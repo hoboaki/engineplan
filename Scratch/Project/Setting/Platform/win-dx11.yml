@@ -1,0 +1,64 @@
+# 文字コード：UTF-8
+PlatformSetting: 
+    # コードネーム（英小文字・単語区切りハイフンで構成を推奨）
+    Name: "win-dx11"  
+    
+    # GUI上などで表示される名前（分かりやすさ優先）
+    DisplayName: "Win-Dx11"  
+
+    # デフォルトのビルドターゲット
+    BuildTargetDefault: "PC-Product"
+    
+    # ビルドターゲット定義
+    BuildTargets:
+        # 製品版
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "PC-Product"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "PC（製品版）"
+
+            # 使用するビルドシステム
+            BuildSystem: "Adel.DevkitWin.Vs2015"
+
+            # ビルドキットに通知するオプション
+            BuildSystemOptions:
+
+            # 追加コンパイル時パラメータ
+            CompileParams:
+                - "EDITION_PRODUCT"
+
+        # 体験版
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "PC-Trial"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "PC（体験版）"
+
+            # 使用するビルドシステム
+            BuildSystem: "Adel.DevkitWin.Vs2015"
+
+            # ビルドキットに通知するオプション
+            BuildSystemOptions:
+
+            # 追加コンパイル時パラメータ
+            CompileParams:
+                - "EDITION_TRIAL"
+
+    # Coreライブラリの定義
+    CoreLib:
+        # 使用するCoreOsライブラリ
+        # ["Adel.DevkitWin.Os"(default)]
+        #CoreOs: "Adel.DevkitWin.Os"
+
+        # 使用するCoreGfxライブラリ
+        # ["Adel.DevkitWin.Dx11"(default), "Adel.DevkitWin.Gl330"]
+        #CoreGfx: "Adel.DevkitWin.Dx11"
+
+        # 使用するCoreSndライブラリ
+        # ["Adel.DevkitWin.Dxsnd"(default), "Adel.DevkitWin.Al"]
+        #CoreSnd: "Adel.DevkitWin.Dxsnd"
+
+# EOF

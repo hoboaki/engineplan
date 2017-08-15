@@ -1,0 +1,70 @@
+# 文字コード：UTF-8
+PlatformSetting: 
+    # コードネーム（英小文字・ハイフンで構成）
+    Name: "ios-gles300"  
+    
+    # GUI上などで表示される名前（分かりやすさ優先）
+    DisplayName: "iOS-GLES3"  
+
+    # デフォルトのビルドターゲット
+    BuildTargetDefault: "Mac"
+
+    # ビルドターゲット定義
+    BuildTargets:
+        # エミュレータ
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "Mac"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "Mac(iOS-emu)"
+            
+            # 使用するビルドシステム
+            BuildSystem: "Adel.DevkitIos.Xcode7"
+            
+            # ビルドシステムに通知するオプション
+            BuildSystemOptions:
+                - 
+                    Key: "BinTarget"
+                    Value: "mac"
+
+            # 追加コンパイル時パラメータ
+            CompileParams:
+                - "MY_FLAG"
+
+        # 実機
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "iOS"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "iOS"
+            
+            # 使用するビルドシステム
+            BuildSystem: "Adel.DevkitIos.Xcode7"
+
+            # ビルドシステムに通知するオプション
+            BuildSystemOptions:
+                - 
+                    Key: "BinTarget"
+                    Value: "ios"
+             
+            # 追加コンパイル時パラメータ
+            CompileParams:
+                - "MY_FLAG"
+
+    # Coreライブラリの定義
+    CoreLib:   
+        # 使用するCoreOsライブラリ
+        # ["Adel.DevkitIos.Os"(default)]
+        #CoreOs: "Adel.DevkitIos.Os"
+
+        # 使用するCoreGfxライブラリ
+        # ["Adel.DevkitIos.Gles300"(default), "Adel.DevkitIos.Metal"]
+        #CoreGfx: "Adel.DevkitIos.Gles300"
+
+        # 使用するCoreSndライブラリ
+        # ["Adel.DevkitIos.Snd.Al"(default)]
+        #CoreSnd: "Adel.DevkitIos.Al"
+
+# EOF
