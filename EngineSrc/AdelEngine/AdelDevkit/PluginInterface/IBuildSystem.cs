@@ -11,5 +11,9 @@ namespace Adel.Adk.PluginInterface
     /// </summary>
     public interface IBuildSystem : IAddon
     {
+        /// <summary>
+        /// アプリケーションをビルドするタスクを作成する。
+        /// </summary>
+        IEnumerable<Task> CreateBuildTasks();
     }
 }
