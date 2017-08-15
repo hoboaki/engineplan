@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Adel.Adk.PluginInterface
+{
+    /// <summary>
+    /// アドオン（追加機能）の基底インターフェース。
+    /// </summary>
+    public interface IAddon
+    {
+    }
+}
