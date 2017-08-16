@@ -10,12 +10,12 @@ namespace Adel.Adk.TaskSystem
     /// <summary>
     /// タスクの処理の実体。
     /// </summary>
-    public class TaskCommand
+    public class Command
     {
         /// <summary>
         /// コマンドの作成。
         /// </summary>
-        public TaskCommand(Action<TaskCommandExecArg> aAction)
+        public Command(Action<CommandExecArg> aAction)
         {
             _Action = aAction;
         }
@@ -23,11 +23,11 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// コマンドの実行。
         /// </summary>
-        public void Exec(TaskCommandExecArg aArg)
+        public void Exec(CommandExecArg aArg)
         {
             _Action(aArg);
         }
 
-        Action<TaskCommandExecArg> _Action;
+        Action<CommandExecArg> _Action;
     }
 }

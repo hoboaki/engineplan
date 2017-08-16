@@ -10,13 +10,13 @@ namespace Adel.Adk.TaskSystem
     /// <summary>
     /// タスクコマンドを制御する内部処理用クラス。
     /// </summary>
-    public class TaskCommandCtrl : Livet.NotificationObject
+    public class CommandCtrl : Livet.NotificationObject
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public TaskCommandCtrl(TaskCommand aCommand)
+        public CommandCtrl(Command aCommand)
         {
             Command = aCommand;
         }
@@ -25,13 +25,13 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// 対象となるコマンド。
         /// </summary>
-        public TaskCommand Command { get; private set; }
+        public Command Command { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// 状態。
         /// </summary>
-        public TaskNodeState State
+        public TaskState State
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Adel.Adk.TaskSystem
             }
 
         }
-        TaskNodeState _State = TaskNodeState.Wait;
+        TaskState _State = TaskState.Wait;
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -55,9 +55,9 @@ namespace Adel.Adk.TaskSystem
         /// </summary>
         public void Prepare()
         {
-            if (_State == TaskNodeState.Wait)
+            if (_State == TaskState.Wait)
             {
-                State = TaskNodeState.Prepared;
+                State = TaskState.Prepared;
             }
         }
 
@@ -69,9 +69,9 @@ namespace Adel.Adk.TaskSystem
         {
             switch (State)
             {
-                case TaskNodeState.Wait:
-                case TaskNodeState.Prepared:
-                    State = TaskNodeState.Canceled;
+                case TaskState.Wait:
+                case TaskState.Prepared:
+                    State = TaskState.Canceled;
                     break;
             }
         }

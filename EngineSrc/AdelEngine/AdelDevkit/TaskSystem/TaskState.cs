@@ -8,9 +8,9 @@ namespace Adel.Adk.TaskSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// タスクノードの状態。
+    /// タスクの実行状態。
     /// </summary>
-    public enum TaskNodeState
+    public enum TaskState
     {
         /// <summary>
         /// 待機中でまだ実行できない状態。
@@ -28,9 +28,14 @@ namespace Adel.Adk.TaskSystem
         Executed,
 
         /// <summary>
-        /// 実行が完了した状態。
+        /// 実行が完了し成功した状態。
         /// </summary>
-        Finished,
+        Successed,
+
+        /// <summary>
+        /// 実行が完了し失敗した状態。
+        /// </summary>
+        Failed,
 
         /// <summary>
         /// キャンセルされた状態。

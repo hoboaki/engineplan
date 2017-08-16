@@ -10,13 +10,13 @@ namespace Adel.Adk.TaskSystem
     /// <summary>
     /// コマンド実行の際に渡す引数。
     /// </summary>
-    public class TaskCommandExecArg
+    public class CommandExecArg
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public TaskCommandExecArg(Logger aLogger)
+        public CommandExecArg(Logger aLogger)
         {
             _Logger = aLogger;
         }

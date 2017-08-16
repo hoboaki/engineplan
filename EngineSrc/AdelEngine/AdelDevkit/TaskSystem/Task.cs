@@ -16,7 +16,7 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// １つのコマンドを実行するタスクとして作成。
         /// </summary>
-        static public Task CreateSingle(TaskCommand aCommand, TaskCreateInfo aCreateInfo)
+        static public Task CreateSingle(Command aCommand, TaskCreateInfo aCreateInfo)
         {
             var obj = new Task();
             obj.CreateInfo = aCreateInfo;
@@ -67,7 +67,7 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// CreateSingle で指定したコマンド。
         /// </summary>
-        public TaskCommand TaskCommand
+        public Command TaskCommand
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Adel.Adk.TaskSystem
                 }
             }
         }
-        TaskCommand _TaskCommand = null;
+        Command _TaskCommand = null;
 
         //------------------------------------------------------------------------------
         /// <summary>

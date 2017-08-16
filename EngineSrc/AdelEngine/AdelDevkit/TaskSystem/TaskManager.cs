@@ -18,7 +18,7 @@ namespace Adel.Adk.TaskSystem
         /// </summary>
         public TaskManager()
         {
-            _TasksCommandCtrls = new List<TaskCommandCtrl>();
+            _TasksCommandCtrls = new List<CommandCtrl>();
         }
 
         //------------------------------------------------------------------------------
@@ -42,6 +42,6 @@ namespace Adel.Adk.TaskSystem
         }
 
         //------------------------------------------------------------------------------
-        List<TaskCommandCtrl> _TasksCommandCtrls;
+        List<CommandCtrl> _TasksCommandCtrls;
     }
 }

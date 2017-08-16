@@ -24,7 +24,7 @@ namespace Adel.Adk.TaskSystem
             switch (aTask.Kind)
             {
                 case TaskKind.Single:
-                    _CommandCtrl = new TaskCommandCtrl(aTask.TaskCommand);
+                    _CommandCtrl = new CommandCtrl(aTask.TaskCommand);
                     _CommandCtrl.PropertyChanged += CommandCtrl_PropertyChanged;
                     break;
 
@@ -49,7 +49,7 @@ namespace Adel.Adk.TaskSystem
                                 {
                                     switch (prevNode.State)
                                     {
-                                        case TaskNodeState.Finished:
+                                        case TaskState.Successed:
                                             nextNode.Prepare();
                                             break;
                                     }
@@ -78,7 +78,7 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// タスクの状態。
         /// </summary>
-        public TaskNodeState State
+        public TaskState State
         {
             get
             {
@@ -92,12 +92,12 @@ namespace Adel.Adk.TaskSystem
                 }
                 switch (value)
                 {
-                    case TaskNodeState.Wait:
+                    case TaskState.Wait:
                         throw new InvalidOperationException();
 
-                    case TaskNodeState.Prepared:
+                    case TaskState.Prepared:
                         // 待機状態以外からの呼び出しは不正
-                        if (_State != TaskNodeState.Wait)
+                        if (_State != TaskState.Wait)
                         {
                             throw new InvalidOperationException();
                         }
@@ -125,17 +125,43 @@ namespace Adel.Adk.TaskSystem
                         }
                         break;
 
-                    case TaskNodeState.Executed:
+                    case TaskState.Executed:
                         // 何もしない
+                        _State = value;
                         break;
 
-                    case TaskNodeState.Finished:
+                    case TaskState.Successed:
                         // 何もしない
+                        _State = value;
                         break;
 
-                    case TaskNodeState.Canceled:
+                    case TaskState.Failed:
                         // 特定状態以外からの呼び出しは不正
-                        if (_State == TaskNodeState.Wait || _State == TaskNodeState.Prepared)
+                        if (_State != TaskState.Executed)
+                        {
+                            throw new InvalidOperationException();
+                        }
+                        _State = value;
+
+                        // 子にキャンセル通知
+                        switch (Task.Kind)
+                        {
+                            case TaskKind.Single:
+                                break;
+
+                            case TaskKind.MultiSerial:
+                            case TaskKind.MultiParallel:
+                                foreach (var node in _Nodes)
+                                {
+                                    node.Cancel();
+                                }
+                                break;
+                        }
+                        break;
+
+                    case TaskState.Canceled:
+                        // 特定状態以外からの呼び出しは不正
+                        if (_State != TaskState.Wait && _State != TaskState.Prepared)
                         {
                             throw new InvalidOperationException();
                         }
@@ -162,11 +188,11 @@ namespace Adel.Adk.TaskSystem
                 }
             }
         }
-        TaskNodeState _State = TaskNodeState.Wait;
+        TaskState _State = TaskState.Wait;
 
         //------------------------------------------------------------------------------
         Task Task { get; set; }
-        TaskCommandCtrl _CommandCtrl;
+        CommandCtrl _CommandCtrl;
         TaskNode[] _Nodes;
 
         //------------------------------------------------------------------------------
@@ -175,9 +201,9 @@ namespace Adel.Adk.TaskSystem
         /// </summary>
         public void Prepare()
         {
-            if (State == TaskNodeState.Wait)
+            if (State == TaskState.Wait)
             {
-                State = TaskNodeState.Prepared;
+                State = TaskState.Prepared;
             }
         }
 
@@ -189,9 +215,9 @@ namespace Adel.Adk.TaskSystem
         {
             switch (State)
             {
-                case TaskNodeState.Wait:
-                case TaskNodeState.Prepared:
-                    State = TaskNodeState.Canceled;
+                case TaskState.Wait:
+                case TaskState.Prepared:
+                    State = TaskState.Canceled;
                     break;
             }
         }
@@ -199,25 +225,30 @@ namespace Adel.Adk.TaskSystem
         //------------------------------------------------------------------------------
         void CommandCtrl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(TaskCommandCtrl.State))
+            if (e.PropertyName == nameof(CommandCtrl.State))
             {
                 switch (_CommandCtrl.State)
                 {
-                    case TaskNodeState.Prepared:
+                    case TaskState.Prepared:
                         // 何もしない
                         break;
 
-                    case TaskNodeState.Executed:
+                    case TaskState.Executed:
                         // 自身に反映
-                        State = TaskNodeState.Executed;
+                        State = TaskState.Executed;
                         break;
 
-                    case TaskNodeState.Finished:
+                    case TaskState.Successed:
                         // 自身に反映
-                        State = TaskNodeState.Finished;
+                        State = TaskState.Successed;
                         break;
 
-                    case TaskNodeState.Canceled:
+                    case TaskState.Failed:
+                        // 自身に反映
+                        State = TaskState.Failed;
+                        break;
+
+                    case TaskState.Canceled:
                         // 何もしない
                         break;
 
@@ -234,21 +265,26 @@ namespace Adel.Adk.TaskSystem
             {
                 switch (State)
                 {
-                    case TaskNodeState.Prepared:
+                    case TaskState.Prepared:
                         // 何もしない
                         break;
 
-                    case TaskNodeState.Executed:
+                    case TaskState.Executed:
                         // 自身に反映
-                        State = TaskNodeState.Executed;
+                        State = TaskState.Executed;
                         break;
 
-                    case TaskNodeState.Finished:
+                    case TaskState.Successed:
                         // 自身に反映
-                        State = TaskNodeState.Finished;
+                        State = TaskState.Successed;
                         break;
 
-                    case TaskNodeState.Canceled:
+                    case TaskState.Failed:
+                        // 自身に反映
+                        State = TaskState.Failed;
+                        break;
+
+                    case TaskState.Canceled:
                         // 何もしない
                         break;
 
