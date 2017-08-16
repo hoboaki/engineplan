@@ -14,6 +14,6 @@ namespace Adel.Adk.PluginInterface
         /// <summary>
         /// アプリケーションをビルドするタスクを作成する。
         /// </summary>
-        IEnumerable<Task> CreateBuildTasks();
+        IEnumerable<System.Threading.Tasks.Task> CreateBuildTasks();
     }
 }
