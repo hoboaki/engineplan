@@ -60,10 +60,14 @@
       }
     ],
     "dest": "_site",
-    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appTitle": "AdelEngine Private Document",
+      "_enableSearch": true,
+      "_disableNavbar": false
+    },
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "statictoc"
     ],
     "postProcessors": [],
     "noLangKeyword": false,
