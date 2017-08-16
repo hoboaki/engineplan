@@ -17,7 +17,7 @@ namespace Adel.Adk.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary
-        public TaskNode(Task aTask)
+        public TaskNode(Task aTask, Action<CommandCtrl> aCommandCtrlCallback)
         {
             Task = aTask;
 
@@ -26,6 +26,7 @@ namespace Adel.Adk.TaskSystem
                 case TaskKind.Single:
                     _CommandCtrl = new CommandCtrl(aTask.TaskCommand);
                     _CommandCtrl.PropertyChanged += CommandCtrl_PropertyChanged;
+                    aCommandCtrlCallback(_CommandCtrl);
                     break;
 
                 case TaskKind.MultiSerial:
@@ -33,7 +34,7 @@ namespace Adel.Adk.TaskSystem
                         // 子ノード作成
                         _Nodes = aTask.ChildTasks.Select(task =>
                         {
-                            var newNode = new TaskNode(task);
+                            var newNode = new TaskNode(task, aCommandCtrlCallback);
                             newNode.PropertyChanged += ChildNode_PropertyChanged_ForSelfStateUpdate;
                             return newNode;
                         }).ToArray();
@@ -65,7 +66,7 @@ namespace Adel.Adk.TaskSystem
                         // 子ノード作成
                         _Nodes = aTask.ChildTasks.Select(task =>
                         {
-                            var newNode = new TaskNode(task);
+                            var newNode = new TaskNode(task, aCommandCtrlCallback);
                             newNode.PropertyChanged += ChildNode_PropertyChanged_ForSelfStateUpdate;
                             return newNode;
                         }).ToArray();
