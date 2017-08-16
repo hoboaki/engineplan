@@ -1,0 +1,7 @@
+- name: ホーム
+  href: index.md
+- name: 記事一覧
+  href: articles/
+#- name: Api Documentation
+#  href: api/
+#  homepage: api/index.md
