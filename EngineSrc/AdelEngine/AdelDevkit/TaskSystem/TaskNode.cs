@@ -5,171 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adel.Adk
+namespace Adel.Adk.TaskSystem
 {
-    public class TaskCommandExecArg
-    {
-        public TaskCommandExecArg(Logger aLogger)
-        {
-            _Logger = aLogger;
-        }
-
-        public Logger Logger { get; }
-        Logger _Logger;
-    }
-
-    public class TaskCommand
-    {
-        public TaskCommand(Action<TaskCommandExecArg> aAction)
-        {
-            _Action = aAction;
-        }
-
-        public void Exec(TaskCommandExecArg aArg)
-        {
-            _Action(aArg);
-        }
-
-        Action<TaskCommandExecArg> _Action;
-    }
-    
     //------------------------------------------------------------------------------
     /// <summary>
-    /// タスクの種類。
+    /// １つのタスクを扱う制御クラス。
     /// </summary>
-    public enum TaskKind
-    {
-        /// <summary>
-        /// １つのコマンドを実行するタスク。
-        /// </summary>
-        Single,
-
-        /// <summary>
-        /// 複数のタスクを順次実行するタスク。
-        /// </summary>
-        MultiSerial,
-
-        /// <summary>
-        /// 複数のタスクを並列実行するタスク。
-        /// </summary>
-        MultiParallel,
-    }
-
-    //------------------------------------------------------------------------------
-    /// <summary>
-    /// タスクの生成情報。
-    /// </summary>
-    public class TaskCreateInfo
-    {
-        /// <summary>
-        /// 処理の名前。GUI上の表示などで使われる。
-        /// </summary>
-        public string Name { get; set; }
-    }
-
-    //------------------------------------------------------------------------------
-    /// <summary>
-    /// １つの処理セットを表すクラス。
-    /// </summary>
-    public class Task
-    {
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// １つのコマンドを実行するタスクとして作成。
-        /// </summary>
-        static public Task CreateSingle(TaskCommand aCommand, TaskCreateInfo aCreateInfo)
-        {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.Single;
-            obj._TaskCommand = aCommand;
-            return obj;
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 複数のタスク項目を順次実行するタスクとして作成。
-        /// </summary>
-        static public Task CreateMultiSerial(IEnumerable<Task> aChildTasks, TaskCreateInfo aCreateInfo)
-        {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.MultiSerial;
-            obj._ChildTasks = aChildTasks.ToArray();
-            return obj;
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 複数のタスク項目を並列実行するタスクとして作成。
-        /// </summary>
-        static public Task CreateMultiParallel(IEnumerable<Task> aChildTasks, TaskCreateInfo aCreateInfo)
-        {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.MultiParallel;
-            obj._ChildTasks = aChildTasks.ToArray();
-            return obj;
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 作成時に渡した情報。
-        /// </summary>
-        public TaskCreateInfo CreateInfo { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// タスクの種類。
-        /// </summary>
-        public TaskKind Kind { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// CreateSingle で指定したコマンド。
-        /// </summary>
-        public TaskCommand TaskCommand
-        {
-            get
-            {
-                switch (Kind)
-                {
-                    case TaskKind.Single:
-                        return _TaskCommand;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-        }
-        TaskCommand _TaskCommand = null;
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// CreateMultiSingle CreateMultiParallel で指定した子タスク。
-        /// </summary>
-        public Task[] ChildTasks
-        {
-            get
-            {
-                switch (Kind)
-                {
-                    case TaskKind.MultiSerial:
-                    case TaskKind.MultiParallel:
-                        return _ChildTasks;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-        }
-        Task[] _ChildTasks = null;
-    }
-    
-    //------------------------------------------------------------------------------
     public class TaskNode : Livet.NotificationObject
     {
         //------------------------------------------------------------------------------
+        /// <summary>
+        /// コンストラクタ。
+        /// </summary
         public TaskNode(Task aTask)
         {
             Task = aTask;
@@ -228,6 +75,9 @@ namespace Adel.Adk
         }
 
         //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの状態。
+        /// </summary>
         public TaskNodeState State
         {
             get
@@ -267,7 +117,8 @@ namespace Adel.Adk
 
                             case TaskKind.MultiParallel:
                                 // 全て
-                                foreach (var node in _Nodes) {
+                                foreach (var node in _Nodes)
+                                {
                                     node.Prepare();
                                 }
                                 break;
@@ -319,6 +170,9 @@ namespace Adel.Adk
         TaskNode[] _Nodes;
 
         //------------------------------------------------------------------------------
+        /// <summary>
+        /// 実行準備状態にする。
+        /// </summary>
         public void Prepare()
         {
             if (State == TaskNodeState.Wait)
@@ -328,6 +182,9 @@ namespace Adel.Adk
         }
 
         //------------------------------------------------------------------------------
+        /// <summary>
+        /// 実行をキャンセルする。
+        /// </summary>
         public void Cancel()
         {
             switch (State)
@@ -340,7 +197,7 @@ namespace Adel.Adk
         }
 
         //------------------------------------------------------------------------------
-        void CommandCtrl_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void CommandCtrl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(TaskCommandCtrl.State))
             {
@@ -371,7 +228,7 @@ namespace Adel.Adk
         }
 
         //------------------------------------------------------------------------------
-        void ChildNode_PropertyChanged_ForSelfStateUpdate(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void ChildNode_PropertyChanged_ForSelfStateUpdate(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(State))
             {
@@ -397,87 +254,8 @@ namespace Adel.Adk
 
                     default:
                         throw new InvalidOperationException();
-                }            
-            }
-        }
-    }
-    
-    public enum TaskNodeState
-    {
-        Wait,
-        Prepared,
-        Executed,
-        Finished,
-        Canceled,
-    }
-
-    public class TaskCommandCtrl : Livet.NotificationObject
-    {
-        public TaskCommandCtrl(TaskCommand aCommand)
-        {
-            Command = aCommand;
-        }
-
-        public TaskCommand Command { get; private set; }
-
-        public TaskNodeState State
-        {
-            get
-            {
-                return _State;
-            }
-            set
-            {
-                if (_State != value)
-                {
-                    _State = value;
-                    RaisePropertyChanged(nameof(State));
                 }
             }
-
-        }
-        TaskNodeState _State = TaskNodeState.Wait;
-
-        public void Prepare()
-        {
-            if (_State == TaskNodeState.Wait)
-            {
-                State = TaskNodeState.Prepared;
-            }
-        }
-        
-        public void Cancel()
-        {
-            switch (State)
-            {
-                case TaskNodeState.Wait:
-                case TaskNodeState.Prepared:
-                    State = TaskNodeState.Canceled;
-                    break;
-            }
         }
     }
-
-    public class TaskManager
-    {
-        public TaskManager()
-        {
-            _TasksCommandCtrls = new List<TaskCommandCtrl>();
-        }
-
-        public void Add(Task aTask)
-        {
-            // TaskNode化していく
-
-        }
-
-        public void Update()
-        {
-            // Prepared になっているものを順番に実行していく
-            // ...
-        }
-
-        List<TaskCommandCtrl> _TasksCommandCtrls;
-    }
-
 }

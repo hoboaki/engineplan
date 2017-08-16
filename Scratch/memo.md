@@ -152,5 +152,35 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
     - アプリケーションモード
         - エディタと通信せずゲームを実行するモード。
 
+## タスク
 
+ビルド
+- Vcs更新
+- Clean
+- Build
+    - Asset
+    - ScriptCode
+    - NativeCode
 
+- Vp Vcs処理
+- Ab アセットビルド（Vcs処理待ち）
+    - FbxセットA
+        - バイナライズ
+            - Tex->ResTex Mat->ResMat Fbx->ResMdl
+        - パック
+    - ScriptCode
+- Eb 実行ファイルビルド（アセットビルド待ち）
+
+- タスクコマンド状態
+    - Wait
+    - Prepared
+    - Executed
+    - Finished
+    - Canceled
+
+- タスク
+    - A
+        - A-1 A-2 A-3
+    - B
+
+if ()
