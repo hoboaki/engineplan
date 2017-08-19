@@ -47,6 +47,25 @@ PlatformSetting:
             CompileParams:
                 - "EDITION_TRIAL"
 
+        # GPUプロファイル版
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "PC-GpuProf"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "PC（GPUプロファイル版）"
+
+            # 使用するビルドシステム
+            BuildSystem: "Adel.DevkitWin.Vs2015"
+
+            # ビルドキットに通知するオプション
+            BuildSystemOptions:
+
+            # 追加コンパイル時パラメータ
+            CompileParams:
+                - "EDITION_PRODUCT"
+                - "ADEL_DEVKIT_WIN_DX11_ENABLE_GPU_PROFILE=1"
+
     # Coreライブラリの定義
     CoreLib:
         # 使用するCoreOsライブラリ
