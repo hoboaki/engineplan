@@ -19,13 +19,14 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "Mac(iOS-emu)"
             
-            # 使用するビルドシステム
-            BuildSystem: "Adel.DevkitIos.Xcode7"
+            # 使用するビルダー
+            Builder: "Adel.DevkitIos.BuilderXcode"
             
-            # ビルドシステムに通知するオプション
-            BuildSystemOptions:
-                - 
-                    Key: "BinTarget"
+            # ビルダーに通知するパラメータ
+            BuilderParams:
+                -   Key: "XcodeVersion"
+                    Value: "7"
+                -   Key: "BinTarget"
                     Value: "mac"
 
             # 追加コンパイル時パラメータ
@@ -40,13 +41,14 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "iOS"
             
-            # 使用するビルドシステム
-            BuildSystem: "Adel.DevkitIos.Xcode7"
-
-            # ビルドシステムに通知するオプション
-            BuildSystemOptions:
-                - 
-                    Key: "BinTarget"
+            # 使用するビルダー
+            Builder: "Adel.DevkitIos.BuilderXcode"
+            
+            # ビルダーに通知するパラメータ
+            BuilderParams:
+                -   Key: "XcodeVersion"
+                    Value: "7"
+                -   Key: "BinTarget"
                     Value: "ios"
              
             # 追加コンパイル時パラメータ

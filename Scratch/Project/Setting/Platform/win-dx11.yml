@@ -19,11 +19,13 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（製品版）"
 
-            # 使用するビルドシステム
-            BuildSystem: "Adel.DevkitWin.Vs2015"
+            # 使用するビルダー
+            Builder: "Adel.DevkitWin.VisualStudioBuilder"
 
-            # ビルドキットに通知するオプション
-            BuildSystemOptions:
+            # ビルダーに通知するパラメータ
+            BuilderParams:
+                -   Key : "VisualStudioVersion"
+                    Value : "2015"
 
             # 追加コンパイル時パラメータ
             CompileParams:
@@ -37,11 +39,13 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（体験版）"
 
-            # 使用するビルドシステム
-            BuildSystem: "Adel.DevkitWin.Vs2015"
+            # 使用するビルダー
+            Builder: "Adel.DevkitWin.BuilderVisualStudio"
 
-            # ビルドキットに通知するオプション
-            BuildSystemOptions:
+            # ビルダーに通知するパラメータ
+            BuilderParams:
+                -   Key : "VisualStudioVersion"
+                    Value : "2015"
 
             # 追加コンパイル時パラメータ
             CompileParams:
@@ -55,11 +59,13 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（GPUプロファイル版）"
 
-            # 使用するビルドシステム
-            BuildSystem: "Adel.DevkitWin.Vs2015"
+            # 使用するビルダー
+            Builder: "Adel.DevkitWin.BuilderVisualStudio"
 
-            # ビルドキットに通知するオプション
-            BuildSystemOptions:
+            # ビルダーに通知するパラメータ
+            BuilderParams:
+                -   Key : "VisualStudioVersion"
+                    Value : "2015"
 
             # 追加コンパイル時パラメータ
             CompileParams:
