@@ -242,6 +242,8 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
         - ファイルパスもその単位で区切るようにする。
         - 例：ファイルパスのハッシュ値が 0x0123456789ABCDEF 、依存情報のハッシュ値が 1010202030304040 の場合
             - /.Cache/Adel.Asset/0123/4567/89AB/CDEF/1010202030304040.file 
+        - 依存情報のハッシュ値をファイル名に使うことで上書きが発生しなくなる。（衝突がないことが保証できれば）
+            - その結果、ゲームアプリがファイルをリード中でもアセットのビルドができる。
     
 - アセットのリビルドの必要性が確認されたら
     - キャッシュサーバーへの問い合わせ
@@ -268,28 +270,50 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
         - ビルド済アセットのファイルタイプ。
     - 組み込みリソース
         - 非アセットファイルをランタイム用にビルドしたファイル。
-    - アセットコンバータ
+    - アセットビルダー
         - アセットをビルド済みアセットにする機能を提供するもののこと。
-        
-- アセットアドオンの要件
-    - 依存情報を返す
-        - 依存アセット => 依存するアセット（そのアセットの依存情報も加えられる）
-        - 依存ファイルパス => 非アセットの依存ファイルパス
-        - 依存システム情報
-            - エンディアン（DontCare、Native）
-            - ビット環境（DontCare, Native）
-        - 依存アセットコンバータ
-    - 指定のビルド済みアセットタイプにコンバート可能かを判定する
-        - コンバート可能の場合は出力されるビルド済みアセットのリストを返す
 
-- アセットコンバータアドオンの要件
-    - 出力するビルド済みアセットのリストを返す
-        - 各ビルド済みアセットに含まれる情報
-            - 出力先パス "Foo/Hoge.file"
-                - アセットシステム側で衝突しないように名前が加工される "$(Plugin)/Foo/Hoge.file" 
-                - 更に最終出力先はハッシュパスになる "$(ProjectRoot)/.Cache/Adel.Asset/$(ハッシュパス)/$(依存情報パス).file
-            - 依存するアセット＆ビルド済みアセットのペアのリスト
-        
+- アセットアドオン
+    - 概要
+        - アセットタイプ１種につき１つ作られる。
+        - FBXならFBXで１つ。
+
+- ビルド済アセットアドオン
+    - 概要
+        - ビルド済アセットタイプ１種につき１つ作られる。
+        - バイナリデータとデバッグ用バイナリデータ２つ作られるアセットの場合は２つアドオンを用意する。
+
+- アセットビルダーアドオン
+    - 要件
+        - アセットファイルを指定のビルド済みアセットタイプにコンバートできるか判定する
+            - システム情報など出力データに必要な情報も一緒に渡される
+            - コンバートできる場合は出力するビルド済みアセットファイルのリストを返す
+                - ビルド済みアセットの出力パス "Foo/Hoge.file" を指定した場合
+                    - アセットシステム側で衝突しないように名前が加工される "$(Plugin)/Foo/Hoge.file" 
+                    - 更に最終出力先はハッシュパスになる "$(ProjectRoot)/.Cache/Adel.Asset/$(ハッシュパス)/$(依存情報パス).file
+            - デバッグ情報用の追加ファイルなどもオプショナルファイルリスト（専用のリスト）に追加して返す
+        - 指定のビルド済アセットファイルの作成に必要な情報を返す
+            - 判定時に使ったアセットファイルの情報もここで渡される
+            - 返す情報
+                - 依存情報
+                    - 依存アセット
+                    - 依存ビルド済みアセット => （そのビルド済みアセットの依存情報も加えられる）
+                    - 依存リソースファイルパス => 非アセットの依存ファイルパス
+                    - 依存アセットコンバータ
+                    - 依存文字列
+                        - エンディアン、ビット環境、実行モード、ビルドバージョンなどを元にコンバータが生成する任意の文字列
+                        - ハッシュ計算で使われる
+                - アセットビルドタスク
+                    - 依存ビルド済みアセットがある場合は、そのビルドが終わってからタスクが実行されることが保証されている
+
+- アセットコンバータ
+    - アセットを別のアセットに変換する機能を提供するクラス
+        - 例： FbxFile を GfxTex に変換する
+    - FBXプラグインはおそらくアセットコンバータのみ提供しアセットビルダーは提供しない。
+        - アセットビルダーは GfxTex を扱うプラグインが提供しているはずなので。
+    - 2段階コンバートは考えないことにする。
+        - A <- B <- C
+        - 欲しい場面があまり想像できないので。
 
 - （合わせて考えた方がイメージしやすいのでモデルのデータフローを検討する）
 - *.aemdl -> Ae.Gfx.ResBin(Ae.Gfx.ResMdl -> ResScn,ResMat,ResTex への参照情報)
@@ -312,6 +336,42 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
         - シェーダーバイナリの作成
     - テクスチャバイナリの作成
         - CoreGfx の テクスチャバイナライザ を使ってバイナリを作成。
+- これをアドオンに当てはめる
+    - アセットアドオン
+        - モデルファイル
+            - Adk.Asset.GfxMdl
+            - AdkExt.StdGfx.Asset.AemdlFile
+        - シーンファイル
+            - Adk.Asset.GfxScn
+            - AdkExt.StdGfx.Asset.FbxFile
+        - マテリアル
+            - Adk.Asset.GfxMat
+            - Adk.Asset.GfxShd
+            - AdkExt.MaterialEditor.Asset.AematFile
+        - テクスチャ
+            - Adk.Asset.GfxTex
+            - AdkExt.StdGfx.Asset.TgaFile
+    - ビルド済アセットアドオン
+        - モデルバイナリ = Adk.RuntimeAsset.GfxResMdl
+        - シーンバイナリ = Adk.RuntimeAsset.GfxResScn
+        - マテリアルバイナリ = Adk.RuntimeAsset.GfxResMat
+        - テクスチャバイナリ = Adk.RuntimeAsset.GfxResTex
+    - A.aemdl が欲しいバイナリ
+        - Mdl.bin
+        - Scn.bin <-- AdelGfxConverter(FbxToGfxScn(Hoge.fbx))
+        - MatSet.bin <-- AdelGfxConverter(AdmatToGfxMat(Face.admat), AdmatToGfxShader(Face.admat), ...)
+        - Tex.bin <-- AdelGfxConverter(TgaToGfxTex(Foo.tga))
+    - Aemdl アセットのプロパティ
+        - AssetRef<GfxScn> scene; <= FbxToGfxScnConverter(fbxAsset)
+        - List<MaterialHolder> MaterialHolderss
+            - "MatA" (Key)
+                - AssetRef<Adk.Asset.GfxMat> material; <= AematToGfxMatConverter(aematAsset)
+                - MaterialParamHolders
+                    - "Color"
+                        - color4(RGBA)
+                    - "Texture"
+                        - AssetRef<Adk.Asset.GfxTex> <= TgaToGfxTexConverter(tgaAsset)
+
 - ResScnについて
     - 前はResMdlと呼んでいたヤツ。ボーンの親子階層、プリミティブ、メッシュの表示フラグなどの情報を含むもの。
     - カメラなどのアニメが必要になったらそれは ResCam や ResEnv など ResScn とは別の名前を付ける。
