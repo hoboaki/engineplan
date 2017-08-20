@@ -284,6 +284,75 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
     - 要件
         - アセットタイプに関する情報を返す。
             - ファイルで扱うタイプかどうか。扱う場合は拡張子
+        - エディタ上から設定できるプロパティの情報を返す
+            - AssetParam （例：AemdlFile.Scn)
+                - Name：GfxScnAssetRef
+                - DisplayName：シーン
+                - Type：AssetRef<GfxScn>
+                - Value：Hoge.fbx
+            - 動的に変わる例（マテリアルセット） <- PropertyChangedイベントでパラメータを動的に変えることが可能
+                - Name：MaterialSet
+                - DisplayName：マテリアル設定
+                - Type：Dictionary
+                - Visibility：True
+                - Value：
+                    - ["Face"] <- マテリアルが増減しても設定が維持されるように名前をキーとする
+                        - Name："Face"
+                        - DisplayName："Face" <- シーンのマテリアル名
+                        - Type：Dictionary
+                        - Value：
+                            - ["GfxMatAssetRef"]
+                                - Name：GfxMatAssetRef
+                                - DisplayName："マテリアル"
+                                - Type：AssetRef<GfxMat>
+                                - Value：Face.aemat
+                            - ["Params"]
+                                - Name：Params
+                                - DisplayName："パラメータ"
+                                - Type：Dictionary
+                                - Value：
+                                    - ["Color"]
+                                        - Name：Color
+                                        - DisplayName：”Color"
+                                        - Type：Color4
+                                        - Value：(RGBA)
+                                    - ["Texture"]
+                                        - Name：Texture
+                                        - DisplayName："Texture"
+                                        - Type：AssetRef<GfxTex>
+                                        - Value：Foo.tga
+```
+こうじゃなくて
+================================
+プロパティ 
+================================
+A.aemdl
+--------------------------------
++Basis
+   Scene            [Hoge.fbx  ]
++MaterialSetting
+  +Face
+     Material       [Face.aemat]
+    +Params
+       Color        [##########]
+       Texture      [Foo.tga   ]
+--------------------------------
+
+こうなるといいよね
+================================
+プロパティ 
+================================
+A.aemdl
+--------------------------------
++Basis
+   Scene            [Hoge.fbx  ]
++MaterialSetting
+  +Face
+     Material       [Face.aemat]
+     Color          [##########]
+     Texture        [Foo.tga   ]
+--------------------------------
+```
 
 - ランタイムアセットアドオン
     - 概要
