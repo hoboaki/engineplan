@@ -178,20 +178,99 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
     - 実行ファイルのビルドのキャッシュもできて良いかもしれないので、アセットビルドに限定しない構成にしておく。
 
 - 登場人物
-    - アセット・アセットファイル
-        - Asset 以下に配置されるファイル
+    - アセット
+        - 元データファイル、中間データ、ランタイムファイル、総じてアセットと呼ぶ。
     - アセットタイプ
-        - アセットのファイルタイプ。
-    - ランタイムアセット・ランタイムアセットファイル
-        - アセットファイルをランタイム用にビルドしたアセット。１つのアセットから２つのファイルが出力されることもある。
-    - ランタイムアセットタイプ
-        - ランタイムアセットのファイルタイプ。
-    - 組み込みリソース
-        - 非アセットファイルをランタイム用にビルドしたファイル。
-    - アセットビルダー
-        - アセットをランタイムアセットにする機能。
+        - アセットの型。
     - アセットコンバータ
         - アセットを別のアセットに変換する機能。
+
+## グラフィックスのデータフロー例
+
+モデル(GfxMdlBundle)を作る
+- モデルはシーン(GfxScnBundle,シーングラフのこと)とシーンが要するマテリアル設定(複数のGfxMatBundle)が必要
+- マテリアル設定はシーンによって変わる（各マテリアル設定にどのマテリアルアセットを割り当てるか）
+- マテリアルアセットはコンバート時に必要なパラメータが求められる
+    - 特定のマテリアルではカラーの指定が求められたり、テクスチャを求められたり。
+
+### 共通クラス
+
+[Class]GfxResRuntimeKey
+- uint32_t FileId; // ファイルId
+- string EntryName; // エントリー名
+
+### Fbx -> Scn(GfxScnBundle)
+
+[Imd/RtFile]Asset.GfxScnBundle :
+- GfxScn scene;
+- GfxResRuntimeKey sceneRuntimeKey;
+
+[OrgFile]Asset.FbxFile :
+
+[ConvParam]Converter.FbxFileToGfxScnBundle.AssetSideConvertParam
+- GfxConvertPolicy ConvertPolicy; // コンバート方針 [自動, メモリ効率優先, IOアクセス効率優先]
+
+[Conv]Converter.FbxFileToGfxScnBundle.Converter :
+- TypeInfo InputAssetType = FbxFile // 入力に使うアセットタイプ
+- TypeInfo OutputAssetType = GfxScnBundle // 出力に使うアセットタイプ
+- ConvertParam AssetSideConvertParam = Converter.FbxFileToGfxScnBundle.AssetSideConvertParam // アセット側で指定するコンバートパラメータ
+- ConvertParam ReferenceSideConvertParam = null // アセット参照側で指定するコンバートパラメータ
+
+### Aemat -> Mat(GfxMatBundle)
+
+[Imd]Asset.GfxMatBundle
+- GfxMat material;
+- GfxShd[] shaders; // 一緒に出力されたシェーダ
+- GfxTex[] textures; // 一緒に出力されたテクスチャ
+- GfxResRuntimeKey[] texturesRuntimeKeys; // 一緒に出力されたテクスチャのラインタイムアクセス用キー
+
+[Class]Asset.GfxMatBundleConvertHint // アセット参照側からコンバータに渡すコンバートのヒント
+- int SkinningWeightCountMax // スキニングのウェイトの最大数
+
+[OrgFile]Asset.AematFile
+
+[ConvParam]Converter.AematToGfxMatBandle.ReferenceSideConvertParam
+- DynamicParams[] dynamicParams; // AematFileの内容によって決まる動的パラメータ
+
+[Conv]Converter.AematToGfxMatBandle.Converter
+- TypeInfo InputAssetType = AematFile
+- TypeInfo OutputAssetType = GfxMatBundle
+- ConvertParam AssetSideConvertParam = null
+- ConvertParam ReferenceSideConvertParam = Converter.AematToGfxMatBandle.ReferenceSideConvertParam
+
+[Imd]Asset.GfxTexBundle
+- GfxTex texture;
+- GfxResRuntimeKey[] textureRuntimeKey;
+
+[OrgFile]Asset.TgaFile
+
+[ConvParam]Converter.TgaFileToGfxTexBundle.AssetSideConvertParam
+- GfxConvertPolicy ConvertPolicy;
+- GfxTexFormat Format; // [圧縮sRGB, 圧縮Linear, 非圧縮sRGB, 非圧縮Linear]
+
+[Conv]Converter.TgaFileToGfxTexBundle.Converter
+- TypeInfo InputAssetType = TgaFile
+- TypeInfo OutputAssetType = GfxTexBundle
+- ConvertParam AssetSideConvertParam = Converter.TgaFileToGfxTexBundle.AssetSideConvertParam
+- ConvertParam ReferenceSideConvertParam = null
+
+### Scn&Mat -> Mdl(GfxMdlBundle)
+
+[OrgFile]Asset.AemdlFile
+- AssetRef<GfxScnBundle> scene;
+- Dictionary<string, AssetRef<GfxMatBundle>> materials;
+
+[Imd]Asset.GfxMdlBundle
+- GfxMdl model;
+- GfxRefRuntimeKey modekRuntimeKey;
+
+[Conv]Converter.AemdlFileToGfxMdlBundle.Converter
+- TypeInfo InputAssetType = AemdlFile
+- TypeInfo OutputAssetType = GfxMdlBundle
+- ConvertParam AssetSideConvertParam = null
+- ConvertParam ReferenceSideConvertParam = null
+
+## アセットシステムのアドオン検討
 
 - アセットアドオン
     - 概要
@@ -199,6 +278,11 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
         - アセットタイプ１種につき１つ作られる。
         - FBXならFBXで１つ。
         - ファイルである必要性はない。内部で使う一時的なデータもアセットで表すことがあるので。
+    - 属性
+        - IsOriginalFile : いわゆるアセットファイル。ユーザーがバージョン管理するもの。
+        - IsIntermedidateData : 中間データ。コンバート時に生成されランタイムには直接載らないデータ。
+        - IsRuntimeData : ランタイムデータ。ランタイムで扱うデータ。
+        - IsRuntimeFile : ランタイムファイルになるデータ。
     - 要件
         - アセットタイプに関する情報を返す。
             - ファイルで扱うタイプかどうか。扱う場合は拡張子
@@ -269,156 +353,61 @@ A.aemdl
 +MaterialSetting
   +Face
      Material       [Face.aemat]
-     Color          [##########]
-     Texture        [Foo.tga   ]
+       Color        [##########]
+       Texture      [Foo.tga   ]
 --------------------------------
 ```
 
-- ランタイムアセットアドオン
+- アセットコンバートアドオン
     - 概要
-        - ランタイムアセットタイプ１種につき１つ作られる。
-        - バイナリデータとデバッグ用バイナリデータ２つ作られるアセットの場合は２つアドオンを用意する。
-
-- アセットビルダーアドオン
+        - アセットを別のアセットに変換する機能を提供するクラス
+            - 例： FbxFile を GfxTexBundle に変換する
+        - 見通し切れていない＆シンプルにしたいので、入力出力１対のアセットタイプペアしか扱えないこととする。
+        - 2段階コンバートは考えないことにする。
+            - A <- B <- C
+            - 欲しい場面があまり想像できないのと、回避策はあるので。
+            - 例えばテクスチャ6枚使ってキューブマップテクスチャアセットを作るアセットを作ったとして。
+                - GfxTexBundles <- Converter<GfxTexBundle>(CustomCubeTexAsset{AssetRef<GfxTexBundle>[6] texs})
+                - というのでなんとかならんでもない。
     - 要件
-        - アセットファイルを指定のランタイムアセットタイプを作成できるか判定する
+        - 基本情報を返す
+            - どのアセットをなんのアセットに変換するか
+        - 渡されたアセットを別のアセットにコンバートをする
+        - 渡されたアセットを別のアセットにコンバートする処理の依存情報を返す
+    - もうちょっと具体的な要件
+        - アセットを別のアセットタイプに変換できるか判定する
             - システム情報など出力データに必要な情報も一緒に渡される
             - 判定結果に含めるもの
                 - 作成できるかどうかの真偽値
-                - 作成できる場合は出力するランタイムアセットファイル情報（ランタイムアセットファイルパスなど）を１つ
-                - 副産物として出力するランタイムアセットファイル情報を0個以上
+                - ランタイムファイルを出力する場合はファイルパス情報
+                - 副産物として出力するアセットを0個以上
                     - デバッグ情報バイナリなどがここに当てはまる
-                - 他のランタイムアセットも使う場合は依存ランタイムアセット情報を0個以上
-                    - ここでいう依存ランタイムアセット情報とはランタイムアセットタイプとアセットファイルのペア。
+                - 他のアセットも使う場合は依存アセット情報を0個以上
             - ランタイムアセットの出力パスについて
                 - "Foo/Hoge.file" を指定した場合
                 - アセットシステム側で衝突しないようにパスが加工される "$(Plugin)/Foo/Hoge.file" 
                 - 最終出力先はハッシュパスになる "$(ProjectRoot)/.Cache/Adel.Asset/$(ハッシュパス)/$(依存情報パス).file
                 - ↑のフォルダに直接書き込むとビルド中にエラーが起きると中途半端なデータとなってしまうおそれがある。
                     - なので　*.file.tmp という名前に書き込み、書き込みが終わったらアセットシステム側で *.file にリネームする。
-        - 指定のランタイムアセットファイルの作成に必要な情報を返す
-            - 判定時に使ったアセットファイルの情報もここで渡される
+        - 指定のアセットの作成に必要な情報を返す
+            - 判定時に使ったアセットの情報もここで渡される
             - 返す情報
                 - 依存情報
                     - 依存アセット
-                    - 依存ランタイムアセット => （そのランタイムアセットの依存情報も加えられる）
-                    - 依存リソースファイルパス => 非アセットの依存ファイルパス
-                    - 依存アセットビルダー => バージョンが変わったら再ビルドする必要があるので
                     - 依存アセットコンバータ => バージョンが変わったら再ビルドする必要があるので
                     - 依存文字列
                         - エンディアン、ビット環境、実行モード、ビルドバージョンなどを元にコンバータが生成する任意の文字列
                         - ハッシュ計算で使われる
-                - アセットビルドタスク
-                    - 依存ランタイムアセットのビルドタスクもここに含める
-
-- アセットコンバータアドオン
-    - 概要
-        - アセットを別のアセットに変換する機能を提供するクラス
-            - 例： FbxFile を GfxTex に変換する
-        - FBXプラグインはおそらくアセットコンバータのみ提供しアセットビルダーは提供しない。
-            - アセットビルダーは GfxTex を扱うプラグインが提供しているはずなので。
-        - 2段階コンバートは考えないことにする。
-            - A <- B <- C
-            - 欲しい場面があまり想像できないのと、回避策はあるので。
-            - 例えばテクスチャ6枚使ってキューブマップテクスチャアセットを作るアセットを作ったとして。
-                - GfxTex <- Converter<GfxTex>(CustomCubeTexAsset{AssetRef<GfxTex>[6] texs})
-                - というのでなんとかならんでもない。
-    - 要件
-        - コンバータの情報を返す
-            - どのアセットをなんのアセットに変換するか
-        - 渡されたアセットを別のアセットにコンバートをする
-        - 渡されたアセットを別のアセットにコンバートする処理の依存情報を返す
-
-- （合わせて考えた方がイメージしやすいのでモデルのデータフローを検討する）
-- *.aemdl -> Ae.Gfx.ResBin(Ae.Gfx.ResMdl -> ResScn,ResMat,ResTex への参照情報)
-    - シーン（*.fbx *.dae） -> Ae.Gfx.ResBin(Ae.Gfx.ResScn 1つ)
-        - 他の *.aemdl で同じモデルシーンを参照してもバイナリは１つで済む。
-    - マテリアル達（*.aemat） -> Ae.Gfx.ResBin(Ae.Gfx.ResMat Ae.Gfx.ResShd それぞれ1つ以上)
-        - ほとんどのケースでは１aemdlファイルにつき１つバイナリが生成される。（同一なマテリアルパラメータのケースがあればバイナリが共有される）
-        - マテリアルパラメータ（アセットプロパティとして編集）
-            - シェーダーパラメータ
-            - テクスチャ -> Ae.Gfx.ResBin(Ae.Gfx.ResTex)
-- *.aemdl をビルドする際のプロセス
-    - モデルバイナリの作成
-        - シーンバイナリ、マテリアルバイナリ、テクスチャバイナリのパスを取得＆埋め込む。
-    - シーンバイナリの作成
-        - *.fbx or *.dae を中間シーンデータに変換。
-        - CoreGfx の シーンバイナライザ を使ってバイナリを作成。
-    - マテリアルバイナリの作成
-        - CoreGfx の シェーダバイナライザ を使ってバイナリを作成。
-        - CoreGfx の マテリアルバイナライザ を使ってバイナリを作成。
-    - テクスチャバイナリの作成
-        - CoreGfx の テクスチャバイナライザ を使ってバイナリを作成。
-- これをアドオンに当てはめる
-    - アセットアドオン
-        - モデルファイル
-            - Adk.Asset.GfxMdl
-            - AdkExt.StdGfx.Asset.AemdlFile
-        - シーンファイル
-            - Adk.Asset.GfxScn
-            - AdkExt.StdGfx.Asset.FbxFile
-        - マテリアル
-            - Adk.Asset.GfxMat
-            - Adk.Asset.GfxShd
-            - AdkExt.MaterialEditor.Asset.AematFile
-        - テクスチャ
-            - Adk.Asset.GfxTex
-            - AdkExt.StdGfx.Asset.TgaFile
-    - ランタイムアセットアドオン
-        - モデルバイナリ = Adk.RuntimeAsset.GfxResMdl
-        - シーンバイナリ = Adk.RuntimeAsset.GfxResScn
-        - マテリアルバイナリ = Adk.RuntimeAsset.GfxResMat
-        - テクスチャバイナリ = Adk.RuntimeAsset.GfxResTex
-        - シェーダバイナリ = Adk.RuntimeAsset.GfxResShd (今回は使わない)
-    - A.aemdl が欲しいバイナリ
-        - Mdl.bin
-            - 依存情報
-                - 依存バイナリ： Scn.bin MatSet.bin Tex.bin
-                - 依存文字列：GfxConverterの情報
-                - 要検討：ランタイムアセットパスが変わらない限りリビルドの必要性ないはずだけど
-            - タスク
-                - Scn.bin MatSet.bin Tex.bin のランタイムアセットパスを使ってバイナリ化
-        - Scn.bin
-            - 依存情報　IAssetConverter<GfxScn> の依存情報 FbxToGfxScn(Hoge.fbx))
-                - 依存アセット：Hoge.fbx
-                - 依存コンバータ: FbxToGfxScnConverter
-                - 依存文字列：GfxConverterの情報
-            - タスク
-                - IAssetConverterでFbxをGfxScnデータにコンバートして取得
-                - GfxScn を ランタイムアセットにビルド
-        - MatSet.bin 
-            - 依存情報 AdelGfxConverter(AdmatToGfxMat(Face.admat))
-                - 依存アセット：Face.admat
-                - 依存コンバータ：AdmatToGfxMatコンバータ
-                - 依存文字列：GfxConverterの情報
-            - タスク
-                - Face.mdmat を GfxMat にコンバート（GfxShdも抱えているGfxMatが得られる）
-                - GfxMatSet (GfxMat GfxShd) を１つのランタイムアセットにビルド
-        - Tex.bin
-            - 依存情報 AdelGfxConverter(TgaToGfxTex(Foo.tga))
-                - 依存アセット：Foo.tga
-                - 依存コンバータ：TgaToGfxTex
-                - 依存文字列：GfxConverterの情報
-            - タスク
-                - Foo.tga を GfxTex にコンバート
-                - GfxTex をランタイムアセットにビルド
-    - Aemdl アセットのプロパティ
-        - AssetRef<GfxScn> scene; <= FbxToGfxScnConverter(fbxAsset)
-        - List<MaterialHolder> MaterialHolderss
-            - "MatA" (Key)
-                - AssetRef<Adk.Asset.GfxMat> material; <= AematToGfxMatConverter(aematAsset)
-                - MaterialParamHolders
-                    - "Color"
-                        - color4(RGBA)
-                    - "Texture"
-                        - AssetRef<Adk.Asset.GfxTex> <= TgaToGfxTexConverter(tgaAsset)
+                - アセットコンバートタスク
+                    - 依存アセットのビルドタスクもここに含める
 
 - ResScnについて
     - 前はResMdlと呼んでいたヤツ。ボーンの親子階層、プリミティブ、メッシュの表示フラグなどの情報を含むもの。
     - カメラなどのアニメが必要になったらそれは ResCam や ResEnv など ResScn とは別の名前を付ける。
 
-
 - 考えられていない点
     - ResShader を *.aemdl 単位で作ってしまってよいものか
-        - シェーダーのセットアップはプラットフォームによってはわりと処理時間がかかるのでできる限り共通化したほうがいいのか否か
-
+        - シェーダーのセットアップはプラットフォームによってはわりと処理時間がかかるのでできる限り共通化したほうがいいのか否か。
+        - aemat のアセット側コンバートパラメータで設定してしまおうか。
+    - ランタイムスクリプトのモデルコンポーネントに GfxMdlBundle アセットを指定する流れ
+        - ...
