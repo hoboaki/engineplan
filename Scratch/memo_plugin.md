@@ -411,3 +411,71 @@ A.aemdl
         - aemat のアセット側コンバートパラメータで設定してしまおうか。
     - ランタイムスクリプトのモデルコンポーネントに GfxMdlBundle アセットを指定する流れ
         - ...
+
+### 別案
+
+Texture
+StaticTexture : Texture
+
+MultiTextureAsset
+
+TgaAsset
+
+TgaAssetConverter
+- Convert() -> 
+    Result {
+        object Object; (StaticTexture)
+        object ObjectResourceKey; (StaticTextureResourceKey)
+        object DevkitInfo;
+    }
+- AssetSideConvertParam
+- ReferenceSideConvertParam
+
+class HogeScript
+{
+    public Texture MyTex {get;set;}
+}
+
+AematAssetConverter
+- Convert() ->
+    Result {
+        object Object; (MaterialSource)
+        object ObjectResourceKey; null
+        object DevkitInfo;
+            {MateiralDevkitInfo}
+                ShaderDevkitInfo Shader;
+                TextureDevkitInfo[] Textures;
+    }
+
+FbxToSceneConverter
+- Convert() ->
+    Result {
+        object Object; {SceneGraph}
+        object ObjectResourceKey; {SceneGraphResourceKey}
+        object DevkitInfo;
+    }
+
+AemdlConverter
+- Convert() ->
+    Result {
+        object Object; {ModelSource}
+        object ObjectResourceKey; {ModelSourceResourceKey} ?
+        object DevkitInfo;
+    }
+
+Gfx.
+- Model (R/W)
+    - ModelTransformState (Source:SceneGraph)
+    - ModelVisibilityState (Source:SceneGraph)
+    - ModelMaterialState* (Source:MaterialSource*)
+- ModelSource (RO)
+- SceneGraph (RO)
+- Material (R/W)
+- MaterialSource (RO)
+- Texture (RO)
+- StaticTexture (RO)
+- RenderedTexture (RO)※ピクセル部はR/W
+- Shader (RO)
+※ R/W なクラスにインスタンス化するものは クラス名＋Source をつけてみる方針。
+
+object GetResource<Texture>(ResourceKey aKey);
