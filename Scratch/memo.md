@@ -122,7 +122,7 @@ Adk.Devkit.ActivePlatform.Gfx.Binarizer.TgaToResTex()
 Adk.Devkit.ActivePlatform.Gfx.Binarizer.GlslToResShader(env,geom,vert,frag,comp)
 
 // class CoreGfxGl330 : Adk.PluginInterface.ICoreLibGfx
-AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
+AdkExt.BuildkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
 ```
 
 ## プラグインでできること
@@ -197,13 +197,13 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
         - システムインクルードパスのリスト
         - 作業に使うフォルダのパス
             - $(ProjectRoot)/.Build/$(Plugin) => これ以下をどう使うかはプラグインの自由
-            - DevkitWinだとこういうフォルダを下に作る
+            - BuildkitWinだとこういうフォルダを下に作る
                 - /$(Platform)_$(BuildTarget)_$(BuildVersion)/Edt (エディットモード)
                 - /$(Platform)_$(BuildTarget)_$(BuildVersion)/App (アプリケーションモード)
                     - /Exec => 実行ファイルフォルダ（成果物置き場・起動時にCodeとData以下からコピーされる）
                     - /Code => コードビルド領域
                     - /Data => データコピー領域
-                - 例: MyProject/.Build/Adel.DevkitWin/Win-Dx11_PC-Product_Ld
+                - 例: MyProject/.Build/Adel.BuildkitWin/Win-Dx11_PC-Product_Ld
 - ビルドした実行ファイルを起動する
 - 実行中の実行ファイルを停止する
 - ビルドした実行ファイルを発行（Publish）する
