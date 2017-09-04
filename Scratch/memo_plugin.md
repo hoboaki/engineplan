@@ -419,14 +419,19 @@ StaticTexture : Texture
 
 MultiTextureAsset
 
-TgaAsset
+TgaFile
 
-TgaAssetConverter
-- Convert() -> 
+TgaFileConverter
+- CanConvertToResource<AdelEngine.Graphics.Texture>(...)
+- ConvertToResource<AdelEngine.Graphics.Texture>(...) -> 
     Result {
-        object Object; (StaticTexture)
-        object ObjectResourceKey; (StaticTextureResourceKey)
-        object DevkitInfo;
+        object ResourceKey; (GfxFileResourceKey)
+        object DevkitInfo; null
+    }
+- ConvertToDevkitObject<GfxResTexture>(...) ->
+    Result {
+        object Object; (GfxResTexture)
+        object DevkitInfo; null
     }
 - AssetSideConvertParam
 - ReferenceSideConvertParam
@@ -435,12 +440,30 @@ class HogeScript
 {
     public Texture MyTex {get;set;}
 }
+ScriptComponent:
+    TypeName: "HogeScript"
+    Property:
+        Target: "MyTex"
+        RequireType: "AdelEngine.Graphics.Texture"
+        AssignResource: 
+            AssetPath: ./Hoge.tga
+            AssetEntryPath: null # アセット内の項目（例：１つのFBXファイル内にある特定のモーション）を指定する場合に必要と予想して仮置き
+            AssetKey: A067-932E-032B-E094
+
+スクリプトコードで Texture MyTex プロパティが宣言されたら
+- Texture が取得できる ResourceKey が実行時に必要。
+- エディタでは CanConvertToResource<Texture> なアセットがここに設定可能。
+- アセットビルドで ConvertToResource<Texture> が実行されてリソースが生成される。
+- 設定したアセットの ResouceKey をランタイム時に使用して MyTex に Texture を設定する。
+
+アセットのプロパティ（ReferenceSideConvertParam）で GfxResTexture が宣言されたら。
+- エディタでは CanConvertToDevkitObject<GfxResTexture> なアセットがここに設定可能。
+- ConvertToDevkitObject<GfxResTexture>() で GfxResTexture オブジェクトにアクセスできる。
 
 AematAssetConverter
-- Convert() ->
+- ConvertToDevkitObject<GfxResMaterial>() ->
     Result {
-        object Object; (MaterialSource)
-        object ObjectResourceKey; null
+        object Object; (GfxResMaterial)
         object DevkitInfo;
             {MateiralDevkitInfo}
                 ShaderDevkitInfo Shader;
@@ -448,22 +471,30 @@ AematAssetConverter
     }
 
 FbxToSceneConverter
-- Convert() ->
+- ConvertToResource<SceneGraph>() ->
     Result {
-        object Object; {SceneGraph}
-        object ObjectResourceKey; {SceneGraphResourceKey}
+        object ResourceKey; {GfxFileResourceKey}
+        object DevkitInfo;
+    }
+- ConvertToDevkitObject<GfxResScene>() ->
+    Result {
+        object Object; (GfxResScene)
         object DevkitInfo;
     }
 
 AemdlConverter
-- Convert() ->
+- ConvertToResource<ModelSource>() ->
     Result {
-        object Object; {ModelSource}
-        object ObjectResourceKey; {ModelSourceResourceKey} ?
+        object ResourceKey; (GfxFileResourceKey)
+        object DevkitInfo;
+    }
+- ConvertToDevkitObject<GfxResModel>() ->
+    Result {
+        object Object; (GfxResModel)
         object DevkitInfo;
     }
 
-Gfx.
+AdelEngine.Graphics
 - Model (R/W)
     - ModelTransformState (Source:SceneGraph)
     - ModelVisibilityState (Source:SceneGraph)
@@ -477,6 +508,13 @@ Gfx.
 - RenderedTexture (RO)※ピクセル部はR/W
 - Shader (RO)
 ※ R/W なクラスにインスタンス化するものは クラス名＋Source をつけてみる方針。
+
+Adk.
+- GfxResModel
+- GfxResScene
+- GfxResMaterial
+- GfxResTexture
+- GfxResShader
 
 
 ```c++
