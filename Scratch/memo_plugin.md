@@ -478,4 +478,60 @@ Gfx.
 - Shader (RO)
 ※ R/W なクラスにインスタンス化するものは クラス名＋Source をつけてみる方針。
 
-object GetResource<Texture>(ResourceKey aKey);
+
+```c++
+class GfxBinResource {
+    GfxBinResource(byte_t* aBytes);
+    void setup();
+    void cleanup();
+
+    GfxBinModelSource   modelSource(...);
+    GfxBinTexture       texture(...);
+}
+```
+```c#
+public class ResourceKey {
+}
+public class FileResourceKey {    
+    public FileKey FileKey;
+}
+public class GfxFileResourceKey : FileResourceKey {    
+    public GfxResourceKind Kind;
+    public string EntryName;
+}
+public class GfxFileResource {
+    public GfxFileResource(byte[] aBytes);
+    public void Cleanup();
+    NativeClass<GfxBinResource> _BinResource;
+}
+public class GfxFileResourceRepos : ResourceReposBase {
+    public object Get<TResult>(ResourceKey aKey)
+    {
+        GfxFileResource res = null;
+        if (_Files.Contains(aKey)) {
+            res = _Files[aKey];
+        } else {
+            _Files.Add(aKey, new GfxFileResource(FileManager.GetBytes(aKey)));
+        }
+
+        ...
+
+        return ...;
+    }
+    public void CleanupResourceDependFile(FileKey aFileKey);
+    Dictionary<FileResourceKey, GfxFileResource> _Files;
+}
+public static class ResourceManager {
+    public object GetResource<TResult>(TResourceKey aKey)
+    {
+        // TResult = Texture
+        // TResourceKey = GfxFileResourceKey
+        return _ResourceRepos[TResourceKey.TypeInfo()].Get<TResult>(aKey);
+    }
+
+    public void CleanupResourceDependFile(FileKey aFileKey);
+}
+public static class FileManager {
+    public bytes[] GetBytes(FileKey aKey);
+}
+```
