@@ -428,10 +428,9 @@ TgaFileConverter
         object ResourceKey; (GfxFileResourceKey)
         object DevkitInfo; null
     }
-- ConvertToDevkitInfo<GfxResTexture>(...) ->
+- ConvertToDevkitInfo<Adk.Graphics.TextureInfo>(...) ->
     Result {
-        object Object; (GfxResTexture)
-        object DevkitInfo; null
+        object Object; (TextureInfo)
     }
 - AssetSideConvertParam
 - ReferenceSideConvertParam
@@ -457,11 +456,11 @@ ScriptComponent:
 - 設定したアセットの ResouceKey をランタイム時に使用して MyTex に Texture を設定する。
 
 アセットのプロパティ（ReferenceSideConvertParam）で StaticTexture が宣言されたら。
-- エディタでは CanConvertToDevkitInfo<StaticTextureInfo, StaticTexture> なアセットがここに設定可能。
-- ConvertToDevkitInfo<StaticTextureInfo, StaticTexture>() で StaticTextureInfo オブジェクトにアクセスできる。
+- エディタでは CanConvertToDevkitInfo<StaticTexture> なアセットがここに設定可能。
+- ConvertToDevkitInfo<StaticTexture, StaticTextureInfo>() で StaticTextureInfo オブジェクトにアクセスできる。
 
 AematAssetConverter
-- ConvertToDevkitInfo<MaterialSourceInfo, MaterialSource>() ->
+- ConvertToDevkitInfo<MaterialSource, MaterialSourceInfo>() ->
     Result {
         object Object; (MaterialSourceInfo) {
             ...
@@ -477,7 +476,7 @@ FbxToSceneConverter
         object ResourceKey; {GfxFileResourceKey}
         object DevkitInfo;
     }
-- ConvertToDevkitInfo<SceneGraphInfo, SceneGraph>() ->
+- ConvertToDevkitInfo<SceneGraph, SceneGraphInfo>() ->
     Result {
         object Object; (SceneGraphInfo)
     }
@@ -488,7 +487,7 @@ AemdlConverter
         object ResourceKey; (GfxFileResourceKey)
         object DevkitInfo;
     }
-- ConvertToDevkitInfo<ModelSourceInfo, ModelSource>() ->
+- ConvertToDevkitInfo<ModelSource, ModelSourceInfo>() ->
     Result {
         object Object; (ModelSourceInfo)
     }
