@@ -428,7 +428,7 @@ TgaFileConverter
         object ResourceKey; (GfxFileResourceKey)
         object DevkitInfo; null
     }
-- ConvertToDevkitObject<GfxResTexture>(...) ->
+- ConvertToDevkitInfo<GfxResTexture>(...) ->
     Result {
         object Object; (GfxResTexture)
         object DevkitInfo; null
@@ -456,18 +456,19 @@ ScriptComponent:
 - アセットビルドで ConvertToResource<Texture> が実行されてリソースが生成される。
 - 設定したアセットの ResouceKey をランタイム時に使用して MyTex に Texture を設定する。
 
-アセットのプロパティ（ReferenceSideConvertParam）で GfxResTexture が宣言されたら。
-- エディタでは CanConvertToDevkitObject<GfxResTexture> なアセットがここに設定可能。
-- ConvertToDevkitObject<GfxResTexture>() で GfxResTexture オブジェクトにアクセスできる。
+アセットのプロパティ（ReferenceSideConvertParam）で StaticTexture が宣言されたら。
+- エディタでは CanConvertToDevkitInfo<StaticTextureInfo, StaticTexture> なアセットがここに設定可能。
+- ConvertToDevkitInfo<StaticTextureInfo, StaticTexture>() で StaticTextureInfo オブジェクトにアクセスできる。
 
 AematAssetConverter
-- ConvertToDevkitObject<GfxResMaterial>() ->
+- ConvertToDevkitInfo<MaterialSourceInfo, MaterialSource>() ->
     Result {
-        object Object; (GfxResMaterial)
-        object DevkitInfo;
-            {MateiralDevkitInfo}
-                ShaderDevkitInfo Shader;
-                TextureDevkitInfo[] Textures;
+        object Object; (MaterialSourceInfo) {
+            ...
+            AdditionalInfo
+                ShaderInfo Shader;
+                StaticTextureInfo[] Textures;
+        }
     }
 
 FbxToSceneConverter
@@ -476,10 +477,9 @@ FbxToSceneConverter
         object ResourceKey; {GfxFileResourceKey}
         object DevkitInfo;
     }
-- ConvertToDevkitObject<GfxResScene>() ->
+- ConvertToDevkitInfo<SceneGraphInfo, SceneGraph>() ->
     Result {
-        object Object; (GfxResScene)
-        object DevkitInfo;
+        object Object; (SceneGraphInfo)
     }
 
 AemdlConverter
@@ -488,10 +488,9 @@ AemdlConverter
         object ResourceKey; (GfxFileResourceKey)
         object DevkitInfo;
     }
-- ConvertToDevkitObject<GfxResModel>() ->
+- ConvertToDevkitInfo<ModelSourceInfo, ModelSource>() ->
     Result {
-        object Object; (GfxResModel)
-        object DevkitInfo;
+        object Object; (ModelSourceInfo)
     }
 
 AdelEngine.Graphics
@@ -509,40 +508,78 @@ AdelEngine.Graphics
 - Shader (RO)
 ※ R/W なクラスにインスタンス化するものは クラス名＋Source をつけてみる方針。
 
-Adk.
-- GfxResModel
-- GfxResScene
-- GfxResMaterial
-- GfxResTexture
-- GfxResShader
+Adk.Graphics
+- ModelSourceInfo
+- SceneGraphInfo
+- MaterialSourceInfo
+- StaticTextureInfo
+- ShaderInfo
 
+ae::core::gfxapi (gfx_api?)
+- Device
+- CommandBuffer
+- RenderState
+- RenderTargetInfo
+- Buffer
+- VertexAttrView
+- UniformBlockView
+- StreamOutBlockView
+- ScanBuffer
+- FrameBuffer
+- TextureView
+- SamplerView
+- ShaderProgramView
+- StaticTextureResource
+- ShaderResource
+- VertexAttributeResource
+
+ae::gfx AdelEngine.Graphics
+- Model
+- ModelSource
+- Material
+- Texture
+- StaticTexture
+- ...
+
+ae::gfx::inside
+- Resource
+- ResModelSource
+- ResSceneGraph
+- ResMaterialSource
+- ResStaticTexture
 
 ```c++
-class GfxBinResource {
-    GfxBinResource(byte_t* aBytes);
+class ae::gfx::inside::Resource {
+    Resource(byte_t* aBytes);
     void setup();
     void cleanup();
 
-    GfxBinModelSource   modelSource(...);
-    GfxBinTexture       texture(...);
+    ResModelSource   modelSource(...);
+    ResStaticTexture staticTexture(...);
+    ...
 }
 ```
 ```c#
+// namespace AdelEngine
 public class ResourceKey {
 }
 public class FileResourceKey {    
     public FileKey FileKey;
 }
-public class GfxFileResourceKey : FileResourceKey {    
+public class Graphics.GfxFileResourceKey : FileResourceKey {    
     public GfxResourceKind Kind;
     public string EntryName;
 }
-public class GfxFileResource {
+public class Graphics.GfxFileResource {
     public GfxFileResource(byte[] aBytes);
     public void Cleanup();
-    NativeClass<GfxBinResource> _BinResource;
+
+    public ModelSource ModelSource(...);
+    ...
+
+    NativeClass< AdelEngineNative.Gfx.Inside.Resource > _Resource;
 }
-public class GfxFileResourceRepos : ResourceReposBase {
+internal class Graphics.GfxFileResourceRepos : ResourceReposBase {
     public object Get<TResult>(ResourceKey aKey)
     {
         GfxFileResource res = null;
