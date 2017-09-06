@@ -39,7 +39,7 @@ MyProject_170401-1120_Td_PC-Trial_AB0926
         - 製品にのるコード。(c++ objective-c)
     - スクリプトコード ScriptCode
         - 製品にのるコード。(limited-cs)
-    - 開発キットコード DevkitCode
+    - 開発キットコード DevKitCode
         - コマンドラインモードとエディットモードで動作するコード。（cs)
 - 実行モード
     - エディットモード
@@ -69,7 +69,7 @@ C#
 
 NativeCode(c++,objective-c) ae::* ae_* (公式プラグインはこの形式) 
 ScriptCode(limited-cs) AdelEngine.*
-DevkitCode(cs) Adk.*
+DevKitCode(cs) Adk.*
 
 プラットフォーム非依存アセットのプラグイン構成
 ::ae_cut_scene::ScenePlayer

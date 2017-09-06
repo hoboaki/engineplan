@@ -35,8 +35,8 @@
     - AdelEngine.Graphics.Shader
 
 ```c#
-Adk.Devkit.ActivePlatform.GraphicsBinarizer.ConvertTexture(StaticTextureInfo aInfo)
-Adk.Devkit.ActivePlatform.GraphicsBinarizer.ConvertGlslShader(env,geom,vert,frag,comp)
+Adk.DevKit.ActivePlatform.GraphicsBinarizer.ConvertTexture(StaticTextureInfo aInfo)
+Adk.DevKit.ActivePlatform.GraphicsBinarizer.ConvertGlslShader(env,geom,vert,frag,comp)
 
 // class CoreGfxGl330 : Adk.PluginInterface.ICoreLibGfx
 Adk.BuildKitWin.CoreGfxGl330.Binarizer.ConvertGlslShader(...)
@@ -106,9 +106,9 @@ TgaFileConverter
 - ConvertToResource<AdelEngine.Graphics.Texture>(...) -> 
     Result {
         object ResourceKey; (GfxFileResourceKey)
-        object DevkitInfo; null
+        object DevKitInfo; null
     }
-- ConvertToDevkitInfo<Adk.Graphics.TextureInfo>(...) ->
+- ConvertToDevKitInfo<Adk.Graphics.TextureInfo>(...) ->
     Result {
         object Object; (TextureInfo)
     }
@@ -136,11 +136,11 @@ ScriptComponent:
 - 設定したアセットの ResouceKey をランタイム時に使用して MyTex に Texture を設定する。
 
 アセットのプロパティ（ReferenceSideConvertParam）で StaticTexture が宣言されたら。
-- エディタでは CanConvertToDevkitInfo<StaticTexture> なアセットがここに設定可能。
-- ConvertToDevkitInfo<StaticTexture, StaticTextureInfo>() で StaticTextureInfo オブジェクトにアクセスできる。
+- エディタでは CanConvertToDevKitInfo<StaticTexture> なアセットがここに設定可能。
+- ConvertToDevKitInfo<StaticTexture, StaticTextureInfo>() で StaticTextureInfo オブジェクトにアクセスできる。
 
 AematAssetConverter
-- ConvertToDevkitInfo<MaterialSource, MaterialSourceInfo>() ->
+- ConvertToDevKitInfo<MaterialSource, MaterialSourceInfo>() ->
     Result {
         object Object; (MaterialSourceInfo) {
             ...
@@ -154,9 +154,9 @@ FbxToSceneConverter
 - ConvertToResource<SceneGraph>() ->
     Result {
         object ResourceKey; {GfxFileResourceKey}
-        object DevkitInfo;
+        object DevKitInfo;
     }
-- ConvertToDevkitInfo<SceneGraph, SceneGraphInfo>() ->
+- ConvertToDevKitInfo<SceneGraph, SceneGraphInfo>() ->
     Result {
         object Object; (SceneGraphInfo)
     }
@@ -165,9 +165,9 @@ AemdlConverter
 - ConvertToResource<ModelSource>() ->
     Result {
         object ResourceKey; (GfxFileResourceKey)
-        object DevkitInfo;
+        object DevKitInfo;
     }
-- ConvertToDevkitInfo<ModelSource, ModelSourceInfo>() ->
+- ConvertToDevKitInfo<ModelSource, ModelSourceInfo>() ->
     Result {
         object Object; (ModelSourceInfo)
     }
@@ -314,13 +314,13 @@ public static class FileManager {
 [ConverterDefine]FbxConverter
 - TypeInfo InputAssetType = FbxFile // 入力に使うアセットタイプ
 
-[Convert]FbxConverter.ConvertToDevkitInfo<TOutputType = SceneGraph, TDevkitInfoType = SceneGraphDevkitInfo>():
+[Convert]FbxConverter.ConvertToDevKitInfo<TOutputType = SceneGraph, TDevKitInfoType = SceneGraphDevKitInfo>():
 - ConvertParam AssetSideConvertParam = FbxAssetSideConvertParam // アセット側で指定するコンバートパラメータ
 - ConvertParam ReferenceSideConvertParam = null // アセット参照側で指定するコンバートパラメータ
 
 ### Aemat -> Mat(MaterialSource)
 
-[Class]MaterialSourceDevkitInfo
+[Class]MaterialSourceDevKitInfo
 - ...
 - AdditionalInfo
     - GfxShd[] shaders; // 一緒に出力されたシェーダ
@@ -338,11 +338,11 @@ public static class FileManager {
 [ConverterDefine]AematConverter
 - TypeInfo InputAssetType = AematFile
 
-[Convert]AematConvert.ConvertToDevkitInfo<TOutputType=MaterialSource, TDevkitInfoType = MaterialSourceDevkitInfo>
+[Convert]AematConvert.ConvertToDevKitInfo<TOutputType=MaterialSource, TDevKitInfoType = MaterialSourceDevKitInfo>
 - ConvertParam AssetSideConvertParam = null
 - ConvertParam ReferenceSideConvertParam = AematReferenceSideConvertParam
 
-[Class]StaticTextureDevkitInfo
+[Class]StaticTextureDevKitInfo
 - ...
 - GfxFileResourceKey[] textureResourceKey;
 
@@ -355,7 +355,7 @@ public static class FileManager {
 [Converter]TgaConverter
 - TypeInfo InputAssetType = TgaFile
 
-[Convert]TgaConverter.ConvertToDevkitInfo<TOutputType = StaticTexture, TDevkitInfoType=StaticTextureDevkitInfo>
+[Convert]TgaConverter.ConvertToDevKitInfo<TOutputType = StaticTexture, TDevKitInfoType=StaticTextureDevKitInfo>
 - ConvertParam AssetSideConvertParam = TgaAssetSideConvertParam
 - ConvertParam ReferenceSideConvertParam = null
 
