@@ -4,8 +4,8 @@
 
 - Universal （OS・デバイス非依存）
     - エンディアンだけ変わる。32bit64bitはひとまず64bit固定とする。
-    - UniversalLE
-    - UniversalBE
+    - UniversalLe
+    - UniversalBe
 - GraphicsResouce（Shader・Texture・VertexAttribute）
     - CoreGfxのタイプによって生成物が変わりそう。
     - WinDx11
@@ -19,31 +19,42 @@
 ## グラフィックスアセットの検討
 
 - .fbx .dae
-    - Ae.Gfx.ResScn
-    - Ae.Gfx.ResScnAnimSkl
+    - AdelEngine.Graphics.SceneGraph
+    - AdelEngine.Graphics.TransformAnimSource
 - .aemat .aematanim MaterialEditor
-    - Ae.Gfx.ResMat
-    - Ae.Gfx.ResMatAnim
-    - Ae.Gfx.ResShd
+    - AdelEngine.Graphics.MaterialSource
+    - AdelEngine.Graphics.MaterialAnimSource
+    - AdelEngine.Graphics.Shader
 - .aepfx PosteffectEditor
-    - Ae.Gfx.ResPfx Ae.Gfx.ResPfxAnim
+    - AdelEngine.Graphics.PosteffectSource PosteffectAnimSource
 - .aevfx VfxEditor
-    - Ae.Gfx.ResVfx
+    - AdelEngine.Graphics.VfxSource
 - .tga .dds
-    - Ae.Gfx.ResTex
+    - AdelEngine.Graphics.StaticTexture
 - シェーダーリソース
-    - Ae.Gfx.ResShader
+    - AdelEngine.Graphics.Shader
 
 ```c#
-Adk.Devkit.ActivePlatform.Gfx.Binarizer.FbxToResMdl()
-Adk.Devkit.ActivePlatform.Gfx.Binarizer.TgaToResTex()
-Adk.Devkit.ActivePlatform.Gfx.Binarizer.GlslToResShader(env,geom,vert,frag,comp)
+Adk.Devkit.ActivePlatform.GraphicsBinarizer.ConvertTexture(StaticTextureInfo aInfo)
+Adk.Devkit.ActivePlatform.GraphicsBinarizer.ConvertGlslShader(env,geom,vert,frag,comp)
 
 // class CoreGfxGl330 : Adk.PluginInterface.ICoreLibGfx
-AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
+Adk.BuildKitWin.CoreGfxGl330.Binarizer.ConvertGlslShader(...)
 ```
 
-## アセットシステムの検討
+## 用語
+- アセット
+    - ユーザーが管理するファイルたち。TGAやらFBXのこと。
+- アセットタイプ
+    - アセットの種類のこと。TGAならTGAアセット。FBXならFBXアセット。
+- リソース　ビルド済バイナリ
+    - アセットをランタイムで扱えるファイル形式にしたデータのこと。
+- アセットのコンバート
+    - アセットをリソースにしたり、アセットを開発キット用の内部クラスに変換すること。
+- アセットのビルド
+    - アセットをコンバートしてリソースにすること。
+
+## アセットシステムのビルド関連の検討
 
 - アセットシステムが使うフォルダ
     - $(ProjectRoot)/.Build/Adel.Asset
@@ -78,262 +89,17 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
     - 目的は、同じアセットのビルドを他のPCで行わないようにし、ビルド時間を短縮化させるため。
     - 実行ファイルのビルドのキャッシュもできて良いかもしれないので、アセットビルドに限定しない構成にしておく。
 
-- 登場人物
-    - アセット
-        - 元データファイル、中間データ、ランタイムファイル、総じてアセットと呼ぶ。
-    - アセットタイプ
-        - アセットの型。
-    - アセットコンバータ
-        - アセットを別のアセットに変換する機能。
 
-## グラフィックスのデータフロー例
-
-モデル(GfxMdlBundle)を作る
-- モデルはシーン(GfxScnBundle,シーングラフのこと)とシーンが要するマテリアル設定(複数のGfxMatBundle)が必要
-- マテリアル設定はシーンによって変わる（各マテリアル設定にどのマテリアルアセットを割り当てるか）
-- マテリアルアセットはコンバート時に必要なパラメータが求められる
-    - 特定のマテリアルではカラーの指定が求められたり、テクスチャを求められたり。
-
-### 共通クラス
-
-[Class]GfxResRuntimeKey
-- uint32_t FileId; // ファイルId
-- string EntryName; // エントリー名
-
-### Fbx -> Scn(GfxScnBundle)
-
-[Imd/RtFile]Asset.GfxScnBundle :
-- GfxScn scene;
-- GfxResRuntimeKey sceneRuntimeKey;
-
-[OrgFile]Asset.FbxFile :
-
-[ConvParam]Converter.FbxFileToGfxScnBundle.AssetSideConvertParam
-- GfxConvertPolicy ConvertPolicy; // コンバート方針 [自動, メモリ効率優先, IOアクセス効率優先]
-
-[Conv]Converter.FbxFileToGfxScnBundle.Converter :
-- TypeInfo InputAssetType = FbxFile // 入力に使うアセットタイプ
-- TypeInfo OutputAssetType = GfxScnBundle // 出力に使うアセットタイプ
-- ConvertParam AssetSideConvertParam = Converter.FbxFileToGfxScnBundle.AssetSideConvertParam // アセット側で指定するコンバートパラメータ
-- ConvertParam ReferenceSideConvertParam = null // アセット参照側で指定するコンバートパラメータ
-
-### Aemat -> Mat(GfxMatBundle)
-
-[Imd]Asset.GfxMatBundle
-- GfxMat material;
-- GfxShd[] shaders; // 一緒に出力されたシェーダ
-- GfxTex[] textures; // 一緒に出力されたテクスチャ
-- GfxResRuntimeKey[] texturesRuntimeKeys; // 一緒に出力されたテクスチャのラインタイムアクセス用キー
-
-[Class]Asset.GfxMatBundleConvertHint // アセット参照側からコンバータに渡すコンバートのヒント
-- int SkinningWeightCountMax // スキニングのウェイトの最大数
-
-[OrgFile]Asset.AematFile
-
-[ConvParam]Converter.AematToGfxMatBandle.ReferenceSideConvertParam
-- DynamicParams[] dynamicParams; // AematFileの内容によって決まる動的パラメータ
-
-[Conv]Converter.AematToGfxMatBandle.Converter
-- TypeInfo InputAssetType = AematFile
-- TypeInfo OutputAssetType = GfxMatBundle
-- ConvertParam AssetSideConvertParam = null
-- ConvertParam ReferenceSideConvertParam = Converter.AematToGfxMatBandle.ReferenceSideConvertParam
-
-[Imd]Asset.GfxTexBundle
-- GfxTex texture;
-- GfxResRuntimeKey[] textureRuntimeKey;
-
-[OrgFile]Asset.TgaFile
-
-[ConvParam]Converter.TgaFileToGfxTexBundle.AssetSideConvertParam
-- GfxConvertPolicy ConvertPolicy;
-- GfxTexFormat Format; // [圧縮sRGB, 圧縮Linear, 非圧縮sRGB, 非圧縮Linear]
-
-[Conv]Converter.TgaFileToGfxTexBundle.Converter
-- TypeInfo InputAssetType = TgaFile
-- TypeInfo OutputAssetType = GfxTexBundle
-- ConvertParam AssetSideConvertParam = Converter.TgaFileToGfxTexBundle.AssetSideConvertParam
-- ConvertParam ReferenceSideConvertParam = null
-
-### Scn&Mat -> Mdl(GfxMdlBundle)
-
-[OrgFile]Asset.AemdlFile
-- AssetRef<GfxScnBundle> scene;
-- Dictionary<string, AssetRef<GfxMatBundle>> materials;
-
-[Imd]Asset.GfxMdlBundle
-- GfxMdl model;
-- GfxRefRuntimeKey modekRuntimeKey;
-
-[Conv]Converter.AemdlFileToGfxMdlBundle.Converter
-- TypeInfo InputAssetType = AemdlFile
-- TypeInfo OutputAssetType = GfxMdlBundle
-- ConvertParam AssetSideConvertParam = null
-- ConvertParam ReferenceSideConvertParam = null
-
-## アセットシステムのアドオン検討　第1案　→　不採用
-
-- アセットアドオン
-    - 概要
-        - アセットを表すアドオン。
-        - アセットタイプ１種につき１つ作られる。
-        - FBXならFBXで１つ。
-        - ファイルである必要性はない。内部で使う一時的なデータもアセットで表すことがあるので。
-    - 属性
-        - IsOriginalFile : いわゆるアセットファイル。ユーザーがバージョン管理するもの。
-        - IsIntermedidateData : 中間データ。コンバート時に生成されランタイムには直接載らないデータ。
-        - IsRuntimeData : ランタイムデータ。ランタイムで扱うデータ。
-        - IsRuntimeFile : ランタイムファイルになるデータ。
-    - 要件
-        - アセットタイプに関する情報を返す。
-            - ファイルで扱うタイプかどうか。扱う場合は拡張子
-        - エディタ上から設定できるプロパティの情報を返す
-
-- アセットアドオンのプロパティ情報の例
-    - AssetParam （例：AemdlFile.Scn)
-        - Name：GfxScnAssetRef
-        - DisplayName：シーン
-        - Type：AssetRef<GfxScn>
-        - Value：Hoge.fbx
-    - 動的に変わる例（マテリアルセット） <- PropertyChangedイベントでパラメータを動的に変えることが可能
-        - Name：MaterialSet
-        - DisplayName：マテリアル設定
-        - Type：Dictionary
-        - Visibility：True
-        - Value：
-            - ["Face"] <- マテリアルが増減しても設定が維持されるように名前をキーとする
-                - Name："Face"
-                - DisplayName："Face" <- シーンのマテリアル名
-                - Type：Dictionary
-                - Value：
-                    - ["GfxMatAssetRef"]
-                        - Name：GfxMatAssetRef
-                        - DisplayName："マテリアル"
-                        - Type：AssetRef<GfxMat>
-                        - Value：Face.aemat
-                    - ["Params"]
-                        - Name：Params
-                        - DisplayName："パラメータ"
-                        - Type：Dictionary
-                        - Value：
-                            - ["Color"]
-                                - Name：Color
-                                - DisplayName：”Color"
-                                - Type：Color4
-                                - Value：(RGBA)
-                            - ["Texture"]
-                                - Name：Texture
-                                - DisplayName："Texture"
-                                - Type：AssetRef<GfxTex>
-                                - Value：Foo.tga
-```
-こうじゃなくて
-================================
-プロパティ 
-================================
-A.aemdl
---------------------------------
-+Basis
-   Scene            [Hoge.fbx  ]
-+MaterialSetting
-  +Face
-     Material       [Face.aemat]
-    +Params
-       Color        [##########]
-       Texture      [Foo.tga   ]
---------------------------------
-
-こうなるといいよね
-================================
-プロパティ 
-================================
-A.aemdl
---------------------------------
-+Basis
-   Scene            [Hoge.fbx  ]
-+MaterialSetting
-  +Face
-     Material       [Face.aemat]
-       Color        [##########]
-       Texture      [Foo.tga   ]
---------------------------------
-```
-
-- アセットコンバートアドオン
-    - 概要
-        - アセットを別のアセットに変換する機能を提供するクラス
-            - 例： FbxFile を GfxTexBundle に変換する
-        - 見通し切れていない＆シンプルにしたいので、入力出力１対のアセットタイプペアしか扱えないこととする。
-        - 2段階コンバートは考えないことにする。
-            - A <- B <- C
-            - 欲しい場面があまり想像できないのと、回避策はあるので。
-            - 例えばテクスチャ6枚使ってキューブマップテクスチャアセットを作るアセットを作ったとして。
-                - GfxTexBundles <- Converter<GfxTexBundle>(CustomCubeTexAsset{AssetRef<GfxTexBundle>[6] texs})
-                - というのでなんとかならんでもない。
-    - 要件
-        - 基本情報を返す
-            - どのアセットをなんのアセットに変換するか
-        - 渡されたアセットを別のアセットにコンバートをする
-        - 渡されたアセットを別のアセットにコンバートする処理の依存情報を返す
-    - もうちょっと具体的な要件
-        - アセットを別のアセットタイプに変換できるか判定する
-            - システム情報など出力データに必要な情報も一緒に渡される
-            - 判定結果に含めるもの
-                - 作成できるかどうかの真偽値
-                - ランタイムファイルを出力する場合はファイルパス情報
-                - 副産物として出力するアセットを0個以上
-                    - デバッグ情報バイナリなどがここに当てはまる
-                - 他のアセットも使う場合は依存アセット情報を0個以上
-            - ランタイムアセットの出力パスについて
-                - "Foo/Hoge.file" を指定した場合
-                - アセットシステム側で衝突しないようにパスが加工される "$(Plugin)/Foo/Hoge.file" 
-                - 最終出力先はハッシュパスになる "$(ProjectRoot)/.Cache/Adel.Asset/$(ハッシュパス)/$(依存情報パス).file
-                - ↑のフォルダに直接書き込むとビルド中にエラーが起きると中途半端なデータとなってしまうおそれがある。
-                    - なので　*.file.tmp という名前に書き込み、書き込みが終わったらアセットシステム側で *.file にリネームする。
-        - 指定のアセットの作成に必要な情報を返す
-            - 判定時に使ったアセットの情報もここで渡される
-            - 返す情報
-                - 依存情報
-                    - 依存アセット
-                    - 依存アセットコンバータ => バージョンが変わったら再ビルドする必要があるので
-                    - 依存文字列
-                        - エンディアン、ビット環境、実行モード、ビルドバージョンなどを元にコンバータが生成する任意の文字列
-                        - ハッシュ計算で使われる
-                - アセットコンバートタスク
-                    - 依存アセットのビルドタスクもここに含める
-
-- ResScnについて
-    - 前はResMdlと呼んでいたヤツ。ボーンの親子階層、プリミティブ、メッシュの表示フラグなどの情報を含むもの。
-    - カメラなどのアニメが必要になったらそれは ResCam や ResEnv など ResScn とは別の名前を付ける。
-
-- 考えられていない点
-    - ResShader を *.aemdl 単位で作ってしまってよいものか
-        - シェーダーのセットアップはプラットフォームによってはわりと処理時間がかかるのでできる限り共通化したほうがいいのか否か。
-        - aemat のアセット側コンバートパラメータで設定してしまおうか。
-    - ランタイムスクリプトのモデルコンポーネントに GfxMdlBundle アセットを指定する流れ
-        - ...
- 
 ## アセットシステムのアドオン検討　第2案
 
-第1案の枠を固めた後にUnity見たら非常にシンプルな印象を受けたのでもっとシンプルにしてみる。
+### 設計大枠
 
-第1案からの変更点
-- アセットアドオンはアセットファイルに限定する。
-    - 中間データクラスなどはアドオンと定義しなくてよい。DLL内にあるただのクラス。
-- ランタイムで扱うデータはリソースと呼ぶ。コンバート前＝アセット。コンバート後＝リソース。
-- ランタイムではリソースキー（ResourceKey）もしくはそれを派生したクラスを ResourceManager に渡すと欲しいリソースがもらえる。
-- ResourceKey はエディタでアセットをスクリプトのプロパティに適用したら、リソースキーを生成してそれを使ってプロパティを設定する。
-    - 詳しくは下の Texture の例を参照。
-- コンバータはアセットtoリソース（ConvertToAsset）とアセットto開発キット情報オブジェクト（ConvertToDevkitInfo）の機能を提供する。
-    - 入力のアセットタイプは1種類に限定。出力できるリソースや開発キット情報オブジェクトは複数対応して良い。
-- コンバータの依存関係周りの仕様大枠は第1案から継承。
-
-Texture
+// ランタイムの型
+Texture 
 StaticTexture : Texture
 
-MultiTextureAsset
-
-TgaFile
+// アセットタイプ
+TgaFile 
 
 TgaFileConverter
 - CanConvertToResource<AdelEngine.Graphics.Texture>(...)
@@ -529,3 +295,209 @@ public static class FileManager {
     public bytes[] GetBytes(FileKey aKey);
 }
 ```
+
+## グラフィックスのデータフロー例
+
+モデル(ModelSource)を作る
+- モデルはシーン(SceneGraph)とシーンが要するマテリアル設定(MaterialSource)が必要
+- マテリアル設定はシーンによって変わる（各マテリアル設定にどのマテリアルアセットを割り当てるか）
+- マテリアルアセットはコンバート時に必要なパラメータが求められる
+    - 特定のマテリアルではカラーの指定が求められたり、テクスチャを求められたり。
+
+### Fbx -> Scn(SceneGraph)
+
+[AssetType]FbxFile
+
+[ConvParam]FbxAssetSideConvertParam
+- GfxConvertPolicy ConvertPolicy; // コンバート方針 [自動, メモリ効率優先, IOアクセス効率優先]
+
+[ConverterDefine]FbxConverter
+- TypeInfo InputAssetType = FbxFile // 入力に使うアセットタイプ
+
+[Convert]FbxConverter.ConvertToDevkitInfo<TOutputType = SceneGraph, TDevkitInfoType = SceneGraphDevkitInfo>():
+- ConvertParam AssetSideConvertParam = FbxAssetSideConvertParam // アセット側で指定するコンバートパラメータ
+- ConvertParam ReferenceSideConvertParam = null // アセット参照側で指定するコンバートパラメータ
+
+### Aemat -> Mat(MaterialSource)
+
+[Class]MaterialSourceDevkitInfo
+- ...
+- AdditionalInfo
+    - GfxShd[] shaders; // 一緒に出力されたシェーダ
+    - GfxTex[] textures; // 一緒に出力されたテクスチャ
+    - GfxFileResourceKey[] textureResourceKeys; // 一緒に出力されたテクスチャのラインタイムアクセス用キー
+
+[Class]MaterialSourceConvertHint // アセット参照側からコンバータに渡すコンバートのヒント
+- int SkinningWeightCountMax // スキニングのウェイトの最大数
+
+[AssetType]AematFile
+
+[ConvParam]AematReferenceSideConvertParam
+- DynamicParams[] dynamicParams; // AematFileの内容によって決まる動的パラメータ
+
+[ConverterDefine]AematConverter
+- TypeInfo InputAssetType = AematFile
+
+[Convert]AematConvert.ConvertToDevkitInfo<TOutputType=MaterialSource, TDevkitInfoType = MaterialSourceDevkitInfo>
+- ConvertParam AssetSideConvertParam = null
+- ConvertParam ReferenceSideConvertParam = AematReferenceSideConvertParam
+
+[Class]StaticTextureDevkitInfo
+- ...
+- GfxFileResourceKey[] textureResourceKey;
+
+[AssetType]TgaFile
+
+[ConvParam]TgaAssetSideConvertParam
+- GfxConvertPolicy ConvertPolicy;
+- GfxTexFormat Format; // [圧縮sRGB, 圧縮Linear, 非圧縮sRGB, 非圧縮Linear]
+
+[Converter]TgaConverter
+- TypeInfo InputAssetType = TgaFile
+
+[Convert]TgaConverter.ConvertToDevkitInfo<TOutputType = StaticTexture, TDevkitInfoType=StaticTextureDevkitInfo>
+- ConvertParam AssetSideConvertParam = TgaAssetSideConvertParam
+- ConvertParam ReferenceSideConvertParam = null
+
+### Scn&Mat -> Mdl(ModelSource)
+
+[AssetType]AemdlFile
+- AssetRef<SceneGraph> scene;
+- Dictionary<string, AssetRef<MaterialSource>> materials;
+
+[Class]ModelSource
+
+[Converter]AemdlConverter
+- TypeInfo InputAssetType = AemdlFile
+
+[Convert]AemdlConverter.ConvertToResource<TOutputType = ModelSource>
+- ConvertParam AssetSideConvertParam = null
+- ConvertParam ReferenceSideConvertParam = null
+
+## アセットシステムのアドオン検討
+
+- アセットアドオン
+    - 概要
+        - アセットファイルを表すアドオン。
+        - アセットタイプ１種につき１つ作られる。
+        - FBXならFBXで１つ。
+    - 要件
+        - エディタ上から設定できるプロパティの情報を返す
+
+- アセットアドオンのプロパティ情報の例
+    - AssetParam （例：AemdlFile.SceneGraph)
+        - Name：SceneGraphAssetRef
+        - DisplayName：シーン
+        - Type：AssetRef<SceneGraphn>
+        - Value：Hoge.fbx
+    - 動的に変わる例（マテリアルセット） <- PropertyChangedイベントでパラメータを動的に変えることが可能
+        - Name：MaterialSourceSet
+        - DisplayName：マテリアル設定
+        - Type：Dictionary
+        - Visibility：True
+        - Value：
+            - ["Face"] <- マテリアルが増減しても設定が維持されるように名前をキーとする
+                - Name："Face"
+                - DisplayName："Face" <- シーンのマテリアル名
+                - Type：Dictionary
+                - Value：
+                    - ["MaterialSourceAssetRef"]
+                        - Name：MaterialSourceAssetRef
+                        - DisplayName："マテリアル"
+                        - Type：AssetRef<MaterialSource>
+                        - Value：Face.aemat
+                    - ["Params"]
+                        - Name：Params
+                        - DisplayName："パラメータ"
+                        - Type：Dictionary
+                        - Value：
+                            - ["Color"]
+                                - Name：Color
+                                - DisplayName：”Color"
+                                - Type：Color4
+                                - Value：(RGBA)
+                            - ["Texture"]
+                                - Name：Texture
+                                - DisplayName："Texture"
+                                - Type：AssetRef<Texture>
+                                - Value：Foo.tga
+```
+こうじゃなくて
+================================
+プロパティ 
+================================
+A.aemdl
+--------------------------------
++Basis
+   Scene            [Hoge.fbx  ]
++MaterialSetting
+  +Face
+     Material       [Face.aemat]
+    +Params
+       Color        [##########]
+       Texture      [Foo.tga   ]
+--------------------------------
+
+こうなるといいよね
+================================
+プロパティ 
+================================
+A.aemdl
+--------------------------------
++Basis
+   Scene            [Hoge.fbx  ]
++MaterialSetting
+  +Face
+     Material       [Face.aemat]
+       Color        [##########]
+       Texture      [Foo.tga   ]
+--------------------------------
+```
+
+- アセットコンバータアドオン
+    - 概要
+        - アセットをリソースに変換、また、アセットを内部クラス（開発キット用クラスオブジェクト）に変換する機能を提供するクラス
+            - 例： FbxFile を SceneGraph に変換する
+        - 入力は対応するアセットタイプ1種類に限定。出力可能な型は何個あってもよい。
+        - 2段階コンバートは考えないことにする。
+            - A <- B <- C
+            - 欲しい場面があまり想像できないのと、回避策はあるので。
+            - 例えばテクスチャ6枚使ってキューブマップテクスチャアセットを作るアセットを作ったとして。
+                - Texture <- Convert<Texture>(CustomCubeTexAsset{AssetRef<Texture>[6] texs})
+                - というのでなんとかならんでもない。
+    - 要件
+        - 基本情報を返す
+            - どのアセットタイプを入力として扱うか。
+        - 渡されたアセットを指定のリソースにコンバートできるかの判定＆実行。
+        - 渡されたアセットを指定のクラスオブジェクトにコンバートできるかの判定＆実行。
+    - もうちょっと具体的な要件
+        - アセットをリソースorクラスオブジェクトに変換できるか判定する
+            - システム情報など出力データに必要な情報も一緒に渡される
+            - 判定結果に含めるもの
+                - 作成できるかどうかの真偽値
+                - リソースを出力する場合はファイルパス情報
+                - 副産物として出力するアセットを0個以上
+                    - デバッグ情報バイナリなどがここに当てはまる
+                - 他のアセットも使う場合は依存アセット情報を0個以上
+            - リソースの出力パスについて
+                - "Foo/Hoge.file" を指定した場合
+                - アセットシステム側で衝突しないようにパスが加工される "$(Plugin)/Foo/Hoge.file" 
+                - 最終出力先はハッシュパスになる "$(ProjectRoot)/.Cache/Adel.Asset/$(ハッシュパス)/$(依存情報パス).file
+                - ↑のフォルダに直接書き込むとビルド中にエラーが起きると中途半端なデータとなってしまうおそれがある。
+                    - なので　*.file.tmp という名前に書き込み、書き込みが終わったらアセットシステム側で *.file にリネームする。
+        - 指定のリソースorクラスオブジェクトへの変換に必要な情報を返す
+            - 判定時に使ったアセットの情報もここで渡される
+            - 返す情報
+                - 依存情報
+                    - 依存アセット
+                    - 依存アセットコンバータ => バージョンが変わったら再ビルドする必要があるので
+                    - 依存文字列
+                        - エンディアン、ビット環境、実行モード、ビルドバージョンなどを元にコンバータが生成する任意の文字列
+                        - ハッシュ計算で使われる
+                - アセットコンバートタスク
+                    - 依存アセットのビルドタスクもここに含める
+ 
+- ランタイムでのリソース取得
+    - ランタイムではリソースキー（ResourceKey）もしくはそれを派生したクラスを ResourceManager に渡すと欲しいリソースがもらえる。
+    - ResourceKey はエディタでアセットをスクリプトのプロパティに適用したら、リソースキーを生成してそれを使ってプロパティを設定する。
+    - 詳しくは設計メモの Texture の例を参照。
