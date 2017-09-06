@@ -59,13 +59,13 @@
         - システムインクルードパスのリスト
         - 作業に使うフォルダのパス
             - $(ProjectRoot)/.Build/$(Plugin) => これ以下をどう使うかはプラグインの自由
-            - DevKitWinだとこういうフォルダを下に作る
+            - BuildKitWinだとこういうフォルダを下に作る
                 - /$(Platform)_$(BuildTarget)_$(BuildVersion)/Edt (エディットモード)
                 - /$(Platform)_$(BuildTarget)_$(BuildVersion)/App (アプリケーションモード)
                     - /Exec => 実行ファイルフォルダ（成果物置き場・起動時にCodeとData以下からコピーされる）
                     - /Code => コードビルド領域
                     - /Data => データコピー領域（エディットモードの.Cacheから直接リードするため空）
-                - 例: MyProject/.Build/Adel.DevKitWin/Win-Dx11_PC-Product_Ld
+                - 例: MyProject/.Build/Adel.BuildKitWin/Win-Dx11_PC-Product_Ld
 - ビルドした実行ファイルを起動する
 - 実行中の実行ファイルを停止する
 - ビルドした実行ファイルを発行（Publish）する
