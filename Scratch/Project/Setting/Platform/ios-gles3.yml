@@ -20,7 +20,7 @@ PlatformSetting:
             DisplayName: "Mac(iOS-emu)"
             
             # 使用するビルダー
-            Builder: "Adel.DevkitIos.BuilderXcode"
+            Builder: "Adel.BuildkitIos.BuilderXcode"
             
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -42,7 +42,7 @@ PlatformSetting:
             DisplayName: "iOS"
             
             # 使用するビルダー
-            Builder: "Adel.DevkitIos.BuilderXcode"
+            Builder: "Adel.BuildkitIos.BuilderXcode"
             
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -58,15 +58,15 @@ PlatformSetting:
     # Coreライブラリの定義
     CoreLib:   
         # 使用するCoreOsライブラリ
-        # ["Adel.DevkitIos.Os"(default)]
-        #CoreOs: "Adel.DevkitIos.Os"
+        # ["Adel.BuildkitIos.Os"(default)]
+        #CoreOs: "Adel.BuildkitIos.Os"
 
         # 使用するCoreGfxライブラリ
-        # ["Adel.DevkitIos.Gles300"(default), "Adel.DevkitIos.Metal"]
-        #CoreGfx: "Adel.DevkitIos.Gles300"
+        # ["Adel.BuildkitIos.Gles300"(default), "Adel.BuildkitIos.Metal"]
+        #CoreGfx: "Adel.BuildkitIos.Gles300"
 
         # 使用するCoreSndライブラリ
-        # ["Adel.DevkitIos.Snd.Al"(default)]
-        #CoreSnd: "Adel.DevkitIos.Al"
+        # ["Adel.BuildkitIos.Snd.Al"(default)]
+        #CoreSnd: "Adel.BuildkitIos.Al"
 
 # EOF

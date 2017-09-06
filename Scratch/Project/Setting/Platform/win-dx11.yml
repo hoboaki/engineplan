@@ -20,7 +20,7 @@ PlatformSetting:
             DisplayName: "PC（製品版）"
 
             # 使用するビルダー
-            Builder: "Adel.DevkitWin.VisualStudioBuilder"
+            Builder: "Adel.BuildkitWin.VisualStudioBuilder"
 
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -40,7 +40,7 @@ PlatformSetting:
             DisplayName: "PC（体験版）"
 
             # 使用するビルダー
-            Builder: "Adel.DevkitWin.BuilderVisualStudio"
+            Builder: "Adel.BuildkitWin.BuilderVisualStudio"
 
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -60,7 +60,7 @@ PlatformSetting:
             DisplayName: "PC（GPUプロファイル版）"
 
             # 使用するビルダー
-            Builder: "Adel.DevkitWin.BuilderVisualStudio"
+            Builder: "Adel.BuildkitWin.BuilderVisualStudio"
 
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -75,15 +75,15 @@ PlatformSetting:
     # Coreライブラリの定義
     CoreLib:
         # 使用するCoreOsライブラリ
-        # ["Adel.DevkitWin.Os"(default)]
-        #CoreOs: "Adel.DevkitWin.Os"
+        # ["Adel.BuildkitWin.Os"(default)]
+        #CoreOs: "Adel.BuildkitWin.Os"
 
         # 使用するCoreGfxライブラリ
-        # ["Adel.DevkitWin.Dx11"(default), "Adel.DevkitWin.Gl330"]
-        #CoreGfx: "Adel.DevkitWin.Dx11"
+        # ["Adel.BuildkitWin.Dx11"(default), "Adel.BuildkitWin.Gl330"]
+        #CoreGfx: "Adel.BuildkitWin.Dx11"
 
         # 使用するCoreSndライブラリ
-        # ["Adel.DevkitWin.Dxsnd"(default), "Adel.DevkitWin.Al"]
-        #CoreSnd: "Adel.DevkitWin.Dxsnd"
+        # ["Adel.BuildkitWin.Dxsnd"(default), "Adel.BuildkitWin.Al"]
+        #CoreSnd: "Adel.BuildkitWin.Dxsnd"
 
 # EOF
