@@ -270,7 +270,7 @@ AdkExt.DevkitWin.CoreGfxGl330.Binarizer.GlslToResShader(...)
 - ConvertParam AssetSideConvertParam = null
 - ConvertParam ReferenceSideConvertParam = null
 
-## アセットシステムのアドオン検討
+## アセットシステムのアドオン検討　第1案　→　不採用
 
 - アセットアドオン
     - 概要
@@ -411,8 +411,21 @@ A.aemdl
         - aemat のアセット側コンバートパラメータで設定してしまおうか。
     - ランタイムスクリプトのモデルコンポーネントに GfxMdlBundle アセットを指定する流れ
         - ...
+ 
+## アセットシステムのアドオン検討　第2案
 
-### 別案
+第1案の枠を固めた後にUnity見たら非常にシンプルな印象を受けたのでもっとシンプルにしてみる。
+
+第1案からの変更点
+- アセットアドオンはアセットファイルに限定する。
+    - 中間データクラスなどはアドオンと定義しなくてよい。DLL内にあるただのクラス。
+- ランタイムで扱うデータはリソースと呼ぶ。コンバート前＝アセット。コンバート後＝リソース。
+- ランタイムではリソースキー（ResourceKey）もしくはそれを派生したクラスを ResourceManager に渡すと欲しいリソースがもらえる。
+- ResourceKey はエディタでアセットをスクリプトのプロパティに適用したら、リソースキーを生成してそれを使ってプロパティを設定する。
+    - 詳しくは下の Texture の例を参照。
+- コンバータはアセットtoリソース（ConvertToAsset）とアセットto開発キット情報オブジェクト（ConvertToDevkitInfo）の機能を提供する。
+    - 入力のアセットタイプは1種類に限定。出力できるリソースや開発キット情報オブジェクトは複数対応して良い。
+- コンバータの依存関係周りの仕様大枠は第1案から継承。
 
 Texture
 StaticTexture : Texture
@@ -435,9 +448,9 @@ TgaFileConverter
 - AssetSideConvertParam
 - ReferenceSideConvertParam
 
-class HogeScript
+class HogeScript // ランタイムのスクリプトコード
 {
-    public Texture MyTex {get;set;}
+    public Texture MyTex {get;set;} // エディタのプロパティ欄にTextureを設定できる項目が追加される。
 }
 ScriptComponent:
     TypeName: "HogeScript"
@@ -531,6 +544,7 @@ ae::core::gfxapi (gfx_api?)
 - StaticTextureResource
 - ShaderResource
 - VertexAttributeResource
+- などといったクラス群。
 
 ae::gfx AdelEngine.Graphics
 - Model
@@ -565,6 +579,11 @@ public class ResourceKey {
 public class FileResourceKey {    
     public FileKey FileKey;
 }
+
+// メモ：
+// オリジナルの ResourceKey Resource ResourceRepos は
+// ランタイムスクリプトコードとして追加可能。（プラグインも同様）
+
 public class Graphics.GfxFileResourceKey : FileResourceKey {    
     public GfxResourceKind Kind;
     public string EntryName;
