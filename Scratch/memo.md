@@ -32,6 +32,23 @@ MyProject_170401-1120_Td_PC-Product_AB0926
 MyProject_170401-1120_Td_PC-Trial_AB0926
 ```
 
+# 用語
+
+- コード
+    - ネイティブコード NativeCode
+        - 製品にのるコード。(c++ objective-c)
+    - スクリプトコード ScriptCode
+        - 製品にのるコード。(limited-cs)
+    - 開発キットコード DevKitCode
+        - コマンドラインモードとエディットモードで動作するコード。（cs)
+- 実行モード
+    - エディットモード
+        - エディタと通信しながらゲームを実行するモード。
+    - アプリケーションモード
+        - エディタと通信せずゲームを実行するモード。
+- 公式○○（公式コード・公式プラグイン）
+    - AdelEngineチームが作成し提供するもの。
+
 ## 名前空間
 
 公式コードの名前空間。予約名扱いのためユーザーコードではこの名前空間以下にコードを書いてはいけない。
@@ -39,29 +56,26 @@ MyProject_170401-1120_Td_PC-Trial_AB0926
 C++
 
 - ae:: 共通コード層。いかなる環境でも通るコードを書くことを意識する層。
-- ap:: プラグインコード層。
-- apf:: プラグイン共通コード層。プラグインコードで使い回される共通コードを書く層。（例：OpenGLの実装など）
 
 
 C#
 
-- Ae Ap Apf  : スクリプトコードから参照できるコード置き場。(limited-cs)
-- Adk : スクリプトコードをのぞくC#コードから参照できるコード置き場。
-- AdkExt : プラグインによるAdk拡張。
+- AdelEngine : スクリプトコードから参照できるコード置き場。(limited-cs)
+    - Ae に略そうかと思った時期もあったが、C#なら名前空間は分かりやすさ重視だろう判断でフルネームにした。
+- Adk : 開発キットコード用コード置き場。（cs）
 
 - ae   adel engine
-- ap   adel engine plugin
-- apf  adel engine plugin foundation
 - adk  adel engine development kit
 
-NativeCode(c++,objective-c) ae::* ap_* apf_*
-ScriptCode(limited-cs) Ae.* Ap.* Apf.*
-DevkitCode(cs) Adk.* AdkExt.*
+NativeCode(c++,objective-c) ae::* ae_* (公式プラグインはこの形式) 
+ScriptCode(limited-cs) AdelEngine.*
+DevKitCode(cs) Adk.*
 
-Universalアセットのプラグイン構成
-::ap_cut_scene::ScenePlayer
-Ap.CutScene.ScenePlayer
-AdkExt.CutScene.AssetCutScene
+プラットフォーム非依存アセットのプラグイン構成
+::ae_cut_scene::ScenePlayer
+AdelEngine.CutScene.ScenePlayer
+Adk.CutScene.AssetCutScene
+※公式プラグインは名前空間がかぶることはないはずなので名前空間は分けない。
 
 ## 名前検討欄
 
@@ -79,6 +93,10 @@ AdkExt.CutScene.AssetCutScene
     - Final(Fn)
 - Version Control System (Vcs)
 - DirectX
-    - dx11
+    - dx11 Dx11
 - OpenGL
     - gl330 (version 3.3) gles300(version 3.0)
+    - Gl330 Gles300
+- Vulkan
+    - vk
+    - Vk
