@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{40355C67-9083-47F5-8F44-517393F5697D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BFFF9B1D-9137-4893-AE2D-B65465D0914E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Adel.Adk</RootNamespace>
-    <AssemblyName>AdelDevkit</AssemblyName>
+    <RootNamespace>AdelCommand</RootNamespace>
+    <AssemblyName>AdelCommand</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Livet">
-      <HintPath>..\..\External\Livet\NET4.5\Livet.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,21 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Devkit.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="PluginInterface\IBuildSystem.cs" />
-    <Compile Include="PluginInterface\IAddon.cs" />
-    <Compile Include="PluginInterface\IPlugin.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskSystem\Task.cs" />
-    <Compile Include="TaskSystem\Command.cs" />
-    <Compile Include="TaskSystem\CommandCtrl.cs" />
-    <Compile Include="TaskSystem\CommandExecArg.cs" />
-    <Compile Include="TaskSystem\TaskCreateInfo.cs" />
-    <Compile Include="TaskSystem\TaskKind.cs" />
-    <Compile Include="TaskSystem\TaskManager.cs" />
-    <Compile Include="TaskSystem\TaskNode.cs" />
-    <Compile Include="TaskSystem\TaskState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

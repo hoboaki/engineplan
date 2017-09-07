@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adel.Adk
+namespace AdelDevKit
 {
     /// <summary>
     /// ログ出力を扱うクラス。

@@ -35,11 +35,11 @@
     - AdelEngine.Graphics.Shader
 
 ```c#
-Adk.DevKit.ActivePlatform.GraphicsBinarizer.ConvertTexture(StaticTextureInfo aInfo)
-Adk.DevKit.ActivePlatform.GraphicsBinarizer.ConvertGlslShader(env,geom,vert,frag,comp)
+AdelDevKit.DevKit.ActivePlatform.GraphicsBinarizer.ConvertTexture(StaticTextureInfo aInfo)
+AdelDevKit.DevKit.ActivePlatform.GraphicsBinarizer.ConvertGlslShader(env,geom,vert,frag,comp)
 
-// class CoreGfxGl330 : Adk.PluginInterface.ICoreLibGfx
-Adk.BuildKitWin.CoreGfxGl330.Binarizer.ConvertGlslShader(...)
+// class CoreGfxGl330 : AdelDevKit.PluginInterface.ICoreLibGfx
+AdelDevKit.BuildKitWin.CoreGfxGl330.Binarizer.ConvertGlslShader(...)
 ```
 
 ## 用語
@@ -108,7 +108,7 @@ TgaFileConverter
         object ResourceKey; (GfxFileResourceKey)
         object DevKitInfo; null
     }
-- ConvertToDevKitInfo<Adk.Graphics.TextureInfo>(...) ->
+- ConvertToDevKitInfo<AdelDevKit.Graphics.TextureInfo>(...) ->
     Result {
         object Object; (TextureInfo)
     }
@@ -187,7 +187,7 @@ AdelEngine.Graphics
 - Shader (RO)
 ※ R/W なクラスにインスタンス化するものは クラス名＋Source をつけてみる方針。
 
-Adk.Graphics
+AdelDevKit.Graphics
 - ModelSourceInfo
 - SceneGraphInfo
 - MaterialSourceInfo

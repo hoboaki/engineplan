@@ -62,19 +62,19 @@ C#
 
 - AdelEngine : スクリプトコードから参照できるコード置き場。(limited-cs)
     - Ae に略そうかと思った時期もあったが、C#なら名前空間は分かりやすさ重視だろう判断でフルネームにした。
-- Adk : 開発キットコード用コード置き場。（cs）
+- AdelDevKit : 開発キットコード用コード置き場。（cs）
 
 - ae   adel engine
 - adk  adel engine development kit
 
 NativeCode(c++,objective-c) ae::* ae_* (公式プラグインはこの形式) 
 ScriptCode(limited-cs) AdelEngine.*
-DevKitCode(cs) Adk.*
+DevKitCode(cs) AdelDevKit.*
 
 プラットフォーム非依存アセットのプラグイン構成
 ::ae_cut_scene::ScenePlayer
 AdelEngine.CutScene.ScenePlayer
-Adk.CutScene.AssetCutScene
+AdelDevKit.CutScene.AssetCutScene
 ※公式プラグインは名前空間がかぶることはないはずなので名前空間は分けない。
 
 ## 名前検討欄
