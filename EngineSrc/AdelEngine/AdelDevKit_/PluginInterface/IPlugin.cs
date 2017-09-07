@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adel.Adk.PluginInterface
+namespace AdelDevKit.PluginInterface
 {
     /// <summary>
     /// プラグインインターフェース。
@@ -21,6 +21,6 @@ namespace Adel.Adk.PluginInterface
         /// </summary>
         /// <param name="aDevkit"></param>
         /// <returns></returns>
-        IEnumerable<IAddon> CreateAddons(Devkit aDevkit);
+        IEnumerable<IAddon> CreateAddons(DevKit_ aDevkit);
     }
 }

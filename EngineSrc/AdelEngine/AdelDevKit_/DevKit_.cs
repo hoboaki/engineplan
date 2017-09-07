@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Adel.Adk.PluginInterface
+namespace AdelDevKit
 {
     /// <summary>
-    /// アドオン（追加機能）の基底インターフェース。
+    /// 開発キットのあらゆるクラスへのアクセスを提供するクラス。
     /// </summary>
-    public interface IAddon
+    public class DevKit_
     {
     }
 }
