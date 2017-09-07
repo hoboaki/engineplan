@@ -21,6 +21,6 @@ namespace AdelDevKit.PluginInterface
         /// </summary>
         /// <param name="aDevkit"></param>
         /// <returns></returns>
-        IEnumerable<IAddon> CreateAddons(DevKit_ aDevkit);
+        IEnumerable<IAddon> CreateAddons(DevKit aDevkit);
     }
 }

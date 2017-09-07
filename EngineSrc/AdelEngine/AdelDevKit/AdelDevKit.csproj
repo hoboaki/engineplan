@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DevKit_.cs" />
+    <Compile Include="DevKit.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="PluginInterface\IBuildSystem.cs" />
     <Compile Include="PluginInterface\IAddon.cs" />

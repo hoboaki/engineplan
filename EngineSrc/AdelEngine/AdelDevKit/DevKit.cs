@@ -9,7 +9,7 @@ namespace AdelDevKit
     /// <summary>
     /// 開発キットのあらゆるクラスへのアクセスを提供するクラス。
     /// </summary>
-    public class DevKit_
+    public class DevKit
     {
     }
 }
