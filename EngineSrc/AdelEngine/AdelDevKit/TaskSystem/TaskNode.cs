@@ -17,7 +17,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary
-        public TaskNode(Task aTask, Action<CommandCtrl> aCommandCtrlCallback)
+        public TaskNode(TaskOld aTask, Action<CommandCtrl> aCommandCtrlCallback)
         {
             Task = aTask;
 
@@ -192,7 +192,7 @@ namespace AdelDevKit.TaskSystem
         TaskState _State = TaskState.Wait;
 
         //------------------------------------------------------------------------------
-        Task Task { get; set; }
+        TaskOld Task { get; set; }
         CommandCtrl _CommandCtrl;
         TaskNode[] _Nodes;
 

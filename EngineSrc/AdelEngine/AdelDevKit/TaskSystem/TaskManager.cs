@@ -27,7 +27,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// タスクの追加。
         /// </summary>
-        public void Add(Task aTask)
+        public void Add(TaskOld aTask)
         {
             // TaskNode化していく
             Action<CommandCtrl> commandCtrlAddCallback = (CommandCtrl aCommandCtrl) =>

@@ -16,7 +16,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public CommandCtrl(Command aCommand)
+        public CommandCtrl(Task aCommand)
         {
             Command = aCommand;
         }
@@ -25,7 +25,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// 対象となるコマンド。
         /// </summary>
-        public Command Command { get; private set; }
+        public Task Command { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
