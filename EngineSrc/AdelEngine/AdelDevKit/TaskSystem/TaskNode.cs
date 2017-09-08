@@ -185,7 +185,7 @@ namespace AdelDevKit.TaskSystem
         /// 全ての子コマンドが終了するのを待つ。
         /// </summary>
         /// <exception cref="ChildTaskFailedException">いずれかの子タスクの処理が失敗していたら投げられる。</exception>
-        public void WaitAllChildTaskDone(AutoResetEvent aEvent)
+        public void WaitAllChildTaskDone(AutoResetEvent aEvent, Action aWaitStartedCallback, Action aWaitFinishedCallback)
         {
             // メモ：
             // この関数は１TaskNodeにつき同時に１つしか呼ばれないという前提で実装する
@@ -234,7 +234,9 @@ namespace AdelDevKit.TaskSystem
             // 待機
             if (!isSkipWait)
             {
+                aWaitStartedCallback();
                 aEvent.WaitOne();
+                aWaitFinishedCallback();
                 _FinishedNodes.CollectionChanged -= eventHandler;
             }
 

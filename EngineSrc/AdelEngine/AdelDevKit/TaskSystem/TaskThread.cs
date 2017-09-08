@@ -20,13 +20,47 @@ namespace AdelDevKit.TaskSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// 新しい子タスクを追加する関数。
+        /// </summary>
+        public delegate void PushChildTaskFunc(TaskNode aChildTask);
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 子タスク待ち開始時のコールバック関数。
+        /// </summary>
+        public delegate void ChildTaskWaitStartedCallback();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 子タスク待ち終了時のコールバック関数。
+        /// </summary>
+        public delegate void ChildTaskWaitFinishedCallback();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public TaskThread(PullNextTaskFunc aPullNextTaskFunc)
+        public TaskThread(
+            PullNextTaskFunc aPullNextTaskFunc, 
+            PushChildTaskFunc aPushChildTaskFunc, 
+            ChildTaskWaitStartedCallback aWaitStartedCallback, 
+            ChildTaskWaitFinishedCallback aWaitFinishedCallback
+            )
         {
             _PullNextTaskFunc = aPullNextTaskFunc;
+            _PushChildTaskFunc = aPushChildTaskFunc;
+            _WaitStartedCallback = aWaitStartedCallback;
+            _WaitFinishedCallback = aWaitFinishedCallback;
             _Thread = new Thread(ThreadMain);
         }
+
+        //------------------------------------------------------------------------------
+        PullNextTaskFunc _PullNextTaskFunc;
+        PushChildTaskFunc _PushChildTaskFunc;
+        ChildTaskWaitStartedCallback _WaitStartedCallback;
+        ChildTaskWaitFinishedCallback _WaitFinishedCallback;
+        Thread _Thread;
+        AutoResetEvent _WakeEvent = new AutoResetEvent(false); // 起動用イベント。最初は寝ている状態にしたいのでfalseで初期化。
         
         //------------------------------------------------------------------------------
         /// <summary>
@@ -45,14 +79,36 @@ namespace AdelDevKit.TaskSystem
                     break;
                 }
 
+                // 実行引数を作成
+                TaskExecArg.ExecChildTaskFunc execChildTaskFunc = (aNewTask) =>
+                {
+                    // タスクノードを作成
+                    var childNode = new TaskNode(aNewTask, next.TaskDepth + 1);
+
+                    // 親ノードに登録
+                    next.AddChildTask(childNode);
+
+                    // タスクマネージャに登録
+                    _PushChildTaskFunc(childNode);
+                };
+                TaskExecArg.WaitAllChildTaskDoneFunc waitAllChildTaskDoneFunc = () =>
+                {
+                    Action waitStartedCallback = () => { _WaitStartedCallback(); };
+                    Action waitFinishedCallback = () => { _WaitFinishedCallback(); };
+                    next.WaitAllChildTaskDone(
+                        _WakeEvent, 
+                        waitStartedCallback, 
+                        waitFinishedCallback
+                        );
+                };
+
                 // 実行
-                //next.Execute();
+                next.Execute(new TaskExecArg(
+                    new Logger(), // 仮コード
+                    execChildTaskFunc,
+                    waitAllChildTaskDoneFunc
+                    ));
             }
         }
-
-        //------------------------------------------------------------------------------
-        PullNextTaskFunc _PullNextTaskFunc;
-        Thread _Thread;
-        AutoResetEvent _WakeEvent = new AutoResetEvent(false); // 起動用イベント。最初は寝ている状態にしたいのでfalseで初期化。
     }
 }
