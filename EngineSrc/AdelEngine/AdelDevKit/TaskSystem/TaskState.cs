@@ -13,11 +13,6 @@ namespace AdelDevKit.TaskSystem
     public enum TaskState
     {
         /// <summary>
-        /// 待機中でまだ実行できない状態。
-        /// </summary>
-        Wait,
-
-        /// <summary>
         /// 実行準備ができている状態。
         /// </summary>
         Prepared,

@@ -14,11 +14,38 @@ namespace AdelDevKit.TaskSystem
     {
         //------------------------------------------------------------------------------
         /// <summary>
+        /// 子タスク実行関数。
+        /// </summary>
+        internal delegate void ExecChildTaskFunc(Task aTask);
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 子タスク終了待機関数。
+        /// </summary>
+        internal delegate void WaitAllChildTaskDoneFunc();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public TaskExecArg(Logger aLogger)
+        internal TaskExecArg(Logger aLogger, ExecChildTaskFunc aExecChildTaskFunc, WaitAllChildTaskDoneFunc aWaitAllChildTaskDoneFunc)
         {
+            if (aLogger == null)
+            {
+                throw new ArgumentNullException(nameof(aLogger));
+            }
+            if (aExecChildTaskFunc == null)
+            {
+                throw new ArgumentNullException(nameof(aExecChildTaskFunc));
+            }
+            if (aWaitAllChildTaskDoneFunc == null)
+            {
+                throw new ArgumentNullException(nameof(aWaitAllChildTaskDoneFunc));
+            }
+
             _Logger = aLogger;
+            _ExecChildTaskFunc = aExecChildTaskFunc;
+            _WaitAllChildTaskDoneFunc = aWaitAllChildTaskDoneFunc;
         }
 
         //------------------------------------------------------------------------------
@@ -29,6 +56,10 @@ namespace AdelDevKit.TaskSystem
         Logger _Logger;
 
         //------------------------------------------------------------------------------
+        ExecChildTaskFunc _ExecChildTaskFunc;
+        WaitAllChildTaskDoneFunc _WaitAllChildTaskDoneFunc;
+
+        //------------------------------------------------------------------------------
         /// <summary>
         /// 子タスクを追加し非同期に処理を開始する。
         /// </summary>
@@ -37,6 +68,7 @@ namespace AdelDevKit.TaskSystem
         /// </remarks>
         public void ExecChildTaskAsync(Task aTask)
         {
+            _ExecChildTaskFunc(aTask);
         }
 
         //------------------------------------------------------------------------------
@@ -45,6 +77,7 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         public void WaitAllChildTaskDone()
         {
+            _WaitAllChildTaskDoneFunc();
         }
     }
 }

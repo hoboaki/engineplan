@@ -17,62 +17,9 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary
-        public TaskNode(TaskOld aTask, Action<CommandCtrl> aCommandCtrlCallback)
+        public TaskNode(Task aTask)
         {
             Task = aTask;
-
-            switch (aTask.Kind)
-            {
-                case TaskKind.Single:
-                    _CommandCtrl = new CommandCtrl(aTask.TaskCommand);
-                    _CommandCtrl.PropertyChanged += CommandCtrl_PropertyChanged;
-                    aCommandCtrlCallback(_CommandCtrl);
-                    break;
-
-                case TaskKind.MultiSerial:
-                    {
-                        // 子ノード作成
-                        _Nodes = aTask.ChildTasks.Select(task =>
-                        {
-                            var newNode = new TaskNode(task, aCommandCtrlCallback);
-                            newNode.PropertyChanged += ChildNode_PropertyChanged_ForSelfStateUpdate;
-                            return newNode;
-                        }).ToArray();
-
-                        // １つ前のノードが完了したら次のノードをPrepareにするコールバックを登録
-                        for (int i = 1; i < _Nodes.Length; ++i)
-                        {
-                            var prevNode = _Nodes[i - 1];
-                            var nextNode = _Nodes[i];
-                            PropertyChangedEventHandler eh = (sender, e) =>
-                            {
-                                if (e.PropertyName == nameof(TaskNode.State))
-                                {
-                                    switch (prevNode.State)
-                                    {
-                                        case TaskState.Successed:
-                                            nextNode.Prepare();
-                                            break;
-                                    }
-                                }
-                            };
-                            prevNode.PropertyChanged += eh;
-                        }
-                    }
-                    break;
-
-                case TaskKind.MultiParallel:
-                    {
-                        // 子ノード作成
-                        _Nodes = aTask.ChildTasks.Select(task =>
-                        {
-                            var newNode = new TaskNode(task, aCommandCtrlCallback);
-                            newNode.PropertyChanged += ChildNode_PropertyChanged_ForSelfStateUpdate;
-                            return newNode;
-                        }).ToArray();
-                    }
-                    break;
-            }
         }
 
         //------------------------------------------------------------------------------
@@ -93,47 +40,16 @@ namespace AdelDevKit.TaskSystem
                 }
                 switch (value)
                 {
-                    case TaskState.Wait:
-                        throw new InvalidOperationException();
-
-                    case TaskState.Prepared:
-                        // 待機状態以外からの呼び出しは不正
-                        if (_State != TaskState.Wait)
-                        {
-                            throw new InvalidOperationException();
-                        }
-                        _State = value;
-
-                        // 子に通知
-                        switch (Task.Kind)
-                        {
-                            case TaskKind.Single:
-                                _CommandCtrl.Prepare();
-                                break;
-
-                            case TaskKind.MultiSerial:
-                                // 先頭だけ
-                                _Nodes[0].Prepare();
-                                break;
-
-                            case TaskKind.MultiParallel:
-                                // 全て
-                                foreach (var node in _Nodes)
-                                {
-                                    node.Prepare();
-                                }
-                                break;
-                        }
-                        break;
-
                     case TaskState.Executed:
                         // 何もしない
                         _State = value;
+                        RaisePropertyChanged(nameof(State));
                         break;
 
                     case TaskState.Successed:
                         // 何もしない
                         _State = value;
+                        RaisePropertyChanged(nameof(State));
                         break;
 
                     case TaskState.Failed:
@@ -143,70 +59,43 @@ namespace AdelDevKit.TaskSystem
                             throw new InvalidOperationException();
                         }
                         _State = value;
+                        RaisePropertyChanged(nameof(State));
 
                         // 子にキャンセル通知
-                        switch (Task.Kind)
+                        foreach (var node in _PreparedNodes.ToArray())
                         {
-                            case TaskKind.Single:
-                                break;
-
-                            case TaskKind.MultiSerial:
-                            case TaskKind.MultiParallel:
-                                foreach (var node in _Nodes)
-                                {
-                                    node.Cancel();
-                                }
-                                break;
+                            node.Cancel();
                         }
                         break;
 
                     case TaskState.Canceled:
                         // 特定状態以外からの呼び出しは不正
-                        if (_State != TaskState.Wait && _State != TaskState.Prepared)
+                        switch (_State)
                         {
-                            throw new InvalidOperationException();
+                            case TaskState.Prepared:
+                                break;
+
+                            default:
+                                throw new InvalidOperationException();
                         }
                         _State = value;
-
+                        RaisePropertyChanged(nameof(State));
 
                         // 子に通知
-                        switch (Task.Kind)
+                        foreach (var node in _PreparedNodes.ToArray())
                         {
-                            case TaskKind.Single:
-                                _CommandCtrl.Cancel();
-                                break;
-
-                            case TaskKind.MultiSerial:
-                            case TaskKind.MultiParallel:
-                                // 全て
-                                foreach (var node in _Nodes)
-                                {
-                                    node.Cancel();
-                                }
-                                break;
+                            node.Cancel();
                         }
                         break;
                 }
             }
         }
-        TaskState _State = TaskState.Wait;
+        TaskState _State = TaskState.Prepared;
 
         //------------------------------------------------------------------------------
-        TaskOld Task { get; set; }
-        CommandCtrl _CommandCtrl;
-        TaskNode[] _Nodes;
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 実行準備状態にする。
-        /// </summary>
-        public void Prepare()
-        {
-            if (State == TaskState.Wait)
-            {
-                State = TaskState.Prepared;
-            }
-        }
+        Task Task { get; set; }
+        List<TaskNode> _PreparedNodes = new List<TaskNode>();
+        List<TaskNode> _ExecutedNodes = new List<TaskNode>(); // 実行もしくはキャンセルされたらこちらに移動する。
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -216,82 +105,9 @@ namespace AdelDevKit.TaskSystem
         {
             switch (State)
             {
-                case TaskState.Wait:
                 case TaskState.Prepared:
                     State = TaskState.Canceled;
                     break;
-            }
-        }
-
-        //------------------------------------------------------------------------------
-        void CommandCtrl_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(CommandCtrl.State))
-            {
-                switch (_CommandCtrl.State)
-                {
-                    case TaskState.Prepared:
-                        // 何もしない
-                        break;
-
-                    case TaskState.Executed:
-                        // 自身に反映
-                        State = TaskState.Executed;
-                        break;
-
-                    case TaskState.Successed:
-                        // 自身に反映
-                        State = TaskState.Successed;
-                        break;
-
-                    case TaskState.Failed:
-                        // 自身に反映
-                        State = TaskState.Failed;
-                        break;
-
-                    case TaskState.Canceled:
-                        // 何もしない
-                        break;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-        }
-
-        //------------------------------------------------------------------------------
-        void ChildNode_PropertyChanged_ForSelfStateUpdate(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(State))
-            {
-                switch (State)
-                {
-                    case TaskState.Prepared:
-                        // 何もしない
-                        break;
-
-                    case TaskState.Executed:
-                        // 自身に反映
-                        State = TaskState.Executed;
-                        break;
-
-                    case TaskState.Successed:
-                        // 自身に反映
-                        State = TaskState.Successed;
-                        break;
-
-                    case TaskState.Failed:
-                        // 自身に反映
-                        State = TaskState.Failed;
-                        break;
-
-                    case TaskState.Canceled:
-                        // 何もしない
-                        break;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
             }
         }
     }
