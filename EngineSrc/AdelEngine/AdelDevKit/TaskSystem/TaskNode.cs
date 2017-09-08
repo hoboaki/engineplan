@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AdelDevKit.TaskSystem
@@ -11,16 +14,27 @@ namespace AdelDevKit.TaskSystem
     /// <summary>
     /// １つのタスクを扱う制御クラス。
     /// </summary>
-    public class TaskNode : Livet.NotificationObject
+    internal class TaskNode : Livet.NotificationObject
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// コンストラクタ。
         /// </summary
-        public TaskNode(Task aTask)
+        /// <param name="aTaskDepth">タスクの深さ。 <see cref="TaskDepth"/> </param>
+        public TaskNode(Task aTask, int aTaskDepth)
         {
             Task = aTask;
+            TaskDepth = aTaskDepth;
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの深さ。
+        /// </summary>
+        /// <remarks>
+        /// ルートタスクなら0。子タスクなら1。孫タスクなら2... というように数字が増えていきます。
+        /// </remarks>
+        public int TaskDepth { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -91,11 +105,28 @@ namespace AdelDevKit.TaskSystem
             }
         }
         TaskState _State = TaskState.Prepared;
-
+        
         //------------------------------------------------------------------------------
         Task Task { get; set; }
-        List<TaskNode> _PreparedNodes = new List<TaskNode>();
-        List<TaskNode> _ExecutedNodes = new List<TaskNode>(); // 実行もしくはキャンセルされたらこちらに移動する。
+        ObservableCollection<TaskNode> _PreparedNodes = new ObservableCollection<TaskNode>(); // 新しいノードはまずここに格納。
+        ObservableCollection<TaskNode> _ExecutedNodes = new ObservableCollection<TaskNode>(); // 実行中はこちらに格納。
+        ObservableCollection<TaskNode> _FinishedNodes = new ObservableCollection<TaskNode>(); // 何かしらの理由で終了したものはここに格納。
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 実行する。
+        /// </summary>
+        public void Execute(TaskExecArg aArg)
+        {
+            lock (this)
+            {
+                if (State == TaskState.Prepared)
+                {
+                    State = TaskState.Executed;
+                    this.Task.CreateInfo.Action(aArg);
+                }
+            }
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -103,11 +134,114 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         public void Cancel()
         {
-            switch (State)
+            lock (this)
             {
-                case TaskState.Prepared:
-                    State = TaskState.Canceled;
-                    break;
+                switch (State)
+                {
+                    case TaskState.Prepared:
+                        State = TaskState.Canceled;
+                        break;
+                }
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 子タスクを追加する。
+        /// </summary>
+        public void AddChildTask(TaskNode aTaskNode)
+        {
+            lock (this)
+            {
+                aTaskNode.PropertyChanged += ChildTaskNode_PropertyChanged;
+                _PreparedNodes.Add(aTaskNode);
+            }
+        }
+        void ChildTaskNode_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var childNode = (TaskNode)sender;
+            if (e.PropertyName == nameof(State))
+            {
+                // 状態に合わせて移動
+                lock (this)
+                {
+                    if (childNode.State == TaskState.Executed)
+                    {
+                        _PreparedNodes.Remove(childNode);
+                        _ExecutedNodes.Add(childNode);
+                    }
+                    else
+                    {
+                        // ここは１つのChildNodeにつき1回しかこないはず。
+                        _ExecutedNodes.Remove(childNode);
+                        _FinishedNodes.Add(childNode);
+                    }
+                }
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 全ての子コマンドが終了するのを待つ。
+        /// </summary>
+        /// <exception cref="ChildTaskFailedException">いずれかの子タスクの処理が失敗していたら投げられる。</exception>
+        public void WaitAllChildTaskDone(AutoResetEvent aEvent)
+        {
+            // メモ：
+            // この関数は１TaskNodeにつき同時に１つしか呼ばれないという前提で実装する
+
+            // 完了待ち関数
+            NotifyCollectionChangedEventHandler eventHandler = (aSender, aArgs) =>
+            {
+                // 追加じゃなければ無視
+                if (aArgs.Action != NotifyCollectionChangedAction.Add)
+                {
+                    return;
+                }
+
+                // 全完了しているか確認
+                bool isCompleted = false;
+                lock (this)
+                {
+                    if (_PreparedNodes.Count == 0 && _ExecutedNodes.Count == 0)
+                    {
+                        isCompleted = true;
+                    }
+                }
+
+                // 全完了しているならスレッドを起こす
+                if (isCompleted)
+                {
+                    aEvent.Set();
+                }
+            };
+
+            // 既に全てのコマンドが終わっているなら待機をスキップ
+            // そうじゃない場合は待ちイベントを開始する
+            bool isSkipWait = false;
+            lock (this)
+            {
+                if (_PreparedNodes.Count == 0 && _ExecutedNodes.Count == 0)
+                {
+                    isSkipWait = true;
+                }
+                else
+                {
+                    _FinishedNodes.CollectionChanged += eventHandler;
+                }
+            }
+
+            // 待機
+            if (!isSkipWait)
+            {
+                aEvent.WaitOne();
+                _FinishedNodes.CollectionChanged -= eventHandler;
+            }
+
+            // 子タスクが失敗しているものがあれば例外を投げる
+            if (_FinishedNodes.Where(child => child.State == TaskState.Canceled).Count() != 0)
+            {
+                throw new ChildTaskFailedException();
             }
         }
     }

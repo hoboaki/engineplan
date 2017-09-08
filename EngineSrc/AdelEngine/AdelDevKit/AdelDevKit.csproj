@@ -58,6 +58,7 @@
     <Compile Include="TaskSystem\TaskManager.cs" />
     <Compile Include="TaskSystem\TaskNode.cs" />
     <Compile Include="TaskSystem\TaskState.cs" />
+    <Compile Include="TaskSystem\TaskThread.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
