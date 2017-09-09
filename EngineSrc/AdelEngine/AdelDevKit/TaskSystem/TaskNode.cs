@@ -267,8 +267,8 @@ namespace AdelDevKit.TaskSystem
                 _FinishedNodes.CollectionChanged -= eventHandler;
             }
 
-            // 子タスクが失敗しているものがあれば例外を投げる
-            if (_FinishedNodes.Where(child => child.State == TaskState.Canceled).Count() != 0)
+            // 子タスクで成功していないものがあれば例外を投げる
+            if (_FinishedNodes.Where(child => child.State != TaskState.Successed).Count() != 0)
             {
                 throw new ChildTaskFailedException();
             }
