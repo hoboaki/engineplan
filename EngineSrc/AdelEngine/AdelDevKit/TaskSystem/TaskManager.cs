@@ -12,6 +12,10 @@ namespace AdelDevKit.TaskSystem
     /// <summary>
     /// タスクを実行管理するクラス。
     /// </summary>
+    /// <remarks>
+    /// 全ての <see cref="Task"/> の実行を管理するクラスです。
+    /// 追加されたタスクは優先順位を考慮しつつできる限り並列に実行します。
+    /// </remarks>
     public class TaskManager
     {
         //------------------------------------------------------------------------------
@@ -20,8 +24,19 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         public TaskManager()
         {
+            // 初期設定
             _ParallelCount = 8; // 暫定数
             _SleepThreadCount = 0;
+
+            // タスクノード管理クラス作成
+            var nodeManager = new List<TaskSystem.TaskNodeManager>();
+            nodeManager.Add(new TaskSystem.TaskNodeManager(TaskCategory.VcsProcess));
+            nodeManager.Add(new TaskSystem.TaskNodeManager(TaskCategory.BatchProcess));
+            nodeManager.Add(new TaskSystem.TaskNodeManager(TaskCategory.AssetBuild));
+            nodeManager.Add(new TaskSystem.TaskNodeManager(TaskCategory.ExecutableFileBuild));
+            nodeManager.ForEach((x) => _NodeManagers.Add(x.Category, x));
+
+            // スレッド作成
             for (int i = 0; i < _ParallelCount; ++i)
             {
                 CreateActiveTaskThread();
@@ -32,11 +47,11 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// タスクの追加。
         /// </summary>
-        public void Add(Task aTask)
+        internal void Add(Task aTask, TaskCategory aCategory)
         {
             // TaskNode化して追加
             int taskDepth = 0;
-            AddTaskNode(new TaskNode(aTask, taskDepth));
+            AddTaskNode(new TaskNode(aTask, aCategory, taskDepth));
         }
 
         //------------------------------------------------------------------------------
@@ -49,8 +64,7 @@ namespace AdelDevKit.TaskSystem
         //------------------------------------------------------------------------------
         int _ParallelCount; // 並列実行数。
         int _SleepThreadCount; // _ActiveTaskThreads の中でスリープ中のスレッド数。
-        ObservableCollection<TaskNode> _PreparedTaskNodes = new ObservableCollection<TaskNode>();
-        ObservableCollection<TaskNode> _ExecutedTaskNodes = new ObservableCollection<TaskNode>();
+        Dictionary<TaskCategory, TaskNodeManager> _NodeManagers = new Dictionary<TaskCategory, TaskNodeManager>();
         List<TaskThread> _ActiveThreads = new List<TaskThread>();
         List<AutoResetEvent> _ActiveWaitEvents = new List<AutoResetEvent>();
         List<SuspendInfo> _SuspendInfos = new List<SuspendInfo>();
@@ -61,7 +75,9 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         void CreateActiveTaskThread()
         {
-            _ActiveThreads.Add(new TaskThread(PullNextTaskFunc, PushChildTaskFunc, ChildTaskWaitStartedCallback, ChildTaskWaitFinishedCallback));
+            var thread = new TaskThread(PullNextTaskFunc, PushChildTaskFunc, ChildTaskWaitStartedCallback, ChildTaskWaitFinishedCallback);
+            _ActiveThreads.Add(thread);
+            thread.Start();
         }
 
         //------------------------------------------------------------------------------
@@ -72,7 +88,7 @@ namespace AdelDevKit.TaskSystem
         {
             lock (this)
             {
-                _PreparedTaskNodes.Add(aTaskNode);
+                _NodeManagers[aTaskNode.Category].Add(aTaskNode);
 
                 // イベント待ちしているスレッドがあれば起こす
                 AutoResetEvent[] wakeEvents;
@@ -112,11 +128,18 @@ namespace AdelDevKit.TaskSystem
                     else
                     {
                         // 既にあるタスクを取得して返す
-                        if (0 < _PreparedTaskNodes.Count)
+                        foreach (var nodeManager in _NodeManagers)
                         {
-                            result = _PreparedTaskNodes[0];
-                            _PreparedTaskNodes.RemoveAt(0);
-                            _ExecutedTaskNodes.Add(result);
+                            result = nodeManager.Value.PullNextTask();
+                            if (result != null)
+                            {
+                                break;
+                            }
+                        }
+
+                        // タスクが取得できたら while ループから抜けてタスクの実行に移る
+                        if (result != null)
+                        {
                             break;
                         }
 

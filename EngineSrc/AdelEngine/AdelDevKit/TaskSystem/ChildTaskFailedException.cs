@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdelDevKit.TaskSystem
 {
+    //------------------------------------------------------------------------------
     /// <summary>
-    /// 子タスクが
+    /// 子タスクが失敗したときに投げられる例外。
     /// </summary>
     class ChildTaskFailedException : Exception
     {

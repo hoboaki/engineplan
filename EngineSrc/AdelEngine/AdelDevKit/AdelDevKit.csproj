@@ -53,10 +53,12 @@
     <Compile Include="TaskSystem\ChildTaskFailedException.cs" />
     <Compile Include="TaskSystem\TaskAction.cs" />
     <Compile Include="TaskSystem\Task.cs" />
+    <Compile Include="TaskSystem\TaskCategory.cs" />
     <Compile Include="TaskSystem\TaskExecArg.cs" />
     <Compile Include="TaskSystem\TaskCreateInfo.cs" />
     <Compile Include="TaskSystem\TaskManager.cs" />
     <Compile Include="TaskSystem\TaskNode.cs" />
+    <Compile Include="TaskSystem\TaskNodeManager.cs" />
     <Compile Include="TaskSystem\TaskState.cs" />
     <Compile Include="TaskSystem\TaskThread.cs" />
   </ItemGroup>

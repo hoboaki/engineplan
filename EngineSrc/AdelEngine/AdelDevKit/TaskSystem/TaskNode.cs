@@ -21,11 +21,18 @@ namespace AdelDevKit.TaskSystem
         /// コンストラクタ。
         /// </summary
         /// <param name="aTaskDepth">タスクの深さ。 <see cref="TaskDepth"/> </param>
-        public TaskNode(Task aTask, int aTaskDepth)
+        public TaskNode(Task aTask, TaskCategory aCategory, int aTaskDepth)
         {
             Task = aTask;
+            Category = aCategory;
             TaskDepth = aTaskDepth;
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの分類。
+        /// </summary>
+        public TaskCategory Category { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

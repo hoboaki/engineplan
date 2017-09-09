@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdelDevKit.TaskSystem
 {
+    //------------------------------------------------------------------------------
     /// <summary>
     /// タスクの処理内容。
     /// </summary>

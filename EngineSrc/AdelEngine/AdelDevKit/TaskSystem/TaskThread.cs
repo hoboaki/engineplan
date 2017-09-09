@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdelDevKit.TaskSystem
 {
+    //------------------------------------------------------------------------------
     /// <summary>
     /// タスクを処理するスレッド。
     /// </summary>
@@ -55,6 +56,15 @@ namespace AdelDevKit.TaskSystem
         }
 
         //------------------------------------------------------------------------------
+        /// <summary>
+        /// スレッドを開始。
+        /// </summary>
+        public void Start()
+        {
+            _Thread.Start();
+        }
+
+        //------------------------------------------------------------------------------
         PullNextTaskFunc _PullNextTaskFunc;
         PushChildTaskFunc _PushChildTaskFunc;
         ChildTaskWaitStartedCallback _WaitStartedCallback;
@@ -83,7 +93,7 @@ namespace AdelDevKit.TaskSystem
                 TaskExecArg.ExecChildTaskFunc execChildTaskFunc = (aNewTask) =>
                 {
                     // タスクノードを作成
-                    var childNode = new TaskNode(aNewTask, next.TaskDepth + 1);
+                    var childNode = new TaskNode(aNewTask, next.Category, next.TaskDepth + 1);
 
                     // 親ノードに登録
                     next.AddChildTask(childNode);
