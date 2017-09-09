@@ -65,8 +65,37 @@ namespace AdelDevKit.TaskSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// 全てのスレッドを終了させる。
+        /// 登録済みのタスクの終了を待つ。
         /// </summary>
+        internal void WaitAllTaskDone()
+        {
+            while (true)
+            {
+                bool isAllTaskFinished = true;
+                foreach (var nodeManager in _NodeManagers)
+                {
+                    if (!nodeManager.Value.CheckIsAllTaskFinished())
+                    {
+                        isAllTaskFinished = false;
+                        break;
+                    }
+                }
+                if (isAllTaskFinished)
+                {
+                    break;
+                }
+                _CheckRestTaskEvent.WaitOne();
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// なるべく速く全てのスレッドを終了させる。
+        /// </summary>
+        /// <remarks>
+        /// ここに到達するのはアプリケーションの終了時のみとなり、早さが求められる。
+        /// そのため登録済みのタスクを全て処理せず、できる限りタスクをキャンセルする。
+        /// </remarks>
         public void Dispose()
         {
             if (!_IsDisposing)
@@ -84,23 +113,7 @@ namespace AdelDevKit.TaskSystem
                 }
 
                 // 子タスクが全て終わるまで待つ
-                while (true)
-                {
-                    bool isAllTaskFinished = true;
-                    foreach (var nodeManager in _NodeManagers)
-                    {
-                        if (!nodeManager.Value.CheckIsAllTaskFinished())
-                        {
-                            isAllTaskFinished = false;
-                            break;
-                        }
-                    }
-                    if (isAllTaskFinished)
-                    {
-                        break;
-                    }
-                    _CheckRestTaskEvent.WaitOne();
-                }
+                WaitAllTaskDone();
 
                 // スレッド終了
                 _DoExitThread = true;

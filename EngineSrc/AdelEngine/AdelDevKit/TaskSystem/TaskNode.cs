@@ -125,22 +125,27 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         public void Execute(TaskExecArg aArg)
         {
+            // 状態変更の部分のみロックをかける
+            // （ロックをかけ続けると子タスクの状態変化のときにデッドロックになる）
             lock (this)
             {
-                if (State == TaskState.Prepared)
+                if (State != TaskState.Prepared)
                 {
-                    State = TaskState.Executed;
-                    try
-                    {
-                        this.Task.CreateInfo.Action(aArg);
-                        State = TaskState.Successed;
-                    }
-                    catch (Exception)
-                    {
-                        State = TaskState.Failed;
-                    }                    
+                    return;
                 }
+                State = TaskState.Executed;
             }
+
+            // タスクの実行
+            try
+            {
+                this.Task.CreateInfo.Action(aArg);
+                State = TaskState.Successed;
+            }
+            catch (Exception)
+            {
+                State = TaskState.Failed;
+            }                    
         }
 
         //------------------------------------------------------------------------------

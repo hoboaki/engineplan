@@ -90,7 +90,7 @@ namespace AdelDevKit.TaskSystem
         {
             lock (this)
             {
-                foreach (var node in _PreparedTaskNodes.Where(x => x.TaskDepth == 0))
+                foreach (var node in _PreparedTaskNodes.Where(x => x.TaskDepth == 0).ToArray())
                 {
                     node.Cancel();
                 }
