@@ -16,7 +16,7 @@ namespace AdelDevKit.TaskSystem
     /// 全ての <see cref="Task"/> の実行を管理するクラスです。
     /// 追加されたタスクは優先順位を考慮しつつできる限り並列に実行します。
     /// </remarks>
-    public class TaskManager
+    public class TaskManager : IDisposable
     {
         //------------------------------------------------------------------------------
         /// <summary>
@@ -42,6 +42,15 @@ namespace AdelDevKit.TaskSystem
                 CreateActiveTaskThread();
             }
         }
+        
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// デストラクタ。
+        /// </summary>
+        ~TaskManager()
+        {
+            Dispose();
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -52,6 +61,50 @@ namespace AdelDevKit.TaskSystem
             // TaskNode化して追加
             int taskDepth = 0;
             AddTaskNode(new TaskNode(aTask, aCategory, taskDepth));
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 全てのスレッドを終了させる。
+        /// </summary>
+        public void Dispose()
+        {
+            if (!_IsDisposing)
+            {
+                // フラグオン
+                _IsDisposing = true;
+
+                // デプス0なタスクを全てキャンセルする
+                lock (this)
+                {
+                    foreach (var nodeManager in _NodeManagers)
+                    {
+                        nodeManager.Value.CancelRootNodeAll();
+                    }
+                }
+
+                // 子タスクが全て終わるまで待つ
+                while (true)
+                {
+                    bool isAllTaskFinished = true;
+                    foreach (var nodeManager in _NodeManagers)
+                    {
+                        if (!nodeManager.Value.CheckIsAllTaskFinished())
+                        {
+                            isAllTaskFinished = false;
+                            break;
+                        }
+                    }
+                    if (isAllTaskFinished)
+                    {
+                        break;
+                    }
+                    _CheckRestTaskEvent.WaitOne();
+                }
+
+                // スレッド終了
+                _DoExitThread = true;
+            }
         }
 
         //------------------------------------------------------------------------------
@@ -68,6 +121,9 @@ namespace AdelDevKit.TaskSystem
         List<TaskThread> _ActiveThreads = new List<TaskThread>();
         List<AutoResetEvent> _ActiveWaitEvents = new List<AutoResetEvent>();
         List<SuspendInfo> _SuspendInfos = new List<SuspendInfo>();
+        bool _IsDisposing = false;
+        bool _DoExitThread = false; // true にしたらスレッドは終了していくフラグ
+        AutoResetEvent _CheckRestTaskEvent = new AutoResetEvent(false);
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -113,6 +169,12 @@ namespace AdelDevKit.TaskSystem
             {
                 lock (this)
                 {
+                    // スレッド終了モードなら null を返してスレッドを終了させる
+                    if (_DoExitThread)
+                    {
+                        break;
+                    }
+
                     // 同時実行上限を超えている場合
                     if (_ParallelCount + _SleepThreadCount < _ActiveThreads.Count())
                     {
@@ -135,13 +197,16 @@ namespace AdelDevKit.TaskSystem
                         // タスクが取得できたら while ループから抜けてタスクの実行に移る
                         if (result != null)
                         {
-                            break;
+                            break; // continue のほうが分かりやすいかな･･･？
                         }
 
                         // なければ待ちイベントに追加
                         _ActiveWaitEvents.Add(aWakeEvent);
                     }
                 }
+
+                // 残りタスクチェックシグナル
+                _CheckRestTaskEvent.Set();
 
                 // 追加もしくは一時停止解除まで待つ
                 aWakeEvent.WaitOne();

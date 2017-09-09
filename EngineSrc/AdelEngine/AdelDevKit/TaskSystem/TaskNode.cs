@@ -130,7 +130,15 @@ namespace AdelDevKit.TaskSystem
                 if (State == TaskState.Prepared)
                 {
                     State = TaskState.Executed;
-                    this.Task.CreateInfo.Action(aArg);
+                    try
+                    {
+                        this.Task.CreateInfo.Action(aArg);
+                        State = TaskState.Successed;
+                    }
+                    catch (Exception)
+                    {
+                        State = TaskState.Failed;
+                    }                    
                 }
             }
         }
