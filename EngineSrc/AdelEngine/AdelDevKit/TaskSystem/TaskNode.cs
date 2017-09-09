@@ -139,7 +139,14 @@ namespace AdelDevKit.TaskSystem
             // タスクの実行
             try
             {
+                // 本タスク実行
                 this.Task.CreateInfo.Action(aArg);
+
+                // 子タスクが残っているなら完了を待つ
+                // （子が終わっていないのに自分が完了になってしまうのを防ぐため）
+                aArg.WaitAllChildTaskDone();
+
+                // 成功
                 State = TaskState.Successed;
             }
             catch (Exception)
