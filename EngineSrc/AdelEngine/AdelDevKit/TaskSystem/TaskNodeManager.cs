@@ -43,7 +43,14 @@ namespace AdelDevKit.TaskSystem
             {
                 throw new ArgumentException("処理済みのノードが渡されました。", nameof(aNode));
             }
-            _PreparedTaskNodes.Add(aNode);
+
+            lock (aNode)
+            {
+                // Depth値は大きいものが優先。
+                // 同じDepth値の場合は末尾に挿入。
+                int index = _PreparedTaskNodes.Where(x => x.TaskDepth >= aNode.TaskDepth).Count();
+                _PreparedTaskNodes.Insert(index, aNode);
+            }
         }
 
         //------------------------------------------------------------------------------

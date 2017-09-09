@@ -88,20 +88,15 @@ namespace AdelDevKit.TaskSystem
         {
             lock (this)
             {
+                // ノードを追加
                 _NodeManagers[aTaskNode.Category].Add(aTaskNode);
-
+                
                 // イベント待ちしているスレッドがあれば起こす
-                AutoResetEvent[] wakeEvents;
-                lock (_ActiveWaitEvents)
+                AutoResetEvent[] wakeEvents = _ActiveWaitEvents.ToArray();
+                _ActiveWaitEvents.Clear();
+                foreach (var wakeEvent in wakeEvents)
                 {
-                    // 全スレッド起こす暫定実装
-                    // 将来的にはCPUの状況やアプリの実行状態を見て同時実行数を動的に制御する
-                    wakeEvents = _ActiveWaitEvents.ToArray();
-                    _ActiveWaitEvents.Clear();
-                    foreach (var wakeEvent in wakeEvents)
-                    {
-                        wakeEvent.Set();
-                    }
+                    wakeEvent.Set();
                 }
             }
 
