@@ -8,100 +8,43 @@ namespace AdelDevKit.TaskSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// １つの処理セットを扱うクラス。
+    /// タスク。
     /// </summary>
+    /// <remarks>
+    /// ◆ 概要
+    /// 1連のオフライン処理（非ランタイム上の処理）を表すクラスです。
+    /// 実行ファイルのビルド、アセットのビルド、SCM 処理といった一瞬で終了しない処理はタスクとして処理されます。
+    /// 
+    /// ◆ 並列処理について
+    /// 開発キットはできる限り多数のタスクを同時に処理します。
+    /// 
+    /// １つのタスクはエラーが起きない限り中断されることはありません。
+    /// 
+    /// 例えば１つのタスク内で並列に実行したい処理がある場合は、
+    /// タスクの引数に渡される <see cref="TaskExecArg.ExecChildTaskAsync(Task)"/> を使い、
+    /// 子タスクとして処理を分割してください。
+    /// C# 標準機能である parallel はできる限り使わないようにしてください。
+    /// 
+    /// 子タスクの分割を推奨しているのは、タスクの同時実行数などを開発キット側がコントロールできるようにするためです。
+    /// タスクの同時実行数を開発キット側がコントロールできるようにする恩恵として、
+    /// アプリケーションのテストプレイの動作パフォーマンスの影響を最低限にしつつ
+    /// できる限りタスクを実行する、というようなことが実現できます。
+    /// </remarks>
     public class Task
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// １つのコマンドを実行するタスクとして作成。
+        /// タスクの作成。
         /// </summary>
-        static public Task CreateSingle(Command aCommand, TaskCreateInfo aCreateInfo)
+        public Task(TaskCreateInfo aCreateInfo)
         {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.Single;
-            obj._TaskCommand = aCommand;
-            return obj;
+            CreateInfo = aCreateInfo;
         }
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// 複数のタスク項目を順次実行するタスクとして作成。
-        /// </summary>
-        static public Task CreateMultiSerial(IEnumerable<Task> aChildTasks, TaskCreateInfo aCreateInfo)
-        {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.MultiSerial;
-            obj._ChildTasks = aChildTasks.ToArray();
-            return obj;
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 複数のタスク項目を並列実行するタスクとして作成。
-        /// </summary>
-        static public Task CreateMultiParallel(IEnumerable<Task> aChildTasks, TaskCreateInfo aCreateInfo)
-        {
-            var obj = new Task();
-            obj.CreateInfo = aCreateInfo;
-            obj.Kind = TaskKind.MultiParallel;
-            obj._ChildTasks = aChildTasks.ToArray();
-            return obj;
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 作成時に渡した情報。
+        /// 作成情報。
         /// </summary>
         public TaskCreateInfo CreateInfo { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// タスクの種類。
-        /// </summary>
-        public TaskKind Kind { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// CreateSingle で指定したコマンド。
-        /// </summary>
-        public Command TaskCommand
-        {
-            get
-            {
-                switch (Kind)
-                {
-                    case TaskKind.Single:
-                        return _TaskCommand;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-        }
-        Command _TaskCommand = null;
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// CreateMultiSingle CreateMultiParallel で指定した子タスク。
-        /// </summary>
-        public Task[] ChildTasks
-        {
-            get
-            {
-                switch (Kind)
-                {
-                    case TaskKind.MultiSerial:
-                    case TaskKind.MultiParallel:
-                        return _ChildTasks;
-
-                    default:
-                        throw new InvalidOperationException();
-                }
-            }
-        }
-        Task[] _ChildTasks = null;
     }
 }

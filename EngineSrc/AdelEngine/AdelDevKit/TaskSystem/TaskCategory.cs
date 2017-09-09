@@ -8,23 +8,28 @@ namespace AdelDevKit.TaskSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// タスクの種類。
+    /// タスクの分類。
     /// </summary>
-    public enum TaskKind
+    enum TaskCategory
     {
         /// <summary>
-        /// １つのコマンドを実行するタスク。
+        /// バージョン管理システム処理。
         /// </summary>
-        Single,
+        VcsProcess,
 
         /// <summary>
-        /// 複数のタスクを順次実行するタスク。
+        /// バッチ処理。
         /// </summary>
-        MultiSerial,
+        BatchProcess,
 
         /// <summary>
-        /// 複数のタスクを並列実行するタスク。
+        /// アセットビルド。
         /// </summary>
-        MultiParallel,
+        AssetBuild,
+
+        /// <summary>
+        /// 実行ファイルビルド。
+        /// </summary>
+        ExecutableFileBuild,
     }
 }
