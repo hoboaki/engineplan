@@ -136,5 +136,59 @@ namespace AdelDevKit.TaskSystem.Tests
             }
             Assert.IsTrue(flag);
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの成功と失敗のテスト。
+        /// </summary>
+        [TestMethod()]
+        public void SuccessAndFailureTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                var taskSuccess = new Task(new TaskCreateInfo(
+                    (arg) => {}
+                    ));
+                var taskFailure = new Task(new TaskCreateInfo(
+                    (arg) => { throw new Exception(); }
+                    ));
+                var nodeSuccess = mgr.Add(taskSuccess, TaskCategory.BatchProcess);
+                var nodeFailure = mgr.Add(taskFailure, TaskCategory.BatchProcess);
+                mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Successed, nodeSuccess.State);
+                Assert.AreEqual(TaskState.Failed, nodeFailure.State);
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 子タスクの失敗のテスト。
+        /// </summary>
+        [TestMethod()]
+        public void FailureChildTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                var parentTask = new Task(new TaskCreateInfo(
+                    (a0) =>
+                    {
+                        // 子タスクを追加
+                        var childTask = new Task(new TaskCreateInfo(
+                            (a1) =>
+                            {
+                                throw new Exception();
+                            }
+                            ));
+                        a0.ExecChildTaskAsync(childTask);
+                        a0.WaitAllChildTaskDone();
+
+                        Assert.Fail(); // 到達しない場所
+                    }
+                    ));
+                var node = mgr.Add(parentTask, TaskCategory.BatchProcess);
+                mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Failed, node.State);
+            }
+        }
     }
 }

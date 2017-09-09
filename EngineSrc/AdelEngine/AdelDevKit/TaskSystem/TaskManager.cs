@@ -56,11 +56,14 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// タスクの追加。
         /// </summary>
-        internal void Add(Task aTask, TaskCategory aCategory)
+        /// <returns>追加されたタスクのノード。テストコード目的で本番コードでは使わない想定。</returns>
+        internal TaskNode Add(Task aTask, TaskCategory aCategory)
         {
             // TaskNode化して追加
             int taskDepth = 0;
-            AddTaskNode(new TaskNode(aTask, aCategory, taskDepth));
+            var node = new TaskNode(aTask, aCategory, taskDepth);
+            AddTaskNode(node);
+            return node;
         }
 
         //------------------------------------------------------------------------------
