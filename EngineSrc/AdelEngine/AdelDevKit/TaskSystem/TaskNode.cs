@@ -211,7 +211,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// 全ての子コマンドが終了するのを待つ。
         /// </summary>
-        /// <exception cref="ChildTaskFailedException">いずれかの子タスクの処理が失敗していたら投げられる。</exception>
+        /// <exception cref="ChildTaskNotSuccessedException">いずれかの子タスクの処理が失敗もしくはキャンセルされたら投げられる。</exception>
         public void WaitAllChildTaskDone(AutoResetEvent aEvent, Action aWaitStartedCallback, Action aWaitFinishedCallback)
         {
             // メモ：
@@ -268,9 +268,11 @@ namespace AdelDevKit.TaskSystem
             }
 
             // 子タスクで成功していないものがあれば例外を投げる
-            if (_FinishedNodes.Where(child => child.State != TaskState.Successed).Count() != 0)
+            bool existsCanceled = _FinishedNodes.Where(child => child.State != TaskState.Canceled).Count() != 0;
+            bool existsFailed = _FinishedNodes.Where(child => child.State != TaskState.Failed).Count() != 0;
+            if (existsCanceled || existsFailed)
             {
-                throw new ChildTaskFailedException();
+                throw new ChildTaskNotSuccessedException(existsCanceled, existsFailed);
             }
         }
     }
