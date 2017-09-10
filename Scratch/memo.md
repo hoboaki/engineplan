@@ -100,3 +100,15 @@ AdelDevKit.CutScene.AssetCutScene
 - Vulkan
     - vk
     - Vk
+
+## グラフィックス世代の扱い
+
+２つで考える
+- SM3 VERT+FRAG GLES3ベース
+    - GL3.3[Win, Mac] GLES3[iOS, Android] (DX9-10[Win])
+- SM5 SM3＋GEOM+GPGPU （コマンドバッファ並列化の有無は別枠）
+    - Metal[Mac, iOS] Vulkan[Win, Android] (GL4.3[Win]) (DX11 [Win])
+    - Mac は GL3.3 の次は GL4.1 （中途半端）
+    - Mac で GL4.3 使えるならそこまで対応しようかと思ったけども難しいなら 4.3 サポートは後回しかな。
+
+
