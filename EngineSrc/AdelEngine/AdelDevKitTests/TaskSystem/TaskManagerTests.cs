@@ -41,8 +41,9 @@ namespace AdelDevKit.TaskSystem.Tests
                         flag = true;
                     }
                     ));
-                mgr.Add(task, TaskCategory.BatchProcess);
+                var node = mgr.Add(task, TaskCategory.BatchProcess);
                 mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Successed, node.State);
             }
             Assert.IsTrue(flag);
         }
@@ -87,8 +88,9 @@ namespace AdelDevKit.TaskSystem.Tests
 
                     }
                     ));
-                mgr.Add(parentTask, TaskCategory.BatchProcess);
+                var node = mgr.Add(parentTask, TaskCategory.BatchProcess);
                 mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Successed, node.State);
             }
             Assert.IsTrue(flagA);
             Assert.IsTrue(flagB);
@@ -131,8 +133,9 @@ namespace AdelDevKit.TaskSystem.Tests
 
                     }
                     ));
-                mgr.Add(parentTask, TaskCategory.BatchProcess);
+                var node = mgr.Add(parentTask, TaskCategory.BatchProcess);
                 mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Successed, node.State);
             }
             Assert.IsTrue(flag);
         }
@@ -188,6 +191,60 @@ namespace AdelDevKit.TaskSystem.Tests
                 var node = mgr.Add(parentTask, TaskCategory.BatchProcess);
                 mgr.WaitAllTaskDone();
                 Assert.AreEqual(TaskState.Failed, node.State);
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクプライオリティのテスト。
+        /// </summary>
+        [TestMethod()]
+        public void PriorityTaskTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                var priorityLo = TaskCategory.AssetBuild;
+                var priorityHi = TaskCategory.BatchProcess;
+                Assert.IsTrue((int)(priorityHi) < (int)(priorityLo));
+
+                int childTaskCount = 100;
+                int counter = 0;
+                bool isHiTaskFinished = false;
+                var taskHi = new Task(new TaskCreateInfo(
+                    (a) =>
+                    {
+                        Assert.IsTrue(counter < (childTaskCount / 2)); // 速やかに実行されているはず。
+                        isHiTaskFinished = true;
+                    }
+                    ));
+                var taskLo = new Task(new TaskCreateInfo(
+                    (a0) =>
+                    {
+                        // 子タスクを追加
+                        var childTask = new Task(new TaskCreateInfo(
+                            (a1) =>
+                            {
+                                // 少し長めの処理を想定してスリープ。
+                                Thread.Sleep(100); // 100msec
+                                Interlocked.Add(ref counter, 1);
+                            }
+                            ));
+                        for (int i = 0; i < childTaskCount; ++i)
+                        {
+                            a0.ExecChildTaskAsync(childTask);
+                        }
+                        a0.WaitAllChildTaskDone();
+
+                        // 100個処理するよりも前に優先度の高いタスクは終わっているはず
+                        Assert.IsTrue(isHiTaskFinished);
+                    }
+                    ));
+                var nodeLo = mgr.Add(taskLo, priorityLo);
+                Thread.Sleep(100); // 100msec
+                var nodeHi = mgr.Add(taskHi, priorityHi);
+                mgr.WaitAllTaskDone();
+                Assert.AreEqual(TaskState.Successed, nodeLo.State);
+                Assert.AreEqual(TaskState.Successed, nodeHi.State);
             }
         }
     }
