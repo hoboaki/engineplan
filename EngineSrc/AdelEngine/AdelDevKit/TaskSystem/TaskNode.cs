@@ -112,7 +112,13 @@ namespace AdelDevKit.TaskSystem
             }
         }
         TaskState _State = TaskState.Prepared;
-        
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ログ記録。
+        /// </summary>
+        public CommandLog.Logger Log { get; private set; } = new CommandLog.Logger();
+
         //------------------------------------------------------------------------------
         Task Task { get; set; }
         ObservableCollection<TaskNode> _PreparedNodes = new ObservableCollection<TaskNode>(); // 新しいノードはまずここに格納。
@@ -125,6 +131,12 @@ namespace AdelDevKit.TaskSystem
         /// </summary>
         public void Execute(TaskExecArg aArg)
         {
+            // チェック
+            if (aArg.Log != Log)
+            {
+                throw new ArgumentException("Invalid Log object.");
+            }
+
             // 状態変更の部分のみロックをかける
             // （ロックをかけ続けると子タスクの状態変化のときにデッドロックになる）
             lock (this)
@@ -149,8 +161,9 @@ namespace AdelDevKit.TaskSystem
                 // 成功
                 State = TaskState.Successed;
             }
-            catch (Exception)
+            catch (Exception exp)
             {
+                aArg.Log.Error.WriteLine(exp);
                 State = TaskState.Failed;
             }                    
         }
@@ -268,8 +281,8 @@ namespace AdelDevKit.TaskSystem
             }
 
             // 子タスクで成功していないものがあれば例外を投げる
-            bool existsCanceled = _FinishedNodes.Where(child => child.State != TaskState.Canceled).Count() != 0;
-            bool existsFailed = _FinishedNodes.Where(child => child.State != TaskState.Failed).Count() != 0;
+            bool existsCanceled = _FinishedNodes.Where(child => child.State == TaskState.Canceled).Count() != 0;
+            bool existsFailed = _FinishedNodes.Where(child => child.State == TaskState.Failed).Count() != 0;
             if (existsCanceled || existsFailed)
             {
                 throw new ChildTaskNotSuccessedException(existsCanceled, existsFailed);
