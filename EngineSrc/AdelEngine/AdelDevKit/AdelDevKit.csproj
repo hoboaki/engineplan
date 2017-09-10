@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLog\ILogStringCallback.cs" />
+    <Compile Include="CommandLog\LogStringWriteCallback.cs" />
     <Compile Include="DevKit.cs" />
     <Compile Include="CommandLog\Logger.cs" />
     <Compile Include="CommandLog\LogKind.cs" />

@@ -17,9 +17,10 @@ namespace AdelDevKit.CommandLog
         /// <summary>
         /// コンストラクタ。（StringBuilderは内部で自動生成したものを使用する）
         /// </summary>
-        public LogStringWriter()
+        internal LogStringWriter(LogStringWriteCallback aCallback)
             : base()
         {
+            _Callback = aCallback;
         }
 
         //------------------------------------------------------------------------------
@@ -44,5 +45,57 @@ namespace AdelDevKit.CommandLog
                 // 書き換え不可
             }
         }
+
+        //------------------------------------------------------------------------------
+        #region 実装の上書き
+        public override void Write(char value)
+        {
+            _Callback.Write(value);
+            base.Write(value);
+        }
+        public override void Write(string value)
+        {
+            _Callback.Write(value);
+            base.Write(value);
+        }
+        public override void Write(char[] buffer, int index, int count)
+        {
+            _Callback.Write(buffer, index, count);
+            base.Write(buffer, index, count);
+        }
+        public override Task WriteAsync(char value)
+        {
+            _Callback.Write(value);
+            return base.WriteAsync(value);
+        }
+        public override Task WriteAsync(string value)
+        {
+            _Callback.Write(value);
+            return base.WriteAsync(value);
+        }
+        public override Task WriteAsync(char[] buffer, int index, int count)
+        {
+            _Callback.Write(buffer, index, count);
+            return base.WriteAsync(buffer, index, count);
+        }
+        public override Task WriteLineAsync(char value)
+        {
+            _Callback.Write(value);
+            return base.WriteLineAsync(value);
+        }
+        public override Task WriteLineAsync(string value)
+        {
+            _Callback.Write(value);
+            return base.WriteLineAsync(value);
+        }
+        public override Task WriteLineAsync(char[] buffer, int index, int count)
+        {
+            _Callback.Write(buffer, index, count);
+            return base.WriteLineAsync(buffer, index, count);
+        }
+        #endregion
+
+        //------------------------------------------------------------------------------
+        LogStringWriteCallback _Callback;
     }
 }

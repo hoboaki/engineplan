@@ -52,7 +52,10 @@ namespace AdelDevKit.CommandLog
         {
             if (!_Writers.ContainsKey(aKind))
             {
-                _Writers.Add(aKind, new LogStringWriter());
+                LogStringWriteCallback.LogStringWritten callback = (str) =>
+                {
+                };
+                _Writers.Add(aKind, new LogStringWriter(new LogStringWriteCallback(callback)));
             }
             return _Writers[aKind];
         }
