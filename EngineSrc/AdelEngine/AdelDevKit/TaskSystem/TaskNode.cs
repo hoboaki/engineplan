@@ -59,6 +59,8 @@ namespace AdelDevKit.TaskSystem
                 {
                     return;
                 }
+
+                var now = DateTime.Now;
                 switch (value)
                 {
                     case TaskState.Executed:
@@ -71,6 +73,7 @@ namespace AdelDevKit.TaskSystem
                         // 何もしない
                         _State = value;
                         RaisePropertyChanged(nameof(State));
+                        FinishDateTime = now;
                         break;
 
                     case TaskState.Failed:
@@ -87,6 +90,9 @@ namespace AdelDevKit.TaskSystem
                         {
                             node.Cancel();
                         }
+
+                        // 時間記録
+                        FinishDateTime = now;
                         break;
 
                     case TaskState.Canceled:
@@ -107,6 +113,9 @@ namespace AdelDevKit.TaskSystem
                         {
                             node.Cancel();
                         }
+
+                        // 時間記録
+                        FinishDateTime = now;
                         break;
                 }
             }
@@ -115,15 +124,75 @@ namespace AdelDevKit.TaskSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ログ記録。
+        /// ログ。
         /// </summary>
         public CommandLog.Logger Log { get; private set; } = new CommandLog.Logger();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクが作成された日時。
+        /// </summary>
+        public DateTime CreateDateTime { get; private set; } = DateTime.Now;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの実行が開始された日時。
+        /// </summary>
+        public DateTime ExecuteDateTime
+        {
+            get
+            {
+                return _ExecuteDateTime;
+            }
+            private set
+            {
+                _ExecuteDateTime = value;
+                RaisePropertyChanged(nameof(ExecuteDateTime));
+            }
+        }
+        DateTime _ExecuteDateTime;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの実行が終了した日時。
+        /// </summary>
+        public DateTime FinishDateTime
+        {
+            get
+            {
+                return _FinishDateTime;
+            }
+            private set
+            {
+                _FinishDateTime = value;
+                RaisePropertyChanged(nameof(FinishDateTime));
+            }
+        }
+        DateTime _FinishDateTime;
 
         //------------------------------------------------------------------------------
         Task Task { get; set; }
         ObservableCollection<TaskNode> _PreparedNodes = new ObservableCollection<TaskNode>(); // 新しいノードはまずここに格納。
         ObservableCollection<TaskNode> _ExecutedNodes = new ObservableCollection<TaskNode>(); // 実行中はこちらに格納。
         ObservableCollection<TaskNode> _FinishedNodes = new ObservableCollection<TaskNode>(); // 何かしらの理由で終了したものはここに格納。
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// タスクの処理時間を取得する。
+        /// </summary>
+        /// <returns>処理を開始する前なら0。開始後なら経過時間。終了後なら処理時間。</returns>
+        public TimeSpan GetProcessTime()
+        {
+            if (_ExecuteDateTime == null)
+            {
+                return TimeSpan.Zero;
+            }
+            if (_FinishDateTime == null)
+            {
+                return DateTime.Now - _ExecuteDateTime;
+            }
+            return _FinishDateTime - _ExecuteDateTime;
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -146,6 +215,7 @@ namespace AdelDevKit.TaskSystem
                     return;
                 }
                 State = TaskState.Executed;
+                ExecuteDateTime = DateTime.Now;
             }
 
             // タスクの実行

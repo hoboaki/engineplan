@@ -245,6 +245,7 @@ namespace AdelDevKit.TaskSystem.Tests
                 mgr.WaitAllTaskDone();
                 Assert.AreEqual(TaskState.Successed, nodeLo.State);
                 Assert.AreEqual(TaskState.Successed, nodeHi.State);
+                Assert.IsTrue(nodeHi.FinishDateTime < nodeLo.FinishDateTime);
             }
         }
 
@@ -279,6 +280,29 @@ namespace AdelDevKit.TaskSystem.Tests
                 Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Info), TextInfo + newLine);
                 Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Warn), TextWarn + newLine);
                 Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Error), TextError + newLine);
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 処理時間のテスト。
+        /// </summary>
+        [TestMethod()]
+        public void ProcessTimeTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                var task = new Task(new TaskCreateInfo(
+                    (arg) =>
+                    {
+                        Thread.Sleep(100);
+                    }
+                    ));
+                var node = mgr.Add(task, TaskCategory.BatchProcess);
+                mgr.WaitAllTaskDone();
+
+                Assert.IsTrue(node.ExecuteDateTime < node.FinishDateTime);
+                Assert.IsTrue(0 < node.GetProcessTime().Milliseconds);
             }
         }
 
