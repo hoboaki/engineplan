@@ -245,7 +245,66 @@ namespace AdelDevKit.TaskSystem.Tests
                 mgr.WaitAllTaskDone();
                 Assert.AreEqual(TaskState.Successed, nodeLo.State);
                 Assert.AreEqual(TaskState.Successed, nodeHi.State);
+                Assert.IsTrue(nodeHi.FinishDateTime < nodeLo.FinishDateTime);
             }
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// コマンドログのテスト。
+        /// </summary>
+        [TestMethod()]
+        public void LogTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                string TextDebug = "This is Debug.";
+                string TextInfo = "This is Info.";
+                string TextWarn = "This is Warn.";
+                string TextError = "This is Error.";
+                var task = new Task(new TaskCreateInfo(
+                    (arg) =>
+                    {
+                        var log = arg.Log;
+                        log.Debug.WriteLine(TextDebug);
+                        log.Info.WriteLine(TextInfo);
+                        log.Warn.WriteLine(TextWarn);
+                        log.Error.WriteLine(TextError);
+                    }
+                    ));
+                var node = mgr.Add(task, TaskCategory.BatchProcess);
+                mgr.WaitAllTaskDone();
+
+                var newLine = node.Log.Debug.NewLine;
+                Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Debug), TextDebug + newLine);
+                Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Info), TextInfo + newLine);
+                Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Warn), TextWarn + newLine);
+                Assert.AreEqual(node.Log.GetText(CommandLog.LogKind.Error), TextError + newLine);
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 処理時間のテスト。
+        /// </summary>
+        [TestMethod()]
+        public void ProcessTimeTest()
+        {
+            using (var mgr = new TaskManager())
+            {
+                var task = new Task(new TaskCreateInfo(
+                    (arg) =>
+                    {
+                        Thread.Sleep(100);
+                    }
+                    ));
+                var node = mgr.Add(task, TaskCategory.BatchProcess);
+                mgr.WaitAllTaskDone();
+
+                Assert.IsTrue(node.ExecuteDateTime < node.FinishDateTime);
+                Assert.IsTrue(0 < node.GetProcessTime().Milliseconds);
+            }
+        }
+
     }
 }

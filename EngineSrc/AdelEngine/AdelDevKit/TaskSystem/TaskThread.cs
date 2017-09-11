@@ -114,7 +114,7 @@ namespace AdelDevKit.TaskSystem
 
                 // 実行
                 next.Execute(new TaskExecArg(
-                    new Logger(), // 仮コード
+                    next.Log,
                     execChildTaskFunc,
                     waitAllChildTaskDoneFunc
                     ));

@@ -28,7 +28,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        internal TaskExecArg(Logger aLogger, ExecChildTaskFunc aExecChildTaskFunc, WaitAllChildTaskDoneFunc aWaitAllChildTaskDoneFunc)
+        internal TaskExecArg(CommandLog.Logger aLogger, ExecChildTaskFunc aExecChildTaskFunc, WaitAllChildTaskDoneFunc aWaitAllChildTaskDoneFunc)
         {
             if (aLogger == null)
             {
@@ -43,7 +43,7 @@ namespace AdelDevKit.TaskSystem
                 throw new ArgumentNullException(nameof(aWaitAllChildTaskDoneFunc));
             }
 
-            _Logger = aLogger;
+            _Log = aLogger;
             _ExecChildTaskFunc = aExecChildTaskFunc;
             _WaitAllChildTaskDoneFunc = aWaitAllChildTaskDoneFunc;
         }
@@ -52,8 +52,8 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// ログ出力用オブジェクト。
         /// </summary>
-        public Logger Logger { get { return _Logger; } }
-        Logger _Logger;
+        public CommandLog.Logger Log { get { return _Log; } }
+        CommandLog.Logger _Log;
 
         //------------------------------------------------------------------------------
         ExecChildTaskFunc _ExecChildTaskFunc;

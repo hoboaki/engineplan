@@ -17,10 +17,26 @@ namespace AdelDevKit.TaskSystem
         /// コンストラクタ。
         /// </summary>
         public ChildTaskNotSuccessedException(bool aExistsCanceled, bool aExistsFailed)
-            : base("子タスクが失敗もしくはキャンセルされました。")
+            : base(CreateMessage(aExistsCanceled, aExistsFailed))
         {
             ExistsCancled = aExistsCanceled;
             ExistsFailed = aExistsFailed;
+        }
+        static string CreateMessage(bool aExistsCanceled, bool aExistsFailed)
+        {
+            if (aExistsCanceled && aExistsFailed)
+            {
+                return "子タスクが失敗もしくはキャンセルされました。";
+            }
+            if (aExistsCanceled && !aExistsFailed)
+            {
+                return "子タスクがキャンセルされました。";
+            }
+            if (!aExistsCanceled && aExistsFailed)
+            {
+                return "子タスクが失敗しました。";
+            }
+            throw new ArgumentException();
         }
 
         //------------------------------------------------------------------------------

@@ -44,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLog\LogPacket.cs" />
+    <Compile Include="CommandLog\LogStringWriteCallback.cs" />
     <Compile Include="DevKit.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="CommandLog\Logger.cs" />
+    <Compile Include="CommandLog\LogKind.cs" />
+    <Compile Include="CommandLog\LogStringWriter.cs" />
     <Compile Include="PluginInterface\IBuildSystem.cs" />
     <Compile Include="PluginInterface\IAddon.cs" />
     <Compile Include="PluginInterface\IPlugin.cs" />
