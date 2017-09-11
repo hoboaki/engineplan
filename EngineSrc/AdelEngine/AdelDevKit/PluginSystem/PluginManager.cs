@@ -11,7 +11,7 @@ namespace AdelDevKit.PluginSystem
     /// <summary>
     /// プラグイン（<see cref="PluginInterface.IPlugin"/>）とプラグインが提供するアドオン（<see cref="IAddon"/>）を管理するクラス。
     /// </summary>
-    internal class PluginManager
+    public class PluginManager
     {
         //------------------------------------------------------------------------------
         /// <summary>
