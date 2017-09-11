@@ -63,36 +63,6 @@ namespace AdelDevKit.CommandLog
             _Callback.Write(buffer, index, count);
             base.Write(buffer, index, count);
         }
-        public override Task WriteAsync(char value)
-        {
-            _Callback.Write(value);
-            return base.WriteAsync(value);
-        }
-        public override Task WriteAsync(string value)
-        {
-            _Callback.Write(value);
-            return base.WriteAsync(value);
-        }
-        public override Task WriteAsync(char[] buffer, int index, int count)
-        {
-            _Callback.Write(buffer, index, count);
-            return base.WriteAsync(buffer, index, count);
-        }
-        public override Task WriteLineAsync(char value)
-        {
-            _Callback.Write(value.ToString() + NewLine);
-            return base.WriteLineAsync(value);
-        }
-        public override Task WriteLineAsync(string value)
-        {
-            _Callback.Write(value + NewLine);
-            return base.WriteLineAsync(value);
-        }
-        public override Task WriteLineAsync(char[] buffer, int index, int count)
-        {
-            _Callback.Write(new string(buffer, index, count) + NewLine);
-            return base.WriteLineAsync(buffer, index, count);
-        }
         #endregion
 
         //------------------------------------------------------------------------------
