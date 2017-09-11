@@ -25,9 +25,26 @@ namespace AdelDevKit.PluginSystem
         /// <summary>
         /// プラグインを読み込みアドオンを作成する。
         /// </summary>
-        /// <param name="aPluginDirectories">*.aeplugin フォルダが置かれているフォルダ群。</param>
-        internal void Load(DirectoryInfo[] aPluginDirectories)
+        /// <param name="aPluginRootDirectories">*.aeplugin フォルダが置かれているルートフォルダ群。</param>
+        /// <exception cref="FileNotFoundException">*.aeplugin 以下に命名規則通りの DLL ファイルがない場合に投げられます。</exception>
+        internal void Load(DirectoryInfo[] aPluginRootDirectories)
         {
+            foreach (var pluginRootDir in aPluginRootDirectories)
+            {
+                foreach (var pluginDir in pluginRootDir.EnumerateDirectories("*.aeplugin"))
+                {
+                    // DLLファイルを探す
+                    var baseName = pluginDir.Name.Substring(0, pluginDir.Name.Length - pluginDir.Extension.Length);
+                    var dllPath = pluginDir.FullName + @"\" + baseName + ".dll";
+                    if (!File.Exists(dllPath))
+                    {
+                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に命名規則通りの DLL ファイルが見つかりませんでした。", pluginDir.FullName) , dllPath);
+                    }
+                    _PluginEntries.Add(new PluginEntry(new FileInfo(dllPath)));
+                }
+            }
         }
+
+        List<PluginEntry> _PluginEntries = new List<PluginEntry>();
     }
 }

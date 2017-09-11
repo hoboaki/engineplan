@@ -19,6 +19,9 @@ namespace AdelDevKit.PluginSystem.Tests
             var pluginsDirs = new List<DirectoryInfo>();
             pluginsDirs.Add(new DirectoryInfo(pluginsDirPath));
 
+            var pluginManager = new PluginSystem.PluginManager();
+            pluginManager.Load(pluginsDirs.ToArray());
+
             foreach(var pluginsDir in pluginsDirs)
             {
                 foreach (var eachPluginDir in pluginsDir.EnumerateDirectories("*.aeplugin"))
