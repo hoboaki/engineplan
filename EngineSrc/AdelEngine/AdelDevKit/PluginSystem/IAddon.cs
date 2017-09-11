@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdelDevKit.PluginInterface
+namespace AdelDevKit.PluginSystem
 {
+    //------------------------------------------------------------------------------
     /// <summary>
     /// アドオン（追加機能）の基底インターフェース。
     /// </summary>
