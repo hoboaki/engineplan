@@ -80,17 +80,17 @@ namespace AdelDevKit.CommandLog
         }
         public override Task WriteLineAsync(char value)
         {
-            _Callback.Write(value);
+            _Callback.Write(value.ToString() + NewLine);
             return base.WriteLineAsync(value);
         }
         public override Task WriteLineAsync(string value)
         {
-            _Callback.Write(value);
+            _Callback.Write(value + NewLine);
             return base.WriteLineAsync(value);
         }
         public override Task WriteLineAsync(char[] buffer, int index, int count)
         {
-            _Callback.Write(buffer, index, count);
+            _Callback.Write(new string(buffer, index, count) + NewLine);
             return base.WriteLineAsync(buffer, index, count);
         }
         #endregion

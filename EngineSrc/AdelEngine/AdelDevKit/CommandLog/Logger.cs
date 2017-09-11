@@ -46,6 +46,24 @@ namespace AdelDevKit.CommandLog
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// 全種類のログを出力順に連結したテキスト。
+        /// </summary>
+        public string Text { get { return _TextStringBuilder.ToString(); } }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ログを出力順に格納したパケット群。
+        /// </summary>
+        /// <remarks>ログの種類によって色分けして表示したいときに使うことを想定している。</remarks>
+        public IEnumerable<LogPacket> Packets { get { return _Packets; } }
+
+        //------------------------------------------------------------------------------
+        StringBuilder _TextStringBuilder = new StringBuilder();
+        List<LogPacket> _Packets = new List<LogPacket>();
+        Dictionary<LogKind, LogStringWriter> _Writers = new Dictionary<LogKind, LogStringWriter>();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 指定の種類のログ書き込みオブジェクトを取得。
         /// </summary>
         public LogStringWriter GetWriter(LogKind aKind)
@@ -54,12 +72,13 @@ namespace AdelDevKit.CommandLog
             {
                 LogStringWriteCallback.LogStringWritten callback = (str) =>
                 {
+                    _TextStringBuilder.Append(str);
+                    _Packets.Add(new LogPacket(aKind, str));
                 };
                 _Writers.Add(aKind, new LogStringWriter(new LogStringWriteCallback(callback)));
             }
             return _Writers[aKind];
         }
-        Dictionary<LogKind, LogStringWriter> _Writers = new Dictionary<LogKind, LogStringWriter>();
 
         //------------------------------------------------------------------------------
         /// <summary>
