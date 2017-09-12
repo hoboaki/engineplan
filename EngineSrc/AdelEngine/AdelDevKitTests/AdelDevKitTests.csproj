@@ -64,6 +64,7 @@
     <ProjectReference Include="..\AdelDevKit\AdelDevKit.csproj">
       <Project>{40355C67-9083-47F5-8F44-517393F5697D}</Project>
       <Name>AdelDevKit</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Choose>

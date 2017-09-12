@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace AdelDevKitTestsPlugin
     /// <summary>
     /// テスト用プラグイン。
     /// </summary>
-    public class SimplePlugin : AdelDevKit.PluginSystem.IPlugin
+    [Export(typeof(IPlugin))]
+    public class SimplePlugin : IPlugin
     {
         public IEnumerable<IAddon> CreateAddons(DevKit aDevkit)
         {
@@ -20,5 +22,9 @@ namespace AdelDevKitTestsPlugin
             addons.Add(new SimpleAddon());
             return addons;
         }
+
+        string SampleProperty { get; set; } = "This is Simple Plugin Property.";
+        string _SampleField = "This is Simple Plugin Field.";
+        string SampleMethod() { return "This is Simple Plugin Method"; }
     }
 }

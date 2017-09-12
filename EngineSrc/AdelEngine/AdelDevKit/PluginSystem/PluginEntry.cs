@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,30 +12,24 @@ namespace AdelDevKit.PluginSystem
 {
     class PluginEntry
     {
-        public PluginEntry(FileInfo aDllFileInfo)
+        public PluginEntry(DirectoryInfo aDllDirInfo)
         {
-            DllFileInfo = aDllFileInfo;
+            DllDirInfo = aDllDirInfo;
 
-            AppDomainSetup setup = new AppDomainSetup();
-            setup.ApplicationBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-            setup.ShadowCopyFiles = "true"; // DLLは自由に削除したいのでシャドーコピーを使う
-            _AppDomain = AppDomain.CreateDomain(aDllFileInfo.Directory.Name, null, setup);
+            var catalog = new DirectoryCatalog(aDllDirInfo.FullName);
+            var container = new CompositionContainer(catalog);
+            _Plugins = container.GetExportedValues<IPlugin>().ToArray();
 
-
-            var pluginType = typeof(IPlugin);
-            var asm = _AppDomain.Load(aDllFileInfo.FullName);
-            foreach (var t in asm.GetTypes())
+            var addons = new List<IAddon>();
+            foreach (var plugin in _Plugins)
             {
-                if (pluginType.IsInstanceOfType(t))
-                {
-                    Plugins.Add(Activator.CreateInstance(t) as IPlugin);
-                }
+                addons.AddRange(plugin.CreateAddons(null));
             }
         }
 
 
-        public FileInfo DllFileInfo { get; private set; }
+        public DirectoryInfo DllDirInfo { get; private set; }
         public AppDomain _AppDomain { get; private set; }
-        public List<IPlugin> Plugins = new List<IPlugin>();
+        public IPlugin[] _Plugins;
     }
 }

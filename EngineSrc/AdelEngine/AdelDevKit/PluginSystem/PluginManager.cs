@@ -33,14 +33,14 @@ namespace AdelDevKit.PluginSystem
             {
                 foreach (var pluginDir in pluginRootDir.EnumerateDirectories("*.aeplugin"))
                 {
-                    // DLLファイルを探す
+                    // DLLファイルをロード
                     var baseName = pluginDir.Name.Substring(0, pluginDir.Name.Length - pluginDir.Extension.Length);
-                    var dllPath = pluginDir.FullName + @"\" + baseName + ".dll";
-                    if (!File.Exists(dllPath))
+                    var dllPath = pluginDir.FullName + @"\DevKitDll";
+                    if (!Directory.Exists(dllPath))
                     {
-                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に命名規則通りの DLL ファイルが見つかりませんでした。", pluginDir.FullName) , dllPath);
+                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName) , dllPath);
                     }
-                    _PluginEntries.Add(new PluginEntry(new FileInfo(dllPath)));
+                    _PluginEntries.Add(new PluginEntry(new DirectoryInfo(dllPath)));
                 }
             }
         }

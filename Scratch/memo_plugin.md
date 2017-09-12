@@ -14,6 +14,18 @@
     - BuildSystem の追加（BuildKitに内包）
     - CoreLib の追加（BuildKitに内包）
 
+## プラグインのフォルダ構成
+- HogeFoo.aeplugin
+    - DevKitDll 
+        - *.dll 
+
+補足
+- DevKitDll
+    - DevKit でロードされるDLL用の置き場。
+    - シャドウコピーしてロードするためツール起動中にファイルロックされることはない。
+    - つまり Vcs 更新がかかってもファイル書き込みエラーになることもない。大丈夫。
+    
+
 ## タスク
 
 ビルド
