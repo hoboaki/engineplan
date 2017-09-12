@@ -12,9 +12,9 @@ namespace AdelDevKitTestsPlugin
     /// <summary>
     /// テスト用プラグイン。
     /// </summary>
-    public class SimplePlugin : AdelDevKit.PluginSystem.IPlugin
+    public class SimplePlugin : AdelDevKit.PluginSystem.PluginBase
     {
-        public IEnumerable<IAddon> CreateAddons(DevKit aDevkit)
+        public override IEnumerable<IAddon> CreateAddons(DevKit aDevkit)
         {
             var addons = new List<IAddon>();
             addons.Add(new SimpleAddon());

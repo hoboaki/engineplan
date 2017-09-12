@@ -49,7 +49,7 @@
     <ProjectReference Include="..\AdelDevKit\AdelDevKit.csproj">
       <Project>{40355c67-9083-47f5-8f44-517393f5697d}</Project>
       <Name>AdelDevKit</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,7 +11,7 @@ namespace AdelDevKit.BuildSystem
     /// <summary>
     /// 実行ファイルビルダーアドオンの基底クラス。（インターフェースにデフォルト実装を加えたモノ）
     /// </summary>
-    public abstract class ExecBuilderAddonBase : IExecBuilderAddon
+    public abstract class ExecBuilderAddonBase : PluginSystem.AddonBase, IExecBuilderAddon
     {
         abstract public TaskSystem.Task CreateBuildTask();
     }

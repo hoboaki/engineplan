@@ -10,7 +10,7 @@ namespace AdelDevKitTestsPlugin
     /// <summary>
     /// 特に何をするでもないアドオン。
     /// </summary>
-    class SimpleAddon : AdelDevKit.PluginSystem.IAddon
+    class SimpleAddon : AdelDevKit.PluginSystem.AddonBase
     {
     }
 }
