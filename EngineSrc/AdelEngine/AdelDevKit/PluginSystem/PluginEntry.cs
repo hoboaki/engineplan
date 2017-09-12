@@ -14,74 +14,26 @@ namespace AdelDevKit.PluginSystem
         {
             DllFileInfo = aDllFileInfo;
 
-            if (!File.Exists(DllFileInfo.FullName))
-            {
-                throw new Exception();
-            }
+            AppDomainSetup setup = new AppDomainSetup();
+            setup.ApplicationBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+            setup.ShadowCopyFiles = "true"; // DLLは自由に削除したいのでシャドーコピーを使う
+            _AppDomain = AppDomain.CreateDomain(aDllFileInfo.Directory.Name, null, setup);
 
-            if (true)
-            {
-                AppDomainSetup setup = new AppDomainSetup();
-                setup.ApplicationBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-                setup.ShadowCopyFiles = "true"; // DLLは自由に削除したいのでシャドーコピーを使う
-                _AppDomain = AppDomain.CreateDomain(aDllFileInfo.Directory.Name, null, setup);
 
-                Type type = typeof(Proxy);
-                Proxy proxy = (Proxy)_AppDomain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, type.FullName);
-                proxy.Load(aDllFileInfo);
-                Plugins = proxy.CreatePlugins();
-            } 
-            else
+            var pluginType = typeof(IPlugin);
+            var asm = _AppDomain.Load(aDllFileInfo.FullName);
+            foreach (var t in asm.GetTypes())
             {
-                var proxy = new Proxy();
-                proxy.Attach(Assembly.LoadFile(aDllFileInfo.FullName));
-                Plugins = proxy.CreatePlugins();
-            }
-
-            foreach (var plugin in Plugins)
-            {
-                plugin.CreateAddons(null);
-            }
-        }
-        public class Proxy : MarshalByRefObject
-        {
-            Assembly _Assembly;
-            public Proxy()
-            {
-            }
-
-            public void Attach(Assembly aAssembly)
-            {
-                _Assembly = aAssembly;
-            }
-
-            public void Load(FileInfo aDllFileInfo)
-            {
-                _Assembly = Assembly.LoadFile(aDllFileInfo.FullName);
-            }
-
-            public PluginBase[] CreatePlugins()
-            {
-                var plugins = new List<PluginBase>();
-                var pluginType = typeof(PluginBase);
-                foreach (var t in _Assembly.GetTypes())
+                if (pluginType.IsInstanceOfType(t))
                 {
-                    if (!pluginType.IsAssignableFrom(t))
-                    {
-                        continue;
-                    }
-                    if (t.IsAbstract || t.IsInterface)
-                    {
-                        continue;
-                    }
-                    plugins.Add(Activator.CreateInstance(t) as PluginBase);
+                    Plugins.Add(Activator.CreateInstance(t) as IPlugin);
                 }
-                return plugins.ToArray();
             }
         }
+
 
         public FileInfo DllFileInfo { get; private set; }
         public AppDomain _AppDomain { get; private set; }
-        public PluginBase[] Plugins;
+        public List<IPlugin> Plugins = new List<IPlugin>();
     }
 }
