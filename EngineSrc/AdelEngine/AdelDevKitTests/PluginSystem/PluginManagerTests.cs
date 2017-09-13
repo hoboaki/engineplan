@@ -22,16 +22,8 @@ namespace AdelDevKit.PluginSystem.Tests
             var pluginManager = new PluginSystem.PluginManager();
             pluginManager.Load(pluginsDirs.ToArray());
 
-            foreach(var pluginsDir in pluginsDirs)
-            {
-                foreach (var eachPluginDir in pluginsDir.EnumerateDirectories("*.aeplugin"))
-                {
-                    var baseName = eachPluginDir.Name.Substring(0, eachPluginDir.Name.Length - eachPluginDir.Extension.Length);
-                    var dllPath = eachPluginDir.FullName + @"\" + baseName + ".dll";
-                    Assert.IsTrue(File.Exists(dllPath));
-                }
-
-            }
+            Assert.IsTrue(0 < pluginManager.PluginUnits.Length);
+            Assert.IsTrue(0 < pluginManager.Addons.Length);
         }
     }
 }

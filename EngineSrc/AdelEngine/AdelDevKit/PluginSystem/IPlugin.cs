@@ -20,6 +20,6 @@ namespace AdelDevKit.PluginSystem
         /// <summary>
         /// プラグインで扱うアドオンを作成する。
         /// </summary>
-        IEnumerable<IAddon> CreateAddons(DevKit aDevkit);
+        IEnumerable<IAddon> CreateAddons();
     }
 }

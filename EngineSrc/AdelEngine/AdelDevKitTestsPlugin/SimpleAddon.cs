@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdelDevKit.PluginSystem;
 
 namespace AdelDevKitTestsPlugin
 {
@@ -15,5 +16,9 @@ namespace AdelDevKitTestsPlugin
         string SampleProperty { get; set; } = "This is Simple Addon Property.";
         string _SampleField = "This is Simple Addon Field.";
         string SampleMethod() { return "This is Simple Addon Method"; }
+
+        public void Setup(AddonSetupArg aArg)
+        {
+        }
     }
 }

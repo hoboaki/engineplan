@@ -53,9 +53,10 @@
     <Compile Include="CommandLog\LogStringWriter.cs" />
     <Compile Include="BuildSystem\ExecBuilderAddonBase.cs" />
     <Compile Include="BuildSystem\IExecBuilderAddon.cs" />
+    <Compile Include="PluginSystem\AddonSetupArg.cs" />
     <Compile Include="PluginSystem\IAddon.cs" />
     <Compile Include="PluginSystem\IPlugin.cs" />
-    <Compile Include="PluginSystem\PluginEntry.cs" />
+    <Compile Include="PluginSystem\PluginUnit.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskSystem\ChildTaskNotSuccessedException.cs" />

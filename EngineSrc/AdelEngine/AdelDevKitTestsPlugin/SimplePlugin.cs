@@ -16,7 +16,7 @@ namespace AdelDevKitTestsPlugin
     [Export(typeof(IPlugin))]
     public class SimplePlugin : IPlugin
     {
-        public IEnumerable<IAddon> CreateAddons(DevKit aDevkit)
+        public IEnumerable<IAddon> CreateAddons()
         {
             var addons = new List<IAddon>();
             addons.Add(new SimpleAddon());

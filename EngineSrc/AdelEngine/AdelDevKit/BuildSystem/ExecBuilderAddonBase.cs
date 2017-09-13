@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdelDevKit.PluginSystem;
 using AdelDevKit.TaskSystem;
 
 namespace AdelDevKit.BuildSystem
@@ -13,6 +14,7 @@ namespace AdelDevKit.BuildSystem
     /// </summary>
     public abstract class ExecBuilderAddonBase : IExecBuilderAddon
     {
-        abstract public TaskSystem.Task CreateBuildTask();
+        public abstract void Setup(AddonSetupArg aArg);
+        public abstract TaskSystem.Task CreateBuildTask();
     }
 }
