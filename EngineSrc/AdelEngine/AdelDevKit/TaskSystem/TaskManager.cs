@@ -22,7 +22,7 @@ namespace AdelDevKit.TaskSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        public TaskManager()
+        internal TaskManager()
         {
             // 初期設定
             _ParallelCount = 8; // 暫定数

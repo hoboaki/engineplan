@@ -8,17 +8,14 @@ namespace AdelDevKit.BuildSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// 実行ファイルビルダーアドオン。
+    /// アプリケーションビルダーアドオン。
     /// </summary>
-    /// <remarks>
-    /// Exec は Executable（実行ファイル） の略。長すぎたので略しました。
-    /// </remarks>
-    public interface IExecBuilderAddon : PluginSystem.IAddon
+    public interface IBuilderAddon : PluginSystem.IAddon
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// アプリケーションをビルドするタスクを作成する。
         /// </summary>
-        TaskSystem.Task CreateBuildTask();
+        TaskSystem.Task CreateBuildTask(BuildArg aArg);
     }
 }
