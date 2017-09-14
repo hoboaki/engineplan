@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,30 +17,35 @@ namespace AdelDevKit.Setting.Platform
         /// <summary>
         /// コードネーム。（ロムファイル名に使用）
         /// </summary>
+        [JsonProperty()]
         public string Name { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// 表示名。分かりやすさ優先。
         /// </summary>
+        [JsonProperty()]
         public string DisplayName { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// 使用するビルダーの名前。
         /// </summary>
+        [JsonProperty()]
         public string BuilderName { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// ビルダーに通知するパラメータ群。
         /// </summary>
+        [JsonProperty()]
         public IReadOnlyDictionary<string, object> BuilderParams { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// コンパイルパラメータ群。
         /// </summary>
+        [JsonProperty()]
         public string[] CompileParams { get; internal set; }
     }
 }
