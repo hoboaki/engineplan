@@ -1,10 +1,10 @@
 # 文字コード：UTF-8
 PlatformSetting: 
     # コードネーム（英小文字・単語区切りハイフンで構成を推奨）
-    Name: "win-dx11"  
+    Name: "win-gl330"  
     
     # GUI上などで表示される名前（分かりやすさ優先）
-    DisplayName: "Win-Dx11"  
+    DisplayName: "Win-Gl330"  
 
     # デフォルトビルドターゲットの名前
     DefaultBuildTargetName: "PC-Product"
@@ -39,7 +39,7 @@ PlatformSetting:
             DisplayName: "PC（体験版）"
 
             # 使用するビルダー
-            BuilderName: "Adel.BuildkitWin.BuilderVisualStudio"
+            BuilderName: "Adel.BuildKitWin.BuilderVisualStudio"
 
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -58,7 +58,7 @@ PlatformSetting:
             DisplayName: "PC（GPUプロファイル版）"
 
             # 使用するビルダー
-            BuilderName: "Adel.BuildkitWin.BuilderVisualStudio"
+            BuilderName: "Adel.BuildKitWin.BuilderVisualStudio"
 
             # ビルダーに通知するパラメータ
             BuilderParams:
@@ -67,20 +67,20 @@ PlatformSetting:
             # 追加コンパイル時パラメータ
             CompileParams:
                 - "EDITION_PRODUCT"
-                - "ADEL_DEVKIT_WIN_DX11_ENABLE_GPU_PROFILE=1"
+                - "ADEL_DEVKIT_WIN_GL330_ENABLE_GPU_PROFILE=1"
 
     # Coreライブラリの定義
     CoreLib:
         # 使用するCoreOsライブラリ
-        # ["Adel.BuildkitWin.Os"(default)]
-        #CoreOs: "Adel.BuildkitWin.Os"
+        # ["Adel.BuildKitWin.Os"(default)]
+        #CoreOs: "Adel.BuildKitWin.Os"
 
         # 使用するCoreGfxライブラリ
-        # ["Adel.BuildkitWin.Dx11"(default), "Adel.BuildkitWin.Gl330"]
-        #CoreGfx: "Adel.BuildkitWin.Dx11"
+        # ["Adel.BuildKitWin.Gl330"(default), "Adel.BuildKitWin.Vulkan"]
+        #CoreGfx: "Adel.BuildKitWin.Gl330"
 
         # 使用するCoreSndライブラリ
-        # ["Adel.BuildkitWin.Dxsnd"(default), "Adel.BuildkitWin.Al"]
-        #CoreSnd: "Adel.BuildkitWin.Dxsnd"
+        # ["Adel.BuildKitWin.Al"(default)]
+        #CoreSnd: "Adel.BuildKitWin.Al"
 
 # EOF

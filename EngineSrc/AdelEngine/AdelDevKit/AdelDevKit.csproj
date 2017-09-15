@@ -67,6 +67,7 @@
     <Compile Include="PluginSystem\PluginUnit.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting\InvalidSettingException.cs" />
     <Compile Include="Setting\Platform\BuildTarget.cs" />
     <Compile Include="Setting\Platform\CoreLib.cs" />
     <Compile Include="Setting\Platform\Root.cs" />

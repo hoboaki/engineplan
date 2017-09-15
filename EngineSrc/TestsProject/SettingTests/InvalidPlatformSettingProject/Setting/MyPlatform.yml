@@ -1,0 +1,16 @@
+# 文字コード：UTF-8
+PlatformSetting: 
+    Name: "my_platform"  
+    DisplayName: "MyPlatform"  
+    DefaultBuildTargetName: "PC"
+    BuildTargets:
+        -
+            Name: "PC"
+            DisplayName: "PC（製品版）"
+            #BuilderName: "Adel.BuildKitWin.VisualStudioBuilder" # これがないエラー
+            #BuilderParams:
+            #    VisualStudioVersion: "2015"
+            #CompileParams:
+            #    - "EDITION_PRODUCT"
+
+# EOF

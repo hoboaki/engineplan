@@ -13,6 +13,10 @@ namespace AdelDevKit.Setting.Project
     /// </summary>
     public class Root
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクト名。
+        /// </summary>
         [JsonProperty()]
         public string Name { get; internal set; }
     }

@@ -90,18 +90,30 @@ namespace AdelDevKit.Setting
 
                         case "PlatformSetting":
                             {
-                                platformSettings.Add(new KeyValuePair<FileInfo, Platform.Root>(
-                                    yamlFileInfo,
-                                    jsonHead.Value.ToObject<Platform.Root>()
-                                    ));
+                                var obj = jsonHead.Value.ToObject<Platform.Root>();
+                                try
+                                {
+                                    obj.Verify(yamlFileInfo, Logger);
+                                    platformSettings.Add(new KeyValuePair<FileInfo, Platform.Root>(
+                                        yamlFileInfo,
+                                        obj
+                                        ));
+                                }
+                                catch (InvalidSettingException)
+                                {
+                                }
+                                catch (Exception exp)
+                                {
+                                    throw exp;
+                                }
                                 break;
                             }
                     }
                 }
                 catch (Exception exp)
                 {
-                    Logger.Error.WriteLine(string.Format("Yamlファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
-                    Logger.Error.WriteLine(exp.ToString());
+                    Logger.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
+                    Logger.Debug.WriteLine(exp.ToString());
                 }
             }
 
