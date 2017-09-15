@@ -58,6 +58,7 @@
     <Compile Include="CommandLog\LoggerTests.cs" />
     <Compile Include="PluginSystem\PluginManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting\SettingManagerTests.cs" />
     <Compile Include="TaskSystem\TaskManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
