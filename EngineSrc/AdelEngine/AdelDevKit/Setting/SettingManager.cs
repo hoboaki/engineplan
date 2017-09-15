@@ -13,8 +13,12 @@ namespace AdelDevKit.Setting
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// Setting を読み込みアクセスできるようにするクラス。
+    /// Setting 以下の設定ファイルを読み込みアクセスできるようにするクラス。
     /// </summary>
+    /// <remarks>
+    /// 本モジュールは静的な設定情報を扱います。
+    /// エディタ起動中に変わるような動的な設定情報は <see cref="Config.ConfigManager"/> で扱います。
+    /// </remarks>
     public class SettingManager
     {
         //------------------------------------------------------------------------------
@@ -22,7 +26,12 @@ namespace AdelDevKit.Setting
         /// コンストラクタ。
         /// </summary>
         internal SettingManager()
+            : this(new CommandLog.Logger())
         {
+        }
+        internal SettingManager(CommandLog.Logger aLog)
+        {
+            Logger = aLog;
         }
 
         //------------------------------------------------------------------------------
@@ -138,7 +147,7 @@ namespace AdelDevKit.Setting
         /// <summary>
         /// ロード処理のログ。
         /// </summary>
-        internal CommandLog.Logger Logger { get; private set; } = new CommandLog.Logger();
+        internal CommandLog.Logger Logger { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

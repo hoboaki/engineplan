@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="BuildSystem\BuildArg.cs" />
     <Compile Include="BuildSystem\BuildManager.cs" />
+    <Compile Include="BuildSystem\BuildTarget.cs" />
+    <Compile Include="BuildSystem\BuildVersion.cs" />
     <Compile Include="CommandLog\LogPacket.cs" />
     <Compile Include="CommandLog\LogStringWriteCallback.cs" />
     <Compile Include="DevKit.cs" />
@@ -61,11 +63,14 @@
     <Compile Include="CommandLog\LogStringWriter.cs" />
     <Compile Include="BuildSystem\BuilderAddonBase.cs" />
     <Compile Include="BuildSystem\IBuilderAddon.cs" />
+    <Compile Include="Config\ConfigManager.cs" />
+    <Compile Include="EnvInfo.cs" />
     <Compile Include="PluginSystem\AddonSetupArg.cs" />
     <Compile Include="PluginSystem\IAddon.cs" />
     <Compile Include="PluginSystem\IPlugin.cs" />
     <Compile Include="PluginSystem\PluginUnit.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
+    <Compile Include="Config\Build.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting\InvalidSettingException.cs" />
     <Compile Include="Setting\Platform\BuildTarget.cs" />
@@ -84,6 +89,7 @@
     <Compile Include="TaskSystem\TaskNodeManager.cs" />
     <Compile Include="TaskSystem\TaskState.cs" />
     <Compile Include="TaskSystem\TaskThread.cs" />
+    <Compile Include="Utility\FilePathUtil.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

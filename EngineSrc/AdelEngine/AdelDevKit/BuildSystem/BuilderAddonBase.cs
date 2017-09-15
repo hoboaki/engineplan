@@ -14,7 +14,9 @@ namespace AdelDevKit.BuildSystem
     /// </summary>
     public abstract class BuilderAddonBase : IBuilderAddon
     {
+
         public abstract void Setup(AddonSetupArg aArg);
+        public abstract string Name { get; }
         public abstract TaskSystem.Task CreateBuildTask(BuildArg aArg);
     }
 }

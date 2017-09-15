@@ -16,13 +16,25 @@ namespace AdelDevKit
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        internal DevKit()
+        internal DevKit(CommandLog.Logger aLog)
         {
+            // オブジェクト生成
             BuildManager = new BuildSystem.BuildManager();
+            ConfigManager = new Config.ConfigManager();
+            EnvInfo = new EnvInfo();
             PluginManager = new PluginSystem.PluginManager();
+            SettingManager = new Setting.SettingManager(aLog);
             TaskManager = new TaskSystem.TaskManager();
+
+            // プラグイン＆アドオンをロード
+            PluginManager.Load(null);
+
+            // 以下、依存関係順にセットアップ
+            SettingManager.Load(EnvInfo.SettingDir);
+            BuildManager.OnAddonLoaded(PluginManager.Addons, SettingManager);
         }
 
+        #region オブジェクト群（ABC順）
         //------------------------------------------------------------------------------
         /// <summary>
         /// ビルドマネージャ。
@@ -31,14 +43,34 @@ namespace AdelDevKit
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// 動的設定情報マネージャ。
+        /// </summary>
+        public Config.ConfigManager ConfigManager { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 環境情報。
+        /// </summary>
+        public EnvInfo EnvInfo { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// プラグインマネージャ。
         /// </summary>
         public PluginSystem.PluginManager PluginManager { get; private set; }
-        
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 静的設定情報マネージャ。
+        /// </summary>
+        public Setting.SettingManager SettingManager { get; private set; }
+
         //------------------------------------------------------------------------------
         /// <summary>
         /// タスクマネージャ。
         /// </summary>
         public TaskSystem.TaskManager TaskManager { get; private set; }
+
+        #endregion
     }
 }
