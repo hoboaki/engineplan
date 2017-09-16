@@ -57,9 +57,9 @@ namespace AdelDevKit.CoreLib
             System.Diagnostics.Debug.Assert(aPluginManager.IsLoaded);
 
             // アドオン収集
-            CoreOsAddons = aPluginManager.Addons.Where(x => x is ICoreOsAddon).Select(x => (ICoreOsAddon)x).ToArray();
-            CoreGfxAddons = aPluginManager.Addons.Where(x => x is ICoreGfxAddon).Select(x => (ICoreGfxAddon)x).ToArray();
-            CoreSndAddons = aPluginManager.Addons.Where(x => x is ICoreSndAddon).Select(x => (ICoreSndAddon)x).ToArray();
+            CoreOsAddons = aPluginManager.Addons.Where(x => x.Addon is ICoreOsAddon).Select(x => (ICoreOsAddon)x).ToArray();
+            CoreGfxAddons = aPluginManager.Addons.Where(x => x.Addon is ICoreGfxAddon).Select(x => (ICoreGfxAddon)x).ToArray();
+            CoreSndAddons = aPluginManager.Addons.Where(x => x.Addon is ICoreSndAddon).Select(x => (ICoreSndAddon)x).ToArray();
 
             // 重複チェック
         }

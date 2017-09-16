@@ -10,13 +10,13 @@ namespace AdelDevKit.PluginSystem
     /// <summary>
     /// アドオン情報。
     /// </summary>
-    class AddonInfo
+    class AddonInfo<TAddonType> where TAddonType:IAddon
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        internal AddonInfo(IAddon aAddon, PluginInfo aPluginInfo)
+        internal AddonInfo(TAddonType aAddon, PluginInfo aPluginInfo)
         {
             Addon = aAddon;
             PluginInfo = aPluginInfo;
@@ -26,7 +26,7 @@ namespace AdelDevKit.PluginSystem
         /// <summary>
         /// アドオン実体。
         /// </summary>
-        internal IAddon Addon { get; private set; }
+        internal TAddonType Addon { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

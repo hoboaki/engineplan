@@ -33,14 +33,14 @@ namespace AdelDevKit.PluginSystem
             var container = new CompositionContainer(catalog);
             var plugins = container.GetExportedValues<IPlugin>().ToArray();
 
-            var addons = new List<AddonInfo>();
+            var addons = new List<AddonInfo<IAddon>>();
             foreach (var plugin in plugins)
             {
                 var pluginInfo = new PluginInfo(
                     plugin,
                     new FileInfo(aDllDirInfo.FullName + "/" + (new FileInfo(plugin.GetType().Assembly.Location)).Name)
                     );
-                addons.AddRange(plugin.CreateAddons().Select(x => new AddonInfo(x, pluginInfo)));
+                addons.AddRange(plugin.CreateAddons().Select(x => new AddonInfo<IAddon>(x, pluginInfo)));
             }
             Addons = addons.ToArray();
         }
@@ -55,6 +55,6 @@ namespace AdelDevKit.PluginSystem
         /// <summary>
         /// Dllから提供されたアドオンオブジェクト群。
         /// </summary>
-        public AddonInfo[] Addons { get; private set; }
+        public AddonInfo<IAddon>[] Addons { get; private set; }
     }
 }

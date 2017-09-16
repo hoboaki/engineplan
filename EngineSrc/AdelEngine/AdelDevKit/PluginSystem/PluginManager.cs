@@ -36,7 +36,7 @@ namespace AdelDevKit.PluginSystem
         /// <summary>
         /// ロードした全アドオン。
         /// </summary>
-        internal AddonInfo[] Addons { get; private set; }
+        internal AddonInfo<IAddon>[] Addons { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -68,7 +68,7 @@ namespace AdelDevKit.PluginSystem
             PluginUnits = loadingPluginUnits.ToArray();
 
             // アドオンを収集
-            var loadingAddons = new List<AddonInfo>();
+            var loadingAddons = new List<AddonInfo<IAddon>>();
             foreach (var plugin in PluginUnits)
             {
                 loadingAddons.AddRange(plugin.Addons);
