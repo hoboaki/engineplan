@@ -165,19 +165,18 @@ namespace AdelDevKit.Setting
             }
 
             // 重複チェック
-            foreach (var platformSetting in platformSettings)
-            {
-                var sameNamePlatformSettings = platformSettings.Where(x => x.Value.Name == platformSetting.Value.Name).ToArray();
-                if (1 < sameNamePlatformSettings.Length)
+            Utility.ErrorCheckUtil.CheckExistSamePropertyEntry(
+                platformSettings,
+                (a, b) => { return a.Value.Name == b.Value.Name; },
+                (items) =>
                 {
-                    Logger.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", platformSetting.Value.Name, sameNamePlatformSettings.Length));
-                    foreach (var sameNamePlatformSetting in sameNamePlatformSettings)
+                    Logger.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length));
+                    foreach (var item in items)
                     {
-                        Logger.Warn.WriteLine(sameNamePlatformSetting.Key.FullName);
+                        Logger.Warn.WriteLine(item.Key.FullName);
                     }
-                    return;
                 }
-            }
+                );
 
             // 保存
             ProjectSetting = projectSettings[0].Value;

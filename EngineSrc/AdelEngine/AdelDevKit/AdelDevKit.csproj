@@ -96,6 +96,7 @@
     <Compile Include="TaskSystem\TaskNodeManager.cs" />
     <Compile Include="TaskSystem\TaskState.cs" />
     <Compile Include="TaskSystem\TaskThread.cs" />
+    <Compile Include="Utility\ErrorCheckUtil.cs" />
     <Compile Include="Utility\FilePathUtil.cs" />
   </ItemGroup>
   <ItemGroup />
