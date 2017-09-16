@@ -3,7 +3,7 @@ PlatformSetting:
     Name: "my_platform"  
     DisplayName: "MyPlatform"  
     DefaultBuildTargetName: "PC"
-    BuildTargets:
+    BuildTargetSettings:
         -
             Name: "PC"
             DisplayName: "PC（製品版）"

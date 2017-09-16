@@ -24,7 +24,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// ロードされたビルダーアドオン群。
         /// </summary>
-        public IBuilderAddon[] Addons { get; private set; }
+        public IBuilderAddon[] BuilderAddons { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -33,7 +33,7 @@ namespace AdelDevKit.BuildSystem
         internal void OnAddonLoaded(PluginSystem.IAddon[] aAddons, Setting.SettingManager aSettingManager)
         {
             // ビルダーアドオンを収集
-            Addons = aAddons.Where(x => x is IBuilderAddon).Select(x => (IBuilderAddon)x).ToArray();
+            BuilderAddons = aAddons.Where(x => x is IBuilderAddon).Select(x => (IBuilderAddon)x).ToArray();
 
             // BuildTarget を生成
             // ...

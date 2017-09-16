@@ -30,7 +30,7 @@ namespace AdelDevKit
             PluginManager.Load(null);
 
             // 以下、依存関係順にセットアップ
-            SettingManager.Load(EnvInfo.SettingDir);
+            SettingManager.Load(EnvInfo.ProjectSettingDir);
             BuildManager.OnAddonLoaded(PluginManager.Addons, SettingManager);
         }
 

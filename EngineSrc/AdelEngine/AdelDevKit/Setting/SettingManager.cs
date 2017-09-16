@@ -102,6 +102,7 @@ namespace AdelDevKit.Setting
                                 var obj = jsonHead.Value.ToObject<Platform.Root>();
                                 try
                                 {
+                                    obj.ResolveBuildTargetSettings();
                                     obj.Verify(yamlFileInfo, Logger);
                                     platformSettings.Add(new KeyValuePair<FileInfo, Platform.Root>(
                                         yamlFileInfo,

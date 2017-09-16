@@ -51,6 +51,37 @@ namespace AdelDevKit.Setting.Platform
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// Coreライブラリの設定。（null許容）
+        /// </summary>
+        [JsonProperty()]
+        public CoreLib CoreLib { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// デフォルトの設定をマージする。
+        /// </summary>
+        internal void MergeDefaultSetting(BuildTarget aDefaultSetting)
+        {
+            if (BuilderName == null)
+            {
+                BuilderName = aDefaultSetting.BuilderName;
+            }
+            if (BuilderParams == null)
+            {
+                BuilderParams = aDefaultSetting.BuilderParams;
+            }
+            if (CompileParams == null)
+            {
+                CompileParams = aDefaultSetting.CompileParams;
+            }
+            if (CoreLib == null)
+            {
+                CoreLib = aDefaultSetting.CoreLib;
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 設定に不正があったら例外を投げる。
         /// </summary>
         /// <exception cref="InvalidSettingException"/>

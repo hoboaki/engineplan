@@ -36,6 +36,18 @@ namespace AdelDevKit
         /// <summary>
         /// プロジェクト設定フォルダ。
         /// </summary>
-        public DirectoryInfo SettingDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Setting"); } }
+        public DirectoryInfo ProjectSettingDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Setting"); } }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクトプラグインフォルダ。
+        /// </summary>
+        public DirectoryInfo ProjectPluginDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Plugin"); } }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクトアセットフォルダ。
+        /// </summary>
+        public DirectoryInfo ProjectAssetDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Asset"); } }
     }
 }
