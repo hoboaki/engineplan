@@ -20,6 +20,23 @@ namespace AdelDevKit.PluginSystem
         internal PluginManager()
         {
         }
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロード済か。
+        /// </summary>
+        internal bool IsLoaded { get; private set; } = false;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロードしたプラグイン群。
+        /// </summary>
+        internal PluginUnit[] PluginUnits { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロードした全アドオン。
+        /// </summary>
+        internal AddonInfo[] Addons { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -43,7 +60,7 @@ namespace AdelDevKit.PluginSystem
                     var dllPath = pluginDir.FullName + @"\DevKitDll";
                     if (!Directory.Exists(dllPath))
                     {
-                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName) , dllPath);
+                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName), dllPath);
                     }
                     loadingPluginUnits.Add(new PluginUnit(new DirectoryInfo(dllPath)));
                 }
@@ -51,7 +68,7 @@ namespace AdelDevKit.PluginSystem
             PluginUnits = loadingPluginUnits.ToArray();
 
             // アドオンを収集
-            var loadingAddons = new List<IAddon>();
+            var loadingAddons = new List<AddonInfo>();
             foreach (var plugin in PluginUnits)
             {
                 loadingAddons.AddRange(plugin.Addons);
@@ -64,21 +81,13 @@ namespace AdelDevKit.PluginSystem
             {
                 foreach (var addon in plugin.Addons)
                 {
-                    addon.Setup(setupArg);
+                    addon.Addon.Setup(setupArg);
                 }
             }
+
+            // ロード済
+            IsLoaded = true;
         }
 
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロードしたプラグイン群。
-        /// </summary>
-        internal PluginUnit[] PluginUnits { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロードした全アドオン。
-        /// </summary>
-        internal IAddon[] Addons { get; private set; }
     }
 }

@@ -24,7 +24,6 @@ namespace AdelDevKitTestsPlugin
         }
 
         string SampleProperty { get; set; } = "This is Simple Plugin Property.";
-        string _SampleField = "This is Simple Plugin Field.";
         string SampleMethod() { return "This is Simple Plugin Method"; }
     }
 }

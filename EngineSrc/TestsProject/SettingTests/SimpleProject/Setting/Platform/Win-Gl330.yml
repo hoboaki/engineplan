@@ -21,16 +21,16 @@ PlatformSetting:
         # Coreライブラリの定義
         CoreLib:
             # 使用するCoreOsライブラリ
-            # ["Adel.BuildKitWin.Os"(default)]
-            #CoreOs: "Adel.BuildKitWin.Os"
+            # ["Adel.BuildKitWin.CoreOsWin"(default)]
+            #CoreOs: "Adel.BuildKitWin.CoreOsWin"
 
             # 使用するCoreGfxライブラリ
-            # ["Adel.BuildKitWin.Gl330"(default), "Adel.BuildKitWin.Vulkan"]
-            #CoreGfx: "Adel.BuildKitWin.Gl330"
+            # ["Adel.BuildKitWin.CoreGfxGl330"(default), "Adel.BuildKitWin.CoreGfxVulkan"]
+            #CoreGfx: "Adel.BuildKitWin.CoreGfxGl330"
 
             # 使用するCoreSndライブラリ
-            # ["Adel.BuildKitWin.Al"(default)]
-            #CoreSnd: "Adel.BuildKitWin.Al"
+            # ["Adel.BuildKitWin.CoreSndAl"(default)]
+            #CoreSnd: "Adel.BuildKitWin.CoreSndAl"
 
     # 各ビルドターゲット定義
     BuildTargetSettings:

@@ -25,6 +25,12 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// 使用するCoreLibの既定設定。
+        /// </summary>
+        Setting.Platform.CoreLib DefaultCoreLib { get; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// アプリケーションをビルドするタスクを作成する。
         /// </summary>
         TaskSystem.Task CreateBuildTask(BuildArg aArg);

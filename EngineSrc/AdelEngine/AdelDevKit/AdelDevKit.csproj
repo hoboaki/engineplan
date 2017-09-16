@@ -52,11 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildSystem\BuildArg.cs" />
+    <Compile Include="BuildSystem\Builder.cs" />
     <Compile Include="BuildSystem\BuildManager.cs" />
     <Compile Include="BuildSystem\BuildTarget.cs" />
     <Compile Include="BuildSystem\BuildVersion.cs" />
     <Compile Include="CommandLog\LogPacket.cs" />
     <Compile Include="CommandLog\LogStringWriteCallback.cs" />
+    <Compile Include="CoreLib\CoreLibManager.cs" />
+    <Compile Include="CoreLib\ICoreGfxAddon.cs" />
+    <Compile Include="CoreLib\ICoreOsAddon.cs" />
+    <Compile Include="CoreLib\ICoreSndAddon.cs" />
     <Compile Include="DevKit.cs" />
     <Compile Include="CommandLog\Logger.cs" />
     <Compile Include="CommandLog\LogKind.cs" />
@@ -65,9 +70,11 @@
     <Compile Include="BuildSystem\IBuilderAddon.cs" />
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="EnvInfo.cs" />
+    <Compile Include="PluginSystem\AddonInfo.cs" />
     <Compile Include="PluginSystem\AddonSetupArg.cs" />
     <Compile Include="PluginSystem\IAddon.cs" />
     <Compile Include="PluginSystem\IPlugin.cs" />
+    <Compile Include="PluginSystem\PluginInfo.cs" />
     <Compile Include="PluginSystem\PluginUnit.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
     <Compile Include="Config\Build.cs" />

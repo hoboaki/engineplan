@@ -36,6 +36,30 @@ namespace AdelDevKit.Setting
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// ロード済か。
+        /// </summary>
+        internal bool IsLoaded { get; private set; } = false;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロード処理のログ。
+        /// </summary>
+        internal CommandLog.Logger Logger { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクト設定。
+        /// </summary>
+        public Project.Root ProjectSetting { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プラットフォーム設定。
+        /// </summary>
+        public Platform.Root[] PlatformSettings { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 設定ファイルを全てロードする。
         /// </summary>
         internal void Load(DirectoryInfo aSettingDir)
@@ -158,24 +182,8 @@ namespace AdelDevKit.Setting
             // 保存
             ProjectSetting = projectSettings[0].Value;
             PlatformSettings = platformSettings.Select(x => x.Value).ToArray();
+            IsLoaded = true;
         }
 
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロード処理のログ。
-        /// </summary>
-        internal CommandLog.Logger Logger { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// プロジェクト設定。
-        /// </summary>
-        public Project.Root ProjectSetting { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// プラットフォーム設定。
-        /// </summary>
-        public Platform.Root[] PlatformSettings { get; private set; }
     }
 }

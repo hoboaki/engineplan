@@ -14,7 +14,6 @@ namespace AdelDevKitTestsPlugin
     class SimpleAddon : AdelDevKit.PluginSystem.IAddon
     {
         string SampleProperty { get; set; } = "This is Simple Addon Property.";
-        string _SampleField = "This is Simple Addon Field.";
         string SampleMethod() { return "This is Simple Addon Method"; }
 
         public void Setup(AddonSetupArg aArg)
