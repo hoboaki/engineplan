@@ -25,18 +25,18 @@ namespace AdelDevKit
             CoreLibManager = new CoreLib.CoreLibManager();
             EnvInfo = new EnvInfo();
             PluginManager = new PluginSystem.PluginManager();
-            SettingManager = new Setting.SettingManager(aLog);
+            SettingManager = new Setting.SettingManager();
             TaskManager = new TaskSystem.TaskManager();
 
             // プラグイン＆アドオンをロード
             {
                 var dirList = new List<DirectoryInfo>();
                 dirList.Add(EnvInfo.ProjectPluginDir);
-                PluginManager.Load(dirList.ToArray());
+                PluginManager.Load(aLog, dirList.ToArray());
             }
 
             // 以下、依存関係順にセットアップ
-            SettingManager.Load(EnvInfo.ProjectSettingDir);
+            SettingManager.Load(aLog, EnvInfo.ProjectSettingDir);
             BuildManager.Load(aLog, PluginManager, SettingManager, CoreLibManager);
         }
 

@@ -78,7 +78,7 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting パラメータ'{1}'が見つかりません。", aSrcFile.FullName, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             checkFunc(Name, nameof(Name));

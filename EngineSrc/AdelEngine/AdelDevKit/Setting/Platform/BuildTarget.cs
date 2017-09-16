@@ -93,7 +93,7 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting.BuildTarget パラメータ'{1}'が見つかりません。", aSrcFile.FullName, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             Action<object, string> checkFuncWithName = (aObject, aVariableName) =>
@@ -101,7 +101,7 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting.BuildTarget[name='{1}'] パラメータ'{2}'が見つかりません。", aSrcFile.FullName, Name, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             checkFunc(Name, nameof(Name));

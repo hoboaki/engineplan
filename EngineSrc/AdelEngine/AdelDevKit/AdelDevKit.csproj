@@ -58,6 +58,7 @@
     <Compile Include="BuildSystem\BuildVersion.cs" />
     <Compile Include="CommandLog\LogPacket.cs" />
     <Compile Include="CommandLog\LogStringWriteCallback.cs" />
+    <Compile Include="CommandLog\MessagedException.cs" />
     <Compile Include="CoreLib\CoreLibManager.cs" />
     <Compile Include="CoreLib\ICoreGfxAddon.cs" />
     <Compile Include="CoreLib\ICoreOsAddon.cs" />

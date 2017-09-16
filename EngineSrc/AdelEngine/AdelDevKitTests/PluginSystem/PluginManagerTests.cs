@@ -20,7 +20,8 @@ namespace AdelDevKit.PluginSystem.Tests
             pluginsDirs.Add(new DirectoryInfo(pluginsDirPath));
 
             var pluginManager = new PluginSystem.PluginManager();
-            pluginManager.Load(pluginsDirs.ToArray());
+            var log = new CommandLog.Logger();
+            pluginManager.Load(log, pluginsDirs.ToArray());
 
             Assert.IsTrue(0 < pluginManager.PluginUnits.Length);
             Assert.IsTrue(0 < pluginManager.Addons.Length);

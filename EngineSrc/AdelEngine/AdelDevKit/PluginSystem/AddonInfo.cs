@@ -33,5 +33,15 @@ namespace AdelDevKit.PluginSystem
         /// 所属するプラグイン。
         /// </summary>
         internal PluginInfo PluginInfo { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 別のアドオン型に変換した情報を取得。
+        /// </summary>
+        /// <typeparam name="TOtherType">コンバート後のアドオンの型。</typeparam>
+        internal AddonInfo<TOtherType> ConvertTo<TOtherType>() where TOtherType : IAddon
+        {
+            return new AddonInfo<TOtherType>((TOtherType)(object)Addon, PluginInfo);
+        }
     }
 }

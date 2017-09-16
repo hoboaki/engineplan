@@ -26,12 +26,7 @@ namespace AdelDevKit.Setting
         /// コンストラクタ。
         /// </summary>
         internal SettingManager()
-            : this(new CommandLog.Logger())
         {
-        }
-        internal SettingManager(CommandLog.Logger aLog)
-        {
-            Logger = aLog;
         }
 
         //------------------------------------------------------------------------------
@@ -39,12 +34,6 @@ namespace AdelDevKit.Setting
         /// ロード済か。
         /// </summary>
         internal bool IsLoaded { get; private set; } = false;
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロード処理のログ。
-        /// </summary>
-        internal CommandLog.Logger Logger { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -62,7 +51,7 @@ namespace AdelDevKit.Setting
         /// <summary>
         /// 設定ファイルを全てロードする。
         /// </summary>
-        internal void Load(DirectoryInfo aSettingDir)
+        internal void Load(CommandLog.Logger Log, DirectoryInfo aSettingDir)
         {
             // 存在しなければ何もしない
             if (!aSettingDir.Exists)
@@ -96,16 +85,16 @@ namespace AdelDevKit.Setting
                     var jsonObj = JObject.Parse(jsonText);
                     if (jsonObj.Type != JTokenType.Object)
                     {
-                        Logger.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が Map ではありません。({1})", yamlFileInfo.FullName, jsonObj.Type.ToString()));
-                        continue;
+                        Log.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が Map ではありません。({1})", yamlFileInfo.FullName, jsonObj.Type.ToString()));
+                        throw new CommandLog.MessagedException();
                     }
 
                     // 1つ目の要素を取得
                     var jsonProps = jsonObj.Properties().ToArray();
                     if (jsonProps.Length != 1)
                     {
-                        Logger.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が１つではありません。({1}個)", yamlFileInfo.FullName, jsonProps.Length));
-                        continue;
+                        Log.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が１つではありません。({1}個)", yamlFileInfo.FullName, jsonProps.Length));
+                        throw new CommandLog.MessagedException();
                     }
                     var jsonHead = jsonProps[0];
 
@@ -127,7 +116,7 @@ namespace AdelDevKit.Setting
                                 try
                                 {
                                     obj.ResolveBuildTargetSettings();
-                                    obj.Verify(yamlFileInfo, Logger);
+                                    obj.Verify(yamlFileInfo, Log);
                                     platformSettings.Add(new KeyValuePair<FileInfo, Platform.Root>(
                                         yamlFileInfo,
                                         obj
@@ -135,6 +124,7 @@ namespace AdelDevKit.Setting
                                 }
                                 catch (InvalidSettingException)
                                 {
+                                    throw new CommandLog.MessagedException();
                                 }
                                 catch (Exception exp)
                                 {
@@ -144,24 +134,28 @@ namespace AdelDevKit.Setting
                             }
                     }
                 }
+                catch (CommandLog.MessagedException exp)
+                {
+                    throw exp;
+                }
                 catch (Exception exp)
                 {
-                    Logger.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
-                    Logger.Warn.WriteLine(exp.ToString());
-                    return;
+                    Log.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
+                    Log.Warn.WriteLine(exp.ToString());
+                    throw new CommandLog.MessagedException();
                 }
             }
 
             // 総数チェック
             if (projectSettings.Count == 0)
             {
-                Logger.Error.WriteLine("プロジェクト設定ファイルが見つかりませんでした。");
-                return;
+                Log.Error.WriteLine("プロジェクト設定ファイルが見つかりませんでした。");
+                throw new CommandLog.MessagedException();
             }
             if (1 < projectSettings.Count)
             {
-                Logger.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
-                return;
+                Log.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
+                throw new CommandLog.MessagedException(); ;
             }
 
             // 重複チェック
@@ -170,10 +164,10 @@ namespace AdelDevKit.Setting
                 (a, b) => { return a.Value.Name == b.Value.Name; },
                 (items) =>
                 {
-                    Logger.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length));
+                    Log.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length));
                     foreach (var item in items)
                     {
-                        Logger.Warn.WriteLine(item.Key.FullName);
+                        Log.Warn.WriteLine(item.Key.FullName);
                     }
                 }
                 );

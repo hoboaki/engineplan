@@ -55,15 +55,27 @@ namespace AdelDevKit.BuildSystem
             System.Diagnostics.Debug.Assert(aCoreLibManager.IsLoaded);
 
             // ビルダーアドオンを収集
-            var addons = aPluginManager.Addons.Where(x => x is IBuilderAddon).Select(x => (IBuilderAddon)x).ToArray();
+            var addons = aPluginManager.Addons.Where(x => x.Addon is IBuilderAddon).Select(x => x.ConvertTo<IBuilderAddon>()).ToArray();
 
             // 重複チェック
+            Utility.ErrorCheckUtil.CheckExistSamePropertyEntry(
+                addons,
+                (a, b) => { return a.Addon.Name == b.Addon.Name; },
+                (items) =>
+                {
+                    aLog.Error.WriteLine(string.Format("'{0}'という名前の Builder アドオンが複数定義されています。({1}個)", items[0].Addon.Name, items.Length));
+                    foreach (var item in items)
+                    {
+                        aLog.Warn.WriteLine("型名'{0}' ファイル'{1}", item.Addon.GetType().FullName, item.PluginInfo.FileInfo.FullName);
+                    }
+                }
+                );
 
             // ビルダーを生成
             var builders = new List<Builder>();
             foreach (var addon in addons)
             {
-                builders.Add(new Builder(addon));
+                builders.Add(new Builder(addon.Addon));
             }
             Builders = builders.ToArray();
 

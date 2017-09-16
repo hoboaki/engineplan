@@ -14,30 +14,13 @@ namespace AdelDevKit.Utility
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// チェック結果。
-        /// </summary>
-        public enum CheckResult
-        {
-            /// <summary>
-            /// エラー無しで通過。
-            /// </summary>
-            NoError,
-
-            /// <summary>
-            /// エラー発生。
-            /// </summary>
-            Error,
-        }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
         /// 同じプロパティが存在するかチェックする関数。
         /// </summary>
         /// <param name="aCollection">エラーチェック対象となるコレクション。</param>
         /// <param name="aSameCheckFunc">エラー判定関数。</param>
         /// <param name="aOnErrorFunc">エラー時の関数。</param>
-        /// <returns></returns>
-        public static CheckResult CheckExistSamePropertyEntry<TType>(
+        /// <exception cref="Exception">エラーが発生したら投げられる。</exception>
+        public static void CheckExistSamePropertyEntry<TType>(
             IEnumerable<TType> aCollection, 
             Func<TType, TType, bool> aSameCheckFunc,
             Action<TType[]> aOnErrorFunc
@@ -49,10 +32,9 @@ namespace AdelDevKit.Utility
                 if (1 < items.Length)
                 {
                     aOnErrorFunc(items);
-                    return CheckResult.Error;
+                    throw new CommandLog.MessagedException();
                 }
             }
-            return CheckResult.NoError;
         }
     }
 }
