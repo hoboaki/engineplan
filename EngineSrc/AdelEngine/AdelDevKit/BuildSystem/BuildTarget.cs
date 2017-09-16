@@ -20,25 +20,45 @@ namespace AdelDevKit.BuildSystem
             CommandLog.Logger aLog,
             Setting.Platform.Root aPlatformSetting, 
             Setting.Platform.BuildTarget aBuildTargetSetting, 
-            Builder[] aBuilders
+            Builder[] aBuilders,
+            CoreLib.CoreLibManager aCoreLibManager
             )
         {
             PlatformSetting = aPlatformSetting;
             BuildTargetSetting = aBuildTargetSetting;
 
-            {// ビルダー検索
-                var builders = aBuilders.Where(x => x.Addon.Name == BuildTargetSetting.BuilderName).ToArray();
-                if (builders.Length == 0)
+            Builder = Utility.ErrorCheckUtil.GetUniqueItem(
+                aBuilders,
+                (x) => { return x.Addon.Addon.Name == BuildTargetSetting.BuilderName; },
+                () =>
                 {
                     aLog.Error.WriteLine("ビルドターゲット'{0}'で指定しているビルダー'{1}'が見つかりませんでした。", UniqueName, BuildTargetSetting.BuilderName);
-                    throw new Exception();
                 }
-                System.Diagnostics.Debug.Assert(builders.Length == 1); // SettingManager＆BuildManagerレベルで2個以上見つかることはないはず。
-                Builder = builders[0];
-            }
-            {// CoreOs検索
-
-            }
+                );
+            CoreOs = Utility.ErrorCheckUtil.GetUniqueItem(
+                aCoreLibManager.CoreOsAddons,
+                (x) => { return x.Addon.Name == CoreOsName; },
+                () =>
+                {
+                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreOs'{1}'が見つかりませんでした。", UniqueName, CoreOsName);
+                }
+                );
+            CoreGfx = Utility.ErrorCheckUtil.GetUniqueItem(
+                aCoreLibManager.CoreGfxAddons,
+                (x) => { return x.Addon.Name == CoreGfxName; },
+                () =>
+                {
+                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreGfxName);
+                }
+                );
+            CoreSnd = Utility.ErrorCheckUtil.GetUniqueItem(
+                aCoreLibManager.CoreSndAddons,
+                (x) => { return x.Addon.Name == CoreSndName; },
+                () =>
+                {
+                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreSndName);
+                }
+                );
         }
 
         //------------------------------------------------------------------------------
@@ -69,18 +89,69 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreOs。
         /// </summary>
-        CoreLib.ICoreOsAddon CoreOs { get; set; }
+        PluginSystem.AddonInfo<CoreLib.ICoreOsAddon> CoreOs { get; set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 使用する CoreOs の名前。
+        /// </summary>
+        string CoreOsName
+        {
+            get
+            {
+                var name = BuildTargetSetting.CoreLib?.CoreOs;
+                if (name == null)
+                {
+                    name = Builder.Addon.Addon.DefaultCoreLib.CoreOs;
+                }
+                return name;
+            }
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// 使用する CoreGfx。
         /// </summary>
-        CoreLib.ICoreGfxAddon CoreGfx { get; set; }
+        PluginSystem.AddonInfo<CoreLib.ICoreGfxAddon> CoreGfx { get; set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 使用する CoreGfx の名前。
+        /// </summary>
+        string CoreGfxName
+        {
+            get
+            {
+                var name = BuildTargetSetting.CoreLib?.CoreGfx;
+                if (name == null)
+                {
+                    name = Builder.Addon.Addon.DefaultCoreLib.CoreGfx;
+                }
+                return name;
+            }
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
         /// 使用する CoreSnd。
         /// </summary>
-        CoreLib.ICoreGfxAddon CoreSnd { get; set; }
+        PluginSystem.AddonInfo<CoreLib.ICoreSndAddon> CoreSnd { get; set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 使用する CoreSnd の名前。
+        /// </summary>
+        string CoreSndName
+        {
+            get
+            {
+                var name = BuildTargetSetting.CoreLib?.CoreSnd;
+                if (name == null)
+                {
+                    name = Builder.Addon.Addon.DefaultCoreLib.CoreSnd;
+                }
+                return name;
+            }
+        }
     }
 }

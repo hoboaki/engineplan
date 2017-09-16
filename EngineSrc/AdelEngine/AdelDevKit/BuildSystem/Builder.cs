@@ -16,7 +16,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        internal Builder(IBuilderAddon aAddon)
+        internal Builder(PluginSystem.AddonInfo<IBuilderAddon> aAddon)
         {
             Addon = aAddon;
         }
@@ -25,6 +25,6 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用するビルダーアドオン。
         /// </summary>
-        public IBuilderAddon Addon { get; private set; }
+        internal PluginSystem.AddonInfo<IBuilderAddon> Addon { get; private set; }
     }
 }

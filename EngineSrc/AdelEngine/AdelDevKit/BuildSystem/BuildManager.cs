@@ -71,11 +71,31 @@ namespace AdelDevKit.BuildSystem
                 }
                 );
 
+            // エラーチェック
+            foreach (var addon in addons)
+            {
+                if (addon.Addon.DefaultCoreLib.CoreOs == null)
+                {
+                    aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreOs が null です。", addon.Addon.Name);
+                    throw new CommandLog.MessagedException();
+                }
+                if (addon.Addon.DefaultCoreLib.CoreGfx == null)
+                {
+                    aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreGfx が null です。", addon.Addon.Name);
+                    throw new CommandLog.MessagedException();
+                }
+                if (addon.Addon.DefaultCoreLib.CoreSnd == null)
+                {
+                    aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreSnd が null です。", addon.Addon.Name);
+                    throw new CommandLog.MessagedException();
+                }
+            }
+
             // ビルダーを生成
             var builders = new List<Builder>();
             foreach (var addon in addons)
             {
-                builders.Add(new Builder(addon.Addon));
+                builders.Add(new Builder(addon));
             }
             Builders = builders.ToArray();
 
@@ -85,7 +105,7 @@ namespace AdelDevKit.BuildSystem
             {
                 foreach (var buildTargetSetting in platfomSetting.BuildTargetSettings)
                 {
-                    buildTargets.Add(new BuildSystem.BuildTarget(aLog, platfomSetting, buildTargetSetting, Builders));
+                    buildTargets.Add(new BuildSystem.BuildTarget(aLog, platfomSetting, buildTargetSetting, Builders, aCoreLibManager));
                 }
             }
             BuildTargets = buildTargets.ToArray();
