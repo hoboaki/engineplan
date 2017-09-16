@@ -123,7 +123,8 @@ namespace AdelDevKit.Setting
                 catch (Exception exp)
                 {
                     Logger.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
-                    Logger.Debug.WriteLine(exp.ToString());
+                    Logger.Warn.WriteLine(exp.ToString());
+                    return;
                 }
             }
 
@@ -137,6 +138,21 @@ namespace AdelDevKit.Setting
             {
                 Logger.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
                 return;
+            }
+
+            // 重複チェック
+            foreach (var platformSetting in platformSettings)
+            {
+                var sameNamePlatformSettings = platformSettings.Where(x => x.Value.Name == platformSetting.Value.Name).ToArray();
+                if (1 < sameNamePlatformSettings.Length)
+                {
+                    Logger.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", platformSetting.Value.Name, sameNamePlatformSettings.Length));
+                    foreach (var sameNamePlatformSetting in sameNamePlatformSettings)
+                    {
+                        Logger.Warn.WriteLine(sameNamePlatformSetting.Key.FullName);
+                    }
+                    return;
+                }
             }
 
             // 保存

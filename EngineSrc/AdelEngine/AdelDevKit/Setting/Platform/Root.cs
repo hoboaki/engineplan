@@ -16,7 +16,7 @@ namespace AdelDevKit.Setting.Platform
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// コードネーム。（英小文字・ハイフンで構成）
+        /// コードネーム。（パスカル英字・ハイフンで構成）
         /// </summary>
         [JsonProperty()]
         public string Name { get; internal set; }

@@ -1,7 +1,7 @@
 # 文字コード：UTF-8
 PlatformSetting: 
-    # コードネーム（英小文字・単語区切りハイフンで構成を推奨）
-    Name: "win-gl330"  
+    # コードネーム（パスカル英字・ハイフンで構成を推奨）
+    Name: "Win-Gl330"  
     
     # GUI上などで表示される名前（分かりやすさ優先）
     DisplayName: "Win-Gl330"  

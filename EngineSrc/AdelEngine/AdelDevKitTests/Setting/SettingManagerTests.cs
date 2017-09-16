@@ -27,7 +27,7 @@ namespace AdelDevKit.Setting.Tests
             Assert.IsTrue(settingManager.Logger.Text.Length == 0);
             Assert.IsTrue(settingManager.PlatformSettings.Length == 1);
             Assert.AreEqual("MyProject", settingManager.ProjectSetting.Name);
-            Assert.AreEqual("win-gl330", settingManager.PlatformSettings[0].Name);
+            Assert.AreEqual("Win-Gl330", settingManager.PlatformSettings[0].Name);
         }
 
         //------------------------------------------------------------------------------
@@ -56,6 +56,20 @@ namespace AdelDevKit.Setting.Tests
             settingManager.Load(new DirectoryInfo(testProjectDir));
             Assert.IsTrue(0 < settingManager.Logger.Text.Length);
             Assert.IsTrue(settingManager.ProjectSetting == null);
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 同名プラットフォーム設定エラーを捕捉するテスト。
+        /// </summary>
+        [TestMethod()]
+        public void SamePlatformNameErrorTest()
+        {
+            string testProjectDir = TestsProjectDirPath + @"SamePlatformNameErrorProject\Setting";
+            var settingManager = new SettingManager();
+            settingManager.Load(new DirectoryInfo(testProjectDir));
+            Assert.IsTrue(0 < settingManager.Logger.Text.Length);
+            Assert.IsTrue(settingManager.Logger.Text.Contains("複数定義"));
         }
 
     }
