@@ -1,7 +1,7 @@
 # 文字コード：UTF-8
 PlatformSetting: 
-    # コードネーム（英小文字・単語区切りハイフンで構成を推奨）
-    Name: "win-gl330"  
+    # コードネーム（パスカル英字・ハイフンで構成を推奨）
+    Name: "Win-Gl330"  
     
     # GUI上などで表示される名前（分かりやすさ優先）
     DisplayName: "Win-Gl330"  
@@ -9,8 +9,31 @@ PlatformSetting:
     # デフォルトビルドターゲットの名前
     DefaultBuildTargetName: "PC-Product"
     
-    # ビルドターゲット定義
-    BuildTargets:
+    # ビルドターゲットの既定設定
+    DefaultBuildTargetSetting:
+        # 使用するビルダー
+        BuilderName: "Adel.BuildKitWin.VisualStudioBuilder"
+
+        # ビルダーに通知するパラメータ
+        BuilderParams:
+            VisualStudioVersion: "2015"
+
+        # Coreライブラリの定義
+        CoreLib:
+            # 使用するCoreOsライブラリ
+            # ["Adel.BuildKitWin.CoreOsWin"(default)]
+            #CoreOs: "Adel.BuildKitWin.CoreOsWin"
+
+            # 使用するCoreGfxライブラリ
+            # ["Adel.BuildKitWin.CoreGfxGl330"(default), "Adel.BuildKitWin.CoreGfxVulkan"]
+            #CoreGfx: "Adel.BuildKitWin.CoreGfxGl330"
+
+            # 使用するCoreSndライブラリ
+            # ["Adel.BuildKitWin.CoreSndAl"(default)]
+            #CoreSnd: "Adel.BuildKitWin.CoreSndAl"
+
+    # 各ビルドターゲット定義
+    BuildTargetSettings:
         # 製品版
         -
             # コードネーム（ロムファイル名に使用）
@@ -19,15 +42,8 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（製品版）"
 
-            # 使用するビルダー
-            BuilderName: "Adel.BuildKitWin.VisualStudioBuilder"
-
-            # ビルダーに通知するパラメータ
-            BuilderParams:
-                VisualStudioVersion: "2015"
-
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_PRODUCT"
 
         # 体験版
@@ -38,15 +54,8 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（体験版）"
 
-            # 使用するビルダー
-            BuilderName: "Adel.BuildKitWin.BuilderVisualStudio"
-
-            # ビルダーに通知するパラメータ
-            BuilderParams:
-                VisualStudioVersion: "2015"
-
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_TRIAL"
 
         # GPUプロファイル版
@@ -57,30 +66,9 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（GPUプロファイル版）"
 
-            # 使用するビルダー
-            BuilderName: "Adel.BuildKitWin.BuilderVisualStudio"
-
-            # ビルダーに通知するパラメータ
-            BuilderParams:
-                VisualStudioVersion: "2015"
-
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_PRODUCT"
                 - "ADEL_DEVKIT_WIN_GL330_ENABLE_GPU_PROFILE=1"
-
-    # Coreライブラリの定義
-    CoreLib:
-        # 使用するCoreOsライブラリ
-        # ["Adel.BuildKitWin.Os"(default)]
-        #CoreOs: "Adel.BuildKitWin.Os"
-
-        # 使用するCoreGfxライブラリ
-        # ["Adel.BuildKitWin.Gl330"(default), "Adel.BuildKitWin.Vulkan"]
-        #CoreGfx: "Adel.BuildKitWin.Gl330"
-
-        # 使用するCoreSndライブラリ
-        # ["Adel.BuildKitWin.Al"(default)]
-        #CoreSnd: "Adel.BuildKitWin.Al"
 
 # EOF

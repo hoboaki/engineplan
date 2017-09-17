@@ -44,10 +44,41 @@ namespace AdelDevKit.Setting.Platform
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// コンパイルパラメータ群。
+        /// コンパイルマクロ群。
         /// </summary>
         [JsonProperty()]
-        public string[] CompileParams { get; internal set; } = new string[0];
+        public string[] CompileMacros { get; internal set; } = new string[0];
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// Coreライブラリの設定。（null許容）
+        /// </summary>
+        [JsonProperty()]
+        public CoreLib CoreLib { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// デフォルトの設定をマージする。
+        /// </summary>
+        internal void MergeDefaultSetting(BuildTarget aDefaultSetting)
+        {
+            if (BuilderName == null)
+            {
+                BuilderName = aDefaultSetting.BuilderName;
+            }
+            if (BuilderParams == null)
+            {
+                BuilderParams = aDefaultSetting.BuilderParams;
+            }
+            if (CompileMacros == null)
+            {
+                CompileMacros = aDefaultSetting.CompileMacros;
+            }
+            if (CoreLib == null)
+            {
+                CoreLib = aDefaultSetting.CoreLib;
+            }
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -62,7 +93,7 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting.BuildTarget パラメータ'{1}'が見つかりません。", aSrcFile.FullName, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             Action<object, string> checkFuncWithName = (aObject, aVariableName) =>
@@ -70,7 +101,7 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting.BuildTarget[name='{1}'] パラメータ'{2}'が見つかりません。", aSrcFile.FullName, Name, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             checkFunc(Name, nameof(Name));

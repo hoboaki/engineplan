@@ -13,8 +13,12 @@ namespace AdelDevKit.Setting
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// Setting を読み込みアクセスできるようにするクラス。
+    /// Setting 以下の設定ファイルを読み込みアクセスできるようにするクラス。
     /// </summary>
+    /// <remarks>
+    /// 本モジュールは静的な設定情報を扱います。
+    /// エディタ起動中に変わるような動的な設定情報は <see cref="Config.ConfigManager"/> で扱います。
+    /// </remarks>
     public class SettingManager
     {
         //------------------------------------------------------------------------------
@@ -27,9 +31,27 @@ namespace AdelDevKit.Setting
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// ロード済か。
+        /// </summary>
+        internal bool IsLoaded { get; private set; } = false;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクト設定。
+        /// </summary>
+        public Project.Root ProjectSetting { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プラットフォーム設定。
+        /// </summary>
+        public Platform.Root[] PlatformSettings { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 設定ファイルを全てロードする。
         /// </summary>
-        internal void Load(DirectoryInfo aSettingDir)
+        internal void Load(CommandLog.Logger Log, DirectoryInfo aSettingDir)
         {
             // 存在しなければ何もしない
             if (!aSettingDir.Exists)
@@ -63,16 +85,16 @@ namespace AdelDevKit.Setting
                     var jsonObj = JObject.Parse(jsonText);
                     if (jsonObj.Type != JTokenType.Object)
                     {
-                        Logger.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が Map ではありません。({1})", yamlFileInfo.FullName, jsonObj.Type.ToString()));
-                        continue;
+                        Log.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が Map ではありません。({1})", yamlFileInfo.FullName, jsonObj.Type.ToString()));
+                        throw new CommandLog.MessagedException();
                     }
 
                     // 1つ目の要素を取得
                     var jsonProps = jsonObj.Properties().ToArray();
                     if (jsonProps.Length != 1)
                     {
-                        Logger.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が１つではありません。({1}個)", yamlFileInfo.FullName, jsonProps.Length));
-                        continue;
+                        Log.Error.WriteLine(string.Format("設定ファイル'{0}'のルート要素が１つではありません。({1}個)", yamlFileInfo.FullName, jsonProps.Length));
+                        throw new CommandLog.MessagedException();
                     }
                     var jsonHead = jsonProps[0];
 
@@ -93,7 +115,8 @@ namespace AdelDevKit.Setting
                                 var obj = jsonHead.Value.ToObject<Platform.Root>();
                                 try
                                 {
-                                    obj.Verify(yamlFileInfo, Logger);
+                                    obj.ResolveBuildTargetSettings();
+                                    obj.Verify(yamlFileInfo, Log);
                                     platformSettings.Add(new KeyValuePair<FileInfo, Platform.Root>(
                                         yamlFileInfo,
                                         obj
@@ -101,6 +124,7 @@ namespace AdelDevKit.Setting
                                 }
                                 catch (InvalidSettingException)
                                 {
+                                    throw new CommandLog.MessagedException();
                                 }
                                 catch (Exception exp)
                                 {
@@ -110,46 +134,49 @@ namespace AdelDevKit.Setting
                             }
                     }
                 }
+                catch (CommandLog.MessagedException exp)
+                {
+                    throw exp;
+                }
                 catch (Exception exp)
                 {
-                    Logger.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
-                    Logger.Debug.WriteLine(exp.ToString());
+                    Log.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
+                    Log.Warn.WriteLine(exp.ToString());
+                    throw new CommandLog.MessagedException();
                 }
             }
 
             // 総数チェック
             if (projectSettings.Count == 0)
             {
-                Logger.Error.WriteLine("プロジェクト設定ファイルが見つかりませんでした。");
-                return;
+                Log.Error.WriteLine("プロジェクト設定ファイルが見つかりませんでした。");
+                throw new CommandLog.MessagedException();
             }
             if (1 < projectSettings.Count)
             {
-                Logger.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
-                return;
+                Log.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
+                throw new CommandLog.MessagedException(); ;
             }
+
+            // 重複チェック
+            Utility.ErrorCheckUtil.CheckExistSamePropertyEntry(
+                platformSettings,
+                (a, b) => { return a.Value.Name == b.Value.Name; },
+                (items) =>
+                {
+                    Log.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length));
+                    foreach (var item in items)
+                    {
+                        Log.Warn.WriteLine(item.Key.FullName);
+                    }
+                }
+                );
 
             // 保存
             ProjectSetting = projectSettings[0].Value;
             PlatformSettings = platformSettings.Select(x => x.Value).ToArray();
+            IsLoaded = true;
         }
 
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロード処理のログ。
-        /// </summary>
-        internal CommandLog.Logger Logger { get; private set; } = new CommandLog.Logger();
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// プロジェクト設定。
-        /// </summary>
-        public Project.Root ProjectSetting { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// プラットフォーム設定。
-        /// </summary>
-        public Platform.Root[] PlatformSettings { get; private set; }
     }
 }

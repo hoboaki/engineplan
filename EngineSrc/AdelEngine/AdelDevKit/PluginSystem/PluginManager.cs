@@ -20,6 +20,23 @@ namespace AdelDevKit.PluginSystem
         internal PluginManager()
         {
         }
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロード済か。
+        /// </summary>
+        internal bool IsLoaded { get; private set; } = false;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロードしたプラグイン群。
+        /// </summary>
+        internal PluginUnit[] PluginUnits { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ロードした全アドオン。
+        /// </summary>
+        internal AddonInfo<IAddon>[] Addons { get; private set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -27,7 +44,7 @@ namespace AdelDevKit.PluginSystem
         /// </summary>
         /// <param name="aPluginRootDirectories">*.aeplugin フォルダが置かれているルートフォルダ群。</param>
         /// <exception cref="FileNotFoundException">*.aeplugin 以下に命名規則通りの DLL ファイルがない場合に投げられます。</exception>
-        internal void Load(DirectoryInfo[] aPluginRootDirectories)
+        internal void Load(CommandLog.Logger aLog, DirectoryInfo[] aPluginRootDirectories)
         {
             // メモ：
             // もし本関数が重くなることがあれば
@@ -43,7 +60,8 @@ namespace AdelDevKit.PluginSystem
                     var dllPath = pluginDir.FullName + @"\DevKitDll";
                     if (!Directory.Exists(dllPath))
                     {
-                        throw new FileNotFoundException(String.Format("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName) , dllPath);
+                        aLog.Error.WriteLine("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName);
+                        throw new FileNotFoundException("Not found dll error.", dllPath);
                     }
                     loadingPluginUnits.Add(new PluginUnit(new DirectoryInfo(dllPath)));
                 }
@@ -51,7 +69,7 @@ namespace AdelDevKit.PluginSystem
             PluginUnits = loadingPluginUnits.ToArray();
 
             // アドオンを収集
-            var loadingAddons = new List<IAddon>();
+            var loadingAddons = new List<AddonInfo<IAddon>>();
             foreach (var plugin in PluginUnits)
             {
                 loadingAddons.AddRange(plugin.Addons);
@@ -64,21 +82,13 @@ namespace AdelDevKit.PluginSystem
             {
                 foreach (var addon in plugin.Addons)
                 {
-                    addon.Setup(setupArg);
+                    addon.Addon.Setup(setupArg);
                 }
             }
+
+            // ロード済
+            IsLoaded = true;
         }
 
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロードしたプラグイン群。
-        /// </summary>
-        internal PluginUnit[] PluginUnits { get; private set; }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ロードした全アドオン。
-        /// </summary>
-        internal IAddon[] Addons { get; private set; }
     }
 }

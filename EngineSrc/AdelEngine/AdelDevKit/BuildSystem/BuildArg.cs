@@ -12,5 +12,29 @@ namespace AdelDevKit.BuildSystem
     /// </summary>
     public class BuildArg
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ビルダーパラメータ情報。
+        /// </summary>
+        public BuilderParamInfo BuilderParamInfo { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// CoreLib から渡された NativeCodeBuildInfo。
+        /// </summary>
+        public NativeCodeBuildInfo CoreLibBuildInfo { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ビルド対象の CpuBit。
+        /// </summary>
+        public CpuBit CpuBit { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ビルド対象の Endian。
+        /// </summary>
+        public Endian Endian { get; internal set; }
+
     }
 }

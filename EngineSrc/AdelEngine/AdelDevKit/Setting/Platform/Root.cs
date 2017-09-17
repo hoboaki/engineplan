@@ -16,7 +16,7 @@ namespace AdelDevKit.Setting.Platform
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// コードネーム。（英小文字・ハイフンで構成）
+        /// コードネーム。（パスカル英字・ハイフンで構成）
         /// </summary>
         [JsonProperty()]
         public string Name { get; internal set; }
@@ -37,17 +37,33 @@ namespace AdelDevKit.Setting.Platform
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ビルドターゲットの定義。
+        /// デフォルトのビルドターゲット設定。（null許容）
         /// </summary>
         [JsonProperty()]
-        public BuildTarget[] BuildTargets { get; internal set; }
+        public BuildTarget DefaultBuildTargetSetting { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// Coreライブラリの設定。（null許容）
+        /// ビルドターゲット設定群。
         /// </summary>
         [JsonProperty()]
-        public CoreLib CoreLib { get; internal set; }
+        public BuildTarget[] BuildTargetSettings { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 各ビルドターゲット設定にデフォルトのビルドターゲット設定を適用。
+        /// </summary>
+        public void ResolveBuildTargetSettings()
+        {
+            if (DefaultBuildTargetSetting == null)
+            {
+                return;
+            }
+            foreach (var buildTarget in BuildTargetSettings)
+            {
+                buildTarget.MergeDefaultSetting(DefaultBuildTargetSetting);
+            }
+        }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -62,14 +78,14 @@ namespace AdelDevKit.Setting.Platform
                 if (aObject == null)
                 {
                     aLog.Error.WriteLine(string.Format("設定ファイル'{0}'の PlatformSetting パラメータ'{1}'が見つかりません。", aSrcFile.FullName, aVariableName));
-                    isInvalid = false;
+                    isInvalid = true;
                 }
             };
             checkFunc(Name, nameof(Name));
             checkFunc(DisplayName, nameof(DisplayName));
             checkFunc(DefaultBuildTargetName, nameof(DefaultBuildTargetName));
-            checkFunc(BuildTargets, nameof(BuildTargets));
-            foreach (var buildTarget in BuildTargets)
+            checkFunc(BuildTargetSettings, nameof(BuildTargetSettings));
+            foreach (var buildTarget in BuildTargetSettings)
             {
                 buildTarget.Verify(aSrcFile, aLog);
             }
