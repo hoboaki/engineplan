@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelEngineScript", "AdelEngineScript\AdelEngineScript.csproj", "{DCB343DA-F5F2-43B3-A7A2-F4D1034E9573}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommand", "AdelCommand\AdelCommand.csproj", "{BFFF9B1D-9137-4893-AE2D-B65465D0914E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5} = {02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTests", "AdelDevKitTests\AdelDevKitTests.csproj", "{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTests", "AdelDevK
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTestsPlugin", "AdelDevKitTestsPlugin\AdelDevKitTestsPlugin.csproj", "{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommandMain", "AdelCommandMain\AdelCommandMain.csproj", "{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +57,10 @@ Global
 		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

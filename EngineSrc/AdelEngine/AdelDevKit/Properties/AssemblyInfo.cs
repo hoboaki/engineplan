@@ -36,4 +36,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // 公開設定
+[assembly: InternalsVisibleTo("AdelCommandMain")]
 [assembly: InternalsVisibleTo("AdelDevKitTests")]
