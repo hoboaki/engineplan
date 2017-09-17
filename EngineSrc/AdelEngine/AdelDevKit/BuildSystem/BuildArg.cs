@@ -20,20 +20,21 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ビルドに使う CoreOs。
+        /// CoreLib から渡された NativeCodeBuildInfo。
         /// </summary>
-        public CoreLib.ICoreOsAddon CoreOs { get; internal set; }
-        
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// ビルドに使う CoreGfx。
-        /// </summary>
-        public CoreLib.ICoreGfxAddon CoreGfx { get; internal set; }
+        public NativeCodeBuildInfo CoreLibBuildInfo { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ビルドに使う CoreSnd。
+        /// ビルド対象の CpuBit。
         /// </summary>
-        public CoreLib.ICoreSndAddon CoreSnd { get; internal set; }
+        public CpuBit CpuBit { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ビルド対象の Endian。
+        /// </summary>
+        public Endian Endian { get; internal set; }
+
     }
 }
