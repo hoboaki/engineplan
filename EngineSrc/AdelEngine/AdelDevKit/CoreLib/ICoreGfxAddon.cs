@@ -20,5 +20,11 @@ namespace AdelDevKit.CoreLib
         /// この名前は検索のキーとして使われます。他のアドオンとは異なるユニークな名前を指定してください。
         /// </remarks>
         string Name { get; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ネイティブコードビルドに必要な情報を作成する。
+        /// </summary>
+        BuildSystem.NativeCodeBuildInfo CreateNativeCodeBulidInfo(CreateNativeCodeBuildInfoArg aArg);
     }
 }

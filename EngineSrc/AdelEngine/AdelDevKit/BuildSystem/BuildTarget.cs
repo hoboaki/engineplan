@@ -26,6 +26,7 @@ namespace AdelDevKit.BuildSystem
         {
             PlatformSetting = aPlatformSetting;
             BuildTargetSetting = aBuildTargetSetting;
+            BuilderParamInfo = new BuilderParamInfo(BuildTargetSetting);
 
             Builder = Utility.ErrorCheckUtil.GetUniqueItem(
                 aBuilders,
@@ -81,6 +82,12 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// ビルダーに渡すパラメータ情報。
+        /// </summary>
+        public BuilderParamInfo BuilderParamInfo { get; private set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 使用するビルダー。
         /// </summary>
         internal Builder Builder { get; private set; }
@@ -95,7 +102,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreOs の名前。
         /// </summary>
-        string CoreOsName
+        public string CoreOsName
         {
             get
             {
@@ -118,7 +125,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreGfx の名前。
         /// </summary>
-        string CoreGfxName
+        public string CoreGfxName
         {
             get
             {
@@ -141,7 +148,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreSnd の名前。
         /// </summary>
-        string CoreSndName
+        public string CoreSndName
         {
             get
             {

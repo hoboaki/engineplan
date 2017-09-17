@@ -42,8 +42,8 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（製品版）"
 
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_PRODUCT"
 
         # 体験版
@@ -54,8 +54,8 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（体験版）"
 
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_TRIAL"
 
         # GPUプロファイル版
@@ -66,8 +66,8 @@ PlatformSetting:
             # 表示名（分かりやすさ優先）
             DisplayName: "PC（GPUプロファイル版）"
 
-            # 追加コンパイル時パラメータ
-            CompileParams:
+            # 追加コンパイルマクロ
+            CompileMacros:
                 - "EDITION_PRODUCT"
                 - "ADEL_DEVKIT_WIN_GL330_ENABLE_GPU_PROFILE=1"
 

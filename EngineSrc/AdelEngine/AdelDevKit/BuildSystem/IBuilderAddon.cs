@@ -8,7 +8,7 @@ namespace AdelDevKit.BuildSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// アプリケーションビルダーアドオン。
+    /// 実行ファイルビルダーアドオン。
     /// </summary>
     public interface IBuilderAddon : PluginSystem.IAddon
     {
@@ -34,5 +34,17 @@ namespace AdelDevKit.BuildSystem
         /// アプリケーションをビルドするタスクを作成する。
         /// </summary>
         TaskSystem.Task CreateBuildTask(BuildArg aArg);
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 指定のビルドパラメータでビルドする際の CpuBit を取得する。
+        /// </summary>
+        CpuBit GetCpuBit(BuilderParamInfo aParam);
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 指定のビルドパラメータでビルドする際の Endian を取得する。
+        /// </summary>
+        Endian GetEndian(BuilderParamInfo aParam);
     }
 }

@@ -10,7 +10,7 @@ PlatformSetting:
             BuilderName: "Adel.BuildKitWin.VisualStudioBuilder" # これがないエラー
             #BuilderParams:
             #    VisualStudioVersion: "2015"
-            #CompileParams:
+            #CompileMacros:
             #    - "EDITION_PRODUCT"
 
 # EOF

@@ -44,10 +44,10 @@ namespace AdelDevKit.Setting.Platform
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// コンパイルパラメータ群。
+        /// コンパイルマクロ群。
         /// </summary>
         [JsonProperty()]
-        public string[] CompileParams { get; internal set; } = new string[0];
+        public string[] CompileMacros { get; internal set; } = new string[0];
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -70,9 +70,9 @@ namespace AdelDevKit.Setting.Platform
             {
                 BuilderParams = aDefaultSetting.BuilderParams;
             }
-            if (CompileParams == null)
+            if (CompileMacros == null)
             {
-                CompileParams = aDefaultSetting.CompileParams;
+                CompileMacros = aDefaultSetting.CompileMacros;
             }
             if (CoreLib == null)
             {
