@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("AdelDevKit")]
+[assembly: AssemblyTitle("AdelCommandMain")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("hoboaki")]
-[assembly: AssemblyProduct("AdelDevKit")]
-[assembly: AssemblyCopyright("Copyright © hoboaki 2017")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("AdelCommandMain")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // このプロジェクトが COM に公開される場合、次の GUID が typelib の ID になります
-[assembly: Guid("40355c67-9083-47f5-8f44-517393f5697d")]
+[assembly: Guid("02ad57c7-d4f2-43b6-8185-76d25dfa0dc5")]
 
 // アセンブリのバージョン情報は次の 4 つの値で構成されています:
 //
@@ -34,7 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-// 公開設定
-[assembly: InternalsVisibleTo("AdelCommandMain")]
-[assembly: InternalsVisibleTo("AdelDevKitTests")]

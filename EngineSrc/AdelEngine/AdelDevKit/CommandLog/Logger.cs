@@ -65,7 +65,8 @@ namespace AdelDevKit.CommandLog
                 }
             }
         }
-
+        StringBuilder _TextStringBuilder = new StringBuilder();
+        Dictionary<LogKind, LogStringWriter> _Writers = new Dictionary<LogKind, LogStringWriter>();
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -86,11 +87,7 @@ namespace AdelDevKit.CommandLog
                 }
             }
         }
-
-        //------------------------------------------------------------------------------
-        StringBuilder _TextStringBuilder = new StringBuilder();
         List<LogPacket> _Packets = new List<LogPacket>();
-        Dictionary<LogKind, LogStringWriter> _Writers = new Dictionary<LogKind, LogStringWriter>();
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -130,6 +127,28 @@ namespace AdelDevKit.CommandLog
             lock (writer)
             {
                 return writer.GetStringBuilder().ToString();
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// コンソールに内容をダンプする。
+        /// </summary>
+        public void DumpToConsole()
+        {
+            foreach(var packet in Packets)
+            {
+                switch(packet.Kind)
+                {
+                    case LogKind.Warn:
+                    case LogKind.Error:
+                        Console.Error.Write(packet.Text);
+                        break;
+
+                    default:
+                        Console.Write(packet.Text);
+                        break;
+                }
             }
         }
     }
