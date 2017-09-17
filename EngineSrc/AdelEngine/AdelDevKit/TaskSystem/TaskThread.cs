@@ -65,6 +65,9 @@ namespace AdelDevKit.TaskSystem
         }
 
         //------------------------------------------------------------------------------
+        public bool IsFinished { get; private set; } = false;
+
+        //------------------------------------------------------------------------------
         PullNextTaskFunc _PullNextTaskFunc;
         PushChildTaskFunc _PushChildTaskFunc;
         ChildTaskWaitStartedCallback _WaitStartedCallback;
@@ -119,6 +122,9 @@ namespace AdelDevKit.TaskSystem
                     waitAllChildTaskDoneFunc
                     ));
             }
+
+            // 終了
+            IsFinished = true;
         }
     }
 }

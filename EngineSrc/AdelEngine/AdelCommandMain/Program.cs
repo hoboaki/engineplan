@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AdelDevKit;
+using AdelDevKit.CommandLog;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,6 +12,8 @@ namespace AdelCommandMain
 {
     class Program
     {
+        static int ExitCodeError { get { return 1; } }
+
         static int Main(string[] aArgs)
         {
             // 引数解析
@@ -16,7 +21,7 @@ namespace AdelCommandMain
             if (aArgs.Length == 0)
             {
                 opt.PrintUsage();
-                return 1;
+                return ExitCodeError;
             }
             try
             {
@@ -27,12 +32,36 @@ namespace AdelCommandMain
                 if (opt.CommandKinds.Count == 0)
                 {
                     Console.Error.WriteLine("[エラー] コマンドが指定されていません。");
-                    return 1;
+                    return ExitCodeError;
                 }
             }
             catch (Exception)
             {
-                return 1;
+                return ExitCodeError;
+            }
+
+            // オブジェクト生成
+            var log = new AdelDevKit.CommandLog.Logger();
+            try
+            {
+                using (var devKit = new DevKit(log, new DirectoryInfo(opt.ProjectDir)))
+                {
+                    devKit.Load(log);
+                }
+            }
+            catch(MessagedException)
+            {
+                log.Error.WriteLine("エラーが発生したため処理を中断しました。");
+                log.DumpToConsole();
+                return ExitCodeError;
+            }
+            catch(Exception exp)
+            {
+                log.Error.WriteLine(exp.Message);
+                log.Warn.WriteLine(exp.ToString());
+                log.Error.WriteLine("エラーが発生したため処理を中断しました。");
+                log.DumpToConsole();
+                return ExitCodeError;
             }
 
             // 実行

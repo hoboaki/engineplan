@@ -98,6 +98,9 @@ namespace AdelDevKit.CoreLib
                     }
                 }
                 );
+
+            // 完了
+            IsLoaded = true;
         }
     }
 }

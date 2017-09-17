@@ -12,8 +12,11 @@ namespace AdelDevKit
     /// フォルダパスといった環境に関する情報を提供するクラス。
     /// </summary>
     /// <remarks>
-    /// 各パスは Windows でも Mac でも動作する
-    /// Unix パス形式（フォルダ区切りが'\'ではなく'\'）の形式で格納されています。
+    /// DirectoryInfo のパスは .Net の実装依存になります。
+    /// （Windows では DOS パス形式で格納されていることが確認されています。）
+    /// 
+    /// DevKit ライブラリでは、各パスを Windows でも Mac でも動作する
+    /// Unix パス形式（フォルダ区切りが'\'ではなく'\'）の形式で処理していることが多いです。
     /// 
     /// Windows API に渡す場合は DOS パス形式を要求されるものがあるため
     /// その場合は <see cref="Utility.FilePathUtil"/> を使って DOS パス形式に変換してください。
@@ -30,7 +33,23 @@ namespace AdelDevKit
         /// <summary>
         /// プロジェクトのルートフォルダ。
         /// </summary>
-        public DirectoryInfo ProjectRootDir { get; internal set; }
+        public DirectoryInfo ProjectRootDir
+        {
+            get
+            {
+                return _DirectoryInfo;
+            }
+            internal set
+            {
+                var fullName = Utility.FilePathUtil.ToUnixPath(new DirectoryInfo(value.FullName).FullName);
+                if (fullName.LastIndexOf("/") == fullName.Length - 1)
+                {
+                    fullName = fullName.Substring(0, fullName.Length - 1);
+                }
+                _DirectoryInfo = new DirectoryInfo(fullName);
+            }
+        }
+        DirectoryInfo _DirectoryInfo;
 
         //------------------------------------------------------------------------------
         /// <summary>

@@ -154,6 +154,6 @@ namespace AdelCommandMain
         /// <summary>
         /// プロジェクトフォルダパス。
         /// </summary>
-        public string ProjectDir { get; set; } = null;
+        public string ProjectDir { get; set; } = Directory.GetCurrentDirectory();
     }
 }

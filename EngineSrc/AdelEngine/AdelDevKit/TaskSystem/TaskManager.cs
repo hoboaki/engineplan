@@ -120,6 +120,52 @@ namespace AdelDevKit.TaskSystem
 
                 // スレッド終了
                 _DoExitThread = true;
+
+                // 全てのスレッドが終了するまで待つ
+                while (true)
+                {
+                    // 活動中のスレッドがないかチェックする
+                    bool isContinue = false;
+                    lock (this)
+                    {
+                        foreach (var thread in _ActiveThreads)
+                        {
+                            if (!thread.IsFinished)
+                            {
+                                isContinue = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!isContinue)
+                    {
+                        break;
+                    }
+
+                    // スレッドを起こす
+                    lock (this)
+                    {
+                        // 一時停止中スレッドは一時停止解除
+                        while (0 < _SuspendInfos.Count())
+                        {
+                            var wakeupInfo = _SuspendInfos[0];
+                            _SuspendInfos.RemoveAt(0);
+                            _ActiveThreads.Add(wakeupInfo.Thread);
+                            _ActiveWaitEvents.Add(wakeupInfo.WakeEvent);
+                        }
+
+                        // スレッドを起こす
+                        AutoResetEvent[] wakeEvents = _ActiveWaitEvents.ToArray();
+                        _ActiveWaitEvents.Clear();
+                        foreach (var wakeEvent in wakeEvents)
+                        {
+                            wakeEvent.Set();
+                        }
+                    }
+                    
+                    // 少し寝る
+                    Thread.Sleep(100);
+                }
             }
         }
 

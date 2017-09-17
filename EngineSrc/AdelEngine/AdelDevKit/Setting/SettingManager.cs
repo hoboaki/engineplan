@@ -53,10 +53,11 @@ namespace AdelDevKit.Setting
         /// </summary>
         internal void Load(CommandLog.Logger Log, DirectoryInfo aSettingDir)
         {
-            // 存在しなければ何もしない
+            // 存在しなければエラー
             if (!aSettingDir.Exists)
             {
-                return;
+                Log.Error.WriteLine("設定ファイルフォルダ'{0}'が存在しません。", aSettingDir.FullName);
+                throw new CommandLog.MessagedException();
             }
 
             // ymlファイルを検索
@@ -140,7 +141,7 @@ namespace AdelDevKit.Setting
                 }
                 catch (Exception exp)
                 {
-                    Log.Error.WriteLine(string.Format("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName));
+                    Log.Error.WriteLine("設定ファイル'{0}'の読み込み処理中に不明なエラーが発生しました。", yamlFileInfo.FullName);
                     Log.Warn.WriteLine(exp.ToString());
                     throw new CommandLog.MessagedException();
                 }
@@ -154,7 +155,12 @@ namespace AdelDevKit.Setting
             }
             if (1 < projectSettings.Count)
             {
-                Log.Error.WriteLine(string.Format("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count));
+                Log.Error.WriteLine("プロジェクト設定ファイルが複数存在します。({0}個)", projectSettings.Count);
+                throw new CommandLog.MessagedException(); ;
+            }
+            if (platformSettings.Count == 0)
+            {
+                Log.Error.WriteLine("プラットフォーム設定ファイルが１つもありません。");
                 throw new CommandLog.MessagedException(); ;
             }
 
@@ -164,7 +170,7 @@ namespace AdelDevKit.Setting
                 (a, b) => { return a.Value.Name == b.Value.Name; },
                 (items) =>
                 {
-                    Log.Error.WriteLine(string.Format("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length));
+                    Log.Error.WriteLine("'{0}'という名前のプラットフォームが複数定義されています。({1}個)", items[0].Value.Name, items.Length);
                     foreach (var item in items)
                     {
                         Log.Warn.WriteLine(item.Key.FullName);
