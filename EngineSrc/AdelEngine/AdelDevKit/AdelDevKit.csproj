@@ -85,6 +85,7 @@
     <Compile Include="PluginSystem\AddonSetupArg.cs" />
     <Compile Include="PluginSystem\IAddon.cs" />
     <Compile Include="PluginSystem\IPlugin.cs" />
+    <Compile Include="PluginSystem\PluginBase.cs" />
     <Compile Include="PluginSystem\PluginInfo.cs" />
     <Compile Include="PluginSystem\PluginUnit.cs" />
     <Compile Include="PluginSystem\PluginManager.cs" />
