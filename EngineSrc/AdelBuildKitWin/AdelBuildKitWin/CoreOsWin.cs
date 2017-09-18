@@ -9,26 +9,31 @@ using AdelDevKit.PluginSystem;
 
 namespace AdelBuildKitWin
 {
+    //------------------------------------------------------------------------------
+    /// <summary>
+    /// Windows 用 CoreOs。
+    /// </summary>
     class CoreOsWin : CoreOsAddonBase
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// Name の static 版。
+        /// </summary>
         public static string StaticName { get { return nameof(AdelBuildKitWin) + "." + nameof(CoreOsWin); } }
 
-        public override string Name
+        //------------------------------------------------------------------------------
+        #region CoreOsAddonBase の実装
+        public override void Setup(AddonSetupArg aArg)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
         }
+        
+        public override string Name {  get { return StaticName; } }
 
         public override NativeCodeBuildInfo CreateNativeCodeBulidInfo(CreateNativeCodeBuildInfoArg aArg)
         {
-            throw new NotImplementedException();
+            return new NativeCodeBuildInfo();
         }
 
-        public override void Setup(AddonSetupArg aArg)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

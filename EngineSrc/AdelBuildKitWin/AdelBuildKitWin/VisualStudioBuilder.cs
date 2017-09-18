@@ -11,8 +11,14 @@ using AdelDevKit.TaskSystem;
 
 namespace AdelBuildKitWin
 {
+    //------------------------------------------------------------------------------
+    /// <summary>
+    /// VisualStudio 用のビルダー。
+    /// </summary>
     class VisualStudioBuilder : BuilderAddonBase
     {
+        //------------------------------------------------------------------------------
+        #region BuilderAddonBase の実装
         public override void Setup(AddonSetupArg aArg)
         {
         }
@@ -63,5 +69,7 @@ namespace AdelBuildKitWin
         {
             return Endian.LittleEndian;
         }
+
+        #endregion
     }
 }

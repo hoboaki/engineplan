@@ -13,6 +13,9 @@ namespace AdelBuildKitWin
         {
             var addons = new List<IAddon>();
             addons.Add(new VisualStudioBuilder());
+            addons.Add(new CoreOsWin());
+            addons.Add(new CoreGfxGl330());
+            addons.Add(new CoreSndAl());
             return addons;
         }
     }

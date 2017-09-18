@@ -9,26 +9,31 @@ using AdelDevKit.PluginSystem;
 
 namespace AdelBuildKitWin
 {
+    //------------------------------------------------------------------------------
+    /// <summary>
+    /// OpenAL 実装の CoreSnd。
+    /// </summary>
     class CoreSndAl : CoreSndAddonBase
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// Name の static 版。
+        /// </summary>
         public static string StaticName { get { return nameof(AdelBuildKitWin) + "." + nameof(CoreSndAl); } }
 
-        public override string Name
+        //------------------------------------------------------------------------------
+        #region CoreSndAddonBase の実装
+        public override void Setup(AddonSetupArg aArg)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
         }
+
+        public override string Name { get { return StaticName; } }
 
         public override NativeCodeBuildInfo CreateNativeCodeBulidInfo(CreateNativeCodeBuildInfoArg aArg)
         {
-            throw new NotImplementedException();
+            return new NativeCodeBuildInfo();
         }
 
-        public override void Setup(AddonSetupArg aArg)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }
