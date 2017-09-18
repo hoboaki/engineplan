@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLog\ConsoleLogger.cs" />
     <Compile Include="CoreLib\CoreOsAddonBase.cs" />
     <Compile Include="CoreLib\CoreSndAddonBase.cs" />
     <Compile Include="ExecutableType.cs" />
