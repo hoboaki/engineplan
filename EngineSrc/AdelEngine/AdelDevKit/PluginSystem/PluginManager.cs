@@ -44,7 +44,7 @@ namespace AdelDevKit.PluginSystem
         /// </summary>
         /// <param name="aPluginRootDirectories">*.aeplugin フォルダが置かれているルートフォルダ群。</param>
         /// <exception cref="FileNotFoundException">*.aeplugin 以下に命名規則通りの DLL ファイルがない場合に投げられます。</exception>
-        internal void Load(CommandLog.Logger aLog, DirectoryInfo[] aPluginRootDirectories)
+        internal void Load(CommandLog.Logger aLog, EnvInfo aEnvInfo, DirectoryInfo[] aPluginRootDirectories)
         {
             // メモ：
             // もし本関数が重くなることがあれば
@@ -77,9 +77,13 @@ namespace AdelDevKit.PluginSystem
             Addons = loadingAddons.ToArray();
 
             // アドオンをセットアップ
-            var setupArg = new AddonSetupArg();
             foreach (var plugin in PluginUnits)
             {
+                var setupArg = new AddonSetupArg()
+                {
+                    EnvInfo = aEnvInfo,
+                    PluginDir = plugin.DllDirInfo.Parent,
+                };
                 foreach (var addon in plugin.Addons)
                 {
                     addon.Addon.Setup(setupArg);

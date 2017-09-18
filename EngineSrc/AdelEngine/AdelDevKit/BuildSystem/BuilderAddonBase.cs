@@ -18,7 +18,9 @@ namespace AdelDevKit.BuildSystem
         public abstract void Setup(AddonSetupArg aArg);
 
         public abstract string Name { get; }
-        public abstract Setting.Platform.CoreLib DefaultCoreLib { get; }
+        public abstract string DefaultCoreOs { get; }
+        public abstract string DefaultCoreGfx { get; }
+        public abstract string DefaultCoreSnd { get; }
         public abstract TaskSystem.Task CreateBuildTask(BuildArg aArg);
         public abstract CpuBit GetCpuBit(BuilderParamInfo aParam);
         public abstract Endian GetEndian(BuilderParamInfo aParam);

@@ -14,7 +14,7 @@ namespace AdelDevKit.BuildSystem
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ビルダーの名前。（例：Adel.BuildKitWin.VisualStudioBuilder）
+        /// ビルダーの名前。（例：AdelBuildKitWin.VisualStudioBuilder）
         /// </summary>
         /// <remarks>
         /// この名前はビルダーの検索で使われます。他のビルダーとは異なるユニークな名前を指定してください。
@@ -25,9 +25,21 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// 使用するCoreLibの既定設定。
+        /// 使用する CoreOs の既定設定。
         /// </summary>
-        Setting.Platform.CoreLib DefaultCoreLib { get; }
+        string DefaultCoreOs { get; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 使用する CoreGfx の既定設定。
+        /// </summary>
+        string DefaultCoreGfx { get; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 使用する CoreSnd の既定設定。
+        /// </summary>
+        string DefaultCoreSnd { get; }
 
         //------------------------------------------------------------------------------
         /// <summary>

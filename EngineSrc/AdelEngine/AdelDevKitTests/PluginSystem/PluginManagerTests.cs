@@ -21,7 +21,8 @@ namespace AdelDevKit.PluginSystem.Tests
 
             var pluginManager = new PluginSystem.PluginManager();
             var log = new CommandLog.Logger();
-            pluginManager.Load(log, pluginsDirs.ToArray());
+            var envInfo = new EnvInfo();
+            pluginManager.Load(log, envInfo, pluginsDirs.ToArray());
 
             Assert.IsTrue(0 < pluginManager.PluginUnits.Length);
             Assert.IsTrue(0 < pluginManager.Addons.Length);

@@ -7,7 +7,7 @@ PlatformSetting:
         -
             Name: "PC"
             DisplayName: "PC（製品版）"
-            BuilderName: "Adel.BuildKitWin.VisualStudioBuilder"
+            BuilderName: "AdelBuildKitWin.VisualStudioBuilder"
             #BuilderParams:
             #    VisualStudioVersion: "2015"
             #CompileMacros:

@@ -128,7 +128,7 @@ namespace AdelDevKit
                 {
                     dirList.Add(EnvInfo.ProjectPluginDir);
                 }
-                PluginManager.Load(aLog, dirList.ToArray());
+                PluginManager.Load(aLog, EnvInfo, dirList.ToArray());
             }
 
             // 以下、依存関係順にセットアップ
