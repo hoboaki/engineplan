@@ -74,17 +74,17 @@ namespace AdelDevKit.BuildSystem
             // エラーチェック
             foreach (var addon in addons)
             {
-                if (addon.Addon.DefaultCoreLib.CoreOs == null)
+                if (addon.Addon.DefaultCoreOs == null)
                 {
                     aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreOs が null です。", addon.Addon.Name);
                     throw new CommandLog.MessagedException();
                 }
-                if (addon.Addon.DefaultCoreLib.CoreGfx == null)
+                if (addon.Addon.DefaultCoreGfx == null)
                 {
                     aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreGfx が null です。", addon.Addon.Name);
                     throw new CommandLog.MessagedException();
                 }
-                if (addon.Addon.DefaultCoreLib.CoreSnd == null)
+                if (addon.Addon.DefaultCoreSnd == null)
                 {
                     aLog.Error.WriteLine("ビルダー{0} のデフォルト CoreSnd が null です。", addon.Addon.Name);
                     throw new CommandLog.MessagedException();

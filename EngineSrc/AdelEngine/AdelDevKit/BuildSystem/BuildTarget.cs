@@ -109,7 +109,7 @@ namespace AdelDevKit.BuildSystem
                 var name = BuildTargetSetting.CoreLib?.CoreOs;
                 if (name == null)
                 {
-                    name = Builder.Addon.Addon.DefaultCoreLib.CoreOs;
+                    name = Builder.Addon.Addon.DefaultCoreOs;
                 }
                 return name;
             }
@@ -132,7 +132,7 @@ namespace AdelDevKit.BuildSystem
                 var name = BuildTargetSetting.CoreLib?.CoreGfx;
                 if (name == null)
                 {
-                    name = Builder.Addon.Addon.DefaultCoreLib.CoreGfx;
+                    name = Builder.Addon.Addon.DefaultCoreGfx;
                 }
                 return name;
             }
@@ -155,7 +155,7 @@ namespace AdelDevKit.BuildSystem
                 var name = BuildTargetSetting.CoreLib?.CoreSnd;
                 if (name == null)
                 {
-                    name = Builder.Addon.Addon.DefaultCoreLib.CoreSnd;
+                    name = Builder.Addon.Addon.DefaultCoreSnd;
                 }
                 return name;
             }

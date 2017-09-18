@@ -14,7 +14,7 @@ namespace AdelDevKit.CoreLib
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// ライブラリの名前。（例：Adel.BuildKitWin.CoreGfxGl330）
+        /// ライブラリの名前。（例：AdelBuildKitWin.CoreGfxGl330）
         /// </summary>
         /// <remarks>
         /// この名前は検索のキーとして使われます。他のアドオンとは異なるユニークな名前を指定してください。
