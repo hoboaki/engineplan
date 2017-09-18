@@ -12,8 +12,10 @@ namespace AdelCommandMain
 {
     class Program
     {
-        static int ExitCodeError { get { return 1; } }
-
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// エントリーポイント。
+        /// </summary>
         static int Main(string[] aArgs)
         {
             // 引数解析
@@ -41,7 +43,7 @@ namespace AdelCommandMain
             }
 
             // オブジェクト生成
-            var log = new AdelDevKit.CommandLog.Logger();
+            var log = new AdelDevKit.CommandLog.ConsoleLogger();
             try
             {
                 using (var devKit = new DevKit(log, new DirectoryInfo(opt.ProjectDir)))
@@ -52,7 +54,6 @@ namespace AdelCommandMain
             catch(MessagedException)
             {
                 log.Error.WriteLine("エラーが発生したため処理を中断しました。");
-                log.DumpToConsole();
                 return ExitCodeError;
             }
             catch(Exception exp)
@@ -60,7 +61,6 @@ namespace AdelCommandMain
                 log.Error.WriteLine(exp.Message);
                 log.Warn.WriteLine(exp.ToString());
                 log.Error.WriteLine("エラーが発生したため処理を中断しました。");
-                log.DumpToConsole();
                 return ExitCodeError;
             }
 
@@ -68,5 +68,11 @@ namespace AdelCommandMain
             Console.WriteLine("Hello AdelCommand. {0}", Assembly.GetExecutingAssembly().Location);
             return 0;
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// エラー終了時の終了コード。
+        /// </summary>
+        static int ExitCodeError { get { return 1; } }
     }
 }

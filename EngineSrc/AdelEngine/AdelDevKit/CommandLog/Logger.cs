@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,21 +74,22 @@ namespace AdelDevKit.CommandLog
         /// ログを出力順に格納したパケット群。
         /// </summary>
         /// <remarks>
-        /// 呼び出し時に格納されたパケットを格納した配列を返します。
-        /// 呼び出し以降に格納されたパケットが戻り値の配列に積まれることはありません。
         /// 本プロパティはログの種類によって色分けして表示したいときに使うことを想定しています。
+        /// 本プロパティのコレクション操作は Add のみで Move や Remove は発生しません。
         /// </remarks>
-        public LogPacket[] Packets
+        public ReadOnlyObservableCollection<LogPacket> Packets
         {
             get
             {
-                lock (this)
+                if (_Packets == null)
                 {
-                    return _Packets.ToArray();
+                    _Packets = new ReadOnlyObservableCollection<LogPacket>(_PacketsImpl);
                 }
+                return _Packets;
             }
         }
-        List<LogPacket> _Packets = new List<LogPacket>();
+        ObservableCollection<LogPacket> _PacketsImpl = new ObservableCollection<LogPacket>();
+        ReadOnlyObservableCollection<LogPacket> _Packets;
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -102,7 +104,7 @@ namespace AdelDevKit.CommandLog
                     lock (this)
                     {
                         _TextStringBuilder.Append(str);
-                        _Packets.Add(new LogPacket(aKind, str));
+                        _PacketsImpl.Add(new LogPacket(aKind, str));
                     }
                 };
                 _Writers.Add(aKind, new LogStringWriter(new LogStringWriteCallback(callback)));
