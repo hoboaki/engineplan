@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!-- プロジェクトの依存関係の挿入 -->
-  <!--%%AutoGenInsertProjectReference%%-->
+  <!--__AutoGenInsertProjectReference__-->
   <!-- ex. -->
   <!--
   <ItemGroup>
@@ -17,22 +17,22 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionDebug%%|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|x64'">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionDeveop%%|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDeveop__|x64'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionFinal%%|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|x64'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionReview%%|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|x64'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionDebug%%|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
@@ -54,8 +54,8 @@
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <IntDir>%%AutoGenIntDir%%</IntDir>
-    <OutDir>%%AutoGenOutDir%%</OutDir>
+    <IntDir>__AutoGenIntDir__</IntDir>
+    <OutDir>__AutoGenOutDir__</OutDir>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
 
@@ -73,21 +73,21 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionDebug%%|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>%%AutoGenPreprocessorDefinitionsBuildVersionDebug%%;_CONSOLE;_DEBUG;AE_LIBRARY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionDebug__;_CONSOLE;_DEBUG;AE_LIBRARY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionDevelop%%|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDevelop__|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>%%AutoGenPreprocessorDefinitionsBuildVersionDevelop%%;_CONSOLE;AE_LIBRARY_DEVELOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionDevelop__;_CONSOLE;AE_LIBRARY_DEVELOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -95,12 +95,12 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionFinal%%|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>%%AutoGenPreprocessorDefinitionsBuildVersionFinal%%;AE_LIBRARY_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionFinal__;AE_LIBRARY_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -108,12 +108,12 @@
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='%%AutoGenConfigurationBuildVersionReview%%|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>%%AutoGenPreprocessorDefinitionsBuildVersionReview%%;_CONSOLE;AE_LIBRARY_REVIEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionReview__;_CONSOLE;AE_LIBRARY_REVIEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
