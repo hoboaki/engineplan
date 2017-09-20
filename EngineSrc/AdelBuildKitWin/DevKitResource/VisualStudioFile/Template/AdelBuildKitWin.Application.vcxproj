@@ -29,7 +29,10 @@
     <!--__AutoGenInsertSourceFiles__-->
     <!-- ex. -->
     <!--
-      <ClCompile Include="..\src\AeBase\display\Main.cpp" />
+      <ClInclude Include="module2\Header.h" />
+      <ClCompile Include="..\src\AeBase\display\Main.cpp >
+        <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+      </ClCompile>
     -->
   </ItemGroup>
 
