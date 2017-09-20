@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- 構成設定 -->
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDebug__|x64">
+      <Configuration>__AutoGenConfigurationBuildVersionDebug__</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDevelop__|x64">
+      <Configuration>__AutoGenConfigurationBuildVersionDevelop__</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionFinal__|x64">
+      <Configuration>__AutoGenConfigurationBuildVersionFinal__</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionReview__|x64">
+      <Configuration>__AutoGenConfigurationBuildVersionReview__</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <!-- Microsoft.Cpp.Defaults.cpp のインポート -->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <!-- ソースコードの列挙 -->
+  <ItemGroup>
+    <!--__AutoGenInsertSourceFiles__-->
+    <!-- ex. -->
+    <!--
+      <ClCompile Include="..\src\AeBase\display\Main.cpp" />
+    -->
+  </ItemGroup>
+
+  <!-- プロジェクト設定 -->
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>__AutoGenProjectGuid__</ProjectGuid>
+    <RootNamespace>__AutoGenRootNamespace__</RootNamespace>
+  </PropertyGroup>
+
+  <!-- 共通設定のインポート -->
+  <Import Project="__AutoGenApplicationProps__" />
+</Project>
