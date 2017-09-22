@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 # MSBuild定義
 $msBuildExe = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
 function ExecMsBuild ($arg) {
-    Start-Process -FilePath $msBuildExe -ArgumentList $arg -Wait -NoNewWindow
-    #& $msBuildExe /p:Configuration=Release ./DevKitProject/AdelBuildKitWin.csproj
+    $cmd = "`"$msBuildExe`"" + " " + $arg
+    Invoke-Expression "& `"$msBuildExe`" $arg"
     if (!$?) {
         echo "MsBuild Failed. $LASTEXITCODE"
         exit 1
