@@ -96,7 +96,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreOs。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreOsAddon> CoreOs { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreOsAddon> CoreOs { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -119,7 +119,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreGfx。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreGfxAddon> CoreGfx { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreGfxAddon> CoreGfx { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -142,7 +142,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreSnd。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreSndAddon> CoreSnd { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreSndAddon> CoreSnd { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

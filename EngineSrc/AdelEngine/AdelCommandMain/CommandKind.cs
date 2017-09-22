@@ -13,18 +13,23 @@ namespace AdelCommandMain
     public enum CommandKind
     {
         /// <summary>
-        /// ビルド。
+        /// ビルドして実行ファイルを作成する。
         /// </summary>
         Build,
 
         /// <summary>
-        /// クリーン。
+        /// ビルドした成果物をクリーンする。
         /// </summary>
         Clean,
 
         /// <summary>
-        /// リビルド。
+        /// <see cref="Clean"/> と <see cref="Build"/> をする。
         /// </summary>
         Rebuild,
+
+        /// <summary>
+        /// IDEプロジェクトファイルを更新する。
+        /// </summary>
+        UpdateIdeProject,
     }
 }

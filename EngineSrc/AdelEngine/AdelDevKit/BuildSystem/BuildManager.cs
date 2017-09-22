@@ -109,6 +109,34 @@ namespace AdelDevKit.BuildSystem
                 }
             }
             BuildTargets = buildTargets.ToArray();
+            System.Diagnostics.Debug.Assert(0 < BuildTargets.Length); // Setting の Verify() の時点で1つ以上あることは保証されているはず。
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// IDEプロジェクトを作成する。
+        /// </summary>
+        internal void CreateIdeProjectFile(BuildTarget aTarget)
+        {
+            // チェック
+            System.Diagnostics.Debug.Assert(aTarget != null);
+
+            // 作成
+            var coreLibArg = new CoreLib.CreateNativeCodeBuildInfoArg()
+            {
+            };
+            var buildArg = new BuildArg()
+            {
+                BuilderParamInfo = new BuildSystem.BuilderParamInfo(aTarget.BuildTargetSetting),
+                CoreOsBuildInfo = aTarget.CoreOs.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                CoreSndBuildInfo = aTarget.CoreSnd.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                IsDevelopMode = true,
+            };
+            buildArg.CpuBit = aTarget.Builder.Addon.Addon.GetCpuBit(buildArg.BuilderParamInfo);
+            buildArg.Endian = aTarget.Builder.Addon.Addon.GetEndian(buildArg.BuilderParamInfo);
+            aTarget.Builder.Addon.Addon.CreateIdeProjectFile(buildArg);
+        }
+
     }
 }
