@@ -60,6 +60,7 @@ namespace AdelBuildKitWin
 
         public override void CreateIdeProjectFile(BuildArg aArg)
         {
+            // フォルダの選定
             DirectoryInfo mainRootDir = null;
             DirectoryInfo commonRootDir = null;
             DirectoryInfo devKitResDir = null;
@@ -76,12 +77,20 @@ namespace AdelBuildKitWin
                 devKitResDir = new DirectoryInfo(dir.FullName + "/DevKitResource");
             }
 
+            // ファイル関連の定義
             string prefix = string.Format("{0}_{1}_{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name);
             FileInfo mainProjFile = new FileInfo(string.Format("{0}/{1}_Main.vcxproj", mainRootDir.FullName, prefix));
+            FileInfo mainPropsFile = new FileInfo(string.Format("{0}/{1}_Main.props", mainRootDir.FullName, prefix));
             FileInfo commonProjFile = new FileInfo(string.Format("{0}/{1}_Common.vcxproj", commonRootDir.FullName, prefix));
-            string mainProjGuid = "{63f2214b-f796-4c0b-908f-c4b6e559e72b}";
+            FileInfo commonPropsFile = new FileInfo(string.Format("{0}/{1}_Common.props", commonRootDir.FullName, prefix));
+            FileInfo mainProjFileTmp = new FileInfo(mainProjFile.FullName + ".tmp");
+            FileInfo mainPropsFileTmp = new FileInfo(mainPropsFile.FullName + ".tmp");
+            FileInfo commonProjFileTmp = new FileInfo(commonProjFile.FullName + ".tmp");
+            FileInfo commonPropsFileTmp = new FileInfo(commonPropsFile.FullName + ".tmp");
+            string mainProjGuid = "{63f2214b-f796-4c0b-908f-c4b6e559e72b}"; // GUIDは事前生成したものを使用
             string commonProjGuid = "{b36e614f-3f96-4f39-b375-dfe703bccc23}";
 
+            // マクロ生成
             string macroCommon = "";
             foreach (var macro in aArg.BuildTargetSetting.CompileMacros)
             {
@@ -99,15 +108,14 @@ namespace AdelBuildKitWin
             {
                 macroCommon += macro + ";";
             }
-
             string macroDebug = macroCommon + "AE_LIBRARY_DEBUG";
             string macroDevelop = macroCommon + "AE_LIBRARY_DEVELOP";
             string macroReview = macroCommon + "AE_LIBRARY_REVIEW";
             string macroFinal = macroCommon + "AE_LIBRARY_FINAL";
 
+            // 置換タグ辞書生成
             var tagAutoGenRootNamespace = "__AutoGenRootNamespace__";
-            var tagAutoGenProjectGuid = "__AutoGenProjectGuid__";
-            
+            var tagAutoGenProjectGuid = "__AutoGenProjectGuid__";            
             var autoGenReplaceTags = new Dictionary<string, string>();
             autoGenReplaceTags.Add("__AutoGenConfigurationBuildVersionDebug__", nameof(BuildVersion.Debug));
             autoGenReplaceTags.Add("__AutoGenConfigurationBuildVersionDevelop__", nameof(BuildVersion.Develop));
