@@ -1,19 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-  <!-- プロジェクトの依存関係の挿入 -->
-  <ItemGroup>
-    <!--__AutoGenInsertProjectReference__-->
-    <!-- ex. -->
-    <!--
-    <ProjectReference Include="..\..\library\windows\AeBase.vcxproj">
-      <Project>{f7cceea1-49f4-475f-839a-4b75237368b6}</Project>
-    </ProjectReference>
-    -->
-  </ItemGroup>
   
   <!-- Microsoft.Cpp.props インポート前のビルドターゲット設定 -->
   <PropertyGroup>
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -50,7 +39,7 @@
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
     <IntDir>__AutoGenIntDir__</IntDir>
     <OutDir>__AutoGenOutDir__</OutDir>
-    <TargetExt>.exe</TargetExt>
+    <TargetName>Lib_$(ProjectName)</TargetName>
   </PropertyGroup>
 
   <!-- Microsoft.Cpp.props インポート後のビルドターゲット設定 -->  
