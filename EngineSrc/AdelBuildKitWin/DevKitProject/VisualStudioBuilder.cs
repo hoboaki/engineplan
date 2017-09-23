@@ -11,6 +11,7 @@ using AdelDevKit.TaskSystem;
 using AdelDevKit.Utility;
 using System.IO;
 using AdelDevKit.CommandLog;
+using System.Text.RegularExpressions;
 
 namespace AdelBuildKitWin
 {
@@ -20,6 +21,25 @@ namespace AdelBuildKitWin
     /// </summary>
     class VisualStudioBuilder : BuilderAddonBase
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// VisualStudioプロジェクトの情報。
+        /// </summary>
+        class VsProjInfo
+        {
+            //------------------------------------------------------------------------------
+            /// <summary>
+            /// ファイル。
+            /// </summary>
+            public FileInfo FileInfo;
+
+            //------------------------------------------------------------------------------
+            /// <summary>
+            /// GUID。
+            /// </summary>
+            public string Guid;
+        }
+
         //------------------------------------------------------------------------------
         #region BuilderAddonBase の実装
         public override void Setup(AddonSetupArg aArg)
@@ -84,8 +104,6 @@ namespace AdelBuildKitWin
             string prefix = string.Format("{0}_{1}_{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name);
             FileInfo mainProjFile = new FileInfo(string.Format("{0}/{1}_Main.vcxproj", mainRootDir.FullName, prefix));
             FileInfo commonProjFile = new FileInfo(string.Format("{0}/{1}_Common.vcxproj", commonRootDir.FullName, prefix));
-            FileInfo mainProjFileTmp = new FileInfo(mainProjFile.FullName + ".tmp");
-            FileInfo commonProjFileTmp = new FileInfo(commonProjFile.FullName + ".tmp");
             FileInfo mainProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.Application.vcxproj");
             FileInfo commonProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.StaticLibrary.vcxproj");
             string mainProjGuid = "{63f2214b-f796-4c0b-908f-c4b6e559e72b}"; // GUIDは事前生成したものを使用
@@ -181,6 +199,7 @@ namespace AdelBuildKitWin
             }
             Func<DirectoryInfo, List<FileInfo>, string> funcSourceFiles = (aBaseDir, aSrcFiles) =>
             {
+                aSrcFiles.Sort((a, b) => a.FullName.CompareTo(b.FullName)); // abc順ソート
                 var stringWriter = new Utf8StringWriter();
                 stringWriter.NewLine = "\r\n";
                 foreach (var srcFile in aSrcFiles)
@@ -196,10 +215,30 @@ namespace AdelBuildKitWin
                 return stringWriter.ToString();
             };
 
+            // プロジェクト参照
+            var mainProjRefs = new List<VsProjInfo>();
+            mainProjRefs.Add(new VsProjInfo() { FileInfo = commonProjFile, Guid = commonProjGuid });
+            Func<DirectoryInfo, List<VsProjInfo>, string> funcProjRefs = (aBaseDir, aProjRefs) =>
+            {
+                aProjRefs.Sort((a, b) => a.FileInfo.FullName.CompareTo(b.FileInfo.FullName)); // abc順ソート
+                var stringWriter = new Utf8StringWriter();
+                stringWriter.NewLine = "\r\n";
+                foreach (var projInfo in aProjRefs)
+                {
+                    string relativePath = FilePathUtil.ToRelativeDosPath(aBaseDir, projInfo.FileInfo.FullName);
+                    stringWriter.WriteLine(string.Format("    <ProjectReference Include=\"{0}\">", relativePath));
+                    stringWriter.WriteLine(string.Format("      <Project>{0}</Project>", projInfo.Guid));
+                    stringWriter.WriteLine(string.Format("    </ProjectReference>"));
+                }
+                return stringWriter.ToString();
+            };
+
             // 置換タグ辞書生成
             var tagAutoGenRootNamespace = "__AutoGenRootNamespace__";
             var tagAutoGenProjectGuid = "__AutoGenProjectGuid__";
             var tagAutoGenAdditionalIncludeDirectories = "__AutoGenAdditionalIncludeDirectories__";
+            var tagAutoGenInsertSourceFiles = "^.*__AutoGenInsertSourceFiles__.*\n";
+            var tagAutoGenInsertProjectReference = "^.*__AutoGenInsertProjectReference__.*\n";
             var autoGenReplaceTags = new Dictionary<string, string>();
             autoGenReplaceTags.Add("__AutoGenConfigurationBuildVersionDebug__", nameof(BuildVersion.Debug));
             autoGenReplaceTags.Add("__AutoGenConfigurationBuildVersionDevelop__", nameof(BuildVersion.Develop));
@@ -214,24 +253,64 @@ namespace AdelBuildKitWin
 
             // Mainプロジェクト用置換タグ辞書生成
             var autoGenReplaceTagsMain = new Dictionary<string, string>(autoGenReplaceTags);
-            autoGenReplaceTags.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Main", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
-            autoGenReplaceTags.Add(tagAutoGenProjectGuid, mainProjGuid);
-            autoGenReplaceTags.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(mainProjFile.Directory));
+            autoGenReplaceTagsMain.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Main", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
+            autoGenReplaceTagsMain.Add(tagAutoGenProjectGuid, mainProjGuid);
+            autoGenReplaceTagsMain.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(mainProjFile.Directory));
 
             // Commonプロジェクト用置換タグ辞書生成
             var autoGenReplaceTagsCommon = new Dictionary<string, string>(autoGenReplaceTags);
-            autoGenReplaceTags.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Common", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
-            autoGenReplaceTags.Add(tagAutoGenProjectGuid, commonProjGuid);
-            autoGenReplaceTags.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(commonProjFile.Directory));
+            autoGenReplaceTagsCommon.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Common", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
+            autoGenReplaceTagsCommon.Add(tagAutoGenProjectGuid, commonProjGuid);
+            autoGenReplaceTagsCommon.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(commonProjFile.Directory));
 
             // テンプレート読み込み
-            // ...
+            var mainProjTemplate = File.ReadAllText(mainProjFileTemplate.FullName);
+            var commonProjTemplate = File.ReadAllText(commonProjFileTemplate.FullName);
 
             // ファイル内容作成
-            // ...
+            var mainProjText = mainProjTemplate;
+            var commonProjText = commonProjTemplate;
+            {
+                // Tag置換
+                foreach (var tagPair in autoGenReplaceTagsMain)
+                {
+                    mainProjText = mainProjText.Replace(tagPair.Key, tagPair.Value);
+                }
+                foreach (var tagPair in autoGenReplaceTagsCommon)
+                {
+                    commonProjText = commonProjText.Replace(tagPair.Key, tagPair.Value);
+                }
 
-            // 新しかったら更新
-            // ...
+                // コンパイル対象追加
+                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(mainProjFile.Directory, mainSrcFiles));
+                commonProjText = Regex.Replace(commonProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(commonProjFile.Directory, commonSrcFiles));
+
+                // プロジェクト参照
+                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertProjectReference, funcProjRefs(mainProjFile.Directory, mainProjRefs));
+            }
+
+            // プロジェクトファイル生成
+            Action<FileInfo, string> funcUpdateProj = (aProjFile, aText) =>
+            {
+                // 今あるものと同じ内容だったら何もしない
+                if (aProjFile.Exists)
+                {
+                    if (aText == File.ReadAllText(aProjFile.FullName))
+                    {
+                        aArg.Log.Debug.WriteLine("Skip to update file '{0}'.", aProjFile.FullName);
+                        return;
+                    }
+                }
+
+                // 一時ファイルに書き込んでから移動
+                string tmpFilePath = aProjFile.FullName + ".new";
+                File.WriteAllText(tmpFilePath, aText);
+                File.Move(tmpFilePath, aProjFile.FullName);
+                aArg.Log.Debug.WriteLine("Updated '{0}'.", aProjFile.FullName);
+
+            };
+            funcUpdateProj(mainProjFile, mainProjText);
+            funcUpdateProj(commonProjFile, commonProjText);
         }
 
         public override AdelDevKit.TaskSystem.Task CreateBuildTask(BuildArg aArg)
