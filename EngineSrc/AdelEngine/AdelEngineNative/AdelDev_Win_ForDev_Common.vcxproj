@@ -85,8 +85,8 @@
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <IntDir>__AutoGenIntDir__</IntDir>
-    <OutDir>__AutoGenOutDir__</OutDir>
+    <IntDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)</IntDir>
+    <OutDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Lib</OutDir>
     <TargetName>Lib_$(ProjectName)</TargetName>
   </PropertyGroup>
 
@@ -99,6 +99,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4127;4481;</DisableSpecificWarnings>
       <AdditionalOptions>/utf-8  %(AdditionalOptions)</AdditionalOptions>
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

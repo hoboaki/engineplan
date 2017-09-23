@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,12 @@ namespace AdelDevKit.BuildSystem
         /// ビルド対象の Endian。
         /// </summary>
         public Endian Endian { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// ビルドに使う作業フォルダ。
+        /// </summary>
+        public DirectoryInfo WorkSpaceDirectory { get; internal set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

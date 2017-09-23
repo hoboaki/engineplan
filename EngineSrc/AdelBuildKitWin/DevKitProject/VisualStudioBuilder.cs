@@ -253,6 +253,8 @@ namespace AdelBuildKitWin
             // 置換タグ辞書生成
             var tagAutoGenRootNamespace = "__AutoGenRootNamespace__";
             var tagAutoGenProjectGuid = "__AutoGenProjectGuid__";
+            var tagAutoGenIntDir = "__AutoGenIntDir__";
+            var tagAutoGenOutDir = "__AutoGenOutDir__";
             var tagAutoGenAdditionalIncludeDirectories = "__AutoGenAdditionalIncludeDirectories__";
             var tagAutoGenInsertSourceFiles = "^.*__AutoGenInsertSourceFiles__.*\n";
             var tagAutoGenInsertProjectReference = "^.*__AutoGenInsertProjectReference__.*\n";
@@ -273,12 +275,16 @@ namespace AdelBuildKitWin
             autoGenReplaceTagsMain.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Main", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
             autoGenReplaceTagsMain.Add(tagAutoGenProjectGuid, mainProjGuid);
             autoGenReplaceTagsMain.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(mainProjFile.Directory));
+            autoGenReplaceTagsMain.Add(tagAutoGenIntDir, FilePathUtil.ToRelativeDosPath(mainProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Obj/$(ProjectName)").FullName));
+            autoGenReplaceTagsMain.Add(tagAutoGenOutDir, FilePathUtil.ToRelativeDosPath(mainProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Bin").FullName));
 
             // Commonプロジェクト用置換タグ辞書生成
             var autoGenReplaceTagsCommon = new Dictionary<string, string>(autoGenReplaceTags);
             autoGenReplaceTagsCommon.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}Common", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
             autoGenReplaceTagsCommon.Add(tagAutoGenProjectGuid, commonProjGuid);
             autoGenReplaceTagsCommon.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(commonProjFile.Directory));
+            autoGenReplaceTagsCommon.Add(tagAutoGenIntDir, FilePathUtil.ToRelativeDosPath(commonProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Obj/$(ProjectName)").FullName));
+            autoGenReplaceTagsCommon.Add(tagAutoGenOutDir, FilePathUtil.ToRelativeDosPath(commonProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Lib").FullName));
 
             // テンプレート読み込み
             var mainProjTemplate = File.ReadAllText(mainProjFileTemplate.FullName);

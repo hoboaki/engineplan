@@ -1,6 +1,7 @@
 ﻿using AdelDevKit.CommandLog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace AdelDevKit.BuildSystem
         /// </summary>
         internal void Load(
             CommandLog.Logger aLog,
+            EnvInfo aEnvInfo,
             PluginSystem.PluginManager aPluginManager, 
             Setting.SettingManager aSettingManager, 
             CoreLib.CoreLibManager aCoreLibManager
@@ -56,6 +58,7 @@ namespace AdelDevKit.BuildSystem
             System.Diagnostics.Debug.Assert(aCoreLibManager.IsLoaded);
 
             // 控える
+            _EnvInfo = aEnvInfo;
             _SettingManager = aSettingManager;
 
             // ビルダーアドオンを収集
@@ -115,6 +118,7 @@ namespace AdelDevKit.BuildSystem
             BuildTargets = buildTargets.ToArray();
             System.Diagnostics.Debug.Assert(0 < BuildTargets.Length); // Setting の Verify() の時点で1つ以上あることは保証されているはず。
         }
+        EnvInfo _EnvInfo;
         Setting.SettingManager _SettingManager;
 
         //------------------------------------------------------------------------------
@@ -141,6 +145,7 @@ namespace AdelDevKit.BuildSystem
                 CoreOsBuildInfo = aTarget.CoreOs.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreSndBuildInfo = aTarget.CoreSnd.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                WorkSpaceDirectory = new DirectoryInfo(_EnvInfo.ProjectLocalDir + string.Format("/Build/{0}_{1}_{2}", _SettingManager.ProjectSetting.Name, aTarget.PlatformSetting.Name, aTarget.BuildTargetSetting.Name)),
                 IsDevelopMode = aIsDevelopMode,
             };
             buildArg.CpuBit = aTarget.Builder.Addon.Addon.GetCpuBit(buildArg.BuilderParamInfo);

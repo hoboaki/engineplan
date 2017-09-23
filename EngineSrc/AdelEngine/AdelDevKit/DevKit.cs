@@ -134,7 +134,7 @@ namespace AdelDevKit
             // 以下、依存関係順にセットアップ
             SettingManager.Load(aLog, EnvInfo.ProjectSettingDir);
             CoreLibManager.Load(aLog, PluginManager);
-            BuildManager.Load(aLog, PluginManager, SettingManager, CoreLibManager);
+            BuildManager.Load(aLog, EnvInfo, PluginManager, SettingManager, CoreLibManager);
         }
 
     }
