@@ -25,6 +25,12 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// コード補完対象となるヘッダーファイル群。（null許容）
+        /// </summary>
+        public FileInfo[] AutoCompleteHeaderFiles { get; set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 強制インクルードするヘッダーファイル群。（null許容）
         /// </summary>
         /// <remarks>
@@ -39,7 +45,7 @@ namespace AdelDevKit.BuildSystem
         /// </summary>
         /// #include <...> 形式でインクルードできるようにするフォルダをここで指定してください。
         /// ダブルコーテーションではなく "<>" で指定するものをシステムインクルードとここでは呼びます。
-        public DirectoryInfo[] SystenIncludeDirs { get; set; }
+        public DirectoryInfo[] SystemIncludeDirs { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

@@ -88,7 +88,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>$(ProjectDir)/../../../include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>__AutoGenAdditionalIncludeDirectories__</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4127;4481;</DisableSpecificWarnings>

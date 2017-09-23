@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdelDevKit.Utility;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace AdelDevKit.CommandLog
     /// <summary>
     /// ログ用文字列書き込みクラス。
     /// </summary>
-    public class LogStringWriter : StringWriter
+    public class LogStringWriter : Utf8StringWriter
     {
         //------------------------------------------------------------------------------
         /// <summary>
@@ -22,13 +23,7 @@ namespace AdelDevKit.CommandLog
         {
             _Callback = aCallback;
         }
-
-        //------------------------------------------------------------------------------
-        /// <summary>
-        /// 文字コードは UTF8 で固定。
-        /// </summary>
-        public override Encoding Encoding { get { return Encoding.UTF8; } }
-
+        
         //------------------------------------------------------------------------------
         /// <summary>
         /// 改行コードを固定。

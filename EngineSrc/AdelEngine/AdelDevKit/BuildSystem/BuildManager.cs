@@ -116,7 +116,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// IDEプロジェクトを作成する。
         /// </summary>
-        internal void CreateIdeProjectFile(BuildTarget aTarget)
+        internal void CreateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget)
         {
             // チェック
             System.Diagnostics.Debug.Assert(aTarget != null);
@@ -127,6 +127,7 @@ namespace AdelDevKit.BuildSystem
             };
             var buildArg = new BuildArg()
             {
+                Log = aLog,
                 BuilderParamInfo = new BuildSystem.BuilderParamInfo(aTarget.BuildTargetSetting),
                 CoreOsBuildInfo = aTarget.CoreOs.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),

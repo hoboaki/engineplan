@@ -14,6 +14,12 @@ namespace AdelDevKit.BuildSystem
     {
         //------------------------------------------------------------------------------
         /// <summary>
+        /// ロガー。
+        /// </summary>
+        public CommandLog.Logger Log { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// プロジェクト設定。
         /// </summary>
         public Setting.Project.Root ProjectSetting { get; internal set; }

@@ -110,6 +110,8 @@
     <Compile Include="TaskSystem\TaskThread.cs" />
     <Compile Include="Utility\ErrorCheckUtil.cs" />
     <Compile Include="Utility\FilePathUtil.cs" />
+    <Compile Include="Utility\IEnumrableExtention.cs" />
+    <Compile Include="Utility\Utf8StringWriter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

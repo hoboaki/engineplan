@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,18 @@ namespace AdelDevKit.Utility
         public static string ToDosPath(string aPath)
         {
             return aPath.Replace(@"/", @"\");
+        }
+        
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// Dos パス形式の相対パスに変換する。
+        /// </summary>
+        public static string ToRelativeDosPath(DirectoryInfo aBaseDir, string aDstPath)
+        {
+            Uri baseUri = new Uri(aBaseDir.FullName + @"\");
+            Uri dstUri = new Uri(aDstPath);
+            Uri resultUri = baseUri.MakeRelativeUri(dstUri);
+            return resultUri.ToString().Replace(@"/", @"\");
         }
     }
 }
