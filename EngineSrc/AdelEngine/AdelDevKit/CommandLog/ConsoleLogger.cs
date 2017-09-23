@@ -25,6 +25,15 @@ namespace AdelDevKit.CommandLog
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// コンソールカラーを初期状態に戻す。
+        /// </summary>
+        public void ResetConsoleColor()
+        {
+            Console.ResetColor();
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// ログパケットをコンソールに出力。
         /// </summary>
         void Packets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

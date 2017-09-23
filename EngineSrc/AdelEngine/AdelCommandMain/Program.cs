@@ -81,15 +81,19 @@ namespace AdelCommandMain
             }
             catch(MessagedException)
             {
-                log.Error.WriteLine("エラーが発生したため処理を中断しました。");
+                log.Info.WriteLine("エラーが発生したため処理を中断しました。");
                 return ExitCodeError;
             }
             catch(Exception exp)
             {
                 log.Error.WriteLine(exp.Message);
                 log.Warn.WriteLine(exp.ToString());
-                log.Error.WriteLine("エラーが発生したため処理を中断しました。");
+                log.Info.WriteLine("エラーが発生したため処理を中断しました。");
                 return ExitCodeError;
+            }
+            finally
+            {
+                log.ResetConsoleColor();
             }
             return 0;
         }
@@ -97,6 +101,7 @@ namespace AdelCommandMain
         //------------------------------------------------------------------------------
         static void ExecUpdateIdeProject(Logger aLog, CommandLineOption aOpt, DevKit aDevKit)
         {
+            // メモ
             var log = aLog;
             var opt = aOpt;
             var devKit = aDevKit;
@@ -126,9 +131,9 @@ namespace AdelCommandMain
                 log.Error.WriteLine("[エラー] {0} をコマンドラインオプションで指定してください。", nameof(aOpt.BuildTargetUniqueName));
                 throw new MessagedException();
             }
-            devKit.BuildManager.BuildTargets.Where(x => x.UniqueName == aOpt.BuildTargetUniqueName);
 
-            // 
+            // 実行
+            devKit.BuildManager.CreateIdeProjectFile(aLog, target);
         }
 
         //------------------------------------------------------------------------------

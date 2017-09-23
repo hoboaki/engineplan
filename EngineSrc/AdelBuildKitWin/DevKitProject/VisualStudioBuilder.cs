@@ -305,6 +305,10 @@ namespace AdelBuildKitWin
                 // 一時ファイルに書き込んでから移動
                 string tmpFilePath = aProjFile.FullName + ".new";
                 File.WriteAllText(tmpFilePath, aText);
+                if (aProjFile.Exists)
+                {
+                    File.Delete(aProjFile.FullName);
+                }
                 File.Move(tmpFilePath, aProjFile.FullName);
                 aArg.Log.Debug.WriteLine("Updated '{0}'.", aProjFile.FullName);
 

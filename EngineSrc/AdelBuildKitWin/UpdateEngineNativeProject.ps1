@@ -13,16 +13,15 @@ function ExecMsBuild ($arg) {
 }
 
 # ビルドキットのビルド＆コピー
-ExecMsBuild(" /p:Configuration=Release ./DevKitProject/AdelBuildKitWin.csproj")
-$srcDir = "./DevKitProject/bin/Release"
+ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitWin.csproj")
+$srcDir = "./DevKitProject/bin/Debug"
 $dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitWin.aeplugin/DevKitDll"
 Remove-Item $dstDir -Recurse
 Copy-Item $srcDir -destination $dstDir -recurse
 
 # AdelCommandのビルド
-ExecMsBuild(" /p:Configuration=Release ../AdelEngine/AdelCommandMain/AdelCommandMain.csproj")
-ExecMsBuild(" /p:Configuration=Release ../AdelEngine/AdelCommand/AdelCommand.csproj")
+ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommandMain/AdelCommandMain.csproj")
+ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommand/AdelCommand.csproj")
 
 # AdelCommandの実行
-& "../AdelEngine/AdelCommand/bin/Release/AdelCommand.exe"
-
+& "../AdelEngine/AdelCommand/bin/Debug/AdelCommand.exe" -ProjectDir "./DevelopResource/AdelDevProject" UpdateIdeProject
