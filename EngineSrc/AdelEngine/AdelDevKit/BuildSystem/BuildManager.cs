@@ -121,7 +121,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// IDEプロジェクトを作成する。
         /// </summary>
-        internal void CreateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget)
+        internal void CreateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget, bool aIsDevelopMode)
         {
             // チェック
             System.Diagnostics.Debug.Assert(aTarget != null);
@@ -129,6 +129,7 @@ namespace AdelDevKit.BuildSystem
             // 引数用意
             var coreLibArg = new CoreLib.CreateNativeCodeBuildInfoArg()
             {
+                IsDevelopMode = aIsDevelopMode,
             };
             var buildArg = new BuildArg()
             {
@@ -140,7 +141,7 @@ namespace AdelDevKit.BuildSystem
                 CoreOsBuildInfo = aTarget.CoreOs.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreSndBuildInfo = aTarget.CoreSnd.Addon.CreateNativeCodeBulidInfo(coreLibArg),
-                IsDevelopMode = true,
+                IsDevelopMode = aIsDevelopMode,
             };
             buildArg.CpuBit = aTarget.Builder.Addon.Addon.GetCpuBit(buildArg.BuilderParamInfo);
             buildArg.Endian = aTarget.Builder.Addon.Addon.GetEndian(buildArg.BuilderParamInfo);

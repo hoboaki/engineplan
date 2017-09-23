@@ -50,6 +50,7 @@
     <Compile Include="CoreSndAl.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="VisualStudioBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

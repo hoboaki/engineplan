@@ -26,13 +26,15 @@
 
   <!-- ソースコードの列挙 -->
   <ItemGroup>
-    <!--__AutoGenInsertSourceFiles__-->
+    <ClCompile Include="Source\ae_win_al\Hoge.cpp"/>
+    <ClCompile Include="Source\ae_win_gl330\Hoge.cpp"/>
+    <ClCompile Include="Source\ae_win_os\Hoge.cpp"/>
     <!-- ex. -->
     <!--
-      <ClInclude Include="module2\Header.h" />
-      <ClCompile Include="..\src\AeBase\display\Main.cpp >
-        <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
-      </ClCompile>
+    <ClInclude Include="module2\Header.h" />
+    <ClCompile Include="..\src\AeBase\display\Main.cpp >
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+    </ClCompile>
     -->
   </ItemGroup>
 
@@ -44,7 +46,9 @@
 
   <!-- プロジェクトの依存関係の挿入 -->
   <ItemGroup>
-    <!--__AutoGenInsertProjectReference__-->
+    <ProjectReference Include="..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_Common.vcxproj">
+      <Project>{b36e614f-3f96-4f39-b375-dfe703bccc23}</Project>
+    </ProjectReference>
     <!-- ex. -->
     <!--
     <ProjectReference Include="..\..\library\windows\AeBase.vcxproj">
@@ -99,7 +103,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>..\..\AdelEngine\AdelEngineNative\Source;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\..\AdelEngine\AdelEngineNative\Source;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4127;4481;</DisableSpecificWarnings>

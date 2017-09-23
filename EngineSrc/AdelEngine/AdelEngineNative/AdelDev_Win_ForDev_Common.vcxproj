@@ -26,13 +26,19 @@
 
   <!-- ソースコードの列挙 -->
   <ItemGroup>
-    <!--__AutoGenInsertSourceFiles__-->
+    <ClCompile Include="Source\ae_openal\Hoge.cpp"/>
+    <ClCompile Include="Source\ae_opengl\Hoge.cpp"/>
+    <ClCompile Include="Source\ae\base\Hoge.cpp"/>
+    <ClCompile Include="Source\ae\gfx\Hoge.cpp"/>
+    <ClCompile Include="Source\ae\gfxapi\Hoge.cpp"/>
+    <ClCompile Include="Source\ae\snd\Hoge.cpp"/>
+    <ClCompile Include="Source\ae\sndapi\Hoge.cpp"/>
     <!-- ex. -->
     <!--
-      <ClInclude Include="module2\Header.h" />
-      <ClCompile Include="..\src\AeBase\display\Main.cpp >
-        <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
-      </ClCompile>
+    <ClInclude Include="module2\Header.h" />
+    <ClCompile Include="..\src\AeBase\display\Main.cpp >
+      <ObjectFileName>$(IntDir)%(RelativeDir)\</ObjectFileName>
+    </ClCompile>
     -->
   </ItemGroup>
 
@@ -88,7 +94,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>Source;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\AdelBuildKitWin\EngineNativeProject\Source;Source;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4127;4481;</DisableSpecificWarnings>

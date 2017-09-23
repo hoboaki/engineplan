@@ -89,11 +89,7 @@ namespace AdelBuildKitWin
             if (aArg.IsDevelopMode)
             {
                 // 指定の名前のフォルダを探す
-                var dir = _SetupArg.PluginDir.Parent;
-                while (dir != null && dir.Name != "AdelBuildKitWin")
-                {
-                    dir = dir.Parent;
-                }
+                var dir = Utility.RootDirectoryForDevelopMode(_SetupArg.PluginDir);
                 mainRootDir = new DirectoryInfo(dir.FullName + "/EngineNativeProject");
                 commonRootDir = new DirectoryInfo(dir.FullName + "/../AdelEngine/AdelEngineNative");
                 devKitResDir = new DirectoryInfo(dir.FullName + "/DevKitResource");
@@ -113,12 +109,12 @@ namespace AdelBuildKitWin
             var selfNativeCodeBuildInfo = new NativeCodeBuildInfo();
             {
                 var sourceFiles = new List<FileInfo>();
-                sourceFiles.AddRange(new DirectoryInfo(commonRootDir.FullName + "/Source/ae").EnumerateFiles("*.cpp"));
+                sourceFiles.AddRange(new DirectoryInfo(commonRootDir.FullName + "/Source/ae").EnumerateFiles("*.cpp", SearchOption.AllDirectories));
                 selfNativeCodeBuildInfo.SourceFiles = sourceFiles.ToArray();
             }
             {
                 var autoCompleteHeaderFiles = new List<FileInfo>();
-                autoCompleteHeaderFiles.AddRange(new DirectoryInfo(commonRootDir.FullName + "/Source/ae").EnumerateFiles("*.hpp"));
+                autoCompleteHeaderFiles.AddRange(new DirectoryInfo(commonRootDir.FullName + "/Source/ae").EnumerateFiles("*.hpp", SearchOption.AllDirectories));
                 selfNativeCodeBuildInfo.AutoCompleteHeaderFiles = autoCompleteHeaderFiles.ToArray();
             }
             { 
@@ -156,6 +152,8 @@ namespace AdelBuildKitWin
             includeDirs.AddRange(aArg.CoreOsBuildInfo.SystemIncludeDirs.OrEmptyIfNull());
             includeDirs.AddRange(aArg.CoreGfxBuildInfo.SystemIncludeDirs.OrEmptyIfNull());
             includeDirs.AddRange(aArg.CoreSndBuildInfo.SystemIncludeDirs.OrEmptyIfNull());
+            includeDirs = includeDirs.GroupBy(x => x.FullName).Select(x => x.First()).ToList(); // 重複削除
+            includeDirs.Sort((a, b) => a.FullName.CompareTo(b.FullName)); // 名前順にソート
             Func<DirectoryInfo, string> funcAdditionalIncludeDirectories = (aBaseDir) =>
             {
                 string additionalIncludeDirectories = "";
@@ -177,6 +175,15 @@ namespace AdelBuildKitWin
             srcFiles.AddRange(aArg.CoreOsBuildInfo.SourceFiles.OrEmptyIfNull());
             srcFiles.AddRange(aArg.CoreGfxBuildInfo.SourceFiles.OrEmptyIfNull());
             srcFiles.AddRange(aArg.CoreSndBuildInfo.SourceFiles.OrEmptyIfNull());
+
+            // 自動補完用ヘッダファイル列挙
+            var acHeaderFiles = new List<FileInfo>();
+            acHeaderFiles.AddRange(selfNativeCodeBuildInfo.AutoCompleteHeaderFiles.OrEmptyIfNull());
+            acHeaderFiles.AddRange(aArg.CoreOsBuildInfo.AutoCompleteHeaderFiles.OrEmptyIfNull());
+            acHeaderFiles.AddRange(aArg.CoreGfxBuildInfo.AutoCompleteHeaderFiles.OrEmptyIfNull());
+            acHeaderFiles.AddRange(aArg.CoreSndBuildInfo.AutoCompleteHeaderFiles.OrEmptyIfNull());
+            acHeaderFiles = acHeaderFiles.GroupBy(x => x.FullName).Select(x => x.First()).ToList(); // 重複削除
+            acHeaderFiles.Sort((a, b) => a.FullName.CompareTo(b.FullName)); // 名前順にソート
 
             // ソースファイル分配
             var mainSrcFiles = new List<FileInfo>();
@@ -210,7 +217,17 @@ namespace AdelBuildKitWin
                         throw new MessagedException();
                     }
                     string relativePath = FilePathUtil.ToRelativeDosPath(aBaseDir, srcFile.FullName);
-                    stringWriter.WriteLine(string.Format("      <ClCompile Include=\"{0}\"/>", relativePath));
+                    stringWriter.WriteLine(string.Format("    <ClCompile Include=\"{0}\"/>", relativePath));
+                }
+                foreach (var headerFile in acHeaderFiles)
+                {
+                    if (!headerFile.Exists)
+                    {
+                        aArg.Log.Error.WriteLine("ヘッダーファイル'{0}'が存在しません。", headerFile.FullName);
+                        throw new MessagedException();
+                    }
+                    string relativePath = FilePathUtil.ToRelativeDosPath(aBaseDir, headerFile.FullName);
+                    stringWriter.WriteLine(string.Format("    <ClInclude Include=\"{0}\"/>", relativePath));
                 }
                 return stringWriter.ToString();
             };
@@ -282,11 +299,11 @@ namespace AdelBuildKitWin
                 }
 
                 // コンパイル対象追加
-                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(mainProjFile.Directory, mainSrcFiles));
-                commonProjText = Regex.Replace(commonProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(commonProjFile.Directory, commonSrcFiles));
+                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(mainProjFile.Directory, mainSrcFiles), RegexOptions.Multiline);
+                commonProjText = Regex.Replace(commonProjText, tagAutoGenInsertSourceFiles, funcSourceFiles(commonProjFile.Directory, commonSrcFiles), RegexOptions.Multiline);
 
                 // プロジェクト参照
-                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertProjectReference, funcProjRefs(mainProjFile.Directory, mainProjRefs));
+                mainProjText = Regex.Replace(mainProjText, tagAutoGenInsertProjectReference, funcProjRefs(mainProjFile.Directory, mainProjRefs), RegexOptions.Multiline);
             }
 
             // プロジェクトファイル生成

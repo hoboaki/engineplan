@@ -133,7 +133,7 @@ namespace AdelCommandMain
             }
 
             // 実行
-            devKit.BuildManager.CreateIdeProjectFile(aLog, target);
+            devKit.BuildManager.CreateIdeProjectFile(aLog, target, true);
         }
 
         //------------------------------------------------------------------------------
