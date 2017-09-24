@@ -46,7 +46,7 @@
 
   <!-- プロジェクトの依存関係の挿入 -->
   <ItemGroup>
-    <ProjectReference Include="..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_Common.vcxproj">
+    <ProjectReference Include="..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj">
       <Project>{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}</Project>
     </ProjectReference>
     <!-- ex. -->

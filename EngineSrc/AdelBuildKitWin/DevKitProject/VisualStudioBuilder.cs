@@ -98,9 +98,9 @@ namespace AdelBuildKitWin
 
             // ファイル関連の定義
             string prefix = string.Format("{0}_{1}_{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name);
-            FileInfo mainSlnFile = new FileInfo(string.Format("{0}/{1}_Main.sln", mainRootDir.FullName, prefix));
-            FileInfo mainProjFile = new FileInfo(string.Format("{0}/{1}_Main.vcxproj", mainRootDir.FullName, prefix));
-            FileInfo commonProjFile = new FileInfo(string.Format("{0}/{1}_Common.vcxproj", commonRootDir.FullName, prefix));
+            FileInfo mainSlnFile = new FileInfo(string.Format("{0}/{1}.sln", mainRootDir.FullName, prefix));
+            FileInfo mainProjFile = new FileInfo(string.Format("{0}/{1}_AeMain.vcxproj", mainRootDir.FullName, prefix));
+            FileInfo commonProjFile = new FileInfo(string.Format("{0}/{1}_AeCommon.vcxproj", commonRootDir.FullName, prefix));
             FileInfo mainSlnFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.Application.sln");
             FileInfo mainProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.Application.vcxproj");
             FileInfo commonProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.StaticLibrary.vcxproj");
