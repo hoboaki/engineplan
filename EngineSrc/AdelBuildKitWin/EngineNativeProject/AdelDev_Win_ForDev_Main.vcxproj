@@ -40,14 +40,14 @@
 
   <!-- プロジェクト設定 -->
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{63f2214b-f796-4c0b-908f-c4b6e559e72b}</ProjectGuid>
+    <ProjectGuid>{01C68E42-0D13-4A34-B624-7396F43BFCE6}</ProjectGuid>
     <RootNamespace>AdelDevWinForDevMain</RootNamespace>
   </PropertyGroup>
 
   <!-- プロジェクトの依存関係の挿入 -->
   <ItemGroup>
     <ProjectReference Include="..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_Common.vcxproj">
-      <Project>{b36e614f-3f96-4f39-b375-dfe703bccc23}</Project>
+      <Project>{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}</Project>
     </ProjectReference>
     <!-- ex. -->
     <!--

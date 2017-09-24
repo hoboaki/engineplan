@@ -15,6 +15,16 @@ namespace AdelDevKit.Utility
     {
         //------------------------------------------------------------------------------
         /// <summary>
+        /// コンストラクタ。
+        /// </summary>
+        public Utf8StringWriter()
+        {
+            // 改行コードのデフォルトはCRLF
+            NewLine = "\r\n";
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// 文字コードは UTF8 で固定。
         /// </summary>
         public override Encoding Encoding { get { return Encoding.UTF8; } }

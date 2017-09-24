@@ -44,7 +44,7 @@
 
   <!-- プロジェクト設定 -->
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{b36e614f-3f96-4f39-b375-dfe703bccc23}</ProjectGuid>
+    <ProjectGuid>{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}</ProjectGuid>
     <RootNamespace>AdelDevWinForDevCommon</RootNamespace>
   </PropertyGroup>
 

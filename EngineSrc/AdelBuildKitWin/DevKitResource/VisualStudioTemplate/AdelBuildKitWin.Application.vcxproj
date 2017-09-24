@@ -3,21 +3,21 @@
 
   <!-- 構成設定 -->
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDebug__|x64">
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__">
       <Configuration>__AutoGenConfigurationBuildVersionDebug__</Configuration>
-      <Platform>x64</Platform>
+      <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDevelop__|x64">
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionDevelop__|__AutoGenPlatform__">
       <Configuration>__AutoGenConfigurationBuildVersionDevelop__</Configuration>
-      <Platform>x64</Platform>
+      <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionFinal__|x64">
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__">
       <Configuration>__AutoGenConfigurationBuildVersionFinal__</Configuration>
-      <Platform>x64</Platform>
+      <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionReview__|x64">
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__">
       <Configuration>__AutoGenConfigurationBuildVersionReview__</Configuration>
-      <Platform>x64</Platform>
+      <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
   </ItemGroup>
 
@@ -59,18 +59,18 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__'">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDevelop__|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDevelop__|__AutoGenPlatform__'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -110,7 +110,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionDebug__;_CONSOLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -119,7 +119,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDevelop__|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionDevelop__|__AutoGenPlatform__'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -132,7 +132,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -145,7 +145,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
