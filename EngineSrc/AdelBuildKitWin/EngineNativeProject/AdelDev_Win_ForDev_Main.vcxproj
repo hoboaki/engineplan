@@ -28,7 +28,7 @@
   <ItemGroup>
     <ClCompile Include="Source\ae_win_al\Hoge.cpp"/>
     <ClCompile Include="Source\ae_win_gl330\Hoge.cpp"/>
-    <ClCompile Include="Source\ae_win_os\Hoge.cpp"/>
+    <ClCompile Include="Source\ae_win_os\Main.cpp"/>
     <!-- ex. -->
     <!--
     <ClInclude Include="module2\Header.h" />
@@ -94,8 +94,8 @@
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <IntDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)</IntDir>
-    <OutDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Bin</OutDir>
+    <IntDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)\</IntDir>
+    <OutDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Bin\</OutDir>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
 

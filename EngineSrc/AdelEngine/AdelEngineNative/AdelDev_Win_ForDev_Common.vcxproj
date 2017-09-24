@@ -85,8 +85,8 @@
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
-    <IntDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)</IntDir>
-    <OutDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Lib</OutDir>
+    <IntDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)\</IntDir>
+    <OutDir>..\..\AdelBuildKitWin\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Lib\</OutDir>
     <TargetName>Lib_$(ProjectName)</TargetName>
   </PropertyGroup>
 
