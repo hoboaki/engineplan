@@ -75,6 +75,10 @@ namespace AdelCommandMain
                         }
                         break;
 
+                    case "-" + nameof(PrivateDevelopMode):
+                        PrivateDevelopMode = true;
+                        break;
+
                     default:
                         {
                             // コマンド達
@@ -156,5 +160,11 @@ namespace AdelCommandMain
         /// プロジェクトフォルダパス。
         /// </summary>
         public string ProjectDir { get; set; } = Directory.GetCurrentDirectory();
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// エンジン開発者用のモードか。
+        /// </summary>
+        public bool PrivateDevelopMode { get; set; } = false;
     }
 }

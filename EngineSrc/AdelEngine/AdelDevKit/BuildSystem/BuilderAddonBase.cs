@@ -21,7 +21,7 @@ namespace AdelDevKit.BuildSystem
         public abstract string DefaultCoreOs { get; }
         public abstract string DefaultCoreGfx { get; }
         public abstract string DefaultCoreSnd { get; }
-        public abstract void CreateIdeProjectFile(BuildArg aArg);
+        public abstract void UpdateIdeProjectFile(BuildArg aArg);
         public abstract TaskSystem.Task CreateBuildTask(BuildArg aArg);
         public abstract CpuBit GetCpuBit(BuilderParamInfo aParam);
         public abstract Endian GetEndian(BuilderParamInfo aParam);

@@ -17,7 +17,7 @@ namespace AdelDevKit
         /// <summary>
         /// コンストラクタ。
         /// </summary>
-        internal DevKit(CommandLog.Logger aLog, DirectoryInfo aProjectDir)
+        internal DevKit(CommandLog.Logger aLog, DirectoryInfo aProjectDir, bool aIsPrivateDevelopMode)
         {
             // 引数チェック
             if (!aProjectDir.Exists)
@@ -34,6 +34,7 @@ namespace AdelDevKit
             EnvInfo = new EnvInfo()
             {
                 ProjectRootDir = aProjectDir,
+                IsPrivateDevelopMode = aIsPrivateDevelopMode,
             };
             PluginManager = new PluginSystem.PluginManager();
             SettingManager = new Setting.SettingManager();

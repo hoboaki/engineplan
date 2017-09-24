@@ -74,5 +74,11 @@ namespace AdelDevKit
         /// プロジェクトローカルフォルダ。
         /// </summary>
         public DirectoryInfo ProjectLocalDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Local"); } }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// エンジン開発者用のモードか。
+        /// </summary>
+        public bool IsPrivateDevelopMode { get; internal set; } = false;
     }
 }

@@ -80,13 +80,13 @@ namespace AdelBuildKitWin
             }
         }
 
-        public override void CreateIdeProjectFile(BuildArg aArg)
+        public override void UpdateIdeProjectFile(BuildArg aArg)
         {
             // フォルダの選定
             DirectoryInfo mainRootDir = null;
             DirectoryInfo commonRootDir = null;
             DirectoryInfo devKitResDir = null;
-            if (aArg.IsDevelopMode)
+            if (aArg.IsPrivateDevelopMode)
             {
                 // 指定の名前のフォルダを探す
                 var dir = Utility.RootDirectoryForDevelopMode(_SetupArg.PluginDir);

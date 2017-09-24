@@ -40,8 +40,8 @@ namespace AdelBuildKitWin
                 var headerFiles = new List<FileInfo>();
                 var includeDirs = new List<DirectoryInfo>();
 
-                var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsDevelopMode);
-                var commonDirRoot = Utility.CommonNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsDevelopMode);
+                var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
+                var commonDirRoot = Utility.CommonNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
                 dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_win_gl330"));
                 dirs.Add(new DirectoryInfo(commonDirRoot.FullName + "/ae_opengl"));

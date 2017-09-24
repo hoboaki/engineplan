@@ -24,4 +24,4 @@ ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommandMain/AdelCommandMa
 ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommand/AdelCommand.csproj")
 
 # AdelCommandの実行
-& "../AdelEngine/AdelCommand/bin/Debug/AdelCommand.exe" -ProjectDir "./DevelopResource/AdelDevProject" UpdateIdeProject
+& "../AdelEngine/AdelCommand/bin/Debug/AdelCommand.exe" -PrivateDevelopMode -ProjectDir "./DevelopResource/AdelDevProject" UpdateIdeProject

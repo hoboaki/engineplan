@@ -43,9 +43,9 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// IDEプロジェクトファイルを作成する。
+        /// IDEプロジェクトファイルを更新する。
         /// </summary>
-        void CreateIdeProjectFile(BuildArg aArg);
+        void UpdateIdeProjectFile(BuildArg aArg);
 
         //------------------------------------------------------------------------------
         /// <summary>
