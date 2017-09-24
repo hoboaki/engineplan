@@ -40,7 +40,7 @@ namespace AdelBuildKitWin
                 var headerFiles = new List<FileInfo>();
                 var includeDirs = new List<DirectoryInfo>();
 
-                var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsDevelopMode);
+                var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
                 dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_win_os"));
                 foreach (var dir in dirs)

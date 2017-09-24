@@ -28,6 +28,6 @@ namespace AdelDevKit.CoreLib
         /// <summary>
         /// 開発環境モードか。
         /// </summary>
-        public bool IsDevelopMode { get; internal set; }
+        public bool IsPrivateDevelopMode { get; internal set; }
     }
 }

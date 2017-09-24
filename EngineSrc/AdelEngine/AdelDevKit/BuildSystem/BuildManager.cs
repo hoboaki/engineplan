@@ -123,9 +123,9 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// IDEプロジェクトを作成する。
+        /// IDEプロジェクトを更新する。
         /// </summary>
-        internal void CreateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget, bool aIsDevelopMode)
+        internal void UpdateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget)
         {
             // チェック
             System.Diagnostics.Debug.Assert(aTarget != null);
@@ -133,7 +133,7 @@ namespace AdelDevKit.BuildSystem
             // 引数用意
             var coreLibArg = new CoreLib.CreateNativeCodeBuildInfoArg()
             {
-                IsDevelopMode = aIsDevelopMode,
+                IsPrivateDevelopMode = _EnvInfo.IsPrivateDevelopMode,
             };
             var buildArg = new BuildArg()
             {
@@ -146,7 +146,7 @@ namespace AdelDevKit.BuildSystem
                 CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 CoreSndBuildInfo = aTarget.CoreSnd.Addon.CreateNativeCodeBulidInfo(coreLibArg),
                 WorkSpaceDirectory = new DirectoryInfo(_EnvInfo.ProjectLocalDir + string.Format("/Build/{0}_{1}_{2}", _SettingManager.ProjectSetting.Name, aTarget.PlatformSetting.Name, aTarget.BuildTargetSetting.Name)),
-                IsDevelopMode = aIsDevelopMode,
+                IsPrivateDevelopMode = _EnvInfo.IsPrivateDevelopMode,
             };
             buildArg.CpuBit = aTarget.Builder.Addon.Addon.GetCpuBit(buildArg.BuilderParamInfo);
             buildArg.Endian = aTarget.Builder.Addon.Addon.GetEndian(buildArg.BuilderParamInfo);
@@ -154,7 +154,7 @@ namespace AdelDevKit.BuildSystem
             // 作成
             try
             {
-                aTarget.Builder.Addon.Addon.CreateIdeProjectFile(buildArg);
+                aTarget.Builder.Addon.Addon.UpdateIdeProjectFile(buildArg);
             }
             catch(MessagedException exp)
             {

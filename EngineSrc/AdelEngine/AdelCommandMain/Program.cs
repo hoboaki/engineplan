@@ -47,7 +47,7 @@ namespace AdelCommandMain
             var log = new AdelDevKit.CommandLog.ConsoleLogger();
             try
             {
-                using (var devKit = new DevKit(log, new DirectoryInfo(opt.ProjectDir)))
+                using (var devKit = new DevKit(log, new DirectoryInfo(opt.ProjectDir), opt.PrivateDevelopMode))
                 {
                     // ロード
                     devKit.Load(log);
@@ -133,7 +133,7 @@ namespace AdelCommandMain
             }
 
             // 実行
-            devKit.BuildManager.CreateIdeProjectFile(aLog, target, true);
+            devKit.BuildManager.UpdateIdeProjectFile(aLog, target);
         }
 
         //------------------------------------------------------------------------------
