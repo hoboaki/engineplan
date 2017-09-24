@@ -340,11 +340,11 @@ namespace AdelBuildKitWin
                         foreach (var slnProj in slnProjs)
                         {
                             stringWriter.WriteLine(
-                                "Project(\"{{{0}}}\") = \"{1}\", \"{2}\", \"{{3}}\"", 
+                                "Project(\"{0}\") = \"{1}\", \"{2}\", \"{3}\"", 
                                 mainSlnGuid, 
                                 Path.GetFileNameWithoutExtension(slnProj.FileInfo.Name), 
                                 FilePathUtil.ToRelativeDosPath(mainSlnFile.Directory, slnProj.FileInfo.FullName),
-                                slnProj.Guid.ToArray()
+                                slnProj.Guid
                                 );
                             stringWriter.WriteLine("EndProject");
                         }
@@ -367,13 +367,13 @@ namespace AdelBuildKitWin
                             foreach (var buildVersionTag in buildVersionTags)
                             {
                                 stringWriter.WriteLine(
-                                    "\t\t{{{0}}}.{1}|{2}.ActiveCfg = {1}|{2}",
+                                    "\t\t{0}.{1}|{2}.ActiveCfg = {1}|{2}",
                                     slnProj.Guid,
                                     autoGenReplaceTags[buildVersionTag],
                                     autoGenReplaceTags[tagAutoGenPlatform]
                                     );
                                 stringWriter.WriteLine(
-                                    "\t\t{{{0}}}.{1}|{2}.Build.0 = {1}|{2}",
+                                    "\t\t{0}.{1}|{2}.Build.0 = {1}|{2}",
                                     slnProj.Guid,
                                     autoGenReplaceTags[buildVersionTag],
                                     autoGenReplaceTags[tagAutoGenPlatform]
