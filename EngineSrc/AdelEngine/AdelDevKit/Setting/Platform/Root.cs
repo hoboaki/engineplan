@@ -85,6 +85,10 @@ namespace AdelDevKit.Setting.Platform
             checkFunc(DisplayName, nameof(DisplayName));
             checkFunc(DefaultBuildTargetName, nameof(DefaultBuildTargetName));
             checkFunc(BuildTargetSettings, nameof(BuildTargetSettings));
+            if (BuildTargetSettings.Where(x => x.Name == DefaultBuildTargetName).Count() == 0)
+            {
+                aLog.Error.WriteLine("設定ファイル'{0}'で指定している DefaultBuildTargetName '{1}' が存在しません。", aSrcFile.FullName, DefaultBuildTargetName);
+            }
             foreach (var buildTarget in BuildTargetSettings)
             {
                 buildTarget.Verify(aSrcFile, aLog);

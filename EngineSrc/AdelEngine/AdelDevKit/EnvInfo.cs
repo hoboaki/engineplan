@@ -68,5 +68,11 @@ namespace AdelDevKit
         /// プロジェクトアセットフォルダ。
         /// </summary>
         public DirectoryInfo ProjectAssetDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Asset"); } }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// プロジェクトローカルフォルダ。
+        /// </summary>
+        public DirectoryInfo ProjectLocalDir { get { return new DirectoryInfo(ProjectRootDir.FullName + "/Local"); } }
     }
 }

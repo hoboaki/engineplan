@@ -8,7 +8,7 @@ namespace AdelDevKit.BuildSystem
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// ビルドターゲット。
+    /// BuildTarget。
     /// </summary>
     public class BuildTarget
     {
@@ -33,7 +33,12 @@ namespace AdelDevKit.BuildSystem
                 (x) => { return x.Addon.Addon.Name == BuildTargetSetting.BuilderName; },
                 () =>
                 {
-                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定しているビルダー'{1}'が見つかりませんでした。", UniqueName, BuildTargetSetting.BuilderName);
+                    aLog.Error.WriteLine("BuildTarget'{0}'で指定している Builder'{1}'が見つかりませんでした。", UniqueName, BuildTargetSetting.BuilderName);
+                    aLog.Info.WriteLine("ロード済 Builder 一覧（{0}個）", aBuilders.Count());
+                    foreach (var builder in aBuilders)
+                    {
+                        aLog.Info.WriteLine("    {0}", builder.Addon.Addon.Name);
+                    }
                 }
                 );
             CoreOs = Utility.ErrorCheckUtil.GetUniqueItem(
@@ -41,7 +46,7 @@ namespace AdelDevKit.BuildSystem
                 (x) => { return x.Addon.Name == CoreOsName; },
                 () =>
                 {
-                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreOs'{1}'が見つかりませんでした。", UniqueName, CoreOsName);
+                    aLog.Error.WriteLine("BuildTarget'{0}'で指定している CoreOs'{1}'が見つかりませんでした。", UniqueName, CoreOsName);
                 }
                 );
             CoreGfx = Utility.ErrorCheckUtil.GetUniqueItem(
@@ -49,7 +54,7 @@ namespace AdelDevKit.BuildSystem
                 (x) => { return x.Addon.Name == CoreGfxName; },
                 () =>
                 {
-                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreGfxName);
+                    aLog.Error.WriteLine("BuildTarget'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreGfxName);
                 }
                 );
             CoreSnd = Utility.ErrorCheckUtil.GetUniqueItem(
@@ -57,7 +62,7 @@ namespace AdelDevKit.BuildSystem
                 (x) => { return x.Addon.Name == CoreSndName; },
                 () =>
                 {
-                    aLog.Error.WriteLine("ビルドターゲット'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreSndName);
+                    aLog.Error.WriteLine("BuildTarget'{0}'で指定している CoreSnd'{1}'が見つかりませんでした。", UniqueName, CoreSndName);
                 }
                 );
         }
@@ -76,7 +81,7 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
-        /// 本ビルドターゲットの設定情報。
+        /// 本BuildTargetの設定情報。
         /// </summary>
         public Setting.Platform.BuildTarget BuildTargetSetting { get; private set; }
 
@@ -96,7 +101,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreOs。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreOsAddon> CoreOs { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreOsAddon> CoreOs { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -119,7 +124,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreGfx。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreGfxAddon> CoreGfx { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreGfxAddon> CoreGfx { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>
@@ -142,7 +147,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// 使用する CoreSnd。
         /// </summary>
-        PluginSystem.AddonInfo<CoreLib.ICoreSndAddon> CoreSnd { get; set; }
+        internal PluginSystem.AddonInfo<CoreLib.ICoreSndAddon> CoreSnd { get; set; }
 
         //------------------------------------------------------------------------------
         /// <summary>

@@ -15,5 +15,21 @@ namespace AdelDevKit.CommandLog
     /// </remarks>
     public class MessagedException : Exception
     {
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// デフォルトコンストラクタ。
+        /// </summary>
+        public MessagedException()
+        {
+        }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// InnnerException 付きコンストラクタ。
+        /// </summary>
+        public MessagedException(Exception aExp)
+            : base("", aExp)
+        {
+        }
     }
 }

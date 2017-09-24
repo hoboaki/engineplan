@@ -43,6 +43,12 @@ namespace AdelDevKit.BuildSystem
 
         //------------------------------------------------------------------------------
         /// <summary>
+        /// IDEプロジェクトファイルを作成する。
+        /// </summary>
+        void CreateIdeProjectFile(BuildArg aArg);
+
+        //------------------------------------------------------------------------------
+        /// <summary>
         /// アプリケーションをビルドするタスクを作成する。
         /// </summary>
         TaskSystem.Task CreateBuildTask(BuildArg aArg);

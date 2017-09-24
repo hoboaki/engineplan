@@ -23,5 +23,11 @@ namespace AdelDevKit.CoreLib
         /// 実行ファイルタイプ。
         /// </summary>
         public ExecutableType ExecutableType { get; internal set; }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// 開発環境モードか。
+        /// </summary>
+        public bool IsDevelopMode { get; internal set; }
     }
 }

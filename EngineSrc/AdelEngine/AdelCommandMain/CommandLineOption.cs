@@ -100,7 +100,8 @@ namespace AdelCommandMain
             var writer = new StringWriter();
             writer.WriteLine("Usage: AdelCommand.exe [options] [commands]");
             writer.WriteLine("Options:");
-            writer.WriteLine("    -{0}: (Required) Set build target for build.", nameof(BuildTargetUniqueName));
+            writer.WriteLine("    -{0}: Set build target for build.", nameof(BuildTargetUniqueName));
+            writer.WriteLine("        If platform  count is one, you can skip to set this option.");
             writer.WriteLine("        Format is \"PlatformName + '/' + BuildTargetName.");
             writer.WriteLine("        Ex. \"MyPlatform/Product\" for PlatformName=\"MyPlatform\" BuildTargetName=\"Product\"");
             writer.WriteLine("    -{0}: Set build version for build.", nameof(BuildVersion));

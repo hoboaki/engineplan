@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AdelDevKit.CommandLog;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +46,7 @@ namespace AdelDevKit.BuildSystem
         /// </summary>
         internal void Load(
             CommandLog.Logger aLog,
+            EnvInfo aEnvInfo,
             PluginSystem.PluginManager aPluginManager, 
             Setting.SettingManager aSettingManager, 
             CoreLib.CoreLibManager aCoreLibManager
@@ -53,6 +56,10 @@ namespace AdelDevKit.BuildSystem
             System.Diagnostics.Debug.Assert(aPluginManager.IsLoaded);
             System.Diagnostics.Debug.Assert(aSettingManager.IsLoaded);
             System.Diagnostics.Debug.Assert(aCoreLibManager.IsLoaded);
+
+            // 控える
+            _EnvInfo = aEnvInfo;
+            _SettingManager = aSettingManager;
 
             // ビルダーアドオンを収集
             var addons = aPluginManager.Addons.Where(x => x.Addon is IBuilderAddon).Select(x => x.ConvertTo<IBuilderAddon>()).ToArray();
@@ -109,6 +116,57 @@ namespace AdelDevKit.BuildSystem
                 }
             }
             BuildTargets = buildTargets.ToArray();
+            System.Diagnostics.Debug.Assert(0 < BuildTargets.Length); // Setting の Verify() の時点で1つ以上あることは保証されているはず。
         }
+        EnvInfo _EnvInfo;
+        Setting.SettingManager _SettingManager;
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// IDEプロジェクトを作成する。
+        /// </summary>
+        internal void CreateIdeProjectFile(CommandLog.Logger aLog, BuildTarget aTarget, bool aIsDevelopMode)
+        {
+            // チェック
+            System.Diagnostics.Debug.Assert(aTarget != null);
+
+            // 引数用意
+            var coreLibArg = new CoreLib.CreateNativeCodeBuildInfoArg()
+            {
+                IsDevelopMode = aIsDevelopMode,
+            };
+            var buildArg = new BuildArg()
+            {
+                Log = aLog,
+                ProjectSetting = _SettingManager.ProjectSetting,
+                PlatformSetting = aTarget.PlatformSetting,
+                BuildTargetSetting = aTarget.BuildTargetSetting,
+                BuilderParamInfo = new BuildSystem.BuilderParamInfo(aTarget.BuildTargetSetting),
+                CoreOsBuildInfo = aTarget.CoreOs.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                CoreGfxBuildInfo = aTarget.CoreGfx.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                CoreSndBuildInfo = aTarget.CoreSnd.Addon.CreateNativeCodeBulidInfo(coreLibArg),
+                WorkSpaceDirectory = new DirectoryInfo(_EnvInfo.ProjectLocalDir + string.Format("/Build/{0}_{1}_{2}", _SettingManager.ProjectSetting.Name, aTarget.PlatformSetting.Name, aTarget.BuildTargetSetting.Name)),
+                IsDevelopMode = aIsDevelopMode,
+            };
+            buildArg.CpuBit = aTarget.Builder.Addon.Addon.GetCpuBit(buildArg.BuilderParamInfo);
+            buildArg.Endian = aTarget.Builder.Addon.Addon.GetEndian(buildArg.BuilderParamInfo);
+
+            // 作成
+            try
+            {
+                aTarget.Builder.Addon.Addon.CreateIdeProjectFile(buildArg);
+            }
+            catch(MessagedException exp)
+            {
+                throw exp;
+            }
+            catch(Exception exp)
+            {
+                aLog.Error.WriteLine("IDEプロジェクト作成中にエラーが発生しました。");
+                aLog.Warn.WriteLine(exp.ToString());
+                throw new MessagedException(exp);
+            }
+        }
+
     }
 }
