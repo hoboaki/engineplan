@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <!-- 構成設定 -->
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -19,11 +20,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+
   <!-- Microsoft.Cpp.Defaults.cpp のインポート -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
   <!-- ソースコードの列挙 -->
   <ItemGroup>
-    <ClCompile Include="Source\LinkOnly.cpp" />
+    <ClCompile Include="Source\LinkOnly.cpp"/>
     <!-- ex. -->
     <!--
     <ClInclude Include="module2\Header.h" />
@@ -32,11 +35,13 @@
     </ClCompile>
     -->
   </ItemGroup>
+
   <!-- プロジェクト設定 -->
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F7FD653A-D72D-46B6-BEC5-3933536F768D}</ProjectGuid>
+    <ProjectGuid>{01C68E42-0D13-4A34-B624-7396F43BFCE6}</ProjectGuid>
     <RootNamespace>AdelDevWinForDev</RootNamespace>
   </PropertyGroup>
+
   <!-- プロジェクトの依存関係の挿入 -->
   <ItemGroup>
     <ProjectReference Include="AdelDev_Win_ForDev_AeMain.vcxproj">
@@ -52,6 +57,7 @@
     </ProjectReference>
     -->
   </ItemGroup>
+  
   <!-- Microsoft.Cpp.props インポート前のビルドターゲット設定 -->
   <PropertyGroup>
     <ConfigurationType>Application</ConfigurationType>
@@ -73,6 +79,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+
   <!-- Microsoft.Cpp.props 等のインポート -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -80,7 +87,9 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+
   <PropertyGroup Label="UserMacros" />
+  
   <!-- ビルドイベントと成果物に関する設定 -->
   <PropertyGroup>
     <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
@@ -90,7 +99,8 @@
     <OutDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Bin\</OutDir>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
-  <!-- Microsoft.Cpp.props インポート後のビルドターゲット設定 -->
+
+  <!-- Microsoft.Cpp.props インポート後のビルドターゲット設定 -->  
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -153,6 +163,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
+
   <!-- Microsoft.Cpp.targets のインポート -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
