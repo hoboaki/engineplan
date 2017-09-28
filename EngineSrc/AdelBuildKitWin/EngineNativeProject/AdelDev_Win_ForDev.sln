@@ -1,15 +1,13 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{BFEF7169-E6FA-4251-AE46-1B2785573792}") = "AdelDev_Win_ForDev_AeMain", "AdelDev_Win_ForDev_AeMain.vcxproj", "{01C68E42-0D13-4A34-B624-7396F43BFCE6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev", "AdelDev_Win_ForDev.vcxproj", "{F7FD653A-D72D-46B6-BEC5-3933536F768D}"
 EndProject
-Project("{BFEF7169-E6FA-4251-AE46-1B2785573792}") = "AdelDev_Win_ForDev_AeCommon", "..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj", "{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev_AeMain", "AdelDev_Win_ForDev_AeMain.vcxproj", "{01C68E42-0D13-4A34-B624-7396F43BFCE6}"
 EndProject
-# ex.
-# Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AeBase", "..\..\library\windows\AeBase.vcxproj", "{F7CCEEA1-49F4-475F-839A-4B75237368B6}"
-# EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev_AeCommon", "..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj", "{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -18,25 +16,30 @@ Global
 		Review|x64 = Review|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Debug|x64.ActiveCfg = Debug|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Debug|x64.Build.0 = Debug|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Develop|x64.ActiveCfg = Develop|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Develop|x64.Build.0 = Develop|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Final|x64.ActiveCfg = Final|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Final|x64.Build.0 = Final|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Review|x64.ActiveCfg = Review|x64
+		{F7FD653A-D72D-46B6-BEC5-3933536F768D}.Review|x64.Build.0 = Review|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Debug|x64.ActiveCfg = Debug|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Debug|x64.Build.0 = Debug|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Develop|x64.ActiveCfg = Develop|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Develop|x64.Build.0 = Develop|x64
-		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Review|x64.ActiveCfg = Review|x64
-		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Review|x64.Build.0 = Review|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Final|x64.ActiveCfg = Final|x64
 		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Final|x64.Build.0 = Final|x64
+		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Review|x64.ActiveCfg = Review|x64
+		{01C68E42-0D13-4A34-B624-7396F43BFCE6}.Review|x64.Build.0 = Review|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Debug|x64.ActiveCfg = Debug|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Debug|x64.Build.0 = Debug|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Develop|x64.ActiveCfg = Develop|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Develop|x64.Build.0 = Develop|x64
-		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Review|x64.ActiveCfg = Review|x64
-		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Review|x64.Build.0 = Review|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Final|x64.ActiveCfg = Final|x64
 		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Final|x64.Build.0 = Final|x64
-		# ex.
-		#{F7CCEEA1-49F4-475F-839A-4B75237368B6}.debug|x64.ActiveCfg = debug|x64
-		#{F7CCEEA1-49F4-475F-839A-4B75237368B6}.debug|x64.Build.0 = debug|x64
+		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Review|x64.ActiveCfg = Review|x64
+		{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}.Review|x64.Build.0 = Review|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

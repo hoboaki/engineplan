@@ -26,9 +26,7 @@
 
   <!-- ソースコードの列挙 -->
   <ItemGroup>
-    <ClCompile Include="Source\ae_win_al\Hoge.cpp"/>
-    <ClCompile Include="Source\ae_win_gl330\Hoge.cpp"/>
-    <ClCompile Include="Source\ae_win_os\Main.cpp"/>
+    <ClCompile Include="Source\LinkOnly.cpp"/>
     <!-- ex. -->
     <!--
     <ClInclude Include="module2\Header.h" />
@@ -40,13 +38,29 @@
 
   <!-- プロジェクト設定 -->
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{01C68E42-0D13-4A34-B624-7396F43BFCE6}</ProjectGuid>
-    <RootNamespace>AdelDevWinForDevLibMain</RootNamespace>
+    <ProjectGuid>{F7FD653A-D72D-46B6-BEC5-3933536F768D}</ProjectGuid>
+    <RootNamespace>AdelDevWinForDev</RootNamespace>
   </PropertyGroup>
 
+  <!-- プロジェクトの依存関係の挿入 -->
+  <ItemGroup>
+    <ProjectReference Include="AdelDev_Win_ForDev_AeMain.vcxproj">
+      <Project>{01C68E42-0D13-4A34-B624-7396F43BFCE6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj">
+      <Project>{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}</Project>
+    </ProjectReference>
+    <!-- ex. -->
+    <!--
+    <ProjectReference Include="..\..\library\windows\AeBase.vcxproj">
+      <Project>{f7cceea1-49f4-475f-839a-4b75237368b6}</Project>
+    </ProjectReference>
+    -->
+  </ItemGroup>
+  
   <!-- Microsoft.Cpp.props インポート前のビルドターゲット設定 -->
   <PropertyGroup>
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
@@ -82,8 +96,8 @@
     <PreBuildEventUseInBuild>false</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild>false</PreLinkEventUseInBuild>
     <IntDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Obj\$(ProjectName)\</IntDir>
-    <OutDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Lib\</OutDir>
-    <TargetName>Lib_$(ProjectName)</TargetName>
+    <OutDir>..\DevelopResource\AdelDevProject\Local\Build\AdelDev_Win_ForDev\$(Configuration)\Bin\</OutDir>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
 
   <!-- Microsoft.Cpp.props インポート後のビルドターゲット設定 -->  

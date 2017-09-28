@@ -45,7 +45,7 @@
   <!-- プロジェクト設定 -->
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}</ProjectGuid>
-    <RootNamespace>AdelDevWinForDevCommon</RootNamespace>
+    <RootNamespace>AdelDevWinForDevLibCommon</RootNamespace>
   </PropertyGroup>
 
   <!-- Microsoft.Cpp.props インポート前のビルドターゲット設定 -->
