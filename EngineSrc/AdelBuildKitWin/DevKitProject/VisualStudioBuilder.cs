@@ -292,7 +292,7 @@ namespace AdelBuildKitWin
             // Appプロジェクト用置換タグ辞書生成
             var autoGenReplaceTagsApp = new Dictionary<string, string>(autoGenReplaceTags);
             autoGenReplaceTagsApp.Add(tagAutoGenRootNamespace, string.Format("{0}{1}{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name));
-            autoGenReplaceTagsApp.Add(tagAutoGenProjectGuid, libMainProjGuid);
+            autoGenReplaceTagsApp.Add(tagAutoGenProjectGuid, appProjGuid);
             autoGenReplaceTagsApp.Add(tagAutoGenAdditionalIncludeDirectories, funcAdditionalIncludeDirectories(appProjFile.Directory));
             autoGenReplaceTagsApp.Add(tagAutoGenIntDir, FilePathUtil.ToRelativeDosPath(appProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Obj/$(ProjectName)").FullName + "\\"));
             autoGenReplaceTagsApp.Add(tagAutoGenOutDir, FilePathUtil.ToRelativeDosPath(appProjFile.Directory, new DirectoryInfo(aArg.WorkSpaceDirectory.FullName + "/$(Configuration)/Bin").FullName + "\\"));
