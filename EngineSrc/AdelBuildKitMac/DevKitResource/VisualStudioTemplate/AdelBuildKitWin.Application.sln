@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+# __AutoGenInsertProjectList__
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		__AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__ = __AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__
+		__AutoGenConfigurationBuildVersionDevelop__|__AutoGenPlatform__ = __AutoGenConfigurationBuildVersionDevelop__|__AutoGenPlatform__
+		__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__ = __AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__
+		__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__ = __AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		# __AutoGenInsertProjectConfigurationPlatforms__
+		# ex.
+		#{F7CCEEA1-49F4-475F-839A-4B75237368B6}.debug|__AutoGenPlatform__.ActiveCfg = debug|__AutoGenPlatform__
+		#{F7CCEEA1-49F4-475F-839A-4B75237368B6}.debug|__AutoGenPlatform__.Build.0 = debug|__AutoGenPlatform__
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

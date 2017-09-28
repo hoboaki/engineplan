@@ -1,0 +1,43 @@
+# 文字コード：UTF-8
+PlatformSetting: 
+    # コードネーム（パスカル英字・ハイフンで構成を推奨）
+    Name: "Mac"
+    
+    # GUI上などで表示される名前（分かりやすさ優先）
+    DisplayName: "Mac"
+
+    # デフォルトビルドターゲットの名前
+    DefaultBuildTargetName: "ForDev"
+    
+    # ビルドターゲットの既定設定
+    DefaultBuildTargetSetting:
+        # 使用するビルダー
+        BuilderName: "AdelBuildKitMac.XcodeBuilder"
+
+        # ビルダーに通知するパラメータ
+        #BuilderParams:
+
+        # Coreライブラリの定義
+        CoreLib:
+            # 使用するCoreOsライブラリ
+            # ["AdelBuildKitMac.CoreOsMac"(default)]
+            #CoreOs: "AdelBuildKitMac.CoreOsMac"
+
+            # 使用するCoreGfxライブラリ
+            # ["AdelBuildKitMac.CoreGfxGl330"(default), "AdelBuildKitMac.CoreGfxVulkan"]
+            #CoreGfx: "AdelBuildKitMac.CoreGfxGl330"
+
+            # 使用するCoreSndライブラリ
+            # ["AdelBuildKitMac.CoreSndAl"(default)]
+            #CoreSnd: "AdelBuildKitMac.CoreSndAl"
+
+    # 各ビルドターゲット定義
+    BuildTargetSettings:
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "ForDev"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "開発用（Mac）"
+
+# EOF
