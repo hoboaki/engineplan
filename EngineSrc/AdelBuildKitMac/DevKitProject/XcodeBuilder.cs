@@ -13,13 +13,13 @@ using System.IO;
 using AdelDevKit.CommandLog;
 using System.Text.RegularExpressions;
 
-namespace AdelBuildKitWin
+namespace AdelBuildKitMac
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// VisualStudio 用のビルダー。
+    /// Xcode 用のビルダー。
     /// </summary>
-    class VisualStudioBuilder : BuilderAddonBase
+    class XcodeBuilder : BuilderAddonBase
     {
         //------------------------------------------------------------------------------
         /// <summary>
@@ -52,7 +52,7 @@ namespace AdelBuildKitWin
         {
             get
             {
-                return nameof(AdelBuildKitWin) + "." + nameof(VisualStudioBuilder);
+                return nameof(AdelBuildKitMac) + "." + nameof(XcodeBuilder);
             }
         }
 
@@ -60,7 +60,7 @@ namespace AdelBuildKitWin
         {
             get
             {
-                return CoreOsWin.StaticName;
+                return CoreOsMac.StaticName;
             }
         }
 

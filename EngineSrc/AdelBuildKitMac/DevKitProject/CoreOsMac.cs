@@ -8,19 +8,19 @@ using AdelDevKit.BuildSystem;
 using AdelDevKit.PluginSystem;
 using System.IO;
 
-namespace AdelBuildKitWin
+namespace AdelBuildKitMac
 {
     //------------------------------------------------------------------------------
     /// <summary>
     /// Windows 用 CoreOs。
     /// </summary>
-    class CoreOsWin : CoreOsAddonBase
+    class CoreOsMac : CoreOsAddonBase
     {
         //------------------------------------------------------------------------------
         /// <summary>
         /// Name の static 版。
         /// </summary>
-        public static string StaticName { get { return nameof(AdelBuildKitWin) + "." + nameof(CoreOsWin); } }
+        public static string StaticName { get { return nameof(AdelBuildKitMac) + "." + nameof(CoreOsMac); } }
 
         //------------------------------------------------------------------------------
         #region CoreOsAddonBase の実装
@@ -42,7 +42,7 @@ namespace AdelBuildKitWin
 
                 var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
-                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_win_os"));
+                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_mac_os"));
                 foreach (var dir in dirs)
                 {
                     srcFiles.AddRange(dir.EnumerateFiles("*.c", SearchOption.AllDirectories));

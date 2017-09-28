@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelBuildKitWin", "DevKitProject\AdelBuildKitWin.csproj", "{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelBuildKitMac", "DevKitProject\AdelBuildKitMac.csproj", "{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKit", "..\AdelEngine\AdelDevKit\AdelDevKit.csproj", "{40355C67-9083-47F5-8F44-517393F5697D}"
 EndProject

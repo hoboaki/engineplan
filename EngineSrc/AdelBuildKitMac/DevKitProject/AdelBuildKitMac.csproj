@@ -7,8 +7,8 @@
     <ProjectGuid>{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdelBuildKitWin</RootNamespace>
-    <AssemblyName>AdelBuildKitWin</AssemblyName>
+    <RootNamespace>AdelBuildKitMac</RootNamespace>
+    <AssemblyName>AdelBuildKitMac</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -46,12 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreGfxGl330.cs" />
-    <Compile Include="CoreOsWin.cs" />
+    <Compile Include="CoreOsMac.cs" />
     <Compile Include="CoreSndAl.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />
-    <Compile Include="VisualStudioBuilder.cs" />
+    <Compile Include="XcodeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AdelEngine\AdelDevKit\AdelDevKit.csproj">

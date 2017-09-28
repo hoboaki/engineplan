@@ -8,7 +8,7 @@ using AdelDevKit.BuildSystem;
 using AdelDevKit.PluginSystem;
 using System.IO;
 
-namespace AdelBuildKitWin
+namespace AdelBuildKitMac
 {
     //------------------------------------------------------------------------------
     /// <summary>
@@ -20,7 +20,7 @@ namespace AdelBuildKitWin
         /// <summary>
         /// Name の static 版。
         /// </summary>
-        public static string StaticName { get { return nameof(AdelBuildKitWin) + "." + nameof(CoreGfxGl330); } }
+        public static string StaticName { get { return nameof(AdelBuildKitMac) + "." + nameof(CoreGfxGl330); } }
 
         //------------------------------------------------------------------------------
         #region CoreGfxAddonBase の実装
@@ -43,7 +43,7 @@ namespace AdelBuildKitWin
                 var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var commonDirRoot = Utility.CommonNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
-                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_win_gl330"));
+                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_mac_gl330"));
                 dirs.Add(new DirectoryInfo(commonDirRoot.FullName + "/ae_opengl"));
                 foreach (var dir in dirs)
                 {
