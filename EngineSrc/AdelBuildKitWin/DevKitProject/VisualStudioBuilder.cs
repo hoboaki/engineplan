@@ -106,7 +106,7 @@ namespace AdelBuildKitWin
             FileInfo appProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.Application.vcxproj");
             FileInfo libMainProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.StaticLibrary.vcxproj");
             FileInfo libCommonProjFileTemplate = new FileInfo(visualStudioTemplateDir.FullName + "/AdelBuildKitWin.StaticLibrary.vcxproj");
-            string appSlnGuid = "{BFEF7169-E6FA-4251-AE46-1B2785573792}";
+            string appSlnGuid = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}";
             string appProjGuid = "{F7FD653A-D72D-46B6-BEC5-3933536F768D}"; // GUIDは事前生成したものを使用
             string libMainProjGuid = "{01C68E42-0D13-4A34-B624-7396F43BFCE6}"; 
             string libCommonProjGuid = "{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}";            

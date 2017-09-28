@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 # __AutoGenInsertProjectList__
-# ex.
-# Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AeBase", "..\..\library\windows\AeBase.vcxproj", "{F7CCEEA1-49F4-475F-839A-4B75237368B6}"
-# EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		__AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__ = __AutoGenConfigurationBuildVersionDebug__|__AutoGenPlatform__
