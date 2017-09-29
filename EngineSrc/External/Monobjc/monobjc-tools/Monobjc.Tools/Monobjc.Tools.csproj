@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C44005EC-E057-4636-96E2-637CA83F5170}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Monobjc.Tools</RootNamespace>
+    <AssemblyName>Monobjc.Tools</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Monobjc.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyList\PList.cs" />
+    <Compile Include="PropertyList\PListArray.cs" />
+    <Compile Include="PropertyList\PListBoolean.cs" />
+    <Compile Include="PropertyList\PListData.cs" />
+    <Compile Include="PropertyList\PListDate.cs" />
+    <Compile Include="PropertyList\PListDict.cs" />
+    <Compile Include="PropertyList\PListDocument.cs" />
+    <Compile Include="PropertyList\PListInteger.cs" />
+    <Compile Include="PropertyList\PListItem.cs" />
+    <Compile Include="PropertyList\PListItemBase.cs" />
+    <Compile Include="PropertyList\PListKey.cs" />
+    <Compile Include="PropertyList\PListReal.cs" />
+    <Compile Include="PropertyList\PListString.cs" />
+    <Compile Include="Utilities\Converter.cs" />
+    <Compile Include="Utilities\EnumExtensions.cs" />
+    <Compile Include="Utilities\FileExtensions.cs" />
+    <Compile Include="Utilities\IExecutionLogger.cs" />
+    <Compile Include="Utilities\NullLogger.cs" />
+    <Compile Include="Utilities\ProcessHelper.cs" />
+    <Compile Include="Xcode\PBXBuildRule.cs" />
+    <Compile Include="Xcode\PBXCompilerSpec.cs" />
+    <Compile Include="Xcode\XcodeProject.Files.cs" />
+    <Compile Include="Xcode\XcodeProject.Targets.cs" />
+    <Compile Include="Xcode\IPBXElement.cs" />
+    <Compile Include="Xcode\IPBXVisitor.cs" />
+    <Compile Include="Xcode\PBXAggregateTarget.cs" />
+    <Compile Include="Xcode\PBXAppleScriptBuildPhase.cs" />
+    <Compile Include="Xcode\PBXBuildFile.cs" />
+    <Compile Include="Xcode\PBXBuildPhase.cs" />
+    <Compile Include="Xcode\PBXContainerItemProxy.cs" />
+    <Compile Include="Xcode\PBXCopyFilesBuildPhase.cs" />
+    <Compile Include="Xcode\PBXDocument.cs" />
+    <Compile Include="Xcode\PBXElement.cs" />
+    <Compile Include="Xcode\PBXElementType.cs" />
+    <Compile Include="Xcode\PBXFileElement.cs" />
+    <Compile Include="Xcode\PBXFileEncoding.cs" />
+    <Compile Include="Xcode\PBXFileReference.cs" />
+    <Compile Include="Xcode\PBXFileType.cs" />
+    <Compile Include="Xcode\PBXFrameworksBuildPhase.cs" />
+    <Compile Include="Xcode\PBXGroup.cs" />
+    <Compile Include="Xcode\PBXHeadersBuildPhase.cs" />
+    <Compile Include="Xcode\PBXLegacyTarget.cs" />
+    <Compile Include="Xcode\PBXLineEnding.cs" />
+    <Compile Include="Xcode\PBXNativeTarget.cs" />
+    <Compile Include="Xcode\PBXProductType.cs" />
+    <Compile Include="Xcode\PBXProject.cs" />
+    <Compile Include="Xcode\PBXResourcesBuildPhase.cs" />
+    <Compile Include="Xcode\PBXShellScriptBuildPhase.cs" />
+    <Compile Include="Xcode\PBXSourcesBuildPhase.cs" />
+    <Compile Include="Xcode\PBXSourceTree.cs" />
+    <Compile Include="Xcode\PBXTarget.cs" />
+    <Compile Include="Xcode\PBXTargetDependency.cs" />
+    <Compile Include="Xcode\PBXVariantGroup.cs" />
+    <Compile Include="Xcode\Visitors\CollectVisitor.cs" />
+    <Compile Include="Xcode\XCBuildConfiguration.cs" />
+    <Compile Include="Xcode\XCConfigurationList.cs" />
+    <Compile Include="Xcode\XcodeCompatibilityVersion.cs" />
+    <Compile Include="Xcode\XcodeProject.cs" />
+    <Compile Include="Xcode\PBXReferenceProxy.cs" />
+    <Compile Include="Xcode\ProjectNSWriter.cs" />
+    <Compile Include="Xcode\ProjectWriter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Folder Include="External\" />
+  </ItemGroup>
+</Project>
