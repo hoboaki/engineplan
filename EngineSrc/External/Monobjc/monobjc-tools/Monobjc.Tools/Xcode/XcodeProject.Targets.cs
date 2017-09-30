@@ -286,8 +286,9 @@ namespace Monobjc.Tools.Xcode
 							target = nativeTarget;
 
 							break;
-						}
-					case PBXProductType.LibraryStatic:
+                        }
+#if true // adel modified
+                        case PBXProductType.LibraryStatic:
 						{
 							this.Project.ProductRefGroup = this.AddGroup ("Products");
 
@@ -303,14 +304,14 @@ namespace Monobjc.Tools.Xcode
 							nativeTarget.AddBuildPhase (new PBXSourcesBuildPhase ());
 							nativeTarget.AddBuildPhase (new PBXFrameworksBuildPhase ());
 							nativeTarget.Name = targetName;
-							nativeTarget.ProductInstallPath = "/usr/lib";
 							nativeTarget.ProductName = targetName;
 							nativeTarget.ProductReference = fileReference;
 							nativeTarget.ProductType = type;
 							target = nativeTarget;
 							break;
 						}
-					case PBXProductType.LibraryDynamic:
+#endif
+                        case PBXProductType.LibraryDynamic:
 						{
 							this.Project.ProductRefGroup = this.AddGroup ("Products");
 
@@ -359,7 +360,12 @@ namespace Monobjc.Tools.Xcode
 						case PBXProductType.Application:
 							this.RemoveFile ("Products", targetName + ".app");
 							break;
-						case PBXProductType.LibraryDynamic:
+#if true // adel modified
+                        case PBXProductType.LibraryStatic:
+                            this.RemoveFile("Products", targetName + ".lib");
+                            break;
+#endif
+                            case PBXProductType.LibraryDynamic:
 							this.RemoveFile ("Products", targetName + ".dylib");
 							break;
 						default:
@@ -382,8 +388,15 @@ namespace Monobjc.Tools.Xcode
 			lock (this.syncRoot) {
 				PBXTarget target = this.GetTarget (targetName);
 				XCBuildConfiguration buildConfiguration = this.GetBuildConfiguration (configurationName, target);
-				buildConfiguration.BuildSettings.Add (new KeyValuePair<String, Object> (key, value));
-			}
+#if true // adel modified
+                if (key != null)
+                {
+                    buildConfiguration.BuildSettings.Add(new KeyValuePair<String, Object>(key, value));
+                }
+#else
+                buildConfiguration.BuildSettings.Add (new KeyValuePair<String, Object> (key, value));
+#endif
+            }
 		}
 
 		/// <summary>

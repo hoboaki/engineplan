@@ -14,7 +14,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        000000050000000000C8FEBE /* Frameworks */ = {
+        00000005000000000348C725 /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -69,7 +69,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-        0000000600000000014B2C3B /* Headers */ = {
+        000000060000000003989A29 /* Headers */ = {
             isa = PBXHeadersBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -83,16 +83,15 @@
             isa = PBXNativeTarget;
             buildConfigurationList = 000000170000000001085A3F /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */;
             buildPhases = (
-                0000000600000000014B2C3B /* Headers */,
-                000000090000000003A48E15 /* Sources */,
-                000000050000000000C8FEBE /* Frameworks */,
+                000000060000000003989A29 /* Headers */,
+                0000000900000000005D6B75 /* Sources */,
+                00000005000000000348C725 /* Frameworks */,
             );
             buildRules = (
             );
             dependencies = (
             );
             name = "AdelDev_Mac_ForDev_AeLib";
-            productInstallPath = "/usr/lib";
             productName = "AdelDev_Mac_ForDev_AeLib";
             productReference = 0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */;
             productType = "com.apple.product-type.library.static";
@@ -120,7 +119,7 @@
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-        000000090000000003A48E15 /* Sources */ = {
+        0000000900000000005D6B75 /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -131,6 +130,30 @@
 
 /* Begin XCBuildConfiguration section */
         000000160000000000F96FC5 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+            };
+            name = "Debug";
+        };
+        000000160000000000C4EDF4 /* Develop */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+            };
+            name = "Develop";
+        };
+        000000160000000002EC5D9C /* Review */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+            };
+            name = "Review";
+        };
+        0000001600000000024F4A7C /* Final */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+            };
+            name = "Final";
+        };
+        0000001600000000014B2C3B /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -159,7 +182,7 @@
             };
             name = "Debug";
         };
-        000000160000000000C4EDF4 /* Develop */ = {
+        000000160000000003A48E15 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -186,7 +209,7 @@
             };
             name = "Develop";
         };
-        000000160000000002EC5D9C /* Review */ = {
+        000000160000000000C8FEBE /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -213,7 +236,7 @@
             };
             name = "Review";
         };
-        0000001600000000024F4A7C /* Final */ = {
+        00000016000000000310F4AF /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -257,8 +280,13 @@
         000000170000000001085A3F /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
+                0000001600000000014B2C3B /* Debug */,
+                000000160000000003A48E15 /* Develop */,
+                000000160000000000C8FEBE /* Review */,
+                00000016000000000310F4AF /* Final */,
             );
             defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = "Debug";
         };
 /* End XCConfigurationList section */
 

@@ -263,22 +263,35 @@ namespace AdelBuildKitMac
             var libProj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
             libProj.BaseDir = tmpLibProjFile.Directory.FullName;
             libProj.AddTarget(libFileName, PBXProductType.LibraryStatic);
-            foreach (var configurationName in configurationNames)
             {
-                var configurationSettings = libConfigurationSettings.ToList();
-                configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
-                foreach (var configurationSetting in configurationSettings)
+                // Project用ConfigurationList列挙
+                foreach (var configurationName in configurationNames)
                 {
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
+                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, null, null);
                 }
             }
-            foreach (var srcFile in libMainSrcFiles)
             {
-                libProj.AddFile("Source/CodeMain", srcFile.FullName);
+                // Configuration列挙
+                foreach (var configurationName in configurationNames)
+                {
+                    var configurationSettings = libConfigurationSettings.ToList();
+                    configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
+                    foreach (var configurationSetting in configurationSettings)
+                    {
+                        libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, configurationSetting.Key, configurationSetting.Value);
+                    }
+                }
             }
-            foreach (var srcFile in libCommonSrcFiles)
             {
-                libProj.AddFile("Source/CodeCommon", srcFile.FullName);
+                // ソース列挙
+                foreach (var srcFile in libMainSrcFiles)
+                {
+                    libProj.AddFile("Source/CodeMain", srcFile.FullName);
+                }
+                foreach (var srcFile in libCommonSrcFiles)
+                {
+                    libProj.AddFile("Source/CodeCommon", srcFile.FullName);
+                }
             }
             libProj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
             libProj.Save();
@@ -307,6 +320,8 @@ namespace AdelBuildKitMac
                 }
                 if (!isNeedToUpdate)
                 {
+                    // 更新する必要がないのでTmpを削除して終了
+                    Directory.Delete(projDirTmp.FullName, true);
                     aArg.Log.Debug.WriteLine("Skip to update '{0}'.", aProjTarget.FullName);
                     return;
                 }
