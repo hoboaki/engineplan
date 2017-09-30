@@ -122,21 +122,21 @@ namespace AdelBuildKitMac
             string macroCommon = "";
             foreach (var macro in aArg.BuildTargetSetting.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + ";";
+                macroCommon += macro + " ";
             }
             foreach (var macro in aArg.CoreOsBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + ";";
+                macroCommon += macro + " ";
             }
             foreach (var macro in aArg.CoreGfxBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + ";";
+                macroCommon += macro + " ";
             }
             foreach (var macro in aArg.CoreSndBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + ";";
+                macroCommon += macro + " ";
             }
-            string macroDebug = macroCommon + "AE_LIBRARY_DEBUG;DEBUG=1;";
+            string macroDebug = macroCommon + "AE_LIBRARY_DEBUG DEBUG=1;";
             string macroDevelop = macroCommon + "AE_LIBRARY_DEVELOP";
             string macroReview = macroCommon + "AE_LIBRARY_REVIEW";
             string macroFinal = macroCommon + "AE_LIBRARY_FINAL";

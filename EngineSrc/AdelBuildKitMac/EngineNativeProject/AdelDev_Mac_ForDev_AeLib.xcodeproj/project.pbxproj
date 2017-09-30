@@ -194,7 +194,7 @@
                 SDKROOT = "macosx";
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
                 GCC_OPTIMIZATION_LEVEL = "0";
-                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_DEBUG;DEBUG=1;";
+                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_DEBUG DEBUG=1;";
                 ZERO_LINK = "YES";
             };
             name = "Debug";
