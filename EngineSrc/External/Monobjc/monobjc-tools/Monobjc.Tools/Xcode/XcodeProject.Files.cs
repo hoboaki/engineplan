@@ -181,7 +181,7 @@ namespace Monobjc.Tools.Xcode
                         else
                         {
                             path = resultPath;
-                            fileReference.SourceTree = PBXSourceTree.Group;
+                            fileReference.SourceTree = PBXSourceTree.SourceRoot;
                         }
 #else
                         if (path.StartsWith (rootDir)) {

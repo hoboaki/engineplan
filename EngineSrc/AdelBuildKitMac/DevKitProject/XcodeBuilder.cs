@@ -287,11 +287,11 @@ namespace AdelBuildKitMac
                 // ソース列挙
                 foreach (var srcFile in libMainSrcFiles)
                 {
-                    libProj.AddFile("Source/CodeMain", srcFile.FullName);
+                    libProj.AddFile("Source/CodeMain", srcFile.FullName, libFileName);
                 }
                 foreach (var srcFile in libCommonSrcFiles)
                 {
-                    libProj.AddFile("Source/CodeCommon", srcFile.FullName);
+                    libProj.AddFile("Source/CodeCommon", srcFile.FullName, libFileName);
                 }
             }
             libProj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう

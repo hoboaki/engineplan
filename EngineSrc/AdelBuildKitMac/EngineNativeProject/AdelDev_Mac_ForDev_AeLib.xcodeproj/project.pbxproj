@@ -6,15 +6,21 @@
     objectVersion = 46;
     objects = {
 
+/* Begin PBXBuildFile section */
+        00000001000000000348C725 /* Main.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001629F15 /* Main.cpp */; };
+        0000000100000000018F0051 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007797C1 /* Hoge.cpp */; };
+        0000000100000000020702D9 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001D70446 /* Hoge.cpp */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
         0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = "archive.ar";includeInIndex = 0;path = "AdelDev_Mac_ForDev_AeLib.a";sourceTree = "BUILT_PRODUCTS_DIR";        };
-        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Main.cpp";path = "Source/ae_mac_os/Main.cpp";sourceTree = "<group>";        };
-        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = "<group>";        };
-        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = "<group>";        };
+        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Main.cpp";path = "Source/ae_mac_os/Main.cpp";sourceTree = "SOURCE_ROOT";        };
+        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = "SOURCE_ROOT";        };
+        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = "SOURCE_ROOT";        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        00000005000000000348C725 /* Frameworks */ = {
+        0000000500000000023F19A8 /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -85,7 +91,7 @@
             buildPhases = (
                 000000060000000003989A29 /* Headers */,
                 0000000900000000005D6B75 /* Sources */,
-                00000005000000000348C725 /* Frameworks */,
+                0000000500000000023F19A8 /* Frameworks */,
             );
             buildRules = (
             );
@@ -123,6 +129,9 @@
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
+                00000001000000000348C725 /* Main.cpp in Sources */,
+                0000000100000000018F0051 /* Hoge.cpp in Sources */,
+                0000000100000000020702D9 /* Hoge.cpp in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
