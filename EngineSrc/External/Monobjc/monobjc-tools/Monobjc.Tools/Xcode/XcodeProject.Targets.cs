@@ -287,6 +287,29 @@ namespace Monobjc.Tools.Xcode
 
 							break;
 						}
+					case PBXProductType.LibraryStatic:
+						{
+							this.Project.ProductRefGroup = this.AddGroup ("Products");
+
+							PBXFileReference fileReference = new PBXFileReference ();
+							fileReference.ExplicitFileType = PBXFileType.archiveAr;
+							fileReference.IncludeInIndex = 0;
+							fileReference.Path = targetName + ".a";
+							fileReference.SourceTree = PBXSourceTree.BuildProductDir;
+							this.Project.ProductRefGroup.AddChild (fileReference);
+
+							PBXNativeTarget nativeTarget = new PBXNativeTarget ();
+							nativeTarget.AddBuildPhase (new PBXHeadersBuildPhase ());
+							nativeTarget.AddBuildPhase (new PBXSourcesBuildPhase ());
+							nativeTarget.AddBuildPhase (new PBXFrameworksBuildPhase ());
+							nativeTarget.Name = targetName;
+							nativeTarget.ProductInstallPath = "/usr/lib";
+							nativeTarget.ProductName = targetName;
+							nativeTarget.ProductReference = fileReference;
+							nativeTarget.ProductType = type;
+							target = nativeTarget;
+							break;
+						}
 					case PBXProductType.LibraryDynamic:
 						{
 							this.Project.ProductRefGroup = this.AddGroup ("Products");

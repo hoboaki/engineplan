@@ -44,5 +44,17 @@ namespace AdelDevKit.Utility
             Uri resultUri = baseUri.MakeRelativeUri(dstUri);
             return resultUri.ToString().Replace(@"/", @"\");
         }
+
+        //------------------------------------------------------------------------------
+        /// <summary>
+        /// Unix パス形式の相対パスに変換する。
+        /// </summary>
+        public static string ToRelativeUnixPath(DirectoryInfo aBaseDir, string aDstPath)
+        {
+            Uri baseUri = new Uri(aBaseDir.FullName + @"\");
+            Uri dstUri = new Uri(aDstPath);
+            Uri resultUri = baseUri.MakeRelativeUri(dstUri);
+            return resultUri.ToString().Replace(@"\", @"/");
+        }
     }
 }

@@ -59,6 +59,10 @@
       <Name>AdelDevKit</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\Monobjc\monobjc-tools\Monobjc.Tools\Monobjc.Tools.csproj">
+      <Project>{c44005ec-e057-4636-96e2-637ca83f5170}</Project>
+      <Name>Monobjc.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTestsPlugin", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommandMain", "..\AdelEngine\AdelCommandMain\AdelCommandMain.csproj", "{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monobjc.Tools", "..\External\Monobjc\monobjc-tools\Monobjc.Tools\Monobjc.Tools.csproj", "{C44005EC-E057-4636-96E2-637CA83F5170}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

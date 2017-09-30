@@ -13,10 +13,12 @@ function ExecMsBuild ($arg) {
 }
 
 # ビルドキットのビルド＆コピー
-ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitWin.csproj")
+ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitMac.csproj")
 $srcDir = "./DevKitProject/bin/Debug"
-$dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitWin.aeplugin/DevKitDll"
-Remove-Item $dstDir -Recurse
+$dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitMac.aeplugin/DevKitDll"
+if (Test-Path $dstDir) {
+    Remove-Item $dstDir -Recurse
+}
 Copy-Item $srcDir -destination $dstDir -recurse
 
 # AdelCommandのビルド
