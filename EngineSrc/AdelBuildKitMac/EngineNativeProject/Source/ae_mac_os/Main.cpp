@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 extern void HogeMain();
-void main()
+int main()
 {
     HogeMain();
+    return 0;
 }
