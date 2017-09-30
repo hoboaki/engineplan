@@ -211,13 +211,13 @@ namespace AdelBuildKitMac
             // ビルド設定列挙
             var commonConfigurationSettings = new List<StringPair>();
             commonConfigurationSettings.Add(new StringPair("CLANG_ANALYZER_NONNULL", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_CXX_LANGUAGE_STANDARD", "\"gnu++0x\""));
+            commonConfigurationSettings.Add(new StringPair("CLANG_CXX_LANGUAGE_STANDARD", "gnu++0x"));
             commonConfigurationSettings.Add(new StringPair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
             commonConfigurationSettings.Add(new StringPair("CLANG_WARN_CONSTANT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new StringPair("CLANG_WARN_ENUM_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new StringPair("CLANG_WARN_INT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new StringPair("COMBINE_HIDPI_IMAGES", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CODE_SIGN_IDENTITY", "\" - \""));
+            commonConfigurationSettings.Add(new StringPair("CODE_SIGN_IDENTITY", " - "));
             commonConfigurationSettings.Add(new StringPair("COPY_PHASE_STRIP", "NO"));
             commonConfigurationSettings.Add(new StringPair("DEBUG_INFORMATION_FORMAT", "dwarf"));
             commonConfigurationSettings.Add(new StringPair("GCC_C_LANGUAGE_STANDARD", "gnu99"));
