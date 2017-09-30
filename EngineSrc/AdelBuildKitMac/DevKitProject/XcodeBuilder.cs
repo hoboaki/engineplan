@@ -261,6 +261,7 @@ namespace AdelBuildKitMac
 
             // プロジェクト生成
             var libProj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
+            libProj.BaseDir = tmpLibProjFile.Directory.FullName;
             libProj.AddTarget(libFileName, PBXProductType.LibraryStatic);
             foreach (var configurationName in configurationNames)
             {
@@ -273,12 +274,13 @@ namespace AdelBuildKitMac
             }
             foreach (var srcFile in libMainSrcFiles)
             {
-                libProj.AddFile("Source/CodeMain", FilePathUtil.ToRelativeUnixPath(libProjFile.Directory, srcFile.FullName));
+                libProj.AddFile("Source/CodeMain", srcFile.FullName);
             }
             foreach (var srcFile in libCommonSrcFiles)
             {
-                libProj.AddFile("Source/CodeCommon", FilePathUtil.ToRelativeUnixPath(libProjFile.Directory, srcFile.FullName));
+                libProj.AddFile("Source/CodeCommon", srcFile.FullName);
             }
+            libProj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
             libProj.Save();
 
             // 変更があったら更新

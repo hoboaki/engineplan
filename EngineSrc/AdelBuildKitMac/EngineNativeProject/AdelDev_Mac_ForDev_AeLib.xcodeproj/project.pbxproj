@@ -8,9 +8,9 @@
 
 /* Begin PBXFileReference section */
         0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = "archive.ar";includeInIndex = 0;path = "AdelDev_Mac_ForDev_AeLib.a";sourceTree = "BUILT_PRODUCTS_DIR";        };
-        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Main.cpp";path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitMac\Source\ae_mac_os\Main.cpp";sourceTree = "<absolute>";        };
-        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitMac\Source\ae_mac_gl330\Hoge.cpp";sourceTree = "<absolute>";        };
-        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "C:\Users\akiharu\projects\engineplan\dev\AdelEngine\AdelEngineNative\Source\ae\base\Hoge.cpp";sourceTree = "<absolute>";        };
+        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Main.cpp";path = "Source/ae_mac_os/Main.cpp";sourceTree = "<group>";        };
+        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = "<group>";        };
+        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = "<group>";        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

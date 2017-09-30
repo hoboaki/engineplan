@@ -168,14 +168,31 @@ namespace Monobjc.Tools.Xcode
 					if (sourceTree != PBXSourceTree.None) {
 						fileReference.SourceTree = sourceTree;
 					} else {
-						if (path.StartsWith (rootDir)) {
+#if true // adel modified
+                        // できる限り相対パスにする
+                        Uri baseUri = new Uri(BaseDir + @"\");
+                        Uri dstUri = new Uri(path);
+                        Uri resultUri = baseUri.MakeRelativeUri(dstUri);
+                        var resultPath = resultUri.ToString().Replace(@"\", @"/");
+                        if (resultPath.Contains(":"))
+                        {
+                            fileReference.SourceTree = PBXSourceTree.Absolute;
+                        }
+                        else
+                        {
+                            path = resultPath;
+                            fileReference.SourceTree = PBXSourceTree.Group;
+                        }
+#else
+                        if (path.StartsWith (rootDir)) {
 							path = path.Substring (rootDir.Length + 1);
 							fileReference.SourceTree = PBXSourceTree.Group;
 						} else {
 							fileReference.SourceTree = PBXSourceTree.Absolute;
 						}
-					}
-					fileReference.Path = path;
+#endif
+                    }
+                    fileReference.Path = path;
 					fileReference.LastKnownFileType = GetFileType (file);
 
 					// Add it to the group
