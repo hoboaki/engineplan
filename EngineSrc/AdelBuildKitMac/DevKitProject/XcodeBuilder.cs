@@ -267,7 +267,8 @@ namespace AdelBuildKitMac
                 // Project用ConfigurationList列挙
                 foreach (var configurationName in configurationNames)
                 {
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, null, null);
+                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, "EXECUTABLE_PREFIX", "lib");
+                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, "PRODUCT_NAME", "$(TARGET_NAME)");
                 }
             }
             {

@@ -132,24 +132,32 @@
         000000160000000000F96FC5 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = "Debug";
         };
         000000160000000000C4EDF4 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = "Develop";
         };
         000000160000000002EC5D9C /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = "Review";
         };
         0000001600000000024F4A7C /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = "Final";
         };

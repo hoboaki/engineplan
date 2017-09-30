@@ -388,14 +388,7 @@ namespace Monobjc.Tools.Xcode
 			lock (this.syncRoot) {
 				PBXTarget target = this.GetTarget (targetName);
 				XCBuildConfiguration buildConfiguration = this.GetBuildConfiguration (configurationName, target);
-#if true // adel modified
-                if (key != null)
-                {
-                    buildConfiguration.BuildSettings.Add(new KeyValuePair<String, Object>(key, value));
-                }
-#else
                 buildConfiguration.BuildSettings.Add (new KeyValuePair<String, Object> (key, value));
-#endif
             }
 		}
 
