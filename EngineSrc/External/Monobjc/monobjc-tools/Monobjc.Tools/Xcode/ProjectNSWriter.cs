@@ -19,6 +19,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Monobjc.Tools.Xcode
 {
@@ -159,7 +160,19 @@ namespace Monobjc.Tools.Xcode
 			if (type == typeof(int)) {
 				this.Write ("{0}", value);
 			} else if (type == typeof(String)) {
-				this.Write ("\"{0}\"", value);
+#if true // adel modified
+                if (Regex.IsMatch((String)value, "^[a-zA-Z0-9._]+$"))
+                {
+                    // ダブルコーテーション不要
+                    this.Write("{0}", value);
+                }
+                else
+                {
+                    this.Write("\"{0}\"", value);
+                }
+#else
+                this.Write ("\"{0}\"", value);
+#endif
 			} else if (typeof(IPBXElement).IsAssignableFrom (type)) {
 				this.Write ("{0} /* {1} */", map [(IPBXElement)value], ((IPBXElement)value).Description);
 			} else if (typeof(IList).IsAssignableFrom (type)) {
