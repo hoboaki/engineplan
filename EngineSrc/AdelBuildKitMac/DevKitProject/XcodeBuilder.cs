@@ -24,17 +24,17 @@ namespace AdelBuildKitMac
     {
         //------------------------------------------------------------------------------
         /// <summary>
-        /// 文字列ペア。
+        /// KeyValueペア。
         /// </summary>
-        class StringPair
+        class KeyValuePair
         {
-            public StringPair(string aKey, string aValue)
+            public KeyValuePair(string aKey, object aValue)
             {
                 Key = aKey;
                 Value = aValue;
             }
             public string Key { get; private set; }
-            public string Value { get; private set; }
+            public object Value { get; private set; }
         }
 
         //------------------------------------------------------------------------------
@@ -119,27 +119,36 @@ namespace AdelBuildKitMac
             }
 
             // マクロ生成
-            string macroCommon = "";
+            var macroListCommon = new List<string>();
             foreach (var macro in aArg.BuildTargetSetting.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + " ";
+                macroListCommon.Add(macro);
             }
             foreach (var macro in aArg.CoreOsBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + " ";
+                macroListCommon.Add(macro);
             }
             foreach (var macro in aArg.CoreGfxBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + " ";
+                macroListCommon.Add(macro);
             }
             foreach (var macro in aArg.CoreSndBuildInfo.CompileMacros.OrEmptyIfNull())
             {
-                macroCommon += macro + " ";
+                macroListCommon.Add(macro);
             }
-            string macroDebug = macroCommon + "AE_LIBRARY_DEBUG DEBUG=1;";
-            string macroDevelop = macroCommon + "AE_LIBRARY_DEVELOP";
-            string macroReview = macroCommon + "AE_LIBRARY_REVIEW";
-            string macroFinal = macroCommon + "AE_LIBRARY_FINAL";
+            var macroListDebug = macroListCommon.ToList();
+            var macroListDevelop = macroListCommon.ToList();
+            var macroListReview = macroListCommon.ToList();
+            var macroListFinal = macroListCommon.ToList();
+            macroListDebug.Add("AE_LIBRARY_DEBUG");
+            macroListDebug.Add("DEBUG =1");
+            macroListDebug.Add("$(inherited)");
+            macroListDevelop.Add("AE_LIBRARY_DEVELOP");
+            macroListDevelop.Add("$(inherited)");
+            macroListReview.Add("AE_LIBRARY_REVIEW");
+            macroListReview.Add("$(inherited)");
+            macroListFinal.Add("AE_LIBRARY_FINAL");
+            macroListFinal.Add("$(inherited)");
 
             // インクルードディレクトリ列挙
             var includeDirs = new List<DirectoryInfo>();
@@ -209,55 +218,63 @@ namespace AdelBuildKitMac
             configurationNames.Add(BuildVersion.Final, nameof(BuildVersion.Final));
 
             // ビルド設定列挙
-            var commonConfigurationSettings = new List<StringPair>();
-            commonConfigurationSettings.Add(new StringPair("CLANG_ANALYZER_NONNULL", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_CXX_LANGUAGE_STANDARD", "gnu++0x"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_WARN_CONSTANT_CONVERSION", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_WARN_ENUM_CONVERSION", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CLANG_WARN_INT_CONVERSION", "YES"));
-            commonConfigurationSettings.Add(new StringPair("COMBINE_HIDPI_IMAGES", "YES"));
-            commonConfigurationSettings.Add(new StringPair("CODE_SIGN_IDENTITY", " - "));
-            commonConfigurationSettings.Add(new StringPair("COPY_PHASE_STRIP", "NO"));
-            commonConfigurationSettings.Add(new StringPair("DEBUG_INFORMATION_FORMAT", "dwarf"));
-            commonConfigurationSettings.Add(new StringPair("GCC_C_LANGUAGE_STANDARD", "gnu99"));
-            commonConfigurationSettings.Add(new StringPair("GCC_WARN_64_TO_32_BIT_CONVERSION", "YES"));
-            commonConfigurationSettings.Add(new StringPair("GCC_WARN_ABOUT_RETURN_TYPE", "YES"));
-            commonConfigurationSettings.Add(new StringPair("GCC_WARN_UNINITIALIZED_AUTOS", "YES"));
-            commonConfigurationSettings.Add(new StringPair("GCC_WARN_UNUSED_VARIABLE", "YES"));
-            commonConfigurationSettings.Add(new StringPair("PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR", "YES"));
-            commonConfigurationSettings.Add(new StringPair("RUN_CLANG_STATIC_ANALYZER", "YES"));
-            commonConfigurationSettings.Add(new StringPair("MACOSX_DEPLOYMENT_TARGET", "10.11"));
-            commonConfigurationSettings.Add(new StringPair("SDKROOT", "macosx"));
+            // Xcodeのデフォルト値をなるべく採用しつつ都合の悪いところのみカスタマイズ
+            var commonConfigurationSettings = new List<KeyValuePair>();
+            commonConfigurationSettings.Add(new KeyValuePair("ALWAYS_SEARCH_USER_PATHS", "NO"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_ANALYZER_NONNULL", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_CXX_LANGUAGE_STANDARD", "gnu++0x"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_CXX_LIBRARY", "libc++"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_BOOL_CONVERSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_CONSTANT_CONVERSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_DIRECT_OBJC_ISA_USAGE", "YES_ERROR"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_ENUM_CONVERSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_INFINITE_RECURSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_INT_CONVERSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_OBJC_ROOT_CLASS", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_SUSPICIOUS_MOVE", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY", " - "));
+            commonConfigurationSettings.Add(new KeyValuePair("COPY_PHASE_STRIP", "NO"));
+            commonConfigurationSettings.Add(new KeyValuePair("DEBUG_INFORMATION_FORMAT", "dwarf-with-dsym"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_C_LANGUAGE_STANDARD", "gnu99"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_64_TO_32_BIT_CONVERSION", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_ABOUT_RETURN_TYPE", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNINITIALIZED_AUTOS", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNUSED_VARIABLE", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("RUN_CLANG_STATIC_ANALYZER", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("MACOSX_DEPLOYMENT_TARGET", "10.11"));
+            commonConfigurationSettings.Add(new KeyValuePair("SDKROOT", "macosx"));
 
-            var additionalConfigurationSetings = new Dictionary<BuildVersion, List<StringPair>>();
+            var additionalConfigurationSetings = new Dictionary<BuildVersion, List<KeyValuePair>>();
             {
                 {
-                    var configurationSettings = new List<StringPair>();
-                    configurationSettings.Add(new StringPair("GCC_OPTIMIZATION_LEVEL", "0"));
-                    configurationSettings.Add(new StringPair("GCC_PREPROCESSOR_DEFINITIONS", macroDebug));
-                    configurationSettings.Add(new StringPair("ZERO_LINK", "YES"));
+                    var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("GCC_OPTIMIZATION_LEVEL", "0"));
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDebug));
+                    configurationSettings.Add(new KeyValuePair("ZERO_LINK", "YES"));
                     additionalConfigurationSetings.Add(BuildVersion.Debug, configurationSettings);
                 }
                 {
-                    var configurationSettings = new List<StringPair>();
-                    configurationSettings.Add(new StringPair("GCC_PREPROCESSOR_DEFINITIONS", macroDevelop));
+                    var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDevelop));
                     additionalConfigurationSetings.Add(BuildVersion.Develop, configurationSettings);
                 }
                 {
-                    var configurationSettings = new List<StringPair>();
-                    configurationSettings.Add(new StringPair("GCC_PREPROCESSOR_DEFINITIONS", macroReview));
+                    var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListReview));
                     additionalConfigurationSetings.Add(BuildVersion.Review, configurationSettings);
                 }
                 {
-                    var configurationSettings = new List<StringPair>();
-                    configurationSettings.Add(new StringPair("GCC_PREPROCESSOR_DEFINITIONS", macroFinal));
+                    var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListFinal));
                     additionalConfigurationSetings.Add(BuildVersion.Final, configurationSettings);
                 }
             }
 
             var libConfigurationSettings = commonConfigurationSettings.ToList();
-            libConfigurationSettings.Add(new StringPair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(libProjFile.Directory)));
+            libConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(libProjFile.Directory)));
 
             // プロジェクト生成
             var libProj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));

@@ -13,10 +13,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-        0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = "archive.ar";includeInIndex = 0;path = "AdelDev_Mac_ForDev_AeLib.a";sourceTree = "BUILT_PRODUCTS_DIR";        };
-        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Main.cpp";path = "Source/ae_mac_os/Main.cpp";sourceTree = "SOURCE_ROOT";        };
-        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = "SOURCE_ROOT";        };
-        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = "sourcecode.cpp.cpp";name = "Hoge.cpp";path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = "SOURCE_ROOT";        };
+        0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = archive.ar;includeInIndex = 0;path = AdelDev_Mac_ForDev_AeLib.a;sourceTree = BUILT_PRODUCTS_DIR;        };
+        0000000C0000000001629F15 /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Main.cpp;path = "Source/ae_mac_os/Main.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000007797C1 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +43,7 @@
             children = (
                 0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */,
             );
-            name = "Products";
+            name = Products;
             sourceTree = "<group>";
         };
         0000000D000000000223FBA4 /* Source */ = {
@@ -52,7 +52,7 @@
                 0000000D000000000343D8C9 /* CodeMain */,
                 0000000D00000000003455CE /* CodeCommon */,
             );
-            name = "Source";
+            name = Source;
             sourceTree = "<group>";
         };
         0000000D000000000343D8C9 /* CodeMain */ = {
@@ -61,7 +61,7 @@
                 0000000C0000000001629F15 /* Main.cpp */,
                 0000000C00000000007797C1 /* Hoge.cpp */,
             );
-            name = "CodeMain";
+            name = CodeMain;
             sourceTree = "<group>";
         };
         0000000D00000000003455CE /* CodeCommon */ = {
@@ -69,7 +69,7 @@
             children = (
                 0000000C0000000001D70446 /* Hoge.cpp */,
             );
-            name = "CodeCommon";
+            name = CodeCommon;
             sourceTree = "<group>";
         };
 /* End PBXGroup section */
@@ -97,8 +97,8 @@
             );
             dependencies = (
             );
-            name = "AdelDev_Mac_ForDev_AeLib";
-            productName = "AdelDev_Mac_ForDev_AeLib";
+            name = AdelDev_Mac_ForDev_AeLib;
+            productName = AdelDev_Mac_ForDev_AeLib;
             productReference = 0000000C0000000003CB1BF5 /* AdelDev_Mac_ForDev_AeLib.a */;
             productType = "com.apple.product-type.library.static";
         };
@@ -109,10 +109,10 @@
             isa = PBXProject;
             buildConfigurationList = 0000001700000000001BB715 /* Build configuration list for PBXProject "PBXProject" */;
             compatibilityVersion = "Xcode 3.2";
-            developmentRegion = "English";
+            developmentRegion = English;
             hasScannedForEncodings = 1;
             knownRegions = (
-                "en",
+                en,
             );
             mainGroup = 0000000D0000000000C99E5E /*  */;
             productRefGroup = 0000000D0000000003169154 /* Products */;
@@ -141,144 +141,185 @@
         000000160000000000F96FC5 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                CLANG_ANALYZER_NONNULL = "YES";
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
                 CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = "YES";
-                CLANG_WARN_CONSTANT_CONVERSION = "YES";
-                CLANG_WARN_ENUM_CONVERSION = "YES";
-                CLANG_WARN_INT_CONVERSION = "YES";
-                COMBINE_HIDPI_IMAGES = "YES";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                COMBINE_HIDPI_IMAGES = YES;
                 CODE_SIGN_IDENTITY = " - ";
-                COPY_PHASE_STRIP = "NO";
-                DEBUG_INFORMATION_FORMAT = "dwarf";
-                GCC_C_LANGUAGE_STANDARD = "gnu99";
-                GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
-                GCC_WARN_ABOUT_RETURN_TYPE = "YES";
-                GCC_WARN_UNINITIALIZED_AUTOS = "YES";
-                GCC_WARN_UNUSED_VARIABLE = "YES";
-                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = "YES";
-                RUN_CLANG_STATIC_ANALYZER = "YES";
-                MACOSX_DEPLOYMENT_TARGET = "10.11";
-                SDKROOT = "macosx";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                MACOSX_DEPLOYMENT_TARGET = 10.11;
+                SDKROOT = macosx;
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
-                GCC_OPTIMIZATION_LEVEL = "0";
-                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_DEBUG DEBUG=1;";
-                ZERO_LINK = "YES";
+                GCC_OPTIMIZATION_LEVEL = 0;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_DEBUG,
+                    "DEBUG =1",
+                    "$(inherited)",
+                );
+                ZERO_LINK = YES;
             };
-            name = "Debug";
+            name = Debug;
         };
         000000160000000000C4EDF4 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                CLANG_ANALYZER_NONNULL = "YES";
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
                 CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = "YES";
-                CLANG_WARN_CONSTANT_CONVERSION = "YES";
-                CLANG_WARN_ENUM_CONVERSION = "YES";
-                CLANG_WARN_INT_CONVERSION = "YES";
-                COMBINE_HIDPI_IMAGES = "YES";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                COMBINE_HIDPI_IMAGES = YES;
                 CODE_SIGN_IDENTITY = " - ";
-                COPY_PHASE_STRIP = "NO";
-                DEBUG_INFORMATION_FORMAT = "dwarf";
-                GCC_C_LANGUAGE_STANDARD = "gnu99";
-                GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
-                GCC_WARN_ABOUT_RETURN_TYPE = "YES";
-                GCC_WARN_UNINITIALIZED_AUTOS = "YES";
-                GCC_WARN_UNUSED_VARIABLE = "YES";
-                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = "YES";
-                RUN_CLANG_STATIC_ANALYZER = "YES";
-                MACOSX_DEPLOYMENT_TARGET = "10.11";
-                SDKROOT = "macosx";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                MACOSX_DEPLOYMENT_TARGET = 10.11;
+                SDKROOT = macosx;
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
-                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_DEVELOP";
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_DEVELOP,
+                    "$(inherited)",
+                );
             };
-            name = "Develop";
+            name = Develop;
         };
         000000160000000002EC5D9C /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                CLANG_ANALYZER_NONNULL = "YES";
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
                 CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = "YES";
-                CLANG_WARN_CONSTANT_CONVERSION = "YES";
-                CLANG_WARN_ENUM_CONVERSION = "YES";
-                CLANG_WARN_INT_CONVERSION = "YES";
-                COMBINE_HIDPI_IMAGES = "YES";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                COMBINE_HIDPI_IMAGES = YES;
                 CODE_SIGN_IDENTITY = " - ";
-                COPY_PHASE_STRIP = "NO";
-                DEBUG_INFORMATION_FORMAT = "dwarf";
-                GCC_C_LANGUAGE_STANDARD = "gnu99";
-                GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
-                GCC_WARN_ABOUT_RETURN_TYPE = "YES";
-                GCC_WARN_UNINITIALIZED_AUTOS = "YES";
-                GCC_WARN_UNUSED_VARIABLE = "YES";
-                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = "YES";
-                RUN_CLANG_STATIC_ANALYZER = "YES";
-                MACOSX_DEPLOYMENT_TARGET = "10.11";
-                SDKROOT = "macosx";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                MACOSX_DEPLOYMENT_TARGET = 10.11;
+                SDKROOT = macosx;
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
-                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_REVIEW";
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_REVIEW,
+                    "$(inherited)",
+                );
             };
-            name = "Review";
+            name = Review;
         };
         0000001600000000024F4A7C /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                CLANG_ANALYZER_NONNULL = "YES";
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
                 CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-                CLANG_WARN__DUPLICATE_METHOD_MATCH = "YES";
-                CLANG_WARN_CONSTANT_CONVERSION = "YES";
-                CLANG_WARN_ENUM_CONVERSION = "YES";
-                CLANG_WARN_INT_CONVERSION = "YES";
-                COMBINE_HIDPI_IMAGES = "YES";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                COMBINE_HIDPI_IMAGES = YES;
                 CODE_SIGN_IDENTITY = " - ";
-                COPY_PHASE_STRIP = "NO";
-                DEBUG_INFORMATION_FORMAT = "dwarf";
-                GCC_C_LANGUAGE_STANDARD = "gnu99";
-                GCC_WARN_64_TO_32_BIT_CONVERSION = "YES";
-                GCC_WARN_ABOUT_RETURN_TYPE = "YES";
-                GCC_WARN_UNINITIALIZED_AUTOS = "YES";
-                GCC_WARN_UNUSED_VARIABLE = "YES";
-                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = "YES";
-                RUN_CLANG_STATIC_ANALYZER = "YES";
-                MACOSX_DEPLOYMENT_TARGET = "10.11";
-                SDKROOT = "macosx";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                MACOSX_DEPLOYMENT_TARGET = 10.11;
+                SDKROOT = macosx;
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
-                GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_FINAL";
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_FINAL,
+                    "$(inherited)",
+                );
             };
-            name = "Final";
+            name = Final;
         };
         0000001600000000014B2C3B /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
+                EXECUTABLE_PREFIX = lib;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
-            name = "Debug";
+            name = Debug;
         };
         000000160000000003A48E15 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
+                EXECUTABLE_PREFIX = lib;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
-            name = "Develop";
+            name = Develop;
         };
         000000160000000000C8FEBE /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
+                EXECUTABLE_PREFIX = lib;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
-            name = "Review";
+            name = Review;
         };
         00000016000000000310F4AF /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
+                EXECUTABLE_PREFIX = lib;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
-            name = "Final";
+            name = Final;
         };
 /* End XCBuildConfiguration section */
 
@@ -292,7 +333,7 @@
                 0000001600000000024F4A7C /* Final */,
             );
             defaultConfigurationIsVisible = 0;
-            defaultConfigurationName = "Debug";
+            defaultConfigurationName = Debug;
         };
         000000170000000001085A3F /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */ = {
             isa = XCConfigurationList;
@@ -303,7 +344,7 @@
                 00000016000000000310F4AF /* Final */,
             );
             defaultConfigurationIsVisible = 0;
-            defaultConfigurationName = "Debug";
+            defaultConfigurationName = Debug;
         };
 /* End XCConfigurationList section */
 
