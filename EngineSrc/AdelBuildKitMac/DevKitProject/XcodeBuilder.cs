@@ -141,7 +141,7 @@ namespace AdelBuildKitMac
             var macroListReview = macroListCommon.ToList();
             var macroListFinal = macroListCommon.ToList();
             macroListDebug.Add("AE_LIBRARY_DEBUG");
-            macroListDebug.Add("DEBUG =1");
+            macroListDebug.Add("DEBUG=1");
             macroListDebug.Add("$(inherited)");
             macroListDevelop.Add("AE_LIBRARY_DEVELOP");
             macroListDevelop.Add("$(inherited)");
