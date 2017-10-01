@@ -267,20 +267,19 @@ namespace AdelBuildKitMac
                 // Project用ConfigurationList列挙
                 foreach (var configurationName in configurationNames)
                 {
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, "EXECUTABLE_PREFIX", "lib");
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, null, "PRODUCT_NAME", "$(TARGET_NAME)");
-                }
-            }
-            {
-                // Configuration列挙
-                foreach (var configurationName in configurationNames)
-                {
                     var configurationSettings = libConfigurationSettings.ToList();
                     configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
                     foreach (var configurationSetting in configurationSettings)
                     {
-                        libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, configurationSetting.Key, configurationSetting.Value);
+                        libProj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
                     }
+                }
+
+                // Target用ConfigurationList列挙
+                foreach (var configurationName in configurationNames)
+                {
+                    libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, "EXECUTABLE_PREFIX", "lib");
+                    libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, "PRODUCT_NAME", "$(TARGET_NAME)");
                 }
             }
             {

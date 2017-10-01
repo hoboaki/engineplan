@@ -141,38 +141,6 @@
         000000160000000000F96FC5 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
-                PRODUCT_NAME = "$(TARGET_NAME)";
-            };
-            name = "Debug";
-        };
-        000000160000000000C4EDF4 /* Develop */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
-                PRODUCT_NAME = "$(TARGET_NAME)";
-            };
-            name = "Develop";
-        };
-        000000160000000002EC5D9C /* Review */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
-                PRODUCT_NAME = "$(TARGET_NAME)";
-            };
-            name = "Review";
-        };
-        0000001600000000024F4A7C /* Final */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
-                EXECUTABLE_PREFIX = "lib";
-                PRODUCT_NAME = "$(TARGET_NAME)";
-            };
-            name = "Final";
-        };
-        0000001600000000014B2C3B /* Debug */ = {
-            isa = XCBuildConfiguration;
-            buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
                 CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
                 CLANG_WARN__DUPLICATE_METHOD_MATCH = "YES";
@@ -199,7 +167,7 @@
             };
             name = "Debug";
         };
-        000000160000000003A48E15 /* Develop */ = {
+        000000160000000000C4EDF4 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -226,7 +194,7 @@
             };
             name = "Develop";
         };
-        000000160000000000C8FEBE /* Review */ = {
+        000000160000000002EC5D9C /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -253,7 +221,7 @@
             };
             name = "Review";
         };
-        00000016000000000310F4AF /* Final */ = {
+        0000001600000000024F4A7C /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 CLANG_ANALYZER_NONNULL = "YES";
@@ -277,6 +245,38 @@
                 SDKROOT = "macosx";
                 HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
                 GCC_PREPROCESSOR_DEFINITIONS = "AE_LIBRARY_FINAL";
+            };
+            name = "Final";
+        };
+        0000001600000000014B2C3B /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = "Debug";
+        };
+        000000160000000003A48E15 /* Develop */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = "Develop";
+        };
+        000000160000000000C8FEBE /* Review */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = "Review";
+        };
+        00000016000000000310F4AF /* Final */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                EXECUTABLE_PREFIX = "lib";
+                PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = "Final";
         };
