@@ -34,7 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C53FA77A1F7E87C00025A843 /* MyApp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MyApp; sourceTree = BUILT_PRODUCTS_DIR; };
+		C53FA77A1F7E87C00025A843 /* MyConsoleApp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MyConsoleApp; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53FA7841F7E87E80025A843 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		C53FA7871F7E882B0025A843 /* MyLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyLib.xcodeproj; path = ../MyLib/MyLib.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,7 +63,7 @@
 		C53FA77B1F7E87C00025A843 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C53FA77A1F7E87C00025A843 /* MyApp */,
+				C53FA77A1F7E87C00025A843 /* MyConsoleApp */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,7 +74,7 @@
 				C53FA7841F7E87E80025A843 /* Main.cpp */,
 			);
 			name = Source;
-			path = MyApp;
+			path = MyConsoleApp;
 			sourceTree = "<group>";
 		};
 		C53FA7861F7E88010025A843 /* ProjectReference */ = {
@@ -96,9 +96,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C53FA7791F7E87C00025A843 /* MyApp */ = {
+		C53FA7791F7E87C00025A843 /* MyConsoleApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C53FA7811F7E87C00025A843 /* Build configuration list for PBXNativeTarget "MyApp" */;
+			buildConfigurationList = C53FA7811F7E87C00025A843 /* Build configuration list for PBXNativeTarget "MyConsoleApp" */;
 			buildPhases = (
 				C53FA7761F7E87C00025A843 /* Sources */,
 				C53FA7771F7E87C00025A843 /* Frameworks */,
@@ -108,9 +108,9 @@
 			);
 			dependencies = (
 			);
-			name = MyApp;
-			productName = MyApp;
-			productReference = C53FA77A1F7E87C00025A843 /* MyApp */;
+			name = MyConsoleApp;
+			productName = MyConsoleApp;
+			productReference = C53FA77A1F7E87C00025A843 /* MyConsoleApp */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -128,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C53FA7751F7E87C00025A843 /* Build configuration list for PBXProject "MyApp" */;
+			buildConfigurationList = C53FA7751F7E87C00025A843 /* Build configuration list for PBXProject "MyConsoleApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -146,7 +146,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				C53FA7791F7E87C00025A843 /* MyApp */,
+				C53FA7791F7E87C00025A843 /* MyConsoleApp */,
 			);
 		};
 /* End PBXProject section */
@@ -277,7 +277,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C53FA7751F7E87C00025A843 /* Build configuration list for PBXProject "MyApp" */ = {
+		C53FA7751F7E87C00025A843 /* Build configuration list for PBXProject "MyConsoleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C53FA77F1F7E87C00025A843 /* Debug */,
@@ -286,7 +286,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C53FA7811F7E87C00025A843 /* Build configuration list for PBXNativeTarget "MyApp" */ = {
+		C53FA7811F7E87C00025A843 /* Build configuration list for PBXNativeTarget "MyConsoleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C53FA7821F7E87C00025A843 /* Debug */,
