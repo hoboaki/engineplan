@@ -11,7 +11,18 @@
 		C50AAC321F813CA4004396F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C50AAC311F813CA4004396F1 /* main.m */; };
 		C50AAC341F813CA4004396F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C50AAC331F813CA4004396F1 /* Assets.xcassets */; };
 		C50AAC371F813CA4004396F1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C50AAC351F813CA4004396F1 /* MainMenu.xib */; };
+		C5C13E941F82842E001E1476 /* libMyLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C13E921F828403001E1476 /* libMyLib.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C5C13E911F828403001E1476 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5C13E8D1F828403001E1476 /* MyLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C53FA7631F7E86C20025A843;
+			remoteInfo = MyLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C50AAC2A1F813CA4004396F1 /* MyCocoaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCocoaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -21,6 +32,7 @@
 		C50AAC331F813CA4004396F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C50AAC361F813CA4004396F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		C50AAC381F813CA4004396F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5C13E8D1F828403001E1476 /* MyLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyLib.xcodeproj; path = ../MyLib/MyLib.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5C13E941F82842E001E1476 /* libMyLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,6 +50,7 @@
 		C50AAC211F813CA4004396F1 = {
 			isa = PBXGroup;
 			children = (
+				C5C13E931F828408001E1476 /* ExternalProjects */,
 				C50AAC2C1F813CA4004396F1 /* MyCocoaApp */,
 				C50AAC2B1F813CA4004396F1 /* Products */,
 			);
@@ -69,6 +83,22 @@
 				C50AAC311F813CA4004396F1 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5C13E8E1F828403001E1476 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C5C13E921F828403001E1476 /* libMyLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C5C13E931F828408001E1476 /* ExternalProjects */ = {
+			isa = PBXGroup;
+			children = (
+				C5C13E8D1F828403001E1476 /* MyLib.xcodeproj */,
+			);
+			name = ExternalProjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -117,12 +147,28 @@
 			mainGroup = C50AAC211F813CA4004396F1;
 			productRefGroup = C50AAC2B1F813CA4004396F1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C5C13E8E1F828403001E1476 /* Products */;
+					ProjectRef = C5C13E8D1F828403001E1476 /* MyLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C50AAC291F813CA4004396F1 /* MyCocoaApp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C5C13E921F828403001E1476 /* libMyLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMyLib.a;
+			remoteRef = C5C13E911F828403001E1476 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C50AAC281F813CA4004396F1 /* Resources */ = {
@@ -290,6 +336,7 @@
 				C50AAC3D1F813CA4004396F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

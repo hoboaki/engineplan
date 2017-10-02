@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-extern void MyFunc();
+extern "C" void MyFunc();
 int main(int argc, const char * argv[]) {
     // insert code here...
     MyFunc();

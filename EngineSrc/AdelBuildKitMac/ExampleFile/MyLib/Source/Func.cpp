@@ -7,7 +7,7 @@
 //
 
 #include <cstdio>
-extern void MyFunc();
+extern "C" void MyFunc();
 void MyFunc()
 {
     std::printf("MyFunc Called.\n");
