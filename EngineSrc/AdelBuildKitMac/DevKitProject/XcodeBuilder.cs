@@ -96,9 +96,29 @@ namespace AdelBuildKitMac
             // ファイル関連の定義
             string prefix = string.Format("{0}_{1}_{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name);
             FileInfo appProjFile = new FileInfo(string.Format("{0}/{1}.xcodeproj", mainRootDir.FullName, prefix));
+            FileInfo tmpAppProjFile = new FileInfo(string.Format("{0}/{1}.tmp.xcodeproj", mainRootDir.FullName, prefix));
             FileInfo libProjFile = new FileInfo(string.Format("{0}/{1}_AeLib.xcodeproj", mainRootDir.FullName, prefix));
             FileInfo tmpLibProjFile = new FileInfo(string.Format("{0}/{1}_AeLib.tmp.xcodeproj", mainRootDir.FullName, prefix));
+            string appFileName = string.Format("{0}", prefix);
             string libFileName = string.Format("{0}_AeLib", prefix);
+
+            // ビルドパラメータチェック
+            FileInfo infoPlistFile = null;
+            {
+                string keyInfoPlistPath = "InfoPlistPath";
+                if (!aArg.BuilderParamInfo.BuildTargetSettingParams.ContainsKey(keyInfoPlistPath))
+                {
+                    aArg.Log.Error.WriteLine("必要な BuilderParam '{0}' が指定されていません。", keyInfoPlistPath);
+                    throw new MessagedException();
+                }
+                var path = aArg.BuilderParamInfo.BuildTargetSettingParams[keyInfoPlistPath];
+                infoPlistFile = new FileInfo(_SetupArg.EnvInfo.ProjectRootDir + "/" + path);
+                if (!infoPlistFile.Exists)
+                {
+                    aArg.Log.Error.WriteLine("ファイルが見つかりません。 '{0}'", infoPlistFile.FullName);
+                    throw new MessagedException();
+                }
+            }
 
             // 自身用ビルドインフォ
             var selfNativeCodeBuildInfo = new NativeCodeBuildInfo();
@@ -273,45 +293,100 @@ namespace AdelBuildKitMac
                 }
             }
 
-            var libConfigurationSettings = commonConfigurationSettings.ToList();
-            libConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(libProjFile.Directory)));
+            var appConfigurationSettings = commonConfigurationSettings.ToList();
+            appConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(appProjFile.Directory)));
+
+            var appTargetConfigurationSettings = new List<KeyValuePair>();
+            appTargetConfigurationSettings.Add(new KeyValuePair("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("INFOPLIST_FILE", "$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(appProjFile.Directory, infoPlistFile.FullName)));
+            appTargetConfigurationSettings.Add(new KeyValuePair("LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/../Frameworks"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_BUNDLE_IDENTIFIER", "org.MyApp"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
+
+            var libProjConfigurationSettings = commonConfigurationSettings.ToList();
+            libProjConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(libProjFile.Directory)));
+
+            var libTargetConfigurationSettings = new List<KeyValuePair>();
+            libTargetConfigurationSettings.Add(new KeyValuePair("EXECUTABLE_PREFIX", "lib"));
+            libTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
             // プロジェクト生成
-            var libProj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
-            libProj.BaseDir = tmpLibProjFile.Directory.FullName;
-            libProj.AddTarget(libFileName, PBXProductType.LibraryStatic);
-            {
-                // Project用ConfigurationList列挙
-                foreach (var configurationName in configurationNames)
+            {// app
+                var proj = new XcodeProject(tmpAppProjFile.Directory.FullName, tmpAppProjFile.Name.Replace(".xcodeproj", ""));
+                proj.BaseDir = tmpAppProjFile.Directory.FullName;
+                proj.AddTarget(appFileName, PBXProductType.Application);
                 {
-                    var configurationSettings = libConfigurationSettings.ToList();
-                    configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
-                    foreach (var configurationSetting in configurationSettings)
+                    // Project用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
                     {
-                        libProj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
+                        var configurationSettings = appConfigurationSettings.ToList();
+                        configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
+                        foreach (var configurationSetting in configurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
+                        }
+                    }
+
+                    // Target用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
+                    {
+                        foreach (var configurationSetting in appTargetConfigurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, appFileName, configurationSetting.Key, configurationSetting.Value);
+                        }
                     }
                 }
+                {
+                    // ソース列挙
+                    foreach (var srcFile in appSrcFiles)
+                    {
+                        proj.AddFile("Source", srcFile.FullName, appFileName);
+                    }
+                }
+                proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
+                proj.Save();
+            }
+            {// lib
+                var proj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
+                proj.BaseDir = tmpLibProjFile.Directory.FullName;
+                proj.AddTarget(libFileName, PBXProductType.LibraryStatic);
+                {
+                    // Project用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
+                    {
+                        var configurationSettings = libProjConfigurationSettings.ToList();
+                        configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
+                        foreach (var configurationSetting in configurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
+                        }
+                    }
 
-                // Target用ConfigurationList列挙
-                foreach (var configurationName in configurationNames)
-                {
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, "EXECUTABLE_PREFIX", "lib");
-                    libProj.AddBuildConfigurationSettings(configurationName.Value, libFileName, "PRODUCT_NAME", "$(TARGET_NAME)");
+
+                    // Target用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
+                    {
+                        foreach (var configurationSetting in libTargetConfigurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, libFileName, configurationSetting.Key, configurationSetting.Value);
+                        }
+                    }
                 }
+                {
+                    // ソース列挙
+                    foreach (var srcFile in libMainSrcFiles)
+                    {
+                        proj.AddFile("Source/CodeMain", srcFile.FullName, libFileName);
+                    }
+                    foreach (var srcFile in libCommonSrcFiles)
+                    {
+                        proj.AddFile("Source/CodeCommon", srcFile.FullName, libFileName);
+                    }
+                }
+                proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
+                proj.Save();
             }
-            {
-                // ソース列挙
-                foreach (var srcFile in libMainSrcFiles)
-                {
-                    libProj.AddFile("Source/CodeMain", srcFile.FullName, libFileName);
-                }
-                foreach (var srcFile in libCommonSrcFiles)
-                {
-                    libProj.AddFile("Source/CodeCommon", srcFile.FullName, libFileName);
-                }
-            }
-            libProj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
-            libProj.Save();
 
             // 変更があったら更新
             Action<FileInfo, FileInfo> funcUpdateProj = (aProjTarget, aProjTmp) =>
@@ -363,6 +438,7 @@ namespace AdelBuildKitMac
                 aArg.Log.Debug.WriteLine("Updated '{0}'.", aProjTarget.FullName);
             };
             funcUpdateProj(libProjFile, tmpLibProjFile);
+            funcUpdateProj(appProjFile, tmpAppProjFile);
         }
 
         public override AdelDevKit.TaskSystem.Task CreateBuildTask(BuildArg aArg)

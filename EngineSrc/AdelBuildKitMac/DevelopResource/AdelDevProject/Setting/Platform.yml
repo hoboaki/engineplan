@@ -15,7 +15,8 @@ PlatformSetting:
         BuilderName: "AdelBuildKitMac.XcodeBuilder"
 
         # ビルダーに通知するパラメータ
-        #BuilderParams:
+        BuilderParams:
+            InfoPlistPath: "./Setting/Mac/Info.plist"
 
         # Coreライブラリの定義
         CoreLib:

@@ -111,6 +111,7 @@
     <Compile Include="Utility\ErrorCheckUtil.cs" />
     <Compile Include="Utility\FilePathUtil.cs" />
     <Compile Include="Utility\IEnumrableExtention.cs" />
+    <Compile Include="Utility\IReadOnlyDictionaryExtention.cs" />
     <Compile Include="Utility\Utf8StringWriter.cs" />
   </ItemGroup>
   <ItemGroup />

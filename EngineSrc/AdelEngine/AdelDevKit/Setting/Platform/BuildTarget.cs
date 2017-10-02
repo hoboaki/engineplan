@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AdelDevKit.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,17 +67,29 @@ namespace AdelDevKit.Setting.Platform
             {
                 BuilderName = aDefaultSetting.BuilderName;
             }
-            if (BuilderParams == null)
-            {
-                BuilderParams = aDefaultSetting.BuilderParams;
-            }
-            if (CompileMacros == null)
-            {
-                CompileMacros = aDefaultSetting.CompileMacros;
-            }
             if (CoreLib == null)
             {
                 CoreLib = aDefaultSetting.CoreLib;
+            }
+
+
+            // 存在しないパラメータのみマージ
+            {
+
+                var dict = BuilderParams.ToMutableDictionary();
+                foreach (var entry in aDefaultSetting.BuilderParams)
+                {
+                    if (!BuilderParams.ContainsKey(entry.Key))
+                    {
+                        dict.Add(entry.Key, entry.Value);
+                    }
+                    BuilderParams = dict;
+                }
+            }
+            {
+                var list = CompileMacros.ToList();
+                list.AddRange(aDefaultSetting.CompileMacros);
+                CompileMacros = list.ToArray();;
             }
         }
 
