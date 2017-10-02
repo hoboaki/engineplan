@@ -234,7 +234,7 @@ namespace AdelBuildKitMac
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_SUSPICIOUS_MOVE", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
-            commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY", " - "));
+            commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY", "-"));
             commonConfigurationSettings.Add(new KeyValuePair("COPY_PHASE_STRIP", "NO"));
             commonConfigurationSettings.Add(new KeyValuePair("DEBUG_INFORMATION_FORMAT", "dwarf-with-dsym"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_C_LANGUAGE_STANDARD", "gnu99"));

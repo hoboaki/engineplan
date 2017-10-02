@@ -155,7 +155,7 @@
                 CLANG_WARN_SUSPICIOUS_MOVE = YES;
                 CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
                 COMBINE_HIDPI_IMAGES = YES;
-                CODE_SIGN_IDENTITY = " - ";
+                CODE_SIGN_IDENTITY = "-";
                 COPY_PHASE_STRIP = NO;
                 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
                 GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -195,7 +195,7 @@
                 CLANG_WARN_SUSPICIOUS_MOVE = YES;
                 CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
                 COMBINE_HIDPI_IMAGES = YES;
-                CODE_SIGN_IDENTITY = " - ";
+                CODE_SIGN_IDENTITY = "-";
                 COPY_PHASE_STRIP = NO;
                 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
                 GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -232,7 +232,7 @@
                 CLANG_WARN_SUSPICIOUS_MOVE = YES;
                 CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
                 COMBINE_HIDPI_IMAGES = YES;
-                CODE_SIGN_IDENTITY = " - ";
+                CODE_SIGN_IDENTITY = "-";
                 COPY_PHASE_STRIP = NO;
                 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
                 GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -269,7 +269,7 @@
                 CLANG_WARN_SUSPICIOUS_MOVE = YES;
                 CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
                 COMBINE_HIDPI_IMAGES = YES;
-                CODE_SIGN_IDENTITY = " - ";
+                CODE_SIGN_IDENTITY = "-";
                 COPY_PHASE_STRIP = NO;
                 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
                 GCC_C_LANGUAGE_STANDARD = gnu99;
