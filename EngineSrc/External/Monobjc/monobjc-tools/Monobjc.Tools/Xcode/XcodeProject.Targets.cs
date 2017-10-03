@@ -492,7 +492,6 @@ namespace Monobjc.Tools.Xcode
                 {
                     PBXTarget thisTarget = this.GetTarget(targetName);
                     PBXBuildPhase phase = GetTargetPhase<PBXFrameworksBuildPhase>(thisTarget);
-                    PBXFileElement fileElement = this.AddFile("Libraries", referenceProxy.Path, PBXSourceTree.BuildProductDir);
                     PBXBuildFile buildFile = phase.FindFile(referenceProxy);
                     if (buildFile == null)
                     {

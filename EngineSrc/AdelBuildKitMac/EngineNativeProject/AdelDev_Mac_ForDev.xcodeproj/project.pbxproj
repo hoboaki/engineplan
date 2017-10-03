@@ -7,8 +7,8 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        000000010000000003496E67 /* Cocoa.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003C4ABCC /* Cocoa.framework */; };
-        00000001000000000194E1A4 /* AdelDev_Mac_ForDev_AeLib in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000001300000000030D38E8 /* AdelDev_Mac_ForDev_AeLib */; };
+        0000000100000000016C5D04 /* Cocoa.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003C4ABCC /* Cocoa.framework */; };
+        000000010000000000CF4527 /* AdelDev_Mac_ForDev_AeLib in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000001300000000030D38E8 /* AdelDev_Mac_ForDev_AeLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,16 +25,15 @@
         0000000C0000000000BCE5AD /* AdelDev_Mac_ForDev.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application;includeInIndex = 0;path = AdelDev_Mac_ForDev.app;sourceTree = BUILT_PRODUCTS_DIR;        };
         0000000C0000000003C4ABCC /* Cocoa.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = Cocoa.framework;path = "/System/Library/Frameworks/Cocoa.framework";sourceTree = "<absolute>";        };
         0000000C00000000013A5BA8 /* AdelDev_Mac_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Mac_ForDev_AeLib.xcodeproj;path = AdelDev_Mac_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
-        0000000C0000000000A70CB4 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; name = AdelDev_Mac_ForDev_AeLib.a;path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitMac\AdelDev_Mac_ForDev_AeLib.a";sourceTree = BUILT_PRODUCTS_DIR;        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        000000050000000000CF4527 /* Frameworks */ = {
+        00000005000000000344EDE4 /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000003496E67 /* Cocoa.framework in Frameworks */,
-                00000001000000000194E1A4 /* AdelDev_Mac_ForDev_AeLib in Frameworks */,
+                0000000100000000016C5D04 /* Cocoa.framework in Frameworks */,
+                000000010000000000CF4527 /* AdelDev_Mac_ForDev_AeLib in Frameworks */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -47,7 +46,6 @@
                 0000000D0000000003A335F6 /* Products */,
                 0000000D0000000002A41316 /* Frameworks */,
                 0000000D0000000001EA0A2F /* Projects */,
-                0000000D00000000032F0169 /* Libraries */,
             );
             sourceTree = "<group>";
         };
@@ -76,24 +74,16 @@
             name = Projects;
             sourceTree = "<group>";
         };
-        0000000D00000000032F0169 /* Libraries */ = {
-            isa = PBXGroup;
-            children = (
-                0000000C0000000000A70CB4 /* AdelDev_Mac_ForDev_AeLib.a */,
-            );
-            name = Libraries;
-            sourceTree = "<group>";
-        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-        000000110000000001DF725B /* AdelDev_Mac_ForDev */ = {
+        0000001100000000032F0169 /* AdelDev_Mac_ForDev */ = {
             isa = PBXNativeTarget;
-            buildConfigurationList = 000000170000000000DB0535 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev" */;
+            buildConfigurationList = 000000170000000000A70CB4 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev" */;
             buildPhases = (
-                00000007000000000344EDE4 /* Resources */,
-                0000000900000000016C5D04 /* Sources */,
-                000000050000000000CF4527 /* Frameworks */,
+                000000070000000003B1D6B0 /* Resources */,
+                000000090000000001408C35 /* Sources */,
+                00000005000000000344EDE4 /* Frameworks */,
             );
             buildRules = (
             );
@@ -128,7 +118,7 @@
             );
             projectRoot = "";
             targets = (
-                000000110000000001DF725B /* AdelDev_Mac_ForDev */,
+                0000001100000000032F0169 /* AdelDev_Mac_ForDev */,
             );
         };
 /* End PBXProject section */
@@ -144,7 +134,7 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-        00000007000000000344EDE4 /* Resources */ = {
+        000000070000000003B1D6B0 /* Resources */ = {
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -154,7 +144,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-        0000000900000000016C5D04 /* Sources */ = {
+        000000090000000001408C35 /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -315,7 +305,7 @@
             };
             name = Final;
         };
-        000000160000000003B32EE5 /* Debug */ = {
+        000000160000000001DF725B /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -327,7 +317,7 @@
             };
             name = Debug;
         };
-        0000001600000000014CA613 /* Develop */ = {
+        000000160000000000DB0535 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -339,7 +329,7 @@
             };
             name = Develop;
         };
-        000000160000000003B1D6B0 /* Review */ = {
+        000000160000000003B32EE5 /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -351,7 +341,7 @@
             };
             name = Review;
         };
-        000000160000000001408C35 /* Final */ = {
+        0000001600000000014CA613 /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -377,13 +367,13 @@
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
         };
-        000000170000000000DB0535 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev" */ = {
+        000000170000000000A70CB4 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
-                000000160000000003B32EE5 /* Debug */,
-                0000001600000000014CA613 /* Develop */,
-                000000160000000003B1D6B0 /* Review */,
-                000000160000000001408C35 /* Final */,
+                000000160000000001DF725B /* Debug */,
+                000000160000000000DB0535 /* Develop */,
+                000000160000000003B32EE5 /* Review */,
+                0000001600000000014CA613 /* Final */,
             );
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
