@@ -316,46 +316,8 @@ namespace AdelBuildKitMac
             libTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
             // プロジェクト生成
-            {// app
-                var proj = new XcodeProject(tmpAppProjFile.Directory.FullName, tmpAppProjFile.Name.Replace(".xcodeproj", ""));
-                proj.BaseDir = tmpAppProjFile.Directory.FullName;
-                proj.AddTarget(appFileName, PBXProductType.Application);
-                {
-                    // Project用ConfigurationList列挙
-                    foreach (var configurationName in configurationNames)
-                    {
-                        var configurationSettings = appConfigurationSettings.ToList();
-                        configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
-                        foreach (var configurationSetting in configurationSettings)
-                        {
-                            proj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
-                        }
-                    }
-
-                    // Target用ConfigurationList列挙
-                    foreach (var configurationName in configurationNames)
-                    {
-                        foreach (var configurationSetting in appTargetConfigurationSettings)
-                        {
-                            proj.AddBuildConfigurationSettings(configurationName.Value, appFileName, configurationSetting.Key, configurationSetting.Value);
-                        }
-                    }
-                }
-                {
-                    // ソース列挙
-                    foreach (var srcFile in appSrcFiles)
-                    {
-                        proj.AddFile("Source", srcFile.FullName, appFileName);
-                    }
-                    // Framework列挙
-                    foreach (var framework in linkFrameworks)
-                    {
-                        proj.AddFramework("Framework", framework, appFileName);
-                    }
-                }
-                proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
-                proj.Save();
-            }
+            XcodeProject appProj;
+            XcodeProject libProj;
             {// lib
                 var proj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
                 proj.BaseDir = tmpLibProjFile.Directory.FullName;
@@ -395,6 +357,56 @@ namespace AdelBuildKitMac
                 }
                 proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
                 proj.Save();
+                libProj = proj;
+            }
+            {// app
+                var proj = new XcodeProject(tmpAppProjFile.Directory.FullName, tmpAppProjFile.Name.Replace(".xcodeproj", ""));
+                proj.BaseDir = tmpAppProjFile.Directory.FullName;
+                proj.AddTarget(appFileName, PBXProductType.Application);
+                {
+                    // Project用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
+                    {
+                        var configurationSettings = appConfigurationSettings.ToList();
+                        configurationSettings.AddRange(additionalConfigurationSetings[configurationName.Key]);
+                        foreach (var configurationSetting in configurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, null, configurationSetting.Key, configurationSetting.Value);
+                        }
+                    }
+
+                    // Target用ConfigurationList列挙
+                    foreach (var configurationName in configurationNames)
+                    {
+                        foreach (var configurationSetting in appTargetConfigurationSettings)
+                        {
+                            proj.AddBuildConfigurationSettings(configurationName.Value, appFileName, configurationSetting.Key, configurationSetting.Value);
+                        }
+                    }
+                }
+                {
+                    // ソース列挙
+                    foreach (var srcFile in appSrcFiles)
+                    {
+                        proj.AddFile("Source", srcFile.FullName, appFileName);
+                    }
+                    // Framework列挙
+                    foreach (var framework in linkFrameworks)
+                    {
+                        proj.AddFramework("Framework", framework, appFileName);
+                    }
+                    // Project参照列挙
+                    {
+                        // 名前を正式な状態にしてから参照追加
+                        var oldName = libProj.Name;
+                        libProj.Name = libProjFile.Name.Replace(".xcodeproj", "");
+                        proj.AddDependantProject(libProj, appFileName);
+                        libProj.Name = oldName;
+                    }
+                }
+                proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう
+                proj.Save();
+                appProj = proj;
             }
 
             // 変更があったら更新
