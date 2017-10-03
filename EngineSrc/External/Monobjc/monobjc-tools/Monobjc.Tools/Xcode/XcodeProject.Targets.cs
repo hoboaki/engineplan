@@ -210,11 +210,11 @@ namespace Monobjc.Tools.Xcode
 		public PBXBuildFile AddFramework (String groups, String framework, String targetName)
 		{
 			lock (this.syncRoot) {
-                // Test for presence in System
 #if true // adel modified
                 // 存在チェックせずに追加
                 String file = framework;
 #else
+                // Test for presence in System
                 String path = String.Format (CultureInfo.CurrentCulture, "/System/Library/Frameworks/{0}.framework/{0}", framework);
                 if (File.Exists (path)) {
 					goto bail;
@@ -461,13 +461,13 @@ namespace Monobjc.Tools.Xcode
 				PBXFileReference productReference = target.ProductReference;
 
 				// Add a dummy group for references
-				PBXGroup referecenGroup = this.AddGroup ("References");
-				
-				// Add file reference
-				PBXFileReference fileReference = this.AddFile (String.Empty, project.ProjectFolder) as PBXFileReference;
+				PBXGroup referecenGroup = this.AddGroup ("Projects");
 
-				// Add proxy
-				PBXContainerItemProxy itemProxy = new PBXContainerItemProxy ();
+                // Add file reference
+                PBXFileReference fileReference = this.AddFile (referecenGroup.Name, project.ProjectFolder) as PBXFileReference;
+
+                // Add proxy
+                PBXContainerItemProxy itemProxy = new PBXContainerItemProxy ();
 				itemProxy.ContainerPortal = fileReference;
 				itemProxy.ProxyType = 2; // TODO: Find other values
 				itemProxy.RemoteInfo = Path.GetFileNameWithoutExtension (fileReference.Name);
@@ -485,7 +485,23 @@ namespace Monobjc.Tools.Xcode
 				
 				// Add association
 				this.Project.AddProjectReference (referecenGroup, fileReference);
-			}
+
+#if true // adel modified
+                // .a ファイルならビルドフェーズに追加
+                if (referenceProxy.FileType == PBXFileType.archiveAr)
+                {
+                    PBXTarget thisTarget = this.GetTarget(targetName);
+                    PBXBuildPhase phase = GetTargetPhase<PBXFrameworksBuildPhase>(thisTarget);
+                    PBXFileElement fileElement = this.AddFile("Libraries", referenceProxy.Path, PBXSourceTree.BuildProductDir);
+                    PBXBuildFile buildFile = phase.FindFile(referenceProxy);
+                    if (buildFile == null)
+                    {
+                        buildFile = new PBXBuildFile(referenceProxy);
+                        phase.AddFile(buildFile);
+                    }
+                }
+#endif
+            }
 		}
 
 		/// <summary>

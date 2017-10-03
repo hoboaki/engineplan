@@ -388,12 +388,12 @@ namespace AdelBuildKitMac
                     // ソース列挙
                     foreach (var srcFile in appSrcFiles)
                     {
-                        proj.AddFile("Source", srcFile.FullName, appFileName);
+                        proj.AddFile("Sources", srcFile.FullName, appFileName);
                     }
                     // Framework列挙
                     foreach (var framework in linkFrameworks)
                     {
-                        proj.AddFramework("Framework", framework, appFileName);
+                        proj.AddFramework("Frameworks", framework, appFileName);
                     }
                     // Project参照列挙
                     {
