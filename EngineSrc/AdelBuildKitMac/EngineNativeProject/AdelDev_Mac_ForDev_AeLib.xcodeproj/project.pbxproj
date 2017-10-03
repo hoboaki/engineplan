@@ -7,14 +7,14 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        000000010000000003770028 /* Main.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000261F82A /* Main.cpp */; };
+        000000010000000003770028 /* Main.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000261F82A /* Main.m */; };
         0000000100000000032F0169 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000171B980 /* Hoge.cpp */; };
         000000010000000000A70CB4 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000FBB1A7 /* Hoge.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
         0000000C0000000001B0118C /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = archive.ar;includeInIndex = 0;path = AdelDev_Mac_ForDev_AeLib.a;sourceTree = BUILT_PRODUCTS_DIR;        };
-        0000000C000000000261F82A /* Main.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Main.cpp;path = "Source/ae_mac_os/Main.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000261F82A /* Main.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = Main.m;path = "Source/ae_mac_os/Main.m";sourceTree = SOURCE_ROOT;        };
         0000000C000000000171B980 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
         0000000C0000000000FBB1A7 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
@@ -58,7 +58,7 @@
         0000000D0000000000B58D5A /* CodeMain */ = {
             isa = PBXGroup;
             children = (
-                0000000C000000000261F82A /* Main.cpp */,
+                0000000C000000000261F82A /* Main.m */,
                 0000000C000000000171B980 /* Hoge.cpp */,
             );
             name = CodeMain;
@@ -129,7 +129,7 @@
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000003770028 /* Main.cpp in Sources */,
+                000000010000000003770028 /* Main.m in Sources */,
                 0000000100000000032F0169 /* Hoge.cpp in Sources */,
                 000000010000000000A70CB4 /* Hoge.cpp in Sources */,
             );

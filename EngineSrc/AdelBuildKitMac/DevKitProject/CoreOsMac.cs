@@ -45,6 +45,7 @@ namespace AdelBuildKitMac
                 dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_mac_os"));
                 foreach (var dir in dirs)
                 {
+                    srcFiles.AddRange(dir.EnumerateFiles("*.m", SearchOption.AllDirectories));
                     srcFiles.AddRange(dir.EnumerateFiles("*.c", SearchOption.AllDirectories));
                     srcFiles.AddRange(dir.EnumerateFiles("*.cpp", SearchOption.AllDirectories));
                     headerFiles.AddRange(dir.EnumerateFiles("*.h", SearchOption.AllDirectories));
