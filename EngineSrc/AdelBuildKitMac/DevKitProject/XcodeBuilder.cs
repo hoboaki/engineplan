@@ -230,6 +230,10 @@ namespace AdelBuildKitMac
                 }
             }
 
+            // フレームワーク列挙
+            var linkFrameworks = new List<string>();
+            linkFrameworks.Add("/System/Library/Frameworks/Cocoa.framework");
+
             // コンフィギュレーション列挙
             var configurationNames = new Dictionary<BuildVersion, string>();
             configurationNames.Add(BuildVersion.Debug, nameof(BuildVersion.Debug));
@@ -342,6 +346,11 @@ namespace AdelBuildKitMac
                     foreach (var srcFile in appSrcFiles)
                     {
                         proj.AddFile("Source", srcFile.FullName, appFileName);
+                    }
+                    // Framework列挙
+                    foreach (var framework in linkFrameworks)
+                    {
+                        proj.AddFramework("Framework", framework, appFileName);
                     }
                 }
                 proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう

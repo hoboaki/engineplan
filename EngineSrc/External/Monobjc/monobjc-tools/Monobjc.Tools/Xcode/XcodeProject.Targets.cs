@@ -210,9 +210,13 @@ namespace Monobjc.Tools.Xcode
 		public PBXBuildFile AddFramework (String groups, String framework, String targetName)
 		{
 			lock (this.syncRoot) {
-				// Test for presence in System
-				String path = String.Format (CultureInfo.CurrentCulture, "/System/Library/Frameworks/{0}.framework/{0}", framework);
-				if (File.Exists (path)) {
+                // Test for presence in System
+#if true // adel modified
+                // 存在チェックせずに追加
+                String file = framework;
+#else
+                String path = String.Format (CultureInfo.CurrentCulture, "/System/Library/Frameworks/{0}.framework/{0}", framework);
+                if (File.Exists (path)) {
 					goto bail;
 				}
 
@@ -226,8 +230,9 @@ namespace Monobjc.Tools.Xcode
 				path = String.Format (CultureInfo.CurrentCulture, "/System/Library/Frameworks/{0}.framework/{0}", framework);
 
                 bail:
-				String file = Path.GetDirectoryName (path);
-				PBXTarget target = this.GetTarget (targetName);
+                String file = Path.GetDirectoryName (path);
+#endif
+                PBXTarget target = this.GetTarget (targetName);
 				PBXBuildPhase phase = GetTargetPhase<PBXFrameworksBuildPhase> (target);
 				PBXFileElement fileElement = this.AddFile (groups, file, PBXSourceTree.Absolute);
 				PBXBuildFile buildFile = phase.FindFile (fileElement);

@@ -135,8 +135,17 @@ namespace Monobjc.Tools.Xcode
 
 				// Extract information
 				String name = Path.GetFileName (file);
-				String path = Path.GetFullPath (file);
-				String rootDir = Path.GetFullPath (this.Dir);
+#if true // adel modified
+                String path = file;
+                if (!file.StartsWith("/")) 
+                {
+                    // Unix絶対パス形式でなければ関数を使う
+                    path = Path.GetFullPath(file);
+                }
+#else
+                String path = Path.GetFullPath (file);
+#endif
+                String rootDir = Path.GetFullPath (this.Dir);
 				if (!String.IsNullOrEmpty(this.BaseDir)) {
 					rootDir = Path.Combine(rootDir, this.BaseDir);
 					rootDir = Path.GetFullPath (rootDir);
