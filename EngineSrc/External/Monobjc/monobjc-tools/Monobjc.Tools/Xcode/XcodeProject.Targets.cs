@@ -451,8 +451,8 @@ namespace Monobjc.Tools.Xcode
 		public void AddDependantProject (XcodeProject project, String targetName)
 		{
 			lock (this.syncRoot) {
-				// Get the native target
-				PBXNativeTarget target = project.GetDefaultTarget () as PBXNativeTarget;
+                // Get the native target
+                PBXNativeTarget target = project.GetDefaultTarget () as PBXNativeTarget;
 				if (target == null) {
 					return;
 				}
@@ -460,11 +460,19 @@ namespace Monobjc.Tools.Xcode
 				// Get the product reference
 				PBXFileReference productReference = target.ProductReference;
 
-				// Add a dummy group for references
-				PBXGroup referecenGroup = this.AddGroup ("Projects");
+#if true // adel modified
+                // Add a dummy group for references
+                PBXGroup referecenGroup = new PBXGroup(Path.GetFileNameWithoutExtension(project.Name) + " Products");
 
                 // Add file reference
-                PBXFileReference fileReference = this.AddFile (referecenGroup.Name, project.ProjectFolder) as PBXFileReference;
+                PBXFileReference fileReference = this.AddFile("OtherProjects", project.ProjectFolder) as PBXFileReference;
+#else
+                // Add a dummy group for references
+                PBXGroup referecenGroup = this.AddGroup("References");
+
+                // Add file reference
+                PBXFileReference fileReference = this.AddFile(String.Empty, project.ProjectFolder) as PBXFileReference;
+#endif
 
                 // Add proxy
                 PBXContainerItemProxy itemProxy = new PBXContainerItemProxy ();
@@ -479,12 +487,15 @@ namespace Monobjc.Tools.Xcode
 				referenceProxy.SourceTree = PBXSourceTree.BuildProductDir;
 				referenceProxy.FileType = productReference.ExplicitFileType;
 				referenceProxy.Path = Path.GetFileName (productReference.Path);
-				
-				// Add reference proxy
-				referecenGroup.AddChild (referenceProxy);
-				
-				// Add association
-				this.Project.AddProjectReference (referecenGroup, fileReference);
+#if true // adel modified
+                referenceProxy.Name = referenceProxy.Path;
+#endif
+
+                // Add reference proxy
+                referecenGroup.AddChild (referenceProxy);
+
+                // Add association
+                this.Project.AddProjectReference (referecenGroup, fileReference);
 
 #if true // adel modified
                 // .a ファイルならビルドフェーズに追加

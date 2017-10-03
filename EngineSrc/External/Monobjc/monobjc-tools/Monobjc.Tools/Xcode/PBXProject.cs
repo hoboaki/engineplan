@@ -246,6 +246,15 @@ namespace Monobjc.Tools.Xcode
                     target.Accept(visitor);
                 }
             }
+#if true // adel modified
+            if (this.ProjectReferences != null)
+            {
+                foreach (var projectReferenceDict in this.ProjectReferences)
+                {
+                    projectReferenceDict["ProductGroup"].Accept(visitor);
+                }
+            }
+#endif
         }
 
         /// <summary>
