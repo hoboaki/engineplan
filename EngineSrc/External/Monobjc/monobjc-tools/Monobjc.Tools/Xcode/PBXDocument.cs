@@ -185,7 +185,11 @@ namespace Monobjc.Tools.Xcode
             Encoding encoding = new UTF8Encoding(false);
             using (StreamWriter writer = new StreamWriter(path, false, encoding))
             {
-				ProjectWriter projectWriter = new ProjectNSWriter(writer);
+                ProjectWriter projectWriter = new ProjectNSWriter(writer);
+#if true // adel modified
+                // 改行コードは常にLF
+                projectWriter.NewLine = "\n";
+#endif
                 this.Write(projectWriter);
             }
         }
