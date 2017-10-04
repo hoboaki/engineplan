@@ -315,11 +315,26 @@ namespace AdelBuildKitMac
             libTargetConfigurationSettings.Add(new KeyValuePair("EXECUTABLE_PREFIX", "lib"));
             libTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
+            // 言語設定
+            Action<XcodeProject> funcSetupLanguage = (proj) =>
+            {
+                var pj = proj.Document.Project;
+                pj.DevelopmentRegion = "Japanese";
+                foreach (var region in pj.KnownRegions.ToList())
+                {
+                    pj.RemoveRegion(region);
+                }
+                pj.AddRegion("jp");
+                pj.AddRegion("en");
+                pj.AddRegion("Base");
+            };
+
             // プロジェクト生成
             XcodeProject appProj;
             XcodeProject libProj;
             {// lib
                 var proj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
+                funcSetupLanguage(proj);
                 proj.BaseDir = tmpLibProjFile.Directory.FullName;
                 proj.AddTarget(libFileName, PBXProductType.LibraryStatic);
                 {
@@ -361,6 +376,7 @@ namespace AdelBuildKitMac
             }
             {// app
                 var proj = new XcodeProject(tmpAppProjFile.Directory.FullName, tmpAppProjFile.Name.Replace(".xcodeproj", ""));
+                funcSetupLanguage(proj);
                 proj.BaseDir = tmpAppProjFile.Directory.FullName;
                 proj.AddTarget(appFileName, PBXProductType.Application);
                 {

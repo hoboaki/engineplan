@@ -109,10 +109,12 @@
             isa = PBXProject;
             buildConfigurationList = 000000170000000000B58D5A /* Build configuration list for PBXProject "PBXProject" */;
             compatibilityVersion = "Xcode 3.2";
-            developmentRegion = English;
+            developmentRegion = Japanese;
             hasScannedForEncodings = 1;
             knownRegions = (
+                jp,
                 en,
+                Base,
             );
             mainGroup = 0000000D0000000000D93EE2 /*  */;
             productRefGroup = 0000000D0000000003A335F6 /* Products */;
