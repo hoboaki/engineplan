@@ -111,4 +111,60 @@ AdelDevKit.CutScene.AssetCutScene
     - Mac は GL3.3 の次は GL4.1 （中途半端）
     - Mac で GL4.3 使えるならそこまで対応しようかと思ったけども難しいなら 4.3 サポートは後回しかな。
 
+## NativeCode フォルダ構成検討
 
+- ae
+    - base
+    - gfx (旧 ae::g3d 相当)
+    - core
+        - os_api
+        - os_impl
+        - gfx_api
+        - gfx_impl
+        - snd_api
+        - snd_impl
+
+ae::core::gfx_api::CommandBuffer
+ae::core::gfx_impl::CommandBufferImpl
+ae_open_gl::CommandBufferImpl
+namespace ae {
+namespace core {
+namespace gfx_impl = ::ae_open_gl;
+}}
+
+ae::core::snd_api::Hoge
+ae::core::snd_impl::HogeImpl
+ae_open_al::HogeImpl
+namespace ae {
+namespace core {
+namespace snd_impl = ::ae_open_al;
+}}
+
+```c++
+// ae/core/gfx_api/CommandBuffer.hpp
+
+// コンパイル時に渡されるマクロ
+#define AE_CORE_GFX_IMPL_DIR ae_open_gl
+#define AE_CORE_GFX_IMPL_NAMESPACE ::ae_open_gl
+
+// マクロを使ってインクルード
+#define AE_INCLUDE_PATH(x) <x>
+#include AE_INCLUDE_PATH(AE_CORE_GFX_IMPL_DIR/CommandBufferImpl.hpp)
+
+// gfx_impl 先を確定
+namespace ae {
+namespace core {
+namespace gfx_impl = AE_CORE_GFX_IMPL_NAMESPACE;
+}}
+
+// クラス定義
+namespace ae {
+namespace core {
+namespace gfx_api {
+class CommandBuffer
+{
+private:
+    gfx_impl::CommandBufferImpl mImpl;
+}
+}}}
+```
