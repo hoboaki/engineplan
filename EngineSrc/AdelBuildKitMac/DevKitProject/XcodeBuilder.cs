@@ -213,6 +213,7 @@ namespace AdelBuildKitMac
             var appSrcFiles = new List<FileInfo>();
             var libMainSrcFiles = new List<FileInfo>();
             var libCommonSrcFiles = new List<FileInfo>();
+            appSrcFiles.Add(new FileInfo(mainRootDir.FullName + "/Source/LinkOnly.m"));
             foreach (var srcFile in srcFiles)
             {
                 if (srcFile.FullName.StartsWith(mainRootDir.FullName))
@@ -363,11 +364,11 @@ namespace AdelBuildKitMac
                     // ソース列挙
                     foreach (var srcFile in libMainSrcFiles)
                     {
-                        proj.AddFile("Source/CodeMain", srcFile.FullName, libFileName);
+                        proj.AddFile("Sources/CodeMain", srcFile.FullName, libFileName);
                     }
                     foreach (var srcFile in libCommonSrcFiles)
                     {
-                        proj.AddFile("Source/CodeCommon", srcFile.FullName, libFileName);
+                        proj.AddFile("Sources/CodeCommon", srcFile.FullName, libFileName);
                     }
                 }
                 proj.BaseDir = ""; // 解除してからセーブしないとフルパスで記録されてしまう

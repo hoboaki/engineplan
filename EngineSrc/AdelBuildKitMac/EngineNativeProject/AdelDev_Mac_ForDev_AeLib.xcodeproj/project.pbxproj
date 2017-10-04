@@ -34,7 +34,7 @@
             isa = PBXGroup;
             children = (
                 0000000D000000000223FBA4 /* Products */,
-                0000000D0000000001629F15 /* Source */,
+                0000000D0000000001629F15 /* Sources */,
             );
             sourceTree = "<group>";
         };
@@ -46,13 +46,13 @@
             name = Products;
             sourceTree = "<group>";
         };
-        0000000D0000000001629F15 /* Source */ = {
+        0000000D0000000001629F15 /* Sources */ = {
             isa = PBXGroup;
             children = (
                 0000000D00000000007797C1 /* CodeMain */,
                 0000000D00000000008F2678 /* CodeCommon */,
             );
-            name = Source;
+            name = Sources;
             sourceTree = "<group>";
         };
         0000000D00000000007797C1 /* CodeMain */ = {
