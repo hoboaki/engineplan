@@ -16,7 +16,9 @@ function ExecMsBuild ($arg) {
 ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitWin.csproj")
 $srcDir = "./DevKitProject/bin/Debug"
 $dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitWin.aeplugin/DevKitDll"
-Remove-Item $dstDir -Recurse
+if (Test-Path $dstDir) {
+    Remove-Item $dstDir -Recurse
+}
 Copy-Item $srcDir -destination $dstDir -recurse
 
 # AdelCommandのビルド
