@@ -2,7 +2,17 @@
 $ErrorActionPreference = "Stop"
 
 # MSBuild定義
-$msBuildExe = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+$vswhereExe = "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"
+if (!(Test-Path $vswhereExe)) {
+    echo "Not found vswhere."
+    exit 1
+}
+Invoke-Expression "& `"$vswhereExe`" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath" | Set-Variable msBuildExePath
+if (!($msBuildExePath)) {
+    echo "Not found MSBuild."
+    exit 1
+}
+$msBuildExe = join-path $msBuildExePath 'MSBuild\15.0\Bin\MSBuild.exe'
 function ExecMsBuild ($arg) {
     $cmd = "`"$msBuildExe`"" + " " + $arg
     Invoke-Expression "& `"$msBuildExe`" $arg"
