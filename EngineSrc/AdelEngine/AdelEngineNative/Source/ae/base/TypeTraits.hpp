@@ -21,10 +21,10 @@ struct TypeTraits
 {
 #if defined(AE_BASE_COMPILER_MSVC)
     template< typename T >
-    struct IsPod { enum { Value = ::std::tr1::is_pod< T >::value }; };
+    struct IsPod { enum { Value = ::std::is_pod< T >::value }; };
 
     template< typename T >
-    struct IsScaler { enum { Value = ::std::tr1::is_scaler< T >::value }; };
+    struct IsScaler { enum { Value = ::std::is_scaler< T >::value }; };
 #else
         // サポートしていないコンパイラでは常にtrueを返す。
         /// Pod型。
