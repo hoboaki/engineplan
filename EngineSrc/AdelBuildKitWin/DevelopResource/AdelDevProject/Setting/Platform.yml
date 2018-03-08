@@ -16,7 +16,7 @@ PlatformSetting:
 
         # ビルダーに通知するパラメータ
         BuilderParams:
-            VisualStudioVersion: "2015"
+            VisualStudioVersion: "2017"
 
         # Coreライブラリの定義
         CoreLib:
