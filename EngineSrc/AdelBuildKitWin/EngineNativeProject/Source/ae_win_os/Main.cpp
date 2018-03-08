@@ -1,5 +1,5 @@
 // 文字コード：UTF-8
-extern void HogeMain();
+extern "C" void HogeMain();
 void main()
 {
     HogeMain();
