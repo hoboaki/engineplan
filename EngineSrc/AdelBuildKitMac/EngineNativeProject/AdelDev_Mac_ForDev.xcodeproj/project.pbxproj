@@ -345,6 +345,7 @@
                 COMBINE_HIDPI_IMAGES = YES;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Mac/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -357,6 +358,7 @@
                 COMBINE_HIDPI_IMAGES = YES;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Mac/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -369,6 +371,7 @@
                 COMBINE_HIDPI_IMAGES = YES;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Mac/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -381,6 +384,7 @@
                 COMBINE_HIDPI_IMAGES = YES;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Mac/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
