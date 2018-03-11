@@ -7,20 +7,140 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        0000000100000000020702D9 /* Main.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000003455CE /* Main.m */; };
-        0000000100000000023F19A8 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001D70446 /* Hoge.cpp */; };
-        00000001000000000037E6EE /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001085A3F /* Hoge.cpp */; };
+        0000000100000000010CF21E /* AeBaseNSApp.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000003455CE /* AeBaseNSApp.m */; };
+        000000010000000001748312 /* AeBaseNSScreen.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001D70446 /* AeBaseNSScreen.m */; };
+        000000010000000001189BAA /* AeBaseNSWindow.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000008F2678 /* AeBaseNSWindow.m */; };
+        000000010000000001DD78FE /* EntryPoint_ExtM.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001085A3F /* EntryPoint_ExtM.m */; };
+        000000010000000000C940EE /* Application_Ext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000014B2C3B /* Application_Ext.cpp */; };
+        000000010000000003134865 /* Display_Ext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003A48E15 /* Display_Ext.cpp */; };
+        000000010000000003AD8B93 /* EntryPoint_Ext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000C8FEBE /* EntryPoint_Ext.cpp */; };
+        00000001000000000119E831 /* Hid_Ext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000310F4AF /* Hid_Ext.cpp */; };
+        000000010000000001E929C1 /* Screen_Ext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003989A29 /* Screen_Ext.cpp */; };
+        0000000100000000013277CA /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000005D6B75 /* Hoge.cpp */; };
+        000000010000000002C6361F /* HogeMain.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000018F0051 /* HogeMain.cpp */; };
+        000000010000000000F7E717 /* Aabb2.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000020702D9 /* Aabb2.cpp */; };
+        000000010000000000B71FD5 /* Aabb2i.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000023F19A8 /* Aabb2i.cpp */; };
+        000000010000000002701E81 /* Angle.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000037E6EE /* Angle.cpp */; };
+        000000010000000001F1128C /* Application.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001F71E64 /* Application.cpp */; };
+        00000001000000000179A6EF /* Argument.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001B0118C /* Argument.cpp */; };
+        00000001000000000146DE6B /* AutoMemBlock.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003309DED /* AutoMemBlock.cpp */; };
+        0000000100000000037DD1CA /* Calendar.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000B58D5A /* Calendar.cpp */; };
+        0000000100000000036C601B /* Color4.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000261F82A /* Color4.cpp */; };
+        000000010000000002CF60F9 /* Color4b.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000171B980 /* Color4b.cpp */; };
+        0000000100000000014A68C4 /* Console.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000FF8584 /* Console.cpp */; };
+        0000000100000000039DAEE5 /* Degree.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000FBB1A7 /* Degree.cpp */; };
+        0000000100000000008B260D /* Display.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000D93EE2 /* Display.cpp */; };
+        000000010000000000E45675 /* DisplayContext.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003A335F6 /* DisplayContext.cpp */; };
+        000000010000000000070A1E /* DivideCheck.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000BCE5AD /* DivideCheck.cpp */; };
+        0000000100000000003F5B11 /* EntryPoint.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000002A41316 /* EntryPoint.cpp */; };
+        0000000100000000023A33A0 /* FrameCounter.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003C4ABCC /* FrameCounter.cpp */; };
+        0000000100000000000BD0A2 /* Hash.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001EA0A2F /* Hash.cpp */; };
+        0000000100000000006A55BA /* Hid.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000013A5BA8 /* Hid.cpp */; };
+        000000010000000003BD0390 /* IAllocator.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000030D38E8 /* IAllocator.cpp */; };
+        000000010000000001A52015 /* IConsoleCallback.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003770028 /* IConsoleCallback.cpp */; };
+        000000010000000002CE20C2 /* InvalidCheck.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000032F0169 /* InvalidCheck.cpp */; };
+        0000000100000000013F26D9 /* IReadStream.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000A70CB4 /* IReadStream.cpp */; };
+        000000010000000003385DA1 /* IRuntimeErrorCallback.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001DF725B /* IRuntimeErrorCallback.cpp */; };
+        000000010000000000FB4AAC /* Keyboard.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000DB0535 /* Keyboard.cpp */; };
+        000000010000000000D5A014 /* Math.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003B32EE5 /* Math.cpp */; };
+        00000001000000000382A0B9 /* Matrix34.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000014CA613 /* Matrix34.cpp */; };
+        00000001000000000397A684 /* Matrix44.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003B1D6B0 /* Matrix44.cpp */; };
+        00000001000000000054DAA6 /* MemBlock.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001408C35 /* MemBlock.cpp */; };
+        000000010000000002FBAFD8 /* Mouse.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000344EDE4 /* Mouse.cpp */; };
+        000000010000000002D92E9B /* Quaternion.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000016C5D04 /* Quaternion.cpp */; };
+        000000010000000001A2A379 /* Radian.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000CF4527 /* Radian.cpp */; };
+        000000010000000002B7BF41 /* Random.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003496E67 /* Random.cpp */; };
+        00000001000000000075B94E /* ResFile.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000194E1A4 /* ResFile.cpp */; };
+        0000000100000000002383BF /* ResFileStream.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000023BEEC7 /* ResFileStream.cpp */; };
+        0000000100000000013FA1BF /* RuntimeAssert.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000001B6501 /* RuntimeAssert.cpp */; };
+        0000000100000000033CAFBE /* RuntimeError.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000F68D0B /* RuntimeError.cpp */; };
+        000000010000000001222DB6 /* Screen.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000AAF566 /* Screen.cpp */; };
+        000000010000000002339B66 /* ScreenPos.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000202A09C /* ScreenPos.cpp */; };
+        000000010000000003D07698 /* ShortStringFactory.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000217A57C /* ShortStringFactory.cpp */; };
+        000000010000000002542B5E /* StringTraits.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000002D4D161 /* StringTraits.cpp */; };
+        000000010000000000F5864F /* Thread.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000017B5C6A /* Thread.cpp */; };
+        000000010000000000A1B8CE /* Time.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001563FC2 /* Time.cpp */; };
+        000000010000000001AF7F43 /* TimeSpan.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000083DD9 /* TimeSpan.cpp */; };
+        0000000100000000032B795F /* Touch.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000004A2CA9 /* Touch.cpp */; };
+        00000001000000000087445B /* TouchTap.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000029B91F1 /* TouchTap.cpp */; };
+        000000010000000000C16738 /* Vector2.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000378217B /* Vector2.cpp */; };
+        000000010000000002CCA100 /* Vector2i.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003392D59 /* Vector2i.cpp */; };
+        00000001000000000131A902 /* Vector3.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001029822 /* Vector3.cpp */; };
+        000000010000000002BEF119 /* Vector3i.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001175939 /* Vector3i.cpp */; };
+        000000010000000000B679E5 /* Vector4.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000001D22306 /* Vector4.cpp */; };
+        0000000100000000026A490F /* Vector4i.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000000633B3A /* Vector4i.cpp */; };
+        000000010000000001BC9188 /* Hoge.cpp in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C00000000037D150E /* Hoge.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
         0000000C000000000343D8C9 /* AdelDev_Mac_ForDev_AeLib.a */ = { isa = PBXFileReference; explicitFileType = archive.ar;includeInIndex = 0;path = AdelDev_Mac_ForDev_AeLib.a;sourceTree = BUILT_PRODUCTS_DIR;        };
-        0000000C00000000003455CE /* Main.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = Main.m;path = "Source/ae_mac_os/Main.m";sourceTree = SOURCE_ROOT;        };
-        0000000C0000000001D70446 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
-        0000000C0000000001085A3F /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000003455CE /* AeBaseNSApp.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = AeBaseNSApp.m;path = "Source/ae_mac_os/AeBaseNSApp.m";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001D70446 /* AeBaseNSScreen.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = AeBaseNSScreen.m;path = "Source/ae_mac_os/AeBaseNSScreen.m";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000008F2678 /* AeBaseNSWindow.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = AeBaseNSWindow.m;path = "Source/ae_mac_os/AeBaseNSWindow.m";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001085A3F /* EntryPoint_ExtM.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = EntryPoint_ExtM.m;path = "Source/ae_mac_os/EntryPoint_ExtM.m";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000014B2C3B /* Application_Ext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Application_Ext.cpp;path = "Source/ae_mac_os/Application_Ext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003A48E15 /* Display_Ext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Display_Ext.cpp;path = "Source/ae_mac_os/Display_Ext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000C8FEBE /* EntryPoint_Ext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = EntryPoint_Ext.cpp;path = "Source/ae_mac_os/EntryPoint_Ext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000310F4AF /* Hid_Ext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hid_Ext.cpp;path = "Source/ae_mac_os/Hid_Ext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003989A29 /* Screen_Ext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Screen_Ext.cpp;path = "Source/ae_mac_os/Screen_Ext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000005D6B75 /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "Source/ae_mac_gl330/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000018F0051 /* HogeMain.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = HogeMain.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/HogeMain.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000020702D9 /* Aabb2.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Aabb2.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Aabb2.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000023F19A8 /* Aabb2i.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Aabb2i.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Aabb2i.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000037E6EE /* Angle.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Angle.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Angle.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001F71E64 /* Application.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Application.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Application.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001B0118C /* Argument.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Argument.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Argument.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003309DED /* AutoMemBlock.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = AutoMemBlock.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/AutoMemBlock.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000B58D5A /* Calendar.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Calendar.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Calendar.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000261F82A /* Color4.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Color4.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Color4.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000171B980 /* Color4b.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Color4b.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Color4b.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000FF8584 /* Console.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Console.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Console.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000FBB1A7 /* Degree.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Degree.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Degree.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000D93EE2 /* Display.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Display.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Display.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003A335F6 /* DisplayContext.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = DisplayContext.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/DisplayContext.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000BCE5AD /* DivideCheck.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = DivideCheck.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/DivideCheck.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000002A41316 /* EntryPoint.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = EntryPoint.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/EntryPoint.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003C4ABCC /* FrameCounter.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = FrameCounter.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/FrameCounter.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001EA0A2F /* Hash.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hash.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hash.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000013A5BA8 /* Hid.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hid.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Hid.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000030D38E8 /* IAllocator.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = IAllocator.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/IAllocator.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003770028 /* IConsoleCallback.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = IConsoleCallback.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/IConsoleCallback.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000032F0169 /* InvalidCheck.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = InvalidCheck.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/InvalidCheck.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000A70CB4 /* IReadStream.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = IReadStream.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/IReadStream.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001DF725B /* IRuntimeErrorCallback.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = IRuntimeErrorCallback.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/IRuntimeErrorCallback.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000DB0535 /* Keyboard.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Keyboard.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Keyboard.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003B32EE5 /* Math.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Math.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Math.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000014CA613 /* Matrix34.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Matrix34.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Matrix34.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003B1D6B0 /* Matrix44.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Matrix44.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Matrix44.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001408C35 /* MemBlock.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = MemBlock.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/MemBlock.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000344EDE4 /* Mouse.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Mouse.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Mouse.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000016C5D04 /* Quaternion.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Quaternion.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Quaternion.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000CF4527 /* Radian.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Radian.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Radian.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003496E67 /* Random.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Random.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Random.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000194E1A4 /* ResFile.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = ResFile.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/ResFile.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000023BEEC7 /* ResFileStream.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = ResFileStream.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/ResFileStream.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000001B6501 /* RuntimeAssert.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = RuntimeAssert.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/RuntimeAssert.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000F68D0B /* RuntimeError.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = RuntimeError.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/RuntimeError.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000AAF566 /* Screen.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Screen.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Screen.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000202A09C /* ScreenPos.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = ScreenPos.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/ScreenPos.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000217A57C /* ShortStringFactory.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = ShortStringFactory.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/ShortStringFactory.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000002D4D161 /* StringTraits.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = StringTraits.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/StringTraits.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000017B5C6A /* Thread.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Thread.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Thread.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001563FC2 /* Time.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Time.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Time.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000083DD9 /* TimeSpan.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = TimeSpan.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/TimeSpan.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000004A2CA9 /* Touch.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Touch.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Touch.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000029B91F1 /* TouchTap.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = TouchTap.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/TouchTap.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C000000000378217B /* Vector2.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector2.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector2.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003392D59 /* Vector2i.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector2i.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector2i.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001029822 /* Vector3.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector3.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector3.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001175939 /* Vector3i.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector3i.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector3i.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000001D22306 /* Vector4.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector4.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector4.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C0000000000633B3A /* Vector4i.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Vector4i.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/base/Vector4i.cpp";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000037D150E /* Hoge.cpp */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp;name = Hoge.cpp;path = "../../AdelEngine/AdelEngineNative/Source/ae/gfx/Hoge.cpp";sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        000000050000000001F71E64 /* Frameworks */ = {
+        000000050000000003A11DC9 /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -50,7 +170,7 @@
             isa = PBXGroup;
             children = (
                 0000000D00000000007797C1 /* CodeMain */,
-                0000000D00000000008F2678 /* CodeCommon */,
+                0000000D000000000348C725 /* CodeCommon */,
             );
             name = Sources;
             sourceTree = "<group>";
@@ -58,16 +178,76 @@
         0000000D00000000007797C1 /* CodeMain */ = {
             isa = PBXGroup;
             children = (
-                0000000C00000000003455CE /* Main.m */,
-                0000000C0000000001D70446 /* Hoge.cpp */,
+                0000000C00000000003455CE /* AeBaseNSApp.m */,
+                0000000C0000000001D70446 /* AeBaseNSScreen.m */,
+                0000000C00000000008F2678 /* AeBaseNSWindow.m */,
+                0000000C0000000001085A3F /* EntryPoint_ExtM.m */,
+                0000000C00000000014B2C3B /* Application_Ext.cpp */,
+                0000000C0000000003A48E15 /* Display_Ext.cpp */,
+                0000000C0000000000C8FEBE /* EntryPoint_Ext.cpp */,
+                0000000C000000000310F4AF /* Hid_Ext.cpp */,
+                0000000C0000000003989A29 /* Screen_Ext.cpp */,
+                0000000C00000000005D6B75 /* Hoge.cpp */,
             );
             name = CodeMain;
             sourceTree = "<group>";
         };
-        0000000D00000000008F2678 /* CodeCommon */ = {
+        0000000D000000000348C725 /* CodeCommon */ = {
             isa = PBXGroup;
             children = (
-                0000000C0000000001085A3F /* Hoge.cpp */,
+                0000000C00000000018F0051 /* HogeMain.cpp */,
+                0000000C00000000020702D9 /* Aabb2.cpp */,
+                0000000C00000000023F19A8 /* Aabb2i.cpp */,
+                0000000C000000000037E6EE /* Angle.cpp */,
+                0000000C0000000001F71E64 /* Application.cpp */,
+                0000000C0000000001B0118C /* Argument.cpp */,
+                0000000C0000000003309DED /* AutoMemBlock.cpp */,
+                0000000C0000000000B58D5A /* Calendar.cpp */,
+                0000000C000000000261F82A /* Color4.cpp */,
+                0000000C000000000171B980 /* Color4b.cpp */,
+                0000000C0000000000FF8584 /* Console.cpp */,
+                0000000C0000000000FBB1A7 /* Degree.cpp */,
+                0000000C0000000000D93EE2 /* Display.cpp */,
+                0000000C0000000003A335F6 /* DisplayContext.cpp */,
+                0000000C0000000000BCE5AD /* DivideCheck.cpp */,
+                0000000C0000000002A41316 /* EntryPoint.cpp */,
+                0000000C0000000003C4ABCC /* FrameCounter.cpp */,
+                0000000C0000000001EA0A2F /* Hash.cpp */,
+                0000000C00000000013A5BA8 /* Hid.cpp */,
+                0000000C00000000030D38E8 /* IAllocator.cpp */,
+                0000000C0000000003770028 /* IConsoleCallback.cpp */,
+                0000000C00000000032F0169 /* InvalidCheck.cpp */,
+                0000000C0000000000A70CB4 /* IReadStream.cpp */,
+                0000000C0000000001DF725B /* IRuntimeErrorCallback.cpp */,
+                0000000C0000000000DB0535 /* Keyboard.cpp */,
+                0000000C0000000003B32EE5 /* Math.cpp */,
+                0000000C00000000014CA613 /* Matrix34.cpp */,
+                0000000C0000000003B1D6B0 /* Matrix44.cpp */,
+                0000000C0000000001408C35 /* MemBlock.cpp */,
+                0000000C000000000344EDE4 /* Mouse.cpp */,
+                0000000C00000000016C5D04 /* Quaternion.cpp */,
+                0000000C0000000000CF4527 /* Radian.cpp */,
+                0000000C0000000003496E67 /* Random.cpp */,
+                0000000C000000000194E1A4 /* ResFile.cpp */,
+                0000000C00000000023BEEC7 /* ResFileStream.cpp */,
+                0000000C00000000001B6501 /* RuntimeAssert.cpp */,
+                0000000C0000000000F68D0B /* RuntimeError.cpp */,
+                0000000C0000000000AAF566 /* Screen.cpp */,
+                0000000C000000000202A09C /* ScreenPos.cpp */,
+                0000000C000000000217A57C /* ShortStringFactory.cpp */,
+                0000000C0000000002D4D161 /* StringTraits.cpp */,
+                0000000C00000000017B5C6A /* Thread.cpp */,
+                0000000C0000000001563FC2 /* Time.cpp */,
+                0000000C0000000000083DD9 /* TimeSpan.cpp */,
+                0000000C00000000004A2CA9 /* Touch.cpp */,
+                0000000C00000000029B91F1 /* TouchTap.cpp */,
+                0000000C000000000378217B /* Vector2.cpp */,
+                0000000C0000000003392D59 /* Vector2i.cpp */,
+                0000000C0000000001029822 /* Vector3.cpp */,
+                0000000C0000000001175939 /* Vector3i.cpp */,
+                0000000C0000000001D22306 /* Vector4.cpp */,
+                0000000C0000000000633B3A /* Vector4i.cpp */,
+                0000000C00000000037D150E /* Hoge.cpp */,
             );
             name = CodeCommon;
             sourceTree = "<group>";
@@ -75,7 +255,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-        00000006000000000348C725 /* Headers */ = {
+        000000060000000001E3B723 /* Headers */ = {
             isa = PBXHeadersBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -85,13 +265,13 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-        0000001100000000014B2C3B /* AdelDev_Mac_ForDev_AeLib */ = {
+        00000011000000000365BD83 /* AdelDev_Mac_ForDev_AeLib */ = {
             isa = PBXNativeTarget;
-            buildConfigurationList = 000000170000000003A48E15 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */;
+            buildConfigurationList = 00000017000000000293A9A3 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */;
             buildPhases = (
-                00000006000000000348C725 /* Headers */,
-                0000000900000000018F0051 /* Sources */,
-                000000050000000001F71E64 /* Frameworks */,
+                000000060000000001E3B723 /* Headers */,
+                00000009000000000101703C /* Sources */,
+                000000050000000003A11DC9 /* Frameworks */,
             );
             buildRules = (
             );
@@ -121,19 +301,79 @@
             projectDirPath = "";
             projectRoot = "";
             targets = (
-                0000001100000000014B2C3B /* AdelDev_Mac_ForDev_AeLib */,
+                00000011000000000365BD83 /* AdelDev_Mac_ForDev_AeLib */,
             );
         };
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-        0000000900000000018F0051 /* Sources */ = {
+        00000009000000000101703C /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                0000000100000000020702D9 /* Main.m in Sources */,
-                0000000100000000023F19A8 /* Hoge.cpp in Sources */,
-                00000001000000000037E6EE /* Hoge.cpp in Sources */,
+                0000000100000000010CF21E /* AeBaseNSApp.m in Sources */,
+                000000010000000001748312 /* AeBaseNSScreen.m in Sources */,
+                000000010000000001189BAA /* AeBaseNSWindow.m in Sources */,
+                000000010000000001DD78FE /* EntryPoint_ExtM.m in Sources */,
+                000000010000000000C940EE /* Application_Ext.cpp in Sources */,
+                000000010000000003134865 /* Display_Ext.cpp in Sources */,
+                000000010000000003AD8B93 /* EntryPoint_Ext.cpp in Sources */,
+                00000001000000000119E831 /* Hid_Ext.cpp in Sources */,
+                000000010000000001E929C1 /* Screen_Ext.cpp in Sources */,
+                0000000100000000013277CA /* Hoge.cpp in Sources */,
+                000000010000000002C6361F /* HogeMain.cpp in Sources */,
+                000000010000000000F7E717 /* Aabb2.cpp in Sources */,
+                000000010000000000B71FD5 /* Aabb2i.cpp in Sources */,
+                000000010000000002701E81 /* Angle.cpp in Sources */,
+                000000010000000001F1128C /* Application.cpp in Sources */,
+                00000001000000000179A6EF /* Argument.cpp in Sources */,
+                00000001000000000146DE6B /* AutoMemBlock.cpp in Sources */,
+                0000000100000000037DD1CA /* Calendar.cpp in Sources */,
+                0000000100000000036C601B /* Color4.cpp in Sources */,
+                000000010000000002CF60F9 /* Color4b.cpp in Sources */,
+                0000000100000000014A68C4 /* Console.cpp in Sources */,
+                0000000100000000039DAEE5 /* Degree.cpp in Sources */,
+                0000000100000000008B260D /* Display.cpp in Sources */,
+                000000010000000000E45675 /* DisplayContext.cpp in Sources */,
+                000000010000000000070A1E /* DivideCheck.cpp in Sources */,
+                0000000100000000003F5B11 /* EntryPoint.cpp in Sources */,
+                0000000100000000023A33A0 /* FrameCounter.cpp in Sources */,
+                0000000100000000000BD0A2 /* Hash.cpp in Sources */,
+                0000000100000000006A55BA /* Hid.cpp in Sources */,
+                000000010000000003BD0390 /* IAllocator.cpp in Sources */,
+                000000010000000001A52015 /* IConsoleCallback.cpp in Sources */,
+                000000010000000002CE20C2 /* InvalidCheck.cpp in Sources */,
+                0000000100000000013F26D9 /* IReadStream.cpp in Sources */,
+                000000010000000003385DA1 /* IRuntimeErrorCallback.cpp in Sources */,
+                000000010000000000FB4AAC /* Keyboard.cpp in Sources */,
+                000000010000000000D5A014 /* Math.cpp in Sources */,
+                00000001000000000382A0B9 /* Matrix34.cpp in Sources */,
+                00000001000000000397A684 /* Matrix44.cpp in Sources */,
+                00000001000000000054DAA6 /* MemBlock.cpp in Sources */,
+                000000010000000002FBAFD8 /* Mouse.cpp in Sources */,
+                000000010000000002D92E9B /* Quaternion.cpp in Sources */,
+                000000010000000001A2A379 /* Radian.cpp in Sources */,
+                000000010000000002B7BF41 /* Random.cpp in Sources */,
+                00000001000000000075B94E /* ResFile.cpp in Sources */,
+                0000000100000000002383BF /* ResFileStream.cpp in Sources */,
+                0000000100000000013FA1BF /* RuntimeAssert.cpp in Sources */,
+                0000000100000000033CAFBE /* RuntimeError.cpp in Sources */,
+                000000010000000001222DB6 /* Screen.cpp in Sources */,
+                000000010000000002339B66 /* ScreenPos.cpp in Sources */,
+                000000010000000003D07698 /* ShortStringFactory.cpp in Sources */,
+                000000010000000002542B5E /* StringTraits.cpp in Sources */,
+                000000010000000000F5864F /* Thread.cpp in Sources */,
+                000000010000000000A1B8CE /* Time.cpp in Sources */,
+                000000010000000001AF7F43 /* TimeSpan.cpp in Sources */,
+                0000000100000000032B795F /* Touch.cpp in Sources */,
+                00000001000000000087445B /* TouchTap.cpp in Sources */,
+                000000010000000000C16738 /* Vector2.cpp in Sources */,
+                000000010000000002CCA100 /* Vector2i.cpp in Sources */,
+                00000001000000000131A902 /* Vector3.cpp in Sources */,
+                000000010000000002BEF119 /* Vector3i.cpp in Sources */,
+                000000010000000000B679E5 /* Vector4.cpp in Sources */,
+                0000000100000000026A490F /* Vector4i.cpp in Sources */,
+                000000010000000001BC9188 /* Hoge.cpp in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -169,7 +409,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_OPTIMIZATION_LEVEL = 0;
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_DEBUG,
@@ -209,7 +452,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_DEVELOP,
                     "$(inherited)",
@@ -246,7 +492,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_REVIEW,
                     "$(inherited)",
@@ -283,7 +532,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_FINAL,
                     "$(inherited)",
@@ -291,7 +543,7 @@
             };
             name = Final;
         };
-        000000160000000000C8FEBE /* Debug */ = {
+        00000016000000000330F6BD /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 EXECUTABLE_PREFIX = lib;
@@ -299,7 +551,7 @@
             };
             name = Debug;
         };
-        00000016000000000310F4AF /* Develop */ = {
+        000000160000000000B8ACAC /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 EXECUTABLE_PREFIX = lib;
@@ -307,7 +559,7 @@
             };
             name = Develop;
         };
-        000000160000000003989A29 /* Review */ = {
+        0000001600000000027E1210 /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 EXECUTABLE_PREFIX = lib;
@@ -315,7 +567,7 @@
             };
             name = Review;
         };
-        0000001600000000005D6B75 /* Final */ = {
+        0000001600000000026EA292 /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 EXECUTABLE_PREFIX = lib;
@@ -337,13 +589,13 @@
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
         };
-        000000170000000003A48E15 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */ = {
+        00000017000000000293A9A3 /* Build configuration list for PBXNativeTarget "AdelDev_Mac_ForDev_AeLib" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
-                000000160000000000C8FEBE /* Debug */,
-                00000016000000000310F4AF /* Develop */,
-                000000160000000003989A29 /* Review */,
-                0000001600000000005D6B75 /* Final */,
+                00000016000000000330F6BD /* Debug */,
+                000000160000000000B8ACAC /* Develop */,
+                0000001600000000027E1210 /* Review */,
+                0000001600000000026EA292 /* Final */,
             );
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
