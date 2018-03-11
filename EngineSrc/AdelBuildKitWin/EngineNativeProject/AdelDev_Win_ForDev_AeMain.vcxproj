@@ -28,7 +28,10 @@
   <ItemGroup>
     <ClCompile Include="Source\ae_win_al\Hoge.cpp"/>
     <ClCompile Include="Source\ae_win_gl330\Hoge.cpp"/>
-    <ClCompile Include="Source\ae_win_os\Main.cpp"/>
+    <ClCompile Include="Source\ae_win_os\Application_Ext.cpp"/>
+    <ClCompile Include="Source\ae_win_os\Display_Ext.cpp"/>
+    <ClCompile Include="Source\ae_win_os\EntryPoint_Ext.cpp"/>
+    <ClCompile Include="Source\ae_win_os\Hid_Ext.cpp"/>
     <ClInclude Include="..\..\AdelEngine\AdelEngineNative\Source\ae\base\Aabb2.hpp"/>
     <ClInclude Include="..\..\AdelEngine\AdelEngineNative\Source\ae\base\Aabb2i.hpp"/>
     <ClInclude Include="..\..\AdelEngine\AdelEngineNative\Source\ae\base\All.hpp"/>

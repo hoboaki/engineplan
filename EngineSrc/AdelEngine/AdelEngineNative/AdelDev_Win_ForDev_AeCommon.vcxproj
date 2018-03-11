@@ -23,7 +23,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <!-- ソースコードの列挙 -->
   <ItemGroup>
-    <ClCompile Include="Source\ae\HogeMain.cpp" />
+    <ClCompile Include="Source\ae\base\EntryPoint.cpp" />
     <ClCompile Include="Source\ae_openal\Hoge.cpp" />
     <ClCompile Include="Source\ae_opengl\Hoge.cpp" />
     <ClCompile Include="Source\ae\base\Aabb2.cpp" />
@@ -78,6 +78,7 @@
     <ClCompile Include="Source\ae\base\Vector4i.cpp" />
     <ClCompile Include="Source\ae\gfx\Hoge.cpp" />
     <ClCompile Include="Source\ae\gfxapi\Hoge.cpp" />
+    <ClCompile Include="Source\ae\HogeMain.cpp" />
     <ClCompile Include="Source\ae\snd\Hoge.cpp" />
     <ClCompile Include="Source\ae\sndapi\Hoge.cpp" />
     <ClInclude Include="Source\ae\base\Aabb2.hpp" />
