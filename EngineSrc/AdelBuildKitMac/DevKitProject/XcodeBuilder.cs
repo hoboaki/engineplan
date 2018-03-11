@@ -306,6 +306,7 @@ namespace AdelBuildKitMac
             appTargetConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
             appTargetConfigurationSettings.Add(new KeyValuePair("INFOPLIST_FILE", "$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(appProjFile.Directory, infoPlistFile.FullName)));
             appTargetConfigurationSettings.Add(new KeyValuePair("LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/../Frameworks"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("OTHER_LDFLAGS", "-lc++"));
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_BUNDLE_IDENTIFIER", "org.MyApp"));
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
