@@ -42,7 +42,7 @@ const char* const tTimeFormat()
 //------------------------------------------------------------------------------
 const char* const Console::DefaultTimeFormatString()
 {
-    static const char* const formatString = "[%04lu/%02lu/%02lu %02lu:%02lu:%02lu(%03lu)]";
+    static const char* const formatString = "[%04u/%02u/%02u %02u:%02u:%02u(%03u)]";
     return formatString;
 }
 
