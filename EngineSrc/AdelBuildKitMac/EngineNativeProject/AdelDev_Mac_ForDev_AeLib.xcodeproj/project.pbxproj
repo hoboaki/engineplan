@@ -409,7 +409,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_OPTIMIZATION_LEVEL = 0;
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_DEBUG,
@@ -449,7 +452,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_DEVELOP,
                     "$(inherited)",
@@ -486,7 +492,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_REVIEW,
                     "$(inherited)",
@@ -523,7 +532,10 @@
                 RUN_CLANG_STATIC_ANALYZER = YES;
                 MACOSX_DEPLOYMENT_TARGET = 10.11;
                 SDKROOT = macosx;
-                HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Source;$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source;";
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
                 GCC_PREPROCESSOR_DEFINITIONS = (
                     AE_LIBRARY_FINAL,
                     "$(inherited)",
