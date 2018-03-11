@@ -178,9 +178,9 @@ namespace AdelBuildKitMac
             includeDirs.AddRange(aArg.CoreSndBuildInfo.SystemIncludeDirs.OrEmptyIfNull());
             includeDirs = includeDirs.GroupBy(x => x.FullName).Select(x => x.First()).ToList(); // 重複削除
             includeDirs.Sort((a, b) => a.FullName.CompareTo(b.FullName)); // 名前順にソート
-            Func<DirectoryInfo, string> funcAdditionalIncludeDirectories = (aBaseDir) =>
+            Func<DirectoryInfo, string[]> funcAdditionalIncludeDirectories = (aBaseDir) =>
             {
-                string additionalIncludeDirectories = "";
+                var additionalIncludeDirectories = new List<string>();
                 foreach (var includeDir in includeDirs)
                 {
                     if (!includeDir.Exists)
@@ -188,9 +188,9 @@ namespace AdelBuildKitMac
                         aArg.Log.Error.WriteLine("インクルードディレクトリ'{0}'が存在しません。", includeDir.FullName);
                         throw new MessagedException();
                     }
-                    additionalIncludeDirectories += "$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(aBaseDir, includeDir.FullName) + ";";
+                    additionalIncludeDirectories.Add("$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(aBaseDir, includeDir.FullName));
                 }
-                return additionalIncludeDirectories;
+                return additionalIncludeDirectories.ToArray();
             };
 
             // ソースファイル列挙
