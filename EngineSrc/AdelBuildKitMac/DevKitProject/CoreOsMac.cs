@@ -12,7 +12,7 @@ namespace AdelBuildKitMac
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// Windows 用 CoreOs。
+    /// macOS 用 CoreOs。
     /// </summary>
     class CoreOsMac : CoreOsAddonBase
     {
