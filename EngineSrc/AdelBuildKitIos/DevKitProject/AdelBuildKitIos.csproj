@@ -7,8 +7,8 @@
     <ProjectGuid>{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdelBuildKitMac</RootNamespace>
-    <AssemblyName>AdelBuildKitMac</AssemblyName>
+    <RootNamespace>AdelBuildKitIos</RootNamespace>
+    <AssemblyName>AdelBuildKitIos</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreGfxGl330.cs" />
-    <Compile Include="CoreOsMac.cs" />
+    <Compile Include="CoreGfxGles300.cs" />
+    <Compile Include="CoreOsIos.cs" />
     <Compile Include="CoreSndAl.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

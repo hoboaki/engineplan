@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     [Export(typeof(IPlugin))]
     public class Plugin : PluginBase
@@ -15,8 +15,8 @@ namespace AdelBuildKitMac
         {
             var addons = new List<IAddon>();
             addons.Add(new XcodeBuilder());
-            addons.Add(new CoreOsMac());
-            addons.Add(new CoreGfxGl330());
+            addons.Add(new CoreOsIos());
+            addons.Add(new CoreGfxGles300());
             addons.Add(new CoreSndAl());
             return addons;
         }

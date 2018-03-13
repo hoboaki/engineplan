@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     //------------------------------------------------------------------------------
     /// <summary>
@@ -52,7 +52,7 @@ namespace AdelBuildKitMac
         public static DirectoryInfo RootDirectoryForDevelopMode(DirectoryInfo aPluginDir)
         {
             var dir = aPluginDir.Parent;
-            while (dir != null && dir.Name != "AdelBuildKitMac")
+            while (dir != null && dir.Name != "AdelBuildKitIos")
             {
                 dir = dir.Parent;
             }

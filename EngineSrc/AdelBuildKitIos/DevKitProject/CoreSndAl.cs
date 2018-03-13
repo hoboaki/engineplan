@@ -8,7 +8,7 @@ using AdelDevKit.BuildSystem;
 using AdelDevKit.PluginSystem;
 using System.IO;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     //------------------------------------------------------------------------------
     /// <summary>
@@ -20,7 +20,7 @@ namespace AdelBuildKitMac
         /// <summary>
         /// Name の static 版。
         /// </summary>
-        public static string StaticName { get { return nameof(AdelBuildKitMac) + "." + nameof(CoreSndAl); } }
+        public static string StaticName { get { return nameof(AdelBuildKitIos) + "." + nameof(CoreSndAl); } }
 
         //------------------------------------------------------------------------------
         #region CoreSndAddonBase の実装

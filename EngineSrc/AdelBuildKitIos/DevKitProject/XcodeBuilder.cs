@@ -14,7 +14,7 @@ using AdelDevKit.CommandLog;
 using System.Text.RegularExpressions;
 using Monobjc.Tools.Xcode;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     //------------------------------------------------------------------------------
     /// <summary>
@@ -49,7 +49,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return nameof(AdelBuildKitMac) + "." + nameof(XcodeBuilder);
+                return nameof(AdelBuildKitIos) + "." + nameof(XcodeBuilder);
             }
         }
 
@@ -57,7 +57,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return CoreOsMac.StaticName;
+                return CoreOsIos.StaticName;
             }
         }
 
@@ -65,7 +65,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return CoreGfxGl330.StaticName;
+                return CoreGfxGles300.StaticName;
             }
         }
 

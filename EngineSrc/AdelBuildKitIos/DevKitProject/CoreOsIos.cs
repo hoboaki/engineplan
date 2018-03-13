@@ -8,28 +8,28 @@ using AdelDevKit.BuildSystem;
 using AdelDevKit.PluginSystem;
 using System.IO;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     //------------------------------------------------------------------------------
     /// <summary>
-    /// OpenGL 3.3 実装の CoreGfx。
+    /// Ios 用 CoreOs。
     /// </summary>
-    class CoreGfxGl330 : CoreGfxAddonBase
-    {        
+    class CoreOsIos : CoreOsAddonBase
+    {
         //------------------------------------------------------------------------------
         /// <summary>
         /// Name の static 版。
         /// </summary>
-        public static string StaticName { get { return nameof(AdelBuildKitMac) + "." + nameof(CoreGfxGl330); } }
+        public static string StaticName { get { return nameof(AdelBuildKitIos) + "." + nameof(CoreOsIos); } }
 
         //------------------------------------------------------------------------------
-        #region CoreGfxAddonBase の実装
+        #region CoreOsAddonBase の実装
         public override void Setup(AddonSetupArg aArg)
         {
             _SetupArg = aArg;
         }
         AddonSetupArg _SetupArg;
-
+        
         public override string Name {  get { return StaticName; } }
 
         public override NativeCodeBuildInfo CreateNativeCodeBulidInfo(CreateNativeCodeBuildInfoArg aArg)
@@ -41,19 +41,17 @@ namespace AdelBuildKitMac
                 var includeDirs = new List<DirectoryInfo>();
 
                 var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
-                var commonDirRoot = Utility.CommonNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
-                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_mac_gl330"));
-                dirs.Add(new DirectoryInfo(commonDirRoot.FullName + "/ae_opengl"));
+                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_ios_os"));
                 foreach (var dir in dirs)
                 {
+                    srcFiles.AddRange(dir.EnumerateFiles("*.m", SearchOption.AllDirectories));
                     srcFiles.AddRange(dir.EnumerateFiles("*.c", SearchOption.AllDirectories));
                     srcFiles.AddRange(dir.EnumerateFiles("*.cpp", SearchOption.AllDirectories));
                     headerFiles.AddRange(dir.EnumerateFiles("*.h", SearchOption.AllDirectories));
                     headerFiles.AddRange(dir.EnumerateFiles("*.hpp", SearchOption.AllDirectories));
                 }
                 includeDirs.Add(mainDirRoot);
-                includeDirs.Add(commonDirRoot);
 
                 obj.SourceFiles = srcFiles.ToArray();
                 obj.AutoCompleteHeaderFiles = headerFiles.ToArray();
@@ -61,7 +59,7 @@ namespace AdelBuildKitMac
             }
             return obj;
         }
-        
+
         #endregion
     }
 }
