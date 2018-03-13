@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("AdelDevKitTestsPlugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Adel Engine Developer")]
 [assembly: AssemblyProduct("AdelDevKitTestsPlugin")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017 hoboaki")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
