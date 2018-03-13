@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C509FD02205824BF00552E12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C509FD01205824BF00552E12 /* main.m */; };
+		C509FD05205824BF00552E12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C509FD04205824BF00552E12 /* AppDelegate.m */; };
+		C509FD08205824BF00552E12 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C509FD07205824BF00552E12 /* ViewController.m */; };
+		C509FD0B205824BF00552E12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C509FD09205824BF00552E12 /* Main.storyboard */; };
+		C509FD0D205824BF00552E12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C509FD0C205824BF00552E12 /* Assets.xcassets */; };
+		C509FD10205824BF00552E12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C509FD0E205824BF00552E12 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C509FCFD205824BF00552E12 /* MyCocoaTouchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCocoaTouchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C509FD01205824BF00552E12 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C509FD03205824BF00552E12 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C509FD04205824BF00552E12 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C509FD06205824BF00552E12 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C509FD07205824BF00552E12 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C509FD0A205824BF00552E12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C509FD0C205824BF00552E12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C509FD0F205824BF00552E12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C509FD11205824BF00552E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C509FCFA205824BF00552E12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C509FCF4205824BF00552E12 = {
+			isa = PBXGroup;
+			children = (
+				C509FCFF205824BF00552E12 /* MyCocoaTouchApp */,
+				C509FCFE205824BF00552E12 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C509FCFE205824BF00552E12 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C509FCFD205824BF00552E12 /* MyCocoaTouchApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C509FCFF205824BF00552E12 /* MyCocoaTouchApp */ = {
+			isa = PBXGroup;
+			children = (
+				C509FD03205824BF00552E12 /* AppDelegate.h */,
+				C509FD04205824BF00552E12 /* AppDelegate.m */,
+				C509FD06205824BF00552E12 /* ViewController.h */,
+				C509FD07205824BF00552E12 /* ViewController.m */,
+				C509FD09205824BF00552E12 /* Main.storyboard */,
+				C509FD0C205824BF00552E12 /* Assets.xcassets */,
+				C509FD0E205824BF00552E12 /* LaunchScreen.storyboard */,
+				C509FD11205824BF00552E12 /* Info.plist */,
+				C509FD00205824BF00552E12 /* Supporting Files */,
+			);
+			path = MyCocoaTouchApp;
+			sourceTree = "<group>";
+		};
+		C509FD00205824BF00552E12 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C509FD01205824BF00552E12 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C509FCFC205824BF00552E12 /* MyCocoaTouchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C509FD14205824BF00552E12 /* Build configuration list for PBXNativeTarget "MyCocoaTouchApp" */;
+			buildPhases = (
+				C509FCF9205824BF00552E12 /* Sources */,
+				C509FCFA205824BF00552E12 /* Frameworks */,
+				C509FCFB205824BF00552E12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyCocoaTouchApp;
+			productName = MyCocoaTouchApp;
+			productReference = C509FCFD205824BF00552E12 /* MyCocoaTouchApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C509FCF5205824BF00552E12 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "あっきー";
+				TargetAttributes = {
+					C509FCFC205824BF00552E12 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C509FCF8205824BF00552E12 /* Build configuration list for PBXProject "MyCocoaTouchApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C509FCF4205824BF00552E12;
+			productRefGroup = C509FCFE205824BF00552E12 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C509FCFC205824BF00552E12 /* MyCocoaTouchApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C509FCFB205824BF00552E12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C509FD10205824BF00552E12 /* LaunchScreen.storyboard in Resources */,
+				C509FD0D205824BF00552E12 /* Assets.xcassets in Resources */,
+				C509FD0B205824BF00552E12 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C509FCF9205824BF00552E12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C509FD08205824BF00552E12 /* ViewController.m in Sources */,
+				C509FD05205824BF00552E12 /* AppDelegate.m in Sources */,
+				C509FD02205824BF00552E12 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C509FD09205824BF00552E12 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C509FD0A205824BF00552E12 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C509FD0E205824BF00552E12 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C509FD0F205824BF00552E12 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C509FD12205824BF00552E12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C509FD13205824BF00552E12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C509FD15205824BF00552E12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MyCocoaTouchApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.MyCocoaTouchApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C509FD16205824BF00552E12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MyCocoaTouchApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.MyCocoaTouchApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C509FCF8205824BF00552E12 /* Build configuration list for PBXProject "MyCocoaTouchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C509FD12205824BF00552E12 /* Debug */,
+				C509FD13205824BF00552E12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C509FD14205824BF00552E12 /* Build configuration list for PBXNativeTarget "MyCocoaTouchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C509FD15205824BF00552E12 /* Debug */,
+				C509FD16205824BF00552E12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C509FCF5205824BF00552E12 /* Project object */;
+}
