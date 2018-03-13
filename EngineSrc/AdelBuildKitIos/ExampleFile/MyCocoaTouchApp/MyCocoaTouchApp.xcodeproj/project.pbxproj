@@ -13,7 +13,18 @@
 		C509FD0B205824BF00552E12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C509FD09205824BF00552E12 /* Main.storyboard */; };
 		C509FD0D205824BF00552E12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C509FD0C205824BF00552E12 /* Assets.xcassets */; };
 		C509FD10205824BF00552E12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C509FD0E205824BF00552E12 /* LaunchScreen.storyboard */; };
+		C509FD1F205825B000552E12 /* libMyLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C509FD1E2058253F00552E12 /* libMyLib.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C509FD1D2058253F00552E12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C509FD192058253E00552E12 /* MyLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C509FCE42058237000552E12;
+			remoteInfo = MyLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C509FCFD205824BF00552E12 /* MyCocoaTouchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCocoaTouchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,6 +37,7 @@
 		C509FD0C205824BF00552E12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C509FD0F205824BF00552E12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C509FD11205824BF00552E12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C509FD192058253E00552E12 /* MyLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MyLib.xcodeproj; path = ../MyLib/MyLib.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C509FD1F205825B000552E12 /* libMyLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +55,7 @@
 		C509FCF4205824BF00552E12 = {
 			isa = PBXGroup;
 			children = (
+				C509FD182058252200552E12 /* ExternalProjects */,
 				C509FCFF205824BF00552E12 /* MyCocoaTouchApp */,
 				C509FCFE205824BF00552E12 /* Products */,
 			);
@@ -77,6 +91,22 @@
 				C509FD01205824BF00552E12 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C509FD182058252200552E12 /* ExternalProjects */ = {
+			isa = PBXGroup;
+			children = (
+				C509FD192058253E00552E12 /* MyLib.xcodeproj */,
+			);
+			name = ExternalProjects;
+			sourceTree = "<group>";
+		};
+		C509FD1A2058253E00552E12 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C509FD1E2058253F00552E12 /* libMyLib.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,12 +155,28 @@
 			mainGroup = C509FCF4205824BF00552E12;
 			productRefGroup = C509FCFE205824BF00552E12 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C509FD1A2058253E00552E12 /* Products */;
+					ProjectRef = C509FD192058253E00552E12 /* MyLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				C509FCFC205824BF00552E12 /* MyCocoaTouchApp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C509FD1E2058253F00552E12 /* libMyLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMyLib.a;
+			remoteRef = C509FD1D2058253F00552E12 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C509FCFB205824BF00552E12 /* Resources */ = {
