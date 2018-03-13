@@ -7,16 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C53FA7701F7E87330025A843 /* Func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C53FA76F1F7E87330025A843 /* Func.cpp */; };
+		C509FCF3205823DE00552E12 /* Func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C509FCF2205823DE00552E12 /* Func.cpp */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C509FCE22058237000552E12 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		C53FA7631F7E86C20025A843 /* libMyLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMyLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C53FA76F1F7E87330025A843 /* Func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Func.cpp; path = Source/Func.cpp; sourceTree = SOURCE_ROOT; };
+		C509FCE42058237000552E12 /* libMyLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMyLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C509FCF2205823DE00552E12 /* Func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Func.cpp; path = Source/Func.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C53FA7601F7E86C20025A843 /* Frameworks */ = {
+		C509FCE12058237000552E12 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -26,51 +38,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C53FA75A1F7E86C20025A843 = {
+		C509FCDB2058237000552E12 = {
 			isa = PBXGroup;
 			children = (
-				C53FA7651F7E86C20025A843 /* Source */,
-				C53FA7641F7E86C20025A843 /* Products */,
+				C509FCF1205823BE00552E12 /* Source */,
+				C509FCE52058237000552E12 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C53FA7641F7E86C20025A843 /* Products */ = {
+		C509FCE52058237000552E12 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C53FA7631F7E86C20025A843 /* libMyLib.a */,
+				C509FCE42058237000552E12 /* libMyLib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C53FA7651F7E86C20025A843 /* Source */ = {
+		C509FCF1205823BE00552E12 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				C53FA76F1F7E87330025A843 /* Func.cpp */,
+				C509FCF2205823DE00552E12 /* Func.cpp */,
 			);
 			name = Source;
-			path = MyLib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		C53FA7611F7E86C20025A843 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
-		C53FA7621F7E86C20025A843 /* MyLib */ = {
+		C509FCE32058237000552E12 /* MyLib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C53FA76C1F7E86C20025A843 /* Build configuration list for PBXNativeTarget "MyLib" */;
+			buildConfigurationList = C509FCED2058237000552E12 /* Build configuration list for PBXNativeTarget "MyLib" */;
 			buildPhases = (
-				C53FA75F1F7E86C20025A843 /* Sources */,
-				C53FA7601F7E86C20025A843 /* Frameworks */,
-				C53FA7611F7E86C20025A843 /* Headers */,
+				C509FCE02058237000552E12 /* Sources */,
+				C509FCE12058237000552E12 /* Frameworks */,
+				C509FCE22058237000552E12 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -78,54 +79,54 @@
 			);
 			name = MyLib;
 			productName = MyLib;
-			productReference = C53FA7631F7E86C20025A843 /* libMyLib.a */;
+			productReference = C509FCE42058237000552E12 /* libMyLib.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C53FA75B1F7E86C20025A843 /* Project object */ = {
+		C509FCDC2058237000552E12 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "あっきー";
 				TargetAttributes = {
-					C53FA7621F7E86C20025A843 = {
+					C509FCE32058237000552E12 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = C53FA75E1F7E86C20025A843 /* Build configuration list for PBXProject "MyLib" */;
+			buildConfigurationList = C509FCDF2058237000552E12 /* Build configuration list for PBXProject "MyLib" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = C53FA75A1F7E86C20025A843;
-			productRefGroup = C53FA7641F7E86C20025A843 /* Products */;
+			mainGroup = C509FCDB2058237000552E12;
+			productRefGroup = C509FCE52058237000552E12 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C53FA7621F7E86C20025A843 /* MyLib */,
+				C509FCE32058237000552E12 /* MyLib */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C53FA75F1F7E86C20025A843 /* Sources */ = {
+		C509FCE02058237000552E12 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C53FA7701F7E87330025A843 /* Func.cpp in Sources */,
+				C509FCF3205823DE00552E12 /* Func.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		C53FA76A1F7E86C20025A843 /* Debug */ = {
+		C509FCEB2058237000552E12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -146,7 +147,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -165,14 +166,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
-		C53FA76B1F7E86C20025A843 /* Release */ = {
+		C509FCEC2058237000552E12 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -193,7 +194,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -206,49 +207,52 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		C53FA76D1F7E86C20025A843 /* Debug */ = {
+		C509FCEE2058237000552E12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = lib;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		C53FA76E1F7E86C20025A843 /* Release */ = {
+		C509FCEF2058237000552E12 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = lib;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C53FA75E1F7E86C20025A843 /* Build configuration list for PBXProject "MyLib" */ = {
+		C509FCDF2058237000552E12 /* Build configuration list for PBXProject "MyLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C53FA76A1F7E86C20025A843 /* Debug */,
-				C53FA76B1F7E86C20025A843 /* Release */,
+				C509FCEB2058237000552E12 /* Debug */,
+				C509FCEC2058237000552E12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C53FA76C1F7E86C20025A843 /* Build configuration list for PBXNativeTarget "MyLib" */ = {
+		C509FCED2058237000552E12 /* Build configuration list for PBXNativeTarget "MyLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C53FA76D1F7E86C20025A843 /* Debug */,
-				C53FA76E1F7E86C20025A843 /* Release */,
+				C509FCEE2058237000552E12 /* Debug */,
+				C509FCEF2058237000552E12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C53FA75B1F7E86C20025A843 /* Project object */;
+	rootObject = C509FCDC2058237000552E12 /* Project object */;
 }
