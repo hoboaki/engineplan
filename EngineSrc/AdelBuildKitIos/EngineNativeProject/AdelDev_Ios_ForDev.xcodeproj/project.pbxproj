@@ -27,9 +27,9 @@
 /* Begin PBXFileReference section */
         0000000C000000000178C804 /* AdelDev_Ios_ForDev.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application;includeInIndex = 0;path = AdelDev_Ios_ForDev.app;sourceTree = BUILT_PRODUCTS_DIR;        };
         0000000C000000000337497E /* LinkOnly.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = LinkOnly.m;path = "Source/LinkOnly.m";sourceTree = SOURCE_ROOT;        };
-        0000000C00000000007E40FC /* CoreGraphics.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = CoreGraphics.framework;path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitIos\System\Library\Frameworks\CoreGraphics.framework";sourceTree = SDKROOT;        };
-        0000000C00000000007048E0 /* QuartzCore.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = QuartzCore.framework;path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitIos\System\Library\Frameworks\QuartzCore.framework";sourceTree = SDKROOT;        };
-        0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitIos\System\Library\Frameworks\UIKit.framework";sourceTree = SDKROOT;        };
+        0000000C00000000007E40FC /* CoreGraphics.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = CoreGraphics.framework;path = "System/Library/Frameworks/CoreGraphics.framework";sourceTree = SDKROOT;        };
+        0000000C00000000007048E0 /* QuartzCore.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = QuartzCore.framework;path = "System/Library/Frameworks/QuartzCore.framework";sourceTree = SDKROOT;        };
+        0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "System/Library/Frameworks/UIKit.framework";sourceTree = SDKROOT;        };
         0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
