@@ -1,0 +1,407 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 46;
+    objects = {
+
+/* Begin PBXBuildFile section */
+        000000010000000001C354D3 /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
+        000000010000000002CDD6E5 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+        0000000B000000000028F30D /* PBXContainerItemProxy */ = {
+            isa = PBXContainerItemProxy;
+            containerPortal = 0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+            proxyType = 2;
+            remoteGlobalIDString = 0000000C0000000003CB1BF5;
+            remoteInfo = AdelDev_Ios_ForDev_AeLib;
+        };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+        0000000C000000000178C804 /* AdelDev_Ios_ForDev.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application;includeInIndex = 0;path = AdelDev_Ios_ForDev.app;sourceTree = BUILT_PRODUCTS_DIR;        };
+        0000000C000000000337497E /* LinkOnly.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = LinkOnly.m;path = "Source/LinkOnly.m";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+        000000050000000003DDFB6E /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                000000010000000002CDD6E5 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+        0000000D0000000000B5A3A7 /*  */ = {
+            isa = PBXGroup;
+            children = (
+                0000000D000000000262C0E4 /* Products */,
+                0000000D00000000013F082A /* Sources */,
+                0000000D0000000000F19571 /* OtherProjects */,
+            );
+            sourceTree = "<group>";
+        };
+        0000000D000000000262C0E4 /* Products */ = {
+            isa = PBXGroup;
+            children = (
+                0000000C000000000178C804 /* AdelDev_Ios_ForDev.app */,
+            );
+            name = Products;
+            sourceTree = "<group>";
+        };
+        0000000D00000000013F082A /* Sources */ = {
+            isa = PBXGroup;
+            children = (
+                0000000C000000000337497E /* LinkOnly.m */,
+            );
+            name = Sources;
+            sourceTree = "<group>";
+        };
+        0000000D0000000000F19571 /* OtherProjects */ = {
+            isa = PBXGroup;
+            children = (
+                0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */,
+            );
+            name = OtherProjects;
+            sourceTree = "<group>";
+        };
+        0000000D00000000013C8E0F /* AdelDev_Ios_ForDev_AeLib Products */ = {
+            isa = PBXGroup;
+            children = (
+                00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */,
+            );
+            name = "AdelDev_Ios_ForDev_AeLib Products";
+            sourceTree = "<group>";
+        };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+        0000001100000000007048E0 /* AdelDev_Ios_ForDev */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000170000000003F28FE7 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
+            buildPhases = (
+                0000000700000000006AB532 /* Resources */,
+                000000090000000003C05EC2 /* Sources */,
+                000000050000000003DDFB6E /* Frameworks */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+            );
+            name = AdelDev_Ios_ForDev;
+            productInstallPath = "$(HOME)/Applications";
+            productName = AdelDev_Ios_ForDev;
+            productReference = 0000000C000000000178C804 /* AdelDev_Ios_ForDev.app */;
+            productType = "com.apple.product-type.application";
+        };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+        0000001200000000003C63AB /* PBXProject */ = {
+            isa = PBXProject;
+            buildConfigurationList = 0000001700000000021F8103 /* Build configuration list for PBXProject "PBXProject" */;
+            compatibilityVersion = "Xcode 3.2";
+            developmentRegion = Japanese;
+            hasScannedForEncodings = 1;
+            knownRegions = (
+                jp,
+                en,
+                Base,
+            );
+            mainGroup = 0000000D0000000000B5A3A7 /*  */;
+            productRefGroup = 0000000D000000000262C0E4 /* Products */;
+            projectDirPath = "";
+            projectReferences = (
+                {
+                    ProductGroup = 0000000D00000000013C8E0F /* AdelDev_Ios_ForDev_AeLib Products */;
+                    ProjectRef = 0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+                },
+            );
+            projectRoot = "";
+            targets = (
+                0000001100000000007048E0 /* AdelDev_Ios_ForDev */,
+            );
+        };
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+        00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */ = {
+            isa = PBXReferenceProxy;
+            fileType = archive.ar;
+            path = AdelDev_Ios_ForDev_AeLib.a;
+            remoteRef = 0000000B000000000028F30D /* PBXContainerItemProxy */;
+            sourceTree = BUILT_PRODUCTS_DIR;
+        };
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+        0000000700000000006AB532 /* Resources */ = {
+            isa = PBXResourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+        000000090000000003C05EC2 /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                000000010000000001C354D3 /* LinkOnly.m in Sources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+        0000001600000000031B8922 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY[sdk=iphoneos*] = "iPhone Developer";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+                SDKROOT = iphoneos;
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
+                TARGETED_DEVICE_FAMILY = "1,2";
+                MTL_ENABLE_DEBUG_INFO = YES;
+                ONLY_ACTIVE_ARCH = YES;
+                GCC_OPTIMIZATION_LEVEL = 0;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_DEBUG,
+                    "DEBUG=1",
+                    "$(inherited)",
+                );
+            };
+            name = Debug;
+        };
+        000000160000000003F7D238 /* Develop */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY[sdk=iphoneos*] = "iPhone Developer";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+                SDKROOT = iphoneos;
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
+                TARGETED_DEVICE_FAMILY = "1,2";
+                MTL_ENABLE_DEBUG_INFO = YES;
+                ONLY_ACTIVE_ARCH = YES;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_DEVELOP,
+                    "$(inherited)",
+                );
+            };
+            name = Develop;
+        };
+        000000160000000003B663FE /* Review */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY[sdk=iphoneos*] = "iPhone Developer";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+                SDKROOT = iphoneos;
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
+                TARGETED_DEVICE_FAMILY = "1,2";
+                MTL_ENABLE_DEBUG_INFO = NO;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_REVIEW,
+                    "$(inherited)",
+                );
+            };
+            name = Review;
+        };
+        0000001600000000016983F6 /* Final */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ANALYZER_NONNULL = YES;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INFINITE_RECURSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES;
+                CLANG_WARN_SUSPICIOUS_MOVE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY[sdk=iphoneos*] = "iPhone Developer";
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+                RUN_CLANG_STATIC_ANALYZER = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+                SDKROOT = iphoneos;
+                HEADER_SEARCH_PATHS = (
+                    "$(PROJECT_DIR)/Source",
+                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                );
+                TARGETED_DEVICE_FAMILY = "1,2";
+                MTL_ENABLE_DEBUG_INFO = NO;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    AE_LIBRARY_FINAL,
+                    "$(inherited)",
+                );
+            };
+            name = Final;
+        };
+        000000160000000003870F20 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = Debug;
+        };
+        000000160000000003BF8826 /* Develop */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = Develop;
+        };
+        000000160000000001BBC959 /* Review */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = Review;
+        };
+        0000001600000000039A1422 /* Final */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+            };
+            name = Final;
+        };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+        0000001700000000021F8103 /* Build configuration list for PBXProject "PBXProject" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                0000001600000000031B8922 /* Debug */,
+                000000160000000003F7D238 /* Develop */,
+                000000160000000003B663FE /* Review */,
+                0000001600000000016983F6 /* Final */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Debug;
+        };
+        000000170000000003F28FE7 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                000000160000000003870F20 /* Debug */,
+                000000160000000003BF8826 /* Develop */,
+                000000160000000001BBC959 /* Review */,
+                0000001600000000039A1422 /* Final */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Debug;
+        };
+/* End XCConfigurationList section */
+
+    };
+    rootObject = 0000001200000000003C63AB /* PBXProject */;
+}
