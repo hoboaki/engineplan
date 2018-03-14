@@ -232,8 +232,8 @@ namespace AdelBuildKitIos
 
             // フレームワーク列挙
             var linkFrameworks = new List<string>();
-            linkFrameworks.Add("/System/Library/Frameworks/CoreGraphics.framework");
-            linkFrameworks.Add("/System/Library/Frameworks/QuartzCore.framework");
+            linkFrameworks.Add("System/Library/Frameworks/CoreGraphics.framework");
+            linkFrameworks.Add("System/Library/Frameworks/QuartzCore.framework");
             linkFrameworks.Add("System/Library/Frameworks/UIKit.framework");
 
             // コンフィギュレーション列挙
