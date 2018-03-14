@@ -3,10 +3,8 @@
 
 #include <ae/base/Display.hpp>
 #include <ae/base/Hid.hpp>
-#include <ae/base/Thread.hpp>
-#include <ae/base/Time.hpp>
-#include <ae/base/TimeSpan.hpp>
-#include "AeBaseNSApp.h"
+#include "EntryPoint_Sync.h"
+#include "AeBaseUIWindow.h"
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -15,75 +13,46 @@ namespace base {
 //------------------------------------------------------------------------------
 void Application::quit()
 {
-    // フラグを立てる
-    mExt.doQuit = true;
-
-    // 終了処理
-    AeBaseNSApp_Terminate();
+    // iOSにはquitするという概念がないので何もしない
 }
 
 //------------------------------------------------------------------------------
 AppEvent::EnumType Application::receiveEventCore()
 {
-    // Hidのフラグをおろしておく
-    if (mDisplayPtr.isValid()) {
-        mDisplayPtr->ext_().keyboardUpdateData.pulse.clear();
-        mDisplayPtr->ext_().mouseUpdateData.posUpdated = false;
-    }
+    // まずUIMainにシグナル送信して同期する
+    AeBaseEntryPointSync_UIMainSignal();
+    AeBaseEntryPointSync_XMainWait();
 
-    // イベント処理
-    AeBaseNSApp_PollEvent();
+    // 新しいイベントを取得
+    switch (AeBaseEntryPointSync_GetAppEvent()) {
+        case AeBaseAppEvent_Quit:
+            return AppEvent::Quit;
 
-    // 終了要求が来たら終了
-    if (mExt.doQuit) {
-        return AppEvent::Quit;
-    }
-
-    // Hid更新
-    if (mDisplayPtr.isValid()
-        && mDisplayPtr->ext_().hidPtr.isValid()
-        )
-    {
-        // 更新の前の設定
-        if (mDisplayPtr->ext_().mouseUpdateData.hold.isAnyOn()) {
-            mDisplayPtr->ext_().mouseUpdateData.posUpdated = true;
-        }
-
-        // 更新
-        Hid_Ext& hidExt = mDisplayPtr->ext_().hidPtr->ext_();
-        hidExt.keyboard.update(mDisplayPtr->ext_().keyboardUpdateData);
-        hidExt.mouse.update(mDisplayPtr->ext_().mouseUpdateData);
-    }
-
-    {// 60フレ同期
-        s64 currentTicks = s64();
-        while (true) {
-            currentTicks = Time::LocalTime().ticks();
-            if ((currentTicks - mExt.prevUpdateTicks) < 166666) {
-                Thread::Sleep(TimeSpan::FromMilliseconds(1));
-                continue;
+        case AeBaseAppEvent_Update:
+        {// Hidの更新
+            if (mDisplayPtr.isValid()) {
+                // タッチ入力ポーリング
+                const AeBaseUITouchSet* touchSet = AeBaseUIWindow_PollTouch(mDisplayPtr->ext_().windowPtr);
+                if (mDisplayPtr->ext_().hidPtr.isValid()) {
+                    const int screenHeight = mDisplayPtr->mainScreen().height();
+                    TouchUpdateData data = {};
+                    for (int i = 0; i < AE_BASE_UITOUCHSET_TOUCH_COUNT_MAX; ++i) {
+                        const AeBaseUITouch& src = touchSet->touches[i];
+                        TouchTapUpdateData& dst = data.taps[i];
+                        dst.tapCount = src.tapCount;
+                        dst.pos.x = s16(src.tapPosX);
+                        dst.pos.y = s16(screenHeight - 1 - src.tapPosY); // 左下原点に変換
+                    }
+                    mDisplayPtr->ext_().hidPtr->ext_().touch.update(data);
+                }
             }
-            break;
         }
-        mExt.prevUpdateTicks = currentTicks;
+        return AppEvent::Update;
+
+        default:
+            AE_BASE_ASSERT_NOT_REACHED();
+            return AppEvent::EnumType(0);
     }
-
-    // 通常は更新
-    return AppEvent::Update;
-}
-
-//------------------------------------------------------------------------------
-Application_Ext::Application_Ext()
-: prevUpdateTicks(Time::LocalTime().ticks())
-, doQuit(false)
-{
-    AeBaseNSApp_Initialize();
-}
-
-//------------------------------------------------------------------------------
-Application_Ext::~Application_Ext()
-{
-    AeBaseNSApp_Finalize();
 }
 
 }} // namespace

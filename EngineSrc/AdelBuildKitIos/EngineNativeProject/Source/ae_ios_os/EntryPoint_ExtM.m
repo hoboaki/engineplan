@@ -1,13 +1,14 @@
 // 文字コード：UTF-8
 
+//------------------------------------------------------------------------------
 #include <assert.h>
 #include <string.h>
-#include <Cocoa/Cocoa.h>
+#include <UIKit/UIKit.h>
+#include "EntryPoint_Ext.h"
+#include "AeBaseUIApplicationDelegate.h"
 
 //------------------------------------------------------------------------------
 // EntryPointC.cppに定義してある関数。
-extern int mainC( int aArgCount , const char* aArgValues[] , const char* aExeFileName , const char* aExeDirPath );
-
 //------------------------------------------------------------------------------
 #define tExeFileNameLength (256)  // Unix のファイル名の最大長
 #define tExeDirPathLength  (1024) // Unix のパスの最大長
@@ -29,12 +30,12 @@ static int tLastIndexOf( const char* aStr , const char aCh )
 }
 
 //------------------------------------------------------------------------------
-int main( const int aArgCount , const char* aArgValues[])
+int main( const int aArgCount , char* aArgValues[] )
 {
-    // メモリリーク対策
-    NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
-    
-    {// Exeのパスを解析        
+    {// Exeのパスを解析
+        // メモリリーク対策
+        NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
+        
         // Exeのパスを取得
         NSBundle* mainBundle = [NSBundle mainBundle];
         if ( mainBundle == 0 )
@@ -54,16 +55,32 @@ int main( const int aArgCount , const char* aArgValues[])
         strncpy( tExeDirPath , exePath , tExeDirPathLength ); 
         tExeDirPath[ dirLength ] = '\0';
         strncpy( tExeFileName , &exePath[ dirLength + 1 ] , tExeFileNameLength );
+        
+        // リリース
+        [pool release];
     }
     
     // CPPに処理を委譲
-    const int result = mainC( aArgCount , aArgValues , tExeFileName , tExeDirPath );
-    
-    // リリース
-    [pool release];
-
-    // 終了
-    return result;
+    return mainC( aArgCount , aArgValues , tExeFileName , tExeDirPath );
 }
 
+//------------------------------------------------------------------------------
+int mainUI( int aArgCount , char* aArgValues[] )
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    int retVal = UIApplicationMain(aArgCount, aArgValues, nil, @"AeBaseUIApplicationDelegate");
+    [pool release];
+    return retVal;    
+}
+
+//------------------------------------------------------------------------------
+void* xmainThreadEntryPoint( void* aArg )
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    xmainThreadEntryPointC( aArg );
+    [pool release];
+    return 0;    
+}
+
+//------------------------------------------------------------------------------
 //EOF

@@ -1,10 +1,10 @@
 // 文字コード：UTF-8
-#if defined(AE_BASE_INCLUDED_XBASENSSCREEN_H)
+#if defined(AE_BASE_INCLUDED_XBASEUICREEN_H)
 #else
-#define AE_BASE_INCLUDED_XBASENSSCREEN_H
+#define AE_BASE_INCLUDED_XBASEUISCREEN_H
 
 //------------------------------------------------------------------------------
-struct AeBaseNSRect
+struct AeBaseUIRect
 {
     float originX;
     float originY;
@@ -16,8 +16,7 @@ struct AeBaseNSRect
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void AeBaseNSScreen_GetMainScreenFrame( struct AeBaseNSRect* );
-extern void AeBaseNSScreen_GetMainScreenVisibleFrame( struct AeBaseNSRect* );
+extern void AeBaseUIScreen_GetMainScreenBounds(struct AeBaseUIRect*);
 #ifdef __cplusplus
 }
 #endif
