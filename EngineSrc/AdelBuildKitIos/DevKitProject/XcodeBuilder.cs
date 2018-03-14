@@ -91,7 +91,6 @@ namespace AdelBuildKitIos
                 commonRootDir = new DirectoryInfo(dir.FullName + "/../AdelEngine/AdelEngineNative");
                 devKitResDir = new DirectoryInfo(dir.FullName + "/DevKitResource");
             }
-            DirectoryInfo visualStudioTemplateDir = new DirectoryInfo(devKitResDir.FullName + "/VisualStudioTemplate");
 
             // ファイル関連の定義
             string prefix = string.Format("{0}_{1}_{2}", aArg.ProjectSetting.Name, aArg.PlatformSetting.Name, aArg.BuildTargetSetting.Name);
