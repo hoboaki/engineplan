@@ -29,7 +29,7 @@
         0000000C000000000337497E /* LinkOnly.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = LinkOnly.m;path = "Source/LinkOnly.m";sourceTree = SOURCE_ROOT;        };
         0000000C00000000007E40FC /* CoreGraphics.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = CoreGraphics.framework;path = "/System/Library/Frameworks/CoreGraphics.framework";sourceTree = "<absolute>";        };
         0000000C00000000007048E0 /* QuartzCore.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = QuartzCore.framework;path = "/System/Library/Frameworks/QuartzCore.framework";sourceTree = "<absolute>";        };
-        0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "/System/Library/Frameworks/UIKit.framework";sourceTree = "<absolute>";        };
+        0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "C:\Users\akiharu\projects\engineplan\dev\EngineSrc\AdelBuildKitIos\System\Library\Frameworks\UIKit.framework";sourceTree = "<absolute>";        };
         0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
@@ -357,7 +357,10 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-                OTHER_LDFLAGS = "-lc++";
+                OTHER_LDFLAGS = (
+                    "-lc++",
+                    "-ObjC",
+                );
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -369,7 +372,10 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-                OTHER_LDFLAGS = "-lc++";
+                OTHER_LDFLAGS = (
+                    "-lc++",
+                    "-ObjC",
+                );
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -381,7 +387,10 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-                OTHER_LDFLAGS = "-lc++";
+                OTHER_LDFLAGS = (
+                    "-lc++",
+                    "-ObjC",
+                );
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -393,7 +402,10 @@
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-                OTHER_LDFLAGS = "-lc++";
+                OTHER_LDFLAGS = (
+                    "-lc++",
+                    "-ObjC",
+                );
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
