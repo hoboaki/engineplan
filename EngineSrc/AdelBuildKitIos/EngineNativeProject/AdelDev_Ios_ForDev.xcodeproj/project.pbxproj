@@ -7,14 +7,17 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        000000010000000001C354D3 /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
-        000000010000000002CDD6E5 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */; };
+        00000001000000000320FE8F /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
+        000000010000000001708B7A /* CoreGraphics.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007E40FC /* CoreGraphics.framework */; };
+        000000010000000000F4E74F /* QuartzCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007048E0 /* QuartzCore.framework */; };
+        0000000100000000009C21CE /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003F28FE7 /* UIKit.framework */; };
+        0000000100000000017D303E /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-        0000000B000000000028F30D /* PBXContainerItemProxy */ = {
+        0000000B00000000017E61CE /* PBXContainerItemProxy */ = {
             isa = PBXContainerItemProxy;
-            containerPortal = 0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+            containerPortal = 0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
             proxyType = 2;
             remoteGlobalIDString = 0000000C0000000003CB1BF5;
             remoteInfo = AdelDev_Ios_ForDev_AeLib;
@@ -24,15 +27,21 @@
 /* Begin PBXFileReference section */
         0000000C000000000178C804 /* AdelDev_Ios_ForDev.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application;includeInIndex = 0;path = AdelDev_Ios_ForDev.app;sourceTree = BUILT_PRODUCTS_DIR;        };
         0000000C000000000337497E /* LinkOnly.m */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc;name = LinkOnly.m;path = "Source/LinkOnly.m";sourceTree = SOURCE_ROOT;        };
-        0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
+        0000000C00000000007E40FC /* CoreGraphics.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = CoreGraphics.framework;path = "/System/Library/Frameworks/CoreGraphics.framework";sourceTree = "<absolute>";        };
+        0000000C00000000007048E0 /* QuartzCore.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = QuartzCore.framework;path = "/System/Library/Frameworks/QuartzCore.framework";sourceTree = "<absolute>";        };
+        0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "/System/Library/Frameworks/UIKit.framework";sourceTree = "<absolute>";        };
+        0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        000000050000000003DDFB6E /* Frameworks */ = {
+        00000005000000000028F30D /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000002CDD6E5 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
+                000000010000000001708B7A /* CoreGraphics.framework in Frameworks */,
+                000000010000000000F4E74F /* QuartzCore.framework in Frameworks */,
+                0000000100000000009C21CE /* UIKit.framework in Frameworks */,
+                0000000100000000017D303E /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -44,7 +53,8 @@
             children = (
                 0000000D000000000262C0E4 /* Products */,
                 0000000D00000000013F082A /* Sources */,
-                0000000D0000000000F19571 /* OtherProjects */,
+                0000000D0000000000F19571 /* Frameworks */,
+                0000000D0000000003870F20 /* OtherProjects */,
             );
             sourceTree = "<group>";
         };
@@ -64,18 +74,28 @@
             name = Sources;
             sourceTree = "<group>";
         };
-        0000000D0000000000F19571 /* OtherProjects */ = {
+        0000000D0000000000F19571 /* Frameworks */ = {
             isa = PBXGroup;
             children = (
-                0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */,
+                0000000C00000000007E40FC /* CoreGraphics.framework */,
+                0000000C00000000007048E0 /* QuartzCore.framework */,
+                0000000C0000000003F28FE7 /* UIKit.framework */,
+            );
+            name = Frameworks;
+            sourceTree = "<group>";
+        };
+        0000000D0000000003870F20 /* OtherProjects */ = {
+            isa = PBXGroup;
+            children = (
+                0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */,
             );
             name = OtherProjects;
             sourceTree = "<group>";
         };
-        0000000D00000000013C8E0F /* AdelDev_Ios_ForDev_AeLib Products */ = {
+        0000000D000000000166B231 /* AdelDev_Ios_ForDev_AeLib Products */ = {
             isa = PBXGroup;
             children = (
-                00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */,
+                0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */,
             );
             name = "AdelDev_Ios_ForDev_AeLib Products";
             sourceTree = "<group>";
@@ -83,13 +103,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-        0000001100000000007048E0 /* AdelDev_Ios_ForDev */ = {
+        000000110000000001BBC959 /* AdelDev_Ios_ForDev */ = {
             isa = PBXNativeTarget;
-            buildConfigurationList = 000000170000000003F28FE7 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
+            buildConfigurationList = 0000001700000000039A1422 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
             buildPhases = (
-                0000000700000000006AB532 /* Resources */,
-                000000090000000003C05EC2 /* Sources */,
-                000000050000000003DDFB6E /* Frameworks */,
+                000000070000000002CDD6E5 /* Resources */,
+                0000000900000000013C8E0F /* Sources */,
+                00000005000000000028F30D /* Frameworks */,
             );
             buildRules = (
             );
@@ -120,29 +140,29 @@
             projectDirPath = "";
             projectReferences = (
                 {
-                    ProductGroup = 0000000D00000000013C8E0F /* AdelDev_Ios_ForDev_AeLib Products */;
-                    ProjectRef = 0000000C00000000007E40FC /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+                    ProductGroup = 0000000D000000000166B231 /* AdelDev_Ios_ForDev_AeLib Products */;
+                    ProjectRef = 0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
                 },
             );
             projectRoot = "";
             targets = (
-                0000001100000000007048E0 /* AdelDev_Ios_ForDev */,
+                000000110000000001BBC959 /* AdelDev_Ios_ForDev */,
             );
         };
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-        00000013000000000320FE8F /* AdelDev_Ios_ForDev_AeLib.a */ = {
+        0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */ = {
             isa = PBXReferenceProxy;
             fileType = archive.ar;
             path = AdelDev_Ios_ForDev_AeLib.a;
-            remoteRef = 0000000B000000000028F30D /* PBXContainerItemProxy */;
+            remoteRef = 0000000B00000000017E61CE /* PBXContainerItemProxy */;
             sourceTree = BUILT_PRODUCTS_DIR;
         };
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-        0000000700000000006AB532 /* Resources */ = {
+        000000070000000002CDD6E5 /* Resources */ = {
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -152,11 +172,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-        000000090000000003C05EC2 /* Sources */ = {
+        0000000900000000013C8E0F /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000001C354D3 /* LinkOnly.m in Sources */,
+                00000001000000000320FE8F /* LinkOnly.m in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -331,45 +351,49 @@
             };
             name = Final;
         };
-        000000160000000003870F20 /* Debug */ = {
+        0000001600000000006AB532 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = Debug;
         };
-        000000160000000003BF8826 /* Develop */ = {
+        000000160000000003C05EC2 /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = Develop;
         };
-        000000160000000001BBC959 /* Review */ = {
+        000000160000000001C354D3 /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
             name = Review;
         };
-        0000001600000000039A1422 /* Final */ = {
+        000000160000000003DDFB6E /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 INFOPLIST_FILE = "$(PROJECT_DIR)/../DevelopResource/AdelDevProject/Setting/Ios/Info.plist";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+                OTHER_LDFLAGS = "-lc++";
                 PRODUCT_BUNDLE_IDENTIFIER = org.MyApp;
                 PRODUCT_NAME = "$(TARGET_NAME)";
             };
@@ -389,13 +413,13 @@
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
         };
-        000000170000000003F28FE7 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */ = {
+        0000001700000000039A1422 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
-                000000160000000003870F20 /* Debug */,
-                000000160000000003BF8826 /* Develop */,
-                000000160000000001BBC959 /* Review */,
-                0000001600000000039A1422 /* Final */,
+                0000001600000000006AB532 /* Debug */,
+                000000160000000003C05EC2 /* Develop */,
+                000000160000000001C354D3 /* Review */,
+                000000160000000003DDFB6E /* Final */,
             );
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
