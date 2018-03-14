@@ -232,7 +232,9 @@ namespace AdelBuildKitIos
 
             // フレームワーク列挙
             var linkFrameworks = new List<string>();
-            //linkFrameworks.Add("/System/Library/Frameworks/Cocoa.framework");
+            linkFrameworks.Add("/System/Library/Frameworks/CoreGraphics.framework");
+            linkFrameworks.Add("/System/Library/Frameworks/QuartzCore.framework");
+            linkFrameworks.Add("/System/Library/Frameworks/UIKit.framework");
 
             // コンフィギュレーション列挙
             var configurationNames = new Dictionary<BuildVersion, string>();
@@ -309,6 +311,7 @@ namespace AdelBuildKitIos
             appTargetConfigurationSettings.Add(new KeyValuePair("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"));
             appTargetConfigurationSettings.Add(new KeyValuePair("INFOPLIST_FILE", "$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(appProjFile.Directory, infoPlistFile.FullName)));
             appTargetConfigurationSettings.Add(new KeyValuePair("LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/../Frameworks"));
+            appTargetConfigurationSettings.Add(new KeyValuePair("OTHER_LDFLAGS", "-lc++"));
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_BUNDLE_IDENTIFIER", "org.MyApp"));
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
