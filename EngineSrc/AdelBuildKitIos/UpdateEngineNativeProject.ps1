@@ -23,9 +23,9 @@ function ExecMsBuild ($arg) {
 }
 
 # ビルドキットのビルド＆コピー
-ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitMac.csproj")
+ExecMsBuild(" /p:Configuration=Debug ./DevKitProject/AdelBuildKitIos.csproj")
 $srcDir = "./DevKitProject/bin/Debug"
-$dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitMac.aeplugin/DevKitDll"
+$dstDir = "./DevelopResource/AdelDevProject/Plugin/AdelBuildKitIos.aeplugin/DevKitDll"
 if (Test-Path $dstDir) {
     Remove-Item $dstDir -Recurse
 }
