@@ -43,7 +43,7 @@ namespace AdelBuildKitIos
                 var mainDirRoot = Utility.MainNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var commonDirRoot = Utility.CommonNativeCodeDirectory(_SetupArg.PluginDir, aArg.IsPrivateDevelopMode);
                 var dirs = new List<DirectoryInfo>();
-                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_mac_al"));
+                dirs.Add(new DirectoryInfo(mainDirRoot.FullName + "/ae_ios_al"));
                 dirs.Add(new DirectoryInfo(commonDirRoot.FullName + "/ae_openal"));
                 foreach (var dir in dirs)
                 {
