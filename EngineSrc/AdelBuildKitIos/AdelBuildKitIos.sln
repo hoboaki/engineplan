@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelBuildKitIos", "DevKitProject\AdelBuildKitIos.csproj", "{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKit", "..\AdelEngine\AdelDevKit\AdelDevKit.csproj", "{40355C67-9083-47F5-8F44-517393F5697D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTests", "..\AdelEngine\AdelDevKitTests\AdelDevKitTests.csproj", "{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTestsPlugin", "..\AdelEngine\AdelDevKitTestsPlugin\AdelDevKitTestsPlugin.csproj", "{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommandMain", "..\AdelEngine\AdelCommandMain\AdelCommandMain.csproj", "{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monobjc.Tools", "..\External\Monobjc\monobjc-tools\Monobjc.Tools\Monobjc.Tools.csproj", "{C44005EC-E057-4636-96E2-637CA83F5170}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40355C67-9083-47F5-8F44-517393F5697D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40355C67-9083-47F5-8F44-517393F5697D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40355C67-9083-47F5-8F44-517393F5697D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40355C67-9083-47F5-8F44-517393F5697D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44005EC-E057-4636-96E2-637CA83F5170}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34A24CE2-D3B4-45C8-9925-B4F05458AE29}
+	EndGlobalSection
+EndGlobal

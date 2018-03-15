@@ -1,0 +1,45 @@
+# 文字コード：UTF-8
+PlatformSetting: 
+    # コードネーム（パスカル英字・ハイフンで構成を推奨）
+    Name: "Ios"
+    
+    # GUI上などで表示される名前（分かりやすさ優先）
+    DisplayName: "Ios"
+
+    # デフォルトビルドターゲットの名前
+    DefaultBuildTargetName: "ForDev"
+    
+    # ビルドターゲットの既定設定
+    DefaultBuildTargetSetting:
+        # 使用するビルダー
+        BuilderName: "AdelBuildKitIos.XcodeBuilder"
+
+        # ビルダーに通知するパラメータ
+        BuilderParams:
+            InfoPlistPath: "./Setting/Ios/Info.plist"
+            LaunchImageDirPath: "./Setting/Ios/LaunchImage"
+
+        # Coreライブラリの定義
+        CoreLib:
+            # 使用するCoreOsライブラリ
+            # ["AdelBuildKitIos.CoreOsIos"(default)]
+            #CoreOs: "AdelBuildKitIos.CoreOsIos"
+
+            # 使用するCoreGfxライブラリ
+            # ["AdelBuildKitIos.CoreGfxGles300"(default), "AdelBuildKitIos.CoreGfxVulkan"]
+            #CoreGfx: "AdelBuildKitIos.CoreGfxGles300"
+
+            # 使用するCoreSndライブラリ
+            # ["AdelBuildKitIos.CoreSndAl"(default)]
+            #CoreSnd: "AdelBuildKitIos.CoreSndAl"
+
+    # 各ビルドターゲット定義
+    BuildTargetSettings:
+        -
+            # コードネーム（ロムファイル名に使用）
+            Name: "ForDev"
+            
+            # 表示名（分かりやすさ優先）
+            DisplayName: "開発用（Ios）"
+
+# EOF

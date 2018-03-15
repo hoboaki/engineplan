@@ -137,8 +137,7 @@ namespace Monobjc.Tools.Xcode
 				String name = Path.GetFileName (file);
 #if true // adel modified
                 String path = file;
-                if (!file.StartsWith("/")) 
-                {
+                if (sourceTree != PBXSourceTree.SdkRoot && !file.StartsWith("/")) {
                     // Unix絶対パス形式でなければ関数を使う
                     path = Path.GetFullPath(file);
                 }
@@ -277,8 +276,10 @@ namespace Monobjc.Tools.Xcode
 				return PBXFileType.SourcecodeCppH;
 			case ".m":
 				return PBXFileType.SourcecodeCObjc;
-			case ".xcodeproj":
-				return PBXFileType.WrapperPBProject;
+            case ".png":
+                return PBXFileType.ImagePng;
+            case ".xcodeproj":
+			    return PBXFileType.WrapperPBProject;
 			case ".xib":
 				return PBXFileType.FileXib;
 			}

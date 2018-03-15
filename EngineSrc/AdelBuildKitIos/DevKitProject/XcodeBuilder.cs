@@ -14,7 +14,7 @@ using AdelDevKit.CommandLog;
 using System.Text.RegularExpressions;
 using Monobjc.Tools.Xcode;
 
-namespace AdelBuildKitMac
+namespace AdelBuildKitIos
 {
     //------------------------------------------------------------------------------
     /// <summary>
@@ -49,7 +49,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return nameof(AdelBuildKitMac) + "." + nameof(XcodeBuilder);
+                return nameof(AdelBuildKitIos) + "." + nameof(XcodeBuilder);
             }
         }
 
@@ -57,7 +57,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return CoreOsMac.StaticName;
+                return CoreOsIos.StaticName;
             }
         }
 
@@ -65,7 +65,7 @@ namespace AdelBuildKitMac
         {
             get
             {
-                return CoreGfxGl330.StaticName;
+                return CoreGfxGles300.StaticName;
             }
         }
 
@@ -115,6 +115,22 @@ namespace AdelBuildKitMac
                 if (!infoPlistFile.Exists)
                 {
                     aArg.Log.Error.WriteLine("ファイルが見つかりません。 '{0}'", infoPlistFile.FullName);
+                    throw new MessagedException();
+                }
+            }
+            DirectoryInfo launchImageDir = null;
+            {
+                string keyLaunchImageDirPath = "LaunchImageDirPath";
+                if (!aArg.BuilderParamInfo.BuildTargetSettingParams.ContainsKey(keyLaunchImageDirPath))
+                {
+                    aArg.Log.Error.WriteLine("必要な BuilderParam '{0}' が指定されていません。", keyLaunchImageDirPath);
+                    throw new MessagedException();
+                }
+                var path = aArg.BuilderParamInfo.BuildTargetSettingParams[keyLaunchImageDirPath];
+                launchImageDir = new DirectoryInfo(_SetupArg.EnvInfo.ProjectRootDir + "/" + path);
+                if (!launchImageDir.Exists)
+                {
+                    aArg.Log.Error.WriteLine("フォルダが見つかりません。 '{0}'", launchImageDir.FullName);
                     throw new MessagedException();
                 }
             }
@@ -232,7 +248,16 @@ namespace AdelBuildKitMac
 
             // フレームワーク列挙
             var linkFrameworks = new List<string>();
-            linkFrameworks.Add("/System/Library/Frameworks/Cocoa.framework");
+            linkFrameworks.Add("System/Library/Frameworks/CoreGraphics.framework");
+            linkFrameworks.Add("System/Library/Frameworks/QuartzCore.framework");
+            linkFrameworks.Add("System/Library/Frameworks/UIKit.framework");
+
+            // 起動イメージ列挙
+            var launchImageFiles = new List<FileInfo>();
+            foreach (var launchImage in launchImageDir.EnumerateFiles("*.png"))
+            {
+                launchImageFiles.Add(launchImage);
+            }
 
             // コンフィギュレーション列挙
             var configurationNames = new Dictionary<BuildVersion, string>();
@@ -257,8 +282,7 @@ namespace AdelBuildKitMac
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_OBJC_ROOT_CLASS", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_SUSPICIOUS_MOVE", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
-            commonConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
-            commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY", "-"));
+            commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY[sdk=iphoneos*]", "iPhone Developer"));
             commonConfigurationSettings.Add(new KeyValuePair("COPY_PHASE_STRIP", "NO"));
             commonConfigurationSettings.Add(new KeyValuePair("DEBUG_INFORMATION_FORMAT", "dwarf-with-dsym"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_C_LANGUAGE_STANDARD", "gnu99"));
@@ -268,30 +292,35 @@ namespace AdelBuildKitMac
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNUSED_VARIABLE", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("RUN_CLANG_STATIC_ANALYZER", "YES"));
-            commonConfigurationSettings.Add(new KeyValuePair("MACOSX_DEPLOYMENT_TARGET", "10.11"));
-            commonConfigurationSettings.Add(new KeyValuePair("SDKROOT", "macosx"));
+            commonConfigurationSettings.Add(new KeyValuePair("IPHONEOS_DEPLOYMENT_TARGET", "10.2"));
+            commonConfigurationSettings.Add(new KeyValuePair("SDKROOT", "iphoneos"));
 
             var additionalConfigurationSetings = new Dictionary<BuildVersion, List<KeyValuePair>>();
             {
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("MTL_ENABLE_DEBUG_INFO", "YES"));
+                    configurationSettings.Add(new KeyValuePair("ONLY_ACTIVE_ARCH", "YES"));
                     configurationSettings.Add(new KeyValuePair("GCC_OPTIMIZATION_LEVEL", "0"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDebug));
-                    configurationSettings.Add(new KeyValuePair("ZERO_LINK", "YES"));
                     additionalConfigurationSetings.Add(BuildVersion.Debug, configurationSettings);
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("MTL_ENABLE_DEBUG_INFO", "YES"));
+                    configurationSettings.Add(new KeyValuePair("ONLY_ACTIVE_ARCH", "YES"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDevelop));
                     additionalConfigurationSetings.Add(BuildVersion.Develop, configurationSettings);
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("MTL_ENABLE_DEBUG_INFO", "NO"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListReview));
                     additionalConfigurationSetings.Add(BuildVersion.Review, configurationSettings);
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("MTL_ENABLE_DEBUG_INFO", "NO"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListFinal));
                     additionalConfigurationSetings.Add(BuildVersion.Final, configurationSettings);
                 }
@@ -299,13 +328,18 @@ namespace AdelBuildKitMac
 
             var appConfigurationSettings = commonConfigurationSettings.ToList();
             appConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(appProjFile.Directory)));
+            appConfigurationSettings.Add(new KeyValuePair("TARGETED_DEVICE_FAMILY", "1,2"));
 
             var appTargetConfigurationSettings = new List<KeyValuePair>();
             appTargetConfigurationSettings.Add(new KeyValuePair("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"));
-            appTargetConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
             appTargetConfigurationSettings.Add(new KeyValuePair("INFOPLIST_FILE", "$(PROJECT_DIR)/" + FilePathUtil.ToRelativeUnixPath(appProjFile.Directory, infoPlistFile.FullName)));
             appTargetConfigurationSettings.Add(new KeyValuePair("LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/../Frameworks"));
-            appTargetConfigurationSettings.Add(new KeyValuePair("OTHER_LDFLAGS", "-lc++"));
+            {
+                var flags = new List<string>();
+                flags.Add("-lc++");
+                flags.Add("-ObjC");
+                appTargetConfigurationSettings.Add(new KeyValuePair("OTHER_LDFLAGS", flags));
+            }
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_BUNDLE_IDENTIFIER", "org.MyApp"));
             appTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
 
@@ -313,8 +347,9 @@ namespace AdelBuildKitMac
             libProjConfigurationSettings.Add(new KeyValuePair("HEADER_SEARCH_PATHS", funcAdditionalIncludeDirectories(libProjFile.Directory)));
 
             var libTargetConfigurationSettings = new List<KeyValuePair>();
-            libTargetConfigurationSettings.Add(new KeyValuePair("EXECUTABLE_PREFIX", "lib"));
+            libTargetConfigurationSettings.Add(new KeyValuePair("OTHER_LDFLAGS", "-ObjC"));
             libTargetConfigurationSettings.Add(new KeyValuePair("PRODUCT_NAME", "$(TARGET_NAME)"));
+            libTargetConfigurationSettings.Add(new KeyValuePair("SKIP_INSTALL", "YES"));
 
             // 言語設定
             Action<XcodeProject> funcSetupLanguage = (proj) =>
@@ -411,6 +446,11 @@ namespace AdelBuildKitMac
                     foreach (var framework in linkFrameworks)
                     {
                         proj.AddFramework("Frameworks", framework, appFileName);
+                    }
+                    // LaunchImage列挙
+                    foreach (var launchImageFile in launchImageFiles)
+                    {
+                        proj.AddFile("LaunchImages", launchImageFile.FullName, appFileName);
                     }
                     // Project参照列挙
                     {

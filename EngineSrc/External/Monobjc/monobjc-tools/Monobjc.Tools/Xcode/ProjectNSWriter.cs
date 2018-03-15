@@ -135,7 +135,14 @@ namespace Monobjc.Tools.Xcode
 				return;
 			}
 
-			if (singleLine) {
+#if true // adel modified
+            if (!Regex.IsMatch(name, "^[a-zA-Z0-9._]+$")) {
+                // 記号があるのでダブルコーテーションで囲む
+                name = String.Format("\"{0}\"", name);
+            }
+#endif
+
+            if (singleLine) {
 				this.Write ("{0} = ", name);
 				this.WritePBXValue (indentLevel, map, value);
 				this.Write (";");

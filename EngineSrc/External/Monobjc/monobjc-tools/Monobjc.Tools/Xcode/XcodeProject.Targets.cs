@@ -234,8 +234,18 @@ namespace Monobjc.Tools.Xcode
 #endif
                 PBXTarget target = this.GetTarget (targetName);
 				PBXBuildPhase phase = GetTargetPhase<PBXFrameworksBuildPhase> (target);
-				PBXFileElement fileElement = this.AddFile (groups, file, PBXSourceTree.Absolute);
-				PBXBuildFile buildFile = phase.FindFile (fileElement);
+#if true // adel modified
+                // sourceTree を選択しつつ fileElement を作成
+                var sourceTree = PBXSourceTree.Absolute;
+                if (framework.StartsWith("System/Library/Frameworks/")) {
+                    // 特定の文字列から始まっている場合は SDK_ROOT
+                    sourceTree = PBXSourceTree.SdkRoot;
+                }
+                PBXFileElement fileElement = this.AddFile(groups, file, sourceTree);
+#else
+                PBXFileElement fileElement = this.AddFile (groups, file, PBXSourceTree.Absolute);
+#endif
+                PBXBuildFile buildFile = phase.FindFile (fileElement);
 				if (buildFile == null) {
 					buildFile = new PBXBuildFile (fileElement);
 					phase.AddFile (buildFile);
@@ -617,7 +627,8 @@ namespace Monobjc.Tools.Xcode
 				phase = GetTargetPhase<PBXHeadersBuildPhase> (target);
 				break;
 			case PBXFileType.FileXib:
-			case PBXFileType.TextPlist:
+            case PBXFileType.ImagePng:
+            case PBXFileType.TextPlist:
 			case PBXFileType.TextPlistInfo:
 				phase = GetTargetPhase<PBXResourcesBuildPhase> (target);
 				break;
