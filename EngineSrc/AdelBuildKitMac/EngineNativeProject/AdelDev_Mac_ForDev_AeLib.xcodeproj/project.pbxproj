@@ -408,7 +408,9 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
                 GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
                 GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_FUNCTION = NO;
                 GCC_WARN_UNUSED_VARIABLE = YES;
                 PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
                 RUN_CLANG_STATIC_ANALYZER = YES;
@@ -418,6 +420,7 @@
                     "$(PROJECT_DIR)/Source",
                     "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
                 );
+                ENABLE_TESTABILITY = YES;
                 ONLY_ACTIVE_ARCH = YES;
                 GCC_OPTIMIZATION_LEVEL = 0;
                 GCC_PREPROCESSOR_DEFINITIONS = (
@@ -457,7 +460,9 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
                 GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
                 GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_FUNCTION = NO;
                 GCC_WARN_UNUSED_VARIABLE = YES;
                 PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
                 RUN_CLANG_STATIC_ANALYZER = YES;
@@ -502,7 +507,9 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
                 GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
                 GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_FUNCTION = NO;
                 GCC_WARN_UNUSED_VARIABLE = YES;
                 PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
                 RUN_CLANG_STATIC_ANALYZER = YES;
@@ -547,7 +554,9 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
                 GCC_WARN_ABOUT_RETURN_TYPE = YES;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
                 GCC_WARN_UNINITIALIZED_AUTOS = YES;
+                GCC_WARN_UNUSED_FUNCTION = NO;
                 GCC_WARN_UNUSED_VARIABLE = YES;
                 PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
                 RUN_CLANG_STATIC_ANALYZER = YES;
