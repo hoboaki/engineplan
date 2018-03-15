@@ -7,15 +7,16 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        000000010000000001708B7A /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
-        0000000100000000009C21CE /* CoreGraphics.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007E40FC /* CoreGraphics.framework */; };
-        0000000100000000017D303E /* QuartzCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007048E0 /* QuartzCore.framework */; };
-        00000001000000000166B231 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003F28FE7 /* UIKit.framework */; };
-        0000000100000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */; };
+        00000001000000000028F30D /* Default-568h@2x.png in Resources */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003BF8826 /* Default-568h@2x.png */; };
+        000000010000000000F4E74F /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
+        0000000100000000017D303E /* CoreGraphics.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007E40FC /* CoreGraphics.framework */; };
+        00000001000000000166B231 /* QuartzCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007048E0 /* QuartzCore.framework */; };
+        0000000100000000009C43C1 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003F28FE7 /* UIKit.framework */; };
+        0000000100000000017E61CE /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 000000130000000000FCF24B /* AdelDev_Ios_ForDev_AeLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-        0000000B0000000000FCF24B /* PBXContainerItemProxy */ = {
+        0000000B0000000000E484A5 /* PBXContainerItemProxy */ = {
             isa = PBXContainerItemProxy;
             containerPortal = 0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
             proxyType = 2;
@@ -35,14 +36,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        000000050000000000F4E74F /* Frameworks */ = {
+        0000000500000000009C21CE /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                0000000100000000009C21CE /* CoreGraphics.framework in Frameworks */,
-                0000000100000000017D303E /* QuartzCore.framework in Frameworks */,
-                00000001000000000166B231 /* UIKit.framework in Frameworks */,
-                0000000100000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
+                0000000100000000017D303E /* CoreGraphics.framework in Frameworks */,
+                00000001000000000166B231 /* QuartzCore.framework in Frameworks */,
+                0000000100000000009C43C1 /* UIKit.framework in Frameworks */,
+                0000000100000000017E61CE /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -102,10 +103,10 @@
             name = OtherProjects;
             sourceTree = "<group>";
         };
-        0000000D00000000017E61CE /* AdelDev_Ios_ForDev_AeLib Products */ = {
+        0000000D0000000001717041 /* AdelDev_Ios_ForDev_AeLib Products */ = {
             isa = PBXGroup;
             children = (
-                000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */,
+                000000130000000000FCF24B /* AdelDev_Ios_ForDev_AeLib.a */,
             );
             name = "AdelDev_Ios_ForDev_AeLib Products";
             sourceTree = "<group>";
@@ -118,8 +119,8 @@
             buildConfigurationList = 000000170000000003C05EC2 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
             buildPhases = (
                 00000007000000000320FE8F /* Resources */,
-                00000009000000000028F30D /* Sources */,
-                000000050000000000F4E74F /* Frameworks */,
+                000000090000000001708B7A /* Sources */,
+                0000000500000000009C21CE /* Frameworks */,
             );
             buildRules = (
             );
@@ -150,7 +151,7 @@
             projectDirPath = "";
             projectReferences = (
                 {
-                    ProductGroup = 0000000D00000000017E61CE /* AdelDev_Ios_ForDev_AeLib Products */;
+                    ProductGroup = 0000000D0000000001717041 /* AdelDev_Ios_ForDev_AeLib Products */;
                     ProjectRef = 0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
                 },
             );
@@ -162,11 +163,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-        000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */ = {
+        000000130000000000FCF24B /* AdelDev_Ios_ForDev_AeLib.a */ = {
             isa = PBXReferenceProxy;
             fileType = archive.ar;
             path = AdelDev_Ios_ForDev_AeLib.a;
-            remoteRef = 0000000B0000000000FCF24B /* PBXContainerItemProxy */;
+            remoteRef = 0000000B0000000000E484A5 /* PBXContainerItemProxy */;
             sourceTree = BUILT_PRODUCTS_DIR;
         };
 /* End PBXReferenceProxy section */
@@ -176,17 +177,18 @@
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
+                00000001000000000028F30D /* Default-568h@2x.png in Resources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-        00000009000000000028F30D /* Sources */ = {
+        000000090000000001708B7A /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000001708B7A /* LinkOnly.m in Sources */,
+                000000010000000000F4E74F /* LinkOnly.m in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
