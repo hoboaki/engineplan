@@ -118,6 +118,22 @@ namespace AdelBuildKitIos
                     throw new MessagedException();
                 }
             }
+            DirectoryInfo launchImageDir = null;
+            {
+                string keyLaunchImageDirPath = "LaunchImageDirPath";
+                if (!aArg.BuilderParamInfo.BuildTargetSettingParams.ContainsKey(keyLaunchImageDirPath))
+                {
+                    aArg.Log.Error.WriteLine("必要な BuilderParam '{0}' が指定されていません。", keyLaunchImageDirPath);
+                    throw new MessagedException();
+                }
+                var path = aArg.BuilderParamInfo.BuildTargetSettingParams[keyLaunchImageDirPath];
+                launchImageDir = new DirectoryInfo(_SetupArg.EnvInfo.ProjectRootDir + "/" + path);
+                if (!launchImageDir.Exists)
+                {
+                    aArg.Log.Error.WriteLine("フォルダが見つかりません。 '{0}'", launchImageDir.FullName);
+                    throw new MessagedException();
+                }
+            }
 
             // 自身用ビルドインフォ
             var selfNativeCodeBuildInfo = new NativeCodeBuildInfo();
@@ -235,6 +251,13 @@ namespace AdelBuildKitIos
             linkFrameworks.Add("System/Library/Frameworks/CoreGraphics.framework");
             linkFrameworks.Add("System/Library/Frameworks/QuartzCore.framework");
             linkFrameworks.Add("System/Library/Frameworks/UIKit.framework");
+
+            // 起動イメージ列挙
+            var launchImageFiles = new List<FileInfo>();
+            foreach (var launchImage in launchImageDir.EnumerateFiles("*.png"))
+            {
+                launchImageFiles.Add(launchImage);
+            }
 
             // コンフィギュレーション列挙
             var configurationNames = new Dictionary<BuildVersion, string>();
@@ -423,6 +446,11 @@ namespace AdelBuildKitIos
                     foreach (var framework in linkFrameworks)
                     {
                         proj.AddFramework("Frameworks", framework, appFileName);
+                    }
+                    // LaunchImage列挙
+                    foreach (var launchImageFile in launchImageFiles)
+                    {
+                        proj.AddFile("LaunchImages", launchImageFile.FullName, appFileName);
                     }
                     // Project参照列挙
                     {
