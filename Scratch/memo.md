@@ -87,9 +87,9 @@ AdelDevKit.CutScene.AssetCutScene
     - Win-VisualStudio Ios-Xcode Mac-Xcode
 - Build Version
     - Debug(Db)
-    - LocalDevelop(Ld) 
-    - TeamDevelop(Td)
-    - Review(Rv)
+    - Local(Lc) 
+    - Inside(Is)
+    - Preview(Pr)
     - Final(Fn)
 - Version Control System (Vcs)
 - DirectX
@@ -100,6 +100,10 @@ AdelDevKit.CutScene.AssetCutScene
 - Vulkan
     - vk
     - Vk
+- Android
+    - Andrd   AdelBuildKitAndrd   ae_andrd_os ← これかなー
+    - Andro   AdelBuildKitAndro   ae_andro_os
+    - Android AdelBuildKitAndroid ae_android_os
 
 ## グラフィックス世代の扱い
 
