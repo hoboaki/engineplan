@@ -269,7 +269,9 @@ namespace AdelBuildKitMac
             commonConfigurationSettings.Add(new KeyValuePair("GCC_NO_COMMON_BLOCKS", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_64_TO_32_BIT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_ABOUT_RETURN_TYPE", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNDECLARED_SELECTOR", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNINITIALIZED_AUTOS", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNUSED_FUNCTION", "NO"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNUSED_VARIABLE", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("RUN_CLANG_STATIC_ANALYZER", "YES"));
@@ -280,6 +282,7 @@ namespace AdelBuildKitMac
             {
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("ENABLE_TESTABILITY", "YES"));
                     configurationSettings.Add(new KeyValuePair("ONLY_ACTIVE_ARCH", "YES"));
                     configurationSettings.Add(new KeyValuePair("GCC_OPTIMIZATION_LEVEL", "0"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDebug));
