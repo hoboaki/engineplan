@@ -276,8 +276,10 @@ namespace Monobjc.Tools.Xcode
 				return PBXFileType.SourcecodeCppH;
 			case ".m":
 				return PBXFileType.SourcecodeCObjc;
-			case ".xcodeproj":
-				return PBXFileType.WrapperPBProject;
+            case ".png":
+                return PBXFileType.ImagePng;
+            case ".xcodeproj":
+			    return PBXFileType.WrapperPBProject;
 			case ".xib":
 				return PBXFileType.FileXib;
 			}
