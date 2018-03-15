@@ -17,6 +17,7 @@ PlatformSetting:
         # ビルダーに通知するパラメータ
         BuilderParams:
             InfoPlistPath: "./Setting/Ios/Info.plist"
+            LaunchImageDirPath: "./Setting/Ios/LaunchImage"
 
         # Coreライブラリの定義
         CoreLib:
