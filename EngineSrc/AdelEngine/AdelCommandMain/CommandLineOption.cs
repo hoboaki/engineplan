@@ -111,7 +111,7 @@ namespace AdelCommandMain
             writer.WriteLine("    -{0}: Set build version for build.", nameof(BuildVersion));
             {
                 writer.Write("        [");
-                BuildVersion[] versions = { BuildVersion.Debug, BuildVersion.Develop, BuildVersion.Review, BuildVersion.Final };
+                BuildVersion[] versions = { BuildVersion.Debug, BuildVersion.Develop, BuildVersion.Check, BuildVersion.Preview, BuildVersion.Final };
                 var versionDefault = BuildVersion.Develop;
                 bool isFirst = true;
                 foreach (var version in versions)
