@@ -627,7 +627,8 @@ namespace Monobjc.Tools.Xcode
 				phase = GetTargetPhase<PBXHeadersBuildPhase> (target);
 				break;
 			case PBXFileType.FileXib:
-			case PBXFileType.TextPlist:
+            case PBXFileType.ImagePng:
+            case PBXFileType.TextPlist:
 			case PBXFileType.TextPlistInfo:
 				phase = GetTargetPhase<PBXResourcesBuildPhase> (target);
 				break;
