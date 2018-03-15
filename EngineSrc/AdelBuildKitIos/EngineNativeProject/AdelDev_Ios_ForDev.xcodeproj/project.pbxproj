@@ -7,17 +7,17 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        00000001000000000320FE8F /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
-        000000010000000001708B7A /* CoreGraphics.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007E40FC /* CoreGraphics.framework */; };
-        000000010000000000F4E74F /* QuartzCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007048E0 /* QuartzCore.framework */; };
-        0000000100000000009C21CE /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003F28FE7 /* UIKit.framework */; };
-        0000000100000000017D303E /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */; };
+        000000010000000001708B7A /* LinkOnly.m in Sources */ = { isa = PBXBuildFile; fileRef = 0000000C000000000337497E /* LinkOnly.m */; };
+        0000000100000000009C21CE /* CoreGraphics.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007E40FC /* CoreGraphics.framework */; };
+        0000000100000000017D303E /* QuartzCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C00000000007048E0 /* QuartzCore.framework */; };
+        00000001000000000166B231 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 0000000C0000000003F28FE7 /* UIKit.framework */; };
+        0000000100000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */ = { isa = PBXBuildFile; fileRef = 000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-        0000000B00000000017E61CE /* PBXContainerItemProxy */ = {
+        0000000B0000000000FCF24B /* PBXContainerItemProxy */ = {
             isa = PBXContainerItemProxy;
-            containerPortal = 0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+            containerPortal = 0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
             proxyType = 2;
             remoteGlobalIDString = 0000000C0000000003CB1BF5;
             remoteInfo = AdelDev_Ios_ForDev_AeLib;
@@ -30,18 +30,19 @@
         0000000C00000000007E40FC /* CoreGraphics.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = CoreGraphics.framework;path = "System/Library/Frameworks/CoreGraphics.framework";sourceTree = SDKROOT;        };
         0000000C00000000007048E0 /* QuartzCore.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = QuartzCore.framework;path = "System/Library/Frameworks/QuartzCore.framework";sourceTree = SDKROOT;        };
         0000000C0000000003F28FE7 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework;name = UIKit.framework;path = "System/Library/Frameworks/UIKit.framework";sourceTree = SDKROOT;        };
-        0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
+        0000000C0000000003BF8826 /* Default-568h@2x.png */ = { isa = PBXFileReference; lastKnownFileType = image.png;name = "Default-568h@2x.png";path = "../DevelopResource/AdelDevProject/Setting/Ios/LaunchImage/Default-568h@2x.png";sourceTree = SOURCE_ROOT;        };
+        0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */ = { isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project";name = AdelDev_Ios_ForDev_AeLib.xcodeproj;path = AdelDev_Ios_ForDev_AeLib.xcodeproj;sourceTree = SOURCE_ROOT;        };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-        00000005000000000028F30D /* Frameworks */ = {
+        000000050000000000F4E74F /* Frameworks */ = {
             isa = PBXFrameworksBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                000000010000000001708B7A /* CoreGraphics.framework in Frameworks */,
-                000000010000000000F4E74F /* QuartzCore.framework in Frameworks */,
-                0000000100000000009C21CE /* UIKit.framework in Frameworks */,
-                0000000100000000017D303E /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
+                0000000100000000009C21CE /* CoreGraphics.framework in Frameworks */,
+                0000000100000000017D303E /* QuartzCore.framework in Frameworks */,
+                00000001000000000166B231 /* UIKit.framework in Frameworks */,
+                0000000100000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a in Frameworks */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -54,7 +55,8 @@
                 0000000D000000000262C0E4 /* Products */,
                 0000000D00000000013F082A /* Sources */,
                 0000000D0000000000F19571 /* Frameworks */,
-                0000000D0000000003870F20 /* OtherProjects */,
+                0000000D0000000003870F20 /* LaunchImages */,
+                0000000D0000000001BBC959 /* OtherProjects */,
             );
             sourceTree = "<group>";
         };
@@ -84,18 +86,26 @@
             name = Frameworks;
             sourceTree = "<group>";
         };
-        0000000D0000000003870F20 /* OtherProjects */ = {
+        0000000D0000000003870F20 /* LaunchImages */ = {
             isa = PBXGroup;
             children = (
-                0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */,
+                0000000C0000000003BF8826 /* Default-568h@2x.png */,
+            );
+            name = LaunchImages;
+            sourceTree = "<group>";
+        };
+        0000000D0000000001BBC959 /* OtherProjects */ = {
+            isa = PBXGroup;
+            children = (
+                0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */,
             );
             name = OtherProjects;
             sourceTree = "<group>";
         };
-        0000000D000000000166B231 /* AdelDev_Ios_ForDev_AeLib Products */ = {
+        0000000D00000000017E61CE /* AdelDev_Ios_ForDev_AeLib Products */ = {
             isa = PBXGroup;
             children = (
-                0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */,
+                000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */,
             );
             name = "AdelDev_Ios_ForDev_AeLib Products";
             sourceTree = "<group>";
@@ -103,13 +113,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-        000000110000000001BBC959 /* AdelDev_Ios_ForDev */ = {
+        0000001100000000006AB532 /* AdelDev_Ios_ForDev */ = {
             isa = PBXNativeTarget;
-            buildConfigurationList = 0000001700000000039A1422 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
+            buildConfigurationList = 000000170000000003C05EC2 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */;
             buildPhases = (
-                000000070000000002CDD6E5 /* Resources */,
-                0000000900000000013C8E0F /* Sources */,
-                00000005000000000028F30D /* Frameworks */,
+                00000007000000000320FE8F /* Resources */,
+                00000009000000000028F30D /* Sources */,
+                000000050000000000F4E74F /* Frameworks */,
             );
             buildRules = (
             );
@@ -140,29 +150,29 @@
             projectDirPath = "";
             projectReferences = (
                 {
-                    ProductGroup = 0000000D000000000166B231 /* AdelDev_Ios_ForDev_AeLib Products */;
-                    ProjectRef = 0000000C0000000003BF8826 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
+                    ProductGroup = 0000000D00000000017E61CE /* AdelDev_Ios_ForDev_AeLib Products */;
+                    ProjectRef = 0000000C00000000039A1422 /* AdelDev_Ios_ForDev_AeLib.xcodeproj */;
                 },
             );
             projectRoot = "";
             targets = (
-                000000110000000001BBC959 /* AdelDev_Ios_ForDev */,
+                0000001100000000006AB532 /* AdelDev_Ios_ForDev */,
             );
         };
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-        0000001300000000009C43C1 /* AdelDev_Ios_ForDev_AeLib.a */ = {
+        000000130000000001717041 /* AdelDev_Ios_ForDev_AeLib.a */ = {
             isa = PBXReferenceProxy;
             fileType = archive.ar;
             path = AdelDev_Ios_ForDev_AeLib.a;
-            remoteRef = 0000000B00000000017E61CE /* PBXContainerItemProxy */;
+            remoteRef = 0000000B0000000000FCF24B /* PBXContainerItemProxy */;
             sourceTree = BUILT_PRODUCTS_DIR;
         };
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-        000000070000000002CDD6E5 /* Resources */ = {
+        00000007000000000320FE8F /* Resources */ = {
             isa = PBXResourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
@@ -172,11 +182,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-        0000000900000000013C8E0F /* Sources */ = {
+        00000009000000000028F30D /* Sources */ = {
             isa = PBXSourcesBuildPhase;
             buildActionMask = 2147483647;
             files = (
-                00000001000000000320FE8F /* LinkOnly.m in Sources */,
+                000000010000000001708B7A /* LinkOnly.m in Sources */,
             );
             runOnlyForDeploymentPostprocessing = 0;
         };
@@ -351,7 +361,7 @@
             };
             name = Final;
         };
-        0000001600000000006AB532 /* Debug */ = {
+        000000160000000001C354D3 /* Debug */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -366,7 +376,7 @@
             };
             name = Debug;
         };
-        000000160000000003C05EC2 /* Develop */ = {
+        000000160000000003DDFB6E /* Develop */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -381,7 +391,7 @@
             };
             name = Develop;
         };
-        000000160000000001C354D3 /* Review */ = {
+        000000160000000002CDD6E5 /* Review */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -396,7 +406,7 @@
             };
             name = Review;
         };
-        000000160000000003DDFB6E /* Final */ = {
+        0000001600000000013C8E0F /* Final */ = {
             isa = XCBuildConfiguration;
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -425,13 +435,13 @@
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
         };
-        0000001700000000039A1422 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */ = {
+        000000170000000003C05EC2 /* Build configuration list for PBXNativeTarget "AdelDev_Ios_ForDev" */ = {
             isa = XCConfigurationList;
             buildConfigurations = (
-                0000001600000000006AB532 /* Debug */,
-                000000160000000003C05EC2 /* Develop */,
-                000000160000000001C354D3 /* Review */,
-                000000160000000003DDFB6E /* Final */,
+                000000160000000001C354D3 /* Debug */,
+                000000160000000003DDFB6E /* Develop */,
+                000000160000000002CDD6E5 /* Review */,
+                0000001600000000013C8E0F /* Final */,
             );
             defaultConfigurationIsVisible = 0;
             defaultConfigurationName = Debug;
