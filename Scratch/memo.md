@@ -87,8 +87,8 @@ AdelDevKit.CutScene.AssetCutScene
     - Win-VisualStudio Ios-Xcode Mac-Xcode
 - Build Version
     - Debug(Db)
-    - Local(Lc) 
-    - Inside(Is)
+    - Develop(Dv)  Local(Lc) 
+    - Check(Ck)    Verify(Vf) Community(Cm) Crew(Cr)  Develop(Dv)
     - Preview(Pr)
     - Final(Fn)
 - Version Control System (Vcs)
