@@ -245,23 +245,28 @@ namespace AdelBuildKitMac
             // Xcodeのデフォルト値をなるべく採用しつつ都合の悪いところのみカスタマイズ
             var commonConfigurationSettings = new List<KeyValuePair>();
             commonConfigurationSettings.Add(new KeyValuePair("ALWAYS_SEARCH_USER_PATHS", "NO"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_ANALYZER_NONNULL", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_CXX_LANGUAGE_STANDARD", "gnu++0x"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_CXX_LIBRARY", "libc++"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_BOOL_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_CONSTANT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_DIRECT_OBJC_ISA_USAGE", "YES_ERROR"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_EMPTY_BODY", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_ENUM_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_INFINITE_RECURSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_INT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_OBJC_ROOT_CLASS", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_SUSPICIOUS_MOVE", "YES"));
+            commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN_UNREACHABLE_CODE", "NO"));
             commonConfigurationSettings.Add(new KeyValuePair("CLANG_WARN__DUPLICATE_METHOD_MATCH", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("COMBINE_HIDPI_IMAGES", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("CODE_SIGN_IDENTITY", "-"));
             commonConfigurationSettings.Add(new KeyValuePair("COPY_PHASE_STRIP", "NO"));
             commonConfigurationSettings.Add(new KeyValuePair("DEBUG_INFORMATION_FORMAT", "dwarf-with-dsym"));
+            commonConfigurationSettings.Add(new KeyValuePair("ENABLE_STRICT_OBJC_MSGSEND", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_C_LANGUAGE_STANDARD", "gnu99"));
+            commonConfigurationSettings.Add(new KeyValuePair("GCC_NO_COMMON_BLOCKS", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_64_TO_32_BIT_CONVERSION", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_ABOUT_RETURN_TYPE", "YES"));
             commonConfigurationSettings.Add(new KeyValuePair("GCC_WARN_UNINITIALIZED_AUTOS", "YES"));
@@ -275,6 +280,7 @@ namespace AdelBuildKitMac
             {
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("ONLY_ACTIVE_ARCH", "YES"));
                     configurationSettings.Add(new KeyValuePair("GCC_OPTIMIZATION_LEVEL", "0"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDebug));
                     configurationSettings.Add(new KeyValuePair("ZERO_LINK", "YES"));
