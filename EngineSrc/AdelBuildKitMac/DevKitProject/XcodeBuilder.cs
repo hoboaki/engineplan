@@ -98,6 +98,7 @@ namespace AdelBuildKitMac
             FileInfo tmpAppProjFile = new FileInfo(string.Format("{0}/{1}.tmp.xcodeproj", mainRootDir.FullName, prefix));
             FileInfo libProjFile = new FileInfo(string.Format("{0}/{1}_AeLib.xcodeproj", mainRootDir.FullName, prefix));
             FileInfo tmpLibProjFile = new FileInfo(string.Format("{0}/{1}_AeLib.tmp.xcodeproj", mainRootDir.FullName, prefix));
+            FileInfo templateSchemeFile = new FileInfo(string.Format("{0}/XcodeTemplate/AppScheme.xcscheme", devKitResDir.FullName));
             string appFileName = string.Format("{0}", prefix);
             string libFileName = string.Format("{0}_AeLib", prefix);
 
@@ -352,6 +353,7 @@ namespace AdelBuildKitMac
             // プロジェクト生成
             XcodeProject appProj;
             XcodeProject libProj;
+            PBXTarget appTarget;
             {// lib
                 var proj = new XcodeProject(tmpLibProjFile.Directory.FullName, tmpLibProjFile.Name.Replace(".xcodeproj", ""));
                 funcSetupLanguage(proj);
@@ -398,7 +400,7 @@ namespace AdelBuildKitMac
                 var proj = new XcodeProject(tmpAppProjFile.Directory.FullName, tmpAppProjFile.Name.Replace(".xcodeproj", ""));
                 funcSetupLanguage(proj);
                 proj.BaseDir = tmpAppProjFile.Directory.FullName;
-                proj.AddTarget(appFileName, PBXProductType.Application);
+                appTarget = proj.AddTarget(appFileName, PBXProductType.Application);
                 {
                     // Project用ConfigurationList列挙
                     foreach (var configurationName in configurationNames)
@@ -496,6 +498,68 @@ namespace AdelBuildKitMac
             };
             funcUpdateProj(libProjFile, tmpLibProjFile);
             funcUpdateProj(appProjFile, tmpAppProjFile);
+
+            // スキーマ作成 or 更新
+            {
+                // メモ
+                var nativeTargetId = appProj.Document.Mapping[appTarget];
+                var templateScheme = File.ReadAllText(templateSchemeFile.FullName);
+                var schemeDataDir = new DirectoryInfo(appProjFile.FullName + "/xcshareddata/xcschemes");
+
+                // 共有データフォルダがなければ作成
+                if (!schemeDataDir.Exists)
+                {
+                    schemeDataDir.Create();
+                }
+
+                // 各ビルドバージョン毎にスキーマを作成
+                foreach (var configurationName in configurationNames)
+                {
+                    // メモ
+                    var schemeFileBaseName = string.Format("{0}__{1}", prefix, configurationName.Value);
+                    FileInfo schemeFileTmp = new FileInfo(string.Format("{0}/{1}.tmp.xcscheme", schemeDataDir.FullName, schemeFileBaseName));
+                    FileInfo schemeFileTarget = new FileInfo(string.Format("{0}/{1}.xcscheme", schemeDataDir.FullName, schemeFileBaseName));
+
+                    // スキーマの内容を作成
+                    string text = templateScheme;
+                    text = text.Replace("__NativeTargetId__", nativeTargetId);
+                    text = text.Replace("__ProjectName__", prefix);
+                    text = text.Replace("__ConfigurationName__", configurationName.Value);
+
+                    // 一時ファイルを作成
+                    File.WriteAllText(schemeFileTmp.FullName, text);
+
+                    // 必要性チェック
+                    bool isNeedToUpdate = false;
+                    if (!schemeFileTarget.Exists)
+                    {
+                        isNeedToUpdate = true;
+                    }
+                    else
+                    {
+                        var tmpText = File.ReadAllText(schemeFileTmp.FullName);
+                        var targetText = File.ReadAllText(schemeFileTarget.FullName);
+                        if (tmpText != targetText)
+                        {
+                            isNeedToUpdate = true;
+                        }
+                    }
+                    if (!isNeedToUpdate)
+                    {
+                        // 更新する必要がないのでTmpを削除して終了
+                        File.Delete(schemeFileTmp.FullName);
+                        aArg.Log.Debug.WriteLine("Skip to update '{0}'.", schemeFileTarget.FullName);
+                        continue;
+                    }
+
+                    // 更新
+                    if (File.Exists(schemeFileTarget.FullName))
+                    {
+                        File.Delete(schemeFileTarget.FullName);
+                    }
+                    File.Move(schemeFileTmp.FullName, schemeFileTarget.FullName);
+                }
+            }
         }
 
         public override AdelDevKit.TaskSystem.Task CreateBuildTask(BuildArg aArg)
