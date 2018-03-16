@@ -19,11 +19,11 @@
       <Configuration>__AutoGenConfigurationBuildVersionPreview__</Configuration>
       <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-  </ItemGroup>
     <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionRelease__|__AutoGenPlatform__">
       <Configuration>__AutoGenConfigurationBuildVersionRelease__</Configuration>
       <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
+  </ItemGroup>
 
   <!-- Microsoft.Cpp.Defaults.cpp のインポート -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
