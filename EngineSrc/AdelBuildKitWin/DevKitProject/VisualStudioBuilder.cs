@@ -150,7 +150,7 @@ namespace AdelBuildKitWin
             string macroDebug = macroCommon + "AE_LIBRARY_DEBUG";
             string macroDevelop = macroCommon + "AE_LIBRARY_DEVELOP";
             string macroInspect = macroCommon + "AE_LIBRARY_INSPECT";
-            string macroPreview = macroCommon + "AE_LIBRARY_PREREVIEW";
+            string macroPreview = macroCommon + "AE_LIBRARY_PREVIEW";
             string macroRelease = macroCommon + "AE_LIBRARY_RELEASE";
 
             // インクルードディレクトリ列挙

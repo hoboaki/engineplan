@@ -7,17 +7,17 @@
 //@{
 
 // ビルドバージョンレベルの定義。
-// FINAL版に向けて1ずつ大きくなる。
+// RELEASE版に向けて1ずつ大きくなる。
 // ・DEBUG     = 0
 // ・DEVELOP   = 1
-// ・CHECK     = 2
+// ・INSPECT   = 2
 // ・PREVIEW   = 3
-// ・FINAL     = 4
+// ・RELEASE   = 4
 #define AE_BASE_BUILD_VERSION_LEVEL_DEBUG     (0)
 #define AE_BASE_BUILD_VERSION_LEVEL_DEVELOP   (1)
-#define AE_BASE_BUILD_VERSION_LEVEL_CHECK     (2)
+#define AE_BASE_BUILD_VERSION_LEVEL_INSPECT   (2)
 #define AE_BASE_BUILD_VERSION_LEVEL_PREVIEW   (3)
-#define AE_BASE_BUILD_VERSION_LEVEL_FINAL     (4)
+#define AE_BASE_BUILD_VERSION_LEVEL_RELEASE   (4)
 
 // 現在のビルドバージョンレベルの指定。
 // AE_BASE_BUILD_VERSION_LEVELにビルドバージョンレベルが定義される。
@@ -36,12 +36,12 @@
     #endif
     #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_DEVELOP)
 #endif
-// check
-#if defined(AE_LIBRARY_CHECK)
+// inspect
+#if defined(AE_LIBRARY_INSPECT)
     #if defined(AE_BASE_BUILD_VERSION_LEVEL)
         #error Already defined 'AE_BASE_BUILD_VERSION_LEVEL'.
     #endif
-    #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_CHECK)
+    #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_INSPECT)
 #endif
 // preview
 #if defined(AE_LIBRARY_PREVIEW)
@@ -50,24 +50,24 @@
     #endif
     #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_PREVIEW)
 #endif
-// final
-#if defined(AE_LIBRARY_FINAL)
+// release
+#if defined(AE_LIBRARY_RELEASE)
     #if defined(AE_BASE_BUILD_VERSION_LEVEL)
         #error Already defined 'AE_BASE_BUILD_VERSION_LEVEL'.
     #endif
-    #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_FINAL)
+    #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_RELEASE)
 #endif
 // 未定義は警告しDEBUGに設定。
 #if !defined(AE_BASE_BUILD_VERSION_LEVEL)
-    #warning "Not defined build version. Please defined 'XLIBRARY_DEBUG','XLIBRARY_DEVELOP','XLIBRARY_CHECK','XLIBRARY_PREVIEW','XLIBRARY_FINAL'."
+    #warning "Not defined build version. Please defined 'AE_LIBRARY_DEBUG','AE_LIBRARY_DEVELOP','AE_LIBRARY_INSPECT','AE_LIBRARY_PREVIEW','AE_LIBRARY_RELEASE'."
     #define AE_BASE_BUILD_VERSION_LEVEL (AE_BASE_BUILD_VERSION_LEVEL_DEBUG)
 #endif
 
 /// @name ビルド環境
 //@{
 
-// 実行時エラーの有効・無効。CHECKまでなら有効。
-#if (AE_BASE_BUILD_VERSION_LEVEL <= AE_BASE_BUILD_VERSION_LEVEL_CHECK)
+// 実行時エラーの有効・無効。INSPECTまでなら有効。
+#if (AE_BASE_BUILD_VERSION_LEVEL <= AE_BASE_BUILD_VERSION_LEVEL_INSPECT)
     /// 実行時エラーが有効なときに定義されるプリプロセッサ。
     #define AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR
 #endif
