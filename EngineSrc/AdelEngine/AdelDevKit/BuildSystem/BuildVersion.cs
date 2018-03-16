@@ -28,7 +28,7 @@ namespace AdelDevKit.BuildSystem
         /// <summary>
         /// プログラム動作確認版。
         /// </summary>
-        Check,
+        Inspect,
 
         /// <summary>
         /// テストプレイ版。
@@ -36,8 +36,8 @@ namespace AdelDevKit.BuildSystem
         Preview,
 
         /// <summary>
-        /// 最終版。
+        /// リリース版。
         /// </summary>
-        Final,
+        Release,
     }
 }
