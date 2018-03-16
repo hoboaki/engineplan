@@ -19,11 +19,11 @@
       <Configuration>Preview</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-  </ItemGroup>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+  </ItemGroup>
 
   <!-- Microsoft.Cpp.Defaults.cpp のインポート -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
