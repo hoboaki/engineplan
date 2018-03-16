@@ -157,17 +157,20 @@ namespace AdelBuildKitMac
             }
             var macroListDebug = macroListCommon.ToList();
             var macroListDevelop = macroListCommon.ToList();
-            var macroListReview = macroListCommon.ToList();
-            var macroListFinal = macroListCommon.ToList();
+            var macroListInspect = macroListCommon.ToList();
+            var macroListPreview = macroListCommon.ToList();
+            var macroListRelease = macroListCommon.ToList();
             macroListDebug.Add("AE_LIBRARY_DEBUG");
             macroListDebug.Add("DEBUG=1");
             macroListDebug.Add("$(inherited)");
             macroListDevelop.Add("AE_LIBRARY_DEVELOP");
             macroListDevelop.Add("$(inherited)");
-            macroListReview.Add("AE_LIBRARY_REVIEW");
-            macroListReview.Add("$(inherited)");
-            macroListFinal.Add("AE_LIBRARY_FINAL");
-            macroListFinal.Add("$(inherited)");
+            macroListInspect.Add("AE_LIBRARY_INSPECT");
+            macroListInspect.Add("$(inherited)");
+            macroListPreview.Add("AE_LIBRARY_PREVIEW");
+            macroListPreview.Add("$(inherited)");
+            macroListRelease.Add("AE_LIBRARY_RELEASE");
+            macroListRelease.Add("$(inherited)");
 
             // インクルードディレクトリ列挙
             var includeDirs = new List<DirectoryInfo>();
@@ -238,8 +241,9 @@ namespace AdelBuildKitMac
             var configurationNames = new Dictionary<BuildVersion, string>();
             configurationNames.Add(BuildVersion.Debug, nameof(BuildVersion.Debug));
             configurationNames.Add(BuildVersion.Develop, nameof(BuildVersion.Develop));
-            configurationNames.Add(BuildVersion.Review, nameof(BuildVersion.Review));
-            configurationNames.Add(BuildVersion.Final, nameof(BuildVersion.Final));
+            configurationNames.Add(BuildVersion.Inspect, nameof(BuildVersion.Inspect));
+            configurationNames.Add(BuildVersion.Preview, nameof(BuildVersion.Preview));
+            configurationNames.Add(BuildVersion.Release, nameof(BuildVersion.Release));
 
             // ビルド設定列挙
             // Xcodeのデフォルト値をなるべく採用しつつ都合の悪いところのみカスタマイズ
@@ -291,18 +295,24 @@ namespace AdelBuildKitMac
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("ONLY_ACTIVE_ARCH", "YES"));
                     configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListDevelop));
                     additionalConfigurationSetings.Add(BuildVersion.Develop, configurationSettings);
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
-                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListReview));
-                    additionalConfigurationSetings.Add(BuildVersion.Review, configurationSettings);
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListInspect));
+                    additionalConfigurationSetings.Add(BuildVersion.Inspect, configurationSettings);
                 }
                 {
                     var configurationSettings = new List<KeyValuePair>();
-                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListFinal));
-                    additionalConfigurationSetings.Add(BuildVersion.Final, configurationSettings);
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListPreview));
+                    additionalConfigurationSetings.Add(BuildVersion.Preview, configurationSettings);
+                }
+                {
+                    var configurationSettings = new List<KeyValuePair>();
+                    configurationSettings.Add(new KeyValuePair("GCC_PREPROCESSOR_DEFINITIONS", macroListRelease));
+                    additionalConfigurationSetings.Add(BuildVersion.Release, configurationSettings);
                 }
             }
 
