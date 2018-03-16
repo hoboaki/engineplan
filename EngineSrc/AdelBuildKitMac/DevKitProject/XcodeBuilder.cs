@@ -549,7 +549,7 @@ namespace AdelBuildKitMac
                         // 更新する必要がないのでTmpを削除して終了
                         File.Delete(schemeFileTmp.FullName);
                         aArg.Log.Debug.WriteLine("Skip to update '{0}'.", schemeFileTarget.FullName);
-                        return;
+                        continue;
                     }
 
                     // 更新
