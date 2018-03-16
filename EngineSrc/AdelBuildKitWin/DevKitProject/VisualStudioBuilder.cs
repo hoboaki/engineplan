@@ -149,8 +149,9 @@ namespace AdelBuildKitWin
             }
             string macroDebug = macroCommon + "AE_LIBRARY_DEBUG";
             string macroDevelop = macroCommon + "AE_LIBRARY_DEVELOP";
-            string macroReview = macroCommon + "AE_LIBRARY_REVIEW";
-            string macroFinal = macroCommon + "AE_LIBRARY_FINAL";
+            string macroInspect = macroCommon + "AE_LIBRARY_INSPECT";
+            string macroPreview = macroCommon + "AE_LIBRARY_PREVIEW";
+            string macroRelease = macroCommon + "AE_LIBRARY_RELEASE";
 
             // インクルードディレクトリ列挙
             var includeDirs = new List<DirectoryInfo>();
@@ -273,21 +274,24 @@ namespace AdelBuildKitWin
             var tagAutoGenInsertProjectReference = "^.*__AutoGenInsertProjectReference__.*\n";
             var tagAutoGenConfigurationBuildVersionDebug = "__AutoGenConfigurationBuildVersionDebug__";
             var tagAutoGenConfigurationBuildVersionDevelop = "__AutoGenConfigurationBuildVersionDevelop__";
-            var tagAutoGenConfigurationBuildVersionReview = "__AutoGenConfigurationBuildVersionReview__";
-            var tagAutoGenConfigurationBuildVersionFinal = "__AutoGenConfigurationBuildVersionFinal__";
+            var tagAutoGenConfigurationBuildVersionInspect = "__AutoGenConfigurationBuildVersionInspect__";
+            var tagAutoGenConfigurationBuildVersionPreview = "__AutoGenConfigurationBuildVersionPreview__";
+            var tagAutoGenConfigurationBuildVersionRelease = "__AutoGenConfigurationBuildVersionRelease__";
             var tagAutoGenPlatform = "__AutoGenPlatform__";
             var autoGenReplaceTags = new Dictionary<string, string>();
             autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionDebug, nameof(BuildVersion.Debug));
             autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionDevelop, nameof(BuildVersion.Develop));
-            autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionReview, nameof(BuildVersion.Review));
-            autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionFinal, nameof(BuildVersion.Final));
+            autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionInspect, nameof(BuildVersion.Inspect));
+            autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionPreview, nameof(BuildVersion.Preview));
+            autoGenReplaceTags.Add(tagAutoGenConfigurationBuildVersionRelease, nameof(BuildVersion.Release));
             autoGenReplaceTags.Add(tagAutoGenPlatform, aArg.CpuBit == CpuBit.Bit64 ? "x64" : "Win32");
             autoGenReplaceTags.Add("__AutoGenApplicationProps__", libMainProjFile.Name);
             autoGenReplaceTags.Add("__AutoGenStaticLibraryProps__", libCommonProjFile.Name);
             autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionDebug__", macroDebug);
             autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionDevelop__", macroDevelop);
-            autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionReview__", macroReview);
-            autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionFinal__", macroFinal);
+            autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionInspect__", macroInspect);
+            autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionPreview__", macroPreview);
+            autoGenReplaceTags.Add("__AutoGenPreprocessorDefinitionsBuildVersionRelease__", macroRelease);
 
             // Appプロジェクト用置換タグ辞書生成
             var autoGenReplaceTagsApp = new Dictionary<string, string>(autoGenReplaceTags);
@@ -382,8 +386,9 @@ namespace AdelBuildKitWin
                         var buildVersionTags = new List<string>();
                         buildVersionTags.Add(tagAutoGenConfigurationBuildVersionDebug);
                         buildVersionTags.Add(tagAutoGenConfigurationBuildVersionDevelop);
-                        buildVersionTags.Add(tagAutoGenConfigurationBuildVersionReview);
-                        buildVersionTags.Add(tagAutoGenConfigurationBuildVersionFinal);
+                        buildVersionTags.Add(tagAutoGenConfigurationBuildVersionInspect);
+                        buildVersionTags.Add(tagAutoGenConfigurationBuildVersionPreview);
+                        buildVersionTags.Add(tagAutoGenConfigurationBuildVersionRelease);
                         foreach (var slnProj in slnProjs)
                         {
                             foreach (var buildVersionTag in buildVersionTags)

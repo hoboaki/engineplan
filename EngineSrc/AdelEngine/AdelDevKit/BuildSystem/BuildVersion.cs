@@ -24,15 +24,20 @@ namespace AdelDevKit.BuildSystem
         /// 開発版。
         /// </summary>
         Develop,
-        
-        /// <summary>
-        /// 動作確認版。
-        /// </summary>
-        Review,
 
         /// <summary>
-        /// 最終版。
+        /// プログラム動作確認版。
         /// </summary>
-        Final,
+        Inspect,
+
+        /// <summary>
+        /// テストプレイ版。
+        /// </summary>
+        Preview,
+
+        /// <summary>
+        /// リリース版。
+        /// </summary>
+        Release,
     }
 }

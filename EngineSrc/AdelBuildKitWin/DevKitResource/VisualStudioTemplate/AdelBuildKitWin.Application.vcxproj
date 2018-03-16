@@ -11,12 +11,16 @@
       <Configuration>__AutoGenConfigurationBuildVersionDevelop__</Configuration>
       <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__">
-      <Configuration>__AutoGenConfigurationBuildVersionFinal__</Configuration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionInspect__|__AutoGenPlatform__">
+      <Configuration>__AutoGenConfigurationBuildVersionInspect__</Configuration>
       <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__">
-      <Configuration>__AutoGenConfigurationBuildVersionReview__</Configuration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionRelease__|__AutoGenPlatform__">
+      <Configuration>__AutoGenConfigurationBuildVersionRelease__</Configuration>
+      <Platform>__AutoGenPlatform__</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="__AutoGenConfigurationBuildVersionPreview__|__AutoGenPlatform__">
+      <Configuration>__AutoGenConfigurationBuildVersionPreview__</Configuration>
       <Platform>__AutoGenPlatform__</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -66,11 +70,15 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionInspect__|__AutoGenPlatform__'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionPreview__|__AutoGenPlatform__'">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionRelease__|__AutoGenPlatform__'">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -132,30 +140,43 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionFinal__|__AutoGenPlatform__'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionInspect__|__AutoGenPlatform__'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionFinal__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionReview__|__AutoGenPlatform__'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionReview__;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionInspect__;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionPreview__|__AutoGenPlatform__'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionPreview__;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='__AutoGenConfigurationBuildVersionRelease__|__AutoGenPlatform__'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>__AutoGenPreprocessorDefinitionsBuildVersionRelease__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
 
