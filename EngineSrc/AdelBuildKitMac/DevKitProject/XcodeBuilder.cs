@@ -504,12 +504,12 @@ namespace AdelBuildKitMac
                 // メモ
                 var nativeTargetId = appProj.Document.Mapping[appTarget];
                 var templateScheme = File.ReadAllText(templateSchemeFile.FullName);
-                var shareDataDir = new DirectoryInfo(appProjFile.FullName + "/xcshareddata");
+                var schemeDataDir = new DirectoryInfo(appProjFile.FullName + "/xcshareddata/xcschemes");
 
                 // 共有データフォルダがなければ作成
-                if (!shareDataDir.Exists)
+                if (!schemeDataDir.Exists)
                 {
-                    shareDataDir.Create();
+                    schemeDataDir.Create();
                 }
 
                 // 各ビルドバージョン毎にスキーマを作成
@@ -517,8 +517,8 @@ namespace AdelBuildKitMac
                 {
                     // メモ
                     var schemeFileBaseName = string.Format("{0}__{1}", prefix, configurationName.Value);
-                    FileInfo schemeFileTmp = new FileInfo(string.Format("{0}/{1}.tmp.xcscheme", shareDataDir.FullName, schemeFileBaseName));
-                    FileInfo schemeFileTarget = new FileInfo(string.Format("{0}/{1}.xcscheme", shareDataDir.FullName, schemeFileBaseName));
+                    FileInfo schemeFileTmp = new FileInfo(string.Format("{0}/{1}.tmp.xcscheme", schemeDataDir.FullName, schemeFileBaseName));
+                    FileInfo schemeFileTarget = new FileInfo(string.Format("{0}/{1}.xcscheme", schemeDataDir.FullName, schemeFileBaseName));
 
                     // スキーマの内容を作成
                     string text = templateScheme;
