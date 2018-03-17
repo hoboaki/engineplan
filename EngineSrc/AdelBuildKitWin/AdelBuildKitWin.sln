@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelBuildKitWin", "DevKitProject\AdelBuildKitWin.csproj", "{D125C7DA-F98B-46CF-B3AE-2822A97C97FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKit", "..\AdelEngine\AdelDevKit\AdelDevKit.csproj", "{40355C67-9083-47F5-8F44-517393F5697D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKit", "..\AdelEngineCore\AdelDevKit\AdelDevKit.csproj", "{40355C67-9083-47F5-8F44-517393F5697D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTests", "..\AdelEngine\AdelDevKitTests\AdelDevKitTests.csproj", "{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTests", "..\AdelEngineCore\AdelDevKitTests\AdelDevKitTests.csproj", "{82BC0B1E-AC7A-4E3B-A647-3BD0AB842EDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTestsPlugin", "..\AdelEngine\AdelDevKitTestsPlugin\AdelDevKitTestsPlugin.csproj", "{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelDevKitTestsPlugin", "..\AdelEngineCore\AdelDevKitTestsPlugin\AdelDevKitTestsPlugin.csproj", "{C7F92C59-52A9-42F6-9DFA-50C4FDC30545}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommandMain", "..\AdelEngine\AdelCommandMain\AdelCommandMain.csproj", "{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdelCommandMain", "..\AdelEngineCore\AdelCommandMain\AdelCommandMain.csproj", "{02AD57C7-D4F2-43B6-8185-76D25DFA0DC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
