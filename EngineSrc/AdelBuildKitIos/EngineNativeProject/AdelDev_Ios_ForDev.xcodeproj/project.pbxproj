@@ -232,7 +232,7 @@
                 SDKROOT = iphoneos;
                 HEADER_SEARCH_PATHS = (
                     "$(PROJECT_DIR)/Source",
-                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                    "$(PROJECT_DIR)/../../AdelEngineCore/AdelEngineNative/Source",
                 );
                 TARGETED_DEVICE_FAMILY = "1,2";
                 ENABLE_TESTABILITY = YES;
@@ -284,7 +284,7 @@
                 SDKROOT = iphoneos;
                 HEADER_SEARCH_PATHS = (
                     "$(PROJECT_DIR)/Source",
-                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                    "$(PROJECT_DIR)/../../AdelEngineCore/AdelEngineNative/Source",
                 );
                 TARGETED_DEVICE_FAMILY = "1,2";
                 MTL_ENABLE_DEBUG_INFO = YES;
@@ -333,7 +333,7 @@
                 SDKROOT = iphoneos;
                 HEADER_SEARCH_PATHS = (
                     "$(PROJECT_DIR)/Source",
-                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                    "$(PROJECT_DIR)/../../AdelEngineCore/AdelEngineNative/Source",
                 );
                 TARGETED_DEVICE_FAMILY = "1,2";
                 MTL_ENABLE_DEBUG_INFO = YES;
@@ -381,7 +381,7 @@
                 SDKROOT = iphoneos;
                 HEADER_SEARCH_PATHS = (
                     "$(PROJECT_DIR)/Source",
-                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                    "$(PROJECT_DIR)/../../AdelEngineCore/AdelEngineNative/Source",
                 );
                 TARGETED_DEVICE_FAMILY = "1,2";
                 MTL_ENABLE_DEBUG_INFO = NO;
@@ -429,7 +429,7 @@
                 SDKROOT = iphoneos;
                 HEADER_SEARCH_PATHS = (
                     "$(PROJECT_DIR)/Source",
-                    "$(PROJECT_DIR)/../../AdelEngine/AdelEngineNative/Source",
+                    "$(PROJECT_DIR)/../../AdelEngineCore/AdelEngineNative/Source",
                 );
                 TARGETED_DEVICE_FAMILY = "1,2";
                 MTL_ENABLE_DEBUG_INFO = NO;

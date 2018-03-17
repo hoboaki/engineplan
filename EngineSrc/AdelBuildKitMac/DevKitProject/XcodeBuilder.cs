@@ -88,7 +88,7 @@ namespace AdelBuildKitMac
                 // 指定の名前のフォルダを探す
                 var dir = Utility.RootDirectoryForDevelopMode(_SetupArg.PluginDir);
                 mainRootDir = new DirectoryInfo(dir.FullName + "/EngineNativeProject");
-                commonRootDir = new DirectoryInfo(dir.FullName + "/../AdelEngine/AdelEngineNative");
+                commonRootDir = new DirectoryInfo(dir.FullName + "/../AdelEngineCore/AdelEngineNative");
                 devKitResDir = new DirectoryInfo(dir.FullName + "/DevKitResource");
             }
 

@@ -37,7 +37,7 @@ namespace AdelBuildKitWin
         {
             if (aIsDevelopMode)
             {
-                return new DirectoryInfo(RootDirectoryForDevelopMode(aPluginDir).FullName + "/../AdelEngine/AdelEngineNative/Source");
+                return new DirectoryInfo(RootDirectoryForDevelopMode(aPluginDir).FullName + "/../AdelEngineCore/AdelEngineNative/Source");
             }
             else
             {

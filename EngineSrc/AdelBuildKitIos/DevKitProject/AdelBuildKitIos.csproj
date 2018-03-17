@@ -54,7 +54,7 @@
     <Compile Include="XcodeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AdelEngine\AdelDevKit\AdelDevKit.csproj">
+    <ProjectReference Include="..\..\AdelEngineCore\AdelDevKit\AdelDevKit.csproj">
       <Project>{40355c67-9083-47f5-8f44-517393f5697d}</Project>
       <Name>AdelDevKit</Name>
       <Private>False</Private>

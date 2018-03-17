@@ -32,8 +32,8 @@ if (Test-Path $dstDir) {
 Copy-Item $srcDir -destination $dstDir -recurse
 
 # AdelCommandのビルド
-ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommandMain/AdelCommandMain.csproj")
-ExecMsBuild(" /p:Configuration=Debug ../AdelEngine/AdelCommand/AdelCommand.csproj")
+ExecMsBuild(" /p:Configuration=Debug ../AdelEngineCore/AdelCommandMain/AdelCommandMain.csproj")
+ExecMsBuild(" /p:Configuration=Debug ../AdelEngineCore/AdelCommand/AdelCommand.csproj")
 
 # AdelCommandの実行
-& "../AdelEngine/AdelCommand/bin/Debug/AdelCommand.exe" -PrivateDevelopMode -ProjectDir "./DevelopResource/AdelDevProject" UpdateIdeProject
+& "../AdelEngineCore/AdelCommand/bin/Debug/AdelCommand.exe" -PrivateDevelopMode -ProjectDir "./DevelopResource/AdelDevProject" UpdateIdeProject
