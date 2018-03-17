@@ -6,9 +6,13 @@
 
 - 各OS対応用プラグインのソースコード置き場。
 
-### AdelEngine
+### AdelEngineCore
 
-- C# ツール・ライブラリやOSに依存しない共通コード置き場。
+- OS に依存しない C# ツールやライブラリの置き場。
+
+### AdelStudio
+
+- Windows 用GUIツールの置き場。
 
 ### DocumentPrivate
 
