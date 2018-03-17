@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev", "AdelD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev_AeMain", "AdelDev_Win_ForDev_AeMain.vcxproj", "{01C68E42-0D13-4A34-B624-7396F43BFCE6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev_AeCommon", "..\..\AdelEngine\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj", "{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdelDev_Win_ForDev_AeCommon", "..\..\AdelEngineCore\AdelEngineNative\AdelDev_Win_ForDev_AeCommon.vcxproj", "{7107AA3C-0ED6-4E2A-9FFA-BE2B85018B6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
