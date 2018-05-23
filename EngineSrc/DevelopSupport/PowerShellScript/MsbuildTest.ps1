@@ -2,4 +2,4 @@
 . "./Msbuild.ps1"
 
 $msbuild = New-Object Msbuild
-$msbuild.Execute("awfawef")
+$msbuild.Execute("/version")
