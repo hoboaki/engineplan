@@ -2,8 +2,8 @@
 $ErrorActionPreference = "Stop"
 
 # インクルード
-. "../DevelopSupport/PowerShell/Msbuild.ps1"
-. "../DevelopSupport/PowerShell/FileUtil.ps1"
+. "$(@(Split-Path $MyInvocation.MyCommand.path))/../DevelopSupport/PowerShell/Msbuild.ps1"
+. "$(@(Split-Path $MyInvocation.MyCommand.path))/../DevelopSupport/PowerShell/FileUtil.ps1"
 
 # MSBuildを使用状態にする
 $msbuild = New-Object Msbuild
