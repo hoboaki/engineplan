@@ -13,5 +13,4 @@ class FileUtil
         Copy-Item $aFrom -destination $aTo -recurse
     }
 }
-
 # EOF

@@ -1,3 +1,5 @@
+# 文字コード：UTF-8
+
 # OS に依存しない MSBuild 実行支援クラス。
 class Msbuild
 {
