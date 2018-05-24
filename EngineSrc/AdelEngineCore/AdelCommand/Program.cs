@@ -16,9 +16,10 @@ namespace AdelCommand
             // 実行中にファイルをなるべくロックしないようにシャドウコピーする
 
             // 本体を実行
-            var setup = new AppDomainSetup() { ShadowCopyFiles = "true" };
+            var dllDir = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName + Path.DirectorySeparatorChar + @"Dll";
+            var setup = new AppDomainSetup() { ShadowCopyFiles = "true", ApplicationBase = dllDir, };
             var appDomain = AppDomain.CreateDomain("AdelCommand_Host", AppDomain.CurrentDomain.Evidence, setup);
-            var executablePath = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory.FullName + @"\Dll\AdelCommandMain.exe";
+            var executablePath = dllDir + Path.DirectorySeparatorChar + @"AdelCommandMain.exe";
             if (!File.Exists(executablePath))
             {
                 Console.Error.WriteLine("指定のファイルが見つかりません。'{0}'", executablePath);
