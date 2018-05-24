@@ -32,7 +32,7 @@ class Msbuild
     }
     
     # MSBuild を指定のコマンドライン引数を使って実行。
-    [int] Execute ([string]$aArg) {
+    [void] Execute ([string]$aArg) {
         $exePath = $this._ExePath
         Invoke-Expression "& `"$exePath`" $aArg" | Out-Host
         if (!$?) {
