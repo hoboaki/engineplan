@@ -1,9 +1,10 @@
-# OS に依存せず MSBuild を実行するためのクラス。
+# OS に依存しない MSBuild 実行支援クラス。
 class Msbuild
 {
     [string] $_ExePath
 
     # コンストラクタ。MSBuild のパスを解決し実行できる状態にする。
+    # もし MSBuild が見つからない場合はエラー終了する。
     Msbuild()
     {
         if ($Global:IsMacOS) {
@@ -31,7 +32,7 @@ class Msbuild
     }
     
     # MSBuild を指定のコマンドライン引数を使って実行。
-    Execute ([string]$aArg) {
+    [int] Execute ([string]$aArg) {
         $exePath = $this._ExePath
         Invoke-Expression "& `"$exePath`" $aArg" | Out-Host
         if (!$?) {
