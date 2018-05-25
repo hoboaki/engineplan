@@ -23,14 +23,13 @@ class AdelCommand
         $msbuild = New-Object Msbuild
 
         # AdelCommandのビルド
-        $env = New-Object Env
-        $msbuild.Execute(" /p:Configuration=$([AdelCommand]::_Configuration) $($env.EngineSrcRoot())/AdelEngineCore/AdelCommandMain/AdelCommandMain.csproj")
-        $msbuild.Execute(" /p:Configuration=$([AdelCommand]::_Configuration) $($env.EngineSrcRoot())/AdelEngineCore/AdelCommand/AdelCommand.csproj")
+        $msbuild.Execute(" /p:Configuration=$([AdelCommand]::_Configuration) $($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommandMain/AdelCommandMain.csproj")
+        $msbuild.Execute(" /p:Configuration=$([AdelCommand]::_Configuration) $($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommand/AdelCommand.csproj")
 
         # AdelCommandMain の内容をコピー
-        $srcDir = "$($env.EngineSrcRoot())/AdelEngineCore/AdelCommandMain/bin/$([AdelCommand]::_Configuration)"
-        $dstDir = "$($env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/Dll"
-        #[FileUtil]::CopyDir($srcDir, $dstDir)
+        $srcDir = "$($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommandMain/bin/$([AdelCommand]::_Configuration)"
+        $dstDir = "$($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/Dll"
+        $global:FileUtil.CopyDir($srcDir, $dstDir)
 
         # 準備OK
         [AdelCommand]::_IsPrepared = true
@@ -45,9 +44,9 @@ class AdelCommand
         # OSで分岐
         $env = New-Object Env
         if ($Global:IsMacOS) {
-            & "mono" "$($env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/AdelCommand.exe" $aArg | Out-Host
+            Invoke-Expression "& `"mono`" `"$($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/AdelCommand.exe`" $aArg" | Out-Host
         } else {
-            & "$($env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/AdelCommand.exe" $aArg | Out-Host
+            Invoke-Expression "& `"$($global:Env.EngineSrcRoot())/AdelEngineCore/AdelCommand/bin/$([AdelCommand]::_Configuration)/AdelCommand.exe`" $aArg" | Out-Host
         }
     }
 }

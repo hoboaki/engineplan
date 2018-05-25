@@ -5,7 +5,7 @@ class FileUtil
 {
     # aFrom 以下にあるファイル＆ディレクトリを aTo 以下にコピーする。
     # コピー先にファイルやディレクトリがあれば消してからコピーする。
-    static [void] CopyDir([string]$aFrom, [string]$aTo)
+    [void] CopyDir([string]$aFrom, [string]$aTo)
     {
         if (Test-Path $aTo) {
             Remove-Item $aTo -Recurse
@@ -13,4 +13,6 @@ class FileUtil
         Copy-Item $aFrom -destination $aTo -recurse
     }
 }
+$global:FileUtil = New-Object FileUtil
+
 # EOF

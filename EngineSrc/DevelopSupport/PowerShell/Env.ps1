@@ -10,5 +10,6 @@ class Env
         return "${PSScriptRoot}/../.."
     }
 }
+$global:Env = New-Object Env
 
 # EOF
