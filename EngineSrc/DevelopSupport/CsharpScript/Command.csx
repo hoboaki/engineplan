@@ -1,3 +1,4 @@
+// 文字コード：UTF-8
 using System.Diagnostics;
 using System.Threading;
 
@@ -78,3 +79,4 @@ static class Command
         Environment.Exit(aExitCode);
     }
 }
+// EOF
