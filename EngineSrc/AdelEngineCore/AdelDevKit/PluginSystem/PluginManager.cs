@@ -57,7 +57,7 @@ namespace AdelDevKit.PluginSystem
                 foreach (var pluginDir in pluginRootDir.EnumerateDirectories("*.aeplugin"))
                 {
                     var baseName = pluginDir.Name.Substring(0, pluginDir.Name.Length - pluginDir.Extension.Length);
-                    var dllPath = pluginDir.FullName + @"\DevKitDll";
+                    var dllPath = pluginDir.FullName + Path.DirectorySeparatorChar + @"DevKitDll";
                     if (!Directory.Exists(dllPath))
                     {
                         aLog.Error.WriteLine("プラグインフォルダ'{0}' に DevKitDll フォルダがありません。", pluginDir.FullName);
