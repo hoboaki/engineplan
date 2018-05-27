@@ -4,7 +4,7 @@
 using System.IO;
 
 /// ファイル操作便利機能。
-static class Fileutil
+static class FileUtil
 {
     /// 呼び出し元のファイル情報を取得する。
     /// この関数を呼び出した csx ファイルの情報が得られます。
@@ -33,7 +33,7 @@ static class Fileutil
             {
                 File.Delete(to.FullName);
             }
-            if (Direcotry.Exists(to.FullName))
+            if (Directory.Exists(to.FullName))
             {
                 Directory.Delete(to.FullName, recursive: true);
             }
@@ -41,7 +41,7 @@ static class Fileutil
         catch (Exception exp)
         {
             Console.Error.WriteLine($@"Error: Can't delete '{aTo}'.");
-            Command.ExistAsError();
+            Command.ExitAsError();
         }
 
         // コピー
@@ -69,5 +69,4 @@ static class Fileutil
         }
     }
 }
-
 // EOF
