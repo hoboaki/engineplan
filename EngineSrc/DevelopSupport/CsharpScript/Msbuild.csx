@@ -1,5 +1,6 @@
 // 文字コード：UTF-8
 #load "./Command.csx"
+#load "./Env.csx"
 
 using System;
 
@@ -12,7 +13,7 @@ class Msbuild
     // もし MSBuild が見つからない場合はエラー終了する。
     internal Msbuild()
     {
-        if (Environment.OSVersion.Platform == PlatformID.MacOSX) 
+        if (Env.IsMacOs) 
         {
             var msbuildPath = Command.Capture("which", "MSBuild");
             if (!File.Exists(msbuildPath)) 

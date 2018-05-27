@@ -1,14 +1,24 @@
 // 文字コード：UTF-8
-#load "./FileUtil.csx"
 
-// 環境に関する値を提供するクラス。
+// 環境に関する情報を提供するクラス。
+// 名前衝突を避けるために Environment ではなく Env にした。
 static class Env
 {
-    // EngineSrc ルートフォルダの絶対パスを取得。
-    // 末尾に区切り文字は入っていないパスを返す。
-    static internal string EngineSrcRoot()
+    /// MacOS 環境か。
+    internal static bool IsMacOs 
     {
-        return FileUtil.CurrentScriptFile().Directory.Parent.Parent.FullName;
+        get
+        {
+            switch (Environment.OSVersion.Platform)
+            {
+                case PlatformID.MacOSX:
+                case PlatformID.Unix: // mono 環境だと UNIX と返す。
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }
+
 // EOF

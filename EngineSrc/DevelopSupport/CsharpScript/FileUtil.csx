@@ -25,7 +25,7 @@ static class FileUtil
             Command.ExitAsError();
         }
 
-        // コピー先が存在したら削除
+        // コピー先フォルダを作り直す
         var to = new DirectoryInfo(aTo);
         try
         {
@@ -37,10 +37,11 @@ static class FileUtil
             {
                 Directory.Delete(to.FullName, recursive: true);
             }
+            Directory.CreateDirectory(to.FullName);
         }
         catch (Exception exp)
         {
-            Console.Error.WriteLine($@"Error: Can't delete '{aTo}'.");
+            Console.Error.WriteLine($@"Error: Can't create '{aTo}'.");
             Command.ExitAsError();
         }
 
