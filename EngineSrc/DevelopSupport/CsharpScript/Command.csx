@@ -9,14 +9,14 @@ static class Command
     /// 外部コマンドが終了してから関数を抜ける。
     /// 出力系はコンソールにリダイレクト。
     /// @return 終了コード。
-    /// @param aExitOnError true の場合，エラー終了したらスクリプトを止める。ほとんどが止めて欲しいので true をデフォルト値としている。
-    internal static int Execute(string aCmd, string aArg = null, bool aExitOnError = true)
+    /// @param aContinueOnError true の場合，エラー終了してもスクリプトを止めない。ほとんどが止めて欲しいので false をデフォルト値としている。
+    internal static int Execute(string aCmd, string aArg = null, bool aContinueOnError = false)
     {
         try
         {
             var proc = Process.Start(aCmd, aArg);
             proc.WaitForExit();
-            if (aExitOnError && proc.ExitCode != 0) 
+            if ("aContinueOnError && proc.ExitCode != 0) 
             {
                 Exit(proc.ExitCode);
             }
@@ -25,7 +25,7 @@ static class Command
         catch (Exception exp)
         {
             Console.Error.WriteLine(exp.Message);
-            Exit(1);
+            ExitAsError();
             return 0;
         }
     }
@@ -68,7 +68,7 @@ static class Command
         catch (Exception exp)
         {
             Console.Error.WriteLine(exp.Message);
-            Exit(1);
+            ExitAsError();
             return "";
         }
     }
@@ -78,5 +78,12 @@ static class Command
     {
         Environment.Exit(aExitCode);
     }
+    
+    /// 一般的なエラーコードでスクリプトを終了。
+    internal static void ExitAsError()
+    {
+        Exit(1);
+    }
+
 }
 // EOF
