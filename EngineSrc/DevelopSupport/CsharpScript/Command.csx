@@ -16,7 +16,7 @@ static class Command
         {
             var proc = Process.Start(aCmd, aArg);
             proc.WaitForExit();
-            if ("aContinueOnError && proc.ExitCode != 0) 
+            if (aContinueOnError && proc.ExitCode != 0) 
             {
                 Exit(proc.ExitCode);
             }

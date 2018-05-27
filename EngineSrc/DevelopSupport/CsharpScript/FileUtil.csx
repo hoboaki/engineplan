@@ -1,6 +1,8 @@
 // 文字コード：UTF-8
 #load "./Command.csx"
 
+using System.IO;
+
 /// ファイル操作便利機能。
 static class Fileutil
 {
@@ -13,13 +15,13 @@ static class Fileutil
 
     /// aFrom 以下にあるファイル＆ディレクトリを aTo 以下にコピーする。
     /// コピー先にファイルやディレクトリがあれば消してからコピーする。
-    internal static void CopyDir(sting aFrom, string aTo)
+    internal static void CopyDir(string aFrom, string aTo)
     {
         // コピー元確認
         var from = new DirectoryInfo(aFrom);
         if (!from.Exists) 
         {
-            Console.Error.WriteLine($@"Error: '{aFrom}' is not exists.")
+            Console.Error.WriteLine($@"Error: '{aFrom}' is not exists.");
             Command.ExitAsError();
         }
 
@@ -33,7 +35,7 @@ static class Fileutil
             }
             if (Direcotry.Exists(to.FullName))
             {
-                Directory.Delete(to.FullName, :recursive = true);
+                Directory.Delete(to.FullName, recursive: true);
             }
         }
         catch (Exception exp)
@@ -43,18 +45,18 @@ static class Fileutil
         }
 
         // コピー
-        Action<DirectoryInfo, DirectoryInfo> copy;
+        Action<DirectoryInfo, DirectoryInfo> copy = null;
         copy = (fromDir, toDir) =>
         {
             foreach (var dir in fromDir.GetDirectories())
             {
-                copy(dir, target.CreateSubdirectory(dir.Name));
+                copy(dir, toDir.CreateSubdirectory(dir.Name));
             }
             foreach (var file in fromDir.GetFiles())
             {
                 file.CopyTo(Path.Combine(toDir.FullName, file.Name));
             }
-        }
+        };
         try
         {
             copy(from, to);
@@ -62,7 +64,7 @@ static class Fileutil
         catch (Exception exp)
         {
             Console.Error.WriteLine(exp.Message);
-            Console.Error.WriteLine($@"Error: Copy failed. (From:'{aFrom}', To:'{aTo}')")
+            Console.Error.WriteLine($@"Error: Copy failed. (From:'{aFrom}', To:'{aTo}')");
             Command.ExitAsError();
         }
     }
