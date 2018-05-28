@@ -8,8 +8,8 @@
 
 using System.IO;
 
-/// BuildKit フォルダにある DevProject を更新する。
-static void UpdateBuildKitDevProject(DirectoryInfo aBuildKitRoot)
+/// BuildKit フォルダにある EngineNativeProject を更新する。
+static void UpdateBuildKitEngineNativeProject(DirectoryInfo aBuildKitRoot)
 {
     // MSBuildを使用状態にする
     var msbuild = new Msbuild();
