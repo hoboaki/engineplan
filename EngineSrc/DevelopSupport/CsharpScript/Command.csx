@@ -14,7 +14,11 @@ static class Command
     {
         try
         {
-            var proc = Process.Start(aCmd, aArg);
+            var info = new ProcessStartInfo(aCmd, aArg);
+            info.CreateNoWindow = false; // csi では指定が逆・・・？
+            info.UseShellExecute = false;
+
+            var proc = Process.Start(info);
             proc.WaitForExit();
             if (aContinueOnError && proc.ExitCode != 0) 
             {
