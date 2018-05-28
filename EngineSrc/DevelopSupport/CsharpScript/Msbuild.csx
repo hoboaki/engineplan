@@ -31,13 +31,16 @@ class Msbuild
                 Console.Error.WriteLine("Error: Not found command 'vswhere'.");
                 Command.ExitAsError();
             }
-            var msbuildPath = Command.Capture(vswhereExe, "-latest -products * -requires Microsoft.Component.MSBuild -property installationPath");
+            var msbuildPath = Path.Combine(
+                Command.Capture(vswhereExe, "-latest -products * -requires Microsoft.Component.MSBuild -property installationPath"),
+                @"MSBuild\15.0\Bin\MSBuild.exe"
+                );
             if (!File.Exists(msbuildPath))
             {
-                Console.Error.WriteLine("Error: Not found command 'MSBuild'.");
+                Console.Error.WriteLine($"Error: Not found command 'MSBuild'. ({msbuildPath})");
                 Command.ExitAsError();
             }
-            _ExePath = Path.Combine(msbuildPath, @"MSBuild\15.0\Bin\MSBuild.exe");
+            _ExePath = msbuildPath;
         }
     }
     
