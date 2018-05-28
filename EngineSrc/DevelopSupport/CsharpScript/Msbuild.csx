@@ -25,7 +25,7 @@ class Msbuild
         }
         else 
         {
-            var vswhereExe = @"C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe";
+            var vswhereExe = $@"{Environment.GetEnvironmentVariable("ProgramFiles(x86)")}\Microsoft Visual Studio\Installer\vswhere.exe";
             if (!File.Exists(vswhereExe)) 
             {
                 Console.Error.WriteLine("Error: Not found command 'vswhere'.");
