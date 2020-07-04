@@ -54,6 +54,7 @@
   - プリミティブトポロジ（VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT が有効なパイプラインの場合）
   - 頂点バッファ・インデックスバッファ
   - インラインコンスタントデータ（PushConstants）（★5）
+  - シェーダーバインドオーバーライト（vkCmdPushDescriptorSetKHR）
   - 他にも DYNAMIC_STATE で指定されたものが設定可能
 - トリガー
   - 描画系
@@ -137,7 +138,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
   - コンスタントバッファビュー（MTLBuffer : MTLResource）
   - テクスチャビュー（MTLTexture : MTLResource）
   - サンプラー（MTLSamplerState）
-  - インラインコンスタントデータ
+  - インラインコンスタントデータ（setVertexBufferBytes/setFragmentBufferBytes）
 - その他の直接設定
   - ラスタライズステート
     - FillMode
