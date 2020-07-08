@@ -288,12 +288,49 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## キュー・コマンドバッファ生成
 
+- キューに関しては，DX12 形式で統一するとシンプルでよさそう。
+- Vulkan みたいに細かく指定する方法もあるが，実際問題メイン，Compute，Copy の３種があればやりたいことはだいたいできるし。
+- Vulkan にあわせるとキューの生成は Device 作成時に指定せざるえなくなる。
+- それですごい不便とは思わないのでその形式であわせよう。
+- コマンドバッファに関して，何でもできる汎用を用意すると Metal のときにパフォーマンスがぐっと落ちそう。
+- コマンドバッファ小間切れに対するオーバーヘッドがないと仮定するならば Rendering, Compute, Copy のいずれかの特性を１つに限定してみるのが良さそう。
+- レンダーパスやパイプライン設定の観点でもコマンドバッファの特性は１つにしておいたほうが実装はシンプルになってよい。
+
 ### Vulkan
 
 - Queue は Device 作成時に引数オブジェクトで指定。
+- Queue の特性は QueueFamily というビットフラグセットで構成され，最終的には QueueFamilyIndex で指定する。
 - コマンドバッファの生成の前に CommandPool の生成が必要。
 - CommandPool 生成時にバッファは求められない。指定する方法も見当たらない。
+- CommandPool は生成時に QueueFamilyIndex を要求される。Queue 毎に作るものと考えると設計は簡単。
 - CommandPool で扱える最大コマンド数の指定も見当たらない。無限大なわけではないのでそこは気になる。
+- CommandBuffer 生成時に CommandPool を渡す。
+
+### DirectX 12
+
+- Queue は Direct，コンピュート専用，コピー専用と別れているっぽい。（ソースは[こちら](https://sites.google.com/site/monshonosuana/directxno-hanashi-1/directx-143)）
+- Direct はコンピュートもコピーもできるらしい。
+- 他のライブラリで見られるようなビットフラグで複数の特性を指定して作成，という感じではない。
+- コマンドバッファに相当する CommandList には CommandAllocator が必要。
+- CommandList も CommandAllocator も最大コマンド数といったものやバッファを指定する口はない。Vulkan と同様。
+- CommandList と CommandAllocator は D3D12_COMMAND_LIST_TYPE を合わせる必要があり。
+- CommandList 作成時に CommandAllocator を渡す。
+- D3D12_COMMAND_LIST_TYPE は Direct，Bundle（セカンダリコマンドバッファ），Compute，Copy といったものがある。
+- Direct は Queue の Direct と同じく色々できる特性。
+- 裏取りしていないが Queue が Compute や Copy のものは CommandList と CommandAllocator もあわせる必要があるのではと予想。
+- Queue が Direct の場合はキューの特性が汎用と考えると Compute と Copy もいけるかも？要裏取り。
+
+### Metal
+
+- Queue は Device.makeCommandQueue で作成。
+- Queue 作成時に最大コマンドバッファ数を指定するものと指定しないものがある。
+- 違いについて言及されていないがたぶん数を指定すると多少パフォーマンスがよくなるんでしょう。
+- Queue は特性を指定する方法はない。
+- CommandBuffer は Queue.makeCommandBuffer で作成。
+- 引数あり版では参照安全の仕組みを切るオプションがあり，厳密にオブジェクトの寿命管理できるんだったら切っておいたほうがパフォーマンスが上がる模様。
+- CommandBuffer のレベルでも特性はない。
+- CommandBuffer に対して Render, Compute, Blit それぞれの CommandEncoder を作成する。そこでようやく特性を意識することになる。
+- CommandBuffer にバッファを指定する口はない。
 
 ## デスクリプタ
 
