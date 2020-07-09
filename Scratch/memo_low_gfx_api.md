@@ -311,12 +311,30 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## シェーダーオブジェクト生成
 
+- 基本はランタイムコンパイルはサポートしない，にしておけば抽象化はかなり簡単。
+- Metal には頂点属性といった付加情報もセットでシェーダーバイナリに含まれているが他２種にはないので採用しない。
+
 ### Vulkan
 
 - VkShaderModule がシェーダーオブジェクト。
 - vkCreateShaderModule で作成。引数には SPIR-V バイナリを指定。
 - シェーダのリソースはバッファでは扱わないし，SPIR-V から GPU で扱う用に変換されたバイナリ領域を取得する手段もない。
 - 特定コンソール専用バイナリシェーダーを流しこむ場合は pCode に専用バイナリを流せるようにするのかなと想像。
+- SPIR-V バイナリへのコンパイルは SDK 付属のコマンドラインアプリで可能。
+
+### DirectX 12
+
+- バイナリの塊がシェーダーオブジェクト。何かの型で扱うということはない。
+- dxc.exe でコンパイル可能。
+
+### Metal
+
+- MTLFunction がシェーダーオブジェクト。
+- 頂点属性といった付加情報も MTLFunction から取得できる。これは他２種のライブラリにはない機能。
+- MTLFunction.makeArgumentEncoder を用いて ArgumentBuffer （デスクリプタセット）が作成できる。
+- MTLFunction は MTLLibrary から取得可能。
+- 事前コンパイル済データを MTLDevice.makeLibrary() にかませば MTLLibrary が作れる。ソースコードを渡せるオーバーロードもある。
+- コマンドラインツールの説明は[こちら](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW8)。
 
 ## キュー・コマンドバッファ生成
 
@@ -369,6 +387,8 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - CommandBuffer にバッファを指定する口はない。
 - セカンダリコマンドバッファは Device.makeIndirectCommandBuffer で作成。
 - こちらは maxCount で最大コマンド数の指定が必須。
+
+## サンプラ
 
 ## デスクリプタ
 
