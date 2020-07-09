@@ -4,6 +4,8 @@
 
 ## コマンドバッファで設定する単位
 
+- 抽象化の分け方は LowLevelGraphicsApi.numbers の表を参照。
+
 ### Vulkan
 
 ★ マークがあるところは他の箇所と値を一致させる必要あり。
@@ -357,13 +359,33 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - MTLSamplerState で表現。MTLDevice.makeSamplerState() で作成。
 - ArgumentEncoder などの Encoder.setSamplerState で設定。
 
-## デスクリプタ
+## デスクリプタ・デスクリプタプール
+
+- Vulkan がデスクリプタプールはトリガー時に１つしか使えず一番制約がきつい。
+- なのでそれにあわせておけば抽象化は簡単。
 
 ### Vulkan
 
-- DescriptorPool がデスクリプタメモリプールみたいなもの。
-- DescriptorSet と Descriptor の最大数を引数で指定して DescriptorPool を作成。
-- DescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
+- VkDescriptorPool がデスクリプタプール。
+- VkDescriptorSet とデスクリプタの最大数を引数で指定して VkDescriptorPool を作成。
+- VkDescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
+- １つの DescriptorPool に複数タイプのデスクリプタを作成することが可能。タイプについては[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorType.html)。
+- VkDescriptorSet を作るときは１つの VkDescriptorPool しか指定できない。
+- VkDescriptorSet を更新するのは vkUpdateDescriptorSets で。
+- VkDescriptorSet は vkCmdBindDescriptorSets でコマンドバッファに設定。その際 vkPipeline オブジェクトも要求される。
+
+## DirectX 12
+
+- ID3D12DescriptorHeap がデスクリプタプール。
+- 最大デスクリプタ数やタイプなどを引数指定して ID3D12Device.CreateDescriptorHeap() で作成。
+- ID3D12DescriptorHeap は１つに１つき１タイプを扱う。タイプについては[こちら](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_type)。
+- ID3D12DescriptorHeap が抱えるメモリ領域を指定できる手段はない。
+- ID3D12GraphicsCommandList.SetDescriptorHeaps で使用する ID3D12DescriptorHeap を複数設定。
+- デスクリプタの設定は ID3D12GraphicsCommandList.SetGraphicsRootDescriptorTable で。
+
+## Metal
+
+- デスクリプタの概念がなく，コマンドバッファ（CommandEncoder）に setBuffer やら setTexture していく。
 
 ## キュー・コマンドバッファ生成
 
