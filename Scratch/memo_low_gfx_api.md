@@ -337,6 +337,35 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - 事前コンパイル済データを MTLDevice.makeLibrary() にかませば MTLLibrary が作れる。ソースコードを渡せるオーバーロードもある。
 - コマンドラインツールの説明は[こちら](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW8)。
 
+## サンプラ生成
+
+- 設計方針
+  - 基本構成はすべて同じ。なのでその形式を継承する。
+  - DirectX 12 だけ作成手続きすら不要だが，他２種にあわせて作成手続きは用意する。
+
+### Vulkan
+
+- VkSampler vkCreateSampler() で作成。
+- DescriptorSet に設定する。
+
+### DirectX 12
+
+- D3D12_STATIC_SAMPLER_DESC で表現。ただのデータ構造で作成の必要もない。
+- RootSignature に設定する。
+
+### Metal
+
+- MTLSamplerState で表現。MTLDevice.makeSamplerState() で作成。
+- ArgumentEncoder などの Encoder.setSamplerState で設定。
+
+## デスクリプタ
+
+### Vulkan
+
+- DescriptorPool がデスクリプタメモリプールみたいなもの。
+- DescriptorSet と Descriptor の最大数を引数で指定して DescriptorPool を作成。
+- DescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
+
 ## キュー・コマンドバッファ生成
 
 - キューについて
@@ -388,35 +417,6 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - CommandBuffer にバッファを指定する口はない。
 - セカンダリコマンドバッファは Device.makeIndirectCommandBuffer で作成。
 - こちらは maxCount で最大コマンド数の指定が必須。
-
-## サンプラ生成
-
-- 設計方針
-  - 基本構成はすべて同じ。なのでその形式を継承する。
-  - DirectX 12 だけ作成手続きすら不要だが，他２種にあわせて作成手続きは用意する。
-
-### Vulkan
-
-- VkSampler vkCreateSampler() で作成。
-- DescriptorSet に設定する。
-
-### DirectX 12
-
-- D3D12_STATIC_SAMPLER_DESC で表現。ただのデータ構造で作成の必要もない。
-- RootSignature に設定する。
-
-### Metal
-
-- MTLSamplerState で表現。MTLDevice.makeSamplerState() で作成。
-- ArgumentEncoder などの Encoder.setSamplerState で設定。
-
-## デスクリプタ
-
-### Vulkan
-
-- DescriptorPool がデスクリプタメモリプールみたいなもの。
-- DescriptorSet と Descriptor の最大数を引数で指定して DescriptorPool を作成。
-- DescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
 
 ## 参考
 
