@@ -311,8 +311,9 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## シェーダーオブジェクト生成
 
-- 基本はランタイムコンパイルはサポートしない，にしておけば抽象化はかなり簡単。
-- Metal には頂点属性といった付加情報もセットでシェーダーバイナリに含まれているが他２種にはないので採用しない。
+- 設計方針
+  - 基本はランタイムコンパイルはサポートしない，にしておけば抽象化はかなり簡単。
+  - Metal には頂点属性といった付加情報もセットでシェーダーバイナリに含まれているが他２種にはないので採用しない。
 
 ### Vulkan
 
@@ -388,7 +389,26 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - セカンダリコマンドバッファは Device.makeIndirectCommandBuffer で作成。
 - こちらは maxCount で最大コマンド数の指定が必須。
 
-## サンプラ
+## サンプラ生成
+
+- 設計方針
+  - 基本構成はすべて同じ。なのでその形式を継承する。
+  - DirectX 12 だけ作成手続きすら不要だが，他２種にあわせて作成手続きは用意する。
+
+### Vulkan
+
+- VkSampler vkCreateSampler() で作成。
+- DescriptorSet に設定する。
+
+### DirectX 12
+
+- D3D12_STATIC_SAMPLER_DESC で表現。ただのデータ構造で作成の必要もない。
+- RootSignature に設定する。
+
+### Metal
+
+- MTLSamplerState で表現。MTLDevice.makeSamplerState() で作成。
+- ArgumentEncoder などの Encoder.setSamplerState で設定。
 
 ## デスクリプタ
 
