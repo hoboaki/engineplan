@@ -257,6 +257,8 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## メモリバリア
 
+- 要検討。
+
 ### Vulkan
 
 - パイプラインバリア。A の処理を B までに終わらせておいてね、的な感じで書ける。（[解説サイト 1](https://gpuopen.com/learn/vulkan-barriers-explained/)　[解説サイト 2](https://glhub.blogspot.com/2017/11/vulkan-vkcmdpipelinebarriervkpipelinest.html)）
@@ -279,8 +281,8 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## CPUGPU 間同期
 
-- Vulkan の仕様をベースのフェンスで抽象化。
-- 引数の値はなく，キューの submit 時に渡す。
+- Vulkan 仕様ベースのフェンスで抽象化。名前もフェンスで。
+- 引数の値指定はなし。キューの submit 時に渡す。
 - Metal の場合は CommandBuffer に対して行うので，最後に commit された CommandBuffer をキューが覚えておいて，submit 時に良い感じにすれば抽象化できる。
 
 ### Vulkan
@@ -300,12 +302,12 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 - [MTLCommandBuffer.waitUntilCompleted()](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) で待つ。
 
-## スワップチェインプレゼント
+## スワップチェインプレゼント同期
 
 - キューに対してプレゼントするのがよさそう。
 - 引数で SwapChain オブジェクトを渡しておけば DirectX 12 がカバーできる。
 - Present() : Present 処理を開始する。
-- WaitToPresentDone() : Present 処理が終わるのを待つ。DirectX 12 はここで Present を呼ぶ。
+- WaitToPresentDone() : 最後にコールされた Present 処理が終わるのを待つ。DirectX 12 はここで Present を呼ぶ。
 
 ### Vulkan
 
@@ -324,6 +326,11 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 - MTLCommandBuffer.present() で present 処理する。
 - present 処理が終わったかどうかは CPU&GPU 間同期の方法で実現。
+
+## スワップチェイン
+
+- 要調査。
+- 要検討。
 
 ## バッファ生成・リソースオブジェクト
 
