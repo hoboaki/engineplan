@@ -283,7 +283,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ### Vulkan
 
-- パイプラインバリア。A の処理を B までに終わらせておいてね、的な感じで書ける。（[解説サイト 1](https://gpuopen.com/learn/vulkan-barriers-explained/)　[解説サイト 2](https://glhub.blogspot.com/2017/11/vulkan-vkcmdpipelinebarriervkpipelinest.html)）
+- [パイプラインバリア](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier.html)。A の処理を B までに終わらせておいてね、的な感じで書ける。（[解説サイト 1](https://gpuopen.com/learn/vulkan-barriers-explained/)　[解説サイト 2](https://glhub.blogspot.com/2017/11/vulkan-vkcmdpipelinebarriervkpipelinest.html)）
 - 更に引数プロパティの MemoryBarrier、BufferMemoryBarrier, ImageMemoryBarrier で対象となるリソースや遷移（DX12 の TransitionBarrier/AliasBarrier に相当）を指定してバリアをはれる。
   - サンプルが少なくて理解が難しい。
 - BufferMemoryBarrier の状態の種類は[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccessFlagBits.html)。
@@ -328,11 +328,11 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 - [MTLCommandBuffer.waitUntilCompleted()](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) で待つ。
 
-## スワップチェインプレゼント同期
+## スワップチェイン提出（present）＆同期
 
-- キューに対してプレゼントするのがよさそう。
+- キューに対して提出するのがよさそう。
 - 引数で SwapChain オブジェクトを渡しておけば DirectX 12 がカバーできる。
-- Present() : Present 処理を開始する。
+- Present() : 提出処理を開始する。
 - WaitToPresentDone() : 最後にコールされた Present 処理が終わるのを待つ。DirectX 12 はここで Present を呼ぶ。
 
 ### Vulkan
@@ -355,8 +355,13 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## スワップチェイン生成
 
-- 生成部分についてはライブラリだけで無くプラットフォームに依存するところが多いので一概に統一は難しい。
-- ただ，次のレンダーターゲット用テクスチャの取得方法は acquire() 形式で統一できそうなのでそうする。
+- あらかじめバッファ確保パターンに対応させたい
+  - この３ライブラリではできないが，あらかじめ確保していたバッファを使って作れるようにもしておきたい。
+  - その狙いも込めて，SwapchainManager みたいなものを用意してそれ経由で Swapchain を作るようにするようにする。
+- 抽象化設計
+  - Metal のことを考えると全レンダーターゲットイメージを取得する方法を提供できない。
+  - 抽象化するなら Image オブジェクト，イメージビュー，レンダーターゲットビューをスワップチェイン側で作るしかない。
+  - これら３種のオブジェクトは acquire() したら現在提出対象のスワップチェインに付随するものを取得できるようにする，がよさそう。
 
 ### Vulkan
 
@@ -509,7 +514,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - Vulkan がデスクリプタプールはトリガー時に１つしか使えず一番制約がきつい。
 - なのでそれにあわせておけば抽象化は簡単。
 - 注意点として DirectX 12 のみ RenderTargetView DepthStencilView という概念が必要。
-- なので，抽象化時も ImageView だけでなくその２つも用意する？
+- なので，抽象化時も ImageView だけでなくその２つも用意しておくとよさそう。Vulkan では無駄になっちゃうけど。
 
 ### Vulkan
 
