@@ -2,6 +2,69 @@
 
 この資料はクロスプラットフォームな 3D グラフィックスライブラリを検討する個人的な資料です。各グラフィックスライブラリの差異をまとめたり，クロスプラットフォームなライブラリの設計や最適化に関するメモを書き残します。
 
+<!-- TOC -->
+
+- [3D グラフィックス低レベル API に関するメモ](#3d-グラフィックス低レベル-api-に関するメモ)
+  - [コマンドバッファで設定する単位](#コマンドバッファで設定する単位)
+    - [Vulkan](#vulkan)
+    - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
+    - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
+  - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
+    - [Vulkan](#vulkan-1)
+    - [DirectX 12](#directx-12)
+    - [Metal](#metal)
+  - [インダイレクト引数描画](#インダイレクト引数描画)
+    - [Vulkan](#vulkan-2)
+    - [DirectX 12](#directx-12-1)
+    - [Metal](#metal-1)
+  - [非同期コンピュート（キューの優先度・キュー間同期）](#非同期コンピュートキューの優先度・キュー間同期)
+    - [Vulkan](#vulkan-3)
+    - [DirectX 12](#directx-12-2)
+    - [Metal](#metal-2)
+  - [メモリバリア](#メモリバリア)
+    - [Vulkan](#vulkan-4)
+    - [DirectX 12](#directx-12-3)
+    - [Metal](#metal-3)
+  - [CPUGPU 間同期](#cpugpu-間同期)
+    - [Vulkan](#vulkan-5)
+    - [DirectX 12](#directx-12-4)
+    - [Metal](#metal-4)
+  - [スワップチェイン提出（present）＆同期](#スワップチェイン提出present＆同期)
+    - [Vulkan](#vulkan-6)
+    - [DirectX 12](#directx-12-5)
+    - [Metal](#metal-5)
+  - [スワップチェイン生成](#スワップチェイン生成)
+    - [Vulkan](#vulkan-7)
+    - [DirectX 12](#directx-12-6)
+    - [Metal](#metal-6)
+  - [レンダターゲット](#レンダターゲット)
+    - [Vulkan](#vulkan-8)
+    - [DirectX 12](#directx-12-7)
+    - [Metal](#metal-7)
+  - [バッファ生成・リソースオブジェクト](#バッファ生成・リソースオブジェクト)
+    - [Vulkan](#vulkan-9)
+    - [DirectX 12](#directx-12-8)
+    - [Metal](#metal-8)
+  - [シェーダーオブジェクト生成](#シェーダーオブジェクト生成)
+    - [Vulkan](#vulkan-10)
+    - [DirectX 12](#directx-12-9)
+    - [Metal](#metal-9)
+  - [サンプラ生成](#サンプラ生成)
+    - [Vulkan](#vulkan-11)
+    - [DirectX 12](#directx-12-10)
+    - [Metal](#metal-10)
+  - [デスクリプタ・デスクリプタプール](#デスクリプタ・デスクリプタプール)
+    - [Vulkan](#vulkan-12)
+    - [DirectX 12](#directx-12-11)
+    - [Metal](#metal-11)
+  - [キュー・コマンドバッファ生成](#キュー・コマンドバッファ生成)
+    - [Vulkan](#vulkan-13)
+    - [DirectX 12](#directx-12-12)
+    - [Metal](#metal-12)
+  - [参考](#参考)
+
+<!-- /TOC -->
+
 ## コマンドバッファで設定する単位
 
 - 抽象化の分け方は LowLevelGraphicsApi.numbers の表を参照。
@@ -526,7 +589,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - VkDescriptorSet を更新するのは vkUpdateDescriptorSets で。
 - VkDescriptorSet は vkCmdBindDescriptorSets でコマンドバッファに設定。その際 vkPipeline オブジェクトも要求される。
 
-## DirectX 12
+### DirectX 12
 
 - ID3D12DescriptorHeap がデスクリプタプール。
 - 最大デスクリプタ数やタイプなどを引数指定して ID3D12Device.CreateDescriptorHeap() で作成。
@@ -535,7 +598,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - ID3D12GraphicsCommandList.SetDescriptorHeaps で使用する ID3D12DescriptorHeap を複数設定。
 - デスクリプタの設定は ID3D12GraphicsCommandList.SetGraphicsRootDescriptorTable で。
 
-## Metal
+### Metal
 
 - デスクリプタの概念がなく，コマンドバッファ（CommandEncoder）に setBuffer やら setTexture していく。
 
