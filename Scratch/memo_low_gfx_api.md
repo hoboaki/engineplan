@@ -353,10 +353,54 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - MTLCommandBuffer.present() で present 処理する。
 - present 処理が終わったかどうかは CPU&GPU 間同期の方法で実現。
 
-## スワップチェイン
+## スワップチェイン生成
 
-- 要調査。
-- 要検討。
+- 生成部分についてはライブラリだけで無くプラットフォームに依存するところが多いので一概に統一は難しい。
+- ただ，次のレンダーターゲット用テクスチャの取得方法は acquire() 形式で統一できそうなのでそうする。
+
+### Vulkan
+
+- プラットフォーム非依存の作成関数は[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSwapchainKHR.html)。
+- 指定するものはサイズ，イメージフォーマットと枚数。あとは細々とオプションが，という印象。
+- デバイスロストしたときは再生成が必要。
+- [vkAcquireNextImageKHR](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireNextImageKHR.html)呼び出しでインデックスを取得。
+- レンダーターゲット用の VkImageView は別途作成が必要。
+
+### DirectX 12
+
+- Windows 用の作成関数は[こちら](https://docs.microsoft.com/en-us/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgifactory2-createswapchainforhwnd)。
+- 指定するものはサイズ，イメージフォーマットと枚数。あとは細々とオプションが，という印象。
+- [GetCurrentBackBufferIndex()](https://docs.microsoft.com/en-us/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgiswapchain3-getcurrentbackbufferindex) でインデックス取得。
+- レンダーターゲット用の ImageView は別途作成が必要。
+
+### Metal
+
+- Swapchain という名前のものはなく，あえて挙げるなら[CAMetalLayer](https://developer.apple.com/documentation/quartzcore/cametallayer)。
+- [nextDrawable()](https://developer.apple.com/documentation/quartzcore/cametallayer/1478172-nextdrawable) でフレームバッファテクスチャを取得できる。
+
+## レンダターゲット
+
+- Vulkan のことも考慮して RenderTargetSet 的なオブジェクトで指定できるようにする。
+- イメージビューではなくレンダーターゲットビュー＆デプスステンシルビューで設定。
+- パイプライン設定でレンダーターゲット構成を宣言しないといけないので，構成は RenderTargetSetLayout 的なもので定義。
+
+### Vulkan
+
+- [vkFrameBuffer](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFramebuffer.html) オブジェクトで表現。名前だけみると１枚のレンダーターゲットしか扱えなさそうに見えるけど違う。
+- [vkCreateFrameBuffer](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateFramebuffer.html)で作成。毎フレーム作るのはやめておいたほうがよさそう。
+- 設定は RenderPassBegin 時に指定。
+
+### DirectX 12
+
+- RenderTargetView と DepthStencilView が必要。どちらもデスクリプタ。
+- 他２種のライブラリは Image もしくは ImageView という読み取り時と同じオブジェクトで表現しているが，DirectX 12 は専用となる。
+- [CreateRenderTargetView()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-createrendertargetview) や [CreateDepthStencilView()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-createdepthstencilview) で作成。
+- コマンドリストに対して OMSetRenderTargets でデスクリプタ配列で指定。
+
+### Metal
+
+- RenderCommandEncoder 作成時に指定。
+- MTLTexture オブジェクトをそのまま設定。
 
 ## バッファ生成・リソースオブジェクト
 
@@ -464,6 +508,8 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 - Vulkan がデスクリプタプールはトリガー時に１つしか使えず一番制約がきつい。
 - なのでそれにあわせておけば抽象化は簡単。
+- 注意点として DirectX 12 のみ RenderTargetView DepthStencilView という概念が必要。
+- なので，抽象化時も ImageView だけでなくその２つも用意する？
 
 ### Vulkan
 
@@ -543,3 +589,4 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 ## 参考
 
 - [A Comparison of Modern Graphics APIs](https://alain.xyz/blog/comparison-of-modern-graphics-apis)
+- [Veldrid (low-level graphics library for .NET)](https://veldrid.dev/articles/intro.html)
