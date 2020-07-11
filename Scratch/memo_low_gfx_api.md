@@ -257,27 +257,53 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 
 ## メモリバリア
 
-- 要検討。
+- 考えられるメモリバリア
+  - GPU メモリにコピーしたバッファをリソース（イメージ，頂点，インデックス，インダイレクト描画引数，他）として使用できるようにする。
+  - Present 状態のレンダーターゲットのバッファをレンダーターゲットとして使用できるようにする。
+  - レンダーターゲットとして使用していたバッファをイメージとして使用できるようにする。
+  - レンダーターゲットとして使用していたバッファをコピー元として使用できるようにする。
+  - レンダーターゲットとして使用していたバッファを Present として使用できるようにする。
+  - レンダーターゲットにバインドされていたデプスバッファをイメージとして使用できるようにする。
+  - レンダーターゲットにバインドされていたデプスバッファをコピー元として使用できるようにする。
+  - コピー先のバッファをリソースとして使用できるようにする。
+  - コンピュートシェーダの計算結果を格納するストレージバッファをリソースとして使用できるようにする。インダイレクト描画引数も含む。
+  - コンピュートシェーダの計算結果を格納するストレージバッファをコピー元として使用できるようにする。
+  - CPU メモリから GPU メモリにコピーする前はたしかバリア不要。Map&Unmap したときに確定扱いになるという認識。
+- ライブラリ比較
+  - 状態遷移バリアに関して３ライブラリとも before-state after-state の概念はある。指定の細かさは異なる。
+  - Vulkan と Metal は更に細かく「どのタイミングからどのタイミングまでに」の指定の概念 stage-after stage-before がある。
+  - DirectX 12 にのみ分割バリアの概念がある。
+- エイリアスバリア
+  - 使ったことないのでイメージがわきづらい。
+  - 例えば動的解像度で同じバッファを別レンダーターゲットとして使うときはこれ？
+- 抽象化設計
+  - 少なくとも，Vulkan と DirectX 12 は遷移バリアが必須なので，その API を用意するのはそれほどずれていなさそう。
+  - 遷移バリアは Vulkan ベースで。余裕があれば stage-after stage-before まで指定できるようにしてみる。
+  - エイリアスバリアは使いどころが見えないのでひとまず保留。
 
 ### Vulkan
 
 - パイプラインバリア。A の処理を B までに終わらせておいてね、的な感じで書ける。（[解説サイト 1](https://gpuopen.com/learn/vulkan-barriers-explained/)　[解説サイト 2](https://glhub.blogspot.com/2017/11/vulkan-vkcmdpipelinebarriervkpipelinest.html)）
 - 更に引数プロパティの MemoryBarrier、BufferMemoryBarrier, ImageMemoryBarrier で対象となるリソースや遷移（DX12 の TransitionBarrier/AliasBarrier に相当）を指定してバリアをはれる。
   - サンプルが少なくて理解が難しい。
+- BufferMemoryBarrier の状態の種類は[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccessFlagBits.html)。
+- ImageMemoryBarrier の状態の種類は[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageLayout.html)。
+- 細かい[PipelineStage](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineStageFlagBits.html) の指定が可能。 DirectX 12 にはない。Metal には Vulkan ほど細かくないがある。
 
 ### DirectX 12
 
 - [参考](https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/using-resource-barriers-to-synchronize-resource-states-in-direct3d-12#split-barriers)
 - TransitionBarrier：レンダーターゲットが読み取りテクスチャになるよといった状態遷移を扱うバリア。
+- 状態の種類は[こちら](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_resource_states)。分かりづらいがビットマスクで複数指定可能。
 - AliasingBarrier：A という Resource オブジェクトがこれ以降で B という Resouce オブジェクトとして使われることを宣言するバリア。
-- UavBarrier：ストレージバッファの読み書き処理をここまでに終わらせてというバリア。Dispatch した結果を別の Dispatch で参照する場合に使う。
+- UavBarrier：ストレージバッファの書き込み処理をここまでに終わらせてというバリア。Dispatch した結果を別の Dispatch で参照する場合に使う。
 - 各種バリアに分割バリアという指定方式もある。ここからこの区間で完了させておいてねーという宣言ができ、パイプラインの最適化のヒントとなる。
 
 ### Metal
 
 - コマンドバッファ内・コマンドバッファ間の同期はフェンス・バリア。
   - [フェンス](https://developer.apple.com/documentation/metal/mtlfence)：DX12 でいう AliasingBarrier と同じ。MTLHeap（メモリプール）を使って手動でリソースメモリ管理をして同じアドレスに別リソースオブジェクトを割り当てているときに使う。
-  - バリア：ここまでに特定のリソースに対しての処理や特定のパイプラインステージに対する処理を終わらせてという宣言。
+  - バリア([1](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/2967442-memorybarrier),[2](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/3019524-memorybarrier))：ここまでに特定のリソースに対しての処理や特定のパイプラインステージに対する処理を終わらせてという宣言。
 
 ## CPUGPU 間同期
 
