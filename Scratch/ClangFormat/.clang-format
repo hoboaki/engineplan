@@ -1,0 +1,35 @@
+# 文字コード：UTF-8
+
+# http://clang.llvm.org/docs/ClangFormatStyleOptions.html
+BasedOnStyle: Google
+
+# アクセス修飾子はインデントしない
+AccessModifierOffset: -4
+
+# インデント幅は4
+IndentWidth: 4
+
+# 80字を最大
+ColumnLimit: 80
+
+# 連続空行は1まで認める
+MaxEmptyLinesToKeep: 1
+
+# インライン関数のみ1行での記述を許可
+AllowShortFunctionsOnASingleLine: Inline
+
+# コンストラクタ
+AllowAllConstructorInitializersOnNextLine: true
+BreakConstructorInitializersBeforeComma: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 0
+
+# case はインデント無し
+IndentCaseLabels: false
+
+# 短い case 文は１行で
+AllowShortCaseLabelsOnASingleLine: true
+
+# 改行許可
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
