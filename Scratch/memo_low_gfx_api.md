@@ -68,6 +68,7 @@
     - [Vulkan](#vulkan-14)
     - [DirectX 12](#directx-12-13)
     - [Metal](#metal-13)
+  - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
 - [付録](#付録)
   - [参考](#参考)
 
@@ -679,6 +680,11 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 ### Metal
 
 - https://developer.apple.com/documentation/metal/mtlrendercommandencoder/specifying_drawing_and_dispatch_arguments_indirectly
+
+## バッファ生成時初期値指定
+
+DirectX 12 のみ CreateReservedResource() や CreateCommittedResource() でイメージバッファ・デプスステンシルバッファに対してクリアカラーが指定できる。
+ここで指定した毎フレームクリアするカラーと一致する場合はパフォーマンスが良くなるのだとか。
 
 # 付録
 
