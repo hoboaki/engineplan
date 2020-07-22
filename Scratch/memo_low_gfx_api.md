@@ -150,6 +150,7 @@
 
 - Windows 用の作成関数は[こちら](https://docs.microsoft.com/en-us/windows/win32/api/dxgi1_2/nf-dxgi1_2-idxgifactory2-createswapchainforhwnd)。
 - 指定するものはサイズ，イメージフォーマットと枚数。あとは細々とオプションが，という印象。
+- それに加えて所属する CommandQueue を渡すのが独特。
 - [GetCurrentBackBufferIndex()](https://docs.microsoft.com/en-us/windows/win32/api/dxgi1_4/nf-dxgi1_4-idxgiswapchain3-getcurrentbackbufferindex) でインデックス取得。
 - レンダーターゲット用の ImageView は別途作成が必要。
 
@@ -320,26 +321,37 @@
 
 - キューに対して提出するのがよさそう。
 - 引数で SwapChain オブジェクトを渡しておけば DirectX 12 がカバーできる。
-- Present() : 提出処理を開始する。
-- WaitToPresentDone() : 最後にコールされた Present 処理が終わるのを待つ。DirectX 12 はここで Present を呼ぶ。
+- Present 予約が完了したかどうかを判定したい場合は CPU&GPU 間同期のフェンスを使う。
+- Present 完了を検出する方法は用意しない。
 
 ### Vulkan
 
-- vkQueuePresentKHR() で present 処理する。引数は vkQueue と同期用の vkSemaphore が求められる。
-- Present 処理は予約だけでブロックしない。終了同期したい場合は引数に渡した vkSemaphore で待つ。
+- vkQueuePresentKHR() で present 処理する。引数は vkQueue と同期用（前処理終了検知用）の vkSemaphore が求められる。
+- この関数は Present 予約するコマンドを積むだけでブロックはしない。
+- Present 完了同期する方法はない。 https://github.com/KhronosGroup/Vulkan-Docs/issues/370
+- [VK_PRESENT_MODE_FIFO_KHR](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPresentModeKHR.html) をみる限り、垂直同期をしつつつ Present 予約済の Swapchain の Present 完了処理をしていく。
+- Swapchain バッファが使っていい状態になっているかどうかは [vkAcquireNextImageKHR](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireNextImageKHR.html) の引数で渡す semaphore もしくは fence にシグナルが来ているかどうかで判定するらしい。
+- Present 予約がおわっているかどうかは CPU&GPU 間同期の方法でできる。
+
 
 ### DirectX 12
 
-- IDXGISwapChain.Present() で present 処理をする。
-- 呼び出しまでに GPU 側の処理が終わっていなければブロックするらしい。（ほんとに？）
-- 終わっていたらノンブロック。おそらく画面フリップの予約だけしてあとは OS にお任せ，ということなのだろう。（ほんとに？）
-- 基本の使い方は CPU&GPU 間同期で Swapchain への描画が終わったのを CPU 上で同期した上でこの Present() を呼ぶ。
-- Present() 自体はすぐもどってくるので次の処理をそのまま開始できる。
+- [IDXGISwapChain.Present()](https://docs.microsoft.com/en-us/windows/win32/api/dxgi/nf-dxgi-idxgiswapchain-present) で present 処理をする。
+- SwapChain 生成時に CommandQueue を渡しているので、おそらく内部でその Queue に対して preset 処理を入れていると推測できる。
+- ~~呼び出しまでに GPU 側の処理が終わっていなければブロックするらしい。（ほんとに？）~~
+- ~~終わっていたらノンブロック。おそらく画面フリップの予約だけしてあとは OS にお任せ，ということなのだろう。（ほんとに？）~~
+- Present() は CommandQueue にコマンドをのせるだけなのですぐもどってくる。
+- Present() の引数 SyncInterval で 1 を指定した場合、「過去に Present したイメージが少なくとも１フレ描画してから Present 予約を実行する」という意味と思われる。
+- ということは SyncInterval に 1 を指定した場合、過去に Present したイメージが１フレ描画されるまでは CommandQueue が待っているのかな？
+- 同期は CommandQueue に対する Fence & Event を使った CPU&GPU 間同期が可能。上記の理解で正しいのであれば Present 完了の同期ではなく Present 予約の同期だけ可能となる。
+- ただ、 SyncInterval に 1 を指定し続ければバッファが２枚あれば上書きすることは防げると思われる。
 
 ### Metal
 
 - MTLCommandBuffer.present() で present 処理する。
-- present 処理が終わったかどうかは CPU&GPU 間同期の方法で実現。
+- 関数リファレンスには drawable に対する描画処理が完了次第できる限り早く present 処理をする、とある。
+- MoltenVk のコード MVKPresentableSwapchainImage::presentCAMetalDrawable を見ると、present() したあとに CPU&GPU 同期できているように見える。
+- ここでいう同期が present 処理が予約だけなのか完了までをさしているのかは不明。たぶん予約だけだと予想。
 
 ## コマンドバッファで設定する単位
 
