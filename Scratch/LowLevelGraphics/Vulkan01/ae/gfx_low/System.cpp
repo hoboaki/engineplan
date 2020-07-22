@@ -319,19 +319,26 @@ void System::InternalQueueFamilyIndexTable(
         // Normal
         const auto& queueProps = queueFamilyProperties[i];
         if (resultRef[QueueType::Normal] < 0 &&
-            queueProps.queueFlags | ::vk::QueueFlagBits::eGraphics) {
+            (uint32_t(queueProps.queueFlags) &
+                uint32_t(::vk::QueueFlagBits::eGraphics)) != 0) {
             resultRef[QueueType::Normal] = int(i);
         }
 
         // ComputeOnly
         if (resultRef[QueueType::ComputeOnly] < 0 &&
-            queueProps.queueFlags == ::vk::QueueFlagBits::eCompute) {
+            (uint32_t(queueProps.queueFlags) &
+                uint32_t(::vk::QueueFlagBits::eGraphics)) == 0 &&
+            (uint32_t(queueProps.queueFlags) &
+                uint32_t(::vk::QueueFlagBits::eCompute)) != 0) {
             resultRef[QueueType::ComputeOnly] = int(i);
         }
 
         // CopyOnly
         if (resultRef[QueueType::CopyOnly] < 0 &&
-            queueProps.queueFlags == ::vk::QueueFlagBits::eTransfer) {
+            (uint32_t(queueProps.queueFlags) &
+                uint32_t(::vk::QueueFlagBits::eGraphics |
+                         ::vk::QueueFlagBits::eCompute)) == 0 &&
+            (queueProps.queueFlags | ::vk::QueueFlagBits::eTransfer)) {
             resultRef[QueueType::CopyOnly] = int(i);
         }
     }
