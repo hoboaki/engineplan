@@ -105,19 +105,19 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     *entity = SwapchainEntity();
 
     // サーフェスの対応フォーマットを取得
-    uint32_t formatCount;
+    uint32_t surfFormatCount = uint32_t();
     auto result = physicalDevice.getSurfaceFormatsKHR(
-        surface_, &formatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
+        surface_, &surfFormatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
-        int(formatCount), &device_.System().InternalTempWorkAllocator());
+        int(surfFormatCount), &device_.System().InternalTempWorkAllocator());
     result = physicalDevice.getSurfaceFormatsKHR(
-         surface_, &formatCount, surfFormats.head());
+         surface_, &surfFormatCount, surfFormats.head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     // サーフェスが対応するフォーマットを選択
     vk::Format format = ::vk::Format::eUndefined;
-    vk::ColorSpaceKHR colorSpace = ::vk::ColorSpaceKHR::eSrgbNonlinear;
+    vk::ColorSpaceKHR colorSpace = ::vk::ColorSpaceKHR();
     {
         const ::vk::Format srgbFormats[] = {
             ::vk::Format::eR8G8B8A8Srgb,
@@ -132,7 +132,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         const ::vk::Format* findFormats =
             createInfo.IsSrgbFormat() ? srgbFormats : linearFormats;
         for (int surfFmtIdx = 0;
-             surfFmtIdx < formatCount && format == ::vk::Format::eUndefined;
+             surfFmtIdx < int(surfFormatCount) && format == ::vk::Format::eUndefined;
              ++surfFmtIdx) {
             const auto& surfFormat = surfFormats[surfFmtIdx];
             for (int fmtIdx = 0;
@@ -149,12 +149,12 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     }
 
     // Check the surface capabilities and formats
-    ::vk::SurfaceCapabilitiesKHR surfCapabilities;
+    auto surfCapabilities = ::vk::SurfaceCapabilitiesKHR();
     result =
         physicalDevice.getSurfaceCapabilitiesKHR(surface_, &surfCapabilities);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
-    uint32_t presentModeCount;
+    auto presentModeCount = uint32_t();
     result = physicalDevice.getSurfacePresentModesKHR(
         surface_, &presentModeCount, static_cast<vk::PresentModeKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
