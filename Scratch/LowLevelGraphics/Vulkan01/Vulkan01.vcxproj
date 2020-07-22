@@ -234,7 +234,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\QueueType.hpp" />
+    <ClInclude Include="ae\gfx_low\QueueKind.hpp" />
     <ClInclude Include="ae\gfx_low\SdkHeader.hpp">
       <SubType>
       </SubType>

@@ -50,7 +50,7 @@ int aemain(::ae::base::Application* app) {
         ::ae::gfx_low::QueueCreateInfo queueCreateInfos[queueCount];
         queueCreateInfos[0] =
             ::ae::gfx_low::QueueCreateInfo()
-                .SetType(::ae::gfx_low::QueueType::Normal)
+                .SetKind(::ae::gfx_low::QueueKind::Normal)
                 .SetPriority(::ae::gfx_low::QueuePriority::Normal);
 
         // Device の作成

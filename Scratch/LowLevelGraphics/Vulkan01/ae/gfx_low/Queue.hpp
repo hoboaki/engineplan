@@ -3,7 +3,7 @@
 
 #include <ae/base/Pointer.hpp>
 #include <ae/base/PtrToRef.hpp>
-#include <ae/gfx_low/QueueType.hpp>
+#include <ae/gfx_low/QueueKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -32,13 +32,13 @@ public:
     Device& device() const { return device_; }
 
     /// Queue の種類。
-    QueueType Type() const { return type_; }
+    QueueKind Kind() const { return type_; }
     //@}
 
     /// @name 内部処理用機能
     //@{
     /// 内部処理用コンストラクタ。アプリケーション側からの呼び出しは禁止。
-    Queue(Device* device, const ::vk::Queue& queue, QueueType type)
+    Queue(Device* device, const ::vk::Queue& queue, QueueKind type)
     : device_(base::PtrToRef(device))
     , queue_(queue)
     , type_(type) {}
@@ -49,7 +49,7 @@ public:
 private:
     Device& device_;
     ::vk::Queue queue_;
-    QueueType type_;
+    QueueKind type_;
 };
 
 }  // namespace gfx_low

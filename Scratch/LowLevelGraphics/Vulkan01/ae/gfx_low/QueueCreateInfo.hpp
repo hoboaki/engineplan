@@ -2,7 +2,7 @@
 #pragma once
 
 #include <ae/gfx_low/QueuePriority.hpp>
-#include <ae/gfx_low/QueueType.hpp>
+#include <ae/gfx_low/QueueKind.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -13,8 +13,8 @@ class QueueCreateInfo {
 public:
     /// @name Queue の種類（初期値：Normal）
     //@{
-    QueueType Type() const { return type_; }
-    QueueCreateInfo& SetType(QueueType type);
+    QueueKind Kind() const { return type_; }
+    QueueCreateInfo& SetKind(QueueKind type);
     //@}
 
     /// @name Queue の実行優先度（初期値：Normal）
@@ -24,7 +24,7 @@ public:
     //@}
 
 private:
-    QueueType type_ = QueueType::Normal;
+    QueueKind type_ = QueueKind::Normal;
     QueuePriority priority_ = QueuePriority::Normal;
 };
 

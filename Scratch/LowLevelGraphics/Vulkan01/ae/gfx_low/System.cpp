@@ -251,9 +251,9 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
         // Normal
         {
             const auto queueFamilyIndex =
-                queueFamilyIndexTable[int(QueueType::Normal)];
+                queueFamilyIndexTable[int(QueueKind::Normal)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueType::Normal)] =
+                info.InternalCreatableQueueCounts[int(QueueKind::Normal)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -261,9 +261,9 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
         // ComputeOnly
         {
             const auto queueFamilyIndex =
-                queueFamilyIndexTable[int(QueueType::ComputeOnly)];
+                queueFamilyIndexTable[int(QueueKind::ComputeOnly)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueType::ComputeOnly)] =
+                info.InternalCreatableQueueCounts[int(QueueKind::ComputeOnly)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -271,9 +271,9 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
         // CopyOnly
         {
             const auto queueFamilyIndex =
-                queueFamilyIndexTable[int(QueueType::CopyOnly)];
+                queueFamilyIndexTable[int(QueueKind::CopyOnly)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueType::CopyOnly)] =
+                info.InternalCreatableQueueCounts[int(QueueKind::CopyOnly)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -289,11 +289,11 @@ void System::DumpAllPhysicalDeviceInfo() const {
         const auto info = PhysicalDeviceInfo(i);
         AE_BASE_COUTFMT_LINE("    PhysicalDevice #%d:", i);
         AE_BASE_COUTFMT_LINE("        CreatableQueueCount[Normal]: %d",
-            info.CreatableQueueCount(QueueType::Normal));
+            info.CreatableQueueCount(QueueKind::Normal));
         AE_BASE_COUTFMT_LINE("        CreatableQueueCount[ComputeOnly]: %d",
-            info.CreatableQueueCount(QueueType::ComputeOnly));
+            info.CreatableQueueCount(QueueKind::ComputeOnly));
         AE_BASE_COUTFMT_LINE("        CreatableQueueCount[CopyOnly]: %d",
-            info.CreatableQueueCount(QueueType::CopyOnly));
+            info.CreatableQueueCount(QueueKind::CopyOnly));
     }
 }
 
@@ -318,28 +318,28 @@ void System::InternalQueueFamilyIndexTable(
     for (uint32_t i = 0; i < queueFamilyCount; ++i) {
         // Normal
         const auto& queueProps = queueFamilyProperties[i];
-        if (resultRef[QueueType::Normal] < 0 &&
+        if (resultRef[QueueKind::Normal] < 0 &&
             (uint32_t(queueProps.queueFlags) &
                 uint32_t(::vk::QueueFlagBits::eGraphics)) != 0) {
-            resultRef[QueueType::Normal] = int(i);
+            resultRef[QueueKind::Normal] = int(i);
         }
 
         // ComputeOnly
-        if (resultRef[QueueType::ComputeOnly] < 0 &&
+        if (resultRef[QueueKind::ComputeOnly] < 0 &&
             (uint32_t(queueProps.queueFlags) &
                 uint32_t(::vk::QueueFlagBits::eGraphics)) == 0 &&
             (uint32_t(queueProps.queueFlags) &
                 uint32_t(::vk::QueueFlagBits::eCompute)) != 0) {
-            resultRef[QueueType::ComputeOnly] = int(i);
+            resultRef[QueueKind::ComputeOnly] = int(i);
         }
 
         // CopyOnly
-        if (resultRef[QueueType::CopyOnly] < 0 &&
+        if (resultRef[QueueKind::CopyOnly] < 0 &&
             (uint32_t(queueProps.queueFlags) &
                 uint32_t(::vk::QueueFlagBits::eGraphics |
                          ::vk::QueueFlagBits::eCompute)) == 0 &&
             (queueProps.queueFlags | ::vk::QueueFlagBits::eTransfer)) {
-            resultRef[QueueType::CopyOnly] = int(i);
+            resultRef[QueueKind::CopyOnly] = int(i);
         }
     }
 }

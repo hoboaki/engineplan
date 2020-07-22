@@ -37,57 +37,57 @@ Device::Device(const DeviceCreateInfo& createInfo)
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
     // Queue の作成数が上限を越えていないかのチェック
     {
-        ::ae::base::EnumKeyArray<QueueType, int> queueCounts;
+        ::ae::base::EnumKeyArray<QueueKind, int> queueCounts;
         for (int i = 0; i < createInfo.QueueCreateInfoCount(); ++i) {
-            ++queueCounts[createInfo.QueueCrateInfos()[i].Type()];
+            ++queueCounts[createInfo.QueueCrateInfos()[i].Kind()];
         }
         for (int i = 0; i < int(queueCounts.count()); ++i) {
-            if (physicalDeviceInfo.CreatableQueueCount(QueueType(i)) <
+            if (physicalDeviceInfo.CreatableQueueCount(QueueKind(i)) <
                 queueCounts[i]) {
                 AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
-                    "Create queue count (for QueueType: %d) is too large.",
+                    "Create queue count (for QueueKind: %d) is too large.",
                     queueCounts[i]);
             }
         }
     }
 #endif
 
-    // 各 QueueType の作成総数とIndex表を作成
-    ::ae::base::EnumKeyArray<QueueType, int>
-        queueCountTable;  // QueueType ごとの作成総数
-    ::ae::base::RuntimeArray<int> indexInQueueTypeTable(queueCreateCount,
+    // 各 QueueKind の作成総数とIndex表を作成
+    ::ae::base::EnumKeyArray<QueueKind, int>
+        queueCountTable;  // QueueKind ごとの作成総数
+    ::ae::base::RuntimeArray<int> indexInQueueKindTable(queueCreateCount,
         &system_
-             .InternalTempWorkAllocator());  // 各 Queue が同じ QueueType
+             .InternalTempWorkAllocator());  // 各 Queue が同じ QueueKind
                                              // における何個目の Queue かの情報
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto& queueCreateInfo = queueCreateInfos[queueIdx];
-        indexInQueueTypeTable[queueIdx] =
-            queueCountTable[queueCreateInfo.Type()];
-        ++queueCountTable[queueCreateInfo.Type()];
+        indexInQueueKindTable[queueIdx] =
+            queueCountTable[queueCreateInfo.Kind()];
+        ++queueCountTable[queueCreateInfo.Kind()];
     }
 
     // 各 QueueFamily ごとの Priority 配列を作成
-    ::ae::base::EnumKeyArray<QueueType, ::ae::base::RuntimeArray<float>>
+    ::ae::base::EnumKeyArray<QueueKind, ::ae::base::RuntimeArray<float>>
         queuePriorityTable;
-    for (int queueType = 0; queueType < int(QueueType::TERM); ++queueType) {
-        const auto queueCount = queueCountTable[queueType];
+    for (int queueKind = 0; queueKind < int(QueueKind::TERM); ++queueKind) {
+        const auto queueCount = queueCountTable[queueKind];
         if (queueCount == 0) {
             continue;
         }
-        queuePriorityTable[queueType].resize(
+        queuePriorityTable[queueKind].resize(
             queueCount, &system_.InternalTempWorkAllocator());
     }
     const float priorityTable[int(QueuePriority::TERM)] = {0.0f, 0.5f, 1.0f};
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
-        const auto indexInQueueType = indexInQueueTypeTable[queueIdx];
+        const auto indexInQueueKind = indexInQueueKindTable[queueIdx];
         const auto priorityEnum = queueCreateInfos[queueIdx].Priority();
         AE_BASE_ASSERT_ENUM(priorityEnum, QueuePriority);
         const float priority = priorityTable[int(priorityEnum)];
-        queuePriorityTable[queueCreateInfos[queueIdx].Type()]
-                          [indexInQueueType] = priority;
+        queuePriorityTable[queueCreateInfos[queueIdx].Kind()]
+                          [indexInQueueKind] = priority;
     }
 
-    // QueueType -> QueueFamilyIndex テーブル
+    // QueueKind -> QueueFamilyIndex テーブル
     System::InternalQueueFamilyIndexTableType queueFamilyIndexTable;
     system_.InternalQueueFamilyIndexTable(
         &queueFamilyIndexTable, physicalDeviceIndex);
@@ -139,17 +139,17 @@ Device::Device(const DeviceCreateInfo& createInfo)
     }
 
     // vkDeviceQueueCreateInfo の作成
-    std::array<::vk::DeviceQueueCreateInfo, static_cast<int>(QueueType::TERM)>
+    std::array<::vk::DeviceQueueCreateInfo, static_cast<int>(QueueKind::TERM)>
         deviceQueueCreateInfos;
     int deviceQueueCreateInfoCount = 0;
-    for (int queueType = 0; queueType < int(QueueType::TERM); ++queueType) {
-        if (queueCountTable[queueType] <= 0) {
+    for (int queueKind = 0; queueKind < int(QueueKind::TERM); ++queueKind) {
+        if (queueCountTable[queueKind] <= 0) {
             continue;
         }
         auto& target = deviceQueueCreateInfos[deviceQueueCreateInfoCount];
-        target.setQueueFamilyIndex(queueFamilyIndexTable[queueType]);
-        target.setQueueCount(queueCountTable[queueType]);
-        target.setPQueuePriorities(&queuePriorityTable[queueType][0]);
+        target.setQueueFamilyIndex(queueFamilyIndexTable[queueKind]);
+        target.setQueueCount(queueCountTable[queueKind]);
+        target.setPQueuePriorities(&queuePriorityTable[queueKind][0]);
         ++deviceQueueCreateInfoCount;
     }
     auto deviceInfo = vk::DeviceCreateInfo()
@@ -170,8 +170,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
     for (int i = 0; i < queueCreateCount; ++i) {
         queues_.add(this,
             device_.getQueue(deviceQueueCreateInfos[i].queueFamilyIndex,
-                indexInQueueTypeTable[i]),
-            queueCreateInfos[i].Type());
+                indexInQueueKindTable[i]),
+            queueCreateInfos[i].Kind());
     }
 }
 

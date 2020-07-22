@@ -153,9 +153,6 @@
     <ClInclude Include="ae\base\ScalerTypes.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\QueueType.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ae\gfx_low\QueuePriority.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -403,6 +400,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\Swapchain.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\QueueKind.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

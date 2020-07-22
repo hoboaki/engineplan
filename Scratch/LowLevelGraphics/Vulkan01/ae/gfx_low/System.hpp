@@ -5,7 +5,7 @@
 #include <ae/base/IAllocator.hpp>
 #include <ae/base/Noncopyable.hpp>
 #include <ae/base/Pointer.hpp>
-#include <ae/gfx_low/QueueType.hpp>
+#include <ae/gfx_low/QueueKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -58,10 +58,10 @@ public:
         return tempWorkAllocator_;
     }
 
-    /// QueueType に対応する QueueFamilyIndex を格納するテーブルの型。
+    /// QueueKind に対応する QueueFamilyIndex を格納するテーブルの型。
     /// @details
     /// 対応する QueueFamilyIndex が存在しない場合、負の値が格納されます。
-    using InternalQueueFamilyIndexTableType = ::ae::base::EnumKeyArray<QueueType, int>;
+    using InternalQueueFamilyIndexTableType = ::ae::base::EnumKeyArray<QueueKind, int>;
 
     /// QueueFamilyIndex を返す。見つからない場合は負の値を返す。
     void InternalQueueFamilyIndexTable(

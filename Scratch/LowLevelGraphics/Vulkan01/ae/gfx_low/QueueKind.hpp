@@ -5,8 +5,8 @@
 namespace ae {
 namespace gfx_low {
 
-/// Queue の特性。
-enum class QueueType {
+/// Queue の種類。
+enum class QueueKind {
 	/// 無効値。
 	Invalid,
 

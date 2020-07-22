@@ -8,9 +8,9 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-QueueCreateInfo& QueueCreateInfo::SetType(const QueueType type) {
-    AE_BASE_ASSERT_ENUM(type, QueueType);
-    AE_BASE_ASSERT(type != QueueType::Invalid);
+QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type) {
+    AE_BASE_ASSERT_ENUM(type, QueueKind);
+    AE_BASE_ASSERT(type != QueueKind::Invalid);
     type_ = type;
     return *this;
 }
