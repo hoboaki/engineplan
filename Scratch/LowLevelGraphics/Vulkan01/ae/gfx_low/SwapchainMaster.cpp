@@ -104,32 +104,49 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     }
     *entity = SwapchainEntity();
 
-    // Get the list of VkFormat's that are supported:
+    // サーフェスの対応フォーマットを取得
     uint32_t formatCount;
-    vk::Format format;
-    vk::ColorSpaceKHR color_space;
     auto result = physicalDevice.getSurfaceFormatsKHR(
         surface_, &formatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
-
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
         int(formatCount), &device_.System().InternalTempWorkAllocator());
     result = physicalDevice.getSurfaceFormatsKHR(
          surface_, &formatCount, surfFormats.head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
-    // If the format list includes just one entry of VK_FORMAT_UNDEFINED,
-    // the surface has no preferred format.  Otherwise, at least one
-    // supported format will be returned.
-    //if (formatCount == 1 && surfFormats[0].format == vk::Format::eUndefined) {
-    //    format = vk::Format::eB8G8R8A8Unorm;
-    //} else {
-    //    assert(formatCount >= 1);
-    //    format = surfFormats[0].format;
-    //}
-    format = createInfo.IsSrgbFormat() ? ::vk::Format::eR8G8B8A8Srgb
-                                       : ::vk::Format::eR8G8B8A8Unorm;
-    color_space = surfFormats[0].colorSpace;
+    // サーフェスが対応するフォーマットを選択
+    vk::Format format = ::vk::Format::eUndefined;
+    vk::ColorSpaceKHR colorSpace = ::vk::ColorSpaceKHR::eSrgbNonlinear;
+    {
+        const ::vk::Format srgbFormats[] = {
+            ::vk::Format::eR8G8B8A8Srgb,
+            ::vk::Format::eB8G8R8A8Srgb,
+            ::vk::Format::eUndefined,
+        };
+        const ::vk::Format linearFormats[] = {
+            ::vk::Format::eR8G8B8A8Unorm,
+            ::vk::Format::eB8G8R8A8Unorm,
+            ::vk::Format::eUndefined,
+        };
+        const ::vk::Format* findFormats =
+            createInfo.IsSrgbFormat() ? srgbFormats : linearFormats;
+        for (int surfFmtIdx = 0;
+             surfFmtIdx < formatCount && format == ::vk::Format::eUndefined;
+             ++surfFmtIdx) {
+            const auto& surfFormat = surfFormats[surfFmtIdx];
+            for (int fmtIdx = 0;
+                 findFormats[fmtIdx] != ::vk::Format::eUndefined; ++fmtIdx) {
+                if (surfFormat.format != findFormats[fmtIdx]) {
+                    continue;
+                }
+                format = surfFormat.format;
+                colorSpace = surfFormat.colorSpace;
+                break;
+            }
+        }
+        AE_BASE_ASSERT(format != ::vk::Format::eUndefined);
+    }
 
     // Check the surface capabilities and formats
     ::vk::SurfaceCapabilitiesKHR surfCapabilities;
@@ -262,7 +279,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
             .setSurface(surface_)
             .setMinImageCount(desiredNumOfSwapchainImages)
             .setImageFormat(format)
-            .setImageColorSpace(color_space)
+            .setImageColorSpace(colorSpace)
             .setImageExtent({swapchainExtent.width, swapchainExtent.height})
             .setImageArrayLayers(1)
             .setImageUsage(vk::ImageUsageFlagBits::eColorAttachment)
