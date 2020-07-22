@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ca9c183d-3c72-48f7-b123-75fb9fb4932b}</ProjectGuid>
+    <RootNamespace>Vulkan01</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir).output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>.output\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir).output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>.output\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;VK_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;WIN32;_WINDOWS;_DEBUG;AE_LIBRARY_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%VULKAN_SDK%\Lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>VK_USE_PLATFORM_WIN32_KHR;VK_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;WIN32;NDEBUG;_WINDOWS;AE_LIBRARY_PREVIEW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%VULKAN_SDK%\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%VULKAN_SDK%\Lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ae\base\Aabb2.hpp" />
+    <ClInclude Include="ae\base\Aabb2i.hpp" />
+    <ClInclude Include="ae\base\All.hpp" />
+    <ClInclude Include="ae\base\Angle.hpp" />
+    <ClInclude Include="ae\base\AppEvent.hpp" />
+    <ClInclude Include="ae\base\Application.hpp" />
+    <ClInclude Include="ae\base\Application_Default.hpp" />
+    <ClInclude Include="ae\base\Application_Windows.hpp" />
+    <ClInclude Include="ae\base\Argument.hpp" />
+    <ClInclude Include="ae\base\ArrayLength.hpp" />
+    <ClInclude Include="ae\base\AutoMemBlock.hpp" />
+    <ClInclude Include="ae\base\AutoPtr.hpp" />
+    <ClInclude Include="ae\base\AutoSpPtr.hpp" />
+    <ClInclude Include="ae\base\BitSet.hpp" />
+    <ClInclude Include="ae\base\Bool.hpp" />
+    <ClInclude Include="ae\base\BuiltInTypes.hpp" />
+    <ClInclude Include="ae\base\Calendar.hpp" />
+    <ClInclude Include="ae\base\Color4.hpp" />
+    <ClInclude Include="ae\base\Color4b.hpp" />
+    <ClInclude Include="ae\base\Compiler.hpp" />
+    <ClInclude Include="ae\base\Config.hpp" />
+    <ClInclude Include="ae\base\Console.hpp" />
+    <ClInclude Include="ae\base\Degree.hpp" />
+    <ClInclude Include="ae\base\Display.hpp" />
+    <ClInclude Include="ae\base\DisplayContext.hpp" />
+    <ClInclude Include="ae\base\Display_Windows.hpp" />
+    <ClInclude Include="ae\base\DivideCheck.hpp" />
+    <ClInclude Include="ae\base\Endian.hpp" />
+    <ClInclude Include="ae\base\EntryPoint.hpp" />
+    <ClInclude Include="ae\base\Enum.hpp" />
+    <ClInclude Include="ae\base\EnumCheck.hpp" />
+    <ClInclude Include="ae\base\EnumKeyArray.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\base\ExplicitSingleton.hpp" />
+    <ClInclude Include="ae\base\FixedString.hpp" />
+    <ClInclude Include="ae\base\FrameCounter.hpp" />
+    <ClInclude Include="ae\base\FunctionAttribute.hpp" />
+    <ClInclude Include="ae\base\Hash.hpp" />
+    <ClInclude Include="ae\base\Hid.hpp" />
+    <ClInclude Include="ae\base\Hid_Windows.hpp" />
+    <ClInclude Include="ae\base\IAllocator.hpp" />
+    <ClInclude Include="ae\base\IConsoleCallback.hpp" />
+    <ClInclude Include="ae\base\Infinity.hpp" />
+    <ClInclude Include="ae\base\IReadStream.hpp" />
+    <ClInclude Include="ae\base\IRuntimeErrorCallback.hpp" />
+    <ClInclude Include="ae\base\KeyBitSet.hpp" />
+    <ClInclude Include="ae\base\Keyboard.hpp" />
+    <ClInclude Include="ae\base\KeyboardUpdateData.hpp" />
+    <ClInclude Include="ae\base\KeyKind.hpp" />
+    <ClInclude Include="ae\base\Math.hpp" />
+    <ClInclude Include="ae\base\Matrix34.hpp" />
+    <ClInclude Include="ae\base\Matrix44.hpp" />
+    <ClInclude Include="ae\base\MemBlock.hpp" />
+    <ClInclude Include="ae\base\Mouse.hpp" />
+    <ClInclude Include="ae\base\MouseBtnBitSet.hpp" />
+    <ClInclude Include="ae\base\MouseBtnKind.hpp" />
+    <ClInclude Include="ae\base\MouseUpdateData.hpp" />
+    <ClInclude Include="ae\base\NewLine.hpp" />
+    <ClInclude Include="ae\base\Noncopyable.hpp" />
+    <ClInclude Include="ae\base\Os.hpp" />
+    <ClInclude Include="ae\base\OsType.hpp" />
+    <ClInclude Include="ae\base\Pi.hpp" />
+    <ClInclude Include="ae\base\Placement.hpp" />
+    <ClInclude Include="ae\base\PodClass.hpp" />
+    <ClInclude Include="ae\base\PodInheritClass.hpp" />
+    <ClInclude Include="ae\base\PodStruct.hpp" />
+    <ClInclude Include="ae\base\PodTypes.hpp" />
+    <ClInclude Include="ae\base\Pointer.hpp" />
+    <ClInclude Include="ae\base\PointerCheck.hpp" />
+    <ClInclude Include="ae\base\PtrToRef.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\base\Quaternion.hpp" />
+    <ClInclude Include="ae\base\Radian.hpp" />
+    <ClInclude Include="ae\base\Random.hpp" />
+    <ClInclude Include="ae\base\Ref.hpp" />
+    <ClInclude Include="ae\base\Reference.hpp" />
+    <ClInclude Include="ae\base\RuntimeArray.hpp" />
+    <ClInclude Include="ae\base\RuntimeAssert.hpp" />
+    <ClInclude Include="ae\base\RuntimeAutoArray.hpp" />
+    <ClInclude Include="ae\base\RuntimeError.hpp" />
+    <ClInclude Include="ae\base\RuntimeMArray.hpp" />
+    <ClInclude Include="ae\base\ScalerClass.hpp" />
+    <ClInclude Include="ae\base\ScalerStruct.hpp" />
+    <ClInclude Include="ae\base\ScalerTypes.hpp" />
+    <ClInclude Include="ae\base\ScopedPtr.hpp" />
+    <ClInclude Include="ae\base\Screen.hpp" />
+    <ClInclude Include="ae\base\ScreenPos.hpp" />
+    <ClInclude Include="ae\base\Screen_Default.hpp" />
+    <ClInclude Include="ae\base\SdkHeader.hpp" />
+    <ClInclude Include="ae\base\SeekOrigin.hpp" />
+    <ClInclude Include="ae\base\ShortString.hpp" />
+    <ClInclude Include="ae\base\ShortStringFactory.hpp" />
+    <ClInclude Include="ae\base\StaticAssert.hpp" />
+    <ClInclude Include="ae\base\StringTraits.hpp" />
+    <ClInclude Include="ae\base\Thread.hpp" />
+    <ClInclude Include="ae\base\Time.hpp" />
+    <ClInclude Include="ae\base\TimeSpan.hpp" />
+    <ClInclude Include="ae\base\ToShortString.hpp" />
+    <ClInclude Include="ae\base\Touch.hpp" />
+    <ClInclude Include="ae\base\TouchTap.hpp" />
+    <ClInclude Include="ae\base\TouchTapUpdateData.hpp" />
+    <ClInclude Include="ae\base\TouchUpdateData.hpp" />
+    <ClInclude Include="ae\base\TypeTraits.hpp" />
+    <ClInclude Include="ae\base\Unused.hpp" />
+    <ClInclude Include="ae\base\ValueInRange.hpp" />
+    <ClInclude Include="ae\base\Vector2.hpp" />
+    <ClInclude Include="ae\base\Vector2i.hpp" />
+    <ClInclude Include="ae\base\Vector3.hpp" />
+    <ClInclude Include="ae\base\Vector3i.hpp" />
+    <ClInclude Include="ae\base\Vector4.hpp" />
+    <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\Device.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DeviceCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\Format.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\PhysicalDeviceInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\Queue.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\QueueCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\QueuePriority.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\QueueType.hpp" />
+    <ClInclude Include="ae\gfx_low\SdkHeader.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\Swapchain.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SwapchainHandle.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SwapchainCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SwapchainMaster.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SwapchainMasterCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\System.hpp" />
+    <ClInclude Include="ae\gfx_low\SystemCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SystemDebugLevel.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vulkan01.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ae\base\Aabb2.cpp" />
+    <ClCompile Include="ae\base\Aabb2i.cpp" />
+    <ClCompile Include="ae\base\Angle.cpp" />
+    <ClCompile Include="ae\base\Application.cpp" />
+    <ClCompile Include="ae\base\Application_Windows.cpp" />
+    <ClCompile Include="ae\base\Argument.cpp" />
+    <ClCompile Include="ae\base\AutoMemBlock.cpp" />
+    <ClCompile Include="ae\base\Calendar.cpp" />
+    <ClCompile Include="ae\base\Color4.cpp" />
+    <ClCompile Include="ae\base\Color4b.cpp" />
+    <ClCompile Include="ae\base\Console.cpp" />
+    <ClCompile Include="ae\base\Degree.cpp" />
+    <ClCompile Include="ae\base\Display.cpp" />
+    <ClCompile Include="ae\base\DisplayContext.cpp" />
+    <ClCompile Include="ae\base\Display_Windows.cpp" />
+    <ClCompile Include="ae\base\DivideCheck.cpp" />
+    <ClCompile Include="ae\base\EntryPoint_Windows.cpp" />
+    <ClCompile Include="ae\base\FrameCounter.cpp" />
+    <ClCompile Include="ae\base\Hash.cpp" />
+    <ClCompile Include="ae\base\Hid.cpp" />
+    <ClCompile Include="ae\base\Hid_Windows.cpp" />
+    <ClCompile Include="ae\base\IAllocator.cpp" />
+    <ClCompile Include="ae\base\IConsoleCallback.cpp" />
+    <ClCompile Include="ae\base\IReadStream.cpp" />
+    <ClCompile Include="ae\base\IRuntimeErrorCallback.cpp" />
+    <ClCompile Include="ae\base\Keyboard.cpp" />
+    <ClCompile Include="ae\base\Math.cpp" />
+    <ClCompile Include="ae\base\Matrix34.cpp" />
+    <ClCompile Include="ae\base\Matrix44.cpp" />
+    <ClCompile Include="ae\base\MemBlock.cpp" />
+    <ClCompile Include="ae\base\Mouse.cpp" />
+    <ClCompile Include="ae\base\PointerCheck.cpp" />
+    <ClCompile Include="ae\base\Quaternion.cpp" />
+    <ClCompile Include="ae\base\Radian.cpp" />
+    <ClCompile Include="ae\base\Random.cpp" />
+    <ClCompile Include="ae\base\RuntimeAssert.cpp" />
+    <ClCompile Include="ae\base\RuntimeError.cpp" />
+    <ClCompile Include="ae\base\Screen.cpp" />
+    <ClCompile Include="ae\base\ScreenPos.cpp" />
+    <ClCompile Include="ae\base\ShortStringFactory.cpp" />
+    <ClCompile Include="ae\base\StringTraits.cpp" />
+    <ClCompile Include="ae\base\Thread.cpp" />
+    <ClCompile Include="ae\base\Time.cpp" />
+    <ClCompile Include="ae\base\TimeSpan.cpp" />
+    <ClCompile Include="ae\base\Touch.cpp" />
+    <ClCompile Include="ae\base\TouchTap.cpp" />
+    <ClCompile Include="ae\base\Vector2.cpp" />
+    <ClCompile Include="ae\base\Vector2i.cpp" />
+    <ClCompile Include="ae\base\Vector3.cpp" />
+    <ClCompile Include="ae\base\Vector3i.cpp" />
+    <ClCompile Include="ae\base\Vector4.cpp" />
+    <ClCompile Include="ae\base\Vector4i.cpp" />
+    <ClCompile Include="ae\gfx_low\Device.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\QueueCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SwapchainCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SwapchainHandle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SwapchainMaster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SwapchainMasterCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\System.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SystemCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SampleMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Vulkan01.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico" />
+    <Image Include="Vulkan01.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
