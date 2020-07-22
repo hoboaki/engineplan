@@ -18,6 +18,7 @@ QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type) {
 //------------------------------------------------------------------------------
 QueueCreateInfo& QueueCreateInfo::SetPriority(const QueuePriority priority) {
     AE_BASE_ASSERT_ENUM(priority, QueuePriority);
+    AE_BASE_ASSERT(priority != QueuePriority::Invalid);
     priority_ = priority;
     return *this;
 }
