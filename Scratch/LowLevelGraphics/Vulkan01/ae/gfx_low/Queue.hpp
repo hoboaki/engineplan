@@ -29,7 +29,7 @@ public:
     /// @name プロパティ
     //@{
     /// 所属する Device。
-    Device& device() const { return device_; }
+    gfx_low::Device& Device() const { return device_; }
 
     /// Queue の種類。
     QueueKind Kind() const { return type_; }
@@ -38,7 +38,7 @@ public:
     /// @name 内部処理用機能
     //@{
     /// 内部処理用コンストラクタ。アプリケーション側からの呼び出しは禁止。
-    Queue(Device* device, const ::vk::Queue& queue, QueueKind type)
+    Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind type)
     : device_(base::PtrToRef(device))
     , queue_(queue)
     , type_(type) {}
@@ -47,7 +47,7 @@ public:
     //@}
 
 private:
-    Device& device_;
+    gfx_low::Device& device_;
     ::vk::Queue queue_;
     QueueKind type_;
 };
