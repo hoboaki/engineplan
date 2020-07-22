@@ -59,9 +59,11 @@ public:
     }
 
     /// QueueType に対応する QueueFamilyIndex を格納するテーブルの型。
+    /// @details
+    /// 対応する QueueFamilyIndex が存在しない場合、負の値が格納されます。
     using InternalQueueFamilyIndexTableType = ::ae::base::EnumKeyArray<QueueType, int>;
 
-    /// を返す。見つからない場合は負の値を返す。
+    /// QueueFamilyIndex を返す。見つからない場合は負の値を返す。
     void InternalQueueFamilyIndexTable(
         InternalQueueFamilyIndexTableType* result,
         int physicalDeviceIndex) const;

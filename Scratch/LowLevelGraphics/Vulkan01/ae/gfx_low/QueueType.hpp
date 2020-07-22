@@ -7,6 +7,9 @@ namespace gfx_low {
 
 /// Queue の特性。
 enum class QueueType {
+	/// 無効値。
+	Invalid,
+
 	/// Graphics、Compute、Copy、をサポート。
 	Normal,
 

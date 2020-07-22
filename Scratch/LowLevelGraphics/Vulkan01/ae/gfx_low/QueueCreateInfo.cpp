@@ -10,6 +10,7 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 QueueCreateInfo& QueueCreateInfo::SetType(const QueueType type) {
     AE_BASE_ASSERT_ENUM(type, QueueType);
+    AE_BASE_ASSERT(type != QueueType::Invalid);
     type_ = type;
     return *this;
 }

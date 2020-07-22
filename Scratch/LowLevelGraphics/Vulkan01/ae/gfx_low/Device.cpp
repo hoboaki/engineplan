@@ -143,17 +143,17 @@ Device::Device(const DeviceCreateInfo& createInfo)
         deviceQueueCreateInfos;
     int deviceQueueCreateInfoCount = 0;
     for (int queueType = 0; queueType < int(QueueType::TERM); ++queueType) {
-        if (queueCountTable[queueType] == 0) {
+        if (queueCountTable[queueType] <= 0) {
             continue;
         }
-        auto& target = deviceQueueCreateInfos[queueType];
+        auto& target = deviceQueueCreateInfos[deviceQueueCreateInfoCount];
         target.setQueueFamilyIndex(queueFamilyIndexTable[queueType]);
         target.setQueueCount(queueCountTable[queueType]);
         target.setPQueuePriorities(&queuePriorityTable[queueType][0]);
         ++deviceQueueCreateInfoCount;
     }
     auto deviceInfo = vk::DeviceCreateInfo()
-                          .setQueueCreateInfoCount(queueCreateCount)
+                          .setQueueCreateInfoCount(deviceQueueCreateInfoCount)
                           .setPQueueCreateInfos(&deviceQueueCreateInfos[0])
                           .setEnabledLayerCount(0)
                           .setPpEnabledLayerNames(nullptr)
