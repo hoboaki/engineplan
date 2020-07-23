@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/base/RuntimeArray.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -25,24 +26,28 @@ namespace gfx_low {
 /// で行い、SwapchainHandle を経由でアクセスします。
 class Swapchain {
 public:
+    /// @name デストラクタ
+    //@{
+    ~Swapchain();
+    //@}
+
     /// @name プロパティ
     //@{
     /// 所属する SwapchainMaster。
-    SwapchainMaster& swapchainMaster() const { return swapchainMaster_.ref(); }
+    gfx_low::SwapchainMaster& SwapchainMaster() const { return swapchainMaster_.ref(); }
     //@}
 
     /// @name 内部処理用機能
     //@{
     /// 無効な UniqueId 値。
-    static const int InvalidUniqueId = 0;
+    static const int InternalInvalidUniqueId = 0;
 
     /// 初期化。
-    void InternalInitialize(SwapchainMaster* swapchainMaster,
-        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId) {
-        swapchainMaster_.reset(swapchainMaster);
-        swapchain_ = swapchain;
-        uniqueId_ = uniqueId_;
-    }
+    void InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
+        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int imageCount);
+
+    /// 後始末。
+    void InternalFinalize();
 
     /// 初期化済みか。
     bool InternalIsInitialized() const { return swapchainMaster_.isValid(); }
@@ -58,9 +63,24 @@ protected:
     Swapchain() {}
 
 private:
-    ::ae::base::Pointer<SwapchainMaster> swapchainMaster_;
+    /// １フレームあたりのプロパティ。
+    class FrameProperty
+    {
+    public:
+        /// バックバッファ化同期用セマフォ。
+        ::vk::Semaphore AcquireSemaphore;
+
+        /// Present 処理可能状態同期用セマフォ。
+        ::vk::Semaphore ReadyToPresentSemaphore;
+    };
+
+    void Reset();
+
+    ::ae::base::Pointer<gfx_low::SwapchainMaster> swapchainMaster_;
     ::vk::SwapchainKHR swapchain_;
-    uint32_t uniqueId_ = InvalidUniqueId;
+    ::ae::base::RuntimeArray<FrameProperty> frameProperties_;
+    uint32_t uniqueId_ = InternalInvalidUniqueId;
+    int currentFrameIndex_ = int();
 };
 
 }  // namespace gfx_low

@@ -13,13 +13,13 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 SwapchainHandle::SwapchainHandle(Swapchain* entity)
 : entity_(&base::PtrToRef(entity))
-, entityMaster_(&entity_->swapchainMaster())
+, entityMaster_(&entity_->SwapchainMaster())
 , entityUniqueId_(entity_->InternalUniqueId()) {}
 
 //------------------------------------------------------------------------------
 bool SwapchainHandle::IsValid() const {
     return entity_.isValid() &&
-           &entity_->swapchainMaster() == entityMaster_.get() &&
+           &entity_->SwapchainMaster() == entityMaster_.get() &&
            entity_->InternalUniqueId() == entityUniqueId_;
 }
 

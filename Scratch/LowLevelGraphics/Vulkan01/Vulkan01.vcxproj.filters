@@ -606,5 +606,8 @@
     <ClCompile Include="ae\base\EntryPoint_Windows.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\Swapchain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

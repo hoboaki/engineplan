@@ -102,7 +102,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
             }
         }
     }
-    *entity = SwapchainEntity();
+    entity->InternalFinalize();
 
     // サーフェスの対応フォーマットを取得
     uint32_t surfFormatCount = uint32_t();
@@ -301,7 +301,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         DestroySwapchainInstance(oldSwapchainInstance);
     }
 
-    entity->InternalInitialize(this, swapchain, nextUniqueId);
+    entity->InternalInitialize(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages);
 
     return SwapchainHandle(entity);
 }
@@ -310,11 +310,11 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 void SwapchainMaster::DestroySwapchain(const SwapchainHandle& swapchain) {
     AE_BASE_ASSERT(swapchain.IsValid());
     auto& entity = swapchain.InternalEntity();
-    AE_BASE_ASSERT(this == &entity.swapchainMaster());
+    AE_BASE_ASSERT(this == &entity.SwapchainMaster());
 
     // 破棄
     DestroySwapchainInstance(entity.InternalInstance());
-    entity = SwapchainEntity();
+    entity.InternalFinalize();
 }
 
 //------------------------------------------------------------------------------
@@ -322,7 +322,7 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
     uint32_t uniqueId = lastAcquireUniqueId_;
     while (true) {
         ++uniqueId;
-        if (uniqueId == Swapchain::InvalidUniqueId) {
+        if (uniqueId == Swapchain::InternalInvalidUniqueId) {
             continue;
         }
         bool isFound = false;

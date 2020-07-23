@@ -334,6 +334,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\Swapchain.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\SwapchainCreateInfo.cpp">
       <SubType>
       </SubType>
