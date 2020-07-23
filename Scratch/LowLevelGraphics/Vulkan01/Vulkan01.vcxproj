@@ -218,6 +218,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageResource.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageResourceCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\PhysicalDeviceInfo.hpp">
       <SubType>
       </SubType>
@@ -235,6 +243,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\QueueKind.hpp" />
+    <ClInclude Include="ae\gfx_low\RenderTargetView.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderTargetViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\SdkHeader.hpp">
       <SubType>
       </SubType>
@@ -330,7 +346,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\ImageResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\QueueCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderTargetView.cpp">
       <SubType>
       </SubType>
     </ClCompile>

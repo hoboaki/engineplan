@@ -1,8 +1,11 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <ae/base/Placement.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/base/RuntimeArray.hpp>
+#include <ae/gfx_low/ImageResource.hpp>
+#include <ae/gfx_low/RenderTargetView.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -75,14 +78,14 @@ private:
         /// Present 処理可能状態同期用セマフォ。
         ::vk::Semaphore ReadyToPresentSemaphore;
 
-        /// Image オブジェクト。
-        ::vk::Image Image;
+        /// イメージリソース。
+        base::Placement<ImageResource> ImageResource;
 
-        /// ImageView オブジェクト。
-        ::vk::ImageView ImageView;
+        /// レンダーターゲットビュー。
+        base::Placement<RenderTargetView> RenderTargetView;
+
+        /// @todo ImageView の追加。
     };
-
-    void Reset();
 
     ::ae::base::Pointer<gfx_low::SwapchainMaster> swapchainMaster_;
     ::vk::SwapchainKHR swapchain_;

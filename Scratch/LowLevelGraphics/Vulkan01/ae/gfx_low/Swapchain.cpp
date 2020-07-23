@@ -4,6 +4,8 @@
 // includes
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/ImageResourceCreateInfo.hpp>
+#include <ae/gfx_low/RenderTargetViewCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
 #include <ae/gfx_low/System.hpp>
 
@@ -61,19 +63,15 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
                     &target.ReadyToPresentSemaphore);
                 AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
-            target.Image = swapchainImages[i];
-            {
-                auto imageViewCreateInfo =
-                    ::vk::ImageViewCreateInfo()
-                        .setImage(target.Image)
-                        .setViewType(::vk::ImageViewType::e2D)
-                        .setFormat(imageFormat)
-                        .setSubresourceRange(::vk::ImageSubresourceRange(
-                            ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
-                const auto result = device.InternalInstance().createImageView(
-                    &imageViewCreateInfo, nullptr, &target.ImageView);
-                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-            }
+            target.ImageResource.init(
+                ImageResourceCreateInfo()
+                    .SetDevice(&device)
+                    .InternalSetImagePtr(&swapchainImages[i]));
+            target.RenderTargetView.init(
+                RenderTargetViewCreateInfo()
+                    .SetDevice(&device)
+                    .SetImageResource(target.ImageResource.ptr())
+                    .InternalSetRawFormat(imageFormat));
         }
     }
     uniqueId_ = uniqueId_;
@@ -91,8 +89,8 @@ void Swapchain::InternalFinalize() {
         auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.count() - 1; 0 <= i; --i) {
             auto& target = frameProperties_[i];
-            device.InternalInstance().destroyImageView(
-                target.ImageView, nullptr);
+            target.RenderTargetView.reset();
+            target.ImageResource.reset();
             device.InternalInstance().destroySemaphore(
                 target.ReadyToPresentSemaphore, nullptr);
             device.InternalInstance().destroySemaphore(
