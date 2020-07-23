@@ -125,8 +125,10 @@
 - CommandBuffer のレベルでも特性はない。
 - CommandBuffer に対して Render, Compute, Blit それぞれの CommandEncoder を作成する。そこでようやく特性を意識することになる。
 - CommandBuffer にバッファを指定する口はない。
-- セカンダリコマンドバッファは Device.makeIndirectCommandBuffer で作成。
+- セカンダリコマンドバッファは [Device.makeIndirectCommandBuffer](https://developer.apple.com/documentation/metal/indirect_command_buffers/creating_an_indirect_command_buffer) で作成。
 - こちらは maxCount で最大コマンド数の指定が必須。
+- どうやら Encoder を使うのではなく、インデックスで取得した Command オブジェクト１つ１つに対して set していくっぽい。
+- そして呼び出しは Render なら RenderCommandEncoder の executeCommandsInBuffer で行うらしい。
 
 ## スワップチェイン生成
 
