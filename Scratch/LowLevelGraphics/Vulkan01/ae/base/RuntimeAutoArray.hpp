@@ -95,9 +95,9 @@ public:
     /// 指定番目の要素にアクセス。
     ValueType& at(const int aIndex)const
     {
-        if (mCount <= aIndex)
+        if (aIndex < 0 || mCount <= aIndex)
         {
-            AE_BASE_ASSERT_LESS(aIndex, mCount);
+            AE_BASE_ASSERT_MIN_TERM(aIndex, 0, mCount);
             return mPtr[0]; // fail safe code
         }
         return mPtr[aIndex];

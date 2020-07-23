@@ -120,8 +120,8 @@ public:
 
     /// 指定番目の要素にアクセス。
     ValueType& at(const int index) {
-        if (count_ <= index) {
-            AE_BASE_ASSERT_LESS(index, count_);
+        if (index < 0 || count_ <= index) {
+            AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0];  // fail safe code
         }
         return ptr_[index];
@@ -129,8 +129,8 @@ public:
 
     /// 指定番目の要素にアクセス。
     const ValueType& at(const int index) const {
-        if (count_ <= index) {
-            AE_BASE_ASSERT_LESS(index, count_);
+        if (index < 0 || count_ <= index) {
+            AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0];  // fail safe code
         }
         return ptr_[index];
