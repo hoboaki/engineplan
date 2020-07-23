@@ -326,13 +326,11 @@
 
 ### Vulkan
 
-- vkQueuePresentKHR() で present 処理する。引数は vkQueue と同期用（前処理終了検知用）の vkSemaphore が求められる。
+- [vkQueuePresentKHR()](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueuePresentKHR.html) で present 処理する。引数は vkQueue と同期用（前処理終了検知用）の vkSemaphore が求められる。
 - この関数は Present 予約するコマンドを積むだけでブロックはしない。
-- Present 完了同期する方法はない。 https://github.com/KhronosGroup/Vulkan-Docs/issues/370
+- Present 予約に対する同期する方法はない。 https://github.com/KhronosGroup/Vulkan-Docs/issues/370
 - [VK_PRESENT_MODE_FIFO_KHR](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPresentModeKHR.html) をみる限り、垂直同期をしつつつ Present 予約済の Swapchain の Present 完了処理をしていく。
 - Swapchain バッファが使っていい状態になっているかどうかは [vkAcquireNextImageKHR](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireNextImageKHR.html) の引数で渡す semaphore もしくは fence にシグナルが来ているかどうかで判定するらしい。
-- Present 予約がおわっているかどうかは CPU&GPU 間同期の方法でできる。
-
 
 ### DirectX 12
 
@@ -553,6 +551,44 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - 同期オブジェクトの名前はイベントで。引数値指定は Vulkan ができないのでなし。
 - キュー間同期はキューに対して Wait と Signal を登録する DX12 形式で。
 - Vulkan は Wait と Signal が呼ばれたイベントを保持しておいて Queue の present のタイミングで vkQueueSubmit する実装がよさそう。
+
+```c++
+
+computeQueue.PushCommand(cmd):
+computeQueue.PushSignal(computeSyncSem):
+computeQueue.Submit(fence: nullptr);
+
+queue.PushWait(swapchain); // Swapchain が利用可能になるまで待つ。 *1
+queue.PushCommand(cmd);
+queue.PushWait(computeSyncSem); // *2
+queue.PushCommand(cmd);
+queue.PushCommand(cmd); // 最後の drawcmd
+queue.PushPresent(swapchain);  // *3
+queue.Submit(completeFence); // これまでに Queue に詰まれたものを一気に消化 *4
+
+// *1
+// Vulkan ではここで 対象 swapchain の内部でかかえる acquire 用 Semaphore を待つ。
+// 他のライブラリでは何もしない。
+
+// *2
+// Wait のあとは１つ以上の PushCommand もしくは PushPresent を呼んでからでないと Submit() できないものとする。
+// これは Vulkan の制限に併せた仕様。
+
+// *3
+// PushPresent の Vulkan の実装メモ。
+// swapchain の抱える内部処理用 Semaphore を 直前の Execute の終わりで Signal するようにする。
+// 
+// コードのイメージ
+// queue.PushSignal(swapchain.waitSemaphore);
+// queue.PushWait()
+
+// *4
+// Vulkan は Present での Fence に対応していない。
+// そのため Submit 時に Fence が渡された場合、
+// コマンドがつまれていたらそこの終了時に Fence に Signal にとぶようにする。
+// コマンドが１つもつまれていなかったら何もできないので
+// Submit に Fence を渡すときの制約として「１つ以上のコマンドをつむ」を課す。
+```
 
 ### Vulkan
 
