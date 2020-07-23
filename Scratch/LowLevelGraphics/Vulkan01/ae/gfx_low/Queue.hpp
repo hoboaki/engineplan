@@ -38,18 +38,23 @@ public:
     /// @name 内部処理用機能
     //@{
     /// 内部処理用コンストラクタ。アプリケーション側からの呼び出しは禁止。
-    Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind type)
+    Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind type,
+        const ::vk::CommandPool& commandPool)
     : device_(base::PtrToRef(device))
     , queue_(queue)
-    , type_(type) {}
+    , type_(type)
+    , commandPool_(commandPool) {}
 
-    ::vk::Queue InternalInstance() const { return queue_; }
+    ::vk::Queue InternalInstance() { return queue_; }
+
+    ::vk::CommandPool& InternalCommandPool() { return commandPool_; }
     //@}
 
 private:
     gfx_low::Device& device_;
     ::vk::Queue queue_;
     QueueKind type_;
+    ::vk::CommandPool commandPool_;
 };
 
 }  // namespace gfx_low

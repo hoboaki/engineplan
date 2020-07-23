@@ -77,7 +77,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
         queuePriorityTable[queueKind].resize(
             queueCount, &system_.InternalTempWorkAllocator());
     }
-    const float priorityTable[int(QueuePriority::TERM)] = {-1.0f, 0.0f, 0.5f, 1.0f};
+    const float priorityTable[int(QueuePriority::TERM)] = {
+        -1.0f, 0.0f, 0.5f, 1.0f};
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto indexInQueueKind = indexInQueueKindTable[queueIdx];
         const auto priorityEnum = queueCreateInfos[queueIdx].Priority();
@@ -168,15 +169,28 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
     // Queue オブジェクト作成
     for (int i = 0; i < queueCreateCount; ++i) {
+        const auto queueFamilyIndex =
+            deviceQueueCreateInfos[i].queueFamilyIndex;
+        ::vk::CommandPool commandPool;
+        {
+            const auto createInfo =
+                ::vk::CommandPoolCreateInfo().setQueueFamilyIndex(
+                    queueFamilyIndex);
+            const auto result =
+                device_.createCommandPool(&createInfo, nullptr, &commandPool);
+            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        }
         queues_.add(this,
-            device_.getQueue(deviceQueueCreateInfos[i].queueFamilyIndex,
-                indexInQueueKindTable[i]),
-            queueCreateInfos[i].Kind());
+            device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
+            queueCreateInfos[i].Kind(), commandPool);
     }
 }
 
 //------------------------------------------------------------------------------
 Device::~Device() {
+    for (int i = queues_.count() - 1; 0 <= i; --i) {
+        device_.destroyCommandPool(queues_[i].InternalCommandPool(), nullptr);
+    }
     queues_.clear();
     device_.destroy(nullptr);
     device_ = ::vk::Device();
