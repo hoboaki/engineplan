@@ -301,7 +301,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         DestroySwapchainInstance(oldSwapchainInstance);
     }
 
-    entity->InternalInitialize(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages);
+    entity->InternalInitialize(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
 
     return SwapchainHandle(entity);
 }

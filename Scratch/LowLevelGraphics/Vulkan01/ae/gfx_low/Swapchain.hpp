@@ -34,7 +34,9 @@ public:
     /// @name プロパティ
     //@{
     /// 所属する SwapchainMaster。
-    gfx_low::SwapchainMaster& SwapchainMaster() const { return swapchainMaster_.ref(); }
+    gfx_low::SwapchainMaster& SwapchainMaster() const {
+        return swapchainMaster_.ref();
+    }
     //@}
 
     /// @name 内部処理用機能
@@ -44,7 +46,8 @@ public:
 
     /// 初期化。
     void InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
-        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int imageCount);
+        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
+        ::vk::Format imageFormat);
 
     /// 後始末。
     void InternalFinalize();
@@ -64,14 +67,19 @@ protected:
 
 private:
     /// １フレームあたりのプロパティ。
-    class FrameProperty
-    {
+    class FrameProperty {
     public:
         /// バックバッファ化同期用セマフォ。
         ::vk::Semaphore AcquireSemaphore;
 
         /// Present 処理可能状態同期用セマフォ。
         ::vk::Semaphore ReadyToPresentSemaphore;
+
+        /// Image オブジェクト。
+        ::vk::Image Image;
+
+        /// ImageView オブジェクト。
+        ::vk::ImageView ImageView;
     };
 
     void Reset();

@@ -12,21 +12,41 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-Swapchain::~Swapchain()
-{
+Swapchain::~Swapchain() {
     AE_BASE_ASSERT(!InternalIsInitialized());
 }
 
 //------------------------------------------------------------------------------
 void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
-    const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int imageCount) {
+    const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
+    ::vk::Format imageFormat) {
     AE_BASE_ASSERT(!InternalIsInitialized());
     swapchainMaster_.reset(swapchainMaster);
     swapchain_ = swapchain;
     {
         auto& device = swapchainMaster_->Device();
-        frameProperties_.resize(imageCount,
+
+        auto swapchainImageCount = uint32_t();
+        {
+            const auto result =
+                device.InternalInstance().getSwapchainImagesKHR(swapchain_,
+                    &swapchainImageCount, static_cast<::vk::Image*>(nullptr));
+            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+            AE_BASE_ASSERT_LESS(0, minImageCount);
+        }
+
+        frameProperties_.resize(int(swapchainImageCount),
             &swapchainMaster_->Device().System().InternalObjectAllocator());
+
+        base::RuntimeArray<::vk::Image> swapchainImages(
+            frameProperties_.count(),
+            &device.System().InternalTempWorkAllocator());
+        {
+            const auto result = device.InternalInstance().getSwapchainImagesKHR(
+                swapchain_, &swapchainImageCount, swapchainImages.head());
+            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        }
+
         const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
         for (int i = 0; i < frameProperties_.count(); ++i) {
             auto& target = frameProperties_[i];
@@ -37,7 +57,21 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
             }
             {
                 const auto result = device.InternalInstance().createSemaphore(
-                    &semaphoreCreateInfo, nullptr, &target.ReadyToPresentSemaphore);
+                    &semaphoreCreateInfo, nullptr,
+                    &target.ReadyToPresentSemaphore);
+                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+            }
+            target.Image = swapchainImages[i];
+            {
+                auto imageViewCreateInfo =
+                    ::vk::ImageViewCreateInfo()
+                        .setImage(target.Image)
+                        .setViewType(::vk::ImageViewType::e2D)
+                        .setFormat(imageFormat)
+                        .setSubresourceRange(::vk::ImageSubresourceRange(
+                            ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
+                const auto result = device.InternalInstance().createImageView(
+                    &imageViewCreateInfo, nullptr, &target.ImageView);
                 AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
         }
@@ -57,6 +91,8 @@ void Swapchain::InternalFinalize() {
         auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.count() - 1; 0 <= i; --i) {
             auto& target = frameProperties_[i];
+            device.InternalInstance().destroyImageView(
+                target.ImageView, nullptr);
             device.InternalInstance().destroySemaphore(
                 target.ReadyToPresentSemaphore, nullptr);
             device.InternalInstance().destroySemaphore(
