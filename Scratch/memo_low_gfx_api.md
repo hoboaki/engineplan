@@ -596,7 +596,7 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
   - セマフォ：Queue Family の制限は受けない。コマンドバッファの途中に挟めない。
   - イベント：同じ Queue Family で使用可能。コマンドバッファの途中に挟める。
 - セマフォは vkQueueSubmit の引数で開始時に待つセマフォと終了時にシグナルを出すセマフォが指定できる。
-- vkQueueSubmit は Queue に複数（0 も可能？）のコマンドバッファを登録する関数。
+- vkQueueSubmit は Queue に１つ以上のコマンドバッファを登録する関数。
 
 ### DirectX 12
 
