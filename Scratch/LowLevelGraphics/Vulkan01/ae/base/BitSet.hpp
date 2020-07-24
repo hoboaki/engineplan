@@ -44,7 +44,7 @@ struct BitSetPod
     {
         MyType result;
         for (int i = 0; i < MyType::ByteSize_; ++i) {
-            bits_[i] = 0xFF;
+            result.bits_[i] = 0xFF;
         }
         return result;
     }
