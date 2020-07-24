@@ -37,6 +37,19 @@ struct BitSetPod
     typedef BitSetPod< BitCount > MyType; ///< 自分自身の型。
     //@}
 
+    /// @name 定数プロパティ
+    //@{
+    /// 全ビット true のオブジェクトを取得。
+    static MyType AllOn() 
+    {
+        MyType result;
+        for (int i = 0; i < MyType::ByteSize_; ++i) {
+            bits_[i] = 0xFF;
+        }
+        return result;
+    }
+    //@}
+
     /// @name 全ビットの操作
     //@{
     /// 全ビットをfalseにする。

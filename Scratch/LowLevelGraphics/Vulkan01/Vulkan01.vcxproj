@@ -206,6 +206,26 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\CommandBuffer.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\CommandBufferCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\CommandBufferFeature.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\CommandBufferFeatureBitSet.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\CommandBufferLevel.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\Device.hpp">
       <SubType>
       </SubType>
@@ -342,6 +362,14 @@
     <ClCompile Include="ae\base\Vector3i.cpp" />
     <ClCompile Include="ae\base\Vector4.cpp" />
     <ClCompile Include="ae\base\Vector4i.cpp" />
+    <ClCompile Include="ae\gfx_low\CommandBuffer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\CommandBufferCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\Device.cpp">
       <SubType>
       </SubType>

@@ -10,7 +10,7 @@ enum class QueueKind {
 	/// 無効値。
 	Invalid,
 
-	/// Graphics、Compute、Copy、をサポート。
+	/// Render、Present、Compute、Copy、をサポート。
 	Normal,
 
 	/// Compute のみをサポート。
