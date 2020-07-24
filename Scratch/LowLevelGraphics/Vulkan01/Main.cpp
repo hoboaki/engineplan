@@ -5,6 +5,8 @@
 #include <ae/base/Display.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/SdkHeader.hpp>
+#include <ae/gfx_low/CommandBuffer.hpp>
+#include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
@@ -71,6 +73,13 @@ int aemain(::ae::base::Application* app) {
     }
     auto swapchain =
         swapchainMaster->CreateSwapchain(ae::gfx_low::SwapchainCreateInfo());
+
+    // CommandBuffer の作成
+    ::std::unique_ptr<::ae::gfx_low::CommandBuffer> commandBuffer(
+        new ::ae::gfx_low::CommandBuffer(
+            ::ae::gfx_low::CommandBufferCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetQueue(&queue)));
 
     return 0;
 #endif
