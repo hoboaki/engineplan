@@ -86,6 +86,12 @@ int aemain(::ae::base::Application* app) {
 
     // ループ
     while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
+        // ディスプレイが閉じてたら終了
+        if (display.isClosed()) {
+            app->quit();
+            continue;
+        }
+
         // Swapchain バッファ確保要求
         swapchain->AcquireNextImage();
 
