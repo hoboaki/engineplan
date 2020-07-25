@@ -175,7 +175,7 @@
     <ClInclude Include="ae\base\RuntimeAssert.hpp" />
     <ClInclude Include="ae\base\RuntimeAutoArray.hpp" />
     <ClInclude Include="ae\base\RuntimeError.hpp" />
-    <ClInclude Include="ae\base\RuntimeMArray.hpp" />
+    <ClInclude Include="ae\base\RuntimeMarray.hpp" />
     <ClInclude Include="ae\base\ScalerClass.hpp" />
     <ClInclude Include="ae\base\ScalerStruct.hpp" />
     <ClInclude Include="ae\base\ScalerTypes.hpp" />
@@ -375,6 +375,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\Queue.cpp">
       <SubType>
       </SubType>
     </ClCompile>

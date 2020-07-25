@@ -180,9 +180,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
                 device_.createCommandPool(&createInfo, nullptr, &commandPool);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
+        const auto& queueCreateInfo = queueCreateInfos[i];
         queues_.add(this,
             device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
-            queueCreateInfos[i].Kind(), commandPool);
+            queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(), commandPool);
     }
 }
 

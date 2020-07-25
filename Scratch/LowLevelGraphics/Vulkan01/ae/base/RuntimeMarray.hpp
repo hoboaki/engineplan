@@ -4,7 +4,7 @@
 #define AE_BASE_INCLUDED_RuntimeMarray_HPP
 
 #include <ae/base/IAllocator.hpp>
-#include <ae/base/NonCopyable.hpp>
+#include <ae/base/Noncopyable.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace base {
 //@{
 /// 実行時に最大要素数が決定する可変長配列。
 template< typename T >
-class RuntimeMarray : public ::ae::base::NonCopyable
+class RuntimeMarray : ::ae::base::Noncopyable<RuntimeMarray<T>>
 {
 public:
     /// @name typedef

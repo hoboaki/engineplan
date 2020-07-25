@@ -42,6 +42,17 @@ public:
     }
     //@}
 
+    /// @name バッファ制御
+    //@{
+    /// バックバッファの切替。
+    void AcquireNextImage();
+
+    /// アクティブなバックバッファを指す RenderTargetView を取得。
+    RenderTargetView& CurrentRenderTargetView() const {
+        return frameProperties_[currentFrameIndex_].RenderTargetView.ref();
+    }
+    //@}
+
     /// @name 内部処理用機能
     //@{
     /// 無効な UniqueId 値。
@@ -91,7 +102,7 @@ private:
     ::vk::SwapchainKHR swapchain_;
     ::ae::base::RuntimeArray<FrameProperty> frameProperties_;
     uint32_t uniqueId_ = InternalInvalidUniqueId;
-    int currentFrameIndex_ = int();
+    int currentFrameIndex_ = int(); // 初期化直後は負の値が入っている
 };
 
 }  // namespace gfx_low

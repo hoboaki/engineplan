@@ -2,6 +2,7 @@
 #include <ae/gfx_low/Swapchain.hpp>
 
 // includes
+#include <ae/base/Math.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
@@ -16,6 +17,21 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 Swapchain::~Swapchain() {
     AE_BASE_ASSERT(!InternalIsInitialized());
+}
+
+//------------------------------------------------------------------------------
+void Swapchain::AcquireNextImage() {
+    AE_BASE_ASSERT(InternalIsInitialized());
+    auto& device = swapchainMaster_->Device();
+    { 
+        currentFrameIndex_ = base::Math::Clamp(currentFrameIndex_, 0, frameProperties_.count() - 1);
+        auto currentBufferIdxUint = uint32_t();
+        auto result = device.InternalInstance().acquireNextImageKHR(swapchain_,
+            UINT64_MAX, frameProperties_[currentFrameIndex_].AcquireSemaphore,
+            ::vk::Fence(), &currentBufferIdxUint);
+        AE_BASE_ASSERT(result == vk::Result::eSuccess);
+        AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -75,7 +91,7 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
         }
     }
     uniqueId_ = uniqueId_;
-    currentFrameIndex_ = 0;
+    currentFrameIndex_ = -1;
     AE_BASE_ASSERT(InternalIsInitialized());
 }
 
