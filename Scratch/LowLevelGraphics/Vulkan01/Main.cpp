@@ -9,7 +9,9 @@
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
+#include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
+#include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
 #include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
@@ -53,7 +55,8 @@ int aemain(::ae::base::Application* app) {
         queueCreateInfos[0] =
             ::ae::gfx_low::QueueCreateInfo()
                 .SetKind(::ae::gfx_low::QueueKind::Normal)
-                .SetPriority(::ae::gfx_low::QueuePriority::Normal);
+                .SetPriority(::ae::gfx_low::QueuePriority::Normal)
+                .SetOperationCountMax(32);
 
         // Device の作成
         gfxLowDevice.reset(new ::ae::gfx_low::Device(
@@ -80,6 +83,21 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::CommandBufferCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetQueue(&queue)));
+
+    // ループ
+    while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
+        // Swapchain バッファ確保要求
+        swapchain->AcquireNextImage();
+
+        // Swapchain バッファ確保同期
+        queue.PushSwapchainWait(&swapchain.Ref());
+
+        // Swapchain 提出
+        queue.PushSwapchainPresent(&swapchain.Ref());
+
+        /// GPU送信
+        queue.Submit(nullptr);
+    }
 
     return 0;
 #endif
