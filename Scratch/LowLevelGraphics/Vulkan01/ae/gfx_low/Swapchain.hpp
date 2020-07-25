@@ -4,6 +4,7 @@
 #include <ae/base/Placement.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/base/RuntimeArray.hpp>
+#include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/RenderTargetView.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
@@ -84,10 +85,10 @@ private:
     class FrameProperty {
     public:
         /// バックバッファ化同期用セマフォ。
-        ::vk::Semaphore AcquireSemaphore;
+        base::Placement<Event> AcquireSemaphore;
 
         /// Present 処理可能状態同期用セマフォ。
-        ::vk::Semaphore ReadyToPresentSemaphore;
+        base::Placement<Event> ReadyToPresentSemaphore;
 
         /// イメージリソース。
         base::Placement<ImageResource> ImageResource;

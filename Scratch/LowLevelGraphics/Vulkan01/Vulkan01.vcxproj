@@ -234,6 +234,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\Event.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\EventCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\Format.hpp">
       <SubType>
       </SubType>
@@ -371,6 +379,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\Device.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\Event.cpp">
       <SubType>
       </SubType>
     </ClCompile>

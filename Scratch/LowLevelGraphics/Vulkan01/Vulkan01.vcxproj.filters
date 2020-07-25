@@ -432,6 +432,12 @@
     <ClInclude Include="ae\base\RuntimeMarray.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\Event.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\EventCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc">
@@ -649,6 +655,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\Queue.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\Event.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
