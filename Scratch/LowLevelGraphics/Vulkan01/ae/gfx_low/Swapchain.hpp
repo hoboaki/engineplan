@@ -45,7 +45,10 @@ public:
 
     /// @name バッファ制御
     //@{
-    /// バックバッファの切替。
+    /// 新しいバックバッファの要求をする。
+    /// @details
+    /// この関数が呼ばれるとアクティブなバックバッファが新しいものに切り替わります。
+    /// 本関数を呼んだあと、Queue::PushSwapchainWait() を必ず呼ぶようにしてください。
     void AcquireNextImage();
 
     /// アクティブなバックバッファを指す RenderTargetView を取得。
