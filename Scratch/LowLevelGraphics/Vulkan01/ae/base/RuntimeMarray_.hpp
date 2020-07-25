@@ -1,7 +1,7 @@
 // 文字コード：UTF-8
-#if defined(AE_BASE_INCLUDED_RUNTIMEMARRAY_HPP)
+#if defined(AE_BASE_INCLUDED_RuntimeMarray_HPP)
 #else
-#define AE_BASE_INCLUDED_RUNTIMEMARRAY_HPP
+#define AE_BASE_INCLUDED_RuntimeMarray_HPP
 
 #include <ae/base/IAllocator.hpp>
 #include <ae/base/NonCopyable.hpp>
@@ -15,7 +15,7 @@ namespace base {
 //@{
 /// 実行時に最大要素数が決定する可変長配列。
 template< typename T >
-class RuntimeMArray : public ::ae::base::NonCopyable
+class RuntimeMarray : public ::ae::base::NonCopyable
 {
 public:
     /// @name typedef
@@ -31,7 +31,7 @@ public:
     /// @param aAllocator 配列データを確保する際に使用するアロケータ。
     /// @details 
     /// 配列長が0の場合、アロケートは走りません。
-    RuntimeMArray(int aCountMax, IAllocator& aAllocator = IAllocator::Default())
+    RuntimeMarray(int aCountMax, IAllocator& aAllocator = IAllocator::Default())
         : mAllocator(aAllocator)
         , mCountMax(aCountMax)
         , mCount(0)
@@ -44,7 +44,7 @@ public:
     }
 
     /// デストラクタ。
-    ~RuntimeMArray()
+    ~RuntimeMarray()
     {
         if (mPtr != 0)
         {

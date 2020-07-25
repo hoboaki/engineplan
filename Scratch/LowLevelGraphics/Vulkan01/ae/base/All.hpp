@@ -9,7 +9,7 @@
 #include <ae/base/BitSet.hpp>
 #include <ae/base/RuntimeArray.hpp>
 #include <ae/base/RuntimeAutoArray.hpp>
-#include <ae/base/RuntimeMArray.hpp>
+#include <ae/base/RuntimeMarray.hpp>
 
 /// @defgroup AeBase-Env AeBase:環境情報
 #include <ae/base/Compiler.hpp>
