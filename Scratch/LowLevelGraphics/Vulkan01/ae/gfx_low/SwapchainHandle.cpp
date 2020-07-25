@@ -24,8 +24,7 @@ bool SwapchainHandle::IsValid() const {
 }
 
 //------------------------------------------------------------------------------
-Swapchain& SwapchainHandle::operator->() const
-{
+Swapchain& SwapchainHandle::Ref() const {
     AE_BASE_ASSERT(IsValid());
     return entity_.ref();
 }

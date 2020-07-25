@@ -134,6 +134,9 @@ void Queue::Submit(Fence* fencePtr) {
             AE_BASE_ASSERT(
                 opIdx + 1 ==
                 operations_.count());  // 今は最後しかサポートしていない
+
+            // Wait をクリア
+            waitEvents_.clear();
         } break;
 
         case OperationKind::EventWait:
@@ -152,6 +155,9 @@ void Queue::Submit(Fence* fencePtr) {
                 "Non supported operation kind (%d).", op.kind);
         }
     }
+
+    // クリア
+    operations_.clear();
 }
 
 }  // namespace gfx_low

@@ -39,9 +39,15 @@ public:
     bool IsValid() const;
     //@}
 
+    /// @name アクセス（IsValid() なときのみアクセス可能）
+    //@{
+    Swapchain& Ref() const;
+    //@}
+
     /// @name アクセス演算子（IsValid() なときのみアクセス可能）
     //@{
-    Swapchain& operator->() const;
+    Swapchain* operator->() const { return &Ref(); }
+    Swapchain& operator*() const { return Ref(); }
     //@}
 
     /// @name 内部処理用機能
