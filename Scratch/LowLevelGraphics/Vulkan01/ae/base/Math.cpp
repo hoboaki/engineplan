@@ -16,8 +16,8 @@ const float tEPSILON = 0.000001f;
 }
 //------------------------------------------------------------------------------
 f32 Math::ClampF32(
-    const f32 aMin,
     const f32 aValue,
+    const f32 aMin,
     const f32 aMax
     )
 {
@@ -33,8 +33,8 @@ f32 Math::ClampF32(
 
 //------------------------------------------------------------------------------
 bool Math::IsInRangeF32(
-    const f32 aMin,
     const f32 aValue,
+    const f32 aMin,
     const f32 aMax
     )
 {
@@ -45,7 +45,7 @@ bool Math::IsInRangeF32(
 //------------------------------------------------------------------------------
 bool Math::IsEqualsF32(const f32 aVal1, const f32 aVal2)
 {
-    return IsInRangeF32(aVal2, aVal1, aVal2);
+    return IsInRangeF32(aVal1, aVal2, aVal2);
 }
 
 //------------------------------------------------------------------------------

@@ -59,16 +59,33 @@ struct Math
     //============================================================
     /// @name 範囲
     //@{
-    /// @brief クランプする。
+    /// @brief 汎用的なクランプ。
     /// @return aMin <= result <= aMax
+    /// @param aValue 対象となる値。
     /// @param aMin 最小値。
     /// @param aMax 最大値。
+    template <typename T>
+    static T Clamp(T aValue, T aMin, T aMax)
+    { 
+        AE_BASE_ASSERT_LESS_EQUALS(aMin, aMax);
+        if (aValue < aMin) {
+            return aMin;
+        } else if (aMax < aValue) {
+            return aMax;
+        }
+        return aValue;
+    }
+
+    /// @brief クランプする。
+    /// @return aMin <= result <= aMax
     /// @param aValue 対象となる値。
-    static f32 ClampF32(f32 aMin, f32 aValue, f32 aMax);
+    /// @param aMin 最小値。
+    /// @param aMax 最大値。
+    static f32 ClampF32(f32 aValue, f32 aMin, f32 aMax);
 
     /// @brief 範囲内の値か。
     /// @return aMin <= aValue <= aMax ならtrue。
-    static bool IsInRangeF32(f32 aMin, f32 aValue, f32 aMax);
+    static bool IsInRangeF32(f32 aValue, f32 aMin, f32 aMax);
     //@}
 
     //============================================================
