@@ -52,7 +52,11 @@ public:
     Queue& PushSwapchainWait(Swapchain* swapchain);
 
     /// Swapchain で Acquire したバッファを Screen に転送要求を出す。
-    Queue& PushSwapchainPresent();
+    /// @param swapchain PushSwapchainWait で渡した swapchain オブジェクト。
+    /// @details
+    /// Present を呼んだあとは Submit() するまで PushCommandBuffer() が呼べない制約があります。
+    /// また、Present を呼ぶ前は PushSwapchainWait() を呼んでおく必要があります。
+    Queue& PushSwapchainPresent(Swapchain* swapchain);
     //@}
 
     /// @name 同期操作
@@ -61,14 +65,16 @@ public:
     Queue& PushEventWait(Event* event);
 
     /// 指定の Event オブジェクトにシグナルを送信する。
+    /// @details
+    /// これを呼ぶ前に１回以上の PushCommandExecute() を呼ぶ必要があります。
     Queue& PushEventSignal(Event* event);
     //@}
 
     /// @name 送信
     //@{
-    /// 追加済の操作を GPU に送信する。
+    /// 追加済の全操作を GPU に送信する。
     /// @param fencePtr 全操作が終了したときに Signal が送信される Fence オブジェクト。nullptr を指定した場合は何もしない。
-    Queue& Submit(Fence* fencePtr);
+    void Submit(Fence* fencePtr);
     //@}
 
     /// @name 内部処理用機能
@@ -88,6 +94,7 @@ private:
     enum class OperationKind
     {
         Invalid,
+        SwapchainWait,
         SwapchainPresent,
         EventWait,
         EventSignal,
@@ -98,17 +105,15 @@ private:
     struct Operation
     {
         OperationKind kind;
-        union
-        {
-            CommandBuffer* commandBuffer;
-            Event* event;
-        };
+        void* ptr;
     };
 
     gfx_low::Device& device_;
     ::vk::Queue queue_;
     const QueueKind kind_;
     base::RuntimeMarray<Operation> operations_;
+    base::RuntimeMarray<::vk::Semaphore> waitEvents_;
+    base::RuntimeMarray<::vk::Semaphore> signalEvents_;
     ::vk::CommandPool commandPool_;
 };
 

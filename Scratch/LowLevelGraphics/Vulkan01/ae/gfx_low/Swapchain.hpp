@@ -72,6 +72,16 @@ public:
 
     ::vk::SwapchainKHR InternalInstance() const { return swapchain_; }
 
+    Event& InternalCurrentAcquireEvent() {
+        return *frameProperties_[currentFrameIndex_].AcquireEvent;
+    }
+
+    Event& InternalCurrentReadyToPresentEvent() {
+        return *frameProperties_[currentFrameIndex_].ReadyToPresentEvent;
+    }
+
+    int InternalCurrentBufferIndex() const { return currentFrameIndex_; }
+
     /// ユニークID。古くなった Handle の Valid 判定で使う。
     uint32_t InternalUniqueId() const { return uniqueId_; }
     //@}
@@ -84,11 +94,11 @@ private:
     /// １フレームあたりのプロパティ。
     class FrameProperty {
     public:
-        /// バックバッファ化同期用セマフォ。
-        base::Placement<Event> AcquireSemaphore;
+        /// バックバッファ化同期用イベント。
+        base::Placement<Event> AcquireEvent;
 
-        /// Present 処理可能状態同期用セマフォ。
-        base::Placement<Event> ReadyToPresentSemaphore;
+        /// Present 処理可能状態同期用イベント。
+        base::Placement<Event> ReadyToPresentEvent;
 
         /// イメージリソース。
         base::Placement<ImageResource> ImageResource;

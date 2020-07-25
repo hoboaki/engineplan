@@ -28,7 +28,7 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ = base::Math::Clamp(currentFrameIndex_, 0, frameProperties_.count() - 1);
         auto currentBufferIdxUint = uint32_t();
         auto result = device.InternalInstance().acquireNextImageKHR(swapchain_,
-            UINT64_MAX, frameProperties_[currentFrameIndex_].AcquireSemaphore->InternalInstance(),
+            UINT64_MAX, frameProperties_[currentFrameIndex_].AcquireEvent->InternalInstance(),
             ::vk::Fence(), &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
@@ -69,8 +69,8 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
         const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
         for (int i = 0; i < frameProperties_.count(); ++i) {
             auto& target = frameProperties_[i];
-            target.AcquireSemaphore.init(EventCreateInfo().SetDevice(&device));
-            target.ReadyToPresentSemaphore.init(EventCreateInfo().SetDevice(&device));
+            target.AcquireEvent.init(EventCreateInfo().SetDevice(&device));
+            target.ReadyToPresentEvent.init(EventCreateInfo().SetDevice(&device));
             target.ImageResource.init(
                 ImageResourceCreateInfo()
                     .SetDevice(&device)
@@ -99,8 +99,8 @@ void Swapchain::InternalFinalize() {
             auto& target = frameProperties_[i];
             target.RenderTargetView.reset();
             target.ImageResource.reset();
-            target.ReadyToPresentSemaphore.reset();
-            target.AcquireSemaphore.reset();
+            target.ReadyToPresentEvent.reset();
+            target.AcquireEvent.reset();
         }
     }
     swapchain_ = ::vk::SwapchainKHR();
