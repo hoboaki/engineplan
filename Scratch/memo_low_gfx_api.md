@@ -300,9 +300,34 @@
 
 ## レンダターゲット
 
-- Vulkan のことも考慮して RenderTargetSet 的なオブジェクトで指定できるようにする。
+- Vulkan のことも考慮して FrameBufferSet 的なオブジェクトで指定できるようにする。
 - イメージビューではなくレンダーターゲットビュー＆デプスステンシルビューで設定。
-- パイプライン設定でレンダーターゲット構成を宣言しないといけないので，構成は RenderTargetSetLayout 的なもので定義。
+- パイプライン設定でレンダーターゲット構成を宣言しないといけないので，構成は FrameBufferSetLayout 的なもので定義。
+
+```yml
+# クラス設計
+
+# 構成（パイプラインでも求められるもの）
+RenderPassLayout
+- FrameBufferSetLayout
+  - ColorAttachmentLayout
+  - DepthStencilAttachmentLayout
+
+# BeginRenderPass に渡す情報
+RenderPass
+- RenderPassLayout
+- FrameBufferSet
+  - ColorAttachment[]
+    - ColorAttachmentImageView
+    - InitialImageResourceState
+    - FinalImageResourceState
+    - ClearSetting
+  - DepthStencilAttachment
+    - DepthStencilAttachmentImageView
+    - InitialImageResourceState
+    - FinalImageResourceState
+    - ClearSetting
+``` 
 
 ### Vulkan
 
