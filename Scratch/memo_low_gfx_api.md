@@ -313,7 +313,7 @@ RenderPassSpecInfo
 - DepthStencilSpecInfo
 
 # BeginRenderPass に渡す情報
-BeginRenderPassInfo
+RenderPassBeginInfo
 - RenderPassSpecInfo
 - RenderTargetSetting[]
   - RenderTargetImageView
