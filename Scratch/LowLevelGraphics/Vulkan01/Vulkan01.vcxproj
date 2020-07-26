@@ -275,7 +275,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\QueueKind.hpp" />
-    <ClInclude Include="ae\gfx_low\RenderPassSpec.hpp">
+    <ClInclude Include="ae\gfx_low\RenderPassSpecInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -287,7 +287,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\RenderTargetSpec.hpp">
+    <ClInclude Include="ae\gfx_low\RenderTargetSpecInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -410,7 +410,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\RenderPassSpec.cpp">
+    <ClCompile Include="ae\gfx_low\RenderPassSpecInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -418,7 +418,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\RenderTargetSpec.cpp">
+    <ClCompile Include="ae\gfx_low\RenderTargetSpecInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

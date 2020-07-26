@@ -1,13 +1,13 @@
 // 文字コード：UTF-8
 #include <ae/base/RuntimeAssert.hpp>
-#include <ae/gfx_low/RenderTargetSpec.hpp>
+#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-RenderTargetSpec& RenderTargetSpec::SetFormat(const gfx_low::Format format) {
+RenderTargetSpecInfo& RenderTargetSpecInfo::SetFormat(const gfx_low::Format format) {
     AE_BASE_ASSERT_ENUM(format, Format);
     AE_BASE_ASSERT(format != gfx_low::Format::Invalid);
     format_ = format;

@@ -9,7 +9,7 @@ namespace ae {
 namespace gfx_low {
 
 /// RenderTarget の仕様情報。
-class RenderTargetSpec {
+class RenderTargetSpecInfo {
 public:
     /// @name プロパティ
     //@{
@@ -17,7 +17,7 @@ public:
     gfx_low::Format Format() const { return format_; }
 
     /// Format() の設定。 
-    RenderTargetSpec& SetFormat(const gfx_low::Format format);
+    RenderTargetSpecInfo& SetFormat(const gfx_low::Format format);
     //@}
 
     /// @name 内部処理用機能群
@@ -26,7 +26,7 @@ public:
     ::vk::Format InternalNativeFormat() const { return nativeFormat_; }
 
     /// NativeFormat() 設定。 
-    RenderTargetSpec& InternalSetNativeFormat(::vk::Format format)
+    RenderTargetSpecInfo& InternalSetNativeFormat(::vk::Format format)
     {
         nativeFormat_ = format;
         return *this;

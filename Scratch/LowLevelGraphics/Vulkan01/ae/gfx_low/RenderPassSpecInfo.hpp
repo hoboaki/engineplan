@@ -2,12 +2,12 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
-#include <ae/gfx_low/RenderTargetSpec.hpp>
+#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <array>
 
 namespace ae {
 namespace gfx_low {
-class RenderTargetSpec;
+class RenderTargetSpecInfo;
 }
 }  // namespace ae
 
@@ -16,7 +16,7 @@ namespace ae {
 namespace gfx_low {
 
 /// RenderPass の仕様情報。
-class RenderPassSpec {
+class RenderPassSpecInfo {
 public:
     /// @name プロパティ
     //@{
@@ -25,25 +25,25 @@ public:
 
     /// RenderTargetCount() の設定。
     /// @param renderTargetCount 0 以上。
-    RenderPassSpec& SetRenderTargetCount(int renderTargetCount);
+    RenderPassSpecInfo& SetRenderTargetCount(int renderTargetCount);
 
     /// 全 RenderTarget の仕様情報がある配列の先頭アドレス。（初期値：nullptr）
-    const RenderTargetSpec* RenderTargetSpecs() const {
-        return renderTargetSpecs_.get();
+    const RenderTargetSpecInfo* RenderTargetSpecInfos() const {
+        return RenderTargetSpecInfos_.get();
     }
 
     /// RenderTarget の数と仕様の設定。
-    RenderPassSpec& SetRenderTargetSpecs(
-        const RenderTargetSpec* renderTargetSpecs)
+    RenderPassSpecInfo& SetRenderTargetSpecInfos(
+        const RenderTargetSpecInfo* RenderTargetSpecInfos)
     {
-        renderTargetSpecs_.reset(renderTargetSpecs);
+        RenderTargetSpecInfos_.reset(RenderTargetSpecInfos);
         return *this;
     }
     //@}
 
 private:
     int renderTargetCount_ = 0;
-    base::Pointer<const RenderTargetSpec> renderTargetSpecs_;
+    base::Pointer<const RenderTargetSpecInfo> RenderTargetSpecInfos_;
 };
 
 }  // namespace gfx_low

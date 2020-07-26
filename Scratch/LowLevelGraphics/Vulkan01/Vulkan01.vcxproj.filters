@@ -441,10 +441,10 @@
     <ClInclude Include="ae\gfx_low\RenderTargetImageViewCreateInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\RenderPassSpec.hpp">
+    <ClInclude Include="ae\gfx_low\RenderPassSpecInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\RenderTargetSpec.hpp">
+    <ClInclude Include="ae\gfx_low\RenderTargetSpecInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -669,10 +669,10 @@
     <ClCompile Include="ae\gfx_low\RenderTargetImageView.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\RenderTargetSpec.cpp">
+    <ClCompile Include="ae\gfx_low\RenderPassSpecInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\RenderPassSpec.cpp">
+    <ClCompile Include="ae\gfx_low\RenderTargetSpecInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
