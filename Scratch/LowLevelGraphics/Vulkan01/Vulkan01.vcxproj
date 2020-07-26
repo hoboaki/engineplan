@@ -275,11 +275,11 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\QueueKind.hpp" />
-    <ClInclude Include="ae\gfx_low\RenderTargetView.hpp">
+    <ClInclude Include="ae\gfx_low\RenderTargetImageView.hpp">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\RenderTargetViewCreateInfo.hpp">
+    <ClInclude Include="ae\gfx_low\RenderTargetImageViewCreateInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -402,7 +402,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\RenderTargetView.cpp">
+    <ClCompile Include="ae\gfx_low\RenderTargetImageView.cpp">
       <SubType>
       </SubType>
     </ClCompile>

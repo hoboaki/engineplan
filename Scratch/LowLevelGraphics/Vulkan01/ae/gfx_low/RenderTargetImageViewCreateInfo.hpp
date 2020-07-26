@@ -15,13 +15,13 @@ class ImageResource;
 namespace ae {
 namespace gfx_low {
 
-/// RenderTargetView オブジェクト作成に必要な情報。
-class RenderTargetViewCreateInfo {
+/// RenderTargetImageView オブジェクト作成に必要な情報。
+class RenderTargetImageViewCreateInfo {
 public:
     /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
     //@{
     gfx_low::Device* Device() const { return device_.get(); }
-    RenderTargetViewCreateInfo& SetDevice(gfx_low::Device* system) {
+    RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* system) {
         device_.reset(system);
         return *this;
     }
@@ -30,7 +30,7 @@ public:
     /// @name 対象となる ImageResource のポインタ（設定必須、初期値：nullptr）
     //@{
     gfx_low::ImageResource* ImageResource() const { return imageResource_.get(); }
-    RenderTargetViewCreateInfo& SetImageResource(gfx_low::ImageResource* system) {
+    RenderTargetImageViewCreateInfo& SetImageResource(gfx_low::ImageResource* system) {
         imageResource_.reset(system);
         return *this;
     }
@@ -40,7 +40,7 @@ public:
     //@{
     /// Vulkan ライブラリのフォーマット。こちらが指定されている場合は Format() よりも優先して使う。
     ::vk::Format InternalRawFormat() const { return rawFormat_; }
-    RenderTargetViewCreateInfo& InternalSetRawFormat(::vk::Format rawFormat) {
+    RenderTargetImageViewCreateInfo& InternalSetRawFormat(::vk::Format rawFormat) {
         rawFormat_ = rawFormat;
         return *this;
     }

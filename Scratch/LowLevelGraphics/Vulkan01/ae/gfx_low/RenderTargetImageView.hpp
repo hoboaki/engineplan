@@ -6,7 +6,7 @@
 namespace ae {
 namespace gfx_low {
 class Device;
-class RenderTargetViewCreateInfo;
+class RenderTargetImageViewCreateInfo;
 }
 }  // namespace ae
 
@@ -14,13 +14,13 @@ class RenderTargetViewCreateInfo;
 namespace ae {
 namespace gfx_low {
 
-/// レンダリングパイプラインにおける１枚の描画対象を扱うデスクリプタ。
-class RenderTargetView {
+/// レンダリングパイプラインにおける１枚の描画対象を扱うビューデスクリプタ。
+class RenderTargetImageView {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    RenderTargetView(const RenderTargetViewCreateInfo& createInfo);
-    ~RenderTargetView();
+    RenderTargetImageView(const RenderTargetImageViewCreateInfo& createInfo);
+    ~RenderTargetImageView();
     //@}
 
     /// @name プロパティ

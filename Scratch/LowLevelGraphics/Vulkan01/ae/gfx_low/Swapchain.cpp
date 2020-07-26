@@ -7,7 +7,7 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
-#include <ae/gfx_low/RenderTargetViewCreateInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
 #include <ae/gfx_low/System.hpp>
 
@@ -81,8 +81,8 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
                 ImageResourceCreateInfo()
                     .SetDevice(&device)
                     .InternalSetImagePtr(&swapchainImages[i]));
-            target.RenderTargetView.init(
-                RenderTargetViewCreateInfo()
+            target.RenderTargetImageView.init(
+                RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
                     .SetImageResource(target.ImageResource.ptr())
                     .InternalSetRawFormat(imageFormat));
@@ -103,7 +103,7 @@ void Swapchain::InternalFinalize() {
         auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.count() - 1; 0 <= i; --i) {
             auto& target = frameProperties_[i];
-            target.RenderTargetView.reset();
+            target.RenderTargetImageView.reset();
             target.ImageResource.reset();
             target.ReadyToPresentEvent.reset();
             target.AcquireEvent.reset();

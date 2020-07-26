@@ -1,18 +1,18 @@
 // 文字コード：UTF-8
-#include <ae/gfx_low/RenderTargetView.hpp>
+#include <ae/gfx_low/RenderTargetImageView.hpp>
 
 // includes
 #include <ae/base/PtrToRef.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
-#include <ae/gfx_low/RenderTargetViewCreateInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-RenderTargetView::RenderTargetView(const RenderTargetViewCreateInfo& createInfo)
+RenderTargetImageView::RenderTargetImageView(const RenderTargetImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , imageView_() {
     // 今は RawFormat しか対応しない
@@ -33,7 +33,7 @@ RenderTargetView::RenderTargetView(const RenderTargetViewCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-RenderTargetView::~RenderTargetView() {
+RenderTargetImageView::~RenderTargetImageView() {
     device_.InternalInstance().destroyImageView(imageView_, nullptr);
 }
 

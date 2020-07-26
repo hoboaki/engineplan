@@ -19,7 +19,7 @@ namespace gfx_low {
 /// @details
 /// イメージリソースはイメージのメモリ領域にまつわる機能を提供します。
 /// イメージリソースを GPU から識別できるようにするには
-/// 追加で ImageView や RenderTargetView 等のオブジェクトが必要です。
+/// 追加で ImageView や RenderTargetImageView 等のオブジェクトが必要です。
 class ImageResource
 {
 public:

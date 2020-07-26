@@ -6,7 +6,7 @@
 #include <ae/base/RuntimeArray.hpp>
 #include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
-#include <ae/gfx_low/RenderTargetView.hpp>
+#include <ae/gfx_low/RenderTargetImageView.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -51,9 +51,9 @@ public:
     /// 本関数を呼んだあと、Queue::PushSwapchainWait() を必ず呼ぶようにしてください。
     void AcquireNextImage();
 
-    /// アクティブなバックバッファを指す RenderTargetView を取得。
-    RenderTargetView& CurrentRenderTargetView() const {
-        return frameProperties_[currentFrameIndex_].RenderTargetView.ref();
+    /// アクティブなバックバッファを指す RenderTargetImageView を取得。
+    RenderTargetImageView& CurrentRenderTargetImageView() const {
+        return frameProperties_[currentFrameIndex_].RenderTargetImageView.ref();
     }
     //@}
 
@@ -107,7 +107,7 @@ private:
         base::Placement<ImageResource> ImageResource;
 
         /// レンダーターゲットビュー。
-        base::Placement<RenderTargetView> RenderTargetView;
+        base::Placement<RenderTargetImageView> RenderTargetImageView;
 
         /// @todo ImageView の追加。
     };
