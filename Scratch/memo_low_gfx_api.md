@@ -308,13 +308,13 @@
 # クラス設計
 
 # 仕様（パイプラインでも求められるもの）
-RenderPassSpec
-- RenderTargetSpec[]
-- DepthStencilSpec
+RenderPassSpecInfo
+- RenderTargetSpecInfo[]
+- DepthStencilSpecInfo
 
 # BeginRenderPass に渡す情報
-RenderPass
-- RenderPassLayout
+BeginRenderPassInfo
+- RenderPassSpecInfo
 - RenderTargetSetting[]
   - RenderTargetImageView
   - InitialImageResourceState
@@ -325,6 +325,7 @@ RenderPass
   - InitialImageResourceState
   - FinalImageResourceState
   - ClearSetting
+- RenderArea
 ``` 
 
 ### Vulkan
