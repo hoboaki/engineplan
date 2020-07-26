@@ -706,16 +706,19 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 - Queue の submit 時の引数で１つ指定。
 - vkWaitForFences で待ち，vkResetFences でリセット。これらは複数の vkFence が指定可能。
 - vkFence は DirectX12 のように値を渡す仕組みはない。
+- タイムアウトは nsec 単位で指定が可能。
 
 ### DirectX 12
 
 - フェンス。
 - ID3D12CommandQueue.Signal() でシグナルが詰める。引数で値も渡せる。
 - ID3D12Fence.SetEventOnCompletion() で待機用に使う Event オブジェクト指定。指定の値がきたら Event にシグナルが送信される。
+- WaitForSingleObject() で待つ。タイムアウトは msec 単位で指定。
 
 ### Metal
 
 - [MTLCommandBuffer.waitUntilCompleted()](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) で待つ。
+- タイムアウトの指定はないが、addCompletedHandler によるコールバックを使うことでシグナルできればタイムアウトっぽいことができる。
 
 # 最適化
 
