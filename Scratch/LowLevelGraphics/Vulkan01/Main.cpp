@@ -98,7 +98,7 @@ int aemain(::ae::base::Application* app) {
                                .SetDevice(gfxLowDevice.get()));
     }
 
-    // ループ
+    // メインループ
     int bufferIndex = 0;
     while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
