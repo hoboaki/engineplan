@@ -206,6 +206,18 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\AttachmentLoadOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\AttachmentStoreOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPassBeginInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\CommandBuffer.hpp">
       <SubType>
       </SubType>
@@ -284,6 +296,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderTargetImageViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderTargetSetting.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -415,6 +431,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderTargetImageView.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderTargetSetting.cpp">
       <SubType>
       </SubType>
     </ClCompile>
