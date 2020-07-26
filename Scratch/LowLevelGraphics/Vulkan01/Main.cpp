@@ -9,6 +9,8 @@
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
+#include <ae/gfx_low/Fence.hpp>
+#include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
@@ -88,6 +90,14 @@ int aemain(::ae::base::Application* app) {
                 .SetQueue(&queue));
     }
 
+    // Fence の作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::Fence> fences(
+        swapchainImageCount);
+    for (int i = 0; i < fences.countMax(); ++i) {
+        fences.add(::ae::gfx_low::FenceCreateInfo()
+                               .SetDevice(gfxLowDevice.get()));
+    }
+
     // ループ
     int bufferIndex = 0;
     while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
@@ -99,6 +109,10 @@ int aemain(::ae::base::Application* app) {
 
         // Swapchain バッファ確保要求
         swapchain->AcquireNextImage();
+
+        // 終了保証
+        auto& fence = fences[bufferIndex];
+        fence.Wait();
 
         // コマンドバッファ作成
         auto& cmd = commandBuffers[bufferIndex];
@@ -117,7 +131,7 @@ int aemain(::ae::base::Application* app) {
         queue.PushSwapchainPresent(&swapchain.Ref());
 
         // GPU送信
-        queue.Submit(nullptr);
+        queue.Submit(&fence);
 
         // バッファを進める
         bufferIndex = (bufferIndex + 1) % swapchainImageCount;

@@ -16,8 +16,8 @@ namespace gfx_low {
 
 /// GPU 内での同期を実現するクラス。
 /// @details
-/// Queue::PushEventSignal() と Queue::PushEventWait() の関数を使って
-/// GPU 内での同期を実現する際に使うクラスで、主に複数 Queue 間での同期に使われます。
+/// Event は GPU 内での同期を実現する際に使うクラスで、主に複数 Queue 間での同期に使われます。
+/// Queue::PushEventSignal() と Queue::PushEventWait() の関数を使って同期処理を行います。
 ///
 /// Wait は Signal を受信するまでこれ以降の処理は行わないことを表します。
 /// Signal と Wait は１対１に対応しており、多対１や１対多には対応していません。

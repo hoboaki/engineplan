@@ -6,6 +6,7 @@
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/Event.hpp>
+#include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/System.hpp>
 
@@ -170,8 +171,18 @@ void Queue::Submit(Fence* fencePtr) {
                 if (nextOp.kind == OperationKind::EventSignal) {
                     signalEvents_.add(
                         static_cast<Event*>(nextOp.ptr)->InternalInstance());
-                    nextOp.kind = OperationKind::NoOperation; // 処理したので NoOperation に変更
+                    nextOp.kind =
+                        OperationKind::NoOperation;  // 処理したので NoOperation
+                                                     // に変更
                 }
+            }
+
+            // Fence 選択＆事前処理
+            ::vk::Fence nativeFence;
+            if (fencePtr != nullptr) {
+                auto& fence = base::PtrToRef(fencePtr);
+                nativeFence = fence.InternalInstance();
+                fence.InternalOnSubmit();
             }
 
             // 送信
@@ -191,26 +202,8 @@ void Queue::Submit(Fence* fencePtr) {
                                               ? nullptr
                                               : &signalEvents_.first());
             {
-                // @todo fence 対応
-                AE_BASE_ASSERT(fencePtr == nullptr);
-                ::vk::Fence fence;
-                {
-                    auto fenceCreateInfo = ::vk::FenceCreateInfo();
-                    const auto result = device_.InternalInstance().createFence(
-                        &fenceCreateInfo, nullptr, &fence);
-                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-                }
-                {
-                    const auto result = queue_.submit(1, &submitInfo, fence);
-                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-                }
-                { 
-                    const auto result =
-                        device_.InternalInstance().waitForFences(
-                            1, &fence, VK_TRUE, UINT64_MAX);
-                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-                    device_.InternalInstance().destroyFence(fence, nullptr);
-                }
+                const auto result = queue_.submit(1, &submitInfo, nativeFence);
+                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
 
             // 各イベントをクリア

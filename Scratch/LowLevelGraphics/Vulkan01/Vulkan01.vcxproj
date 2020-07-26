@@ -214,6 +214,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\Fence.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\FenceCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderPassBeginInfo.hpp">
       <SubType>
       </SubType>
@@ -411,6 +419,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\Event.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\Fence.cpp">
       <SubType>
       </SubType>
     </ClCompile>
