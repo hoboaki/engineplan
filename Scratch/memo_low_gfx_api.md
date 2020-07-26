@@ -307,26 +307,24 @@
 ```yml
 # クラス設計
 
-# 構成（パイプラインでも求められるもの）
-RenderPassLayout
-- FrameBufferSetLayout
-  - ColorAttachmentLayout
-  - DepthStencilAttachmentLayout
+# 仕様（パイプラインでも求められるもの）
+RenderPassSpec
+- RenderTargetSpec[]
+- DepthStencilSpec
 
 # BeginRenderPass に渡す情報
 RenderPass
 - RenderPassLayout
-- FrameBufferSet
-  - ColorAttachment[]
-    - ColorAttachmentImageView
-    - InitialImageResourceState
-    - FinalImageResourceState
-    - ClearSetting
-  - DepthStencilAttachment
-    - DepthStencilAttachmentImageView
-    - InitialImageResourceState
-    - FinalImageResourceState
-    - ClearSetting
+- RenderTargetSetting[]
+  - RenderTargetImageView
+  - InitialImageResourceState
+  - FinalImageResourceState
+  - ClearSetting
+- DepthStencilSetting
+  - DepthStencilImageView
+  - InitialImageResourceState
+  - FinalImageResourceState
+  - ClearSetting
 ``` 
 
 ### Vulkan
