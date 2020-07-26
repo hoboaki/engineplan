@@ -29,21 +29,21 @@ public:
 
     /// 全 RenderTarget の仕様情報がある配列の先頭アドレス。（初期値：nullptr）
     const RenderTargetSpecInfo* RenderTargetSpecInfos() const {
-        return RenderTargetSpecInfos_.get();
+        return renderTargetSpecInfos_.get();
     }
 
     /// RenderTarget の数と仕様の設定。
     RenderPassSpecInfo& SetRenderTargetSpecInfos(
-        const RenderTargetSpecInfo* RenderTargetSpecInfos)
+        const RenderTargetSpecInfo* renderTargetSpecInfos)
     {
-        RenderTargetSpecInfos_.reset(RenderTargetSpecInfos);
+        renderTargetSpecInfos_.reset(renderTargetSpecInfos);
         return *this;
     }
     //@}
 
 private:
     int renderTargetCount_ = 0;
-    base::Pointer<const RenderTargetSpecInfo> RenderTargetSpecInfos_;
+    base::Pointer<const RenderTargetSpecInfo> renderTargetSpecInfos_;
 };
 
 }  // namespace gfx_low
