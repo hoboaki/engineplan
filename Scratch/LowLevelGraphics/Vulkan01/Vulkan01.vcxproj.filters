@@ -672,5 +672,8 @@
     <ClCompile Include="ae\gfx_low\RenderTargetSpec.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderPassSpec.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
