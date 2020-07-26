@@ -275,11 +275,19 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\QueueKind.hpp" />
+    <ClInclude Include="ae\gfx_low\RenderPassSpec.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderTargetImageView.hpp">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderTargetImageViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderTargetSpec.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -403,6 +411,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderTargetImageView.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderTargetSpec.cpp">
       <SubType>
       </SubType>
     </ClCompile>
