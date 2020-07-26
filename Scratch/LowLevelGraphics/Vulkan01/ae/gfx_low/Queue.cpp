@@ -3,7 +3,9 @@
 
 // includes
 #include <ae/base/PtrToRef.hpp>
+#include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/System.hpp>
 
@@ -61,11 +63,13 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
     AE_BASE_ASSERT(pushedSwapchainWait);
 
     // CommandExecute が追加済ならそのコマンド終了時に送信する Signal
-    // を登録しておく
+    // を登録しておきそれが完了するのを待ってから Present する
     for (const auto& op : operations_) {
         if (op.kind == OperationKind::CommandExecute) {
             PushEventSignal(&base::PtrToRef(swapchain)
                                  .InternalCurrentReadyToPresentEvent());
+            PushEventWait(&base::PtrToRef(swapchain)
+                               .InternalCurrentReadyToPresentEvent());
             break;
         }
     }
@@ -102,6 +106,10 @@ void Queue::Submit(Fence* fencePtr) {
     for (int opIdx = 0; opIdx < operations_.count(); ++opIdx) {
         const auto& op = operations_[opIdx];
         switch (op.kind) {
+        case OperationKind::NoOperation:
+            // 何もしない
+            break;
+
         case OperationKind::SwapchainWait:
             // 何もしない
             break;
@@ -110,13 +118,11 @@ void Queue::Submit(Fence* fencePtr) {
             // １つ以上の Wait があるはず。
             AE_BASE_ASSERT_LESS_EQUALS(1, waitEvents_.count());
 
-            // @todo 複数の Present
+            // @todo 複数の Present 対応
             // 今は 1Submit につき 1Present しかサポートしない。
-            for (int aftOpIdx = opIdx + 1; aftOpIdx < operations_.count();
-                 ++aftOpIdx) {
-                AE_BASE_ASSERT(
-                    operations_[opIdx].kind != OperationKind::SwapchainPresent);
-            }
+            AE_BASE_ASSERT_LESS(
+                findOperationIndex(OperationKind::SwapchainPresent, opIdx + 1),
+                0);
 
             // Present 実行
             auto& swapchain = base::PtrToRef(static_cast<Swapchain*>(op.ptr));
@@ -124,7 +130,7 @@ void Queue::Submit(Fence* fencePtr) {
                 uint32_t(swapchain.InternalCurrentBufferIndex())};
             const auto presentInfo =
                 vk::PresentInfoKHR()
-                    .setWaitSemaphoreCount(1)
+                    .setWaitSemaphoreCount(waitEvents_.count())
                     .setPWaitSemaphores(&waitEvents_.first())
                     .setSwapchainCount(1)
                     .setPSwapchains(&swapchain.InternalInstance())
@@ -150,6 +156,53 @@ void Queue::Submit(Fence* fencePtr) {
             AE_BASE_ASSERT_NOT_REACHED();
             break;
 
+        case OperationKind::CommandExecute: {
+            // @todo 複数コマンド実行対応
+            // 今は１つしか対応しない
+            AE_BASE_ASSERT_LESS(
+                findOperationIndex(OperationKind::CommandExecute, opIdx + 1),
+                0);
+
+            // 以降の Signal を回収
+            for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.count();
+                 ++nextOpIdx) {
+                auto& nextOp = operations_[nextOpIdx];
+                if (nextOp.kind == OperationKind::EventSignal) {
+                    signalEvents_.add(
+                        static_cast<Event*>(nextOp.ptr)->InternalInstance());
+                    nextOp.kind = OperationKind::NoOperation; // 処理したので NoOperation に変更
+                }
+            }
+
+            // 送信
+            const ::vk::PipelineStageFlags pipeStageFlags =
+                ::vk::PipelineStageFlagBits::eColorAttachmentOutput;
+            auto const submitInfo =
+                ::vk::SubmitInfo()
+                    .setPWaitDstStageMask(&pipeStageFlags)
+                    .setWaitSemaphoreCount(waitEvents_.count())
+                    .setPWaitSemaphores(
+                        waitEvents_.isEmpty() ? nullptr : &waitEvents_.first())
+                    .setCommandBufferCount(1)
+                    .setPCommandBuffers(&static_cast<CommandBuffer*>(op.ptr)
+                                             ->InternalInstance())
+                    .setSignalSemaphoreCount(signalEvents_.count())
+                    .setPSignalSemaphores(signalEvents_.isEmpty()
+                                              ? nullptr
+                                              : &signalEvents_.first());
+            {
+                // @todo fence 対応
+                AE_BASE_ASSERT(fencePtr == nullptr);
+                const auto result = queue_.submit(1, &submitInfo, nullptr);
+                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+            }
+
+            // 各イベントをクリア
+            waitEvents_.clear();
+            signalEvents_.clear();
+            break;
+        }
+
         default:
             AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
                 "Non supported operation kind (%d).", op.kind);
@@ -158,6 +211,16 @@ void Queue::Submit(Fence* fencePtr) {
 
     // クリア
     operations_.clear();
+}
+
+//------------------------------------------------------------------------------
+int Queue::findOperationIndex(const OperationKind kind, const int startIndex) {
+    for (int i = startIndex; i < operations_.count(); ++i) {
+        if (operations_[i].kind == kind) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 }  // namespace gfx_low

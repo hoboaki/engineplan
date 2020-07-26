@@ -4,6 +4,7 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/CommandBufferFeatureBitSet.hpp>
 #include <ae/gfx_low/CommandBufferLevel.hpp>
+#include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -61,12 +62,29 @@ public:
     CommandBufferFeatureBitSet Features() const { return features_; }
     //@}
 
+    /// @name 記録開始・終了処理
+    //@{
+    /// 記録済みの情報をリセットして記録を開始する。
+    void BeginRecord();
+
+    /// 記録を終了する。
+    void EndRecord();
+    //@}
+
+    /// @name 内部処理用機能
+    //@{
+    ::vk::CommandBuffer& InternalInstance() { return commandBuffer_; }
+
+    Event& InternalCompleteEvent() { return completeEvent_; }
+    //@}
+
 private:
     gfx_low::Device& device_;
     const base::Pointer<Queue> queuePtr_;
     const CommandBufferLevel level_;
     const CommandBufferFeatureBitSet features_;
     ::vk::CommandBuffer commandBuffer_;
+    Event completeEvent_;
 };
 
 }  // namespace gfx_low

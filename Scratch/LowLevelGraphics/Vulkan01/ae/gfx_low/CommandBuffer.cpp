@@ -6,6 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 
 //------------------------------------------------------------------------------
@@ -18,7 +19,8 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , queuePtr_(createInfo.Queue())
 , level_(createInfo.Level())
 , features_(createInfo.Features())
-, commandBuffer_() {
+, commandBuffer_()
+, completeEvent_(EventCreateInfo().SetDevice(&device_)) {
     // 今は Primary のみサポート
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
 
@@ -37,6 +39,23 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 CommandBuffer::~CommandBuffer() {
     device_.InternalInstance().freeCommandBuffers(
         queuePtr_->InternalCommandPool(), commandBuffer_);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::BeginRecord() {
+    commandBuffer_.reset(::vk::CommandBufferResetFlags(0));
+    {
+        const auto beginInfo =
+            ::vk::CommandBufferBeginInfo().setPInheritanceInfo(nullptr);
+        const auto result = commandBuffer_.begin(&beginInfo);
+        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    }
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::EndRecord() {
+    const ::vk::Result result = commandBuffer_.end();
+    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 }  // namespace gfx_low

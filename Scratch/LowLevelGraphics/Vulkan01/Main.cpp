@@ -80,13 +80,16 @@ int aemain(::ae::base::Application* app) {
         ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
 
     // CommandBuffer の作成
-    ::std::unique_ptr<::ae::gfx_low::CommandBuffer> commandBuffer(
-        new ::ae::gfx_low::CommandBuffer(
-            ::ae::gfx_low::CommandBufferCreateInfo()
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers(
+        swapchainImageCount);
+    for (int i = 0; i < commandBuffers.countMax(); ++i) {
+        commandBuffers.add(::ae::gfx_low::CommandBufferCreateInfo()
                 .SetDevice(gfxLowDevice.get())
-                .SetQueue(&queue)));
+                .SetQueue(&queue));
+    }
 
     // ループ
+    int bufferIndex = 0;
     while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.isClosed()) {
@@ -97,14 +100,27 @@ int aemain(::ae::base::Application* app) {
         // Swapchain バッファ確保要求
         swapchain->AcquireNextImage();
 
+        // コマンドバッファ作成
+        auto& cmd = commandBuffers[bufferIndex];
+        {
+            cmd.BeginRecord();
+            cmd.EndRecord();
+        }
+
         // Swapchain バッファ確保同期
         queue.PushSwapchainWait(&swapchain.Ref());
+
+        // コマンド実行
+        queue.PushCommandExecute(&cmd);
 
         // Swapchain 提出
         queue.PushSwapchainPresent(&swapchain.Ref());
 
-        /// GPU送信
+        // GPU送信
         queue.Submit(nullptr);
+
+        // バッファを進める
+        bufferIndex = (bufferIndex + 1) % swapchainImageCount;
     }
 
     return 0;

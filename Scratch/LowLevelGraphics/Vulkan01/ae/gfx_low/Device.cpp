@@ -174,8 +174,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
         ::vk::CommandPool commandPool;
         {
             const auto createInfo =
-                ::vk::CommandPoolCreateInfo().setQueueFamilyIndex(
-                    queueFamilyIndex);
+                ::vk::CommandPoolCreateInfo()
+                    .setQueueFamilyIndex(queueFamilyIndex)
+                    .setFlags(
+                        ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
             const auto result =
                 device_.createCommandPool(&createInfo, nullptr, &commandPool);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
@@ -183,7 +185,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
         const auto& queueCreateInfo = queueCreateInfos[i];
         queues_.add(this,
             device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
-            queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(), commandPool);
+            queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(),
+            commandPool);
     }
 }
 

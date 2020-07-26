@@ -47,7 +47,7 @@ public:
 
     /// 非推奨版。
     RuntimeAutoArray(
-        int aCountMax, IAllocator& aAllocator = IAllocator::Default())
+        int aCountMax, IAllocator& aAllocator)
     : RuntimeAutoArray(aCountMax, &aAllocator) {}
 
     /// デストラクタ。
