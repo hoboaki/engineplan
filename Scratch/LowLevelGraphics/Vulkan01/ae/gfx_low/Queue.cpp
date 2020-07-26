@@ -193,8 +193,24 @@ void Queue::Submit(Fence* fencePtr) {
             {
                 // @todo fence 対応
                 AE_BASE_ASSERT(fencePtr == nullptr);
-                const auto result = queue_.submit(1, &submitInfo, nullptr);
-                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+                ::vk::Fence fence;
+                {
+                    auto fenceCreateInfo = ::vk::FenceCreateInfo();
+                    const auto result = device_.InternalInstance().createFence(
+                        &fenceCreateInfo, nullptr, &fence);
+                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+                }
+                {
+                    const auto result = queue_.submit(1, &submitInfo, fence);
+                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+                }
+                { 
+                    const auto result =
+                        device_.InternalInstance().waitForFences(
+                            1, &fence, VK_TRUE, UINT64_MAX);
+                    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+                    device_.InternalInstance().destroyFence(fence, nullptr);
+                }
             }
 
             // 各イベントをクリア
