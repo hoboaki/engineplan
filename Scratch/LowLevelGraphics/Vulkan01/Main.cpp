@@ -72,11 +72,12 @@ int aemain(::ae::base::Application* app) {
         auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
                                .SetDevice(gfxLowDevice.get())
                                .SetScreen(&display.mainScreen())
-                               .SetSwapchainCountMax(3);
+                               .SetSwapchainCountMax(1);
         swapchainMaster.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
     }
-    auto swapchain =
-        swapchainMaster->CreateSwapchain(ae::gfx_low::SwapchainCreateInfo());
+    const int swapchainImageCount = 3;
+    auto swapchain = swapchainMaster->CreateSwapchain(
+        ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
 
     // CommandBuffer の作成
     ::std::unique_ptr<::ae::gfx_low::CommandBuffer> commandBuffer(
