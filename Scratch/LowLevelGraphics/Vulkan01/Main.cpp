@@ -107,12 +107,12 @@ int aemain(::ae::base::Application* app) {
             continue;
         }
 
-        // Swapchain バッファ確保要求
-        swapchain->AcquireNextImage();
-
         // 前回実行したコマンドの終了保証
         auto& fence = fences[bufferIndex];
         fence.Wait();
+
+        // Swapchain バッファ確保要求
+        swapchain->AcquireNextImage();
 
         // コマンドバッファ作成
         auto& cmd = commandBuffers[bufferIndex];
