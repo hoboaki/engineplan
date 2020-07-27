@@ -139,7 +139,7 @@ int aemain(::ae::base::Application* app) {
                             .SetInitialImageResourceState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
                             .SetFinalImageResourceState(
-                                ::ae::gfx_low::ImageResourceState::RenderTarget)
+                                ::ae::gfx_low::ImageResourceState::PresentSrc)
                             .SetClearColor(
                                 ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
                                     .toRGBAf()),
