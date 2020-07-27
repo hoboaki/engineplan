@@ -137,6 +137,11 @@ int aemain(::ae::base::Application* app) {
         bufferIndex = (bufferIndex + 1) % swapchainImageCount;
     }
 
+    // GPU 完了同期
+    for (auto& fence : fences) {
+        fence.Wait();
+    }
+
     return 0;
 #endif
 }

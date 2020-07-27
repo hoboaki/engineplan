@@ -22,6 +22,7 @@ Fence::Fence(const FenceCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 Fence::~Fence() {
+    AE_BASE_ASSERT(!isActive_);
     device_.InternalInstance().destroyFence(fence_, nullptr);
 }
 
