@@ -213,7 +213,7 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
     tCurrentDisplay.set(*this);
     hwindow = CreateWindow(
         className,
-        "Window Title",
+        "Adel Engine Application", // Window Title
         style,
         aContext.locationX(),
         aContext.locationY(),
