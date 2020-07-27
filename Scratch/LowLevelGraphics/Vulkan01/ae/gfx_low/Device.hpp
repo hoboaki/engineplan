@@ -3,10 +3,12 @@
 
 #include <ae/base/RuntimeAutoArray.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <list>
 
 namespace ae {
 namespace gfx_low {
 class DeviceCreateInfo;
+class RenderPassBeginInfo;
 class Queue;
 class System;
 }
@@ -48,7 +50,15 @@ public:
 
     /// @name 内部処理用API
     //@{
+    static const int InternalSupportedAttachmentCountMax = 8;
+
     ::vk::Device& InternalInstance() { return device_; }
+
+    /// beginInfo に必要な RenderPass オブジェクトを返す。
+    ::vk::RenderPass InternalAcquireRenderPass(const RenderPassBeginInfo& beginInfo);
+    
+    /// beginInfo に必要な FrameBuffer オブジェクトを返す。
+    ::vk::Framebuffer InternalAcquireFramebuffer(const RenderPassBeginInfo& beginInfo);
     //@}
 
 private:
@@ -56,6 +66,8 @@ private:
     ::vk::Device device_;
     int physicalDeviceIndex_;
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
+    std::list<::vk::RenderPass> acquiredRenderPassList_;
+    std::list<::vk::Framebuffer> acquiredFramebufferList_;
 };
 
 }  // namespace gfx_low

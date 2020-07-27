@@ -29,6 +29,11 @@ public:
     gfx_low::Device& Device() const { return device_; }
     //@}
 
+    /// @name 内部処理用機能
+    //@{
+    ::vk::ImageView& InternalInstance() { return imageView_; }
+    //@}
+
 private:
     gfx_low::Device& device_;
     ::vk::ImageView imageView_;

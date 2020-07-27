@@ -6,10 +6,15 @@
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeArray.hpp>
 #include <ae/base/RuntimeAssert.hpp>
+#include <ae/base/RuntimeMarray.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
+#include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
+#include <ae/gfx_low/RenderPassBeginInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageView.hpp>
+#include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
 
@@ -192,6 +197,17 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 Device::~Device() {
+    // Acquire されたリソースの破棄
+    for (auto framebuffer : acquiredFramebufferList_) {
+        device_.destroyFramebuffer(framebuffer, nullptr);
+    }
+    acquiredFramebufferList_.clear();
+    for (auto renderPass : acquiredRenderPassList_) {
+        device_.destroyRenderPass(renderPass, nullptr);
+    }
+    acquiredRenderPassList_.clear();
+
+
     for (int i = queues_.count() - 1; 0 <= i; --i) {
         device_.destroyCommandPool(queues_[i].InternalCommandPool(), nullptr);
     }
@@ -203,6 +219,117 @@ Device::~Device() {
 //------------------------------------------------------------------------------
 gfx_low::Queue& Device::Queue(const int queueIndex) const {
     return queues_[queueIndex];
+}
+
+//------------------------------------------------------------------------------
+::vk::RenderPass Device::InternalAcquireRenderPass(
+    const RenderPassBeginInfo& beginInfo)
+{
+    // @todo スレッドセーフ対応
+    // @todo キャッシュ対応
+
+    std::array<::vk::AttachmentDescription, InternalSupportedAttachmentCountMax>
+        attachments;
+    for (int i = 0; i < beginInfo.RenderPassSpecInfo().RenderTargetCount();
+         ++i) {
+        const auto& renderTargetSpec = beginInfo.RenderPassSpecInfo().RenderTargetSpecInfos()[i];
+        const auto& renderTargetSetting = beginInfo.RenderTargetSettings()[i];
+        auto& attachment = attachments[i];
+
+        // @todo 普通の Format での指定
+        AE_BASE_ASSERT(renderTargetSpec.InternalNativeFormat() !=
+                       ::vk::Format::eUndefined);
+        attachment.setFormat(renderTargetSpec.InternalNativeFormat());
+
+        // その他の設定
+        attachment.setSamples(::vk::SampleCountFlagBits::e1)
+            .setLoadOp(EnumUtil::ToNative(renderTargetSetting.LoadOp()))
+            .setStoreOp(EnumUtil::ToNative(renderTargetSetting.StoreOp()))
+            .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
+            .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare)
+            .setInitialLayout(EnumUtil::ToImageLayoutForColorAttachment(renderTargetSetting.InitialImageResourceState()))
+            .setFinalLayout(EnumUtil::ToImageLayoutForColorAttachment(renderTargetSetting.FinalImageResourceState()));
+    }
+
+    auto const colorReference =
+        vk::AttachmentReference().setAttachment(0).setLayout(
+            vk::ImageLayout::eColorAttachmentOptimal);
+
+    auto const subpass =
+        vk::SubpassDescription()
+            .setPipelineBindPoint(vk::PipelineBindPoint::eGraphics)
+            .setInputAttachmentCount(0)
+            .setPInputAttachments(nullptr)
+            .setColorAttachmentCount(1)
+            .setPColorAttachments(&colorReference)
+            .setPResolveAttachments(nullptr)
+            .setPDepthStencilAttachment(nullptr)
+            .setPreserveAttachmentCount(0)
+            .setPPreserveAttachments(nullptr);
+
+    vk::PipelineStageFlags stages =
+        vk::PipelineStageFlagBits::eEarlyFragmentTests |
+        vk::PipelineStageFlagBits::eLateFragmentTests;
+    vk::SubpassDependency const dependencies[1] = {
+        vk::SubpassDependency()  // Image layout transition
+            .setSrcSubpass(VK_SUBPASS_EXTERNAL)
+            .setDstSubpass(0)
+            .setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+            .setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+            .setSrcAccessMask(vk::AccessFlagBits())
+            .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite |
+                              vk::AccessFlagBits::eColorAttachmentRead)
+            .setDependencyFlags(vk::DependencyFlags()),
+    };
+
+    auto const renderPassCreateInfo = vk::RenderPassCreateInfo()
+                             .setAttachmentCount(1)
+                             .setPAttachments(&attachments[0])
+                             .setSubpassCount(1)
+                             .setPSubpasses(&subpass)
+                             .setDependencyCount(1)
+                             .setPDependencies(dependencies);
+
+    ::vk::RenderPass renderPass;
+    {
+        const auto result = device_.createRenderPass(
+            &renderPassCreateInfo, nullptr, &renderPass);
+        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    }
+    acquiredRenderPassList_.push_back(renderPass);
+    return renderPass;
+}
+
+//------------------------------------------------------------------------------
+::vk::Framebuffer Device::InternalAcquireFramebuffer(
+    const RenderPassBeginInfo& beginInfo) {
+    // @todo スレッドセーフ対応
+    // @todo キャッシュ対応
+
+    std::array<::vk::ImageView, InternalSupportedAttachmentCountMax> imageViews;
+    for (int i = 0; i < beginInfo.RenderPassSpecInfo().RenderTargetCount();
+         ++i) {
+        imageViews[i] = beginInfo.RenderTargetSettings()[i]
+                            .RenderTargetImageView()
+                            ->InternalInstance();
+    }
+
+    auto const createInfo =
+        vk::FramebufferCreateInfo()
+            .setRenderPass(InternalAcquireRenderPass(beginInfo))
+            .setAttachmentCount(1)
+            .setPAttachments(&imageViews[0])
+            .setWidth(uint32_t(beginInfo.RenderArea().width()))
+            .setHeight(uint32_t(beginInfo.RenderArea().height()))
+            .setLayers(1);
+    ::vk::Framebuffer framebuffer;
+    {
+        const auto result = device_.createFramebuffer(
+            &createInfo, nullptr, &framebuffer);
+        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    }
+    acquiredFramebufferList_.push_back(framebuffer);
+    return framebuffer;
 }
 
 }  // namespace gfx_low
