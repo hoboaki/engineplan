@@ -68,6 +68,7 @@ public:
     /// ClearColor() の設定。
     RenderTargetSetting& SetClearColor(const base::Color4Pod& clearColor) {
         clearColor_ = clearColor;
+        return *this;
     }
     //@}
 

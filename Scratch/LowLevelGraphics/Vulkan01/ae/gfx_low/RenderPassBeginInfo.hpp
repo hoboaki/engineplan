@@ -41,9 +41,10 @@ public:
     /// RenderTargetSettings() の設定。
     /// @param settings RenderPassSpecInfo().RenderTargetCount()
     /// 長の配列ポインタ。
-    RenderPassBeginInfo& SetRenderTargetSetting(
+    RenderPassBeginInfo& SetRenderTargetSettings(
         const RenderTargetSetting* settings) {
         renderTargetSettings_.reset(settings);
+        return *this;
     }
 
     /// 描画範囲。（初期値：Aabb2iデフォルトコンストラクタの値）

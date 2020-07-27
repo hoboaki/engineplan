@@ -47,6 +47,8 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
     AE_BASE_ASSERT(!InternalIsInitialized());
     swapchainMaster_.reset(swapchainMaster);
     swapchain_ = swapchain;
+    renderTargetSpecInfo_ =
+        gfx_low::RenderTargetSpecInfo().InternalSetNativeFormat(imageFormat);
     {
         auto& device = swapchainMaster_->Device();
 

@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/AppEvent.hpp>
 #include <ae/base/Application.hpp>
+#include <ae/base/Color4b.hpp>
 #include <ae/base/Console.hpp>
 #include <ae/base/Display.hpp>
 #include <ae/base/RuntimeAssert.hpp>
@@ -13,6 +14,9 @@
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
+#include <ae/gfx_low/RenderPassBeginInfo.hpp>
+#include <ae/gfx_low/RenderPassSpecInfo.hpp>
+#include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
@@ -86,16 +90,16 @@ int aemain(::ae::base::Application* app) {
         swapchainImageCount);
     for (int i = 0; i < commandBuffers.countMax(); ++i) {
         commandBuffers.add(::ae::gfx_low::CommandBufferCreateInfo()
-                .SetDevice(gfxLowDevice.get())
-                .SetQueue(&queue));
+                               .SetDevice(gfxLowDevice.get())
+                               .SetQueue(&queue));
     }
 
     // Fence の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::Fence> fences(
         swapchainImageCount);
     for (int i = 0; i < fences.countMax(); ++i) {
-        fences.add(::ae::gfx_low::FenceCreateInfo()
-                               .SetDevice(gfxLowDevice.get()));
+        fences.add(
+            ::ae::gfx_low::FenceCreateInfo().SetDevice(gfxLowDevice.get()));
     }
 
     // メインループ
@@ -116,10 +120,46 @@ int aemain(::ae::base::Application* app) {
 
         // コマンドバッファ作成
         auto& cmd = commandBuffers[bufferIndex];
+        cmd.BeginRecord();
         {
-            cmd.BeginRecord();
-            cmd.EndRecord();
+            // クリアカラー参考
+            // https://www.colordic.org/colorscheme/7005
+            {
+                const ::ae::gfx_low::RenderTargetSpecInfo
+                    renderTargetSpecInfos[] = {
+                        swapchain->RenderTargetSpecInfo()};
+                const ::ae::gfx_low::RenderTargetSetting
+                    renderTargetSettings[] = {
+                        ::ae::gfx_low::RenderTargetSetting()
+                            .SetRenderTargetImageView(
+                                &swapchain->CurrentRenderTargetImageView())
+                            .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetInitialImageResourceState(
+                                ::ae::gfx_low::ImageResourceState::Unknown)
+                            .SetFinalImageResourceState(
+                                ::ae::gfx_low::ImageResourceState::RenderTarget)
+                            .SetClearColor(
+                                ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
+                                    .toRGBAf()),
+                    };
+
+                cmd.CmdBeginRenderPass(
+                    ::ae::gfx_low::RenderPassBeginInfo()
+                        .SetRenderPassSpecInfo(
+                            ::ae::gfx_low::RenderPassSpecInfo()
+                                .SetRenderTargetCount(1)
+                                .SetRenderTargetSpecInfos(
+                                    renderTargetSpecInfos))
+                        .SetRenderTargetSettings(renderTargetSettings)
+                        .SetRenderArea(
+                            ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
+                                display.mainScreen().width(),
+                                display.mainScreen().height())));
+                cmd.CmdEndRenderPass();
+            }
         }
+        cmd.EndRecord();
 
         // Swapchain バッファ確保同期
         queue.PushSwapchainWait(&swapchain.Ref());

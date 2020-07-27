@@ -7,6 +7,7 @@
 #include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/RenderTargetImageView.hpp>
+#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -40,6 +41,12 @@ public:
     /// 所属する SwapchainMaster。
     gfx_low::SwapchainMaster& SwapchainMaster() const {
         return swapchainMaster_.ref();
+    }
+
+    /// RenderTarget 仕様情報。
+    gfx_low::RenderTargetSpecInfo RenderTargetSpecInfo() const
+    {
+        return renderTargetSpecInfo_;
     }
     //@}
 
@@ -114,6 +121,7 @@ private:
 
     ::ae::base::Pointer<gfx_low::SwapchainMaster> swapchainMaster_;
     ::vk::SwapchainKHR swapchain_;
+    gfx_low::RenderTargetSpecInfo renderTargetSpecInfo_;
     ::ae::base::RuntimeArray<FrameProperty> frameProperties_;
     uint32_t uniqueId_ = InternalInvalidUniqueId;
     int currentFrameIndex_ = int(); // 初期化直後は負の値が入っている
