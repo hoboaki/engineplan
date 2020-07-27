@@ -71,6 +71,7 @@ void CommandBuffer::Reset() {
         const auto result =
             commandBuffer_.reset(::vk::CommandBufferResetFlags(0));
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        state_ = CommandBufferState::Initial;
         break;
     }
     default:
