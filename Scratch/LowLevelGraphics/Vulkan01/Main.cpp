@@ -127,7 +127,8 @@ int aemain(::ae::base::Application* app) {
             {
                 const ::ae::gfx_low::RenderTargetSpecInfo
                     renderTargetSpecInfos[] = {
-                        swapchain->RenderTargetSpecInfo()};
+                        swapchain->RenderTargetSpecInfo(),
+                    };
                 const ::ae::gfx_low::RenderTargetSetting
                     renderTargetSettings[] = {
                         ::ae::gfx_low::RenderTargetSetting()
