@@ -263,6 +263,12 @@ public:
 
     //@}
 
+    /// @name イテレータ
+    //@{
+    ValueType* begin() const { return mPtr; }
+    ValueType* end() const { return &mPtr[mCount]; }
+    //@}
+
     /// @name 演算子オーバーロード
     //@{
     ValueType& operator[](const int aIndex)const { return at(aIndex); } ///< at()const のエイリアス。

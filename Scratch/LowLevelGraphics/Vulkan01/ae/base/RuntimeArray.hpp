@@ -138,6 +138,14 @@ public:
 
     //@}
 
+    /// @name イテレータ
+    //@{
+    ValueType* begin() { return ptr_; }
+    const ValueType* begin() const { return ptr_; }
+    ValueType* end() { return &ptr_[count_]; }
+    const ValueType* end() const { return &ptr_[count_]; }
+    //@}
+
     /// @name 演算子オーバーロード
     //@{
     /// at() のエイリアス。
