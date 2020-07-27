@@ -43,19 +43,56 @@ CommandBuffer::~CommandBuffer() {
 
 //------------------------------------------------------------------------------
 void CommandBuffer::BeginRecord() {
-    commandBuffer_.reset(::vk::CommandBufferResetFlags(0));
-    {
-        const auto beginInfo =
-            ::vk::CommandBufferBeginInfo().setPInheritanceInfo(nullptr);
-        const auto result = commandBuffer_.begin(&beginInfo);
-        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-    }
+    Reset();
+    AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
+    const auto beginInfo =
+        ::vk::CommandBufferBeginInfo().setPInheritanceInfo(nullptr);
+    const auto result = commandBuffer_.begin(&beginInfo);
+    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    state_ = CommandBufferState::Recording;
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::EndRecord() {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     const ::vk::Result result = commandBuffer_.end();
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    state_ = CommandBufferState::Recorded;
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::Reset() {
+    switch (state_) {
+    case CommandBufferState::Initial: 
+        // 何もする必要がない
+        break;
+
+    case CommandBufferState::Recorded: {
+        const auto result =
+            commandBuffer_.reset(::vk::CommandBufferResetFlags(0));
+        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        break;
+    }
+    default:
+        AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
+            "[CommandBuffer::Reset] Invalid state(%d).", state_);
+        break;
+    }
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info)
+{
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.isAllOff());
+    activePass_.set(int(CommandBufferFeature::Render), true);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdEndRenderPass() {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.get(int(CommandBufferFeature::Render)));
+    activePass_.set(int(CommandBufferFeature::Render), false);
 }
 
 }  // namespace gfx_low

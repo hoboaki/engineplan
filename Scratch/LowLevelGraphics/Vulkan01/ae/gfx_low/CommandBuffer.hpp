@@ -4,6 +4,7 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/CommandBufferFeatureBitSet.hpp>
 #include <ae/gfx_low/CommandBufferLevel.hpp>
+#include <ae/gfx_low/CommandBufferState.hpp>
 #include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
@@ -11,6 +12,7 @@ namespace ae {
 namespace gfx_low {
 class CommandBufferCreateInfo;
 class Device;
+class RenderPassBeginInfo;
 class Queue;
 }  // namespace gfx_low
 }  // namespace ae
@@ -30,18 +32,30 @@ namespace gfx_low {
 /// に渡すことは出来ません。
 ///
 /// ・BeginRecord/EndRecord について
-/// コマンドの登録をする前に BeginRecord() を必ず呼び、最後に EndRecord()
+/// 関数の頭に ```Cmd``` とついているものがコマンドを追加する関数です。
+/// コマンドの追加をする前に BeginRecord() を必ず呼び、最後に EndRecord()
 /// を呼ぶようにしてください。 また、BeginRecord()
 /// を呼ぶと以前登録されたコマンドは削除されます。
 /// そのため、コマンドバッファのインスタンスがが GPU で処理されている最中に
 /// BeginRecord() すると GPU の動作が停止する可能性があるため注意してください。
+///
+/// ・コマンドの種類と呼び出しタイミングの制約について
+/// コマンドの追加は Features() で指定されている機能に限定されます。
+/// Render に関するコマンドについては BeginRenderPass() EndRenderPass() の間で、
+/// Compute に関するコマンドについては BeginComputePass() EndComputePass()
+/// の間でのみ実行できます。 どちらかの Begin/End 区間中にもう片方の Begin/End
+/// を呼ぶことはできません。 例えば BeginRenderPass() を呼び EndRenderPass()
+/// を呼ぶ前に BeginComputePass() をすることはできません。必ず End
+/// してから新しく Begin してください。 Copy については Begin/End
+/// の宣言は不要ですが、Render や Compute の Begin/End
+/// 期間中には実行できません。
 ///
 /// ・Primary と Secondary について
 /// CommandBufferLevel::Primary は Queue::PushExecute() の引数に渡せますが
 /// CommandBufferLevel::Secondary はできません。
 /// その代わり、Primary のコマンドバッファの Call() の引数に渡せます。
 /// Secondary は createInfo の SetFeatureFlags() で Render か Compute
-/// のどちらか１つを設定するひつようがあります。
+/// のどちらか１つを設定する必要があります。
 class CommandBuffer {
 public:
     /// @name コンストラクタとデストラクタ
@@ -53,13 +67,16 @@ public:
     /// @name プロパティ
     //@{
     /// 所属する Device。
-    gfx_low::Device& Device() const { return device_; }   
-    
-    /// 階層レベル。   
+    gfx_low::Device& Device() const { return device_; }
+
+    /// 階層レベル。
     CommandBufferLevel Level() const { return level_; }
 
-    /// サポートしている機能郡。 
+    /// サポートしている機能郡。
     CommandBufferFeatureBitSet Features() const { return features_; }
+
+    /// 現在の状態。
+    CommandBufferState State() const { return state_; }
     //@}
 
     /// @name 記録開始・終了処理
@@ -69,6 +86,23 @@ public:
 
     /// 記録を終了する。
     void EndRecord();
+
+    /// 記録済みの情報があればリセットする。
+    /// @details BeginRecord() / EndRecord() の間では呼べません。
+    void Reset();
+    //@}
+
+    /// @name Render コマンド追加の開始・終了
+    //@{
+    /// Render コマンド郡の開始コマンド。
+    /// @details
+    /// 開始・終了コマンドに詳細ついてはクラスの説明を参照してください。
+    void CmdBeginRenderPass(const RenderPassBeginInfo& info);
+
+    /// Render コマンド群の終了コマンド。
+    /// @details
+    /// 開始・終了コマンドに詳細ついてはクラスの説明を参照してください。
+    void CmdEndRenderPass();
     //@}
 
     /// @name 内部処理用機能
@@ -85,6 +119,8 @@ private:
     const CommandBufferFeatureBitSet features_;
     ::vk::CommandBuffer commandBuffer_;
     Event completeEvent_;
+    CommandBufferState state_ = CommandBufferState::Initial;
+    CommandBufferFeatureBitSet activePass_;
 };
 
 }  // namespace gfx_low
