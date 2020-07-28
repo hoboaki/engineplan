@@ -16,6 +16,15 @@ CommandBufferCreateInfo& CommandBufferCreateInfo::SetLevel(const CommandBufferLe
     return *this;
 }
 
+//------------------------------------------------------------------------------
+CommandBufferCreateInfo& CommandBufferCreateInfo::SetRenderPassCountMax(
+    const int count)
+{
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    renderPassCountMax_ = count;
+    return *this;
+}
+
 }  // namespace gfx_low
 }  // namespace ae
 // EOF

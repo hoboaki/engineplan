@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/base/RuntimeMarray.hpp>
 #include <ae/gfx_low/CommandBufferFeatureBitSet.hpp>
 #include <ae/gfx_low/CommandBufferLevel.hpp>
 #include <ae/gfx_low/CommandBufferState.hpp>
@@ -113,6 +114,12 @@ public:
     //@}
 
 private:
+    struct RenderPassProperty
+    {
+        ::vk::RenderPass renderPass;
+        ::vk::Framebuffer framebuffer;
+    };
+
     gfx_low::Device& device_;
     const base::Pointer<Queue> queuePtr_;
     const CommandBufferLevel level_;
@@ -121,6 +128,7 @@ private:
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;
     CommandBufferFeatureBitSet activePass_;
+    base::RuntimeMarray<RenderPassProperty> renderPassProperties_;
 };
 
 }  // namespace gfx_low

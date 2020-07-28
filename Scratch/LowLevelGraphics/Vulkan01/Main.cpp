@@ -91,7 +91,8 @@ int aemain(::ae::base::Application* app) {
     for (int i = 0; i < commandBuffers.countMax(); ++i) {
         commandBuffers.add(::ae::gfx_low::CommandBufferCreateInfo()
                                .SetDevice(gfxLowDevice.get())
-                               .SetQueue(&queue));
+                               .SetQueue(&queue)
+                               .SetRenderPassCountMax(16));
     }
 
     // Fence の作成
