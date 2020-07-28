@@ -203,16 +203,15 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setWidth(uint32_t(info.RenderArea().width()))
                 .setHeight(uint32_t(info.RenderArea().height()))
                 .setLayers(1);
-        ::vk::Framebuffer framebuffer;
         {
             const auto result = device_.InternalInstance().createFramebuffer(
-                &createInfo, nullptr, &framebuffer);
+                &createInfo, nullptr, &prop.framebuffer);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
     renderPassProperties_.add(prop);
 
-    std::array<::vk::ClearValue, 8> clearValues;
+    std::array<::vk::ClearValue, Device::InternalSupportedAttachmentCountMax> clearValues;
     for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount(); ++i) {
         const auto color = info.RenderTargetSettings()[i].ClearColor();
         ::vk::ClearColorValue val;
