@@ -48,27 +48,27 @@ public:
 
     /// @name 内部処理用
     //@{
-    ::vk::Instance& InternalInstance() { return instance_; }
+    ::vk::Instance& PrvInstance() { return instance_; }
 
-    ::ae::base::IAllocator& InternalObjectAllocator() const {
+    ::ae::base::IAllocator& PrvObjectAllocator() const {
         return objectAllocator_;
     }
 
-    ::ae::base::IAllocator& InternalTempWorkAllocator() const {
+    ::ae::base::IAllocator& PrvTempWorkAllocator() const {
         return tempWorkAllocator_;
     }
 
     /// QueueKind に対応する QueueFamilyIndex を格納するテーブルの型。
     /// @details
     /// 対応する QueueFamilyIndex が存在しない場合、負の値が格納されます。
-    using InternalQueueFamilyIndexTableType = ::ae::base::EnumKeyArray<QueueKind, int>;
+    using PrvQueueFamilyIndexTableType = ::ae::base::EnumKeyArray<QueueKind, int>;
 
     /// QueueFamilyIndex を返す。見つからない場合は負の値を返す。
-    void InternalQueueFamilyIndexTable(
-        InternalQueueFamilyIndexTableType* result,
+    void PrvQueueFamilyIndexTable(
+        PrvQueueFamilyIndexTableType* result,
         int physicalDeviceIndex) const;
 
-    const ::vk::PhysicalDevice& InternalPhysicalDevice(
+    const ::vk::PhysicalDevice& PrvPhysicalDevice(
         int physicalDeviceIndex) const {
         return physicalDevices_[physicalDeviceIndex];
     }

@@ -47,10 +47,10 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Fence& InternalInstance() { return fence_; }
+    ::vk::Fence& PrvInstance() { return fence_; }
 
     /// Submit 時に呼ぶ処理。
-    void InternalOnSubmit();
+    void PrvOnSubmit();
     //@}
 
 private:

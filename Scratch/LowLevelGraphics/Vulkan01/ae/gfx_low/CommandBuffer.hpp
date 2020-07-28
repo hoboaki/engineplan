@@ -108,9 +108,9 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::CommandBuffer& InternalInstance() { return commandBuffer_; }
+    ::vk::CommandBuffer& PrvInstance() { return commandBuffer_; }
 
-    Event& InternalCompleteEvent() { return completeEvent_; }
+    Event& PrvCompleteEvent() { return completeEvent_; }
     //@}
 
 private:

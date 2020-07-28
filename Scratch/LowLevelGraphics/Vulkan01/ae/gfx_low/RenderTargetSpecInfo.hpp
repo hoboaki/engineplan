@@ -23,10 +23,10 @@ public:
     /// @name 内部処理用機能群
     //@{
     /// Native フォーマット。Format() より優先される。
-    ::vk::Format InternalNativeFormat() const { return nativeFormat_; }
+    ::vk::Format PrvNativeFormat() const { return nativeFormat_; }
 
     /// NativeFormat() 設定。 
-    RenderTargetSpecInfo& InternalSetNativeFormat(::vk::Format format)
+    RenderTargetSpecInfo& PrvSetNativeFormat(::vk::Format format)
     {
         nativeFormat_ = format;
         return *this;

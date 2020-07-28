@@ -17,12 +17,12 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 Swapchain::~Swapchain() {
-    AE_BASE_ASSERT(!InternalIsInitialized());
+    AE_BASE_ASSERT(!PrvIsInitialized());
 }
 
 //------------------------------------------------------------------------------
 void Swapchain::AcquireNextImage() {
-    AE_BASE_ASSERT(InternalIsInitialized());
+    AE_BASE_ASSERT(PrvIsInitialized());
     auto& device = swapchainMaster_->Device();
     {
         currentFrameIndex_ =
@@ -30,10 +30,10 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ = base::Math::Clamp(
             currentFrameIndex_, 0, frameProperties_.count() - 1);
         auto currentBufferIdxUint = uint32_t();
-        auto result = device.InternalInstance().acquireNextImageKHR(swapchain_,
+        auto result = device.PrvInstance().acquireNextImageKHR(swapchain_,
             UINT64_MAX,
             frameProperties_[currentFrameIndex_]
-                .AcquireEvent->InternalInstance(),
+                .AcquireEvent->PrvInstance(),
             ::vk::Fence(), &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
@@ -41,34 +41,34 @@ void Swapchain::AcquireNextImage() {
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
+void Swapchain::PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
     const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
     ::vk::Format imageFormat) {
-    AE_BASE_ASSERT(!InternalIsInitialized());
+    AE_BASE_ASSERT(!PrvIsInitialized());
     swapchainMaster_.reset(swapchainMaster);
     swapchain_ = swapchain;
     renderTargetSpecInfo_ =
-        gfx_low::RenderTargetSpecInfo().InternalSetNativeFormat(imageFormat);
+        gfx_low::RenderTargetSpecInfo().PrvSetNativeFormat(imageFormat);
     {
         auto& device = swapchainMaster_->Device();
 
         auto swapchainImageCount = uint32_t();
         {
             const auto result =
-                device.InternalInstance().getSwapchainImagesKHR(swapchain_,
+                device.PrvInstance().getSwapchainImagesKHR(swapchain_,
                     &swapchainImageCount, static_cast<::vk::Image*>(nullptr));
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT_LESS(0, minImageCount);
         }
 
         frameProperties_.resize(int(swapchainImageCount),
-            &swapchainMaster_->Device().System().InternalObjectAllocator());
+            &swapchainMaster_->Device().System().PrvObjectAllocator());
 
         base::RuntimeArray<::vk::Image> swapchainImages(
             frameProperties_.count(),
-            &device.System().InternalTempWorkAllocator());
+            &device.System().PrvTempWorkAllocator());
         {
-            const auto result = device.InternalInstance().getSwapchainImagesKHR(
+            const auto result = device.PrvInstance().getSwapchainImagesKHR(
                 swapchain_, &swapchainImageCount, swapchainImages.head());
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
@@ -82,25 +82,25 @@ void Swapchain::InternalInitialize(gfx_low::SwapchainMaster* swapchainMaster,
             target.ImageResource.init(
                 ImageResourceCreateInfo()
                     .SetDevice(&device)
-                    .InternalSetImagePtr(&swapchainImages[i]));
+                    .PrvSetImagePtr(&swapchainImages[i]));
             target.RenderTargetImageView.init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
                     .SetImageResource(target.ImageResource.ptr())
-                    .InternalSetRawFormat(imageFormat));
+                    .PrvSetRawFormat(imageFormat));
         }
     }
     uniqueId_ = uniqueId_;
     currentFrameIndex_ = -1;
-    AE_BASE_ASSERT(InternalIsInitialized());
+    AE_BASE_ASSERT(PrvIsInitialized());
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::InternalFinalize() {
-    if (!InternalIsInitialized()) {
+void Swapchain::PrvFinalize() {
+    if (!PrvIsInitialized()) {
         return;
     }
-    uniqueId_ = InternalInvalidUniqueId;
+    uniqueId_ = PrvInvalidUniqueId;
     {
         auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.count() - 1; 0 <= i; --i) {
@@ -113,7 +113,7 @@ void Swapchain::InternalFinalize() {
     }
     swapchain_ = ::vk::SwapchainKHR();
     swapchainMaster_.reset();
-    AE_BASE_ASSERT(!InternalIsInitialized());
+    AE_BASE_ASSERT(!PrvIsInitialized());
 }
 
 }  // namespace gfx_low

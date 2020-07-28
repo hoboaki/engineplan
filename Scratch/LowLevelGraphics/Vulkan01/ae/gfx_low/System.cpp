@@ -244,8 +244,8 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
         device.getQueueFamilyProperties(
             &queueFamilyCount, queueFamilyProperties);
 
-        InternalQueueFamilyIndexTableType queueFamilyIndexTable;
-        InternalQueueFamilyIndexTable(
+        PrvQueueFamilyIndexTableType queueFamilyIndexTable;
+        PrvQueueFamilyIndexTable(
             &queueFamilyIndexTable, physicalDeviceIndex);
 
         // Normal
@@ -253,7 +253,7 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
             const auto queueFamilyIndex =
                 queueFamilyIndexTable[int(QueueKind::Normal)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueKind::Normal)] =
+                info.PrvCreatableQueueCounts[int(QueueKind::Normal)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -263,7 +263,7 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
             const auto queueFamilyIndex =
                 queueFamilyIndexTable[int(QueueKind::ComputeOnly)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueKind::ComputeOnly)] =
+                info.PrvCreatableQueueCounts[int(QueueKind::ComputeOnly)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -273,7 +273,7 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
             const auto queueFamilyIndex =
                 queueFamilyIndexTable[int(QueueKind::CopyOnly)];
             if (0 <= queueFamilyIndex) {
-                info.InternalCreatableQueueCounts[int(QueueKind::CopyOnly)] =
+                info.PrvCreatableQueueCounts[int(QueueKind::CopyOnly)] =
                     int(queueFamilyProperties[queueFamilyIndex].queueCount);
             }
         }
@@ -298,8 +298,8 @@ void System::DumpAllPhysicalDeviceInfo() const {
 }
 
 //------------------------------------------------------------------------------
-void System::InternalQueueFamilyIndexTable(
-    InternalQueueFamilyIndexTableType* result,
+void System::PrvQueueFamilyIndexTable(
+    PrvQueueFamilyIndexTableType* result,
     const int physicalDeviceIndex) const {
     auto& resultRef = ::ae::base::PtrToRef(result);
     AE_BASE_ASSERT_LESS(physicalDeviceIndex, physicalDeviceCount_);

@@ -52,7 +52,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    Swapchain& InternalEntity() const { return *entity_; }
+    Swapchain& PrvEntity() const { return *entity_; }
     //@}
 
 private:

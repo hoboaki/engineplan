@@ -15,14 +15,14 @@ Event::Event(const EventCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , semaphore_() {
     const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
-    const auto result = device_.InternalInstance().createSemaphore(
+    const auto result = device_.PrvInstance().createSemaphore(
         &semaphoreCreateInfo, nullptr, &semaphore_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 Event::~Event() {
-    device_.InternalInstance().destroySemaphore(semaphore_, nullptr);
+    device_.PrvInstance().destroySemaphore(semaphore_, nullptr);
 }
 
 }  // namespace gfx_low

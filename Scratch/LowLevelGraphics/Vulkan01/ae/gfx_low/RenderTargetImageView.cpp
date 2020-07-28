@@ -16,25 +16,25 @@ RenderTargetImageView::RenderTargetImageView(const RenderTargetImageViewCreateIn
 : device_(base::PtrToRef(createInfo.Device()))
 , imageView_() {
     // 今は RawFormat しか対応しない
-    auto imageFormat = createInfo.InternalRawFormat();
+    auto imageFormat = createInfo.PrvRawFormat();
     AE_BASE_ASSERT(imageFormat != ::vk::Format::eUndefined);
 
     auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(
-                base::PtrToRef(createInfo.ImageResource()).InternalInstance())
+                base::PtrToRef(createInfo.ImageResource()).PrvInstance())
             .setViewType(::vk::ImageViewType::e2D)
             .setFormat(imageFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(
                 ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
-    const auto result = device_.InternalInstance().createImageView(
+    const auto result = device_.PrvInstance().createImageView(
         &imageViewCreateInfo, nullptr, &imageView_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 RenderTargetImageView::~RenderTargetImageView() {
-    device_.InternalInstance().destroyImageView(imageView_, nullptr);
+    device_.PrvInstance().destroyImageView(imageView_, nullptr);
 }
 
 }  // namespace gfx_low
