@@ -12,16 +12,16 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Hid::Hid(Display& aDisplay)
-: mDisplay(aDisplay)
-, mExt()
+: display_(aDisplay)
+, ext_()
 {
-    mDisplay.ext_().hidPtr.set(*this);
+    display_.Ext_().hidPtr.set(*this);
 }
 
 //------------------------------------------------------------------------------
 Hid::~Hid()
 {
-    mDisplay.ext_().hidPtr.unset(*this);
+    display_.Ext_().hidPtr.unset(*this);
 }
 
 //------------------------------------------------------------------------------
@@ -52,9 +52,9 @@ const Touch Hid::touch()const
 }
 
 //------------------------------------------------------------------------------
-Hid_Ext& Hid::ext_()
+Hid_Ext& Hid::Ext_()
 {
-    return mExt;
+    return ext_;
 }
 
 }} // namespace

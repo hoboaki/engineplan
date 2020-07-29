@@ -7,8 +7,8 @@ namespace base {
 
 //------------------------------------------------------------------------------
 TouchTap::TouchTap()
-: mData()
-, mPrevData()
+: data_()
+, prevData_()
 {
 }
 
@@ -20,44 +20,44 @@ TouchTap::~TouchTap()
 //------------------------------------------------------------------------------
 void TouchTap::update(const TouchTapUpdateData& aData)
 {
-    mPrevData = mData;
-    mData = aData;
+    prevData_ = data_;
+    data_ = aData;
 }
 
 //------------------------------------------------------------------------------
 const TouchTapUpdateData TouchTap::lastUpdateData()const
 {
-    return mData;
+    return data_;
 }
 
 //------------------------------------------------------------------------------
 int TouchTap::tapCount()const
 {
-    return mData.tapCount;
+    return data_.tapCount;
 }
 
 //------------------------------------------------------------------------------
 const ScreenPosPod TouchTap::pos()const
 {
-    return mData.pos;
+    return data_.pos;
 }
 
 //------------------------------------------------------------------------------
 bool TouchTap::isHold()const
 {
-    return 0 < mData.tapCount;
+    return 0 < data_.tapCount;
 }
 
 //------------------------------------------------------------------------------
 bool TouchTap::isTrigger()const
 {
-    return mData.tapCount != 0 && mPrevData.tapCount == 0;
+    return data_.tapCount != 0 && prevData_.tapCount == 0;
 }
 
 //------------------------------------------------------------------------------
 bool TouchTap::isRelease()const
 {
-    return mData.tapCount == 0 && mPrevData.tapCount != 0;
+    return data_.tapCount == 0 && prevData_.tapCount != 0;
 }
 
 }} // namespace

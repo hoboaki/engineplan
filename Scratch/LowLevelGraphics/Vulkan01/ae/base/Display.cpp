@@ -12,8 +12,8 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Display::Display(const DisplayContext& aContext)
-: mContext(aContext)
-, mExt(aContext)
+: context_(aContext)
+, ext_(aContext)
 {
     // 登録
     Application::Instance().registerDisplay_(*this);
@@ -27,15 +27,15 @@ Display::~Display()
 }
 
 //------------------------------------------------------------------------------
-const DisplayContext Display::context_()const
+const DisplayContext Display::Context_()const
 {
-    return mContext;
+    return context_;
 }
 
 //------------------------------------------------------------------------------
-Display_Ext& Display::ext_()
+Display_Ext& Display::Ext_()
 {
-    return mExt;
+    return ext_;
 }
 
 }} // namespace

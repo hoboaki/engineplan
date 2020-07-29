@@ -152,21 +152,21 @@ Screen& Display::screenAtIndex(const int aIndex)
 //------------------------------------------------------------------------------
 Screen& Display::mainScreen()
 {
-    return *mExt.mainScreen;
+    return *ext_.mainScreen;
 }
 
 //------------------------------------------------------------------------------
 void Display::show()
 {
-    mExt.isClosed = false;
-    ShowWindow(mExt.hwindow, SW_SHOWNORMAL);
-    UpdateWindow(mExt.hwindow);
+    ext_.isClosed = false;
+    ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
+    UpdateWindow(ext_.hwindow);
 }
 
 //------------------------------------------------------------------------------
 bool Display::isClosed()const
 {
-    return mExt.isClosed;
+    return ext_.isClosed;
 }
 
 //------------------------------------------------------------------------------
@@ -266,8 +266,8 @@ void Display_Ext::pollEvent(Application&)
 
     // Hid更新
     if (hidPtr.isValid()) {
-        hidPtr->ext_().keyboard.update(keyboardUpdateData);
-        hidPtr->ext_().mouse.update(mouseUpdateData);
+        hidPtr->Ext_().keyboard.update(keyboardUpdateData);
+        hidPtr->Ext_().mouse.update(mouseUpdateData);
     }
 }
 

@@ -62,12 +62,12 @@ public:
 
     //============================================================
     // 内部実装用関数群。
-    const DisplayContext context_()const; // コンテキストの取得。
-    Display_Ext& ext_(); // 拡張。
+    const DisplayContext Context_()const; // コンテキストの取得。
+    Display_Ext& Ext_(); // 拡張。
 
 private:
-    DisplayContext mContext;
-    Display_Ext mExt;
+    DisplayContext context_;
+    Display_Ext ext_;
 };
 
 //@}

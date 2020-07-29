@@ -10,15 +10,15 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2()
-: mMin()
-, mMax()
+: min_()
+, max_()
 {
 }
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2(const Vector2Pod& aPos)
-: mMin(aPos)
-, mMax(aPos)
+: min_(aPos)
+, max_(aPos)
 {
 }
 
@@ -27,87 +27,87 @@ Aabb2::Aabb2(
     const Vector2Pod& aPos1,
     const Vector2Pod& aPos2
     )
-: mMin(aPos1.min(aPos2))
-, mMax(aPos1.max(aPos2))
+: min_(aPos1.min(aPos2))
+, max_(aPos1.max(aPos2))
 {
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::min()const
 {
-    return mMin;
+    return min_;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::max()const
 {
-    return mMax;
+    return max_;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::center()const
 {
-    return (mMin + mMax) * 0.5f;
+    return (min_ + max_) * 0.5f;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::posLB()const
 {
-    return Vector2(mMin.x, mMin.y);
+    return Vector2(min_.x, min_.y);
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::posRB()const
 {
-    return Vector2(mMax.x, mMin.y);
+    return Vector2(max_.x, min_.y);
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::posLT()const
 {
-    return Vector2(mMin.x, mMax.y);
+    return Vector2(min_.x, max_.y);
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::posRT()const
 {
-    return Vector2(mMax.x, mMax.y);
+    return Vector2(max_.x, max_.y);
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::left()const
 {
-    return mMin.x;
+    return min_.x;
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::right()const
 {
-    return mMax.x;
+    return max_.x;
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::bottom()const
 {
-    return mMin.y;
+    return min_.y;
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::top()const
 {
-    return mMax.y;
+    return max_.y;
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::width()const
 {
-    return mMax.x - mMin.x;
+    return max_.x - min_.x;
 }
 
 //------------------------------------------------------------------------------
 float Aabb2::height()const
 {
-    return mMax.y - mMin.y;
+    return max_.y - min_.y;
 }
 
 //------------------------------------------------------------------------------
@@ -141,40 +141,40 @@ const Aabb2 Aabb2::merge(const Aabb2& aAABB)const
 //------------------------------------------------------------------------------
 void Aabb2::mergeAssign(const Vector2Pod& aPos)
 {
-    mMin = mMin.min(aPos);
-    mMax = mMax.max(aPos);
+    min_ = min_.min(aPos);
+    max_ = max_.max(aPos);
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::mergeAssign(const Aabb2& aAABB)
 {
-    mMin = mMin.min(aAABB.mMin);
-    mMax = mMax.max(aAABB.mMax);
+    min_ = min_.min(aAABB.min_);
+    max_ = max_.max(aAABB.max_);
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2::isIntersects(const Aabb2& aAABB)const
 {
-    return mMin.x <= aAABB.mMax.x
-        && mMin.y <= aAABB.mMax.y
-        && aAABB.mMin.x <= mMax.x
-        && aAABB.mMin.y <= mMax.y;
+    return min_.x <= aAABB.max_.x
+        && min_.y <= aAABB.max_.y
+        && aAABB.min_.x <= max_.x
+        && aAABB.min_.y <= max_.y;
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2::isContains(const Vector2Pod& aPos)const
 {
-    return mMin.x <= aPos.x
-        && mMin.y <= aPos.y
-        && aPos.x <= mMax.x
-        && aPos.y <= mMax.y;
+    return min_.x <= aPos.x
+        && min_.y <= aPos.y
+        && aPos.x <= max_.x
+        && aPos.y <= max_.y;
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2::isContains(const Aabb2& aAABB)const
 {
-    return isContains(aAABB.mMin)
-        && isContains(aAABB.mMax);
+    return isContains(aAABB.min_)
+        && isContains(aAABB.max_);
 }
 
 //------------------------------------------------------------------------------
@@ -220,36 +220,36 @@ const Aabb2 Aabb2::mul(const float aScale)const
 //------------------------------------------------------------------------------
 void Aabb2::addAssign(const Vector2Pod& aTrans)
 {
-    mMin += aTrans;
-    mMax += aTrans;
+    min_ += aTrans;
+    max_ += aTrans;
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::subAssign(const Vector2Pod& aTrans)
 {
-    mMin -= aTrans;
-    mMax -= aTrans;
+    min_ -= aTrans;
+    max_ -= aTrans;
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::addAssign(const Aabb2& aAABB)
 {
-    mMin += aAABB.mMin;
-    mMax += aAABB.mMax;
+    min_ += aAABB.min_;
+    max_ += aAABB.max_;
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::subAssign(const Aabb2& aAABB)
 {
-    mMin -= aAABB.mMin;
-    mMax -= aAABB.mMax;
+    min_ -= aAABB.min_;
+    max_ -= aAABB.max_;
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::mulAssign(const float aScale)
 {
-    mMin *= aScale;
-    mMax *= aScale;
+    min_ *= aScale;
+    max_ *= aScale;
 }
 
 //------------------------------------------------------------------------------
@@ -321,12 +321,12 @@ Aabb2& Aabb2::operator*=(const float aScale)
 const Aabb2i Aabb2::toAABB2i()const
 {
     const Vector2i newMin(
-        int(Math::FloorF32(mMin.x)),
-        int(Math::FloorF32(mMin.y))
+        int(Math::FloorF32(min_.x)),
+        int(Math::FloorF32(min_.y))
         );
     const Vector2i newTerm(
-        int(Math::CeilF32(mMax.x)),
-        int(Math::CeilF32(mMax.y))
+        int(Math::CeilF32(max_.x)),
+        int(Math::CeilF32(max_.y))
         );
     return Aabb2i(
         newMin,

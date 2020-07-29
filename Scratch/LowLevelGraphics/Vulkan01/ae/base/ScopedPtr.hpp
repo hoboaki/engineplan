@@ -18,7 +18,7 @@ public:
     //@{
     /// ポインタを指定して作成。
     explicit ScopedPtr(T* aPtr = 0)
-        : mPtr(aPtr)
+        : ptr_(aPtr)
     {
     }
     //@}
@@ -28,27 +28,27 @@ public:
     /// ポインタが設定されていなければtrueを返す。
     bool isNull()const
     {
-        return mPtr == 0;
+        return ptr_ == 0;
     }
 
     /// ポインタが設定されていればtrueを返す。
     bool isValid()const
     {
-        return mPtr != 0;
+        return ptr_ != 0;
     }
 
     /// ポインタの参照を取得する。
     T& ref()const
     {
         AE_BASE_ASSERT(isValid());
-        return *mPtr;
+        return *ptr_;
     }
 
     /// @brief ポインタの値をそのまま取得する。
     /// @details 設定されていないときは0を返します。
     T* get()const
     {
-        return mPtr;
+        return ptr_;
     }
     //@}
 
@@ -63,13 +63,13 @@ public:
     /// ポインタをリセットする。
     void reset(T* aPtr)
     {
-        T* ptr = mPtr;
-        mPtr = 0;
+        T* ptr = ptr_;
+        ptr_ = 0;
         if (ptr != 0)
         {
             delete ptr;
         }
-        mPtr = aPtr;
+        ptr_ = aPtr;
     }
     //@}
 
@@ -90,7 +90,7 @@ public:
     //@}
 
 private:
-    mutable T* mPtr;
+    mutable T* ptr_;
 };
 //@}
 

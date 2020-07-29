@@ -126,27 +126,27 @@ public:
     /// ポインタが設定されていなければtrueを返す。
     bool isNull()const
     {
-        return mPtr.isNull();
+        return ptr_.isNull();
     }
 
     /// ポインタが設定されていればtrueを返す。
     bool isValid()const
     {
-        return mPtr.isValid();
+        return ptr_.isValid();
     }
 
     /// ポインタの参照を取得する。
     T& ref()const
     {
         AE_BASE_ASSERT(isValid());
-        return *mPtr;
+        return *ptr_;
     }
 
     /// @brief ポインタの値をそのまま取得する。
     /// @details 設定されていないときは0を返します。
     T* get()const
     {
-        return mPtr.get();
+        return ptr_.get();
     }
     //@}
 
@@ -159,11 +159,11 @@ public:
         {
             return;
         }
-        T* ptr = mPtr.get();
-        mPtr.reset();
+        T* ptr = ptr_.get();
+        ptr_.reset();
         ptr->~T();
-        operator delete (ptr, mAllocatorPtr.ref());
-        mAllocatorPtr.reset();
+        operator delete (ptr, allocatorPtr_.ref());
+        allocatorPtr_.reset();
     }
 
     //@}
@@ -173,67 +173,67 @@ public:
     void init(::ae::base::IAllocator& aAllocator)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T());
+        ptr_.reset(new (aAllocator) T());
     }
     template< typename A0 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0));
+        ptr_.reset(new (aAllocator) T(a0));
     }
     template< typename A0, typename A1 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1));
+        ptr_.reset(new (aAllocator) T(a0, a1));
     }
     template< typename A0, typename A1, typename A2 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2));
     }
     template< typename A0, typename A1, typename A2, typename A3 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8));
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9 >
     void init(::ae::base::IAllocator& aAllocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
     {
         prepareCtor(aAllocator);
-        mPtr.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9));
+        ptr_.reset(new (aAllocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9));
     }
     //@}
 
@@ -245,10 +245,10 @@ public:
         reset();
         if (aRHS.isValid())
         {
-            mPtr.set(*aRHS.mPtr);
-            mAllocatorPtr = aRHS.mAllocatorPtr;
-            aRHS.mPtr.reset();
-            aRHS.mAllocatorPtr.reset();
+            ptr_.set(*aRHS.ptr_);
+            allocatorPtr_ = aRHS.allocatorPtr_;
+            aRHS.ptr_.reset();
+            aRHS.allocatorPtr_.reset();
         }
         return *this;
     }
@@ -260,10 +260,10 @@ public:
         reset();
         if (aRHS.isValid())
         {
-            mPtr.set(*aRHS.mPtr);
-            mAllocatorPtr = aRHS.mAllocatorPtr;
-            aRHS.mPtr.reset();
-            aRHS.mAllocatorPtr.reset();
+            ptr_.set(*aRHS.ptr_);
+            allocatorPtr_ = aRHS.allocatorPtr_;
+            aRHS.ptr_.reset();
+            aRHS.allocatorPtr_.reset();
         }
         return *this;
     }
@@ -283,13 +283,13 @@ public:
     //@}
 
 private:
-    mutable Pointer< T >          mPtr;
-    mutable Pointer< IAllocator > mAllocatorPtr;
+    mutable Pointer< T >          ptr_;
+    mutable Pointer< IAllocator > allocatorPtr_;
     //------------------------------------------------------------------------------
     void prepareCtor(::ae::base::IAllocator& aAllocator)
     {
         reset();
-        mAllocatorPtr.set(aAllocator);
+        allocatorPtr_.set(aAllocator);
     }
 };
 //@}

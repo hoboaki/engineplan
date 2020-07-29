@@ -7,40 +7,40 @@ namespace base {
 
 //------------------------------------------------------------------------------
 MemBlock::MemBlock()
-: mAddr(0)
-, mSize(0)
+: addr_(0)
+, size_(0)
 {
 }
 
 //------------------------------------------------------------------------------
 MemBlock::MemBlock(const ptr_t aAddr, const pword_t aSize)
-: mAddr(aAddr)
-, mSize(aSize)
+: addr_(aAddr)
+, size_(aSize)
 {
 }
 
 //------------------------------------------------------------------------------
 bool MemBlock::isNull()const
 {
-    return mAddr == 0;
+    return addr_ == 0;
 }
 
 //------------------------------------------------------------------------------
 ptr_t MemBlock::head()const
 {
-    return mAddr;
+    return addr_;
 }
 
 //------------------------------------------------------------------------------
 ptr_t MemBlock::tail()const
 {
-    return mAddr + mSize;
+    return addr_ + size_;
 }
 
 //------------------------------------------------------------------------------
 pword_t MemBlock::size()const
 {
-    return mSize;
+    return size_;
 }
 
 }} // namespace

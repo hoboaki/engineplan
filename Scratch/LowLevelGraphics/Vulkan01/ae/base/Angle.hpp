@@ -35,7 +35,7 @@ public:
     //@}
 
 private:
-    f32 mRad;
+    f32 rad_;
 };
 //@}
 

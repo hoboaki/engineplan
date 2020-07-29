@@ -7,11 +7,11 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Keyboard::Keyboard()
-: mData()
-, mTrigger()
-, mRepeat()
-, mPulse()
-, mRelease()
+: data_()
+, trigger_()
+, repeat_()
+, pulse_()
+, release_()
 {
 }
 
@@ -19,81 +19,81 @@ Keyboard::Keyboard()
 void Keyboard::update(const KeyboardUpdateData& aData)
 {
     // データ設定
-    const KeyboardUpdateData  pre = mData;
-    mData = aData;
-    const KeyboardUpdateData& cur = mData;
+    const KeyboardUpdateData  pre = data_;
+    data_ = aData;
+    const KeyboardUpdateData& cur = data_;
 
     // 更新
-    mTrigger = ~pre.hold &  cur.hold;
-    mRelease = pre.hold & ~cur.hold;
-    mPulse = mData.pulse | mTrigger;
-    mRepeat = ~mPulse & mTrigger;
+    trigger_ = ~pre.hold &  cur.hold;
+    release_ = pre.hold & ~cur.hold;
+    pulse_ = data_.pulse | trigger_;
+    repeat_ = ~pulse_ & trigger_;
 }
 
 //------------------------------------------------------------------------------
 const KeyboardUpdateData Keyboard::lastUpdateData()const
 {
-    return mData;
+    return data_;
 }
 
 //------------------------------------------------------------------------------
 bool Keyboard::isHold(const KeyKind::EnumType aKind)const
 {
-    return mData.hold.get(aKind);
+    return data_.hold.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Keyboard::isTrigger(const KeyKind::EnumType aKind)const
 {
-    return mTrigger.get(aKind);
+    return trigger_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Keyboard::isRepeat(const KeyKind::EnumType aKind)const
 {
-    return mRepeat.get(aKind);
+    return repeat_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Keyboard::isPulse(const KeyKind::EnumType aKind)const
 {
-    return mPulse.get(aKind);
+    return pulse_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Keyboard::isRelease(const KeyKind::EnumType aKind)const
 {
-    return mRelease.get(aKind);
+    return release_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 const KeyBitSet Keyboard::hold()const
 {
-    return mData.hold;
+    return data_.hold;
 }
 
 //------------------------------------------------------------------------------
 const KeyBitSet Keyboard::trigger()const
 {
-    return mTrigger;
+    return trigger_;
 }
 
 //------------------------------------------------------------------------------
 const KeyBitSet Keyboard::repeat()const
 {
-    return mRepeat;
+    return repeat_;
 }
 
 //------------------------------------------------------------------------------
 const KeyBitSet Keyboard::pulse()const
 {
-    return mPulse;
+    return pulse_;
 }
 
 //------------------------------------------------------------------------------
 const KeyBitSet Keyboard::release()const
 {
-    return mRelease;
+    return release_;
 }
 
 }} // namespace

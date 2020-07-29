@@ -31,19 +31,19 @@ u64 tCurrentUSec()
 //------------------------------------------------------------------------------
 void Application::quit()
 {
-    mExt.doQuit = true;
+    ext_.doQuit = true;
 }
 
 //------------------------------------------------------------------------------
 AppEvent::EnumType Application::receiveEventCore()
 {
     // 終了要求があったらQuit
-    if (mExt.doQuit) {
+    if (ext_.doQuit) {
         return AppEvent::Quit;
     }
     // ディスプレイのイベントチェック
-    if (mDisplayPtr.isValid()) {
-        mDisplayPtr->ext_().pollEvent(*this);
+    if (displayPtr_.isValid()) {
+        displayPtr_->Ext_().pollEvent(*this);
     }
 
     // 60フレ同期
@@ -51,15 +51,15 @@ AppEvent::EnumType Application::receiveEventCore()
         u64 currentUSec = u64();
         while (true) {
             currentUSec = tCurrentUSec();
-            if (mExt.prevUSec <= currentUSec) {// オーバーフローしていることもあるので。
-                if (currentUSec - mExt.prevUSec < 16666) {
+            if (ext_.prevUSec <= currentUSec) {// オーバーフローしていることもあるので。
+                if (currentUSec - ext_.prevUSec < 16666) {
                     Thread::Sleep(TimeSpan::FromMilliseconds(1));
                     continue;
                 }
             }
             break;
         }
-        mExt.prevUSec = currentUSec;
+        ext_.prevUSec = currentUSec;
     }
 
     // 常にUpdate

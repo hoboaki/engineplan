@@ -20,7 +20,7 @@ const Keyboard Hid::keyboardAtIndex(const int aIndex)const
 {
     AE_BASE_ASSERT_LESS(aIndex, keyboardCount());
     AE_BASE_UNUSED(aIndex);
-    return mExt.keyboard;
+    return ext_.keyboard;
 }
 
 //------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ const Mouse Hid::mouseAtIndex(const int aIndex)const
 {
     AE_BASE_ASSERT_LESS(aIndex, mouseCount());
     AE_BASE_UNUSED(aIndex);
-    return mExt.mouse;
+    return ext_.mouse;
 }
 
 //------------------------------------------------------------------------------

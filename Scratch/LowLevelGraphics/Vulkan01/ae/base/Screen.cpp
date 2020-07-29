@@ -13,42 +13,42 @@ Screen::Screen(
     const int aWidth,
     const int aHeight
     )
-: mOwner(aOwner)
-, mExt()
-, mWidth(aWidth)
-, mHeight(aHeight)
+: owner_(aOwner)
+, ext_()
+, width_(aWidth)
+, height_(aHeight)
 {
 }
 
 //------------------------------------------------------------------------------
 int Screen::width()const
 {
-    return mWidth;
+    return width_;
 }
 
 //------------------------------------------------------------------------------
 int Screen::height()const
 {
-    return mHeight;
+    return height_;
 }
 
 //------------------------------------------------------------------------------
 bool Screen::isContains(const ScreenPosPod& aPos)const
 {
-    return 0 <= aPos.x && aPos.x < int(mWidth)
-        && 0 <= aPos.y && aPos.y < int(mHeight);
+    return 0 <= aPos.x && aPos.x < int(width_)
+        && 0 <= aPos.y && aPos.y < int(height_);
 }
 
 //------------------------------------------------------------------------------
 Display_Ext& Screen::display_()
 {
-    return mOwner;
+    return owner_;
 }
 
 //------------------------------------------------------------------------------
-Screen_Ext& Screen::ext_()
+Screen_Ext& Screen::Ext_()
 {
-    return mExt;
+    return ext_;
 }
 
 }} // namespace

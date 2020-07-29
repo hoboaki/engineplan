@@ -73,8 +73,8 @@ public:
     //@}
 
 private:
-    mutable MemBlock mBlock;
-    mutable Pointer< IAllocator > mAllocatorPtr;
+    mutable MemBlock block_;
+    mutable Pointer< IAllocator > allocatorPtr_;
 };
 //@}
 

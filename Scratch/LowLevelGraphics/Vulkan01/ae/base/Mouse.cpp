@@ -7,10 +7,10 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Mouse::Mouse()
-: mData()
-, mPos()
-, mTrigger()
-, mRelease()
+: data_()
+, pos_()
+, trigger_()
+, release_()
 {
 }
 
@@ -18,70 +18,70 @@ Mouse::Mouse()
 void Mouse::update(const MouseUpdateData& aData)
 {
     // メモ
-    const MouseUpdateData pre = mData;
+    const MouseUpdateData pre = data_;
     const MouseUpdateData cur = aData;
-    mData = aData;
+    data_ = aData;
 
     // 更新
-    if (mData.posUpdated != 0) {
-        mPos = mData.pos;
+    if (data_.posUpdated != 0) {
+        pos_ = data_.pos;
     }
-    mTrigger = ~pre.hold &  cur.hold;
-    mRelease = pre.hold & ~cur.hold;
+    trigger_ = ~pre.hold &  cur.hold;
+    release_ = pre.hold & ~cur.hold;
 }
 
 //------------------------------------------------------------------------------
 const MouseUpdateData Mouse::lastUpdateData()const
 {
-    return mData;
+    return data_;
 }
 
 //------------------------------------------------------------------------------
 bool Mouse::isPosUpdated()const
 {
-    return mData.posUpdated != 0;
+    return data_.posUpdated != 0;
 }
 
 //------------------------------------------------------------------------------
 const ScreenPosPod Mouse::pos()const
 {
-    return mPos;
+    return pos_;
 }
 
 //------------------------------------------------------------------------------
 bool Mouse::isHold(const MouseBtnKind::EnumType aKind)const
 {
-    return mData.hold.get(aKind);
+    return data_.hold.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Mouse::isTrigger(const MouseBtnKind::EnumType aKind)const
 {
-    return mTrigger.get(aKind);
+    return trigger_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 bool Mouse::isRelease(const MouseBtnKind::EnumType aKind)const
 {
-    return mRelease.get(aKind);
+    return release_.get(aKind);
 }
 
 //------------------------------------------------------------------------------
 const MouseBtnBitSet Mouse::hold()const
 {
-    return mData.hold;
+    return data_.hold;
 }
 
 //------------------------------------------------------------------------------
 const MouseBtnBitSet Mouse::trigger()const
 {
-    return mTrigger;
+    return trigger_;
 }
 
 //------------------------------------------------------------------------------
 const MouseBtnBitSet Mouse::release()const
 {
-    return mRelease;
+    return release_;
 }
 
 }} // namespace

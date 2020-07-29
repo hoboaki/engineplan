@@ -52,8 +52,8 @@ public:
     //@}
 
 private:
-    int mFrame;
-    int mTotalFrame;
+    int frame_;
+    int totalFrame_;
 };
 //@}
 

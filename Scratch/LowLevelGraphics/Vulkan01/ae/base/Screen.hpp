@@ -53,13 +53,13 @@ public:
     //============================================================
     // 内部実装用関数群。
     Display_Ext& display_();
-    Screen_Ext& ext_();
+    Screen_Ext& Ext_();
 
 private:
-    Display_Ext& mOwner;
-    Screen_Ext mExt;
-    int mWidth;
-    int mHeight;
+    Display_Ext& owner_;
+    Screen_Ext ext_;
+    int width_;
+    int height_;
 };
 //@}
 

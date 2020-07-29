@@ -48,8 +48,8 @@ public:
     //@}
 
 private:
-    TouchTapUpdateData mData;
-    TouchTapUpdateData mPrevData;
+    TouchTapUpdateData data_;
+    TouchTapUpdateData prevData_;
 };
 //@}
 

@@ -89,11 +89,11 @@ public:
 
     //============================================================
     // 内部実装用関数群。
-    Hid_Ext& ext_(); // 拡張。
+    Hid_Ext& Ext_(); // 拡張。
 
 private:
-    Display& mDisplay;
-    Hid_Ext  mExt;
+    Display& display_;
+    Hid_Ext  ext_;
 };
 //@}
 

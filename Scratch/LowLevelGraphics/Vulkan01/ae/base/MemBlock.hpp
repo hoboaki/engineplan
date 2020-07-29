@@ -33,8 +33,8 @@ public:
     //@}
 
 private:
-    ptr_t   mAddr;
-    pword_t mSize;
+    ptr_t   addr_;
+    pword_t size_;
 };
 //@}
 

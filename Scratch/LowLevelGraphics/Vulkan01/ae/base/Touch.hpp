@@ -54,9 +54,9 @@ public:
     //@}
 
 private:
-    int mTapCount;
-    TouchUpdateData mData;
-    TouchTap mTaps[TouchUpdateData::TAP_COUNT_MAX];
+    int tapCount_;
+    TouchUpdateData data_;
+    TouchTap taps_[TouchUpdateData::TAP_COUNT_MAX];
 };
 //@}
 

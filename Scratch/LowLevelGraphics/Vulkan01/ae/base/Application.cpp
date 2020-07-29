@@ -19,10 +19,10 @@ Application& Application::Instance()
 
 //------------------------------------------------------------------------------
 ae::base::Application::Application(const Argument& aArgument)
-: mArgument(aArgument)
-, mLastEvent(AppEvent::INVALID)
-, mDisplayPtr()
-, mExt()
+: argument_(aArgument)
+, lastEvent_(AppEvent::INVALID)
+, displayPtr_()
+, ext_()
 {
     tPtr.set(*this);
 }
@@ -36,32 +36,32 @@ Application::~Application()
 //------------------------------------------------------------------------------
 const Argument& Application::argument()const
 {
-    return mArgument;
+    return argument_;
 }
 
 //------------------------------------------------------------------------------
 AppEvent::EnumType Application::receiveEvent()
 {
-    mLastEvent = receiveEventCore();
-    return mLastEvent;
+    lastEvent_ = receiveEventCore();
+    return lastEvent_;
 }
 
 //------------------------------------------------------------------------------
 AppEvent::EnumType Application::lastEvent()const
 {
-    return mLastEvent;
+    return lastEvent_;
 }
 
 //------------------------------------------------------------------------------
 void Application::registerDisplay_(Display& aDisplay)
 {
-    mDisplayPtr.set(aDisplay);
+    displayPtr_.set(aDisplay);
 }
 
 //------------------------------------------------------------------------------
 void Application::unregisterDisplay_(Display& aDisplay)
 {
-    mDisplayPtr.unset(aDisplay);
+    displayPtr_.unset(aDisplay);
 }
 
 }} // namespace

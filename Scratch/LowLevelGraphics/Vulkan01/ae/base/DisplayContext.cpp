@@ -25,11 +25,11 @@ enum
 
 //------------------------------------------------------------------------------
 DisplayContext::DisplayContext()
-: mLocationX(0)
-, mLocationY(0)
-, mWidth(tDefaultWidth)
-, mHeight(tDefaultHeight)
-, mIsScreenDoubleBuffer(true)
+: locationX_(0)
+, locationY_(0)
+, width_(tDefaultWidth)
+, height_(tDefaultHeight)
+, isScreenDoubleBuffer_(true)
 {
     // センタリング
     setLocationToCenter();
@@ -47,11 +47,11 @@ void DisplayContext::setLocationToCenter()
     ReleaseDC(hwnd, hdc);
 
     // 位置設定
-    if (mWidth < dispWidth) {
-        mLocationX = (dispWidth - mWidth) / 2;
+    if (width_ < dispWidth) {
+        locationX_ = (dispWidth - width_) / 2;
     }
-    if (mHeight < dispHeight) {
-        mLocationY = (dispHeight - mHeight) / 2;
+    if (height_ < dispHeight) {
+        locationY_ = (dispHeight - height_) / 2;
     }
 #elif defined(AE_BASE_OS_MACOSX)
     // 情報取得
@@ -59,11 +59,11 @@ void DisplayContext::setLocationToCenter()
     AeBaseNSScreen_GetMainScreenVisibleFrame(&rect);
 
     // 位置設定
-    if (mWidth < rect.sizeW) {
-        mLocationX = uint(rect.originX + (rect.sizeW - mWidth) / 2);
+    if (width_ < rect.sizeW) {
+        locationX_ = uint(rect.originX + (rect.sizeW - width_) / 2);
     }
-    if (mHeight < rect.sizeH) {
-        mLocationY = uint(rect.originY + (rect.sizeH - mHeight) / 2);
+    if (height_ < rect.sizeH) {
+        locationY_ = uint(rect.originY + (rect.sizeH - height_) / 2);
     }
 #endif
 }
@@ -71,25 +71,25 @@ void DisplayContext::setLocationToCenter()
 //------------------------------------------------------------------------------
 int DisplayContext::locationX()const
 {
-    return mLocationX;
+    return locationX_;
 }
 
 //------------------------------------------------------------------------------
 int DisplayContext::locationY()const
 {
-    return mLocationY;
+    return locationY_;
 }
 
 //------------------------------------------------------------------------------
 int DisplayContext::width()const
 {
-    return mWidth;
+    return width_;
 }
 
 //------------------------------------------------------------------------------
 int DisplayContext::height()const
 {
-    return mHeight;
+    return height_;
 }
 
 //------------------------------------------------------------------------------

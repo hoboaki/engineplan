@@ -9,13 +9,13 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Touch::Touch(const int aTapCount)
-: mTapCount(aTapCount)
-, mData()
-, mTaps()
+: tapCount_(aTapCount)
+, data_()
+, taps_()
 {
-    if (TouchUpdateData::TAP_COUNT_MAX < mTapCount) {
+    if (TouchUpdateData::TAP_COUNT_MAX < tapCount_) {
         AE_BASE_ERROR_INVALID_VALUE(aTapCount);
-        mTapCount = TouchUpdateData::TAP_COUNT_MAX;
+        tapCount_ = TouchUpdateData::TAP_COUNT_MAX;
     }
 }
 
@@ -28,24 +28,24 @@ Touch::~Touch()
 void Touch::update(const TouchUpdateData& aData)
 {
     // バックアップ
-    mData = aData;
+    data_ = aData;
 
     // 更新
-    for (int i = 0; i < mTapCount; ++i) {
-        mTaps[i].update(aData.taps[i]);
+    for (int i = 0; i < tapCount_; ++i) {
+        taps_[i].update(aData.taps[i]);
     }
 }
 
 //------------------------------------------------------------------------------
 const TouchUpdateData Touch::lastUpdateData()const
 {
-    return mData;
+    return data_;
 }
 
 //------------------------------------------------------------------------------
 int Touch::tapCount()const
 {
-    return mTapCount;
+    return tapCount_;
 }
 
 //------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ const TouchTap Touch::tapAtIndex(const int aIndex)const
         AE_BASE_ERROR_INVALID_VALUE(aIndex);
         return TouchTap();
     }
-    return mTaps[aIndex];
+    return taps_[aIndex];
 }
 
 }} // namespace

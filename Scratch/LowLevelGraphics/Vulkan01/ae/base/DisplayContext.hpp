@@ -34,11 +34,11 @@ public:
 
 private:
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
-    int mLocationX;
-    int mLocationY;
-    int mWidth;
-    int mHeight;
-    Bool32 mIsScreenDoubleBuffer;
+    int locationX_;
+    int locationY_;
+    int width_;
+    int height_;
+    Bool32 isScreenDoubleBuffer_;
 #endif
 };
 //@}

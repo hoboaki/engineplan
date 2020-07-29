@@ -15,35 +15,35 @@ Argument::Argument(
     const char* aExeFileName,
     const char* aExeDirPath
     )
-: mArgCount(aArgCount)
-, mArgValues(aArgValues)
-, mExeFileName(aExeFileName)
-, mExeDirPath(aExeDirPath)
+: argCount_(aArgCount)
+, argValues_(aArgValues)
+, exeFileName_(aExeFileName)
+, exeDirPath_(aExeDirPath)
 {
 }
 
 //------------------------------------------------------------------------------
 int Argument::argCount()const
 {
-    return mArgCount;
+    return argCount_;
 }
 
 //------------------------------------------------------------------------------
 const char* Argument::argValue(const int aIndex)const
 {
     // 範囲外チェック
-    if (mArgCount <= aIndex) {
+    if (argCount_ <= aIndex) {
         AE_BASE_ERROR_INVALID_VALUE(aIndex);
         return "";
     }
 
     // 配列ポインタチェック
-    if (PointerCheck::InvalidCheck(mArgValues)) {
+    if (PointerCheck::InvalidCheck(argValues_)) {
         return "";
     }
 
     // 文字列ポインタチェック
-    const char* value = mArgValues[aIndex];
+    const char* value = argValues_[aIndex];
     if (PointerCheck::InvalidCheck(value)) {
         return "";
     }
@@ -55,19 +55,19 @@ const char* Argument::argValue(const int aIndex)const
 //------------------------------------------------------------------------------
 const char* Argument::exeFileName()const
 {
-    if (PointerCheck::InvalidCheck(mExeFileName)) {
+    if (PointerCheck::InvalidCheck(exeFileName_)) {
         return "";
     }
-    return mExeFileName;
+    return exeFileName_;
 }
 
 //------------------------------------------------------------------------------
 const char* Argument::exeDirPath()const
 {
-    if (PointerCheck::InvalidCheck(mExeDirPath)) {
+    if (PointerCheck::InvalidCheck(exeDirPath_)) {
         return "";
     }
-    return mExeDirPath;
+    return exeDirPath_;
 }
 
 }} // namespace

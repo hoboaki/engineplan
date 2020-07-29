@@ -19,18 +19,18 @@ class Reference
 {
 public:
     Reference(T& aRef)
-        : mPtr(&aRef)
+        : ptr_(&aRef)
     {
     }
 
     operator T& ()const
     {
-        AE_BASE_ASSERT_POINTER(mPtr);
-        return *mPtr;
+        AE_BASE_ASSERT_POINTER(ptr_);
+        return *ptr_;
     }
 
 private:
-    T* mPtr;
+    T* ptr_;
 };
 //@}
 

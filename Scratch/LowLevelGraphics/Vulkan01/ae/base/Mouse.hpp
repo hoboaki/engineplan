@@ -66,10 +66,10 @@ public:
     //@}
 
 private:
-    MouseUpdateData mData;
-    ScreenPos       mPos;
-    MouseBtnBitSet  mTrigger;
-    MouseBtnBitSet  mRelease;
+    MouseUpdateData data_;
+    ScreenPos       pos_;
+    MouseBtnBitSet  trigger_;
+    MouseBtnBitSet  release_;
 };
 //@}
 

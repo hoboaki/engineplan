@@ -10,13 +10,13 @@ namespace base {
 
 //------------------------------------------------------------------------------
 ResFileStream::ResFileStream()
-: mExt()
+: ext_()
 {
 }
 
 //------------------------------------------------------------------------------
 ResFileStream::ResFileStream(const char* aPath)
-: mExt()
+: ext_()
 {
     const bool result = open(aPath);
     AE_BASE_UNUSED(result);

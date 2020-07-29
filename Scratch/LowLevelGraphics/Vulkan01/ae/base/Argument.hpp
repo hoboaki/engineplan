@@ -50,10 +50,10 @@ public:
     //@}
 
 private:
-    int              mArgCount;
-    const char*const* mArgValues;
-    const char*       mExeFileName;
-    const char*       mExeDirPath;
+    int              argCount_;
+    const char*const* argValues_;
+    const char*       exeFileName_;
+    const char*       exeDirPath_;
 };
 //@}
 

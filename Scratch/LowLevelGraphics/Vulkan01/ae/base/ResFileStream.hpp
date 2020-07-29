@@ -79,7 +79,7 @@ public:
     AE_BASE_OVERRIDE(void close());
 
 private:
-    ResFileStream_EXT mExt;
+    ResFileStream_EXT ext_;
 };
 
 //@}

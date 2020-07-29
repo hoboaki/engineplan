@@ -16,15 +16,15 @@ const Aabb2i Aabb2i::Largest()
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i()
-: mMin(Vector2i::Zero())
-, mTerm(mMin)
+: min_(Vector2i::Zero())
+, term_(min_)
 {
 }
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i(const Vector2iPod& aBegin)
-: mMin(aBegin)
-, mTerm(mMin)
+: min_(aBegin)
+, term_(min_)
 {
 }
 
@@ -34,64 +34,64 @@ Aabb2i::Aabb2i(
     const int aWidth,
     const int aHeight
     )
-: mMin(aBegin)
-, mTerm(
+: min_(aBegin)
+, term_(
     aBegin.x + reinterpret_cast<const int&>(aWidth),
     aBegin.y + reinterpret_cast<const int&>(aHeight)
     )
 {
-    AE_BASE_ASSERT_LESS_EQUALS(mMin.x, mTerm.x);
-    AE_BASE_ASSERT_LESS_EQUALS(mMin.y, mTerm.y);
+    AE_BASE_ASSERT_LESS_EQUALS(min_.x, term_.x);
+    AE_BASE_ASSERT_LESS_EQUALS(min_.y, term_.y);
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::begin()const
 {
-    return mMin;
+    return min_;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::end()const
 {
-    return mTerm;
+    return term_;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::min()const
 {
-    return mMin;
+    return min_;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::term()const
 {
-    return mTerm;
+    return term_;
 }
 
 //------------------------------------------------------------------------------
 int Aabb2i::width()const
 {
-    return int(mTerm.x - mMin.x);
+    return int(term_.x - min_.x);
 }
 
 //------------------------------------------------------------------------------
 int Aabb2i::height()const
 {
-    return int(mTerm.y - mMin.y);
+    return int(term_.y - min_.y);
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2i::isPositive()const
 {
-    return 0 <= mMin.x
-        && 0 <= mMin.y;
+    return 0 <= min_.x
+        && 0 <= min_.y;
 }
 
 //------------------------------------------------------------------------------
 const Aabb2i Aabb2i::toPositive()const
 {
-    const Vector2i newMin = mMin.max(Vector2i::Zero());
-    const Vector2i newTerm = mTerm.max(Vector2i::Zero());
+    const Vector2i newMin = min_.max(Vector2i::Zero());
+    const Vector2i newTerm = term_.max(Vector2i::Zero());
     const Vector2i newSize = newTerm - newMin;
     return Aabb2i(
         newMin,
@@ -111,35 +111,35 @@ const Aabb2i Aabb2i::merge(const Aabb2i& aAABB)const
 //------------------------------------------------------------------------------
 void Aabb2i::mergeAssign(const Aabb2i& aAABB)
 {
-    mMin = mMin.min(aAABB.mMin);
-    mTerm = mTerm.max(aAABB.mTerm);
+    min_ = min_.min(aAABB.min_);
+    term_ = term_.max(aAABB.term_);
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2i::isIntersects(const Aabb2i& aAABB)const
 {
-    return mMin.x < aAABB.mTerm.x
-        && mMin.y < aAABB.mTerm.y
-        && aAABB.mMin.x < mTerm.x
-        && aAABB.mMin.y < mTerm.y;
+    return min_.x < aAABB.term_.x
+        && min_.y < aAABB.term_.y
+        && aAABB.min_.x < term_.x
+        && aAABB.min_.y < term_.y;
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2i::isContains(const Vector2iPod& aPos)const
 {
-    return mMin.x <= aPos.x
-        && mMin.y <= aPos.y
-        && aPos.x < mTerm.x
-        && aPos.y < mTerm.y;
+    return min_.x <= aPos.x
+        && min_.y <= aPos.y
+        && aPos.x < term_.x
+        && aPos.y < term_.y;
 }
 
 //------------------------------------------------------------------------------
 bool Aabb2i::isContains(const Aabb2i& aAABB)const
 {
-    return mMin.x <= aAABB.mMin.x
-        && mMin.y <= aAABB.mMin.y
-        && aAABB.mTerm.x <= mTerm.x
-        && aAABB.mTerm.y <= mTerm.y;
+    return min_.x <= aAABB.min_.x
+        && min_.y <= aAABB.min_.y
+        && aAABB.term_.x <= term_.x
+        && aAABB.term_.y <= term_.y;
 }
 
 //------------------------------------------------------------------------------
@@ -161,15 +161,15 @@ const Aabb2i Aabb2i::sub(const Vector2iPod& aTrans)const
 //------------------------------------------------------------------------------
 void Aabb2i::addAssign(const Vector2iPod& aTrans)
 {
-    mMin += aTrans;
-    mTerm += aTrans;
+    min_ += aTrans;
+    term_ += aTrans;
 }
 
 //------------------------------------------------------------------------------
 void Aabb2i::subAssign(const Vector2iPod& aTrans)
 {
-    mMin -= aTrans;
-    mTerm -= aTrans;
+    min_ -= aTrans;
+    term_ -= aTrans;
 }
 
 //------------------------------------------------------------------------------

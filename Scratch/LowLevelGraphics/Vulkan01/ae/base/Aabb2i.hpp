@@ -124,8 +124,8 @@ public:
     //@}
 
 private:
-    Vector2i mMin;
-    Vector2i mTerm;
+    Vector2i min_;
+    Vector2i term_;
 };
 //@}
 

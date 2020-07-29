@@ -65,10 +65,10 @@ public:
     void unregisterDisplay_(Display&);
 
 private:
-    const Argument& mArgument;
-    Enum32< AppEvent::EnumType > mLastEvent;
-    Pointer< Display > mDisplayPtr;
-    Application_Ext mExt;
+    const Argument& argument_;
+    Enum32< AppEvent::EnumType > lastEvent_;
+    Pointer< Display > displayPtr_;
+    Application_Ext ext_;
     //------------------------------------------------------------------------------
     AppEvent::EnumType receiveEventCore();
 };

@@ -32,32 +32,32 @@ public:
     /// @details 
     /// 配列長が0の場合、アロケートは走りません。
     RuntimeMarray(int aCountMax, IAllocator& aAllocator = IAllocator::Default())
-        : mAllocator(aAllocator)
-        , mCountMax(aCountMax)
-        , mCount(0)
-        , mPtr(0)
+        : allocator_(aAllocator)
+        , countMax_(aCountMax)
+        , count_(0)
+        , ptr_(0)
     {
         if (0 < aCountMax)
         {
-            mPtr = reinterpret_cast<ValueType*>(mAllocator.alloc(sizeof(ValueType) * aCountMax));
+            ptr_ = reinterpret_cast<ValueType*>(allocator_.alloc(sizeof(ValueType) * aCountMax));
         }
     }
 
     /// デストラクタ。
     ~RuntimeMarray()
     {
-        if (mPtr != 0)
+        if (ptr_ != 0)
         {
             // 逆順でデストラクタを呼び出す
-            for (int i = mCount; 0 < i; --i)
+            for (int i = count_; 0 < i; --i)
             {
                 const int idx = i - 1;
                 at(idx).~ValueType();
             }
 
-            ValueType* ptr = mPtr;
-            mPtr = 0;
-            mAllocator.free(reinterpret_cast<ptr_t>(ptr));
+            ValueType* ptr = ptr_;
+            ptr_ = 0;
+            allocator_.free(reinterpret_cast<ptr_t>(ptr));
         }
     }
 
@@ -68,47 +68,47 @@ public:
     /// 要素が１つもない状態か。
     bool isEmpty()const
     {
-        return mCount == 0;
+        return count_ == 0;
     }
 
     /// 要素数が最大の状態か。
     bool isFull()const
     {
-        return mCount == mCountMax;
+        return count_ == countMax_;
     }
 
     /// 現在の要素数。
     int count()const
     {
-        return mCount;
+        return count_;
     }
 
     /// 最大の要素数。
     int countMax()const
     {
-        return mCountMax;
+        return countMax_;
     }
 
     /// 指定番目の要素にアクセス。
     ValueType& at(const int aIndex)
     {
-        if (mCount <= aIndex)
+        if (count_ <= aIndex)
         {
-            AE_BASE_ASSERT_LESS(aIndex, mCount);
-            return mPtr[0]; // fail safe code
+            AE_BASE_ASSERT_LESS(aIndex, count_);
+            return ptr_[0]; // fail safe code
         }
-        return mPtr[aIndex];
+        return ptr_[aIndex];
     }
 
     /// 指定番目の要素にアクセス。
     const ValueType& at(const int aIndex)const
     {
-        if (mCount <= aIndex)
+        if (count_ <= aIndex)
         {
-            AE_BASE_ASSERT_LESS(aIndex, mCount);
-            return mPtr[0]; // fail safe code
+            AE_BASE_ASSERT_LESS(aIndex, count_);
+            return ptr_[0]; // fail safe code
         }
-        return mPtr[aIndex];
+        return ptr_[aIndex];
     }
 
     /// 最初の要素にアクセス。
@@ -117,9 +117,9 @@ public:
     const ValueType& first()const { return at(0); }
 
     /// 最後の要素にアクセス。
-    ValueType& last() { return at(mCount - 1); }
+    ValueType& last() { return at(count_ - 1); }
     /// @copydoc last()
-    const ValueType& last()const { return at(mCount - 1); }
+    const ValueType& last()const { return at(count_ - 1); }
 
     //@}
 
@@ -129,7 +129,7 @@ public:
     /// 全ての要素を削除する。
     void clear()
     {
-        mCount = 0;
+        count_ = 0;
     }
 
     /// 指定の要素を末尾に追加する。
@@ -140,18 +140,18 @@ public:
             AE_BASE_ASSERT_NOT_REACHED();
             return;
         }
-        mPtr[mCount] = aVal;
-        ++mCount;
+        ptr_[count_] = aVal;
+        ++count_;
     }
 
     //@}
 
     /// @name イテレータ
     //@{
-    ValueType* begin() { return mPtr; }
-    const ValueType* begin() const { return mPtr; }
-    ValueType* end() { return &mPtr[mCount]; }
-    const ValueType* end() const { return &mPtr[mCount]; }
+    ValueType* begin() { return ptr_; }
+    const ValueType* begin() const { return ptr_; }
+    ValueType* end() { return &ptr_[count_]; }
+    const ValueType* end() const { return &ptr_[count_]; }
     //@}
 
     /// @name 演算子オーバーロード
@@ -161,10 +161,10 @@ public:
     //@}
 
 private:
-    IAllocator& mAllocator;
-    const int  mCountMax;
-    int        mCount;
-    ValueType*  mPtr;
+    IAllocator& allocator_;
+    const int  countMax_;
+    int        count_;
+    ValueType*  ptr_;
 };
 //@}
 

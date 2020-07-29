@@ -9,8 +9,8 @@ namespace base {
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock()
-: mBlock()
-, mAllocatorPtr()
+: block_()
+, allocatorPtr_()
 {
 }
 
@@ -20,8 +20,8 @@ AutoMemBlock::AutoMemBlock(
     IAllocator& aAllocator,
     const pword_t aAlignment
     )
-: mBlock()
-, mAllocatorPtr()
+: block_()
+, allocatorPtr_()
 {
     // 確保
     ptr_t ptr = aAllocator.alloc(aSize, aAlignment);
@@ -31,21 +31,21 @@ AutoMemBlock::AutoMemBlock(
     }
 
     // 設定
-    mBlock = MemBlock(ptr, aSize);
-    mAllocatorPtr.set(aAllocator);
+    block_ = MemBlock(ptr, aSize);
+    allocatorPtr_.set(aAllocator);
 }
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const MemBlock& aBlock, IAllocator& aAllocator)
-: mBlock(aBlock)
-, mAllocatorPtr(aAllocator)
+: block_(aBlock)
+, allocatorPtr_(aAllocator)
 {
 }
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const AutoMemBlock& aOther)
-: mBlock()
-, mAllocatorPtr()
+: block_()
+, allocatorPtr_()
 {
     *this = aOther;
 }
@@ -59,7 +59,7 @@ AutoMemBlock::~AutoMemBlock()
 //------------------------------------------------------------------------------
 bool AutoMemBlock::isEmpty()const
 {
-    return mAllocatorPtr.isNull();
+    return allocatorPtr_.isNull();
 }
 
 //------------------------------------------------------------------------------
@@ -68,16 +68,16 @@ void AutoMemBlock::clear()
     if (isEmpty()) {
         return;
     }
-    mAllocatorPtr->free(mBlock.head());
-    mAllocatorPtr.reset();
-    mBlock = MemBlock();
+    allocatorPtr_->free(block_.head());
+    allocatorPtr_.reset();
+    block_ = MemBlock();
 }
 
 //------------------------------------------------------------------------------
 const MemBlock& AutoMemBlock::ref()const
 {
     AE_BASE_ASSERT(!isEmpty());
-    return mBlock;
+    return block_;
 }
 
 //------------------------------------------------------------------------------
@@ -87,12 +87,12 @@ AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& aRHS)
     clear();
 
     // つぎに移動
-    mBlock = aRHS.mBlock;
-    mAllocatorPtr = aRHS.mAllocatorPtr;
+    block_ = aRHS.block_;
+    allocatorPtr_ = aRHS.allocatorPtr_;
 
     // 相手をクリア
-    aRHS.mBlock = MemBlock();
-    aRHS.mAllocatorPtr.reset();
+    aRHS.block_ = MemBlock();
+    aRHS.allocatorPtr_.reset();
 
     // 終了
     return *this;

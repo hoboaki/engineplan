@@ -119,8 +119,8 @@ public:
     const Aabb2i toAABB2i()const; ///< 切り捨てたmin()、切り上げたmax()の値を使って整数版AABBに変換。
     //@}
 private:
-    Vector2 mMin;
-    Vector2 mMax;
+    Vector2 min_;
+    Vector2 max_;
 };
 //@}
 

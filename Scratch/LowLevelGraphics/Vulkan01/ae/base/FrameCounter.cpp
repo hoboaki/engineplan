@@ -10,29 +10,29 @@ namespace base {
 
 //------------------------------------------------------------------------------
 FrameCounter::FrameCounter()
-: mFrame(0)
-, mTotalFrame(0)
+: frame_(0)
+, totalFrame_(0)
 {
 }
 
 //------------------------------------------------------------------------------
 FrameCounter::FrameCounter(const int aTotalFrame)
-: mFrame(0)
-, mTotalFrame(aTotalFrame)
+: frame_(0)
+, totalFrame_(aTotalFrame)
 {
 }
 
 //------------------------------------------------------------------------------
 void FrameCounter::reset()
 {
-    mFrame = 0;
+    frame_ = 0;
 }
 
 //------------------------------------------------------------------------------
 void FrameCounter::reset(const int aTotalFrame)
 {
-    mFrame = 0;
-    mTotalFrame = aTotalFrame;
+    frame_ = 0;
+    totalFrame_ = aTotalFrame;
 }
 
 //------------------------------------------------------------------------------
@@ -50,26 +50,26 @@ void FrameCounter::advanceStrict()
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    ++mFrame;
+    ++frame_;
 }
 
 //------------------------------------------------------------------------------
 void FrameCounter::toEnd()
 {
-    mFrame = mTotalFrame;
+    frame_ = totalFrame_;
 }
 
 //------------------------------------------------------------------------------
 int FrameCounter::frame()const
 {
-    return mFrame;
+    return frame_;
 
 }
 
 //------------------------------------------------------------------------------
 int FrameCounter::totalFrame()const
 {
-    return mTotalFrame;
+    return totalFrame_;
 }
 
 //------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ bool FrameCounter::isEnd()const
 //------------------------------------------------------------------------------
 bool FrameCounter::isCounting()const
 {
-    return mFrame < mTotalFrame;
+    return frame_ < totalFrame_;
 }
 
 //------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ float FrameCounter::rateFrame()const
     }
     else
     {
-        return AE_BASE_DIV(float(mFrame), mTotalFrame);
+        return AE_BASE_DIV(float(frame_), totalFrame_);
     }
 }
 

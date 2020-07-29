@@ -55,11 +55,11 @@ public:
     //@}
 
 private:
-    KeyboardUpdateData mData;
-    KeyBitSet mTrigger;
-    KeyBitSet mRepeat;
-    KeyBitSet mPulse;
-    KeyBitSet mRelease;
+    KeyboardUpdateData data_;
+    KeyBitSet trigger_;
+    KeyBitSet repeat_;
+    KeyBitSet pulse_;
+    KeyBitSet release_;
 };
 //@}
 

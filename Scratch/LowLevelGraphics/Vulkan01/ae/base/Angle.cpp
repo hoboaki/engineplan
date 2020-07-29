@@ -10,32 +10,32 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Angle::Angle()
-: mRad(0)
+: rad_(0)
 {
 }
 
 //------------------------------------------------------------------------------
 Angle::Angle(const DegreePod& aDegree)
-: mRad(aDegree.toRadian().value)
+: rad_(aDegree.toRadian().value)
 {
 }
 
 //------------------------------------------------------------------------------
 Angle::Angle(const RadianPod& aRadian)
-: mRad(aRadian.value)
+: rad_(aRadian.value)
 {
 }
 
 //------------------------------------------------------------------------------
 f32 Angle::rad()const
 {
-    return mRad;
+    return rad_;
 }
 
 //------------------------------------------------------------------------------
 f32 Angle::deg()const
 {
-    return Radian(mRad).toDegree().value;
+    return Radian(rad_).toDegree().value;
 }
 
 }} // namespace
