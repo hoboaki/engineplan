@@ -16,24 +16,24 @@ const AutoMemBlock ResFile::Read(
 {
     // オープン
     ResFileStream stream;
-    if (!stream.open(aPath)) {
+    if (!stream.Open(aPath)) {
         AE_BASE_ASSERT_NOT_REACHED_MSGFMT("ResFile named '%s' is failed to open.", aPath);
         return AutoMemBlock();
     }
 
     // メモリ準備
-    const pword_t size = stream.seek(0, ::ae::base::SeekOrigin::End);
-    const pword_t bufferSize = stream.calcReadBufferSize(size);
-    ptr_t ptr = aAllocator.alloc(bufferSize, stream.requireReadBufferAlignment());
+    const pword_t size = stream.Seek(0, ::ae::base::SeekOrigin::End);
+    const pword_t bufferSize = stream.CalcReadBufferSize(size);
+    ptr_t ptr = aAllocator.Alloc(bufferSize, stream.RequireReadBufferAlignment());
     if (ptr == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return AutoMemBlock();
     }
 
     // 読み込み
-    stream.seek(0, ::ae::base::SeekOrigin::Begin);
-    stream.read(ptr, size);
-    stream.close();
+    stream.Seek(0, ::ae::base::SeekOrigin::Begin);
+    stream.Read(ptr, size);
+    stream.Close();
 
     // 終了
     return AutoMemBlock(MemBlock(ptr, size), aAllocator);

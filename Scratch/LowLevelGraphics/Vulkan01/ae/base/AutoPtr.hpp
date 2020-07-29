@@ -40,7 +40,7 @@ public:
     /// デストラクタ
     ~AutoPtr()
     {
-        reset();
+        Reset();
     }
 
     //@}
@@ -48,27 +48,27 @@ public:
     /// @name 取得
     //@{
     /// ポインタが設定されていなければtrueを返す。
-    bool isNull()const
+    bool IsNull()const
     {
         return ptr_ == 0;
     }
 
     /// ポインタが設定されていればtrueを返す。
-    bool isValid()const
+    bool IsValid()const
     {
         return ptr_ != 0;
     }
 
     /// ポインタの参照を取得する。
-    T& ref()const
+    T& Ref()const
     {
-        AE_BASE_ASSERT(isValid());
+        AE_BASE_ASSERT(IsValid());
         return *ptr_;
     }
 
     /// @brief ポインタの値をそのまま取得する。
     /// @details 設定されていないときは0を返します。
-    T* get()const
+    T* Get()const
     {
         return ptr_;
     }
@@ -77,22 +77,22 @@ public:
     /// @name 変更
     //@{
     /// ポインタの破棄責任を剥奪し、抱えていたポインタを取得する。
-    T* release()
+    T* Release()
     {
-        AE_BASE_ASSERT(isValid());
+        AE_BASE_ASSERT(IsValid());
         T* ptr = ptr_;
         ptr_ = 0;
         return ptr;
     }
 
     /// ポインタを設定していない状態にする。
-    void reset()
+    void Reset()
     {
-        reset(0);
+        Reset(0);
     }
 
     /// ポインタをリセットする。
-    void reset(T* aPtr)
+    void Reset(T* aPtr)
     {
         T* ptr = ptr_;
         ptr_ = 0;
@@ -111,7 +111,7 @@ public:
     {
         T* ptr = aRHS.ptr_;
         aRHS.ptr_ = 0;
-        reset(ptr);
+        Reset(ptr);
         return *this;
     }
 
@@ -121,21 +121,21 @@ public:
     {
         T* ptr = aRHS.ptr_;
         aRHS.ptr_ = 0;
-        reset(ptr);
+        Reset(ptr);
         return *this;
     }
 
     /// 参照演算子。
     T& operator*()const
     {
-        return ref();
+        return Ref();
     }
 
     /// 参照演算子
     T* operator->()const
     {
-        AE_BASE_ASSERT(isValid());
-        return get();
+        AE_BASE_ASSERT(IsValid());
+        return Get();
     }
     //@}
 

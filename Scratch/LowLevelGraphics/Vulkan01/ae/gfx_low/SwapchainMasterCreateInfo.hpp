@@ -24,9 +24,9 @@ class SwapchainMasterCreateInfo {
 public:
     /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::Device* Device() const { return device_.get(); }
+    gfx_low::Device* Device() const { return device_.Get(); }
     SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* system) {
-        device_.reset(system);
+        device_.Reset(system);
         return *this;
     }
     //@}
@@ -45,9 +45,9 @@ public:
     
     /// @name 対象 Surface を持つ Screen（設定必須、初期値：nullptr）
     //@{
-    base::Screen* Screen() const { return screen_.get(); }
+    base::Screen* Screen() const { return screen_.Get(); }
     SwapchainMasterCreateInfo& SetScreen(base::Screen* display) {
-        screen_.reset(display);
+        screen_.Reset(display);
         return *this;
     }
     //@}

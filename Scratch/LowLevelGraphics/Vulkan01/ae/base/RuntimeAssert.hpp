@@ -96,7 +96,7 @@ struct RuntimeAssert
 #define AE_BASE_ASSERT_SHOULD_NULL( aVal ) \
     AE_BASE_ASSERT_MSG( (aVal)==0 \
     , "Value is not Null (%s)\n" \
-    , AE_BASE_TO_SHORT_STRING( aVal ).readPtr() \
+    , AE_BASE_TO_SHORT_STRING( aVal ).ReadPtr() \
     ) 
 
 /// @brief NULLじゃない値をさしているかチェックする。
@@ -143,9 +143,9 @@ struct RuntimeAssert
 /// エラーが無効なときは何もしません。
 #define AE_BASE_ERROR_INVALID_VALUE( aVal ) \
     AE_BASE_ASSERT_NOT_REACHED_MSGFMT( \
-        "%s is invalid value(%s)\n" \
+        "%s is invalid Value(%s)\n" \
         , #aVal \
-        , AE_BASE_TO_SHORT_STRING(aVal).readPtr() \
+        , AE_BASE_TO_SHORT_STRING(aVal).ReadPtr() \
         )
 
 /// @brief AE_BASE_ERROR_INVALID_VALUE のenum版。
@@ -163,8 +163,8 @@ struct RuntimeAssert
 #define AE_BASE_ASSERT_EQUALS( aVal1 , aVal2 ) \
     AE_BASE_ASSERT_MSGFMT( aVal1 == aVal2 \
     , "%s(%s) is not equals %s(%s).\n" \
-    , #aVal1 , AE_BASE_TO_SHORT_STRING( aVal1 ).readPtr() \
-    , #aVal2 , AE_BASE_TO_SHORT_STRING( aVal2 ).readPtr() \
+    , #aVal1 , AE_BASE_TO_SHORT_STRING( aVal1 ).ReadPtr() \
+    , #aVal2 , AE_BASE_TO_SHORT_STRING( aVal2 ).ReadPtr() \
     )
 
 /// @brief ２つの値が等しくないことをチェックする。
@@ -178,8 +178,8 @@ struct RuntimeAssert
 #define AE_BASE_ASSERT_NOT_EQUALS( aVal1 , aVal2 ) \
     AE_BASE_ASSERT_MSGFMT( aVal1 != aVal2 \
     , "%s(%s) is quals %s(%s).\n" \
-    , #aVal1 , AE_BASE_TO_SHORT_STRING( aVal1 ).readPtr() \
-    , #aVal2 , AE_BASE_TO_SHORT_STRING( aVal2 ).readPtr() \
+    , #aVal1 , AE_BASE_TO_SHORT_STRING( aVal1 ).ReadPtr() \
+    , #aVal2 , AE_BASE_TO_SHORT_STRING( aVal2 ).ReadPtr() \
     )
 
 /// @def AE_BASE_TEST
@@ -241,16 +241,16 @@ struct RuntimeAssert
     AE_BASE_ASSERT_MSGFMT(func(aVal1 , aVal2) \
     , "Value is not in range.\n" \
       "aVal1 : %s \naVal2 : %s\n" \
-    , AE_BASE_TO_SHORT_STRING(aVal1).readPtr() \
-    , AE_BASE_TO_SHORT_STRING(aVal2).readPtr() \
+    , AE_BASE_TO_SHORT_STRING(aVal1).ReadPtr() \
+    , AE_BASE_TO_SHORT_STRING(aVal2).ReadPtr() \
     )
 #define AE_BASE_ASSERT_RANGE_CORE3(func, aVal1, aVal2, aVal3) \
     AE_BASE_ASSERT_MSGFMT(func(aVal1, aVal2, aVal3)  \
     , "Value is not in range.\n" \
     "aVal1 : %s \naVal2 : %s \naVal3 : %s\n" \
-    , AE_BASE_TO_SHORT_STRING(aVal1).readPtr() \
-    , AE_BASE_TO_SHORT_STRING(aVal2).readPtr() \
-    , AE_BASE_TO_SHORT_STRING(aVal3).readPtr() \
+    , AE_BASE_TO_SHORT_STRING(aVal1).ReadPtr() \
+    , AE_BASE_TO_SHORT_STRING(aVal2).ReadPtr() \
+    , AE_BASE_TO_SHORT_STRING(aVal3).ReadPtr() \
     )
 
 #endif

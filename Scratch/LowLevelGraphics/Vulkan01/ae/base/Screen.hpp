@@ -40,14 +40,14 @@ public:
     /// @name 解像度
     //@{
     /// 横ピクセル数。
-    int width()const;
+    int Width()const;
 
     /// 縦ピクセル数。
-    int height()const;
+    int Height()const;
 
     /// @brief 指定の位置がスクリーン内かどうか判定する。
-    /// @return 0 <= aPos.x < width() && 0 <= aPos.y < height()
-    bool isContains(const ScreenPosPod& aPos)const;
+    /// @return 0 <= aPos.x < Width() && 0 <= aPos.y < Height()
+    bool IsContains(const ScreenPosPod& aPos)const;
     //@}
 
     //============================================================

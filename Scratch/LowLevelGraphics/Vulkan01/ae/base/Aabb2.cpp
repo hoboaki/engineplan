@@ -27,8 +27,8 @@ Aabb2::Aabb2(
     const Vector2Pod& aPos1,
     const Vector2Pod& aPos2
     )
-: min_(aPos1.min(aPos2))
-, max_(aPos1.max(aPos2))
+: min_(aPos1.Min(aPos2))
+, max_(aPos1.Max(aPos2))
 {
 }
 
@@ -141,15 +141,15 @@ const Aabb2 Aabb2::Merge(const Aabb2& aAABB)const
 //------------------------------------------------------------------------------
 void Aabb2::MergeAssign(const Vector2Pod& aPos)
 {
-    min_ = min_.min(aPos);
-    max_ = max_.max(aPos);
+    min_ = min_.Min(aPos);
+    max_ = max_.Max(aPos);
 }
 
 //------------------------------------------------------------------------------
 void Aabb2::MergeAssign(const Aabb2& aAABB)
 {
-    min_ = min_.min(aAABB.min_);
-    max_ = max_.max(aAABB.max_);
+    min_ = min_.Min(aAABB.min_);
+    max_ = max_.Max(aAABB.max_);
 }
 
 //------------------------------------------------------------------------------

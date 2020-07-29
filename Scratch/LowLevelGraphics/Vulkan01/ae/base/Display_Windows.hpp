@@ -50,8 +50,8 @@ public:
     Display_Ext(const DisplayContext&);
 
     //============================================================
-    void    pollEvent(Application&);
-    LRESULT windowProcessLocal(HWND, UINT, WPARAM, LPARAM);
+    void    PollEvent(Application&);
+    LRESULT WindowProcessLocal(HWND, UINT, WPARAM, LPARAM);
 };
 //@}
 

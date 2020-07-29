@@ -20,7 +20,7 @@ public:
     /// @brief コンソールに書き込み要求があったときに呼ばれる。
     /// @param aFormat printfフォーマット文字列。
     /// @param aArg aFormatの引数。
-    virtual void onWrite(const char* aFormat, va_list aArg) = 0;
+    virtual void OnWrite(const char* aFormat, va_list aArg) = 0;
 };
 //@}
 

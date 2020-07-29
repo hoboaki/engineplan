@@ -26,9 +26,9 @@ void Swapchain::AcquireNextImage() {
     auto& device = swapchainMaster_->Device();
     {
         currentFrameIndex_ =
-            (currentFrameIndex_ + 1) % frameProperties_.count();
+            (currentFrameIndex_ + 1) % frameProperties_.Count();
         currentFrameIndex_ = base::Math::Clamp(
-            currentFrameIndex_, 0, frameProperties_.count() - 1);
+            currentFrameIndex_, 0, frameProperties_.Count() - 1);
         auto currentBufferIdxUint = uint32_t();
         auto result = device.PrvInstance().acquireNextImageKHR(swapchain_,
             UINT64_MAX,
@@ -45,7 +45,7 @@ void Swapchain::PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
     const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
     ::vk::Format imageFormat) {
     AE_BASE_ASSERT(!PrvIsInitialized());
-    swapchainMaster_.reset(swapchainMaster);
+    swapchainMaster_.Reset(swapchainMaster);
     swapchain_ = swapchain;
     renderTargetSpecInfo_ =
         gfx_low::RenderTargetSpecInfo().PrvSetNativeFormat(imageFormat);
@@ -61,32 +61,32 @@ void Swapchain::PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
             AE_BASE_ASSERT_LESS(0, minImageCount);
         }
 
-        frameProperties_.resize(int(swapchainImageCount),
+        frameProperties_.Resize(int(swapchainImageCount),
             &swapchainMaster_->Device().System().PrvObjectAllocator());
 
         base::RuntimeArray<::vk::Image> swapchainImages(
-            frameProperties_.count(),
+            frameProperties_.Count(),
             &device.System().PrvTempWorkAllocator());
         {
             const auto result = device.PrvInstance().getSwapchainImagesKHR(
-                swapchain_, &swapchainImageCount, swapchainImages.head());
+                swapchain_, &swapchainImageCount, swapchainImages.Head());
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
 
         const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
-        for (int i = 0; i < frameProperties_.count(); ++i) {
+        for (int i = 0; i < frameProperties_.Count(); ++i) {
             auto& target = frameProperties_[i];
-            target.AcquireEvent.init(EventCreateInfo().SetDevice(&device));
-            target.ReadyToPresentEvent.init(
+            target.AcquireEvent.Init(EventCreateInfo().SetDevice(&device));
+            target.ReadyToPresentEvent.Init(
                 EventCreateInfo().SetDevice(&device));
-            target.ImageResource.init(
+            target.ImageResource.Init(
                 ImageResourceCreateInfo()
                     .SetDevice(&device)
                     .PrvSetImagePtr(&swapchainImages[i]));
-            target.RenderTargetImageView.init(
+            target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
-                    .SetImageResource(target.ImageResource.ptr())
+                    .SetImageResource(target.ImageResource.Ptr())
                     .PrvSetRawFormat(imageFormat));
         }
     }
@@ -103,16 +103,16 @@ void Swapchain::PrvFinalize() {
     uniqueId_ = PrvInvalidUniqueId;
     {
         auto& device = swapchainMaster_->Device();
-        for (int i = frameProperties_.count() - 1; 0 <= i; --i) {
+        for (int i = frameProperties_.Count() - 1; 0 <= i; --i) {
             auto& target = frameProperties_[i];
-            target.RenderTargetImageView.reset();
-            target.ImageResource.reset();
-            target.ReadyToPresentEvent.reset();
-            target.AcquireEvent.reset();
+            target.RenderTargetImageView.Reset();
+            target.ImageResource.Reset();
+            target.ReadyToPresentEvent.Reset();
+            target.AcquireEvent.Reset();
         }
     }
     swapchain_ = ::vk::SwapchainKHR();
-    swapchainMaster_.reset();
+    swapchainMaster_.Reset();
     AE_BASE_ASSERT(!PrvIsInitialized());
 }
 

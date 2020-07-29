@@ -49,22 +49,22 @@ struct FixedStringPod
 
     /// @brief ポインタを取得する。
     /// @return バッファの先頭アドレス。
-    const CharType* readPtr()const { return buffer_; }
-    CharType*       ptr() { return buffer_; } ///< @copydoc readPtr
-    const CharType* ptr()const { return buffer_; } ///< @copydoc readPtr   
+    const CharType* ReadPtr()const { return buffer_; }
+    CharType*       Ptr() { return buffer_; } ///< @copydoc readPtr
+    const CharType* Ptr()const { return buffer_; } ///< @copydoc readPtr   
 
     /// @brief 指定文字列を設定する。
     /// @param aStr 設定する文字列。
     /// @details 
     /// バッファ長が不足したときはAssertに失敗し長さ0に設定されます。
-    void set(const CharType* aStr)
+    void Set(const CharType* aStr)
     {
         StringTraits< CharType >::NCopy(buffer_, BufferLength, aStr);
     }
 
     /// @brief 文字列の長さを取得する。
     /// @return 文字数(バイト長ではない)。終端文字は含めない。
-    size_t length()const
+    size_t Length()const
     {
         return StringTraits< CharType >::Length(buffer_);
     }
@@ -89,7 +89,7 @@ public:
     FixedString(const CHAR_TYPE* aStr)
         : SuperType()
     {
-        SuperType::set(aStr);
+        SuperType::Set(aStr);
     }
 
     /// コピーして作成。

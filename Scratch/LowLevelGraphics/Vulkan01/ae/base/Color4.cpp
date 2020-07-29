@@ -49,33 +49,33 @@ const Color4Pod Color4Pod::UnitA()
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::toRRRR()const
+const Color4Pod Color4Pod::ToRRRR()const
 {
     return Color4(r, r, r, r);
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::toGGGG()const
+const Color4Pod Color4Pod::ToGGGG()const
 {
     return Color4(g, g, g, g);
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::toBBBB()const
+const Color4Pod Color4Pod::ToBBBB()const
 {
     return Color4(b, b, b, b);
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::toAAAA()const
+const Color4Pod Color4Pod::ToAAAA()const
 {
     return Color4(a, a, a, a);
 }
 
 //------------------------------------------------------------------------------
-const Color4bPod Color4Pod::toRGBAb()const
+const Color4bPod Color4Pod::ToRGBAb()const
 {
-    const Color4 tmp = toVector4().clamp(Vector4::Zero(), Vector4::One()) * 255.0f;
+    const Color4 tmp = ToVector4().Clamp(Vector4::Zero(), Vector4::One()) * 255.0f;
     return Color4b(
         static_cast<u8>(tmp.r),
         static_cast<u8>(tmp.g),
@@ -85,13 +85,13 @@ const Color4bPod Color4Pod::toRGBAb()const
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Color4Pod::toVector4()const
+const Vector4Pod Color4Pod::ToVector4()const
 {
     return Vector4(r, g, b, a);
 }
 
 //------------------------------------------------------------------------------
-bool Color4Pod::equals(const Color4Pod& aRHS)const
+bool Color4Pod::Equals(const Color4Pod& aRHS)const
 {
     return Math::IsEqualsF32(r, aRHS.r)
         && Math::IsEqualsF32(g, aRHS.g)
@@ -100,7 +100,7 @@ bool Color4Pod::equals(const Color4Pod& aRHS)const
 }
 
 //------------------------------------------------------------------------------
-bool Color4Pod::equalsStrict(const Color4Pod& aRHS)const
+bool Color4Pod::EqualsStrict(const Color4Pod& aRHS)const
 {
     return r == aRHS.r
         && g == aRHS.g
@@ -109,79 +109,79 @@ bool Color4Pod::equalsStrict(const Color4Pod& aRHS)const
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::add(const float aVal)const
+const Color4Pod Color4Pod::Add(const float aVal)const
 {
     Color4 col(*this);
-    col.addAssign(aVal);
+    col.AddAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::sub(const float aVal)const
+const Color4Pod Color4Pod::Sub(const float aVal)const
 {
     Color4 col(*this);
-    col.subAssign(aVal);
+    col.SubAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::mul(const float aVal)const
+const Color4Pod Color4Pod::Mul(const float aVal)const
 {
     Color4 col(*this);
-    col.mulAssign(aVal);
+    col.MulAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::div(const float aVal)const
+const Color4Pod Color4Pod::Div(const float aVal)const
 {
     Color4 col(*this);
-    col.divAssign(aVal);
+    col.DivAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::add(const Color4Pod& aVal)const
+const Color4Pod Color4Pod::Add(const Color4Pod& aVal)const
 {
     Color4 col(*this);
-    col.addAssign(aVal);
+    col.AddAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::sub(const Color4Pod& aVal)const
+const Color4Pod Color4Pod::Sub(const Color4Pod& aVal)const
 {
     Color4 col(*this);
-    col.subAssign(aVal);
+    col.SubAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::mul(const Color4Pod& aVal)const
+const Color4Pod Color4Pod::Mul(const Color4Pod& aVal)const
 {
     Color4 col(*this);
-    col.mulAssign(aVal);
+    col.MulAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::div(const Color4Pod& aVal)const
+const Color4Pod Color4Pod::Div(const Color4Pod& aVal)const
 {
     Color4 col(*this);
-    col.divAssign(aVal);
+    col.DivAssign(aVal);
     return col;
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4Pod::neg()const
+const Color4Pod Color4Pod::Neg()const
 {
     Color4 col(*this);
-    col.mulAssign(-1.0f);
+    col.MulAssign(-1.0f);
     return col;
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::addAssign(const float aVal)
+void Color4Pod::AddAssign(const float aVal)
 {
     r += aVal;
     g += aVal;
@@ -190,7 +190,7 @@ void Color4Pod::addAssign(const float aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::subAssign(const float aVal)
+void Color4Pod::SubAssign(const float aVal)
 {
     r -= aVal;
     g -= aVal;
@@ -199,7 +199,7 @@ void Color4Pod::subAssign(const float aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::mulAssign(const float aVal)
+void Color4Pod::MulAssign(const float aVal)
 {
     r *= aVal;
     g *= aVal;
@@ -208,17 +208,17 @@ void Color4Pod::mulAssign(const float aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::divAssign(const float aVal)
+void Color4Pod::DivAssign(const float aVal)
 {
     if (aVal == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    mulAssign(1.0f / aVal);
+    MulAssign(1.0f / aVal);
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::addAssign(const Color4Pod& aVal)
+void Color4Pod::AddAssign(const Color4Pod& aVal)
 {
     r += aVal.r;
     g += aVal.g;
@@ -227,7 +227,7 @@ void Color4Pod::addAssign(const Color4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::subAssign(const Color4Pod& aVal)
+void Color4Pod::SubAssign(const Color4Pod& aVal)
 {
     r -= aVal.r;
     g -= aVal.g;
@@ -236,7 +236,7 @@ void Color4Pod::subAssign(const Color4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::mulAssign(const Color4Pod& aVal)
+void Color4Pod::MulAssign(const Color4Pod& aVal)
 {
     r *= aVal.r;
     g *= aVal.g;
@@ -245,7 +245,7 @@ void Color4Pod::mulAssign(const Color4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Color4Pod::divAssign(const Color4Pod& aVal)
+void Color4Pod::DivAssign(const Color4Pod& aVal)
 {
     AE_BASE_DIV_ASSIGN(r, aVal.r);
     AE_BASE_DIV_ASSIGN(g, aVal.g);
@@ -256,116 +256,116 @@ void Color4Pod::divAssign(const Color4Pod& aVal)
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator+=(const float aVal)
 {
-    addAssign(aVal);
+    AddAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator-=(const float aVal)
 {
-    subAssign(aVal);
+    SubAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator*=(const float aVal)
 {
-    mulAssign(aVal);
+    MulAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator/=(const float aVal)
 {
-    divAssign(aVal);
+    DivAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator+=(const Color4Pod& aVal)
 {
-    addAssign(aVal);
+    AddAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator-=(const Color4Pod& aVal)
 {
-    subAssign(aVal);
+    SubAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator*=(const Color4Pod& aVal)
 {
-    mulAssign(aVal);
+    MulAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Color4Pod& Color4Pod::operator/=(const Color4Pod& aVal)
 {
-    divAssign(aVal);
+    DivAssign(aVal);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator+(const float aVal)const
 {
-    return add(aVal);
+    return Add(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator-(const float aVal)const
 {
-    return sub(aVal);
+    return Sub(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator*(const float aVal)const
 {
-    return mul(aVal);
+    return Mul(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator/(const float aVal)const
 {
-    return div(aVal);
+    return Div(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator+(const Color4Pod& aVal)const
 {
-    return add(aVal);
+    return Add(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator-(const Color4Pod& aVal)const
 {
-    return sub(aVal);
+    return Sub(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator*(const Color4Pod& aVal)const
 {
-    return mul(aVal);
+    return Mul(aVal);
 }
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::operator/(const Color4Pod& aVal)const
 {
-    return div(aVal);
+    return Div(aVal);
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Color4Pod::toShortString()const
+const ::ae::base::ShortString Color4Pod::ToShortString()const
 {
     return ::ae::base::ShortString::FromFormat(
         "%s,%s,%s,%s",
-        F32(r).toShortString().readPtr(),
-        F32(g).toShortString().readPtr(),
-        F32(b).toShortString().readPtr(),
-        F32(a).toShortString().readPtr()
+        F32(r).ToShortString().ReadPtr(),
+        F32(g).ToShortString().ReadPtr(),
+        F32(b).ToShortString().ReadPtr(),
+        F32(a).ToShortString().ReadPtr()
         );
 }
 

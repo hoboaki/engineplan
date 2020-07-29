@@ -26,7 +26,7 @@
 ///  {
 ///  public:
 ///      AE_BASE_OVERRIDE( void func() ); // オーバーライドしているのでOK。
-///      AE_BASE_OVERRIDE( void foo() );  // オーバーライドしていないのでエラー。
+///      AE_BASE_OVERRIDE( void Foo() );  // オーバーライドしていないのでエラー。
 ///  };
 /// @endcode
 #if defined(AE_BASE_COMPILER_MSVC)

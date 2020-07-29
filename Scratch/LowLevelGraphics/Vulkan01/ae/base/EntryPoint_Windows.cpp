@@ -208,7 +208,7 @@ int WINAPI WinMain(
 
 //------------------------------------------------------------------------------
 #if !defined(AE_BASE_FINAL)
-int main(
+int Main(
     const int aArgCount,
     const char* aArgValues[]
     )

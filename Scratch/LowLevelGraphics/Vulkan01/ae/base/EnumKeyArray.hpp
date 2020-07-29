@@ -32,37 +32,37 @@ public:
     /// @name API
     //@{
     /// 配列の総数。
-    constexpr int count() const { return int(EnumType::TERM); }
+    constexpr int Count() const { return int(EnumType::TERM); }
 
     /// 指定番目の要素にアクセス。
-    ValueType& at(const int index) {
-        if (index < 0 || count() <= index) {
-            AE_BASE_ASSERT_MIN_TERM(index, 0, count());
+    ValueType& At(const int index) {
+        if (index < 0 || Count() <= index) {
+            AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
             return values_[0];  // fail safe code
         }
         return values_[index];
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& at(const int aIndex) const {
-        if (index < 0 || count() <= index) {
-            AE_BASE_ASSERT_MIN_TERM(index, 0, count());
+    const ValueType& At(const int aIndex) const {
+        if (index < 0 || Count() <= index) {
+            AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
             return values_[0];  // fail safe code
         }
         return values_[index];
     }
 
     /// 指定キーの要素にアクセス。
-    ValueType& at(const EnumType enumValue) { return at(int(enumValue)); }
+    ValueType& At(const EnumType enumValue) { return At(int(enumValue)); }
 
     /// 指定キーの要素にアクセス。
-    const ValueType& at(const EnumType enumValue) const {
-        return at(int(enumValue));
+    const ValueType& At(const EnumType enumValue) const {
+        return At(int(enumValue));
     }
 
     /// 指定の値を全要素に代入。
-    void fill(const ValueType& value) {
-        for (int i = 0; i < count(); ++i) {
+    void Fill(const ValueType& value) {
+        for (int i = 0; i < Count(); ++i) {
             values_[i] = value;
         }
     }
@@ -70,18 +70,18 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    /// at() のエイリアス。
-    ValueType& operator[](const int aIndex) { return at(aIndex); }
+    /// At() のエイリアス。
+    ValueType& operator[](const int aIndex) { return At(aIndex); }
 
-    /// at()const のエイリアス。
-    const ValueType& operator[](const int aIndex) const { return at(aIndex); }
+    /// At()const のエイリアス。
+    const ValueType& operator[](const int aIndex) const { return At(aIndex); }
 
-    /// at() のエイリアス。
-    ValueType& operator[](const EnumType enumValue) { return at(enumValue); }
+    /// At() のエイリアス。
+    ValueType& operator[](const EnumType enumValue) { return At(enumValue); }
 
-    /// at()const のエイリアス。
+    /// At()const のエイリアス。
     const ValueType& operator[](const EnumType enumValue) const {
-        return at(enumValue);
+        return At(enumValue);
     }
     //@}
 

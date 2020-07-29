@@ -173,7 +173,7 @@ const Matrix44Pod Matrix44Pod::Perspective(
     const f32 aFar
     )
 {
-    AE_BASE_ASSERT_LESS(0, aFOVY.rad());
+    AE_BASE_ASSERT_LESS(0, aFOVY.Rad());
     AE_BASE_ASSERT_LESS(0, aAspect);
     AE_BASE_ASSERT_NOT_EQUALS(aNear, aFar);
 
@@ -193,7 +193,7 @@ const Matrix44Pod Matrix44Pod::LookAt(
     const Vector3Pod& aUpVec
     )
 {
-    return Matrix34::LookAt(aEyePos, aTargetPos, aUpVec).toMatrix44();
+    return Matrix34::LookAt(aEyePos, aTargetPos, aUpVec).ToMatrix44();
 }
 
 //------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ const Vector4Pod Matrix44Pod::w()const
 }
 
 //------------------------------------------------------------------------------
-void Matrix44Pod::setX(const Vector4Pod& aVal)
+void Matrix44Pod::SetX(const Vector4Pod& aVal)
 {
     v[IndexXX] = aVal.x;
     v[IndexXY] = aVal.y;
@@ -250,7 +250,7 @@ void Matrix44Pod::setX(const Vector4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Matrix44Pod::setY(const Vector4Pod& aVal)
+void Matrix44Pod::SetY(const Vector4Pod& aVal)
 {
     v[IndexYX] = aVal.x;
     v[IndexYY] = aVal.y;
@@ -259,7 +259,7 @@ void Matrix44Pod::setY(const Vector4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Matrix44Pod::setZ(const Vector4Pod& aVal)
+void Matrix44Pod::SetZ(const Vector4Pod& aVal)
 {
     v[IndexZX] = aVal.x;
     v[IndexZY] = aVal.y;
@@ -268,7 +268,7 @@ void Matrix44Pod::setZ(const Vector4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-void Matrix44Pod::setW(const Vector4Pod& aVal)
+void Matrix44Pod::SetW(const Vector4Pod& aVal)
 {
     v[IndexWX] = aVal.x;
     v[IndexWY] = aVal.y;
@@ -277,7 +277,7 @@ void Matrix44Pod::setW(const Vector4Pod& aVal)
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::mul(const Matrix44Pod& aRHS)const
+const Matrix44Pod Matrix44Pod::Mul(const Matrix44Pod& aRHS)const
 {
     Matrix44Pod mtx;
 
@@ -373,27 +373,27 @@ const Matrix44Pod Matrix44Pod::mul(const Matrix44Pod& aRHS)const
 }
 
 //------------------------------------------------------------------------------
-Matrix44Pod& Matrix44Pod::mulAssign(const Matrix44Pod& aRHS)
+Matrix44Pod& Matrix44Pod::MulAssign(const Matrix44Pod& aRHS)
 {
-    *this = mul(aRHS);
+    *this = Mul(aRHS);
     return *this;
 }
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::operator*(const Matrix44Pod& aRHS)const
 {
-    return mul(aRHS);
+    return Mul(aRHS);
 }
 
 //------------------------------------------------------------------------------
 Matrix44Pod& Matrix44Pod::operator*=(const Matrix44Pod& aRHS)
 {
-    mulAssign(aRHS);
+    MulAssign(aRHS);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::invert()const
+const Matrix44Pod Matrix44Pod::Invert()const
 {
     const float c = 0.0f
         + v[Index00] * v[Index11] * v[Index22] * v[Index33] + v[Index00] * v[Index12] * v[Index23] * v[Index31] + v[Index00] * v[Index13] * v[Index21] * v[Index32]
@@ -481,7 +481,7 @@ const Matrix44Pod Matrix44Pod::invert()const
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::transpose()const
+const Matrix44Pod Matrix44Pod::Transpose()const
 {
     return Matrix44(
         v[Index00], v[Index10], v[Index20], v[Index30],
@@ -492,7 +492,7 @@ const Matrix44Pod Matrix44Pod::transpose()const
 }
 
 //------------------------------------------------------------------------------
-void Matrix44Pod::dump()const
+void Matrix44Pod::Dump()const
 {
     AE_BASE_COUTFMT("Matrix44Pod::dump %p\n", this);
     AE_BASE_COUTFMT("( %f , %f , %f , %f )\n", v[Index00], v[Index01], v[Index02], v[Index03]);
@@ -547,10 +547,10 @@ Matrix44::Matrix44(
     const Vector4Pod& aW
     )
 {
-    setX(aX);
-    setY(aY);
-    setZ(aZ);
-    setW(aW);
+    SetX(aX);
+    SetY(aY);
+    SetZ(aZ);
+    SetW(aW);
 }
 }} // namespace
 // EOF

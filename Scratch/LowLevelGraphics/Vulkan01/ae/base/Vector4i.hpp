@@ -54,119 +54,119 @@ struct Vector4iPod
     //============================================================
     /// @name 変換
     //@{
-    const Vector2iPod toXY()const;
-    const Vector2iPod toXX()const;
-    const Vector2iPod toYY()const;
-    const Vector2iPod toZZ()const;
-    const Vector2iPod toWW()const;
-    const Vector3iPod toXYZ()const;
-    const Vector3iPod toXXX()const;
-    const Vector3iPod toYYY()const;
-    const Vector3iPod toZZZ()const;
-    const Vector3iPod toWWW()const;
-    const Vector4iPod toXYZ0()const;
-    const Vector4iPod toXY0W()const;
-    const Vector4iPod toXY00()const;
-    const Vector4iPod toX0ZW()const;
-    const Vector4iPod toX0Z0()const;
-    const Vector4iPod toX00W()const;
-    const Vector4iPod toX000()const;
-    const Vector4iPod to0YZ0()const;
-    const Vector4iPod to0Y0W()const;
-    const Vector4iPod to0Y00()const;
-    const Vector4iPod to00ZW()const;
-    const Vector4iPod to00Z0()const;
-    const Vector4iPod to000W()const;
-    const Vector4iPod toXXXX()const;
-    const Vector4iPod toYYYY()const;
-    const Vector4iPod toZZZZ()const;
-    const Vector4iPod toWWWW()const;
-    const Vector4Pod  toXYZWf()const;
+    const Vector2iPod ToXY()const;
+    const Vector2iPod ToXX()const;
+    const Vector2iPod ToYY()const;
+    const Vector2iPod ToZZ()const;
+    const Vector2iPod ToWW()const;
+    const Vector3iPod ToXYZ()const;
+    const Vector3iPod ToXXX()const;
+    const Vector3iPod ToYYY()const;
+    const Vector3iPod ToZZZ()const;
+    const Vector3iPod ToWWW()const;
+    const Vector4iPod ToXYZ0()const;
+    const Vector4iPod ToXY0W()const;
+    const Vector4iPod ToXY00()const;
+    const Vector4iPod ToX0ZW()const;
+    const Vector4iPod ToX0Z0()const;
+    const Vector4iPod ToX00W()const;
+    const Vector4iPod ToX000()const;
+    const Vector4iPod To0YZ0()const;
+    const Vector4iPod To0Y0W()const;
+    const Vector4iPod To0Y00()const;
+    const Vector4iPod To00ZW()const;
+    const Vector4iPod To00Z0()const;
+    const Vector4iPod To000W()const;
+    const Vector4iPod ToXXXX()const;
+    const Vector4iPod ToYYYY()const;
+    const Vector4iPod ToZZZZ()const;
+    const Vector4iPod ToWWWW()const;
+    const Vector4Pod  ToXYZWf()const;
     //@}
 
     //============================================================
     /// @name 等価比較
     //@{
-    bool equals(const Vector4iPod&)const;       ///< 等価比較。
+    bool Equals(const Vector4iPod&)const;       ///< 等価比較。
     //@}
 
     //============================================================
     /// @name 四則演算
     //@{
-    const Vector4iPod add(s32)const; ///< 各要素に値を加算した結果を取得する。
-    const Vector4iPod sub(s32)const; ///< 各要素から値を減算した結果を取得する。
-    const Vector4iPod mul(s32)const; ///< 各要素に値をかけた結果を取得する。
-    const Vector4iPod div(s32)const; ///< 各要素から値をわった結果を取得する。
-    const Vector4iPod add(const Vector4iPod&)const; ///< 対応する値同士を加算した結果を取得する。
-    const Vector4iPod sub(const Vector4iPod&)const; ///< 対応する値に対して減算した結果を取得する。
-    const Vector4iPod mul(const Vector4iPod&)const; ///< 対応する値同士をかけた結果を取得する。
-    const Vector4iPod div(const Vector4iPod&)const; ///< 対応する値に対して割り算をした結果を取得する。
-    void addAssign(s32); ///< 各要素に値を加算する。
-    void subAssign(s32); ///< 各要素から値を減算する。
-    void mulAssign(s32); ///< 各要素に値をかける。
-    void divAssign(s32); ///< 各要素から値をわる。
-    void addAssign(const Vector4iPod&); ///< 対応する値同士を加算する。
-    void subAssign(const Vector4iPod&); ///< 対応する値に対して減算する。
-    void mulAssign(const Vector4iPod&); ///< 対応する値同士をかける。
-    void divAssign(const Vector4iPod&); ///< 対応する値に対して割り算をする。       
+    const Vector4iPod Add(s32)const; ///< 各要素に値を加算した結果を取得する。
+    const Vector4iPod Sub(s32)const; ///< 各要素から値を減算した結果を取得する。
+    const Vector4iPod Mul(s32)const; ///< 各要素に値をかけた結果を取得する。
+    const Vector4iPod Div(s32)const; ///< 各要素から値をわった結果を取得する。
+    const Vector4iPod Add(const Vector4iPod&)const; ///< 対応する値同士を加算した結果を取得する。
+    const Vector4iPod Sub(const Vector4iPod&)const; ///< 対応する値に対して減算した結果を取得する。
+    const Vector4iPod Mul(const Vector4iPod&)const; ///< 対応する値同士をかけた結果を取得する。
+    const Vector4iPod Div(const Vector4iPod&)const; ///< 対応する値に対して割り算をした結果を取得する。
+    void AddAssign(s32); ///< 各要素に値を加算する。
+    void SubAssign(s32); ///< 各要素から値を減算する。
+    void MulAssign(s32); ///< 各要素に値をかける。
+    void DivAssign(s32); ///< 各要素から値をわる。
+    void AddAssign(const Vector4iPod&); ///< 対応する値同士を加算する。
+    void SubAssign(const Vector4iPod&); ///< 対応する値に対して減算する。
+    void MulAssign(const Vector4iPod&); ///< 対応する値同士をかける。
+    void DivAssign(const Vector4iPod&); ///< 対応する値に対して割り算をする。       
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Vector4iPod operator+(s32)const; ///< add()。
-    const Vector4iPod operator-(s32)const; ///< sub()。
-    const Vector4iPod operator*(s32)const; ///< mul()。
-    const Vector4iPod operator/(s32)const; ///< div()。
-    const Vector4iPod operator+(const Vector4iPod&)const; ///< add()。
-    const Vector4iPod operator-(const Vector4iPod&)const; ///< sub()。
-    const Vector4iPod operator*(const Vector4iPod&)const; ///< mul()。
-    const Vector4iPod operator/(const Vector4iPod&)const; ///< div()。
-    const Vector4iPod operator-()const; ///< neg()。
-    Vector4iPod& operator+=(s32); ///< addAssign()。
-    Vector4iPod& operator-=(s32); ///< subAssign()。
-    Vector4iPod& operator*=(s32); ///< mulAssign()。
-    Vector4iPod& operator/=(s32); ///< divAssign()。
-    Vector4iPod& operator+=(const Vector4iPod&); ///< addAssign()。
-    Vector4iPod& operator-=(const Vector4iPod&); ///< subAssign()。
-    Vector4iPod& operator*=(const Vector4iPod&); ///< mulAssign()。
-    Vector4iPod& operator/=(const Vector4iPod&); ///< divAssign()。
+    const Vector4iPod operator+(s32)const; ///< Add()。
+    const Vector4iPod operator-(s32)const; ///< Sub()。
+    const Vector4iPod operator*(s32)const; ///< Mul()。
+    const Vector4iPod operator/(s32)const; ///< Div()。
+    const Vector4iPod operator+(const Vector4iPod&)const; ///< Add()。
+    const Vector4iPod operator-(const Vector4iPod&)const; ///< Sub()。
+    const Vector4iPod operator*(const Vector4iPod&)const; ///< Mul()。
+    const Vector4iPod operator/(const Vector4iPod&)const; ///< Div()。
+    const Vector4iPod operator-()const; ///< Neg()。
+    Vector4iPod& operator+=(s32); ///< AddAssign()。
+    Vector4iPod& operator-=(s32); ///< SubAssign()。
+    Vector4iPod& operator*=(s32); ///< MulAssign()。
+    Vector4iPod& operator/=(s32); ///< DivAssign()。
+    Vector4iPod& operator+=(const Vector4iPod&); ///< AddAssign()。
+    Vector4iPod& operator-=(const Vector4iPod&); ///< SubAssign()。
+    Vector4iPod& operator*=(const Vector4iPod&); ///< MulAssign()。
+    Vector4iPod& operator/=(const Vector4iPod&); ///< DivAssign()。
     //@}
 
     //============================================================
     /// @name 選択
     //@{
-    const Vector4iPod min(const Vector4iPod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
-    const Vector4iPod max(const Vector4iPod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
+    const Vector4iPod Min(const Vector4iPod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
+    const Vector4iPod Max(const Vector4iPod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
     //@}
 
     //============================================================
     /// @name クランプ
     //@{
-    const Vector4iPod clamp(const Vector4iPod& aMin, const Vector4iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
-    const Vector4iPod clampPositive()const; ///< clamp( Zero() , Max() ) を取得する。
-    const Vector4iPod clampNegative()const; ///< clamp( Min() , Zero() ) を取得する。
+    const Vector4iPod Clamp(const Vector4iPod& aMin, const Vector4iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector4iPod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
+    const Vector4iPod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
 
     //============================================================
     /// @name 符号
     //@{
-    const Vector4iPod abs()const; ///< 各要素を正に置き換えたベクトルを取得。
-    const Vector4iPod neg()const; ///< 符号を反転させた結果を取得する。
-    bool isPositive()const; ///< 各要素が0以上か。
+    const Vector4iPod Abs()const; ///< 各要素を正に置き換えたベクトルを取得。
+    const Vector4iPod Neg()const; ///< 符号を反転させた結果を取得する。
+    bool IsPositive()const; ///< 各要素が0以上か。
     //@}
 
     //============================================================
     /// @name 長さ
     //@{
-    bool isZero()const;                      ///< 全てが0か。
+    bool IsZero()const;                      ///< 全てが0か。
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// x,y,z,w形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 

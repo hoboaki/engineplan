@@ -19,9 +19,9 @@ class DeviceCreateInfo {
 public:
     /// @name 属する System インスタンスのポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::System* System() const { return system_.get(); }
+    gfx_low::System* System() const { return system_.Get(); }
     DeviceCreateInfo& SetSystem(gfx_low::System* system) {
-        system_.reset(system);
+        system_.Reset(system);
         return *this;
     }
     //@}
@@ -39,12 +39,12 @@ public:
     //@{
     int QueueCreateInfoCount() const { return queueCreateInfosCount_; }
     const QueueCreateInfo* QueueCrateInfos() const {
-        return queueCreateInfos_.get();
+        return queueCreateInfos_.Get();
     }
     DeviceCreateInfo& SetQueueCreateInfos(
         int count, const QueueCreateInfo* infos) {
         queueCreateInfosCount_ = count;
-        queueCreateInfos_.reset(infos);
+        queueCreateInfos_.Reset(infos);
         return *this;
     }
     //@}

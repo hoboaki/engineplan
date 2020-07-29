@@ -51,108 +51,108 @@ struct Vector3iPod
     //============================================================
     /// @name 変換
     //@{
-    const Vector2iPod toXY()const;
-    const Vector2iPod toXX()const;
-    const Vector2iPod toYY()const;
-    const Vector2iPod toZZ()const;
-    const Vector3iPod toX00()const;
-    const Vector3iPod toXY0()const;
-    const Vector3iPod to0Y0()const;
-    const Vector3iPod to0YZ()const;
-    const Vector3iPod to00Z()const;
-    const Vector3iPod toXXX()const;
-    const Vector3iPod toYYY()const;
-    const Vector3iPod toZZZ()const;
-    const Vector4iPod toXYZ0()const;
-    const Vector4iPod toXXXX()const;
-    const Vector4iPod toYYYY()const;
-    const Vector4iPod toZZZZ()const;
-    const Vector3Pod  toXYZf()const;
+    const Vector2iPod ToXY()const;
+    const Vector2iPod ToXX()const;
+    const Vector2iPod ToYY()const;
+    const Vector2iPod ToZZ()const;
+    const Vector3iPod ToX00()const;
+    const Vector3iPod ToXY0()const;
+    const Vector3iPod To0Y0()const;
+    const Vector3iPod To0YZ()const;
+    const Vector3iPod To00Z()const;
+    const Vector3iPod ToXXX()const;
+    const Vector3iPod ToYYY()const;
+    const Vector3iPod ToZZZ()const;
+    const Vector4iPod ToXYZ0()const;
+    const Vector4iPod ToXXXX()const;
+    const Vector4iPod ToYYYY()const;
+    const Vector4iPod ToZZZZ()const;
+    const Vector3Pod  ToXYZf()const;
     //@}
 
     //============================================================
     /// @name 等価比較
     //@{
-    bool equals(const Vector3iPod&)const;       ///< 等価比較。
+    bool Equals(const Vector3iPod&)const;       ///< 等価比較。
     //@}
 
     //============================================================
     /// @name 四則演算
     //@{
-    const Vector3iPod add(s32)const; ///< 各要素に値を加算した結果を取得する。
-    const Vector3iPod sub(s32)const; ///< 各要素から値を減算した結果を取得する。
-    const Vector3iPod mul(s32)const; ///< 各要素に値をかけた結果を取得する。
-    const Vector3iPod div(s32)const; ///< 各要素から値をわった結果を取得する。
-    const Vector3iPod add(const Vector3iPod&)const; ///< 対応する値同士を加算した結果を取得する。
-    const Vector3iPod sub(const Vector3iPod&)const; ///< 対応する値に対して減算した結果を取得する。
-    const Vector3iPod mul(const Vector3iPod&)const; ///< 対応する値同士をかけた結果を取得する。
-    const Vector3iPod div(const Vector3iPod&)const; ///< 対応する値に対して割り算をした結果を取得する。
-    void addAssign(s32); ///< 各要素に値を加算する。
-    void subAssign(s32); ///< 各要素から値を減算する。
-    void mulAssign(s32); ///< 各要素に値をかける。
-    void divAssign(s32); ///< 各要素から値をわる。
-    void addAssign(const Vector3iPod&); ///< 対応する値同士を加算する。
-    void subAssign(const Vector3iPod&); ///< 対応する値に対して減算する。
-    void mulAssign(const Vector3iPod&); ///< 対応する値同士をかける。
-    void divAssign(const Vector3iPod&); ///< 対応する値に対して割り算をする。       
+    const Vector3iPod Add(s32)const; ///< 各要素に値を加算した結果を取得する。
+    const Vector3iPod Sub(s32)const; ///< 各要素から値を減算した結果を取得する。
+    const Vector3iPod Mul(s32)const; ///< 各要素に値をかけた結果を取得する。
+    const Vector3iPod Div(s32)const; ///< 各要素から値をわった結果を取得する。
+    const Vector3iPod Add(const Vector3iPod&)const; ///< 対応する値同士を加算した結果を取得する。
+    const Vector3iPod Sub(const Vector3iPod&)const; ///< 対応する値に対して減算した結果を取得する。
+    const Vector3iPod Mul(const Vector3iPod&)const; ///< 対応する値同士をかけた結果を取得する。
+    const Vector3iPod Div(const Vector3iPod&)const; ///< 対応する値に対して割り算をした結果を取得する。
+    void AddAssign(s32); ///< 各要素に値を加算する。
+    void SubAssign(s32); ///< 各要素から値を減算する。
+    void MulAssign(s32); ///< 各要素に値をかける。
+    void DivAssign(s32); ///< 各要素から値をわる。
+    void AddAssign(const Vector3iPod&); ///< 対応する値同士を加算する。
+    void SubAssign(const Vector3iPod&); ///< 対応する値に対して減算する。
+    void MulAssign(const Vector3iPod&); ///< 対応する値同士をかける。
+    void DivAssign(const Vector3iPod&); ///< 対応する値に対して割り算をする。       
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Vector3iPod operator+(s32)const; ///< add()。
-    const Vector3iPod operator-(s32)const; ///< sub()。
-    const Vector3iPod operator*(s32)const; ///< mul()。
-    const Vector3iPod operator/(s32)const; ///< div()。
-    const Vector3iPod operator+(const Vector3iPod&)const; ///< add()。
-    const Vector3iPod operator-(const Vector3iPod&)const; ///< sub()。
-    const Vector3iPod operator*(const Vector3iPod&)const; ///< mul()。
-    const Vector3iPod operator/(const Vector3iPod&)const; ///< div()。
-    const Vector3iPod operator-()const; ///< neg()。
-    Vector3iPod& operator+=(s32); ///< addAssign()。
-    Vector3iPod& operator-=(s32); ///< subAssign()。
-    Vector3iPod& operator*=(s32); ///< mulAssign()。
-    Vector3iPod& operator/=(s32); ///< divAssign()。
-    Vector3iPod& operator+=(const Vector3iPod&); ///< addAssign()。
-    Vector3iPod& operator-=(const Vector3iPod&); ///< subAssign()。
-    Vector3iPod& operator*=(const Vector3iPod&); ///< mulAssign()。
-    Vector3iPod& operator/=(const Vector3iPod&); ///< divAssign()。
+    const Vector3iPod operator+(s32)const; ///< Add()。
+    const Vector3iPod operator-(s32)const; ///< Sub()。
+    const Vector3iPod operator*(s32)const; ///< Mul()。
+    const Vector3iPod operator/(s32)const; ///< Div()。
+    const Vector3iPod operator+(const Vector3iPod&)const; ///< Add()。
+    const Vector3iPod operator-(const Vector3iPod&)const; ///< Sub()。
+    const Vector3iPod operator*(const Vector3iPod&)const; ///< Mul()。
+    const Vector3iPod operator/(const Vector3iPod&)const; ///< Div()。
+    const Vector3iPod operator-()const; ///< Neg()。
+    Vector3iPod& operator+=(s32); ///< AddAssign()。
+    Vector3iPod& operator-=(s32); ///< SubAssign()。
+    Vector3iPod& operator*=(s32); ///< MulAssign()。
+    Vector3iPod& operator/=(s32); ///< DivAssign()。
+    Vector3iPod& operator+=(const Vector3iPod&); ///< AddAssign()。
+    Vector3iPod& operator-=(const Vector3iPod&); ///< SubAssign()。
+    Vector3iPod& operator*=(const Vector3iPod&); ///< MulAssign()。
+    Vector3iPod& operator/=(const Vector3iPod&); ///< DivAssign()。
     //@}
 
     //============================================================
     /// @name 選択
     //@{
-    const Vector3iPod min(const Vector3iPod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
-    const Vector3iPod max(const Vector3iPod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
+    const Vector3iPod Min(const Vector3iPod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
+    const Vector3iPod Max(const Vector3iPod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
     //@}
 
     //============================================================
     /// @name クランプ
     //@{
-    const Vector3iPod clamp(const Vector3iPod& aMin, const Vector3iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
-    const Vector3iPod clampPositive()const; ///< clamp( Zero() , Max() ) を取得する。
-    const Vector3iPod clampNegative()const; ///< clamp( Min() , Zero() ) を取得する。
+    const Vector3iPod Clamp(const Vector3iPod& aMin, const Vector3iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector3iPod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
+    const Vector3iPod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
 
     //============================================================
     /// @name 符号
     //@{
-    const Vector3iPod abs()const; ///< 各要素を正に置き換えたベクトルを取得。
-    const Vector3iPod neg()const; ///< 符号を反転させた結果を取得する。
-    bool isPositive()const; ///< 各要素が0以上か。
+    const Vector3iPod Abs()const; ///< 各要素を正に置き換えたベクトルを取得。
+    const Vector3iPod Neg()const; ///< 符号を反転させた結果を取得する。
+    bool IsPositive()const; ///< 各要素が0以上か。
     //@}
 
     //============================================================
     /// @name 長さ
     //@{
-    bool isZero()const;                      ///< 全てが0か。
+    bool IsZero()const;                      ///< 全てが0か。
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// x,y,z形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 

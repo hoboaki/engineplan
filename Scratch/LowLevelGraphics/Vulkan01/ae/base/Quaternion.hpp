@@ -43,14 +43,14 @@ public:
     //============================================================
     /// @name 計算
     //@{
-    const Quaternion mul(const Quaternion&)const; ///< 乗算した結果を得る。this x rhs。
-    Quaternion& mulAssign(const Quaternion&); ///< 乗算。this x rhs。
+    const Quaternion Mul(const Quaternion&)const; ///< 乗算した結果を得る。this x rhs。
+    Quaternion& MulAssign(const Quaternion&); ///< 乗算。this x rhs。
     //@}
 
     //============================================================
     /// @name 変換
     //@{
-    const Matrix34Pod toRotateMatrix()const; ///< 回転行列に変換。
+    const Matrix34Pod ToRotateMatrix()const; ///< 回転行列に変換。
     //@}
 
     //============================================================
@@ -64,7 +64,7 @@ public:
     /// @name ユーティリティ
     //@{
     /// x,y,z,w形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 //@}

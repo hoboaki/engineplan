@@ -43,21 +43,21 @@ public:
 
     /// @name スクリーン
     //@{
-    int screenCount()const; ///< スクリーンの総数を取得する。
-    Screen& screenAtIndex(int aIndex); ///< 指定番目のスクリーンを取得する。
-    Screen& mainScreen(); ///< メインとなるスクリーンを取得する。
+    int ScreenCount()const; ///< スクリーンの総数を取得する。
+    Screen& ScreenAtIndex(int aIndex); ///< 指定番目のスクリーンを取得する。
+    Screen& MainScreen(); ///< メインとなるスクリーンを取得する。
     //@}
 
     /// @name コントロール
     //@{
     /// 表示する。
-    void show();
+    void Show();
     //@}
 
     /// @name 状態取得
     //@{        
     /// ディスプレイが閉じられたか。
-    bool isClosed()const;
+    bool IsClosed()const;
     //@}
 
     //============================================================

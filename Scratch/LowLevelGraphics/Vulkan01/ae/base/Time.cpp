@@ -62,7 +62,7 @@ const TimePod tCurrentTime(tTimeConverter aConverter)
 #elif defined(AE_BASE_OS_MACOSX)
     {
         timeval tv;
-        gettimeofday(&tv, 0);
+        Gettimeofday(&tv, 0);
         secFrom1970 = tv.tv_sec;
         subTick = u64(tv.tv_usec) * 10;
     }
@@ -179,7 +179,7 @@ namespace {
     // 1日の総チック数。
 const u64 tUnitTickOfDay = (u64(24) * 60 * 60 * 1000 * 1000 * 10);
 }
-const CalendarPod TimePod::toCalendar()const
+const CalendarPod TimePod::ToCalendar()const
 {
     // 変数準備
     Calendar calendar;
@@ -233,7 +233,7 @@ const CalendarPod TimePod::toCalendar()const
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::add(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::Add(const TimeSpanPod& aTimeSpan)const
 {
     TimePod obj = *this;
     obj += aTimeSpan;
@@ -243,24 +243,24 @@ const TimePod TimePod::add(const TimeSpanPod& aTimeSpan)const
 //------------------------------------------------------------------------------
 const TimePod TimePod::operator+(const TimeSpanPod& aTimeSpan)const
 {
-    return add(aTimeSpan);
+    return Add(aTimeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::addAssign(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::AddAssign(const TimeSpanPod& aTimeSpan)
 {
-    ticks_ += aTimeSpan.ticks();
+    ticks_ += aTimeSpan.Ticks();
     return *this;
 }
 
 //------------------------------------------------------------------------------
 TimePod& TimePod::operator+=(const TimeSpanPod& aTimeSpan)
 {
-    return addAssign(aTimeSpan);
+    return AddAssign(aTimeSpan);
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::sub(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::Sub(const TimeSpanPod& aTimeSpan)const
 {
     TimePod obj = *this;
     obj -= aTimeSpan;
@@ -270,24 +270,24 @@ const TimePod TimePod::sub(const TimeSpanPod& aTimeSpan)const
 //------------------------------------------------------------------------------
 const TimePod TimePod::operator-(const TimeSpanPod& aTimeSpan)const
 {
-    return sub(aTimeSpan);
+    return Sub(aTimeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::subAssign(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::SubAssign(const TimeSpanPod& aTimeSpan)
 {
-    ticks_ -= aTimeSpan.ticks();
+    ticks_ -= aTimeSpan.Ticks();
     return *this;
 }
 
 //------------------------------------------------------------------------------
 TimePod& TimePod::operator-=(const TimeSpanPod& aTimeSpan)
 {
-    return subAssign(aTimeSpan);
+    return SubAssign(aTimeSpan);
 }
 
 //------------------------------------------------------------------------------
-s64 TimePod::ticks()const
+s64 TimePod::Ticks()const
 {
     return ticks_;
 }

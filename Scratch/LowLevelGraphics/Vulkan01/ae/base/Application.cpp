@@ -14,40 +14,40 @@ Pointer< Application > tPtr;
 //------------------------------------------------------------------------------
 Application& Application::Instance()
 {
-    return tPtr.ref();
+    return tPtr.Ref();
 }
 
 //------------------------------------------------------------------------------
-ae::base::Application::Application(const Argument& aArgument)
+ae::base::Application::Application(const base::Argument& aArgument)
 : argument_(aArgument)
 , lastEvent_(AppEvent::INVALID)
 , displayPtr_()
 , ext_()
 {
-    tPtr.set(*this);
+    tPtr.Set(*this);
 }
 
 //------------------------------------------------------------------------------
 Application::~Application()
 {
-    tPtr.unset();
+    tPtr.Unset();
 }
 
 //------------------------------------------------------------------------------
-const Argument& Application::argument()const
+const Argument& Application::Argument()const
 {
     return argument_;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::receiveEvent()
+AppEvent::EnumType Application::ReceiveEvent()
 {
-    lastEvent_ = receiveEventCore();
+    lastEvent_ = ReceiveEventCore();
     return lastEvent_;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::lastEvent()const
+AppEvent::EnumType Application::LastEvent()const
 {
     return lastEvent_;
 }
@@ -55,13 +55,13 @@ AppEvent::EnumType Application::lastEvent()const
 //------------------------------------------------------------------------------
 void Application::registerDisplay_(Display& aDisplay)
 {
-    displayPtr_.set(aDisplay);
+    displayPtr_.Set(aDisplay);
 }
 
 //------------------------------------------------------------------------------
 void Application::unregisterDisplay_(Display& aDisplay)
 {
-    displayPtr_.unset(aDisplay);
+    displayPtr_.Unset(aDisplay);
 }
 
 }} // namespace

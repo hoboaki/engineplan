@@ -109,7 +109,7 @@ private:
     };
 
     /// 指定の Kind の操作が詰まれている最初のインデックスを取得する。見つからない場合は負の値を返す。
-    int findOperationIndex(OperationKind kind, int startIndex = 0);
+    int FindOperationIndex(OperationKind kind, int startIndex = 0);
 
     gfx_low::Device& device_;
     ::vk::Queue queue_;

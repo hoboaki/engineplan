@@ -24,10 +24,10 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void update(const TouchTapUpdateData& aData);
+    void Update(const TouchTapUpdateData& aData);
 
     /// 前回の更新データを取得する。
-    const TouchTapUpdateData lastUpdateData()const;
+    const TouchTapUpdateData LastUpdateData()const;
     //@}
 
     /// @name 状態取得
@@ -36,15 +36,15 @@ public:
     /// @details
     /// 押されていなければ0、シングルタップなら1、ダブルタップなら2を返します。@n
     /// 3以上のタップ数をサポートしている環境なら3以上の値を返します。@n
-    int tapCount()const;
+    int TapCount()const;
 
     /// @brief 押している位置。
     /// @details 離している状態なら最後に押していた位置を返します。
-    const ScreenPosPod pos()const;
+    const ScreenPosPod Pos()const;
 
-    bool isHold()const;    ///< 押されているか。
-    bool isTrigger()const; ///< 押された瞬間か。
-    bool isRelease()const; ///< 離された瞬間か。
+    bool IsHold()const;    ///< 押されているか。
+    bool IsTrigger()const; ///< 押された瞬間か。
+    bool IsRelease()const; ///< 離された瞬間か。
     //@}
 
 private:

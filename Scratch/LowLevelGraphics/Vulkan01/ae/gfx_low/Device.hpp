@@ -40,7 +40,7 @@ public:
     int PhysicalDeviceIndex() const { return physicalDeviceIndex_; }
     
     /// 保持している Queue の総数。
-    int QueueCount() const { return queues_.count(); }
+    int QueueCount() const { return queues_.Count(); }
 
     /// 指定番目の Queue の取得。
     /// @param queueIndex [0, QueueCount())

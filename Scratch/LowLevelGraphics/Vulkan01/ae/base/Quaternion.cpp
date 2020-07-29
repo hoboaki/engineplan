@@ -41,10 +41,10 @@ Quaternion::Quaternion(
 , z()
 , w()
 {
-    const Vector3 normalizedAxis = aAxis.isZeroStrict()
+    const Vector3 normalizedAxis = aAxis.IsZeroStrict()
         ? Vector3()
-        : aAxis.unit();
-    const Radian halfAngle = aAngle.rad() * 0.5f;
+        : aAxis.Unit();
+    const Radian halfAngle = aAngle.Rad() * 0.5f;
     const f32 cosHalfAngle = Math::CosF32(halfAngle);
     const f32 sinHalfAngle = Math::SinF32(halfAngle);
     x = normalizedAxis.x * sinHalfAngle;
@@ -54,15 +54,15 @@ Quaternion::Quaternion(
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::mul(const Quaternion& aQuat)const
+const Quaternion Quaternion::Mul(const Quaternion& aQuat)const
 {
     Quaternion quat(*this);
-    quat.mulAssign(aQuat);
+    quat.MulAssign(aQuat);
     return quat;
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::mulAssign(const Quaternion& aRHS)
+Quaternion& Quaternion::MulAssign(const Quaternion& aRHS)
 {
     const Quaternion& lhs = *this;
     const Quaternion& rhs = aRHS;
@@ -76,7 +76,7 @@ Quaternion& Quaternion::mulAssign(const Quaternion& aRHS)
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod Quaternion::toRotateMatrix()const
+const Matrix34Pod Quaternion::ToRotateMatrix()const
 {
     const f32 lenSrc = Math::SqrtF32(w*w + x*x + y*y + z*z);
     if (lenSrc == 0) {
@@ -111,25 +111,25 @@ const Matrix34Pod Quaternion::toRotateMatrix()const
 //------------------------------------------------------------------------------
 const Quaternion Quaternion::operator*(const Quaternion& aRHS)const
 {
-    return mul(aRHS);
+    return Mul(aRHS);
 }
 
 //------------------------------------------------------------------------------
 Quaternion& Quaternion::operator*=(const Quaternion& aRHS)
 {
-    mulAssign(aRHS);
+    MulAssign(aRHS);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Quaternion::toShortString()const
+const ::ae::base::ShortString Quaternion::ToShortString()const
 {
     return ::ae::base::ShortString::FromFormat(
         "%s,%s,%s,%s",
-        F32(x).toShortString().readPtr(),
-        F32(y).toShortString().readPtr(),
-        F32(z).toShortString().readPtr(),
-        F32(w).toShortString().readPtr()
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr(),
+        F32(z).ToShortString().ReadPtr(),
+        F32(w).ToShortString().ReadPtr()
         );
 }
 

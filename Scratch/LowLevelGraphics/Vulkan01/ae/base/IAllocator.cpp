@@ -42,7 +42,7 @@ IAllocator& IAllocator::Default()
 //------------------------------------------------------------------------------
 void IAllocator::SetDefault(IAllocator& aAllocator)
 {
-    tDefaultAllocator.ptr.reset(&aAllocator);
+    tDefaultAllocator.ptr.Reset(&aAllocator);
 }
 
 //------------------------------------------------------------------------------
@@ -51,14 +51,14 @@ IAllocator& IAllocator::OperatorNewDelete()
     class OperatorNewDeleteAllocator : public IAllocator
     {
     public:
-        AE_BASE_OVERRIDE(ptr_t alloc(pword_t aSize, pword_t aAlignment))
+        AE_BASE_OVERRIDE(ptr_t Alloc(pword_t aSize, pword_t aAlignment))
         {
             AE_BASE_UNUSED(aAlignment);
             void* ptr = ::operator new(aSize, std::nothrow_t());
             AE_BASE_ASSERT_EQUALS(pword_t(ptr) % aAlignment, 0);
             return static_cast<ptr_t>(ptr);
         }
-        AE_BASE_OVERRIDE(void free(ptr_t aPtr))
+        AE_BASE_OVERRIDE(void Free(ptr_t aPtr))
         {
             ::operator delete(aPtr, std::nothrow_t());
         }
@@ -72,25 +72,25 @@ IAllocator& IAllocator::OperatorNewDelete()
 //------------------------------------------------------------------------------
 void* operator new(const std::size_t aSize, ::ae::base::IAllocator& aAllocator)
 {
-    return aAllocator.alloc(aSize);
+    return aAllocator.Alloc(aSize);
 }
 
 //------------------------------------------------------------------------------
 void* operator new[](const std::size_t aSize, ::ae::base::IAllocator& aAllocator)
 {
-    return aAllocator.alloc(aSize);
+    return aAllocator.Alloc(aSize);
 }
 
 //------------------------------------------------------------------------------
 void operator delete(void* aPtr, ::ae::base::IAllocator& aAllocator)
 {
-    aAllocator.free(::ae::base::ptr_t(aPtr));
+    aAllocator.Free(::ae::base::ptr_t(aPtr));
 }
 
 //------------------------------------------------------------------------------
 void operator delete[](void* aPtr, ::ae::base::IAllocator& aAllocator)
 {
-    aAllocator.free(::ae::base::ptr_t(aPtr));
+    aAllocator.Free(::ae::base::ptr_t(aPtr));
 }
 
 // EOF

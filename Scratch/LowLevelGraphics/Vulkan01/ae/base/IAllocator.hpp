@@ -48,11 +48,11 @@ public:
     /// @return 確保したメモリブロックの先頭アドレス。
     /// @param aSize 確保するメモリブロックのサイズ。
     /// @param aAlignment 確保するメモリブロックのアライメント。
-    virtual ptr_t alloc(pword_t aSize, pword_t aAlignment = DefaultAlignment) = 0;
+    virtual ptr_t Alloc(pword_t aSize, pword_t aAlignment = DefaultAlignment) = 0;
 
     /// @brief メモリ解放。
     /// @param aPtr 解放するメモリブロックの先頭アドレス。
-    virtual void free(ptr_t aPtr) = 0;
+    virtual void Free(ptr_t aPtr) = 0;
     //@}
 };
 //@}

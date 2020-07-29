@@ -22,8 +22,8 @@ namespace base {
 /// @code
 /// // 例
 /// ::ae::base::Placement< ::ae::base::Vector3 > vec3;
-/// vec3.init( 1 , 2 , 3 );
-/// const float len = vec3->length();
+/// vec3.Init( 1 , 2 , 3 );
+/// const float len = vec3->Length();
 /// @endcode
 template< typename T >
 class Placement
@@ -32,33 +32,33 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     Placement() : ptr_(0) {}
-    ~Placement() { reset(); }
+    ~Placement() { Reset(); }
     //@}
 
     /// @name アクセス
     //@{
     /// 生成済みか。
-    bool isValid()const { return ptr_ != 0; }
+    bool IsValid()const { return ptr_ != 0; }
 
     /// 生成済みのオブジェクトのポインタを取得する。
-    T*   ptr()const { AE_BASE_ASSERT_POINTER(ptr_); return ptr_; }
+    T*   Ptr()const { AE_BASE_ASSERT_POINTER(ptr_); return ptr_; }
 
     /// 生成済みのオブジェクトの参照を取得する。
-    T&   ref()const { return *ptr(); }
+    T&   Ref()const { return *Ptr(); }
     //@}
 
     /// @name 演算子オーバーロード
     //@{
-    T* operator->()const { return ptr(); } ///< ptr() のエイリアス。
-    T& operator*()const { return ref(); } ///< ref() のエイリアス。
+    T* operator->()const { return Ptr(); } ///< Ptr() のエイリアス。
+    T& operator*()const { return Ref(); } ///< Ref() のエイリアス。
     //@}
 
     /// @name 破棄
     //@{
     /// 生成済みなら破棄する。
-    void reset()
+    void Reset()
     {
-        if (isValid())
+        if (IsValid())
         {
             ptr_->~T();
             ptr_ = 0;
@@ -68,69 +68,69 @@ public:
 
     /// @name 生成
     //@{
-    void init()
+    void Init()
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T();
     }
     template< typename A0 >
-    void init(A0 a0)
+    void Init(A0 a0)
     {
-        prepareCtor();
+        PrepareCtor();
         new(ptr_) T(a0);
     }
     template< typename A0, typename A1 >
-    void init(A0 a0, A1 a1)
+    void Init(A0 a0, A1 a1)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1);
     }
     template< typename A0, typename A1, typename A2 >
-    void init(A0 a0, A1 a1, A2 a2)
+    void Init(A0 a0, A1 a1, A2 a2)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2);
     }
     template< typename A0, typename A1, typename A2, typename A3 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9 >
-    void init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
     {
-        prepareCtor();
+        PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }
     //@}
@@ -139,9 +139,9 @@ private:
     T*     ptr_;
     byte_t bytes_[sizeof(T)];
     //------------------------------------------------------------------------------
-    void prepareCtor()
+    void PrepareCtor()
     {
-        reset();
+        Reset();
         ptr_ = reinterpret_cast<T*>(bytes_);
     }
 };

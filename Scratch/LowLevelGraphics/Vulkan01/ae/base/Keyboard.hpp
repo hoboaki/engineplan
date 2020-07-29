@@ -30,28 +30,28 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void update(const KeyboardUpdateData& aData);
+    void Update(const KeyboardUpdateData& aData);
 
     /// 前回の更新データを取得する。
-    const KeyboardUpdateData lastUpdateData()const;
+    const KeyboardUpdateData LastUpdateData()const;
     //@}
 
     /// @name 状態取得
     //@{
-    bool isHold(KeyKind::EnumType aKind)const;    ///< 押されているか。
-    bool isTrigger(KeyKind::EnumType aKind)const; ///< 押された瞬間か。
-    bool isRepeat(KeyKind::EnumType aKind)const;  ///< 押しっぱなしの状態で入力が入ったか。
-    bool isPulse(KeyKind::EnumType aKind)const;   ///< isTrigger() || isRepeat()。
-    bool isRelease(KeyKind::EnumType aKind)const; ///< 離された瞬間か。
+    bool IsHold(KeyKind::EnumType aKind)const;    ///< 押されているか。
+    bool IsTrigger(KeyKind::EnumType aKind)const; ///< 押された瞬間か。
+    bool IsRepeat(KeyKind::EnumType aKind)const;  ///< 押しっぱなしの状態で入力が入ったか。
+    bool IsPulse(KeyKind::EnumType aKind)const;   ///< IsTrigger() || IsRepeat()。
+    bool IsRelease(KeyKind::EnumType aKind)const; ///< 離された瞬間か。
     //@}
 
     /// @name ビットセット取得
     //@{
-    const KeyBitSet hold()const;    ///< isHold() のビットセット。
-    const KeyBitSet trigger()const; ///< isTrigger() のビットセット。
-    const KeyBitSet repeat()const;  ///< isRepeat() のビットセット。
-    const KeyBitSet pulse()const;   ///< isPulse() のビットセット。
-    const KeyBitSet release()const; ///< isRelease() のビットセット。
+    const KeyBitSet Hold()const;    ///< IsHold() のビットセット。
+    const KeyBitSet Trigger()const; ///< IsTrigger() のビットセット。
+    const KeyBitSet Repeat()const;  ///< IsRepeat() のビットセット。
+    const KeyBitSet Pulse()const;   ///< IsPulse() のビットセット。
+    const KeyBitSet Release()const; ///< IsRelease() のビットセット。
     //@}
 
 private:

@@ -43,29 +43,29 @@ public:
     /// @name キーボードデバイス
     //@{
     /// キーボードの総数。
-    int           keyboardCount()const;
+    int           KeyboardCount()const;
 
     /// 指定番目のキーボードを取得。
-    const base::Keyboard keyboardAtIndex(int aIndex) const;
+    const base::Keyboard KeyboardAtIndex(int aIndex) const;
 
     /// @brief 存在する環境なら0番のキーボードを取得する。
     /// @details 
     /// 存在しなければ空のキーボードを返す。
-    const base::Keyboard keyboard() const;
+    const base::Keyboard Keyboard() const;
     //@}
 
     /// @name マウスデバイス
     //@{
     /// マウスの総数。
-    int           mouseCount()const;
+    int           MouseCount()const;
 
     /// 指定番目のマウスを取得。
-    const base::Mouse mouseAtIndex(int aIndex) const;
+    const base::Mouse MouseAtIndex(int aIndex) const;
 
     /// @brief 存在する環境なら0番のマウスを取得する。
     /// @details 
     /// 存在しなければ空のマウスを返す。
-    const base::Mouse mouse() const;
+    const base::Mouse Mouse() const;
     //@}
 
     /// @name タッチデバイス
@@ -73,18 +73,18 @@ public:
     /// @brief この機器でサポートされているタップ数を取得する。
     /// @details 
     /// シングルタッチしかサポートしない環境は1、マルチタッチをサポートする環境では2以上の値が返ります。@n
-    int supportedTouchTapCount()const;
+    int SupportedTouchTapCount()const;
 
     /// タッチデバイスの総数。
-    int touchCount()const;
+    int TouchCount()const;
 
     /// 指定番目のタッチデバイスの取得。
-    const base::Touch touchAtIndex(int aIndex) const;
+    const base::Touch TouchAtIndex(int aIndex) const;
 
     /// @brief 存在する環境なら0番のタッチデバイスを取得する。
     /// @details 
     /// 存在しなければ空のタッチデバイスを返す。
-    const base::Touch touch() const;
+    const base::Touch Touch() const;
     //@}
 
     //============================================================

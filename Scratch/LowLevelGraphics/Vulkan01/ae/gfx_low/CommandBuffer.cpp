@@ -82,7 +82,7 @@ void CommandBuffer::Reset() {
     }
     default:
         AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
-            "[CommandBuffer::Reset] Invalid state(%d).", state_);
+            "[CommandBuffer::Reset] Invalid State(%d).", state_);
         return;
     }
 
@@ -92,21 +92,21 @@ void CommandBuffer::Reset() {
     state_ = CommandBufferState::Initial;
 
     // コマンドバッファで作った情報をリセット
-    for (int i = renderPassProperties_.count() - 1; 0 <= i; --i) {
+    for (int i = renderPassProperties_.Count() - 1; 0 <= i; --i) {
         auto& prop = renderPassProperties_[i];
         device_.PrvInstance().destroyFramebuffer(
             prop.framebuffer, nullptr);
         device_.PrvInstance().destroyRenderPass(prop.renderPass, nullptr);
     }
-    renderPassProperties_.clear();
+    renderPassProperties_.Clear();
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
-    AE_BASE_ASSERT(activePass_.isAllOff());
+    AE_BASE_ASSERT(activePass_.IsAllOff());
 
-    activePass_.set(int(CommandBufferFeature::Render), true);
+    activePass_.Set(int(CommandBufferFeature::Render), true);
 
     RenderPassProperty prop;
     {
@@ -200,8 +200,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setRenderPass(prop.renderPass)
                 .setAttachmentCount(1)
                 .setPAttachments(&imageViews[0])
-                .setWidth(uint32_t(info.RenderArea().width()))
-                .setHeight(uint32_t(info.RenderArea().height()))
+                .setWidth(uint32_t(info.RenderArea().Width()))
+                .setHeight(uint32_t(info.RenderArea().Height()))
                 .setLayers(1);
         {
             const auto result = device_.PrvInstance().createFramebuffer(
@@ -209,7 +209,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
-    renderPassProperties_.add(prop);
+    renderPassProperties_.Add(prop);
 
     std::array<::vk::ClearValue, Device::PrvSupportedAttachmentCountMax> clearValues;
     for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount(); ++i) {
@@ -225,10 +225,10 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             .setRenderPass(prop.renderPass)
             .setFramebuffer(prop.framebuffer)
             .setRenderArea(
-                ::vk::Rect2D(::vk::Offset2D(info.RenderArea().begin().x,
-                                 info.RenderArea().begin().y),
-                    ::vk::Extent2D(uint32_t(info.RenderArea().width()),
-                        uint32_t(info.RenderArea().height()))))
+                ::vk::Rect2D(::vk::Offset2D(info.RenderArea().Begin().x,
+                                 info.RenderArea().Begin().y),
+                    ::vk::Extent2D(uint32_t(info.RenderArea().Width()),
+                        uint32_t(info.RenderArea().Height()))))
             .setClearValueCount(1)
             .setPClearValues(&clearValues[0]);
 
@@ -238,10 +238,10 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdEndRenderPass() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
-    AE_BASE_ASSERT(activePass_.get(int(CommandBufferFeature::Render)));
+    AE_BASE_ASSERT(activePass_.Get(int(CommandBufferFeature::Render)));
 
     commandBuffer_.endRenderPass();
-    activePass_.set(int(CommandBufferFeature::Render), false);
+    activePass_.Set(int(CommandBufferFeature::Render), false);
 }
 
 }  // namespace gfx_low

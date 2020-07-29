@@ -103,9 +103,9 @@ struct Math
     static f32 SinF32(const Angle&); ///< sineを求める。
     static f32 CosF32(const Angle&); ///< cosineを求める。
     static f32 TanF32(const Angle&); ///< tangentを求める。
-    static f32 CecF32(const Angle&); ///< cosecant(1/sin)を求める。
-    static f32 SecF32(const Angle&); ///< secant(1/cos)を求める。
-    static f32 CotF32(const Angle&); ///< cotangent(1/tan)を求める。
+    static f32 CecF32(const Angle&); ///< Cosecant(1/sin)を求める。
+    static f32 SecF32(const Angle&); ///< Secant(1/cos)を求める。
+    static f32 CotF32(const Angle&); ///< Cotangent(1/tan)を求める。
     //@}
 
     //============================================================

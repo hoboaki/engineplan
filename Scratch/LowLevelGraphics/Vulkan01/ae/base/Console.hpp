@@ -187,7 +187,7 @@ struct Console
 /// @param aVal ダンプする値。ShortString変換に対応していないとエラーになる。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_DUMP( aVal ) AE_BASE_COUTFMT_LINE_WITH_TIME( "%s : %s\n" , #aVal , AE_BASE_TO_SHORT_STRING( aVal ).readPtr() )
+#define AE_BASE_DUMP( aVal ) AE_BASE_COUTFMT_LINE_WITH_TIME( "%s : %s\n" , #aVal , AE_BASE_TO_SHORT_STRING( aVal ).ReadPtr() )
 
 //@}
 //@}

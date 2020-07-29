@@ -23,8 +23,8 @@ public:
     /// Struct型のエイリアス。
     typedef ::ae::base::PodStruct<T> StructType;
 
-    PodClass() { StructType::ref() = StructType::DefaultValue(); }   ///< 規定値で初期化される。
-    PodClass(const PodStruct<T>& aValue) { StructType::ref() = aValue; } ///< 値を指定して初期化。
+    PodClass() { StructType::Ref() = StructType::DefaultValue(); }   ///< 規定値で初期化される。
+    PodClass(const PodStruct<T>& aValue) { StructType::Ref() = aValue; } ///< 値を指定して初期化。
 
 private:
     typedef StructType SuperClass;

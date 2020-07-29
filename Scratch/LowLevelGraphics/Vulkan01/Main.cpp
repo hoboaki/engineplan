@@ -41,7 +41,7 @@ int aemain(::ae::base::Application* app) {
         ::ae::base::Display(::ae::base::DisplayContext());
 
     // ディスプレイの表示
-    display.show();
+    display.Show();
 
     // グラフィックスシステムインスタンス作成
     ::std::unique_ptr<::ae::gfx_low::System> gfxLowSystem(
@@ -77,7 +77,7 @@ int aemain(::ae::base::Application* app) {
     {
         auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
                                .SetDevice(gfxLowDevice.get())
-                               .SetScreen(&display.mainScreen())
+                               .SetScreen(&display.MainScreen())
                                .SetSwapchainCountMax(1);
         swapchainMaster.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
     }
@@ -88,8 +88,8 @@ int aemain(::ae::base::Application* app) {
     // CommandBuffer の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers(
         swapchainImageCount);
-    for (int i = 0; i < commandBuffers.countMax(); ++i) {
-        commandBuffers.add(::ae::gfx_low::CommandBufferCreateInfo()
+    for (int i = 0; i < commandBuffers.CountMax(); ++i) {
+        commandBuffers.Add(::ae::gfx_low::CommandBufferCreateInfo()
                                .SetDevice(gfxLowDevice.get())
                                .SetQueue(&queue)
                                .SetRenderPassCountMax(16));
@@ -98,17 +98,17 @@ int aemain(::ae::base::Application* app) {
     // Fence の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::Fence> fences(
         swapchainImageCount);
-    for (int i = 0; i < fences.countMax(); ++i) {
-        fences.add(
+    for (int i = 0; i < fences.CountMax(); ++i) {
+        fences.Add(
             ::ae::gfx_low::FenceCreateInfo().SetDevice(gfxLowDevice.get()));
     }
 
     // メインループ
     int bufferIndex = 0;
-    while (app->receiveEvent() == ::ae::base::AppEvent::Update) {
+    while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
-        if (display.isClosed()) {
-            app->quit();
+        if (display.IsClosed()) {
+            app->Quit();
             continue;
         }
 
@@ -143,7 +143,7 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::gfx_low::ImageResourceState::PresentSrc)
                             .SetClearColor(
                                 ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
-                                    .toRGBAf()),
+                                    .ToRGBAf()),
                     };
 
                 cmd.CmdBeginRenderPass(
@@ -156,8 +156,8 @@ int aemain(::ae::base::Application* app) {
                         .SetRenderTargetSettings(renderTargetSettings)
                         .SetRenderArea(
                             ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
-                                display.mainScreen().width(),
-                                display.mainScreen().height())));
+                                display.MainScreen().Width(),
+                                display.MainScreen().Height())));
                 cmd.CmdEndRenderPass();
             }
         }

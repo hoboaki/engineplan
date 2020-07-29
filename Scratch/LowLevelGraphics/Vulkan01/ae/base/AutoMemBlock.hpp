@@ -31,7 +31,7 @@ public:
     AutoMemBlock();
 
     /// @brief 指定のサイズのブロックを指定のアロケータから確保したメモリブロックを作成。
-    /// @details メモリの確保に失敗したら isEmpty() はtrueを返します。
+    /// @details メモリの確保に失敗したら IsEmpty() はtrueを返します。
     AutoMemBlock(pword_t aSize, IAllocator& aAllocator = IAllocator::Default(), pword_t aAlignment = IAllocator::DefaultAlignment);
 
     /// @brief 指定のブロックを抱えたメモリブロックを作成。
@@ -50,14 +50,14 @@ public:
     //@{
     /// @brief ブロックを保持していなければtrueを返す。
     /// @details 抱えているブロックのサイズが0の場合でもブロックは保持しているのでfalseを返します。
-    bool isEmpty()const;
+    bool IsEmpty()const;
 
     /// @brief 保持しているブロックを解放する。
     /// @details 保持していなければ何もしません。
-    void clear();
+    void Clear();
 
     /// ブロックの参照を取得する。
-    const MemBlock& ref()const;
+    const MemBlock& Ref()const;
     //@}
 
     /// @name 演算子オーバーロード

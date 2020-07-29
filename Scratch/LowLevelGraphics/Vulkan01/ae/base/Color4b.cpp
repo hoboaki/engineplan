@@ -48,45 +48,45 @@ const Color4bPod Color4bPod::UnitA()
 }
 
 //------------------------------------------------------------------------------
-const Color4bPod Color4bPod::toRRRR()const
+const Color4bPod Color4bPod::ToRRRR()const
 {
     return Color4b(r, r, r, r);
 }
 
 //------------------------------------------------------------------------------
-const Color4bPod Color4bPod::toGGGG()const
+const Color4bPod Color4bPod::ToGGGG()const
 {
     return Color4b(g, g, g, g);
 }
 
 //------------------------------------------------------------------------------
-const Color4bPod Color4bPod::toBBBB()const
+const Color4bPod Color4bPod::ToBBBB()const
 {
     return Color4b(b, b, b, b);
 }
 
 //------------------------------------------------------------------------------
-const Color4bPod Color4bPod::toAAAA()const
+const Color4bPod Color4bPod::ToAAAA()const
 {
     return Color4b(a, a, a, a);
 }
 
 //------------------------------------------------------------------------------
-const Color4Pod Color4bPod::toRGBAf()const
+const Color4Pod Color4bPod::ToRGBAf()const
 {
     const float rate = 1.0f / 255.0f;
     return Color4(r * rate, g * rate, b * rate, a * rate);
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Color4bPod::toShortString()const
+const ::ae::base::ShortString Color4bPod::ToShortString()const
 {
     return ::ae::base::ShortString::FromFormat(
         "%s,%s,%s,%s",
-        U8(r).toShortString().readPtr(),
-        U8(g).toShortString().readPtr(),
-        U8(b).toShortString().readPtr(),
-        U8(a).toShortString().readPtr()
+        U8(r).ToShortString().ReadPtr(),
+        U8(g).ToShortString().ReadPtr(),
+        U8(b).ToShortString().ReadPtr(),
+        U8(a).ToShortString().ReadPtr()
         );
 }
 

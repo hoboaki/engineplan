@@ -99,41 +99,41 @@ struct Matrix34Pod
     const Vector3Pod y()const;
     const Vector3Pod z()const;
     const Vector3Pod w()const;
-    void setX(const Vector3Pod&);
-    void setY(const Vector3Pod&);
-    void setZ(const Vector3Pod&);
-    void setW(const Vector3Pod&);
+    void SetX(const Vector3Pod&);
+    void SetY(const Vector3Pod&);
+    void SetZ(const Vector3Pod&);
+    void SetW(const Vector3Pod&);
     //@}
 
     //============================================================
     /// @name 乗算（引数が同じオブジェクトでも問題無し）
     //@{
-    const Vector3Pod mul(const Vector3Pod&)const;   ///< @brief 乗算した結果を得る。 @details 4行目は0,0,0,1として計算する。
-    const Matrix34Pod mul(const Matrix34Pod&)const; ///< @brief 乗算した結果を得る。 @details this x rhs。4行目は0,0,0,1として計算する。
-    Matrix34Pod& mulAssign(const Matrix34Pod&);     ///< @brief 乗算し結果を代入する。@details  this = this x rhs。4行目は0,0,0,1として計算する。
+    const Vector3Pod Mul(const Vector3Pod&)const;   ///< @brief 乗算した結果を得る。 @details 4行目は0,0,0,1として計算する。
+    const Matrix34Pod Mul(const Matrix34Pod&)const; ///< @brief 乗算した結果を得る。 @details this x rhs。4行目は0,0,0,1として計算する。
+    Matrix34Pod& MulAssign(const Matrix34Pod&);     ///< @brief 乗算し結果を代入する。@details  this = this x rhs。4行目は0,0,0,1として計算する。
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Vector3Pod   operator*(const Vector3Pod&)const; ///< mul() のエイリアス。
-    const Matrix34Pod  operator*(const Matrix34Pod&)const; ///< mul() のエイリアス。
-    Matrix34Pod&       operator*=(const Matrix34Pod&);    ///< mulAssign() のエイリアス。
+    const Vector3Pod   operator*(const Vector3Pod&)const; ///< Mul() のエイリアス。
+    const Matrix34Pod  operator*(const Matrix34Pod&)const; ///< Mul() のエイリアス。
+    Matrix34Pod&       operator*=(const Matrix34Pod&);    ///< MulAssign() のエイリアス。
     //@}
 
     //============================================================
     /// @name 変換
     //@{
-    const Matrix34Pod invert()const; ///< 逆行列を取得する。4行目は0,0,0,1として作成する。
-    const Matrix34Pod transpose()const; ///< 転置行列を取得する。4行目は0,0,0,1として作成する。
-    const Quaternion  toQuaternion()const; ///< 3x3の部分をクォータニオンに変換する。
-    const Matrix44Pod toMatrix44()const; ///< 4x4に変換する。4行目は0,0,0,1として作成する。
+    const Matrix34Pod Invert()const; ///< 逆行列を取得する。4行目は0,0,0,1として作成する。
+    const Matrix34Pod Transpose()const; ///< 転置行列を取得する。4行目は0,0,0,1として作成する。
+    const Quaternion  ToQuaternion()const; ///< 3x3の部分をクォータニオンに変換する。
+    const Matrix44Pod ToMatrix44()const; ///< 4x4に変換する。4行目は0,0,0,1として作成する。
     //@}
 
     //============================================================
     /// @name デバッグ
     //@{
-    void dump()const;
+    void Dump()const;
     //@}
 };
 

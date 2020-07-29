@@ -23,13 +23,13 @@ Argument::Argument(
 }
 
 //------------------------------------------------------------------------------
-int Argument::argCount()const
+int Argument::ArgCount()const
 {
     return argCount_;
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::argValue(const int aIndex)const
+const char* Argument::ArgValue(const int aIndex)const
 {
     // 範囲外チェック
     if (argCount_ <= aIndex) {
@@ -53,7 +53,7 @@ const char* Argument::argValue(const int aIndex)const
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::exeFileName()const
+const char* Argument::ExeFileName()const
 {
     if (PointerCheck::InvalidCheck(exeFileName_)) {
         return "";
@@ -62,7 +62,7 @@ const char* Argument::exeFileName()const
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::exeDirPath()const
+const char* Argument::ExeDirPath()const
 {
     if (PointerCheck::InvalidCheck(exeDirPath_)) {
         return "";

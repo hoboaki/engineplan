@@ -24,7 +24,7 @@ AutoMemBlock::AutoMemBlock(
 , allocatorPtr_()
 {
     // 確保
-    ptr_t ptr = aAllocator.alloc(aSize, aAlignment);
+    ptr_t ptr = aAllocator.Alloc(aSize, aAlignment);
     if (ptr == 0) {
         // 失敗
         return;
@@ -32,7 +32,7 @@ AutoMemBlock::AutoMemBlock(
 
     // 設定
     block_ = MemBlock(ptr, aSize);
-    allocatorPtr_.set(aAllocator);
+    allocatorPtr_.Set(aAllocator);
 }
 
 //------------------------------------------------------------------------------
@@ -53,30 +53,30 @@ AutoMemBlock::AutoMemBlock(const AutoMemBlock& aOther)
 //------------------------------------------------------------------------------
 AutoMemBlock::~AutoMemBlock()
 {
-    clear();
+    Clear();
 }
 
 //------------------------------------------------------------------------------
-bool AutoMemBlock::isEmpty()const
+bool AutoMemBlock::IsEmpty()const
 {
-    return allocatorPtr_.isNull();
+    return allocatorPtr_.IsNull();
 }
 
 //------------------------------------------------------------------------------
-void AutoMemBlock::clear()
+void AutoMemBlock::Clear()
 {
-    if (isEmpty()) {
+    if (IsEmpty()) {
         return;
     }
-    allocatorPtr_->free(block_.head());
-    allocatorPtr_.reset();
+    allocatorPtr_->Free(block_.Head());
+    allocatorPtr_.Reset();
     block_ = MemBlock();
 }
 
 //------------------------------------------------------------------------------
-const MemBlock& AutoMemBlock::ref()const
+const MemBlock& AutoMemBlock::Ref()const
 {
-    AE_BASE_ASSERT(!isEmpty());
+    AE_BASE_ASSERT(!IsEmpty());
     return block_;
 }
 
@@ -84,7 +84,7 @@ const MemBlock& AutoMemBlock::ref()const
 AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& aRHS)
 {
     // まずクリア
-    clear();
+    Clear();
 
     // つぎに移動
     block_ = aRHS.block_;
@@ -92,7 +92,7 @@ AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& aRHS)
 
     // 相手をクリア
     aRHS.block_ = MemBlock();
-    aRHS.allocatorPtr_.reset();
+    aRHS.allocatorPtr_.Reset();
 
     // 終了
     return *this;
@@ -101,13 +101,13 @@ AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& aRHS)
 //------------------------------------------------------------------------------
 const MemBlock& AutoMemBlock::operator*()const
 {
-    return ref();
+    return Ref();
 }
 
 //------------------------------------------------------------------------------
 const MemBlock* AutoMemBlock::operator->()const
 {
-    return &ref();
+    return &Ref();
 }
 
 }} // namespace

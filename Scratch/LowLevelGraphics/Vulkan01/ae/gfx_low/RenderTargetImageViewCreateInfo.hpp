@@ -20,18 +20,18 @@ class RenderTargetImageViewCreateInfo {
 public:
     /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::Device* Device() const { return device_.get(); }
+    gfx_low::Device* Device() const { return device_.Get(); }
     RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* system) {
-        device_.reset(system);
+        device_.Reset(system);
         return *this;
     }
     //@}
 
     /// @name 対象となる ImageResource のポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::ImageResource* ImageResource() const { return imageResource_.get(); }
+    gfx_low::ImageResource* ImageResource() const { return imageResource_.Get(); }
     RenderTargetImageViewCreateInfo& SetImageResource(gfx_low::ImageResource* system) {
-        imageResource_.reset(system);
+        imageResource_.Reset(system);
         return *this;
     }
     //@}

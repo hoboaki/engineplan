@@ -41,7 +41,7 @@ IRuntimeErrorCallback& RuntimeError::DefaultCallback()
     class Callback : public IRuntimeErrorCallback
     {
     public:
-        AE_BASE_OVERRIDE(void onRuntimeError())
+        AE_BASE_OVERRIDE(void OnRuntimeError())
         {
         #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
                     // 標準のアサートで止めてみる。
@@ -70,7 +70,7 @@ void RuntimeError::SetCallback(IRuntimeErrorCallback& aCallback)
 void RuntimeError::OnError()
 {
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
-    tCallbackObj().onRuntimeError();
+    tCallbackObj().OnRuntimeError();
 #endif
 }
 

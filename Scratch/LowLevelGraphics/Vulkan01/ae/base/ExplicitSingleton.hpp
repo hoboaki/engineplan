@@ -31,12 +31,12 @@ namespace base {
     ///     {
     ///         UnsetInstance();
     ///     }
-    ///     int value()const { return 1; }
+    ///     int Value()const { return 1; }
     /// };
     /// void func()
     /// {
     ///     // Managerが作成済みならこのようにアクセスできる
-    ///     return Manager::Instance().value();
+    ///     return Manager::Instance().Value();
     /// }
     /// @endcode
 template< typename T >

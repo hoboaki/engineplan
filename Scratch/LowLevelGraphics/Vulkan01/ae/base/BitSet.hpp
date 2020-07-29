@@ -53,7 +53,7 @@ struct BitSetPod
     /// @name 全ビットの操作
     //@{
     /// 全ビットをfalseにする。
-    void clear()
+    void Clear()
     {
         for (int i = 0; i < MyType::ByteSize_; ++i)
         {
@@ -65,7 +65,7 @@ struct BitSetPod
     /// @name 各ビットの設定・取得
     //@{
     /// 指定番目のビットの値を設定する。
-    void set(int aIndex, bool aFlag)
+    void Set(int aIndex, bool aFlag)
     {
         // チェック
         if (BitCount <= aIndex)
@@ -81,19 +81,19 @@ struct BitSetPod
     }
 
     /// 指定番目のビットをたてる。
-    void on(int aIndex)
+    void On(int aIndex)
     {
-        set(aIndex, true);
+        Set(aIndex, true);
     }
 
     /// 指定番目のビットをおろす。
-    void off(int aIndex)
+    void Off(int aIndex)
     {
-        set(aIndex, false);
+        Set(aIndex, false);
     }
 
     /// 指定番目のビットの値を取得する。
-    bool get(int aIndex)const
+    bool Get(int aIndex)const
     {
         // チェック
         if (BitCount <= aIndex)
@@ -108,7 +108,7 @@ struct BitSetPod
         return (val & mask) != 0 ? true : false;
     }
     /// 1つ以上のビットがたっているか。
-    bool isAnyOn()const
+    bool IsAnyOn()const
     {
         for (int i = 0; i < ByteSize_; ++i)
         {
@@ -120,16 +120,16 @@ struct BitSetPod
         return false;
     }
     /// 全てのビットがたっていない状態か。
-    bool isAllOff()const
+    bool IsAllOff()const
     {
-        return !isAnyOn();
+        return !IsAnyOn();
     }
     /// 全てのビットがたっている状態か。
-    bool isAllOn()const
+    bool IsAllOn()const
     {
         for (int i = 0; i < BitCount; ++i)
         {
-            if (!get(i))
+            if (!Get(i))
             {
                 return false;
             }
@@ -196,7 +196,7 @@ public:
     /// 全てoffの状態で作成。
     BitSet()
     {
-        BitSetPod< BIT_COUNT, ALIGNMENT >::clear();
+        BitSetPod< BIT_COUNT, ALIGNMENT >::Clear();
     }
 
     /// コピーして作成。

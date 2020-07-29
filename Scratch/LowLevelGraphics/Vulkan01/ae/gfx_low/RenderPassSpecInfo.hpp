@@ -29,14 +29,14 @@ public:
 
     /// 全 RenderTarget の仕様情報がある配列の先頭アドレス。（初期値：nullptr）
     const RenderTargetSpecInfo* RenderTargetSpecInfos() const {
-        return renderTargetSpecInfos_.get();
+        return renderTargetSpecInfos_.Get();
     }
 
     /// RenderTarget の数と仕様の設定。
     RenderPassSpecInfo& SetRenderTargetSpecInfos(
         const RenderTargetSpecInfo* renderTargetSpecInfos)
     {
-        renderTargetSpecInfos_.reset(renderTargetSpecInfos);
+        renderTargetSpecInfos_.Reset(renderTargetSpecInfos);
         return *this;
     }
     //@}

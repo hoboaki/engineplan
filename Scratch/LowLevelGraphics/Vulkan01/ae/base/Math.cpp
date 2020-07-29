@@ -70,21 +70,21 @@ bool Math::IsZeroF32(const f32 aVal)
 f32 Math::SinF32(const Angle& aAngle)
 {
     using namespace std;
-    return f32(sinf(aAngle.rad()));
+    return f32(sinf(aAngle.Rad()));
 }
 
 //------------------------------------------------------------------------------
 f32 Math::CosF32(const Angle& aAngle)
 {
     using namespace std;
-    return f32(cosf(aAngle.rad()));
+    return f32(cosf(aAngle.Rad()));
 }
 
 //------------------------------------------------------------------------------
 f32 Math::TanF32(const Angle& aAngle)
 {
     using namespace std;
-    return f32(tanf(aAngle.rad()));
+    return f32(tanf(aAngle.Rad()));
 }
 
 //------------------------------------------------------------------------------

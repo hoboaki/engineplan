@@ -30,10 +30,10 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void update(const MouseUpdateData& aData);
+    void Update(const MouseUpdateData& aData);
 
     /// 前回の更新データを取得する。
-    const MouseUpdateData lastUpdateData()const;
+    const MouseUpdateData LastUpdateData()const;
     //@}
 
     /// @name カーソル位置取得
@@ -41,28 +41,28 @@ public:
     /// @brief 最新のカーソル位置情報がとれるか。
     /// @details
     /// カーソルがウィンドウ外などに移動して位置情報がとれなかったときにfalseを返します。@n
-    /// false なら pos() は最後に更新された位置を返します。@n
-    bool isPosUpdated()const;
+    /// false なら Pos() は最後に更新された位置を返します。@n
+    bool IsPosUpdated()const;
 
     /// @brief カーソル位置を取得する。
-    /// @see isPosUpdated()
+    /// @see IsPosUpdated()
     /// @details
     /// 初期値は(0,0)を返します。
-    const ScreenPosPod pos()const;
+    const ScreenPosPod Pos()const;
     //@}
 
     /// @name ボタンの状態取得
     //@{
-    bool isHold(MouseBtnKind::EnumType aKind)const;    ///< 押されているか。
-    bool isTrigger(MouseBtnKind::EnumType aKind)const; ///< 押された瞬間か。
-    bool isRelease(MouseBtnKind::EnumType aKind)const; ///< 離された瞬間か。
+    bool IsHold(MouseBtnKind::EnumType aKind)const;    ///< 押されているか。
+    bool IsTrigger(MouseBtnKind::EnumType aKind)const; ///< 押された瞬間か。
+    bool IsRelease(MouseBtnKind::EnumType aKind)const; ///< 離された瞬間か。
     //@}
 
     /// @name ボタンのビットセット取得
     //@{
-    const MouseBtnBitSet hold()const;    ///< isHold() のビットセット。
-    const MouseBtnBitSet trigger()const; ///< isTrigger() のビットセット。
-    const MouseBtnBitSet release()const; ///< isRelease() のビットセット。
+    const MouseBtnBitSet Hold()const;    ///< IsHold() のビットセット。
+    const MouseBtnBitSet Trigger()const; ///< IsTrigger() のビットセット。
+    const MouseBtnBitSet Release()const; ///< IsRelease() のビットセット。
     //@}
 
 private:

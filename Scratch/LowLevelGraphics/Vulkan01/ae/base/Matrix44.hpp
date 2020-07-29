@@ -123,37 +123,37 @@ struct Matrix44Pod
     const Vector4Pod y()const;
     const Vector4Pod z()const;
     const Vector4Pod w()const;
-    void setX(const Vector4Pod&);
-    void setY(const Vector4Pod&);
-    void setZ(const Vector4Pod&);
-    void setW(const Vector4Pod&);
+    void SetX(const Vector4Pod&);
+    void SetY(const Vector4Pod&);
+    void SetZ(const Vector4Pod&);
+    void SetW(const Vector4Pod&);
     //@}
 
     //============================================================
     /// @name 乗算（引数が同じオブジェクトでも問題無し）
     //@{
-    const Matrix44Pod mul(const Matrix44Pod&)const; ///< 乗算した結果を得る。this x rhs。
-    Matrix44Pod& mulAssign(const Matrix44Pod&);     ///< 乗算し結果を代入する。this = this x rhs。
+    const Matrix44Pod Mul(const Matrix44Pod&)const; ///< 乗算した結果を得る。this x rhs。
+    Matrix44Pod& MulAssign(const Matrix44Pod&);     ///< 乗算し結果を代入する。this = this x rhs。
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Matrix44Pod  operator*(const Matrix44Pod&)const; ///< mul()。
-    Matrix44Pod&       operator*=(const Matrix44Pod&);    ///< mulAssign()。
+    const Matrix44Pod  operator*(const Matrix44Pod&)const; ///< Mul()。
+    Matrix44Pod&       operator*=(const Matrix44Pod&);    ///< MulAssign()。
     //@}
 
     //============================================================
     /// @name 変換
     //@{
-    const Matrix44Pod invert()const; ///< 逆行列を取得する。
-    const Matrix44Pod transpose()const; ///< 転置行列を取得する。
+    const Matrix44Pod Invert()const; ///< 逆行列を取得する。
+    const Matrix44Pod Transpose()const; ///< 転置行列を取得する。
     //@}
 
     //============================================================
     /// @name デバッグ
     //@{
-    void dump()const;
+    void Dump()const;
     //@}
 };
 

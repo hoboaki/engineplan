@@ -97,7 +97,7 @@ public:
 
 /// @name EnumTmpl EnumPodTmpl をラップする型。
 //@{
-template< typename TEnumType > class Enum8 : public EnumTmpl< TEnumType, s8  > { public: Enum8() {};  Enum8(const TEnumType aVal) { EnumTmpl< TEnumType, s8   >::val_ = s8(aVal); } };  ///< 8bitクラス版。
+template< typename TEnumType > class Enum8 : public EnumTmpl< TEnumType, s8  > { public: Enum8() {};  Enum8(const TEnumType aVal) { EnumTmpl< TEnumType, s8   >::val_ = S8(aVal); } };  ///< 8bitクラス版。
 template< typename TEnumType > class Enum16 : public EnumTmpl< TEnumType, s16 > { public: Enum16() {}; Enum16(const TEnumType aVal) { EnumTmpl< TEnumType, s16  >::val_ = s16(aVal); } };  ///< 16bitクラス版。
 template< typename TEnumType > class Enum32 : public EnumTmpl< TEnumType, s32 > { public: Enum32() {}; Enum32(const TEnumType aVal) { EnumTmpl< TEnumType, s32  >::val_ = s32(aVal); } }; ///< 32bitクラス版。
 template< typename TEnumType > class Enum64 : public EnumTmpl< TEnumType, s64 > { public: Enum64() {}; Enum64(const TEnumType aVal) { EnumTmpl< TEnumType, s64  >::val_ = s64(aVal); } }; ///< 64bitクラス版。

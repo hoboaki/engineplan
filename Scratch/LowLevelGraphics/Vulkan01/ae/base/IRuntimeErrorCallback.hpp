@@ -19,7 +19,7 @@ public:
        /// @brief エラーが起きたときに呼ばれる関数。
        /// @details 
        /// この関数ではアプリケーションを強制終了するなど致命的な時に実行したい処理を行ってください。
-    virtual void onRuntimeError() = 0;
+    virtual void OnRuntimeError() = 0;
 };
 //@}
 

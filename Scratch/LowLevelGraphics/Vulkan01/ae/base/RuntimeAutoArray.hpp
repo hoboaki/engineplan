@@ -41,7 +41,7 @@ public:
     {
         if (0 < aCountMax)
         {
-            ptr_ = reinterpret_cast<ValueType*>(allocator_.alloc(sizeof(ValueType) * aCountMax));
+            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * aCountMax));
         }
     }
 
@@ -54,13 +54,13 @@ public:
     ~RuntimeAutoArray()
     {
         // 全てをデストラクト
-        clear();
+        Clear();
 
         if (ptr_ != 0)
         {
             ValueType* ptr = ptr_;
             ptr_ = 0;
-            allocator_.free(reinterpret_cast<ptr_t>(ptr));
+            allocator_.Free(reinterpret_cast<ptr_t>(ptr));
         }
     }
 
@@ -69,31 +69,31 @@ public:
     /// @name アクセス
     //@{
     /// 要素が１つもない状態か。
-    bool isEmpty()const
+    bool IsEmpty()const
     {
         return count_ == 0;
     }
 
     /// 要素数が最大の状態か。
-    bool isFull()const
+    bool IsFull()const
     {
         return count_ == countMax_;
     }
 
     /// 現在の要素数。
-    int count()const
+    int Count()const
     {
         return count_;
     }
 
     /// 最大の要素数。
-    int countMax()const
+    int CountMax()const
     {
         return countMax_;
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& at(const int aIndex)const
+    ValueType& At(const int aIndex)const
     {
         if (aIndex < 0 || count_ <= aIndex)
         {
@@ -104,14 +104,14 @@ public:
     }
 
     /// 最初の要素にアクセス。
-    ValueType& first() { return at(0); }
-    /// @copydoc first()
-    const ValueType& first()const { return at(0); }
+    ValueType& First() { return At(0); }
+    /// @copydoc First()
+    const ValueType& First()const { return At(0); }
 
     /// 最後の要素にアクセス。
-    ValueType& last() { return at(count_ - 1); }
-    /// @copydoc last()
-    const ValueType& last()const { return at(count_ - 1); }
+    ValueType& Last() { return At(count_ - 1); }
+    /// @copydoc Last()
+    const ValueType& Last()const { return At(count_ - 1); }
 
     //@}
 
@@ -119,7 +119,7 @@ public:
     //@{
 
     /// 全ての要素を削除する。
-    void clear()
+    void Clear()
     {
         if (ptr_ == 0)
         {
@@ -130,7 +130,7 @@ public:
         for (int i = count_; 0 < i; --i)
         {
             const int idx = i - 1;
-            at(idx).~ValueType();
+            At(idx).~ValueType();
         }
         count_ = 0;
     }
@@ -140,9 +140,9 @@ public:
     /// @name 要素の追加
     //@{
 
-    void add()
+    void Add()
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -151,9 +151,9 @@ public:
         ++count_;
     }
     template< typename A0 >
-    void add(A0 a0)
+    void Add(A0 a0)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -162,9 +162,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1 >
-    void add(A0 a0, A1 a1)
+    void Add(A0 a0, A1 a1)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -173,9 +173,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2 >
-    void add(A0 a0, A1 a1, A2 a2)
+    void Add(A0 a0, A1 a1, A2 a2)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -184,9 +184,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -195,9 +195,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -206,9 +206,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -217,9 +217,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -228,9 +228,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -239,9 +239,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -250,9 +250,9 @@ public:
         ++count_;
     }
     template< typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9 >
-    void add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -271,7 +271,7 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int aIndex)const { return at(aIndex); } ///< at()const のエイリアス。
+    ValueType& operator[](const int aIndex)const { return At(aIndex); } ///< At()const のエイリアス。
     //@}
 
 private:

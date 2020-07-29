@@ -44,7 +44,7 @@ public:
     public:
         static const ::ae::base::ShortString Create(const T& aObj)
         {
-            return aObj.toShortString();
+            return aObj.ToShortString();
         }
     };
 

@@ -25,33 +25,33 @@ Touch::~Touch()
 }
 
 //------------------------------------------------------------------------------
-void Touch::update(const TouchUpdateData& aData)
+void Touch::Update(const TouchUpdateData& aData)
 {
     // バックアップ
     data_ = aData;
 
     // 更新
     for (int i = 0; i < tapCount_; ++i) {
-        taps_[i].update(aData.taps[i]);
+        taps_[i].Update(aData.taps[i]);
     }
 }
 
 //------------------------------------------------------------------------------
-const TouchUpdateData Touch::lastUpdateData()const
+const TouchUpdateData Touch::LastUpdateData()const
 {
     return data_;
 }
 
 //------------------------------------------------------------------------------
-int Touch::tapCount()const
+int Touch::TapCount()const
 {
     return tapCount_;
 }
 
 //------------------------------------------------------------------------------
-const TouchTap Touch::tapAtIndex(const int aIndex)const
+const TouchTap Touch::TapAtIndex(const int aIndex)const
 {
-    if (tapCount() <= aIndex) {
+    if (TapCount() <= aIndex) {
         AE_BASE_ERROR_INVALID_VALUE(aIndex);
         return TouchTap();
     }

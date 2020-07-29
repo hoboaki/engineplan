@@ -43,7 +43,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         for (int i = 0; i < createInfo.QueueCreateInfoCount(); ++i) {
             ++queueCounts[createInfo.QueueCrateInfos()[i].Kind()];
         }
-        for (int i = 0; i < int(queueCounts.count()); ++i) {
+        for (int i = 0; i < int(queueCounts.Count()); ++i) {
             if (physicalDeviceInfo.CreatableQueueCount(QueueKind(i)) <
                 queueCounts[i]) {
                 AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
@@ -76,7 +76,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         if (queueCount == 0) {
             continue;
         }
-        queuePriorityTable[queueKind].resize(
+        queuePriorityTable[queueKind].Resize(
             queueCount, &system_.PrvTempWorkAllocator());
     }
     const float priorityTable[int(QueuePriority::TERM)] = {
@@ -114,7 +114,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
                 int(deviceExtensionCount),
                 &system_.PrvTempWorkAllocator());
             result = physicalDevice.enumerateDeviceExtensionProperties(
-                nullptr, &deviceExtensionCount, deviceExtensions.head());
+                nullptr, &deviceExtensionCount, deviceExtensions.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
             for (uint32_t i = 0; i < deviceExtensionCount; i++) {
@@ -185,7 +185,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
         const auto& queueCreateInfo = queueCreateInfos[i];
-        queues_.add(this,
+        queues_.Add(this,
             device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
             queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(),
             commandPool);
@@ -194,10 +194,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 Device::~Device() {
-    for (int i = queues_.count() - 1; 0 <= i; --i) {
+    for (int i = queues_.Count() - 1; 0 <= i; --i) {
         device_.destroyCommandPool(queues_[i].PrvCommandPool(), nullptr);
     }
-    queues_.clear();
+    queues_.Clear();
     device_.destroy(nullptr);
     device_ = ::vk::Device();
 }

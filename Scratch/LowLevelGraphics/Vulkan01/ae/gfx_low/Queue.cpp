@@ -40,13 +40,13 @@ Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
     }
     AE_BASE_ASSERT(!pushedSwapchainPresent);
 
-    operations_.add(Operation{OperationKind::CommandExecute, commands});
+    operations_.Add(Operation{OperationKind::CommandExecute, commands});
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Queue& Queue::PushSwapchainWait(Swapchain* swapchain) {
-    operations_.add(Operation{OperationKind::SwapchainWait, swapchain});
+    operations_.Add(Operation{OperationKind::SwapchainWait, swapchain});
     PushEventWait(&base::PtrToRef(swapchain).PrvCurrentAcquireEvent());
     return *this;
 }
@@ -75,13 +75,13 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
         }
     }
 
-    operations_.add(Operation{OperationKind::SwapchainPresent, swapchain});
+    operations_.Add(Operation{OperationKind::SwapchainPresent, swapchain});
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Queue& Queue::PushEventWait(Event* event) {
-    operations_.add(Operation{OperationKind::EventWait, event});
+    operations_.Add(Operation{OperationKind::EventWait, event});
     return *this;
 }
 
@@ -97,14 +97,14 @@ Queue& Queue::PushEventSignal(Event* event) {
     }
     AE_BASE_ASSERT(pushedCommandExecute);
 
-    operations_.add(Operation{OperationKind::EventSignal, event});
+    operations_.Add(Operation{OperationKind::EventSignal, event});
     return *this;
 }
 
 //------------------------------------------------------------------------------
 void Queue::Submit(Fence* fencePtr) {
     // １つずつコマンドを処理
-    for (int opIdx = 0; opIdx < operations_.count(); ++opIdx) {
+    for (int opIdx = 0; opIdx < operations_.Count(); ++opIdx) {
         const auto& op = operations_[opIdx];
         switch (op.kind) {
         case OperationKind::NoOperation:
@@ -117,12 +117,12 @@ void Queue::Submit(Fence* fencePtr) {
 
         case OperationKind::SwapchainPresent: {
             // １つ以上の Wait があるはず。
-            AE_BASE_ASSERT_LESS_EQUALS(1, waitEvents_.count());
+            AE_BASE_ASSERT_LESS_EQUALS(1, waitEvents_.Count());
 
             // @todo 複数の Present 対応
             // 今は 1Submit につき 1Present しかサポートしない。
             AE_BASE_ASSERT_LESS(
-                findOperationIndex(OperationKind::SwapchainPresent, opIdx + 1),
+                FindOperationIndex(OperationKind::SwapchainPresent, opIdx + 1),
                 0);
 
             // Present 実行
@@ -131,8 +131,8 @@ void Queue::Submit(Fence* fencePtr) {
                 uint32_t(swapchain.PrvCurrentBufferIndex())};
             const auto presentInfo =
                 vk::PresentInfoKHR()
-                    .setWaitSemaphoreCount(waitEvents_.count())
-                    .setPWaitSemaphores(&waitEvents_.first())
+                    .setWaitSemaphoreCount(waitEvents_.Count())
+                    .setPWaitSemaphores(&waitEvents_.First())
                     .setSwapchainCount(1)
                     .setPSwapchains(&swapchain.PrvInstance())
                     .setPImageIndices(imageIndicies);
@@ -140,14 +140,14 @@ void Queue::Submit(Fence* fencePtr) {
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT(
                 opIdx + 1 ==
-                operations_.count());  // 今は最後しかサポートしていない
+                operations_.Count());  // 今は最後しかサポートしていない
 
             // Wait をクリア
-            waitEvents_.clear();
+            waitEvents_.Clear();
         } break;
 
         case OperationKind::EventWait:
-            waitEvents_.add(
+            waitEvents_.Add(
                 base::PtrToRef(static_cast<Event*>(op.ptr)).PrvInstance());
             break;
 
@@ -161,15 +161,15 @@ void Queue::Submit(Fence* fencePtr) {
             // @todo 複数コマンド実行対応
             // 今は１つしか対応しない
             AE_BASE_ASSERT_LESS(
-                findOperationIndex(OperationKind::CommandExecute, opIdx + 1),
+                FindOperationIndex(OperationKind::CommandExecute, opIdx + 1),
                 0);
 
             // 以降の Signal を回収
-            for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.count();
+            for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.Count();
                  ++nextOpIdx) {
                 auto& nextOp = operations_[nextOpIdx];
                 if (nextOp.kind == OperationKind::EventSignal) {
-                    signalEvents_.add(
+                    signalEvents_.Add(
                         static_cast<Event*>(nextOp.ptr)->PrvInstance());
                     nextOp.kind =
                         OperationKind::NoOperation;  // 処理したので NoOperation
@@ -191,24 +191,24 @@ void Queue::Submit(Fence* fencePtr) {
             auto const submitInfo =
                 ::vk::SubmitInfo()
                     .setPWaitDstStageMask(&pipeStageFlags)
-                    .setWaitSemaphoreCount(waitEvents_.count())
+                    .setWaitSemaphoreCount(waitEvents_.Count())
                     .setPWaitSemaphores(
-                        waitEvents_.isEmpty() ? nullptr : &waitEvents_.first())
+                        waitEvents_.IsEmpty() ? nullptr : &waitEvents_.First())
                     .setCommandBufferCount(1)
                     .setPCommandBuffers(&static_cast<CommandBuffer*>(op.ptr)
                                              ->PrvInstance())
-                    .setSignalSemaphoreCount(signalEvents_.count())
-                    .setPSignalSemaphores(signalEvents_.isEmpty()
+                    .setSignalSemaphoreCount(signalEvents_.Count())
+                    .setPSignalSemaphores(signalEvents_.IsEmpty()
                                               ? nullptr
-                                              : &signalEvents_.first());
+                                              : &signalEvents_.First());
             {
                 const auto result = queue_.submit(1, &submitInfo, nativeFence);
                 AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
 
             // 各イベントをクリア
-            waitEvents_.clear();
-            signalEvents_.clear();
+            waitEvents_.Clear();
+            signalEvents_.Clear();
             break;
         }
 
@@ -219,12 +219,12 @@ void Queue::Submit(Fence* fencePtr) {
     }
 
     // クリア
-    operations_.clear();
+    operations_.Clear();
 }
 
 //------------------------------------------------------------------------------
-int Queue::findOperationIndex(const OperationKind kind, const int startIndex) {
-    for (int i = startIndex; i < operations_.count(); ++i) {
+int Queue::FindOperationIndex(const OperationKind kind, const int startIndex) {
+    for (int i = startIndex; i < operations_.Count(); ++i) {
         if (operations_[i].kind == kind) {
             return i;
         }

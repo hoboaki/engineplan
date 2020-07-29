@@ -19,9 +19,9 @@ namespace base {
 void Thread::Sleep(const TimeSpanPod& aTimeSpan)
 {
 #if defined(AE_BASE_OS_WINDOWS)
-    ::Sleep(DWORD(::ae::base::Math::Max(s64(1), aTimeSpan.milliseconds())));
+    ::Sleep(DWORD(::ae::base::Math::Max(s64(1), aTimeSpan.Milliseconds())));
 #else    
-    usleep(useconds_t(::ae::base::Math::Max(s64(1), aTimeSpan.microseconds())));
+    Usleep(useconds_t(::ae::base::Math::Max(s64(1), aTimeSpan.Microseconds())));
 #endif
 }
 

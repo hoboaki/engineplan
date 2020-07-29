@@ -37,7 +37,7 @@ const char* const tTimeFormat()
     {
         return Console::DefaultTimeFormatString();
     }
-    return tTimeFormatStringPtr->readPtr();
+    return tTimeFormatStringPtr->ReadPtr();
 }
 }
 
@@ -65,7 +65,7 @@ IConsoleCallback& Console::DefaultCallback()
     class Callback : public IConsoleCallback
     {
     public:
-        AE_BASE_OVERRIDE(void onWrite(const char* aFormat, va_list aArg))
+        AE_BASE_OVERRIDE(void OnWrite(const char* aFormat, va_list aArg))
         {
 #if defined(AE_BASE_OS_WINDOWS)
             char buff[256];
@@ -99,7 +99,7 @@ void Console::WriteF(const char* aFormat, ...)
 //------------------------------------------------------------------------------
 void Console::WriteVF(const char* aFormat, va_list aArg)
 {
-    tCallbackObj().onWrite(aFormat, aArg);
+    tCallbackObj().OnWrite(aFormat, aArg);
 }
 
 //------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ void Console::WriteLineVF(const char* aFormat, va_list aArg)
 //------------------------------------------------------------------------------
 void Console::WriteTime()
 {
-    Calendar calendar = Time::LocalTime().toCalendar();
+    Calendar calendar = Time::LocalTime().ToCalendar();
     WriteF(tTimeFormat(),
         uint(calendar.year + 1),
         uint(calendar.month + 1),

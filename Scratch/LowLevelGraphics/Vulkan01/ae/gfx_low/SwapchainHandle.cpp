@@ -18,15 +18,15 @@ SwapchainHandle::SwapchainHandle(Swapchain* entity)
 
 //------------------------------------------------------------------------------
 bool SwapchainHandle::IsValid() const {
-    return entity_.isValid() &&
-           &entity_->SwapchainMaster() == entityMaster_.get() &&
+    return entity_.IsValid() &&
+           &entity_->SwapchainMaster() == entityMaster_.Get() &&
            entity_->PrvUniqueId() == entityUniqueId_;
 }
 
 //------------------------------------------------------------------------------
 Swapchain& SwapchainHandle::Ref() const {
     AE_BASE_ASSERT(IsValid());
-    return entity_.ref();
+    return entity_.Ref();
 }
 
 }  // namespace gfx_low

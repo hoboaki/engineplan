@@ -21,19 +21,19 @@ Screen::Screen(
 }
 
 //------------------------------------------------------------------------------
-int Screen::width()const
+int Screen::Width()const
 {
     return width_;
 }
 
 //------------------------------------------------------------------------------
-int Screen::height()const
+int Screen::Height()const
 {
     return height_;
 }
 
 //------------------------------------------------------------------------------
-bool Screen::isContains(const ScreenPosPod& aPos)const
+bool Screen::IsContains(const ScreenPosPod& aPos)const
 {
     return 0 <= aPos.x && aPos.x < int(width_)
         && 0 <= aPos.y && aPos.y < int(height_);

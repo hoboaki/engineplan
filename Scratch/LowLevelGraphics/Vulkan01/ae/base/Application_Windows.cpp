@@ -22,28 +22,28 @@ u64 tCurrentUSec()
     }
     else
     {
-        return Time::LocalTime().ticks() / 10;
+        return Time::LocalTime().Ticks() / 10;
     }
 }
 
 } // namespace
 
 //------------------------------------------------------------------------------
-void Application::quit()
+void Application::Quit()
 {
     ext_.doQuit = true;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::receiveEventCore()
+AppEvent::EnumType Application::ReceiveEventCore()
 {
     // 終了要求があったらQuit
     if (ext_.doQuit) {
         return AppEvent::Quit;
     }
     // ディスプレイのイベントチェック
-    if (displayPtr_.isValid()) {
-        displayPtr_->Ext_().pollEvent(*this);
+    if (displayPtr_.IsValid()) {
+        displayPtr_->Ext_().PollEvent(*this);
     }
 
     // 60フレ同期
