@@ -51,7 +51,7 @@ public:
 
     //============================================================
     void    pollEvent(Application&);
-    LRESULT windowProcess(HWND, UINT, WPARAM, LPARAM);
+    LRESULT windowProcessLocal(HWND, UINT, WPARAM, LPARAM);
 };
 //@}
 

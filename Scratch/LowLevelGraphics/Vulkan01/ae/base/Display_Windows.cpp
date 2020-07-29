@@ -274,12 +274,12 @@ void Display_Ext::pollEvent(Application&)
 //------------------------------------------------------------------------------
 LRESULT Display_Ext::WindowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam)
 {
-    return tCurrentDisplay->windowProcess(aHWND, aMsg, aWParam, aLParam);
+    return tCurrentDisplay->windowProcessLocal(aHWND, aMsg, aWParam, aLParam);
 }
 
 //------------------------------------------------------------------------------
-LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam)
-{
+LRESULT Display_Ext::windowProcessLocal(
+    HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam) {
     switch (aMsg) {
         case WM_GETMINMAXINFO:  // set window's minimum size
             ((MINMAXINFO*)aLParam)->ptMinTrackSize = minSize;
