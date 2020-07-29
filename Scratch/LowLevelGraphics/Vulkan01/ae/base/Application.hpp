@@ -45,7 +45,7 @@ public:
     ~Application();
 
     /// コマンドライン引数を取得する。
-    const Argument& argument()const;
+    const base::Argument& argument() const;
 
     /// @brief アプリケーションの終了を要求する。
     /// @details 
@@ -65,7 +65,7 @@ public:
     void unregisterDisplay_(Display&);
 
 private:
-    const Argument& argument_;
+    const base::Argument& argument_;
     Enum32< AppEvent::EnumType > lastEvent_;
     Pointer< Display > displayPtr_;
     Application_Ext ext_;
