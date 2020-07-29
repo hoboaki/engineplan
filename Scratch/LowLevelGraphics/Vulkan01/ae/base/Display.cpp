@@ -11,9 +11,9 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-Display::Display(const DisplayContext& aContext)
-: context_(aContext)
-, ext_(aContext)
+Display::Display(const DisplayContext& context)
+: context_(context)
+, ext_(context)
 {
     // 登録
     Application::Instance().registerDisplay_(*this);

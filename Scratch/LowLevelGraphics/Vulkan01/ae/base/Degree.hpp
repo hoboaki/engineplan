@@ -36,8 +36,8 @@ public:
     /// @name コンストラクタ
     //@{
     Degree(); ///< 0度を作成。
-    Degree(float aDegree); ///< 値を指定して作成。
-    Degree(const DegreePod& aVal); ///< コピーして作成。
+    Degree(float degree); ///< 値を指定して作成。
+    Degree(const DegreePod& val); ///< コピーして作成。
     //@}
 };
 //@}

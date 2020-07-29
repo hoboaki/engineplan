@@ -27,19 +27,19 @@ public:
     //@{
 
     /// @brief コンストラクタ。
-    /// @param aCountMax 最大配列長。
-    /// @param aAllocator 配列データを確保する際に使用するアロケータ。
+    /// @param countMax 最大配列長。
+    /// @param allocator 配列データを確保する際に使用するアロケータ。
     /// @details 
     /// 配列長が0の場合、アロケートは走りません。
-    RuntimeMarray(int aCountMax, IAllocator& aAllocator = IAllocator::Default())
-        : allocator_(aAllocator)
-        , countMax_(aCountMax)
+    RuntimeMarray(int countMax, IAllocator& allocator = IAllocator::Default())
+        : allocator_(allocator)
+        , countMax_(countMax)
         , count_(0)
         , ptr_(0)
     {
-        if (0 < aCountMax)
+        if (0 < countMax)
         {
-            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * aCountMax));
+            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * countMax));
         }
     }
 
@@ -90,25 +90,25 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int aIndex)
+    ValueType& At(const int index)
     {
-        if (count_ <= aIndex)
+        if (count_ <= index)
         {
-            AE_BASE_ASSERT_LESS(aIndex, count_);
+            AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
         }
-        return ptr_[aIndex];
+        return ptr_[index];
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& At(const int aIndex)const
+    const ValueType& At(const int index)const
     {
-        if (count_ <= aIndex)
+        if (count_ <= index)
         {
-            AE_BASE_ASSERT_LESS(aIndex, count_);
+            AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
         }
-        return ptr_[aIndex];
+        return ptr_[index];
     }
 
     /// 最初の要素にアクセス。
@@ -133,14 +133,14 @@ public:
     }
 
     /// 指定の要素を末尾に追加する。
-    void Add(const ValueType& aVal)
+    void Add(const ValueType& val)
     {
         if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
         }
-        ptr_[count_] = aVal;
+        ptr_[count_] = val;
         ++count_;
     }
 
@@ -156,8 +156,8 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int aIndex) { return At(aIndex); } ///< At() のエイリアス。
-    const ValueType& operator[](const int aIndex)const { return At(aIndex); } ///< At()const のエイリアス。
+    ValueType& operator[](const int index) { return At(index); } ///< At() のエイリアス。
+    const ValueType& operator[](const int index)const { return At(index); } ///< At()const のエイリアス。
     //@}
 
 private:

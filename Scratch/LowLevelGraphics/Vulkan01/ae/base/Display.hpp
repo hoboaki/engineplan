@@ -44,7 +44,7 @@ public:
     /// @name スクリーン
     //@{
     int ScreenCount()const; ///< スクリーンの総数を取得する。
-    Screen& ScreenAtIndex(int aIndex); ///< 指定番目のスクリーンを取得する。
+    Screen& ScreenAtIndex(int index); ///< 指定番目のスクリーンを取得する。
     Screen& MainScreen(); ///< メインとなるスクリーンを取得する。
     //@}
 

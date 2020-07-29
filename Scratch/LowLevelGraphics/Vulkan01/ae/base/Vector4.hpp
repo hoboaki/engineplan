@@ -141,7 +141,7 @@ struct Vector4Pod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector4Pod Clamp(const Vector4Pod& aMin, const Vector4Pod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector4Pod Clamp(const Vector4Pod& min, const Vector4Pod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector4Pod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector4Pod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -188,11 +188,11 @@ public:
     /// @name コンストラクタ
     //@{
     Vector4(); ///< Zero() で作成。
-    Vector4(const Vector4Pod& aXYZW); ///< コピーして作成。
-    Vector4(f32 aV); ///< 全要素同じ値で作成。
-    Vector4(const Vector2Pod& aXY, f32 aZ, f32 aW); ///< XYZWを指定して作成。
-    Vector4(const Vector3Pod& aXYZ, f32 aW); ///< XYZWを指定して作成。
-    Vector4(f32 aX, f32 aY, f32 aZ, f32 aW); ///< XYZWを指定して作成。
+    Vector4(const Vector4Pod& xYZW); ///< コピーして作成。
+    Vector4(f32 v); ///< 全要素同じ値で作成。
+    Vector4(const Vector2Pod& xY, f32 z, f32 w); ///< XYZWを指定して作成。
+    Vector4(const Vector3Pod& xYZ, f32 w); ///< XYZWを指定して作成。
+    Vector4(f32 x, f32 y, f32 z, f32 w); ///< XYZWを指定して作成。
     //@}
 };
 

@@ -32,12 +32,12 @@ public:
 
     /// @brief 指定のサイズのブロックを指定のアロケータから確保したメモリブロックを作成。
     /// @details メモリの確保に失敗したら IsEmpty() はtrueを返します。
-    AutoMemBlock(pword_t aSize, IAllocator& aAllocator = IAllocator::Default(), pword_t aAlignment = IAllocator::DefaultAlignment);
+    AutoMemBlock(pword_t size, IAllocator& allocator = IAllocator::Default(), pword_t alignment = IAllocator::DefaultAlignment);
 
     /// @brief 指定のブロックを抱えたメモリブロックを作成。
-    /// @param aBlock メモリブロック。
-    /// @param aAllocator aBlock を確保する際に使用したアロケータ。
-    AutoMemBlock(const MemBlock& aBlock, IAllocator& aAllocator);
+    /// @param block メモリブロック。
+    /// @param allocator block を確保する際に使用したアロケータ。
+    AutoMemBlock(const MemBlock& block, IAllocator& allocator);
 
     /// 破棄責任を移動して作成。
     AutoMemBlock(const AutoMemBlock&);
@@ -63,7 +63,7 @@ public:
     /// @name 演算子オーバーロード
     //@{
     /// 代入演算子。
-    AutoMemBlock& operator=(const AutoMemBlock& aRHS);
+    AutoMemBlock& operator=(const AutoMemBlock& rHS);
 
     /// 参照演算子。
     const MemBlock& operator*()const;

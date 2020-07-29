@@ -13,9 +13,9 @@ MemBlock::MemBlock()
 }
 
 //------------------------------------------------------------------------------
-MemBlock::MemBlock(const ptr_t aAddr, const pword_t aSize)
-: addr_(aAddr)
-, size_(aSize)
+MemBlock::MemBlock(const ptr_t addr, const pword_t size)
+: addr_(addr)
+, size_(size)
 {
 }
 

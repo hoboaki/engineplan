@@ -23,7 +23,7 @@ class Application;
 ///     return 0;
 /// }
 /// @endcode
-extern int aemain(::ae::base::Application* aApp);
+extern int aemain(::ae::base::Application* app);
 
 //@}
 #endif

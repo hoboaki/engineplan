@@ -18,9 +18,9 @@ namespace {
 
 Pointer< Display_Ext > tCurrentDisplay;
 
-KeyKind::EnumType tToKeyKind(WPARAM aKey)
+KeyKind::EnumType tToKeyKind(WPARAM key)
 {
-    switch (aKey) {
+    switch (key) {
         case VK_BACK:   return KeyKind::BackSpace;
         case VK_TAB:    return KeyKind::Tab;
         case VK_RETURN: return KeyKind::Return;
@@ -126,11 +126,11 @@ KeyKind::EnumType tToKeyKind(WPARAM aKey)
     }
 }
 
-void tUpdateMouseBtn(MouseUpdateData& aData, WPARAM aWParam)
+void tUpdateMouseBtn(MouseUpdateData& data, WPARAM wParam)
 {
-    aData.hold.Set(MouseBtnKind::L, (aWParam & MK_LBUTTON) != 0);
-    aData.hold.Set(MouseBtnKind::R, (aWParam & MK_RBUTTON) != 0);
-    aData.hold.Set(MouseBtnKind::M, (aWParam & MK_MBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::L, (wParam & MK_LBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::R, (wParam & MK_RBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::M, (wParam & MK_MBUTTON) != 0);
 }
 
 } // namespace
@@ -142,10 +142,10 @@ int Display::ScreenCount()const
 }
 
 //------------------------------------------------------------------------------
-Screen& Display::ScreenAtIndex(const int aIndex)
+Screen& Display::ScreenAtIndex(const int index)
 {
-    AE_BASE_ASSERT_LESS(aIndex, ScreenCount());
-    AE_BASE_UNUSED(aIndex);
+    AE_BASE_ASSERT_LESS(index, ScreenCount());
+    AE_BASE_UNUSED(index);
     return MainScreen();
 }
 
@@ -170,7 +170,7 @@ bool Display::IsClosed()const
 }
 
 //------------------------------------------------------------------------------
-Display_Ext::Display_Ext(const DisplayContext& aContext)
+Display_Ext::Display_Ext(const DisplayContext& context)
 : hinstance((HINSTANCE)GetModuleHandle(0))
 , hwindow()
 , windowClass()
@@ -202,7 +202,7 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
     const int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 
     // 矩形の計算
-    RECT rect = {0, 0, LONG(aContext.Width()), LONG(aContext.Height())};
+    RECT rect = {0, 0, LONG(context.Width()), LONG(context.Height())};
     AdjustWindowRect(
         &rect,
         style,
@@ -215,8 +215,8 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
         className,
         "Adel Engine Application", // Window Title
         style,
-        aContext.LocationX(),
-        aContext.LocationY(),
+        context.LocationX(),
+        context.LocationY(),
         rect.right - rect.left,
         rect.bottom - rect.top,
         0, // hWndParent
@@ -230,7 +230,7 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
     minSize.y = GetSystemMetrics(SM_CYMINTRACK) + 1;
 
     // メインスクリーンの作成
-    mainScreen.Init(Ref(*this), aContext.Width(), aContext.Height());
+    mainScreen.Init(Ref(*this), context.Width(), context.Height());
 }
 
 //------------------------------------------------------------------------------
@@ -272,17 +272,17 @@ void Display_Ext::PollEvent(Application&)
 }
 
 //------------------------------------------------------------------------------
-LRESULT Display_Ext::WindowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam)
+LRESULT Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    return tCurrentDisplay->WindowProcessLocal(aHWND, aMsg, aWParam, aLParam);
+    return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
 //------------------------------------------------------------------------------
 LRESULT Display_Ext::WindowProcessLocal(
-    HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam) {
-    switch (aMsg) {
+    HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    switch (msg) {
         case WM_GETMINMAXINFO:  // set window's minimum size
-            ((MINMAXINFO*)aLParam)->ptMinTrackSize = minSize;
+            ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;
             return 0;
 
         case WM_SYSKEYDOWN:
@@ -293,7 +293,7 @@ LRESULT Display_Ext::WindowProcessLocal(
 
         case WM_KEYDOWN:
         {
-            KeyKind::EnumType k = tToKeyKind(aWParam);
+            KeyKind::EnumType k = tToKeyKind(wParam);
             if (k < KeyKind::TERM) {
                 keyboardUpdateData.hold.Set(k, true);
                 keyboardUpdateData.pulse.Set(k, true);
@@ -303,7 +303,7 @@ LRESULT Display_Ext::WindowProcessLocal(
 
         case WM_KEYUP:
         {
-            KeyKind::EnumType k = tToKeyKind(aWParam);
+            KeyKind::EnumType k = tToKeyKind(wParam);
             if (k < KeyKind::TERM) {
                 keyboardUpdateData.hold.Set(k, false);
             }
@@ -318,18 +318,18 @@ LRESULT Display_Ext::WindowProcessLocal(
         case WM_RBUTTONUP:
         case WM_MOUSEMOVE:
         {
-            switch (aMsg) {
+            switch (msg) {
                 case WM_LBUTTONDOWN:
                 case WM_MBUTTONDOWN:
                 case WM_RBUTTONDOWN:
                 {// ボタンが押された
                     // 更新する前にキャプチャー設定
                     if (mouseUpdateData.hold.IsAllOff()) {
-                        SetCapture(aHWND);
+                        SetCapture(hWND);
                     }
 
                     // 更新
-                    tUpdateMouseBtn(mouseUpdateData, aWParam);
+                    tUpdateMouseBtn(mouseUpdateData, wParam);
                 }
                 break;
 
@@ -338,7 +338,7 @@ LRESULT Display_Ext::WindowProcessLocal(
                 case WM_RBUTTONUP:
                 {// ボタンが離された
                     // 更新
-                    tUpdateMouseBtn(mouseUpdateData, aWParam);
+                    tUpdateMouseBtn(mouseUpdateData, wParam);
 
                     // キャプチャー設定
                     if (mouseUpdateData.hold.IsAllOff()) {
@@ -351,8 +351,8 @@ LRESULT Display_Ext::WindowProcessLocal(
             }
 
             // 位置設定
-            const s16 mx = reinterpret_cast<const s16*>(&aLParam)[0];
-            const s16 my = reinterpret_cast<const s16*>(&aLParam)[1];
+            const s16 mx = reinterpret_cast<const s16*>(&lParam)[0];
+            const s16 my = reinterpret_cast<const s16*>(&lParam)[1];
             mouseUpdateData.pos = ScreenPos(mx, my);
             mouseUpdateData.posUpdated = true;
         }
@@ -364,7 +364,7 @@ LRESULT Display_Ext::WindowProcessLocal(
             return 0;
     }
 
-    return DefWindowProc(aHWND, aMsg, aWParam, aLParam);
+    return DefWindowProc(hWND, msg, wParam, lParam);
 }
 
 }} // namespace

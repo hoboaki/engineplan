@@ -35,9 +35,9 @@ struct BoolPodTmpl
     /// BoolPodTmpl< int > var;
     /// var = true; // 代入できる
     /// @endcode
-    BoolPodTmpl< DataType >& operator=(const bool aVal)
+    BoolPodTmpl< DataType >& operator=(const bool val)
     {
-        val_ = DataType(aVal ? 1 : 0);
+        val_ = DataType(val ? 1 : 0);
         return *this;
     }
 
@@ -45,9 +45,9 @@ struct BoolPodTmpl
     /// @details
     /// これを定義することで下記のコードが実行できるようになります。
     /// @code
-    /// void func( const BoolPodTmpl< int >& aVal )
+    /// void func( const BoolPodTmpl< int >& val )
     /// {
-    ///     bool var = aVal; // boolの値を取得できるのでこのように代入できる
+    ///     bool var = val; // boolの値を取得できるのでこのように代入できる
     /// }
     /// @endcode
     operator bool()const
@@ -76,9 +76,9 @@ public:
     }
 
     /// 値を指定して作成。
-    BoolTmpl(const bool aVal)
+    BoolTmpl(const bool val)
     {
-        BoolPodTmpl< DATA_TYPE >::val_ = aVal;
+        BoolPodTmpl< DATA_TYPE >::val_ = val;
     }
     //@}
 };

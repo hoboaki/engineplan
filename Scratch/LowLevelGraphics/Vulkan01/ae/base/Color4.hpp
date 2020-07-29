@@ -125,9 +125,9 @@ public:
     /// @name コンストラクタ
     //@{
     Color4(); ///< Zero() で作成。
-    Color4(const Color4Pod& aRGBA); ///< コピーして作成。
-    Color4(f32 aR, f32 aG, f32 aB, f32 aA); ///< RGBAを指定して作成。
-    Color4(const Vector4Pod& aVec); ///< ベクトルのXYZWをRGBAとみなして作成。
+    Color4(const Color4Pod& rGBA); ///< コピーして作成。
+    Color4(f32 r, f32 g, f32 b, f32 a); ///< RGBAを指定して作成。
+    Color4(const Vector4Pod& vec); ///< ベクトルのXYZWをRGBAとみなして作成。
     //@}
 };
 //@}

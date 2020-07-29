@@ -65,46 +65,46 @@ struct BitSetPod
     /// @name 各ビットの設定・取得
     //@{
     /// 指定番目のビットの値を設定する。
-    void Set(int aIndex, bool aFlag)
+    void Set(int index, bool flag)
     {
         // チェック
-        if (BitCount <= aIndex)
+        if (BitCount <= index)
         {
-            AE_BASE_ERROR_INVALID_VALUE(aIndex);
+            AE_BASE_ERROR_INVALID_VALUE(index);
             return;
         }
 
         // 設定
-        byte_t& val = bits_[aIndex >> 3];
-        const byte_t mask = byte_t(1 << (aIndex & 0x7));
-        val = (val & ~mask) | (aFlag ? mask : 0);
+        byte_t& val = bits_[index >> 3];
+        const byte_t mask = byte_t(1 << (index & 0x7));
+        val = (val & ~mask) | (flag ? mask : 0);
     }
 
     /// 指定番目のビットをたてる。
-    void On(int aIndex)
+    void On(int index)
     {
-        Set(aIndex, true);
+        Set(index, true);
     }
 
     /// 指定番目のビットをおろす。
-    void Off(int aIndex)
+    void Off(int index)
     {
-        Set(aIndex, false);
+        Set(index, false);
     }
 
     /// 指定番目のビットの値を取得する。
-    bool Get(int aIndex)const
+    bool Get(int index)const
     {
         // チェック
-        if (BitCount <= aIndex)
+        if (BitCount <= index)
         {
-            AE_BASE_ERROR_INVALID_VALUE(aIndex);
+            AE_BASE_ERROR_INVALID_VALUE(index);
             return bool();
         }
 
         // 取得
-        const byte_t& val = bits_[aIndex >> 3];
-        const byte_t mask = byte_t(1 << (aIndex & 0x7));
+        const byte_t& val = bits_[index >> 3];
+        const byte_t mask = byte_t(1 << (index & 0x7));
         return (val & mask) != 0 ? true : false;
     }
     /// 1つ以上のビットがたっているか。
@@ -152,34 +152,34 @@ struct BitSetPod
     }
 
     /// 論理積を取得。
-    const MyType operator &(const MyType& aRHS)const
+    const MyType operator &(const MyType& rHS)const
     {
         MyType obj = *this;
         for (int i = 0; i < ByteSize_; ++i)
         {
-            obj.bits_[i] = bits_[i] & aRHS.bits_[i];
+            obj.bits_[i] = bits_[i] & rHS.bits_[i];
         }
         return obj;
     }
 
     /// 論理和を取得。
-    const MyType operator |(const MyType& aRHS)const
+    const MyType operator |(const MyType& rHS)const
     {
         MyType obj = *this;
         for (int i = 0; i < ByteSize_; ++i)
         {
-            obj.bits_[i] = bits_[i] | aRHS.bits_[i];
+            obj.bits_[i] = bits_[i] | rHS.bits_[i];
         }
         return obj;
     }
 
     /// 排他的論理和を取得。
-    const MyType operator ^(const MyType& aRHS)const
+    const MyType operator ^(const MyType& rHS)const
     {
         MyType obj = *this;
         for (int i = 0; i < ByteSize_; ++i)
         {
-            obj.bits_[i] = bits_[i] ^ aRHS.bits_[i];
+            obj.bits_[i] = bits_[i] ^ rHS.bits_[i];
         }
         return obj;
     }
@@ -200,9 +200,9 @@ public:
     }
 
     /// コピーして作成。
-    BitSet(const BitSetPod< BIT_COUNT, ALIGNMENT >& aObj)
+    BitSet(const BitSetPod< BIT_COUNT, ALIGNMENT >& obj)
     {
-        static_cast<BitSetPod< BIT_COUNT, ALIGNMENT >&>(*this) = aObj;
+        static_cast<BitSetPod< BIT_COUNT, ALIGNMENT >&>(*this) = obj;
     }
 
     //@}

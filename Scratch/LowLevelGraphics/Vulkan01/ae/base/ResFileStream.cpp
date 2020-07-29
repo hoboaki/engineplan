@@ -15,12 +15,12 @@ ResFileStream::ResFileStream()
 }
 
 //------------------------------------------------------------------------------
-ResFileStream::ResFileStream(const char* aPath)
+ResFileStream::ResFileStream(const char* path)
 : ext_()
 {
-    const bool result = Open(aPath);
+    const bool result = Open(path);
     AE_BASE_UNUSED(result);
-    AE_BASE_ASSERT_MSGFMT(result, "Can't open resource file '%s'.", aPath);
+    AE_BASE_ASSERT_MSGFMT(result, "Can't open resource file '%s'.", path);
 }
 
 //------------------------------------------------------------------------------
@@ -30,9 +30,9 @@ pword_t ResFileStream::RequireReadBufferAlignment()const
 }
 
 //------------------------------------------------------------------------------
-pword_t ResFileStream::CalcReadBufferSize(const pword_t aSize)const
+pword_t ResFileStream::CalcReadBufferSize(const pword_t size)const
 {
-    return CalcReadBufferSize(aSize);
+    return CalcReadBufferSize(size);
 }
 
 }} // namespace

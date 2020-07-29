@@ -143,7 +143,7 @@ struct Vector4iPod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector4iPod Clamp(const Vector4iPod& aMin, const Vector4iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector4iPod Clamp(const Vector4iPod& min, const Vector4iPod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector4iPod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector4iPod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -178,11 +178,11 @@ public:
     /// @name コンストラクタ
     //@{
     Vector4i(); ///< Zero() で作成。
-    Vector4i(const Vector4iPod& aXYZW); ///< コピーして作成。
-    Vector4i(s32 aV); ///< 全要素同じ値で作成。
-    Vector4i(const Vector2iPod& aXY, s32 aZ, s32 aW); ///< XYZWを指定して作成。
-    Vector4i(const Vector3iPod& aXYZ, s32 aW); ///< XYZWを指定して作成。
-    Vector4i(s32 aX, s32 aY, s32 aZ, s32 aW); ///< XYZWを指定して作成。
+    Vector4i(const Vector4iPod& xYZW); ///< コピーして作成。
+    Vector4i(s32 v); ///< 全要素同じ値で作成。
+    Vector4i(const Vector2iPod& xY, s32 z, s32 w); ///< XYZWを指定して作成。
+    Vector4i(const Vector3iPod& xYZ, s32 w); ///< XYZWを指定して作成。
+    Vector4i(s32 x, s32 y, s32 z, s32 w); ///< XYZWを指定して作成。
     //@}
 };
 

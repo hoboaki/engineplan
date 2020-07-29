@@ -117,11 +117,11 @@ const uint32 tCRC32C_TABLE[256] =
 } // namespace
 
 //------------------------------------------------------------------------------
-uint16 Hash::CRC16(const MemBlock& aBlock)
+uint16 Hash::CRC16(const MemBlock& block)
 {
     uint16 crcVal = 0xFFFF;
-    pword_t restSize = aBlock.Size();
-    const uint8* addr = aBlock.Head();
+    pword_t restSize = block.Size();
+    const uint8* addr = block.Head();
     while (0 < restSize) {
         crcVal = tCRC16_TABLE[(crcVal ^ *addr) & 0xFF] ^ (crcVal >> 8);
         ++addr;
@@ -131,11 +131,11 @@ uint16 Hash::CRC16(const MemBlock& aBlock)
 }
 
 //------------------------------------------------------------------------------
-uint32 Hash::CRC32(const MemBlock& aBlock)
+uint32 Hash::CRC32(const MemBlock& block)
 {
     uint32 crcVal = 0xFFFFFFFF;
-    pword_t restSize = aBlock.Size();
-    const uint8* addr = aBlock.Head();
+    pword_t restSize = block.Size();
+    const uint8* addr = block.Head();
     while (0 < restSize) {
         crcVal = tCRC32C_TABLE[(crcVal ^ *addr) & 0xFF] ^ (crcVal >> 8);
         ++addr;

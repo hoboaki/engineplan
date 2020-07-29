@@ -15,14 +15,14 @@ Angle::Angle()
 }
 
 //------------------------------------------------------------------------------
-Angle::Angle(const DegreePod& aDegree)
-: rad_(aDegree.ToRadian().value)
+Angle::Angle(const DegreePod& degree)
+: rad_(degree.ToRadian().value)
 {
 }
 
 //------------------------------------------------------------------------------
-Angle::Angle(const RadianPod& aRadian)
-: rad_(aRadian.value)
+Angle::Angle(const RadianPod& radian)
+: rad_(radian.value)
 {
 }
 

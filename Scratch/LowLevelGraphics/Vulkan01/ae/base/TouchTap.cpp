@@ -18,10 +18,10 @@ TouchTap::~TouchTap()
 }
 
 //------------------------------------------------------------------------------
-void TouchTap::Update(const TouchTapUpdateData& aData)
+void TouchTap::Update(const TouchTapUpdateData& data)
 {
     prevData_ = data_;
-    data_ = aData;
+    data_ = data;
 }
 
 //------------------------------------------------------------------------------

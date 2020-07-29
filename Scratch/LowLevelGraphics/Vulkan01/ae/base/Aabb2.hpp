@@ -26,8 +26,8 @@ public:
     /// @name コンストラクタ
     //@{
     Aabb2(); ///< Aabb2( Vector2::Zero() ) で作成。
-    Aabb2(const Vector2Pod& aPos); ///< 1点を含むAABBを作成。
-    Aabb2(const Vector2Pod& aPos1, const Vector2Pod& aPos2); ///< 2点を含むAABBを作成。
+    Aabb2(const Vector2Pod& pos); ///< 1点を含むAABBを作成。
+    Aabb2(const Vector2Pod& pos1, const Vector2Pod& pos2); ///< 2点を含むAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------
@@ -58,10 +58,10 @@ public:
     //------------------------------------------------------------------------------
     /// @name 結合。
     //@{
-    const Aabb2 Merge(const Vector2Pod& aPos)const; ///< 自分自身と指定の点を含むAABBを取得。
-    const Aabb2 Merge(const Aabb2& aAABB)const; ///< 自分自身と指定のAABBを含むAABBを取得。
-    void MergeAssign(const Vector2Pod& aPos); ///< 自分自身と指定の点を含むAABBに設定する。
-    void MergeAssign(const Aabb2& aAABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
+    const Aabb2 Merge(const Vector2Pod& pos)const; ///< 自分自身と指定の点を含むAABBを取得。
+    const Aabb2 Merge(const Aabb2& aABB)const; ///< 自分自身と指定のAABBを含むAABBを取得。
+    void MergeAssign(const Vector2Pod& pos); ///< 自分自身と指定の点を含むAABBに設定する。
+    void MergeAssign(const Aabb2& aABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
     //@}
 
     //------------------------------------------------------------------------------
@@ -70,32 +70,32 @@ public:
     /// @brief 指定のAABBが重なっているか。
     /// @details 
     /// 同線上は重なっているとして判定します。
-    bool IsIntersects(const Aabb2& aAABB)const;
+    bool IsIntersects(const Aabb2& aABB)const;
 
     /// @brief 指定の点を含んでいるか。
     /// @details 
     /// 線上は含んでいるとして判定します。
-    bool IsContains(const Vector2Pod& aPos)const;
+    bool IsContains(const Vector2Pod& pos)const;
 
     /// @brief 指定のAABBを含んでいるか。
     /// @details
     /// 同線上は含んでいると判定しています。
-    bool IsContains(const Aabb2& aAABB)const;
+    bool IsContains(const Aabb2& aABB)const;
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 四則演算
     //@{
-    const Aabb2 Add(const Vector2Pod& aTrans)const; ///< Min() Max() に値を加算した結果を取得する。
-    const Aabb2 Sub(const Vector2Pod& aTrans)const; ///< Min() Max() から値を減算した結果を取得する。
-    const Aabb2 Add(const Aabb2& aAABB)const; ///< Min() Max() をそれぞれ加算した結果を取得する。
-    const Aabb2 Sub(const Aabb2& aAABB)const; ///< Min() Max() をそれぞれ減算した結果を取得する。
-    const Aabb2 Mul(f32 aScale)const; ///< Min() Max() に値を乗算した結果を取得する。
-    void AddAssign(const Vector2Pod& aTrans); ///< Min() Max() に値を加算する。
-    void SubAssign(const Vector2Pod& aTrans); ///< Min() Max() から値を減算する。
-    void AddAssign(const Aabb2& aAABB); ///< Min() Max() をそれぞれ加算する。
-    void SubAssign(const Aabb2& aAABB); ///< Min() Max() をそれぞれ減算する。
-    void MulAssign(f32 aScale); ///< Min() Max() に値を乗算する。
+    const Aabb2 Add(const Vector2Pod& trans)const; ///< Min() Max() に値を加算した結果を取得する。
+    const Aabb2 Sub(const Vector2Pod& trans)const; ///< Min() Max() から値を減算した結果を取得する。
+    const Aabb2 Add(const Aabb2& aABB)const; ///< Min() Max() をそれぞれ加算した結果を取得する。
+    const Aabb2 Sub(const Aabb2& aABB)const; ///< Min() Max() をそれぞれ減算した結果を取得する。
+    const Aabb2 Mul(f32 scale)const; ///< Min() Max() に値を乗算した結果を取得する。
+    void AddAssign(const Vector2Pod& trans); ///< Min() Max() に値を加算する。
+    void SubAssign(const Vector2Pod& trans); ///< Min() Max() から値を減算する。
+    void AddAssign(const Aabb2& aABB); ///< Min() Max() をそれぞれ加算する。
+    void SubAssign(const Aabb2& aABB); ///< Min() Max() をそれぞれ減算する。
+    void MulAssign(f32 scale); ///< Min() Max() に値を乗算する。
     //@}
 
     //------------------------------------------------------------------------------

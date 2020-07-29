@@ -61,9 +61,9 @@ IRuntimeErrorCallback& RuntimeError::DefaultCallback()
 }
 
 //------------------------------------------------------------------------------
-void RuntimeError::SetCallback(IRuntimeErrorCallback& aCallback)
+void RuntimeError::SetCallback(IRuntimeErrorCallback& callback)
 {
-    tCallbackPtr = &aCallback;
+    tCallbackPtr = &callback;
 }
 
 //------------------------------------------------------------------------------

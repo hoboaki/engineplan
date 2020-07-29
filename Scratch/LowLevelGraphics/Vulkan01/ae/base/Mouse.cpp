@@ -15,12 +15,12 @@ Mouse::Mouse()
 }
 
 //------------------------------------------------------------------------------
-void Mouse::Update(const MouseUpdateData& aData)
+void Mouse::Update(const MouseUpdateData& data)
 {
     // メモ
     const MouseUpdateData pre = data_;
-    const MouseUpdateData cur = aData;
-    data_ = aData;
+    const MouseUpdateData cur = data;
+    data_ = data;
 
     // 更新
     if (data_.posUpdated != 0) {
@@ -49,21 +49,21 @@ const ScreenPosPod Mouse::Pos()const
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsHold(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsHold(const MouseBtnKind::EnumType kind)const
 {
-    return data_.hold.Get(aKind);
+    return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsTrigger(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsTrigger(const MouseBtnKind::EnumType kind)const
 {
-    return trigger_.Get(aKind);
+    return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsRelease(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsRelease(const MouseBtnKind::EnumType kind)const
 {
-    return release_.Get(aKind);
+    return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------

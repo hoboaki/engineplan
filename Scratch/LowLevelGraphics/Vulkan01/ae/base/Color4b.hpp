@@ -72,8 +72,8 @@ public:
     /// @name コンストラクタ
     //@{
     Color4b(); ///< Zero() で作成。
-    Color4b(const Color4bPod& aRGBA); ///< コピーして作成。
-    Color4b(u8 aR, u8 aG, u8 aB, u8 aA); ///< RGBAを指定して作成。
+    Color4b(const Color4bPod& rGBA); ///< コピーして作成。
+    Color4b(u8 r, u8 g, u8 b, u8 a); ///< RGBAを指定して作成。
     //@}
 };
 //@}

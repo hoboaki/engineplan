@@ -22,16 +22,16 @@ public:
     // 引数のポインタはポインタをコピーするだけでポインタ先はコピーしない。
     // つまりポインタ先のデータを破棄しないように注意すること。
     Argument(
-        int aArgCount
-        , const char* const* aArgValues
-        , const char* aAppFileName
-        , const char* aAppDirPath
+        int argCount
+        , const char* const* argValues
+        , const char* appFileName
+        , const char* appDirPath
     );
 
 /// @name 引数（実行ファイルの情報は含まれない）
 //@{
     int        ArgCount()const;
-    const char* ArgValue(int aIndex)const;
+    const char* ArgValue(int index)const;
     //@}
 
     /// @name 実行ファイル情報

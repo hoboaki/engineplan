@@ -29,8 +29,8 @@ public:
     }
 
     /// 引数の値をコピーして作成する。
-    PodInheritClass(const PodType& aObj)
-        : PodType(aObj)
+    PodInheritClass(const PodType& obj)
+        : PodType(obj)
     {
     }
 

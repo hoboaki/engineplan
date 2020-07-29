@@ -21,7 +21,7 @@ public:
     MemBlock();
 
     /// アドレス・サイズを指定して作成。
-    MemBlock(ptr_t aAddr, pword_t aSize);
+    MemBlock(ptr_t addr, pword_t size);
     //@}
 
     /// @name プロパティの取得。

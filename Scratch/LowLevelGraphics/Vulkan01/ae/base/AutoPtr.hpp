@@ -17,24 +17,24 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     /// ポインタを指定して作成。
-    explicit AutoPtr(T* aPtr = 0)
-        : ptr_(aPtr)
+    explicit AutoPtr(T* ptr = 0)
+        : ptr_(ptr)
     {
     }
 
     /// 破棄責任を委譲して作成。
-    AutoPtr(const AutoPtr<T>& aPtr)
+    AutoPtr(const AutoPtr<T>& ptr)
         : ptr_(0)
     {
-        *this = aPtr;
+        *this = ptr;
     }
 
     /// 破棄責任を委譲して作成。
     template< typename OtherType >
-    AutoPtr(const AutoPtr<OtherType>& aPtr)
+    AutoPtr(const AutoPtr<OtherType>& ptr)
         : ptr_(0)
     {
-        *this = aPtr;
+        *this = ptr;
     }
 
     /// デストラクタ
@@ -92,7 +92,7 @@ public:
     }
 
     /// ポインタをリセットする。
-    void Reset(T* aPtr)
+    void Reset(T* ptr)
     {
         T* ptr = ptr_;
         ptr_ = 0;
@@ -100,27 +100,27 @@ public:
         {
             delete ptr;
         }
-        ptr_ = aPtr;
+        ptr_ = ptr;
     }
     //@}
 
     /// @name 演算子オーバーロード
     //@{
     /// 特別な代入演算子。
-    AutoPtr< T >& operator=(const AutoPtr< T >& aRHS)
+    AutoPtr< T >& operator=(const AutoPtr< T >& rHS)
     {
-        T* ptr = aRHS.ptr_;
-        aRHS.ptr_ = 0;
+        T* ptr = rHS.ptr_;
+        rHS.ptr_ = 0;
         Reset(ptr);
         return *this;
     }
 
     /// 特別な代入演算子。
     template< typename OtherType >
-    AutoPtr< T >& operator=(const AutoPtr< OtherType >& aRHS)
+    AutoPtr< T >& operator=(const AutoPtr< OtherType >& rHS)
     {
-        T* ptr = aRHS.ptr_;
-        aRHS.ptr_ = 0;
+        T* ptr = rHS.ptr_;
+        rHS.ptr_ = 0;
         Reset(ptr);
         return *this;
     }

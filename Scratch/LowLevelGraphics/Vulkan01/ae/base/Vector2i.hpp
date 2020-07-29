@@ -121,7 +121,7 @@ struct Vector2iPod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector2iPod Clamp(const Vector2iPod& aMin, const Vector2iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector2iPod Clamp(const Vector2iPod& min, const Vector2iPod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector2iPod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector2iPod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -156,9 +156,9 @@ public:
     /// @name コンストラクタ
     //@{
     Vector2i(); ///< Zero() で作成。
-    Vector2i(const Vector2iPod& aXY); ///< コピーして作成。
-    Vector2i(s32 aV); ///< 全要素同じ値で作成。
-    Vector2i(s32 aX, s32 aY); ///< XYを指定して作成。
+    Vector2i(const Vector2iPod& xY); ///< コピーして作成。
+    Vector2i(s32 v); ///< 全要素同じ値で作成。
+    Vector2i(s32 x, s32 y); ///< XYを指定して作成。
     //@}
 };
 

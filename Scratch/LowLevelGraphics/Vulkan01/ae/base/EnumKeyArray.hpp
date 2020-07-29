@@ -44,7 +44,7 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& At(const int aIndex) const {
+    const ValueType& At(const int index) const {
         if (index < 0 || Count() <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
             return values_[0];  // fail safe code
@@ -71,10 +71,10 @@ public:
     /// @name 演算子オーバーロード
     //@{
     /// At() のエイリアス。
-    ValueType& operator[](const int aIndex) { return At(aIndex); }
+    ValueType& operator[](const int index) { return At(index); }
 
     /// At()const のエイリアス。
-    const ValueType& operator[](const int aIndex) const { return At(aIndex); }
+    const ValueType& operator[](const int index) const { return At(index); }
 
     /// At() のエイリアス。
     ValueType& operator[](const EnumType enumValue) { return At(enumValue); }

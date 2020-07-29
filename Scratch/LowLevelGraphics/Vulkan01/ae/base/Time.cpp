@@ -26,7 +26,7 @@ namespace {
 typedef std::tm* (*tTimeConverter)(const std::time_t*, std::tm*);
 
 // 現在時間を作成。
-const TimePod tCurrentTime(tTimeConverter aConverter)
+const TimePod tCurrentTime(tTimeConverter converter)
 {
     // 結果用変数の用意        
     TimePod obj = {};
@@ -73,7 +73,7 @@ const TimePod tCurrentTime(tTimeConverter aConverter)
 
         // 変換したtmを取得
     std::tm safeTM = {};
-    const std::tm* tmPtr = aConverter(&secFrom1970, &safeTM);
+    const std::tm* tmPtr = converter(&secFrom1970, &safeTM);
     if (PointerCheck::InvalidCheck(tmPtr)) {
         AE_BASE_ASSERT_NOT_REACHED();
     }
@@ -120,11 +120,11 @@ const TimePod TimePod::LocalTime()
 {
     struct Converter
     {
-        static std::tm* func(const std::time_t* aTime, std::tm* aSafePtr)
+        static std::tm* func(const std::time_t* time, std::tm* safePtr)
         {
-            std::tm* result = std::localtime(aTime);
+            std::tm* result = std::localtime(time);
             if (PointerCheck::InvalidCheck(result)) {
-                result = aSafePtr;
+                result = safePtr;
             }
             return result;
         }
@@ -137,11 +137,11 @@ const TimePod TimePod::UniversalTime()
 {
     struct Converter
     {
-        static std::tm* func(const std::time_t* aTime, std::tm* aSafePtr)
+        static std::tm* func(const std::time_t* time, std::tm* safePtr)
         {
-            std::tm* result = std::gmtime(aTime);
+            std::tm* result = std::gmtime(time);
             if (PointerCheck::InvalidCheck(result)) {
-                result = aSafePtr;
+                result = safePtr;
             }
             return result;
         }
@@ -151,25 +151,25 @@ const TimePod TimePod::UniversalTime()
 
 //------------------------------------------------------------------------------
 const TimePod TimePod::FromDate(
-    const int aYear,
-    const int aMonth,
-    const int aDayOfMonth,
-    const int aHour,
-    const int aMin,
-    const int aSec,
-    const int aMsec,
-    const int aUsec
+    const int year,
+    const int month,
+    const int dayOfMonth,
+    const int hour,
+    const int min,
+    const int sec,
+    const int msec,
+    const int usec
     )
 {
-    const u64 days = Calendar::DaysToDate(aYear, aMonth, aDayOfMonth);
+    const u64 days = Calendar::DaysToDate(year, month, dayOfMonth);
     Time obj;
     obj.ticks_ =
         days * u64(u64(24) * 60 * 60 * 1000 * 1000 * 10)
-        + aHour * u64(u64(60) * 60 * 1000 * 1000 * 10)
-        + aMin  * u64(u64(60) * 1000 * 1000 * 10)
-        + aSec  * u64(1000 * 1000 * 10)
-        + aMsec * u64(1000 * 10)
-        + aUsec * u64(10);
+        + hour * u64(u64(60) * 60 * 1000 * 1000 * 10)
+        + min  * u64(u64(60) * 1000 * 1000 * 10)
+        + sec  * u64(1000 * 1000 * 10)
+        + msec * u64(1000 * 10)
+        + usec * u64(10);
     return obj;
 }
 
@@ -233,57 +233,57 @@ const CalendarPod TimePod::ToCalendar()const
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::Add(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::Add(const TimeSpanPod& timeSpan)const
 {
     TimePod obj = *this;
-    obj += aTimeSpan;
+    obj += timeSpan;
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::operator+(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::operator+(const TimeSpanPod& timeSpan)const
 {
-    return Add(aTimeSpan);
+    return Add(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::AddAssign(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::AddAssign(const TimeSpanPod& timeSpan)
 {
-    ticks_ += aTimeSpan.Ticks();
+    ticks_ += timeSpan.Ticks();
     return *this;
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::operator+=(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::operator+=(const TimeSpanPod& timeSpan)
 {
-    return AddAssign(aTimeSpan);
+    return AddAssign(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::Sub(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::Sub(const TimeSpanPod& timeSpan)const
 {
     TimePod obj = *this;
-    obj -= aTimeSpan;
+    obj -= timeSpan;
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::operator-(const TimeSpanPod& aTimeSpan)const
+const TimePod TimePod::operator-(const TimeSpanPod& timeSpan)const
 {
-    return Sub(aTimeSpan);
+    return Sub(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::SubAssign(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::SubAssign(const TimeSpanPod& timeSpan)
 {
-    ticks_ -= aTimeSpan.Ticks();
+    ticks_ -= timeSpan.Ticks();
     return *this;
 }
 
 //------------------------------------------------------------------------------
-TimePod& TimePod::operator-=(const TimeSpanPod& aTimeSpan)
+TimePod& TimePod::operator-=(const TimeSpanPod& timeSpan)
 {
-    return SubAssign(aTimeSpan);
+    return SubAssign(timeSpan);
 }
 
 //------------------------------------------------------------------------------

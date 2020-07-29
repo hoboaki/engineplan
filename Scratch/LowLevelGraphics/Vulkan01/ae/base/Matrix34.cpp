@@ -26,62 +26,62 @@ const Matrix34Pod Matrix34Pod::Identity()
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Translate(
-    const f32 aX,
-    const f32 aY,
-    const f32 aZ
+    const f32 x,
+    const f32 y,
+    const f32 z
     )
 {
     return Matrix34(
-        1, 0, 0, aX,
-        0, 1, 0, aY,
-        0, 0, 1, aZ
+        1, 0, 0, x,
+        0, 1, 0, y,
+        0, 0, 1, z
         );
 }
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Translate(
-    const Vector3Pod& aVec
+    const Vector3Pod& vec
     )
 {
-    return Translate(aVec.x, aVec.y, aVec.z);
+    return Translate(vec.x, vec.y, vec.z);
 }
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Scale(
-    const f32 aX,
-    const f32 aY,
-    const f32 aZ
+    const f32 x,
+    const f32 y,
+    const f32 z
     )
 {
     return Matrix34(
-        aX, 0, 0, 0,
-        0, aY, 0, 0,
-        0, 0, aZ, 0
+        x, 0, 0, 0,
+        0, y, 0, 0,
+        0, 0, z, 0
         );
 }
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Scale(
-    const Vector3Pod& aVec
+    const Vector3Pod& vec
     )
 {
-    return Scale(aVec.x, aVec.y, aVec.z);
+    return Scale(vec.x, vec.y, vec.z);
 }
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Rotate(
-    const Angle& aAngle,
-    const f32 aAxisX,
-    const f32 aAxisY,
-    const f32 aAxisZ
+    const Angle& angle,
+    const f32 axisX,
+    const f32 axisY,
+    const f32 axisZ
     )
 {
-    const f32 c = Math::CosF32(aAngle);
-    const f32 s = Math::SinF32(aAngle);
+    const f32 c = Math::CosF32(angle);
+    const f32 s = Math::SinF32(angle);
     const f32 inv_c = 1.0f - c;
-    const f32 x = aAxisX;
-    const f32 y = aAxisY;
-    const f32 z = aAxisZ;
+    const f32 x = axisX;
+    const f32 y = axisY;
+    const f32 z = axisZ;
     const f32 xy = x*y;
     const f32 xz = x*z;
     const f32 yz = y*z;
@@ -98,22 +98,22 @@ const Matrix34Pod Matrix34Pod::Rotate(
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Rotate(
-    const Angle& aAngle,
-    const Vector3Pod& aAxisVec
+    const Angle& angle,
+    const Vector3Pod& axisVec
     )
 {
-    return Rotate(aAngle, aAxisVec.x, aAxisVec.y, aAxisVec.z);
+    return Rotate(angle, axisVec.x, axisVec.y, axisVec.z);
 }
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::LookAt(
-    const Vector3Pod& aEyePos,
-    const Vector3Pod& aTargetPos,
-    const Vector3Pod& aUpVec
+    const Vector3Pod& eyePos,
+    const Vector3Pod& targetPos,
+    const Vector3Pod& upVec
     )
 {
     // toTargetUnit
-    Vector3 toTarget = aTargetPos - aEyePos;
+    Vector3 toTarget = targetPos - eyePos;
     if (toTarget.IsZeroStrict()) {
         AE_BASE_ASSERT_NOT_REACHED();
         toTarget = Vector3Pod::UnitZ(); // fail safe code
@@ -122,13 +122,13 @@ const Matrix34Pod Matrix34Pod::LookAt(
 
     // upVecUnit
     Vector3Pod upVecUnit;
-    if (aUpVec.IsZeroStrict()) {
-        AE_BASE_ERROR_INVALID_VALUE(aUpVec);
+    if (upVec.IsZeroStrict()) {
+        AE_BASE_ERROR_INVALID_VALUE(upVec);
         upVecUnit = Vector3::UnitY(); // fail safe code
     }
     else
     {
-        upVecUnit = aUpVec.Unit();
+        upVecUnit = upVec.Unit();
     }
 
     // toTarget以外の軸を再作成
@@ -137,7 +137,7 @@ const Matrix34Pod Matrix34Pod::LookAt(
     const Vector3Pod v = -toTargetUnit;
 
     // 平行移動
-    const Vector3Pod invEyePos = -aEyePos;
+    const Vector3Pod invEyePos = -eyePos;
     const Vector3Pod t = Vector3(
         invEyePos.Dot(s),
         invEyePos.Dot(u),
@@ -195,135 +195,135 @@ const Vector3Pod Matrix34Pod::w()const
 }
 
 //------------------------------------------------------------------------------
-void Matrix34Pod::SetX(const Vector3Pod& aVal)
+void Matrix34Pod::SetX(const Vector3Pod& val)
 {
-    v[IndexXX] = aVal.x;
-    v[IndexXY] = aVal.y;
-    v[IndexXZ] = aVal.z;
+    v[IndexXX] = val.x;
+    v[IndexXY] = val.y;
+    v[IndexXZ] = val.z;
 }
 
 //------------------------------------------------------------------------------
-void Matrix34Pod::SetY(const Vector3Pod& aVal)
+void Matrix34Pod::SetY(const Vector3Pod& val)
 {
-    v[IndexYX] = aVal.x;
-    v[IndexYY] = aVal.y;
-    v[IndexYZ] = aVal.z;
+    v[IndexYX] = val.x;
+    v[IndexYY] = val.y;
+    v[IndexYZ] = val.z;
 }
 
 //------------------------------------------------------------------------------
-void Matrix34Pod::SetZ(const Vector3Pod& aVal)
+void Matrix34Pod::SetZ(const Vector3Pod& val)
 {
-    v[IndexZX] = aVal.x;
-    v[IndexZY] = aVal.y;
-    v[IndexZZ] = aVal.z;
+    v[IndexZX] = val.x;
+    v[IndexZY] = val.y;
+    v[IndexZZ] = val.z;
 }
 
 //------------------------------------------------------------------------------
-void Matrix34Pod::SetW(const Vector3Pod& aVal)
+void Matrix34Pod::SetW(const Vector3Pod& val)
 {
-    v[IndexWX] = aVal.x;
-    v[IndexWY] = aVal.y;
-    v[IndexWZ] = aVal.z;
+    v[IndexWX] = val.x;
+    v[IndexWY] = val.y;
+    v[IndexWZ] = val.z;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Matrix34Pod::Mul(const Vector3Pod& aVec)const
+const Vector3Pod Matrix34Pod::Mul(const Vector3Pod& vec)const
 {
     return Vector3(
-        aVec.x * v[IndexXX] + aVec.y * v[IndexYX] + aVec.z * v[IndexZX] + v[IndexWX],
-        aVec.x * v[IndexXY] + aVec.y * v[IndexYY] + aVec.z * v[IndexZY] + v[IndexWY],
-        aVec.x * v[IndexXZ] + aVec.y * v[IndexYZ] + aVec.z * v[IndexZZ] + v[IndexWZ]
+        vec.x * v[IndexXX] + vec.y * v[IndexYX] + vec.z * v[IndexZX] + v[IndexWX],
+        vec.x * v[IndexXY] + vec.y * v[IndexYY] + vec.z * v[IndexZY] + v[IndexWY],
+        vec.x * v[IndexXZ] + vec.y * v[IndexYZ] + vec.z * v[IndexZZ] + v[IndexWZ]
         );
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod Matrix34Pod::Mul(const Matrix34Pod& aRHS)const
+const Matrix34Pod Matrix34Pod::Mul(const Matrix34Pod& rHS)const
 {
     Matrix34Pod mtx;
 
     // c0
     mtx.v[Index00] =
-        this->v[Index00] * aRHS.v[Index00]
-        + this->v[Index01] * aRHS.v[Index10]
-        + this->v[Index02] * aRHS.v[Index20];
+        this->v[Index00] * rHS.v[Index00]
+        + this->v[Index01] * rHS.v[Index10]
+        + this->v[Index02] * rHS.v[Index20];
     mtx.v[Index01] =
-        this->v[Index00] * aRHS.v[Index01]
-        + this->v[Index01] * aRHS.v[Index11]
-        + this->v[Index02] * aRHS.v[Index21];
+        this->v[Index00] * rHS.v[Index01]
+        + this->v[Index01] * rHS.v[Index11]
+        + this->v[Index02] * rHS.v[Index21];
     mtx.v[Index02] =
-        this->v[Index00] * aRHS.v[Index02]
-        + this->v[Index01] * aRHS.v[Index12]
-        + this->v[Index02] * aRHS.v[Index22];
+        this->v[Index00] * rHS.v[Index02]
+        + this->v[Index01] * rHS.v[Index12]
+        + this->v[Index02] * rHS.v[Index22];
     mtx.v[Index03] =
-        this->v[Index00] * aRHS.v[Index03]
-        + this->v[Index01] * aRHS.v[Index13]
-        + this->v[Index02] * aRHS.v[Index23]
+        this->v[Index00] * rHS.v[Index03]
+        + this->v[Index01] * rHS.v[Index13]
+        + this->v[Index02] * rHS.v[Index23]
         + this->v[Index03];
 
     // c1
     mtx.v[Index10] =
-        this->v[Index10] * aRHS.v[Index00]
-        + this->v[Index11] * aRHS.v[Index10]
-        + this->v[Index12] * aRHS.v[Index20];
+        this->v[Index10] * rHS.v[Index00]
+        + this->v[Index11] * rHS.v[Index10]
+        + this->v[Index12] * rHS.v[Index20];
     mtx.v[Index11] =
-        this->v[Index10] * aRHS.v[Index01]
-        + this->v[Index11] * aRHS.v[Index11]
-        + this->v[Index12] * aRHS.v[Index21];
+        this->v[Index10] * rHS.v[Index01]
+        + this->v[Index11] * rHS.v[Index11]
+        + this->v[Index12] * rHS.v[Index21];
     mtx.v[Index12] =
-        this->v[Index10] * aRHS.v[Index02]
-        + this->v[Index11] * aRHS.v[Index12]
-        + this->v[Index12] * aRHS.v[Index22];
+        this->v[Index10] * rHS.v[Index02]
+        + this->v[Index11] * rHS.v[Index12]
+        + this->v[Index12] * rHS.v[Index22];
     mtx.v[Index13] =
-        this->v[Index10] * aRHS.v[Index03]
-        + this->v[Index11] * aRHS.v[Index13]
-        + this->v[Index12] * aRHS.v[Index23]
+        this->v[Index10] * rHS.v[Index03]
+        + this->v[Index11] * rHS.v[Index13]
+        + this->v[Index12] * rHS.v[Index23]
         + this->v[Index13];
 
     // c2
     mtx.v[Index20] =
-        this->v[Index20] * aRHS.v[Index00]
-        + this->v[Index21] * aRHS.v[Index10]
-        + this->v[Index22] * aRHS.v[Index20];
+        this->v[Index20] * rHS.v[Index00]
+        + this->v[Index21] * rHS.v[Index10]
+        + this->v[Index22] * rHS.v[Index20];
     mtx.v[Index21] =
-        this->v[Index20] * aRHS.v[Index01]
-        + this->v[Index21] * aRHS.v[Index11]
-        + this->v[Index22] * aRHS.v[Index21];
+        this->v[Index20] * rHS.v[Index01]
+        + this->v[Index21] * rHS.v[Index11]
+        + this->v[Index22] * rHS.v[Index21];
     mtx.v[Index22] =
-        this->v[Index20] * aRHS.v[Index02]
-        + this->v[Index21] * aRHS.v[Index12]
-        + this->v[Index22] * aRHS.v[Index22];
+        this->v[Index20] * rHS.v[Index02]
+        + this->v[Index21] * rHS.v[Index12]
+        + this->v[Index22] * rHS.v[Index22];
     mtx.v[Index23] =
-        this->v[Index20] * aRHS.v[Index03]
-        + this->v[Index21] * aRHS.v[Index13]
-        + this->v[Index22] * aRHS.v[Index23]
+        this->v[Index20] * rHS.v[Index03]
+        + this->v[Index21] * rHS.v[Index13]
+        + this->v[Index22] * rHS.v[Index23]
         + this->v[Index23];
 
     return mtx;
 }
 
 //------------------------------------------------------------------------------
-Matrix34Pod& Matrix34Pod::MulAssign(const Matrix34Pod& aRHS)
+Matrix34Pod& Matrix34Pod::MulAssign(const Matrix34Pod& rHS)
 {
-    *this = Mul(aRHS);
+    *this = Mul(rHS);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Matrix34Pod::operator*(const Vector3Pod& aRHS)const
+const Vector3Pod Matrix34Pod::operator*(const Vector3Pod& rHS)const
 {
-    return Mul(aRHS);
+    return Mul(rHS);
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod Matrix34Pod::operator*(const Matrix34Pod& aRHS)const
+const Matrix34Pod Matrix34Pod::operator*(const Matrix34Pod& rHS)const
 {
-    return Mul(aRHS);
+    return Mul(rHS);
 }
 
 //------------------------------------------------------------------------------
-Matrix34Pod& Matrix34Pod::operator*=(const Matrix34Pod& aRHS)
+Matrix34Pod& Matrix34Pod::operator*=(const Matrix34Pod& rHS)
 {
-    MulAssign(aRHS);
+    MulAssign(rHS);
     return *this;
 }
 
@@ -501,44 +501,44 @@ Matrix34::Matrix34()
 }
 
 //------------------------------------------------------------------------------
-Matrix34::Matrix34(const Matrix34Pod& aObj)
-: Matrix34Pod(aObj)
+Matrix34::Matrix34(const Matrix34Pod& obj)
+: Matrix34Pod(obj)
 {
 }
 
 //------------------------------------------------------------------------------
 Matrix34::Matrix34(
-    const f32 aR0C0, const f32 aR0C1, const f32 aR0C2, const f32 aR0C3,
-    const f32 aR1C0, const f32 aR1C1, const f32 aR1C2, const f32 aR1C3,
-    const f32 aR2C0, const f32 aR2C1, const f32 aR2C2, const f32 aR2C3
+    const f32 r0C0, const f32 r0C1, const f32 r0C2, const f32 r0C3,
+    const f32 r1C0, const f32 r1C1, const f32 r1C2, const f32 r1C3,
+    const f32 r2C0, const f32 r2C1, const f32 r2C2, const f32 r2C3
     )
 {
-    v[Index00] = aR0C0;
-    v[Index10] = aR1C0;
-    v[Index20] = aR2C0;
-    v[Index01] = aR0C1;
-    v[Index11] = aR1C1;
-    v[Index21] = aR2C1;
-    v[Index02] = aR0C2;
-    v[Index12] = aR1C2;
-    v[Index22] = aR2C2;
-    v[Index03] = aR0C3;
-    v[Index13] = aR1C3;
-    v[Index23] = aR2C3;
+    v[Index00] = r0C0;
+    v[Index10] = r1C0;
+    v[Index20] = r2C0;
+    v[Index01] = r0C1;
+    v[Index11] = r1C1;
+    v[Index21] = r2C1;
+    v[Index02] = r0C2;
+    v[Index12] = r1C2;
+    v[Index22] = r2C2;
+    v[Index03] = r0C3;
+    v[Index13] = r1C3;
+    v[Index23] = r2C3;
 }
 
 //------------------------------------------------------------------------------
 Matrix34::Matrix34(
-    const Vector3Pod& aX,
-    const Vector3Pod& aY,
-    const Vector3Pod& aZ,
-    const Vector3Pod& aW
+    const Vector3Pod& x,
+    const Vector3Pod& y,
+    const Vector3Pod& z,
+    const Vector3Pod& w
     )
 {
-    SetX(aX);
-    SetY(aY);
-    SetZ(aZ);
-    SetW(aW);
+    SetX(x);
+    SetY(y);
+    SetZ(z);
+    SetW(w);
 }
 
 }} // namespace

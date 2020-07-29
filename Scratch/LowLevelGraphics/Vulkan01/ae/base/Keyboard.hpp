@@ -30,7 +30,7 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void Update(const KeyboardUpdateData& aData);
+    void Update(const KeyboardUpdateData& data);
 
     /// 前回の更新データを取得する。
     const KeyboardUpdateData LastUpdateData()const;
@@ -38,11 +38,11 @@ public:
 
     /// @name 状態取得
     //@{
-    bool IsHold(KeyKind::EnumType aKind)const;    ///< 押されているか。
-    bool IsTrigger(KeyKind::EnumType aKind)const; ///< 押された瞬間か。
-    bool IsRepeat(KeyKind::EnumType aKind)const;  ///< 押しっぱなしの状態で入力が入ったか。
-    bool IsPulse(KeyKind::EnumType aKind)const;   ///< IsTrigger() || IsRepeat()。
-    bool IsRelease(KeyKind::EnumType aKind)const; ///< 離された瞬間か。
+    bool IsHold(KeyKind::EnumType kind)const;    ///< 押されているか。
+    bool IsTrigger(KeyKind::EnumType kind)const; ///< 押された瞬間か。
+    bool IsRepeat(KeyKind::EnumType kind)const;  ///< 押しっぱなしの状態で入力が入ったか。
+    bool IsPulse(KeyKind::EnumType kind)const;   ///< IsTrigger() || IsRepeat()。
+    bool IsRelease(KeyKind::EnumType kind)const; ///< 離された瞬間か。
     //@}
 
     /// @name ビットセット取得

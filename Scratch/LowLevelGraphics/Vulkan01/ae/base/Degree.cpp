@@ -36,15 +36,15 @@ Degree::Degree()
 }
 
 //------------------------------------------------------------------------------
-Degree::Degree(const float aDegree)
+Degree::Degree(const float degree)
 : DegreePod()
 {
-    value = aDegree;
+    value = degree;
 }
 
 //------------------------------------------------------------------------------
-Degree::Degree(const DegreePod& aVal)
-: DegreePod(aVal)
+Degree::Degree(const DegreePod& val)
+: DegreePod(val)
 {
 }
 

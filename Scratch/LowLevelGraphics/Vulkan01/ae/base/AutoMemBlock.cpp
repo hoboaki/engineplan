@@ -16,38 +16,38 @@ AutoMemBlock::AutoMemBlock()
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(
-    const pword_t aSize,
-    IAllocator& aAllocator,
-    const pword_t aAlignment
+    const pword_t size,
+    IAllocator& allocator,
+    const pword_t alignment
     )
 : block_()
 , allocatorPtr_()
 {
     // 確保
-    ptr_t ptr = aAllocator.Alloc(aSize, aAlignment);
+    ptr_t ptr = allocator.Alloc(size, alignment);
     if (ptr == 0) {
         // 失敗
         return;
     }
 
     // 設定
-    block_ = MemBlock(ptr, aSize);
-    allocatorPtr_.Set(aAllocator);
+    block_ = MemBlock(ptr, size);
+    allocatorPtr_.Set(allocator);
 }
 
 //------------------------------------------------------------------------------
-AutoMemBlock::AutoMemBlock(const MemBlock& aBlock, IAllocator& aAllocator)
-: block_(aBlock)
-, allocatorPtr_(aAllocator)
+AutoMemBlock::AutoMemBlock(const MemBlock& block, IAllocator& allocator)
+: block_(block)
+, allocatorPtr_(allocator)
 {
 }
 
 //------------------------------------------------------------------------------
-AutoMemBlock::AutoMemBlock(const AutoMemBlock& aOther)
+AutoMemBlock::AutoMemBlock(const AutoMemBlock& other)
 : block_()
 , allocatorPtr_()
 {
-    *this = aOther;
+    *this = other;
 }
 
 //------------------------------------------------------------------------------
@@ -81,18 +81,18 @@ const MemBlock& AutoMemBlock::Ref()const
 }
 
 //------------------------------------------------------------------------------
-AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& aRHS)
+AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& rHS)
 {
     // まずクリア
     Clear();
 
     // つぎに移動
-    block_ = aRHS.block_;
-    allocatorPtr_ = aRHS.allocatorPtr_;
+    block_ = rHS.block_;
+    allocatorPtr_ = rHS.allocatorPtr_;
 
     // 相手をクリア
-    aRHS.block_ = MemBlock();
-    aRHS.allocatorPtr_.Reset();
+    rHS.block_ = MemBlock();
+    rHS.allocatorPtr_.Reset();
 
     // 終了
     return *this;

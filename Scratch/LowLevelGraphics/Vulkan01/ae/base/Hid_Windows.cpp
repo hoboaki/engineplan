@@ -16,10 +16,10 @@ int Hid::KeyboardCount()const
 }
 
 //------------------------------------------------------------------------------
-const Keyboard Hid::KeyboardAtIndex(const int aIndex)const
+const Keyboard Hid::KeyboardAtIndex(const int index)const
 {
-    AE_BASE_ASSERT_LESS(aIndex, KeyboardCount());
-    AE_BASE_UNUSED(aIndex);
+    AE_BASE_ASSERT_LESS(index, KeyboardCount());
+    AE_BASE_UNUSED(index);
     return ext_.keyboard;
 }
 
@@ -30,10 +30,10 @@ int Hid::MouseCount()const
 }
 
 //------------------------------------------------------------------------------
-const Mouse Hid::MouseAtIndex(const int aIndex)const
+const Mouse Hid::MouseAtIndex(const int index)const
 {
-    AE_BASE_ASSERT_LESS(aIndex, MouseCount());
-    AE_BASE_UNUSED(aIndex);
+    AE_BASE_ASSERT_LESS(index, MouseCount());
+    AE_BASE_UNUSED(index);
     return ext_.mouse;
 }
 

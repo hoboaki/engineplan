@@ -27,13 +27,13 @@ struct Console
     static const char* const DefaultTimeFormatString();
 
     /// @brief 時間フォーマット文字列を設定する。
-    /// @param aFormat フォーマット文字列。文字列長は終端文字を含めて64文字まで。
+    /// @param format フォーマット文字列。文字列長は終端文字を含めて64文字まで。
     /// @details
     /// printf形式で「年,月,日,時,分,秒,ミリ秒,マイクロ秒」(全てuint型)がフォーマット文字列の後に続きます。
     /// それを処理するような文字列を設定してください。 @n
     /// 出力結果が終端文字を含めて64文字以内になるようにしてください。もしそれを超える場合の動作は不定です。 @n
-    /// aFormat は内部バッファにコピーされます。
-    static void SetTimeFormatString(const char* aFormat);
+    /// format は内部バッファにコピーされます。
+    static void SetTimeFormatString(const char* format);
 
     /// @brief デフォルトのコールバッククラスを取得する。
     /// @return デフォルトのコールバッククラス。
@@ -42,35 +42,35 @@ struct Console
     static IConsoleCallback& DefaultCallback();
 
     /// @brief コールバッククラスを設定する。
-    /// @param aCallback 設定するコールバック。
-    static void SetCallback(IConsoleCallback& aCallback);
+    /// @param callback 設定するコールバック。
+    static void SetCallback(IConsoleCallback& callback);
 
     /// @brief printf形式で文字列をコンソールに書き込む。
-    /// @param aFormat printfフォーマット文字列。
-    static void WriteF(const char* aFormat, ...);
+    /// @param format printfフォーマット文字列。
+    static void WriteF(const char* format, ...);
 
     /// @brief vprintf形式で文字列をコンソールに書き込む。
-    /// @param aFormat printfフォーマット文字列。
-    static void WriteVF(const char* aFormat, va_list);
+    /// @param format printfフォーマット文字列。
+    static void WriteVF(const char* format, va_list);
 
     /// @brief printf形式で文字列をコンソールに改行書き込みする。
-    /// @param aFormat printfフォーマット文字列。
-    static void WriteLineF(const char* aFormat, ...);
+    /// @param format printfフォーマット文字列。
+    static void WriteLineF(const char* format, ...);
 
     /// @brief vprintf形式で文字列をコンソールに改行書き込みする。
-    /// @param aFormat printfフォーマット文字列。
-    static void WriteLineVF(const char* aFormat, va_list);
+    /// @param format printfフォーマット文字列。
+    static void WriteLineVF(const char* format, va_list);
 
     /// 現在時間をコンソールに書き込む。
     static void WriteTime();
 
     /// @brief 現在時間と共にprintf形式で文字列をコンソールに改行書き込みする。
-    /// @param aFormat printfフォーマット文字列。
-    static void TimeWriteLineF(const char* aFormat, ...);
+    /// @param format printfフォーマット文字列。
+    static void TimeWriteLineF(const char* format, ...);
 
     /// @brief 現在時間と共にvprintf形式で文字列をコンソールに改行書き込みする。
-    /// @param aFormat printfフォーマット文字列。
-    static void TimeWriteLineVF(const char* aFormat, va_list);
+    /// @param format printfフォーマット文字列。
+    static void TimeWriteLineVF(const char* format, va_list);
 };
 //@}
 
@@ -78,9 +78,9 @@ struct Console
 
 // 準備
 #if defined(AE_BASE_CONFIG_ENABLE_LOGSTR)
-#define AE_BASE_COUT_CORE( aFmt , ...) ::ae::base::Console::WriteF( aFmt , __VA_ARGS__ )
+#define AE_BASE_COUT_CORE( fmt , ...) ::ae::base::Console::WriteF( fmt , __VA_ARGS__ )
 #else
-#define AE_BASE_COUT_CORE( aFmt , ...) do{}while(0)
+#define AE_BASE_COUT_CORE( fmt , ...) do{}while(0)
 #endif
 
 /// @addtogroup AeBase-Debug
@@ -91,12 +91,12 @@ struct Console
 /// @brief 文字列をコンソールに書き込む。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_COUT( aStr ) AE_BASE_COUT_CORE( "%s" , aStr )
+#define AE_BASE_COUT( str ) AE_BASE_COUT_CORE( "%s" , str )
 
 /// @brief printfフォーマットの文字列をコンソールに書き込む。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_COUTFMT( aFmt , ... ) AE_BASE_COUT_CORE( aFmt , __VA_ARGS__ )
+#define AE_BASE_COUTFMT( fmt , ... ) AE_BASE_COUT_CORE( fmt , __VA_ARGS__ )
 
 /// @def AE_BASE_COUT_TIME
 /// @brief 現在時刻をコンソールに書き込む。
@@ -121,10 +121,10 @@ struct Console
 /// @brief 文字列をコンソールに改行書き込みする。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_COUT_LINE( aStr ) \
+#define AE_BASE_COUT_LINE( str ) \
     do \
     { \
-        AE_BASE_COUT( aStr ); \
+        AE_BASE_COUT( str ); \
         AE_BASE_COUT_END_LINE(); \
     } while(0)
 
@@ -141,11 +141,11 @@ struct Console
 /// @brief 現在時間と共にprintfフォーマットの文字列をコンソールに書き込む。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_COUT_WITH_TIME( aStr ) \
+#define AE_BASE_COUT_WITH_TIME( str ) \
     do \
     { \
         AE_BASE_COUT_TIME(); \
-        AE_BASE_COUT( aStr ); \
+        AE_BASE_COUT( str ); \
     } while(0)
 
 /// @brief 現在時間と共にprintfフォーマットの文字列をコンソールに書き込む。
@@ -161,10 +161,10 @@ struct Console
 /// @brief 現在時間と共に文字列をコンソールに改行書き込みする。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_COUT_LINE_WITH_TIME( aStr ) \
+#define AE_BASE_COUT_LINE_WITH_TIME( str ) \
     do \
     { \
-        AE_BASE_COUT_WITH_TIME( aStr ); \
+        AE_BASE_COUT_WITH_TIME( str ); \
         AE_BASE_COUT_END_LINE(); \
     } while(0)
 
@@ -184,10 +184,10 @@ struct Console
 #define AE_BASE_CHECKPOINT() AE_BASE_COUTFMT_LINE_WITH_TIME( "%s at %lu\n" , __FILE__ , __LINE__ )
 
 /// @brief 現在時刻と共に変数の名前・値をコンソールに改行書き込みする。
-/// @param aVal ダンプする値。ShortString変換に対応していないとエラーになる。
+/// @param val ダンプする値。ShortString変換に対応していないとエラーになる。
 /// @see AE_BASE_CONFIG_ENABLE_LOGSTR
 /// @details ログ文字列が無効な時は何もしません。
-#define AE_BASE_DUMP( aVal ) AE_BASE_COUTFMT_LINE_WITH_TIME( "%s : %s\n" , #aVal , AE_BASE_TO_SHORT_STRING( aVal ).ReadPtr() )
+#define AE_BASE_DUMP( val ) AE_BASE_COUTFMT_LINE_WITH_TIME( "%s : %s\n" , #val , AE_BASE_TO_SHORT_STRING( val ).ReadPtr() )
 
 //@}
 //@}

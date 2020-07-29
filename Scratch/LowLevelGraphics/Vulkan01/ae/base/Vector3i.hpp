@@ -129,7 +129,7 @@ struct Vector3iPod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector3iPod Clamp(const Vector3iPod& aMin, const Vector3iPod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector3iPod Clamp(const Vector3iPod& min, const Vector3iPod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector3iPod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector3iPod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -164,10 +164,10 @@ public:
     /// @name コンストラクタ
     //@{
     Vector3i(); ///< Zero() で作成。
-    Vector3i(const Vector3iPod& aXYZ); ///< コピーして作成。
-    Vector3i(s32 aV); ///< 全要素同じ値で作成。
-    Vector3i(const Vector2iPod& aXY, s32 aZ); ///< XYZを指定して作成。
-    Vector3i(s32 aX, s32 aY, s32 aZ); ///< XYZを指定して作成。
+    Vector3i(const Vector3iPod& xYZ); ///< コピーして作成。
+    Vector3i(s32 v); ///< 全要素同じ値で作成。
+    Vector3i(const Vector2iPod& xY, s32 z); ///< XYZを指定して作成。
+    Vector3i(s32 x, s32 y, s32 z); ///< XYZを指定して作成。
     //@}
 };
 

@@ -20,12 +20,12 @@ public:
     //@{
     Pointer()
     : ptr_(0) {}
-    Pointer(T* aObj)
-    : ptr_(aObj) {
+    Pointer(T* obj)
+    : ptr_(obj) {
     }
-    Pointer(T& aObj)
+    Pointer(T& obj)
     : ptr_(0) {
-        Set(aObj);
+        Set(obj);
     }
     //@}
 
@@ -48,7 +48,7 @@ public:
     }
 
     /// 同じポインタを指しているか。
-    bool Equals(const Pointer<T>& aRHS) const { return ptr_ == aRHS.ptr_; }
+    bool Equals(const Pointer<T>& rHS) const { return ptr_ == rHS.ptr_; }
     //@}
 
     /// @name 設定
@@ -57,13 +57,13 @@ public:
     void Reset() { Reset(0); }
 
     /// 指定されたポインタをそのまま設定する。
-    void Reset(T* aPtr) { ptr_ = aPtr; }
+    void Reset(T* ptr) { ptr_ = ptr; }
 
     /// @brief 未設定な状態で指定された参照を設定する。
     /// @details 既に設定済みな状況で呼ぶとエラーになります。
-    void Set(T& aRef) {
+    void Set(T& ref) {
         AE_BASE_ASSERT(IsNull());
-        ptr_ = &aRef;
+        ptr_ = &ref;
     }
 
     /// @brief 設定済みな状態で設定を解除する。
@@ -73,10 +73,10 @@ public:
     /// @brief 指定のオブジェクトが設定されている状態で設定を解除する。
     /// @details
     /// 未設定な状況で呼んだり指定のオブジェクト以外が設定されているとエラーになる。
-    void Unset(T& aRef) {
+    void Unset(T& ref) {
         AE_BASE_ASSERT(IsValid());
-        AE_BASE_ASSERT(ptr_ == &aRef);
-        AE_BASE_UNUSED(aRef);
+        AE_BASE_ASSERT(ptr_ == &ref);
+        AE_BASE_UNUSED(ref);
         ptr_ = 0;
     }
     //@}
@@ -85,8 +85,8 @@ public:
     //@{
     T* operator->() const { return Get(); }  ///< Get()のエイリアス。
     T& operator*() const { return Ref(); }   ///< Ref()のエイリアス。
-    bool operator==(const Pointer<T>& aRHS) const {
-        return Equals(aRHS);
+    bool operator==(const Pointer<T>& rHS) const {
+        return Equals(rHS);
     }  ///> Equals()のエイリアス。
     //@}
 

@@ -26,10 +26,10 @@ namespace base {
 /// このようなルールを設けるため、AABB内の各セルの処理について次のようなfor分を書くことを想定しています。@n
 /// 経験上、整数版のAABBはこのほうが使い勝手がよいと作者は考えています。@n
 /// @code
-/// void func(const Aabb2i& aAABB)
+/// void func(const Aabb2i& aABB)
 /// {
-///     for (int y = aAABB.Begin().y; t < aAABB.End().y; ++y) {
-///         for (int x = aAABB.Begin().x; t < aAABB.End().x; ++x) {
+///     for (int y = aABB.Begin().y; t < aABB.End().y; ++y) {
+///         for (int x = aABB.Begin().x; t < aABB.End().x; ++x) {
 ///         }
 ///     }
 /// }
@@ -47,8 +47,8 @@ public:
     /// @name コンストラクタ
     //@{
     Aabb2i(); ///< Aabb2i( Vector2i::Zero() ) で作成。
-    Aabb2i(const Vector2iPod& aBegin); ///< Aabb2i( aPos , 0 , 0 ) で作成。
-    Aabb2i(const Vector2iPod& aBegin, int aWidth, int aHeight); ///< 基準となる点とサイズを指定してAABBを作成。
+    Aabb2i(const Vector2iPod& begin); ///< Aabb2i( pos , 0 , 0 ) で作成。
+    Aabb2i(const Vector2iPod& begin, int width, int height); ///< 基準となる点とサイズを指定してAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------
@@ -77,8 +77,8 @@ public:
     //------------------------------------------------------------------------------
     /// @name 結合
     //@{
-    const Aabb2i Merge(const Aabb2i& aAABB)const; ///< 自分自身と指定のAABBを含むAABBを取得。
-    void MergeAssign(const Aabb2i& aAABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
+    const Aabb2i Merge(const Aabb2i& aABB)const; ///< 自分自身と指定のAABBを含むAABBを取得。
+    void MergeAssign(const Aabb2i& aABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
     //@}
 
     //------------------------------------------------------------------------------
@@ -87,25 +87,25 @@ public:
     /// @brief 指定のAABBが重なっているか。
     /// @details 
     /// Term() 線上は重なっていないとして判定します。
-    bool IsIntersects(const Aabb2i& aAABB)const;
+    bool IsIntersects(const Aabb2i& aABB)const;
 
     /// @brief 指定の点を含んでいるか。
-    /// @return Begin() <= aPos && aPos() < End()
-    bool IsContains(const Vector2iPod& aPos)const;
+    /// @return Begin() <= pos && pos() < End()
+    bool IsContains(const Vector2iPod& pos)const;
 
     /// @brief 指定のAABBを含んでいるか。
     /// @details
     /// Term() 線上は重なっていないとして判定します。
-    bool IsContains(const Aabb2i& aAABB)const;
+    bool IsContains(const Aabb2i& aABB)const;
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 四則演算
     //@{
-    const Aabb2i Add(const Vector2iPod& aTrans)const; ///< Min() Term() に値を加算した結果を取得する。
-    const Aabb2i Sub(const Vector2iPod& aTrans)const; ///< Min() Term() から値を減算した結果を取得する。
-    void AddAssign(const Vector2iPod& aTrans); ///< Min() Term() に値を加算する。
-    void SubAssign(const Vector2iPod& aTrans); ///< Min() Term() から値を減算する。
+    const Aabb2i Add(const Vector2iPod& trans)const; ///< Min() Term() に値を加算した結果を取得する。
+    const Aabb2i Sub(const Vector2iPod& trans)const; ///< Min() Term() から値を減算した結果を取得する。
+    void AddAssign(const Vector2iPod& trans); ///< Min() Term() に値を加算する。
+    void SubAssign(const Vector2iPod& trans); ///< Min() Term() から値を減算する。
     //@}
 
     //------------------------------------------------------------------------------

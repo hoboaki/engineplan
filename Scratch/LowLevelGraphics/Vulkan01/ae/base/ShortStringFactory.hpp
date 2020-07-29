@@ -17,42 +17,42 @@ class ShortStringFactory
 {
 public:
     // 特殊化された関数達。
-    static const ::ae::base::ShortString Create(bool aVal);
-    static const ::ae::base::ShortString Create(int aVal);
-    static const ::ae::base::ShortString Create(uint aVal);
-    static const ::ae::base::ShortString Create(f32 aVal);
-    static const ::ae::base::ShortString Create(f64 aVal);
-    static const ::ae::base::ShortString Create(s8 aVal);
-    static const ::ae::base::ShortString Create(s16 aVal);
-    static const ::ae::base::ShortString Create(s64 aVal);
-    static const ::ae::base::ShortString Create(u8 aVal);
-    static const ::ae::base::ShortString Create(u16 aVal);
-    static const ::ae::base::ShortString Create(u64 aVal);
+    static const ::ae::base::ShortString Create(bool val);
+    static const ::ae::base::ShortString Create(int val);
+    static const ::ae::base::ShortString Create(uint val);
+    static const ::ae::base::ShortString Create(f32 val);
+    static const ::ae::base::ShortString Create(f64 val);
+    static const ::ae::base::ShortString Create(s8 val);
+    static const ::ae::base::ShortString Create(s16 val);
+    static const ::ae::base::ShortString Create(s64 val);
+    static const ::ae::base::ShortString Create(u8 val);
+    static const ::ae::base::ShortString Create(u16 val);
+    static const ::ae::base::ShortString Create(u64 val);
 #if !defined(AE_BASE_OS_WINDOWS)
-    static const ::ae::base::ShortString Create(pword_t aVal);
+    static const ::ae::base::ShortString Create(pword_t val);
 #endif
-    static const ::ae::base::ShortString Create(ptr_t aVal);
-    static const ::ae::base::ShortString Create(const_ptr_t aVal);
-    static const ::ae::base::ShortString Create(anyptr_t aVal);
-    static const ::ae::base::ShortString Create(const_anyptr_t aVal);
-    static const ::ae::base::ShortString Create(const char* aVal);
+    static const ::ae::base::ShortString Create(ptr_t val);
+    static const ::ae::base::ShortString Create(const_ptr_t val);
+    static const ::ae::base::ShortString Create(anyptr_t val);
+    static const ::ae::base::ShortString Create(const_anyptr_t val);
+    static const ::ae::base::ShortString Create(const char* val);
 
     // デフォルトの実装。toShortString関数を使う。
     template< typename T, class Cond = void >
     class Impl
     {
     public:
-        static const ::ae::base::ShortString Create(const T& aObj)
+        static const ::ae::base::ShortString Create(const T& obj)
         {
-            return aObj.ToShortString();
+            return obj.ToShortString();
         }
     };
 
     // 特殊化できなかったものは、Implに委譲。
     template< typename T >
-    static const ::ae::base::ShortString Create(const T& aObj)
+    static const ::ae::base::ShortString Create(const T& obj)
     {
-        return Impl< T >::Create(aObj);
+        return Impl< T >::Create(obj);
     };
 };
 

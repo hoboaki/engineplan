@@ -23,28 +23,28 @@ Quaternion::Quaternion()
 }
 
 //------------------------------------------------------------------------------
-Quaternion::Quaternion(const f32 aX, const f32 aY, const f32 aZ, const f32 aW)
-: x(aX)
-, y(aY)
-, z(aZ)
-, w(aW)
+Quaternion::Quaternion(const f32 x, const f32 y, const f32 z, const f32 w)
+: x(x)
+, y(y)
+, z(z)
+, w(w)
 {
 }
 
 //------------------------------------------------------------------------------
 Quaternion::Quaternion(
-    const Vector3Pod& aAxis,
-    const Angle& aAngle
+    const Vector3Pod& axis,
+    const Angle& angle
     )
 : x()
 , y()
 , z()
 , w()
 {
-    const Vector3 normalizedAxis = aAxis.IsZeroStrict()
+    const Vector3 normalizedAxis = axis.IsZeroStrict()
         ? Vector3()
-        : aAxis.Unit();
-    const Radian halfAngle = aAngle.Rad() * 0.5f;
+        : axis.Unit();
+    const Radian halfAngle = angle.Rad() * 0.5f;
     const f32 cosHalfAngle = Math::CosF32(halfAngle);
     const f32 sinHalfAngle = Math::SinF32(halfAngle);
     x = normalizedAxis.x * sinHalfAngle;
@@ -54,18 +54,17 @@ Quaternion::Quaternion(
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::Mul(const Quaternion& aQuat)const
+const Quaternion Quaternion::Mul(const Quaternion& rhs)const
 {
     Quaternion quat(*this);
-    quat.MulAssign(aQuat);
+    quat.MulAssign(rhs);
     return quat;
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::MulAssign(const Quaternion& aRHS)
+Quaternion& Quaternion::MulAssign(const Quaternion& rhs)
 {
     const Quaternion& lhs = *this;
-    const Quaternion& rhs = aRHS;
     *this = Quaternion(
         lhs.w*rhs.x + lhs.x*rhs.w + lhs.y*rhs.z - lhs.z*rhs.y,
         lhs.w*rhs.y - lhs.x*rhs.z + lhs.y*rhs.w + lhs.z*rhs.x,
@@ -109,15 +108,15 @@ const Matrix34Pod Quaternion::ToRotateMatrix()const
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::operator*(const Quaternion& aRHS)const
+const Quaternion Quaternion::operator*(const Quaternion& rhs)const
 {
-    return Mul(aRHS);
+    return Mul(rhs);
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::operator*=(const Quaternion& aRHS)
+Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 {
-    MulAssign(aRHS);
+    MulAssign(rhs);
     return *this;
 }
 

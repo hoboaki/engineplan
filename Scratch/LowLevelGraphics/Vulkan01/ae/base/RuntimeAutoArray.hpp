@@ -27,28 +27,28 @@ public:
     //@{
 
     /// @brief コンストラクタ。
-    /// @param aCountMax 最大配列長。
-    /// @param aAllocator 配列データを確保する際に使用するアロケータ。
+    /// @param countMax 最大配列長。
+    /// @param allocator 配列データを確保する際に使用するアロケータ。
     /// @details 
     /// 配列長が0の場合、アロケートは走りません。
     RuntimeAutoArray(
-        int aCountMax, IAllocator* aAllocator = &IAllocator::Default()
+        int countMax, IAllocator* allocator = &IAllocator::Default()
         )
-        : allocator_(PtrToRef(aAllocator))
-        , countMax_(aCountMax)
+        : allocator_(PtrToRef(allocator))
+        , countMax_(countMax)
         , count_(0)
         , ptr_(0)
     {
-        if (0 < aCountMax)
+        if (0 < countMax)
         {
-            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * aCountMax));
+            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * countMax));
         }
     }
 
     /// 非推奨版。
     RuntimeAutoArray(
-        int aCountMax, IAllocator& aAllocator)
-    : RuntimeAutoArray(aCountMax, &aAllocator) {}
+        int countMax, IAllocator& allocator)
+    : RuntimeAutoArray(countMax, &allocator) {}
 
     /// デストラクタ。
     ~RuntimeAutoArray()
@@ -93,14 +93,14 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int aIndex)const
+    ValueType& At(const int index)const
     {
-        if (aIndex < 0 || count_ <= aIndex)
+        if (index < 0 || count_ <= index)
         {
-            AE_BASE_ASSERT_MIN_TERM(aIndex, 0, count_);
+            AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0]; // fail safe code
         }
-        return ptr_[aIndex];
+        return ptr_[index];
     }
 
     /// 最初の要素にアクセス。
@@ -271,7 +271,7 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int aIndex)const { return At(aIndex); } ///< At()const のエイリアス。
+    ValueType& operator[](const int index)const { return At(index); } ///< At()const のエイリアス。
     //@}
 
 private:

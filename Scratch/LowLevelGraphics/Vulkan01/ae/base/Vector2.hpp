@@ -124,7 +124,7 @@ struct Vector2Pod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector2Pod Clamp(const Vector2Pod& aMin, const Vector2Pod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector2Pod Clamp(const Vector2Pod& min, const Vector2Pod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector2Pod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector2Pod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -172,9 +172,9 @@ public:
     /// @name コンストラクタ
     //@{
     Vector2(); ///< Zero() で作成。
-    Vector2(const Vector2Pod& aXY); ///< コピーして作成。
-    Vector2(f32 aV); ///< 全要素同じ値で作成。
-    Vector2(f32 aX, f32 aY); ///< XYを指定して作成。
+    Vector2(const Vector2Pod& xY); ///< コピーして作成。
+    Vector2(f32 v); ///< 全要素同じ値で作成。
+    Vector2(f32 x, f32 y); ///< XYを指定して作成。
     //@}
 };
 

@@ -18,8 +18,8 @@ Application& Application::Instance()
 }
 
 //------------------------------------------------------------------------------
-ae::base::Application::Application(const base::Argument& aArgument)
-: argument_(aArgument)
+ae::base::Application::Application(const base::Argument& argument)
+: argument_(argument)
 , lastEvent_(AppEvent::INVALID)
 , displayPtr_()
 , ext_()
@@ -53,15 +53,15 @@ AppEvent::EnumType Application::LastEvent()const
 }
 
 //------------------------------------------------------------------------------
-void Application::registerDisplay_(Display& aDisplay)
+void Application::registerDisplay_(Display& display)
 {
-    displayPtr_.Set(aDisplay);
+    displayPtr_.Set(display);
 }
 
 //------------------------------------------------------------------------------
-void Application::unregisterDisplay_(Display& aDisplay)
+void Application::unregisterDisplay_(Display& display)
 {
-    displayPtr_.Unset(aDisplay);
+    displayPtr_.Unset(display);
 }
 
 }} // namespace

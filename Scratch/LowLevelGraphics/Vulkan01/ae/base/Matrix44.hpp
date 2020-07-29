@@ -78,32 +78,32 @@ struct Matrix44Pod
     /// @name 行列の作成
     //@{
     static const Matrix44Pod Identity(); ///< 単位行列の作成。
-    static const Matrix44Pod Translate(f32 aX, f32 aY, f32 aZ);   ///< 平行移動行列の作成。
-    static const Matrix44Pod Translate(const Vector3Pod& aVec);     ///< 平行移動行列の作成。
-    static const Matrix44Pod Scale(f32 aX, f32 aY, f32 aZ);   ///< 拡大縮小行列の作成。
-    static const Matrix44Pod Scale(const Vector3Pod& aVec);     ///< 拡大縮小行列の作成。
-    static const Matrix44Pod Rotate(const Angle&, f32 aAxisX, f32 aAxisY, f32 aAxisZ);   ///< 回転行列の作成。
-    static const Matrix44Pod Rotate(const Angle&, const Vector3Pod& aAxis);                 ///< 回転行列の作成。
+    static const Matrix44Pod Translate(f32 x, f32 y, f32 z);   ///< 平行移動行列の作成。
+    static const Matrix44Pod Translate(const Vector3Pod& vec);     ///< 平行移動行列の作成。
+    static const Matrix44Pod Scale(f32 x, f32 y, f32 z);   ///< 拡大縮小行列の作成。
+    static const Matrix44Pod Scale(const Vector3Pod& vec);     ///< 拡大縮小行列の作成。
+    static const Matrix44Pod Rotate(const Angle&, f32 axisX, f32 axisY, f32 axisZ);   ///< 回転行列の作成。
+    static const Matrix44Pod Rotate(const Angle&, const Vector3Pod& axis);                 ///< 回転行列の作成。
 
     /// 正射影行列の作成。
-    static const Matrix44Pod Ortho(f32 aLeft, f32 aTop, f32 aRight, f32 aBottom, f32 aNear, f32 aFar);
+    static const Matrix44Pod Ortho(f32 left, f32 top, f32 right, f32 bottom, f32 near, f32 far);
 
     /// 透視射影行列(Frustum)の作成。
-    static const Matrix44Pod Frustum(f32 aLeft, f32 aRight, f32 aBottom, f32 aTop, f32 aNear, f32 aFar);
+    static const Matrix44Pod Frustum(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
 
     /// @brief 透視射影行列(Perspective)の作成。
-    /// @param aFOVY   Y方向の画角。0 < aFOVY。
-    /// @param aAspect 横/縦のアスペクト比。4:3なら1.333。0 < aAspect。
-    /// @param aNear   Near値。
-    /// @param aFar    Far値。
-    static const Matrix44Pod Perspective(const Angle& aFOVY, f32 aAspect, f32 aNear, f32 aFar);
+    /// @param fOVY   Y方向の画角。0 < fOVY。
+    /// @param aspect 横/縦のアスペクト比。4:3なら1.333。0 < aspect。
+    /// @param near   Near値。
+    /// @param far    Far値。
+    static const Matrix44Pod Perspective(const Angle& fOVY, f32 aspect, f32 near, f32 far);
 
     /// @brief 視野変換行列の作成。
-    /// @param aEyePos 目の位置。
-    /// @param aTargetPos 注視点。
-    /// @param aUpVec 上方向のベクトル。isZeroなベクトルを渡してはいけない。
-    /// @param aEyePos != aTargetPosである必要がある。
-    static const Matrix44Pod LookAt(const Vector3Pod& aEyePos, const Vector3Pod& aTargetPos, const Vector3Pod& aUpVec);
+    /// @param eyePos 目の位置。
+    /// @param targetPos 注視点。
+    /// @param upVec 上方向のベクトル。isZeroなベクトルを渡してはいけない。
+    /// @param eyePos != targetPosである必要がある。
+    static const Matrix44Pod LookAt(const Vector3Pod& eyePos, const Vector3Pod& targetPos, const Vector3Pod& upVec);
     //@}
 
     //============================================================
@@ -171,7 +171,7 @@ public:
         , f32 r2c0, f32 r2c1, f32 r2c2, f32 r2c3
         , f32 r3c0, f32 r3c1, f32 r3c2, f32 r3c3
     );
-    Matrix44(const Vector4Pod& aX, const Vector4Pod& aY, const Vector4Pod& aZ, const Vector4Pod& aW); ///< X,Y,Z,Wを指定して作成。
+    Matrix44(const Vector4Pod& x, const Vector4Pod& y, const Vector4Pod& z, const Vector4Pod& w); ///< X,Y,Z,Wを指定して作成。
     Matrix44(const Matrix44Pod&); ///< コピーして作成。
     //@}
 };

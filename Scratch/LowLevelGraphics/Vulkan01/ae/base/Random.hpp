@@ -26,12 +26,12 @@ public:
     /// @name 乱数取得
     //@{
     u32 Rand();
-    u32 RandU32(u32 aTerm); ///< 0 <= return < aTerm。
-    s32 RandS32(s32 aTerm); ///< 0 <= return < aTerm。
-    s32 RandS32(s32 aMin, s32 aMax); ///< aMin <= return <= aMax。
+    u32 RandU32(u32 term); ///< 0 <= return < term。
+    s32 RandS32(s32 term); ///< 0 <= return < term。
+    s32 RandS32(s32 min, s32 max); ///< min <= return <= max。
     f32 RandF32N(); ///<  0.0f <= return <= 1.0f。
     f32 RandF32SN(); ///< -1.0f <= return <= 1.0f。
-    unsigned int operator()(unsigned int aTerm); ///< std::random_shuffle用。
+    unsigned int operator()(unsigned int term); ///< std::random_shuffle用。
     //@}
 
 private:

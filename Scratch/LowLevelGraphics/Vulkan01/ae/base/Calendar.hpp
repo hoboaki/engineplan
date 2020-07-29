@@ -48,31 +48,31 @@ struct CalendarPod
 
     /// @brief 指定の年が閏年かどうか取得する。
     /// @return 閏年ならtrue。
-    /// @param aYear 年。値の意味は CalendarPod::year と同じ。
-    static bool IsLeapYear(int aYear);
+    /// @param year 年。値の意味は CalendarPod::year と同じ。
+    static bool IsLeapYear(int year);
 
     /// @brief 西暦1年1月1日から指定の年・月・日まで何日あるか取得する。
     /// @return 日数。
-    /// @param aYear 年。値の意味は CalendarPod::year と同じ。
-    /// @param aMonth 月。値の意味は CalendarPod::month と同じ。
-    /// @param aDayOfMonth 日。値の意味は CalendarPod::dayOfMonth と同じ。
-    static int DaysToDate(int aYear, int aMonth, int aDayOfMonth);
+    /// @param year 年。値の意味は CalendarPod::year と同じ。
+    /// @param month 月。値の意味は CalendarPod::month と同じ。
+    /// @param dayOfMonth 日。値の意味は CalendarPod::dayOfMonth と同じ。
+    static int DaysToDate(int year, int month, int dayOfMonth);
 
     /// @brief 西暦1年1月1日から指定した日数が経過した日の0:0:0.0.0.0を取得する。
     /// @return カレンダー。
-    /// @param aDays 日数。
-    static const CalendarPod FromDays(int aDays);
+    /// @param days 日数。
+    static const CalendarPod FromDays(int days);
 
     /// @brief 指定の年の総日数を取得する。
     /// @return 総日数。
-    /// @param aYear 年。値の意味は CalendarPod::year と同じ。
-    static int  DaysInYear(int aYear);
+    /// @param year 年。値の意味は CalendarPod::year と同じ。
+    static int  DaysInYear(int year);
 
     /// @brief 指定の年・月の総日数を取得する。
     /// @return 総日数。
-    /// @param aYear 月が所属する年。値の意味は CalendarPod::year と同じ。
-    /// @param aMonth 月。値の意味は CalendarPod::month と同じ。
-    static int  DaysInMonth(int aYear, int aMonth);
+    /// @param year 月が所属する年。値の意味は CalendarPod::year と同じ。
+    /// @param month 月。値の意味は CalendarPod::month と同じ。
+    static int  DaysInMonth(int year, int month);
 
     u16 year;       ///< 年。 CalendarPod::YearMin <= val <= CalendarPod::YearMax 。0は西暦1年を示す。
     u16 month;      ///< 月。 CalendarPod::MonthMin <= val <= CalendarPod::MonthMax 。0は1月を示す。

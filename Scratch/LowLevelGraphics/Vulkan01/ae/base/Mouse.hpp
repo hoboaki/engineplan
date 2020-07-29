@@ -30,7 +30,7 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void Update(const MouseUpdateData& aData);
+    void Update(const MouseUpdateData& data);
 
     /// 前回の更新データを取得する。
     const MouseUpdateData LastUpdateData()const;
@@ -53,9 +53,9 @@ public:
 
     /// @name ボタンの状態取得
     //@{
-    bool IsHold(MouseBtnKind::EnumType aKind)const;    ///< 押されているか。
-    bool IsTrigger(MouseBtnKind::EnumType aKind)const; ///< 押された瞬間か。
-    bool IsRelease(MouseBtnKind::EnumType aKind)const; ///< 離された瞬間か。
+    bool IsHold(MouseBtnKind::EnumType kind)const;    ///< 押されているか。
+    bool IsTrigger(MouseBtnKind::EnumType kind)const; ///< 押された瞬間か。
+    bool IsRelease(MouseBtnKind::EnumType kind)const; ///< 離された瞬間か。
     //@}
 
     /// @name ボタンのビットセット取得

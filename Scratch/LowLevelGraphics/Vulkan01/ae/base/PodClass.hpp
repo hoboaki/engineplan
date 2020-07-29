@@ -24,7 +24,7 @@ public:
     typedef ::ae::base::PodStruct<T> StructType;
 
     PodClass() { StructType::Ref() = StructType::DefaultValue(); }   ///< 規定値で初期化される。
-    PodClass(const PodStruct<T>& aValue) { StructType::Ref() = aValue; } ///< 値を指定して初期化。
+    PodClass(const PodStruct<T>& value) { StructType::Ref() = value; } ///< 値を指定して初期化。
 
 private:
     typedef StructType SuperClass;

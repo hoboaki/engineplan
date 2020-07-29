@@ -40,9 +40,9 @@ IAllocator& IAllocator::Default()
 }
 
 //------------------------------------------------------------------------------
-void IAllocator::SetDefault(IAllocator& aAllocator)
+void IAllocator::SetDefault(IAllocator& allocator)
 {
-    tDefaultAllocator.ptr.Reset(&aAllocator);
+    tDefaultAllocator.ptr.Reset(&allocator);
 }
 
 //------------------------------------------------------------------------------
@@ -51,16 +51,16 @@ IAllocator& IAllocator::OperatorNewDelete()
     class OperatorNewDeleteAllocator : public IAllocator
     {
     public:
-        AE_BASE_OVERRIDE(ptr_t Alloc(pword_t aSize, pword_t aAlignment))
+        AE_BASE_OVERRIDE(ptr_t Alloc(pword_t size, pword_t alignment))
         {
-            AE_BASE_UNUSED(aAlignment);
-            void* ptr = ::operator new(aSize, std::nothrow_t());
-            AE_BASE_ASSERT_EQUALS(pword_t(ptr) % aAlignment, 0);
+            AE_BASE_UNUSED(alignment);
+            void* ptr = ::operator new(size, std::nothrow_t());
+            AE_BASE_ASSERT_EQUALS(pword_t(ptr) % alignment, 0);
             return static_cast<ptr_t>(ptr);
         }
-        AE_BASE_OVERRIDE(void Free(ptr_t aPtr))
+        AE_BASE_OVERRIDE(void Free(ptr_t ptr))
         {
-            ::operator delete(aPtr, std::nothrow_t());
+            ::operator delete(ptr, std::nothrow_t());
         }
     };
     static OperatorNewDeleteAllocator obj;
@@ -70,27 +70,27 @@ IAllocator& IAllocator::OperatorNewDelete()
 }} // namespace
 
 //------------------------------------------------------------------------------
-void* operator new(const std::size_t aSize, ::ae::base::IAllocator& aAllocator)
+void* operator new(const std::size_t size, ::ae::base::IAllocator& allocator)
 {
-    return aAllocator.Alloc(aSize);
+    return allocator.Alloc(size);
 }
 
 //------------------------------------------------------------------------------
-void* operator new[](const std::size_t aSize, ::ae::base::IAllocator& aAllocator)
+void* operator new[](const std::size_t size, ::ae::base::IAllocator& allocator)
 {
-    return aAllocator.Alloc(aSize);
+    return allocator.Alloc(size);
 }
 
 //------------------------------------------------------------------------------
-void operator delete(void* aPtr, ::ae::base::IAllocator& aAllocator)
+void operator delete(void* ptr, ::ae::base::IAllocator& allocator)
 {
-    aAllocator.Free(::ae::base::ptr_t(aPtr));
+    allocator.Free(::ae::base::ptr_t(ptr));
 }
 
 //------------------------------------------------------------------------------
-void operator delete[](void* aPtr, ::ae::base::IAllocator& aAllocator)
+void operator delete[](void* ptr, ::ae::base::IAllocator& allocator)
 {
-    aAllocator.Free(::ae::base::ptr_t(aPtr));
+    allocator.Free(::ae::base::ptr_t(ptr));
 }
 
 // EOF

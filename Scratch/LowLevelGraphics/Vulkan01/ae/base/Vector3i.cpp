@@ -186,248 +186,248 @@ const Vector3Pod Vector3iPod::ToXYZf()const
 }
 
 //------------------------------------------------------------------------------
-bool Vector3iPod::Equals(const Vector3iPod& aVec)const
+bool Vector3iPod::Equals(const Vector3iPod& vec)const
 {
-    return x == aVec.x
-        && y == aVec.y
-        && z == aVec.z
+    return x == vec.x
+        && y == vec.y
+        && z == vec.z
         ;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Add(const s32 aVal)const
+const Vector3iPod Vector3iPod::Add(const s32 val)const
 {
     Vector3i vec(*this);
-    vec.AddAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Sub(const s32 aVal)const
+const Vector3iPod Vector3iPod::Sub(const s32 val)const
 {
     Vector3i vec(*this);
-    vec.SubAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Mul(const s32 aVal)const
+const Vector3iPod Vector3iPod::Mul(const s32 val)const
 {
     Vector3i vec(*this);
-    vec.MulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Div(const s32 aVal)const
+const Vector3iPod Vector3iPod::Div(const s32 val)const
 {
     Vector3i vec(*this);
-    vec.DivAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Add(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Add(const Vector3iPod& val)const
 {
     Vector3i vec(*this);
-    vec.AddAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Sub(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Sub(const Vector3iPod& val)const
 {
     Vector3i vec(*this);
-    vec.SubAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Mul(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Mul(const Vector3iPod& val)const
 {
     Vector3i vec(*this);
-    vec.MulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Div(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Div(const Vector3iPod& val)const
 {
     Vector3i vec(*this);
-    vec.DivAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::AddAssign(const s32 aVal)
+void Vector3iPod::AddAssign(const s32 val)
 {
-    x += aVal;
-    y += aVal;
-    z += aVal;
+    x += val;
+    y += val;
+    z += val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::SubAssign(const s32 aVal)
+void Vector3iPod::SubAssign(const s32 val)
 {
-    x -= aVal;
-    y -= aVal;
-    z -= aVal;
+    x -= val;
+    y -= val;
+    z -= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::MulAssign(const s32 aVal)
+void Vector3iPod::MulAssign(const s32 val)
 {
-    x *= aVal;
-    y *= aVal;
-    z *= aVal;
+    x *= val;
+    y *= val;
+    z *= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::DivAssign(const s32 aVal)
+void Vector3iPod::DivAssign(const s32 val)
 {
-    if (aVal == 0) {
+    if (val == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    x /= aVal;
-    y /= aVal;
-    z /= aVal;
+    x /= val;
+    y /= val;
+    z /= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::AddAssign(const Vector3iPod& aVal)
+void Vector3iPod::AddAssign(const Vector3iPod& val)
 {
-    x += aVal.x;
-    y += aVal.y;
-    z += aVal.z;
+    x += val.x;
+    y += val.y;
+    z += val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::SubAssign(const Vector3iPod& aVal)
+void Vector3iPod::SubAssign(const Vector3iPod& val)
 {
-    x -= aVal.x;
-    y -= aVal.y;
-    z -= aVal.z;
+    x -= val.x;
+    y -= val.y;
+    z -= val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::MulAssign(const Vector3iPod& aVal)
+void Vector3iPod::MulAssign(const Vector3iPod& val)
 {
-    x *= aVal.x;
-    y *= aVal.y;
-    z *= aVal.z;
+    x *= val.x;
+    y *= val.y;
+    z *= val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3iPod::DivAssign(const Vector3iPod& aVal)
+void Vector3iPod::DivAssign(const Vector3iPod& val)
 {
-    AE_BASE_DIV_ASSIGN(x, aVal.x);
-    AE_BASE_DIV_ASSIGN(y, aVal.y);
-    AE_BASE_DIV_ASSIGN(z, aVal.z);
+    AE_BASE_DIV_ASSIGN(x, val.x);
+    AE_BASE_DIV_ASSIGN(y, val.y);
+    AE_BASE_DIV_ASSIGN(z, val.z);
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator+=(const s32 aVal)
+Vector3iPod& Vector3iPod::operator+=(const s32 val)
 {
-    AddAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator-=(const s32 aVal)
+Vector3iPod& Vector3iPod::operator-=(const s32 val)
 {
-    SubAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator*=(const s32 aVal)
+Vector3iPod& Vector3iPod::operator*=(const s32 val)
 {
-    MulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator/=(const s32 aVal)
+Vector3iPod& Vector3iPod::operator/=(const s32 val)
 {
-    DivAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator+=(const Vector3iPod& aVal)
+Vector3iPod& Vector3iPod::operator+=(const Vector3iPod& val)
 {
-    AddAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator-=(const Vector3iPod& aVal)
+Vector3iPod& Vector3iPod::operator-=(const Vector3iPod& val)
 {
-    SubAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator*=(const Vector3iPod& aVal)
+Vector3iPod& Vector3iPod::operator*=(const Vector3iPod& val)
 {
-    MulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3iPod& Vector3iPod::operator/=(const Vector3iPod& aVal)
+Vector3iPod& Vector3iPod::operator/=(const Vector3iPod& val)
 {
-    DivAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator+(const s32 aVal)const
+const Vector3iPod Vector3iPod::operator+(const s32 val)const
 {
-    return Add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator-(const s32 aVal)const
+const Vector3iPod Vector3iPod::operator-(const s32 val)const
 {
-    return Sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator*(const s32 aVal)const
+const Vector3iPod Vector3iPod::operator*(const s32 val)const
 {
-    return Mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator/(const s32 aVal)const
+const Vector3iPod Vector3iPod::operator/(const s32 val)const
 {
-    return Div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator+(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::operator+(const Vector3iPod& val)const
 {
-    return Add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator-(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::operator-(const Vector3iPod& val)const
 {
-    return Sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator*(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::operator*(const Vector3iPod& val)const
 {
-    return Mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::operator/(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::operator/(const Vector3iPod& val)const
 {
-    return Div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
@@ -437,32 +437,32 @@ const Vector3iPod Vector3iPod::operator-()const
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Min(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Min(const Vector3iPod& val)const
 {
     return Vector3i(
-        Math::Min(x, aVal.x),
-        Math::Min(y, aVal.y),
-        Math::Min(z, aVal.z)
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z)
         );
 }
 
 //------------------------------------------------------------------------------
-const Vector3iPod Vector3iPod::Max(const Vector3iPod& aVal)const
+const Vector3iPod Vector3iPod::Max(const Vector3iPod& val)const
 {
     return Vector3i(
-        Math::Max(x, aVal.x),
-        Math::Max(y, aVal.y),
-        Math::Max(z, aVal.z)
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z)
         );
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Clamp(
-    const Vector3iPod& aMin,
-    const Vector3iPod& aMax
+    const Vector3iPod& min,
+    const Vector3iPod& max
 )const
 {
-    return Max(aMin).Min(aMax);
+    return Max(min).Min(max);
 }
 
 //------------------------------------------------------------------------------
@@ -527,33 +527,33 @@ Vector3i::Vector3i()
 }
 
 //------------------------------------------------------------------------------
-Vector3i::Vector3i(const Vector3iPod& aVec)
-: Vector3iPod(aVec)
+Vector3i::Vector3i(const Vector3iPod& vec)
+: Vector3iPod(vec)
 {
 }
 
 //------------------------------------------------------------------------------
-Vector3i::Vector3i(const s32 aV)
+Vector3i::Vector3i(const s32 v)
 {
-    x = aV;
-    y = aV;
-    z = aV;
+    this->x = v;
+    this->y = v;
+    this->z = v;
 }
 
 //------------------------------------------------------------------------------
-Vector3i::Vector3i(const Vector2iPod& aXY, const s32 aZ)
+Vector3i::Vector3i(const Vector2iPod& xY, const s32 z)
 {
-    x = aXY.x;
-    y = aXY.y;
-    z = aZ;
+    this->x = xY.x;
+    this->y = xY.y;
+    this->z = z;
 }
 
 //------------------------------------------------------------------------------
-Vector3i::Vector3i(const s32 aX, const s32 aY, const s32 aZ)
+Vector3i::Vector3i(const s32 x, const s32 y, const s32 z)
 {
-    x = aX;
-    y = aY;
-    z = aZ;
+    this->x = x;
+    this->y = y;
+    this->z = z;
 }
 
 }} // namespace

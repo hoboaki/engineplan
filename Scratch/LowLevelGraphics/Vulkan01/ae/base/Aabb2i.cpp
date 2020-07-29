@@ -22,22 +22,22 @@ Aabb2i::Aabb2i()
 }
 
 //------------------------------------------------------------------------------
-Aabb2i::Aabb2i(const Vector2iPod& aBegin)
-: min_(aBegin)
+Aabb2i::Aabb2i(const Vector2iPod& begin)
+: min_(begin)
 , term_(min_)
 {
 }
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i(
-    const Vector2iPod& aBegin,
-    const int aWidth,
-    const int aHeight
+    const Vector2iPod& begin,
+    const int width,
+    const int height
     )
-: min_(aBegin)
+: min_(begin)
 , term_(
-    aBegin.x + reinterpret_cast<const int&>(aWidth),
-    aBegin.y + reinterpret_cast<const int&>(aHeight)
+    begin.x + reinterpret_cast<const int&>(width),
+    begin.y + reinterpret_cast<const int&>(height)
     )
 {
     AE_BASE_ASSERT_LESS_EQUALS(min_.x, term_.x);
@@ -101,100 +101,100 @@ const Aabb2i Aabb2i::ToPositive()const
 }
 
 //------------------------------------------------------------------------------
-const Aabb2i Aabb2i::Merge(const Aabb2i& aAABB)const
+const Aabb2i Aabb2i::Merge(const Aabb2i& aABB)const
 {
     Aabb2i aabb(*this);
-    aabb.MergeAssign(aAABB);
+    aabb.MergeAssign(aABB);
     return aabb;
 }
 
 //------------------------------------------------------------------------------
-void Aabb2i::MergeAssign(const Aabb2i& aAABB)
+void Aabb2i::MergeAssign(const Aabb2i& aABB)
 {
-    min_ = min_.Min(aAABB.min_);
-    term_ = term_.Max(aAABB.term_);
+    min_ = min_.Min(aABB.min_);
+    term_ = term_.Max(aABB.term_);
 }
 
 //------------------------------------------------------------------------------
-bool Aabb2i::IsIntersects(const Aabb2i& aAABB)const
+bool Aabb2i::IsIntersects(const Aabb2i& aABB)const
 {
-    return min_.x < aAABB.term_.x
-        && min_.y < aAABB.term_.y
-        && aAABB.min_.x < term_.x
-        && aAABB.min_.y < term_.y;
+    return min_.x < aABB.term_.x
+        && min_.y < aABB.term_.y
+        && aABB.min_.x < term_.x
+        && aABB.min_.y < term_.y;
 }
 
 //------------------------------------------------------------------------------
-bool Aabb2i::IsContains(const Vector2iPod& aPos)const
+bool Aabb2i::IsContains(const Vector2iPod& pos)const
 {
-    return min_.x <= aPos.x
-        && min_.y <= aPos.y
-        && aPos.x < term_.x
-        && aPos.y < term_.y;
+    return min_.x <= pos.x
+        && min_.y <= pos.y
+        && pos.x < term_.x
+        && pos.y < term_.y;
 }
 
 //------------------------------------------------------------------------------
-bool Aabb2i::IsContains(const Aabb2i& aAABB)const
+bool Aabb2i::IsContains(const Aabb2i& aABB)const
 {
-    return min_.x <= aAABB.min_.x
-        && min_.y <= aAABB.min_.y
-        && aAABB.term_.x <= term_.x
-        && aAABB.term_.y <= term_.y;
+    return min_.x <= aABB.min_.x
+        && min_.y <= aABB.min_.y
+        && aABB.term_.x <= term_.x
+        && aABB.term_.y <= term_.y;
 }
 
 //------------------------------------------------------------------------------
-const Aabb2i Aabb2i::Add(const Vector2iPod& aTrans)const
+const Aabb2i Aabb2i::Add(const Vector2iPod& trans)const
 {
     Aabb2i aabb = *this;
-    aabb.AddAssign(aTrans);
+    aabb.AddAssign(trans);
     return aabb;
 }
 
 //------------------------------------------------------------------------------
-const Aabb2i Aabb2i::Sub(const Vector2iPod& aTrans)const
+const Aabb2i Aabb2i::Sub(const Vector2iPod& trans)const
 {
     Aabb2i aabb = *this;
-    aabb.SubAssign(aTrans);
+    aabb.SubAssign(trans);
     return aabb;
 }
 
 //------------------------------------------------------------------------------
-void Aabb2i::AddAssign(const Vector2iPod& aTrans)
+void Aabb2i::AddAssign(const Vector2iPod& trans)
 {
-    min_ += aTrans;
-    term_ += aTrans;
+    min_ += trans;
+    term_ += trans;
 }
 
 //------------------------------------------------------------------------------
-void Aabb2i::SubAssign(const Vector2iPod& aTrans)
+void Aabb2i::SubAssign(const Vector2iPod& trans)
 {
-    min_ -= aTrans;
-    term_ -= aTrans;
+    min_ -= trans;
+    term_ -= trans;
 }
 
 //------------------------------------------------------------------------------
-const Aabb2i Aabb2i::operator+(const Vector2iPod& aTrans)const
+const Aabb2i Aabb2i::operator+(const Vector2iPod& trans)const
 {
-    return Add(aTrans);
+    return Add(trans);
 }
 
 //------------------------------------------------------------------------------
-const Aabb2i Aabb2i::operator-(const Vector2iPod& aTrans)const
+const Aabb2i Aabb2i::operator-(const Vector2iPod& trans)const
 {
-    return Sub(aTrans);
+    return Sub(trans);
 }
 
 //------------------------------------------------------------------------------
-Aabb2i& Aabb2i::operator+=(const Vector2iPod& aTrans)
+Aabb2i& Aabb2i::operator+=(const Vector2iPod& trans)
 {
-    AddAssign(aTrans);
+    AddAssign(trans);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Aabb2i& Aabb2i::operator-=(const Vector2iPod& aTrans)
+Aabb2i& Aabb2i::operator-=(const Vector2iPod& trans)
 {
-    SubAssign(aTrans);
+    SubAssign(trans);
     return *this;
 }
 

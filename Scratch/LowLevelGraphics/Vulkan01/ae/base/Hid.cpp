@@ -11,8 +11,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-Hid::Hid(Display& aDisplay)
-: display_(aDisplay)
+Hid::Hid(Display& display)
+: display_(display)
 , ext_()
 {
     display_.Ext_().hidPtr.Set(*this);

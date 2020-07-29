@@ -17,8 +17,8 @@ public:
     /// コンストラクタ
     //@{
     /// ポインタを指定して作成。
-    explicit ScopedPtr(T* aPtr = 0)
-        : ptr_(aPtr)
+    explicit ScopedPtr(T* ptr = 0)
+        : ptr_(ptr)
     {
     }
     //@}
@@ -61,7 +61,7 @@ public:
     }
 
     /// ポインタをリセットする。
-    void Reset(T* aPtr)
+    void Reset(T* ptr)
     {
         T* ptr = ptr_;
         ptr_ = 0;
@@ -69,7 +69,7 @@ public:
         {
             delete ptr;
         }
-        ptr_ = aPtr;
+        ptr_ = ptr;
     }
     //@}
 

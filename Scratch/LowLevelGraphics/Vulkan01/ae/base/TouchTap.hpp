@@ -24,7 +24,7 @@ public:
     /// @name 更新
     //@{
     /// 状態を更新する。
-    void Update(const TouchTapUpdateData& aData);
+    void Update(const TouchTapUpdateData& data);
 
     /// 前回の更新データを取得する。
     const TouchTapUpdateData LastUpdateData()const;

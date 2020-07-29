@@ -97,18 +97,18 @@ Color4b::Color4b()
 }
 
 //------------------------------------------------------------------------------
-Color4b::Color4b(const Color4bPod& aCol)
-: Color4bPod(aCol)
+Color4b::Color4b(const Color4bPod& col)
+: Color4bPod(col)
 {
 }
 
 //------------------------------------------------------------------------------
-Color4b::Color4b(const u8 aR, const u8 aG, const u8 aB, const u8 aA)
+Color4b::Color4b(const u8 r, const u8 g, const u8 b, const u8 a)
 {
-    r = aR;
-    g = aG;
-    b = aB;
-    a = aA;
+    this->r = r;
+    this->g = g;
+    this->b = b;
+    this->a = a;
 }
 
 }} // namespace

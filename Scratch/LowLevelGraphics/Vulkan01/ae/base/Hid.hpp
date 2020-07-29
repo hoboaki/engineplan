@@ -46,7 +46,7 @@ public:
     int           KeyboardCount()const;
 
     /// 指定番目のキーボードを取得。
-    const base::Keyboard KeyboardAtIndex(int aIndex) const;
+    const base::Keyboard KeyboardAtIndex(int index) const;
 
     /// @brief 存在する環境なら0番のキーボードを取得する。
     /// @details 
@@ -60,7 +60,7 @@ public:
     int           MouseCount()const;
 
     /// 指定番目のマウスを取得。
-    const base::Mouse MouseAtIndex(int aIndex) const;
+    const base::Mouse MouseAtIndex(int index) const;
 
     /// @brief 存在する環境なら0番のマウスを取得する。
     /// @details 
@@ -79,7 +79,7 @@ public:
     int TouchCount()const;
 
     /// 指定番目のタッチデバイスの取得。
-    const base::Touch TouchAtIndex(int aIndex) const;
+    const base::Touch TouchAtIndex(int index) const;
 
     /// @brief 存在する環境なら0番のタッチデバイスを取得する。
     /// @details 

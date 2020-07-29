@@ -128,7 +128,7 @@ struct Vector3Pod
     //============================================================
     /// @name クランプ
     //@{
-    const Vector3Pod Clamp(const Vector3Pod& aMin, const Vector3Pod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
+    const Vector3Pod Clamp(const Vector3Pod& min, const Vector3Pod& max)const; ///< min以上aMax以下になるようにクランプする。
     const Vector3Pod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
     const Vector3Pod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
@@ -176,10 +176,10 @@ public:
     /// @name コンストラクタ
     //@{
     Vector3(); ///< Zero() で作成。
-    Vector3(const Vector3Pod& aXYZ); ///< コピーして作成。
-    Vector3(f32 aV); ///< 全要素同じ値で作成。
-    Vector3(const Vector2Pod& aXY, f32 aZ); ///< XYZを指定して作成。
-    Vector3(f32 aX, f32 aY, f32 aZ); ///< XYZを指定して作成。
+    Vector3(const Vector3Pod& xYZ); ///< コピーして作成。
+    Vector3(f32 v); ///< 全要素同じ値で作成。
+    Vector3(const Vector2Pod& xY, f32 z); ///< XYZを指定して作成。
+    Vector3(f32 x, f32 y, f32 z); ///< XYZを指定して作成。
     //@}
 };
 

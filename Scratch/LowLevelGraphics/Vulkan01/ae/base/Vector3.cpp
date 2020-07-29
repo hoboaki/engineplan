@@ -180,251 +180,251 @@ const Vector4Pod Vector3Pod::ToZZZZ()const
 }
 
 //------------------------------------------------------------------------------
-bool Vector3Pod::Equals(const Vector3Pod& aVec)const
+bool Vector3Pod::Equals(const Vector3Pod& vec)const
 {
-    return Math::IsEqualsF32(x, aVec.x)
-        && Math::IsEqualsF32(y, aVec.y)
-        && Math::IsEqualsF32(z, aVec.z);
+    return Math::IsEqualsF32(x, vec.x)
+        && Math::IsEqualsF32(y, vec.y)
+        && Math::IsEqualsF32(z, vec.z);
 }
 
 //------------------------------------------------------------------------------
-bool Vector3Pod::EqualsStrict(const Vector3Pod& aVec)const
+bool Vector3Pod::EqualsStrict(const Vector3Pod& vec)const
 {
-    return x == aVec.x && y == aVec.y && z == aVec.z;
+    return x == vec.x && y == vec.y && z == vec.z;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Add(const float aVal)const
+const Vector3Pod Vector3Pod::Add(const float val)const
 {
     Vector3 vec(*this);
-    vec.AddAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Sub(const float aVal)const
+const Vector3Pod Vector3Pod::Sub(const float val)const
 {
     Vector3 vec(*this);
-    vec.SubAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Mul(const float aVal)const
+const Vector3Pod Vector3Pod::Mul(const float val)const
 {
     Vector3 vec(*this);
-    vec.MulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Div(const float aVal)const
+const Vector3Pod Vector3Pod::Div(const float val)const
 {
     Vector3 vec(*this);
-    vec.DivAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Add(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Add(const Vector3Pod& val)const
 {
     Vector3 vec(*this);
-    vec.AddAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Sub(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Sub(const Vector3Pod& val)const
 {
     Vector3 vec(*this);
-    vec.SubAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Mul(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Mul(const Vector3Pod& val)const
 {
     Vector3 vec(*this);
-    vec.MulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Div(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Div(const Vector3Pod& val)const
 {
     Vector3 vec(*this);
-    vec.DivAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::AddAssign(const float aVal)
+void Vector3Pod::AddAssign(const float val)
 {
-    x += aVal;
-    y += aVal;
-    z += aVal;
+    x += val;
+    y += val;
+    z += val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::SubAssign(const float aVal)
+void Vector3Pod::SubAssign(const float val)
 {
-    x -= aVal;
-    y -= aVal;
-    z -= aVal;
+    x -= val;
+    y -= val;
+    z -= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::MulAssign(const float aVal)
+void Vector3Pod::MulAssign(const float val)
 {
-    x *= aVal;
-    y *= aVal;
-    z *= aVal;
+    x *= val;
+    y *= val;
+    z *= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::DivAssign(const float aVal)
+void Vector3Pod::DivAssign(const float val)
 {
-    if (aVal == 0) {
+    if (val == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    MulAssign(1.0f / aVal);
+    MulAssign(1.0f / val);
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::AddAssign(const Vector3Pod& aVal)
+void Vector3Pod::AddAssign(const Vector3Pod& val)
 {
-    x += aVal.x;
-    y += aVal.y;
-    z += aVal.z;
+    x += val.x;
+    y += val.y;
+    z += val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::SubAssign(const Vector3Pod& aVal)
+void Vector3Pod::SubAssign(const Vector3Pod& val)
 {
-    x -= aVal.x;
-    y -= aVal.y;
-    z -= aVal.z;
+    x -= val.x;
+    y -= val.y;
+    z -= val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::MulAssign(const Vector3Pod& aVal)
+void Vector3Pod::MulAssign(const Vector3Pod& val)
 {
-    x *= aVal.x;
-    y *= aVal.y;
-    z *= aVal.z;
+    x *= val.x;
+    y *= val.y;
+    z *= val.z;
 }
 
 //------------------------------------------------------------------------------
-void Vector3Pod::DivAssign(const Vector3Pod& aVal)
+void Vector3Pod::DivAssign(const Vector3Pod& val)
 {
-    AE_BASE_DIV_ASSIGN(x, aVal.x);
-    AE_BASE_DIV_ASSIGN(y, aVal.y);
-    AE_BASE_DIV_ASSIGN(z, aVal.z);
+    AE_BASE_DIV_ASSIGN(x, val.x);
+    AE_BASE_DIV_ASSIGN(y, val.y);
+    AE_BASE_DIV_ASSIGN(z, val.z);
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator+=(const float aVal)
+Vector3Pod& Vector3Pod::operator+=(const float val)
 {
-    AddAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator-=(const float aVal)
+Vector3Pod& Vector3Pod::operator-=(const float val)
 {
-    SubAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator*=(const float aVal)
+Vector3Pod& Vector3Pod::operator*=(const float val)
 {
-    MulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator/=(const float aVal)
+Vector3Pod& Vector3Pod::operator/=(const float val)
 {
-    DivAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator+=(const Vector3Pod& aVal)
+Vector3Pod& Vector3Pod::operator+=(const Vector3Pod& val)
 {
-    AddAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator-=(const Vector3Pod& aVal)
+Vector3Pod& Vector3Pod::operator-=(const Vector3Pod& val)
 {
-    SubAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator*=(const Vector3Pod& aVal)
+Vector3Pod& Vector3Pod::operator*=(const Vector3Pod& val)
 {
-    MulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector3Pod& Vector3Pod::operator/=(const Vector3Pod& aVal)
+Vector3Pod& Vector3Pod::operator/=(const Vector3Pod& val)
 {
-    DivAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator+(const float aVal)const
+const Vector3Pod Vector3Pod::operator+(const float val)const
 {
-    return Add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator-(const float aVal)const
+const Vector3Pod Vector3Pod::operator-(const float val)const
 {
-    return Sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator*(const float aVal)const
+const Vector3Pod Vector3Pod::operator*(const float val)const
 {
-    return Mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator/(const float aVal)const
+const Vector3Pod Vector3Pod::operator/(const float val)const
 {
-    return Div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator+(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::operator+(const Vector3Pod& val)const
 {
-    return Add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator-(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::operator-(const Vector3Pod& val)const
 {
-    return Sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator*(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::operator*(const Vector3Pod& val)const
 {
-    return Mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::operator/(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::operator/(const Vector3Pod& val)const
 {
-    return Div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
@@ -434,33 +434,33 @@ const Vector3Pod Vector3Pod::operator-()const
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Min(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Min(const Vector3Pod& val)const
 {
     return Vector3(
-        Math::Min(x, aVal.x),
-        Math::Min(y, aVal.y),
-        Math::Min(z, aVal.z)
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z)
         );
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Max(const Vector3Pod& aVal)const
+const Vector3Pod Vector3Pod::Max(const Vector3Pod& val)const
 {
     return Vector3(
-        Math::Max(x, aVal.x),
-        Math::Max(y, aVal.y),
-        Math::Max(z, aVal.z)
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z)
         );
 }
 
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Clamp(
-    const Vector3Pod& aMin,
-    const Vector3Pod& aMax
+    const Vector3Pod& min,
+    const Vector3Pod& max
 )const
 {
-    return Max(aMin).Min(aMax);
+    return Max(min).Min(max);
 }
 
 //------------------------------------------------------------------------------
@@ -506,9 +506,9 @@ f32 Vector3Pod::Length()const
 }
 
 //------------------------------------------------------------------------------
-f32 Vector3Pod::Distance(const Vector3Pod& aVal)const
+f32 Vector3Pod::Distance(const Vector3Pod& val)const
 {
-    return Sub(aVal).Length();
+    return Sub(val).Length();
 }
 
 //------------------------------------------------------------------------------
@@ -548,18 +548,18 @@ void Vector3Pod::UnitAssign()
 }
 
 //------------------------------------------------------------------------------
-f32 Vector3Pod::Dot(const Vector3Pod& aVec)const
+f32 Vector3Pod::Dot(const Vector3Pod& vec)const
 {
-    return x * aVec.x + y * aVec.y + z * aVec.z;
+    return x * vec.x + y * vec.y + z * vec.z;
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Cross(const Vector3Pod& aVec)const
+const Vector3Pod Vector3Pod::Cross(const Vector3Pod& vec)const
 {
     return Vector3(
-        y * aVec.z - z * aVec.y,
-        z * aVec.x - x * aVec.z,
-        x * aVec.y - y * aVec.x
+        y * vec.z - z * vec.y,
+        z * vec.x - x * vec.z,
+        x * vec.y - y * vec.x
         );
 }
 
@@ -581,33 +581,33 @@ Vector3::Vector3()
 }
 
 //------------------------------------------------------------------------------
-Vector3::Vector3(const Vector3Pod& aVec)
-: Vector3Pod(aVec)
+Vector3::Vector3(const Vector3Pod& vec)
+: Vector3Pod(vec)
 {
 }
 
 //------------------------------------------------------------------------------
-Vector3::Vector3(const float aV)
+Vector3::Vector3(const float v)
 {
-    x = aV;
-    y = aV;
-    z = aV;
+    this->x = v;
+    this->y = v;
+    this->z = v;
 }
 
 //------------------------------------------------------------------------------
-Vector3::Vector3(const Vector2Pod& aXY, const float aZ)
+Vector3::Vector3(const Vector2Pod& xY, const float z)
 {
-    x = aXY.x;
-    y = aXY.y;
-    z = aZ;
+    this->x = xY.x;
+    this->y = xY.y;
+    this->z = z;
 }
 
 //------------------------------------------------------------------------------
-Vector3::Vector3(const float aX, const float aY, const float aZ)
+Vector3::Vector3(const float x, const float y, const float z)
 {
-    x = aX;
-    y = aY;
-    z = aZ;
+    this->x = x;
+    this->y = y;
+    this->z = z;
 }
 
 }} // namespace

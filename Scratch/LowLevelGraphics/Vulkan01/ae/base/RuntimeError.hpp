@@ -24,9 +24,9 @@ struct RuntimeError
     static IRuntimeErrorCallback& DefaultCallback();
 
     /// @brief エラー時に使用するコールバックオブジェクトを設定する。
-    /// @param aCallback 設定するコールバックオブジェクト。
+    /// @param callback 設定するコールバックオブジェクト。
     /// @see OnError
-    static void SetCallback(IRuntimeErrorCallback& aCallback);
+    static void SetCallback(IRuntimeErrorCallback& callback);
 
     /// @brief エラーが起きたときに呼ばれる関数。
     /// @details 実行時エラーが有効なビルドバージョンなら設定されているコールバックを呼びます。

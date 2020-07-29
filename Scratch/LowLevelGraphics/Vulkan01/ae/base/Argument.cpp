@@ -10,15 +10,15 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Argument::Argument(
-    const int aArgCount,
-    const char* const* aArgValues,
-    const char* aExeFileName,
-    const char* aExeDirPath
+    const int argCount,
+    const char* const* argValues,
+    const char* exeFileName,
+    const char* exeDirPath
     )
-: argCount_(aArgCount)
-, argValues_(aArgValues)
-, exeFileName_(aExeFileName)
-, exeDirPath_(aExeDirPath)
+: argCount_(argCount)
+, argValues_(argValues)
+, exeFileName_(exeFileName)
+, exeDirPath_(exeDirPath)
 {
 }
 
@@ -29,11 +29,11 @@ int Argument::ArgCount()const
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::ArgValue(const int aIndex)const
+const char* Argument::ArgValue(const int index)const
 {
     // 範囲外チェック
-    if (argCount_ <= aIndex) {
-        AE_BASE_ERROR_INVALID_VALUE(aIndex);
+    if (argCount_ <= index) {
+        AE_BASE_ERROR_INVALID_VALUE(index);
         return "";
     }
 
@@ -43,7 +43,7 @@ const char* Argument::ArgValue(const int aIndex)const
     }
 
     // 文字列ポインタチェック
-    const char* value = argValues_[aIndex];
+    const char* value = argValues_[index];
     if (PointerCheck::InvalidCheck(value)) {
         return "";
     }

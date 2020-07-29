@@ -33,15 +33,15 @@ Radian::Radian()
 }
 
 //------------------------------------------------------------------------------
-Radian::Radian(const float aRadian)
+Radian::Radian(const float radian)
 : RadianPod()
 {
-    value = aRadian;
+    value = radian;
 }
 
 //------------------------------------------------------------------------------
-Radian::Radian(const RadianPod& aVal)
-: RadianPod(aVal)
+Radian::Radian(const RadianPod& val)
+: RadianPod(val)
 {
 }
 

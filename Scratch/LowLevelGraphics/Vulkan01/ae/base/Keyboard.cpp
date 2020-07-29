@@ -16,11 +16,11 @@ Keyboard::Keyboard()
 }
 
 //------------------------------------------------------------------------------
-void Keyboard::Update(const KeyboardUpdateData& aData)
+void Keyboard::Update(const KeyboardUpdateData& data)
 {
     // データ設定
     const KeyboardUpdateData  pre = data_;
-    data_ = aData;
+    data_ = data;
     const KeyboardUpdateData& cur = data_;
 
     // 更新
@@ -37,33 +37,33 @@ const KeyboardUpdateData Keyboard::LastUpdateData()const
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsHold(const KeyKind::EnumType aKind)const
+bool Keyboard::IsHold(const KeyKind::EnumType kind)const
 {
-    return data_.hold.Get(aKind);
+    return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsTrigger(const KeyKind::EnumType aKind)const
+bool Keyboard::IsTrigger(const KeyKind::EnumType kind)const
 {
-    return trigger_.Get(aKind);
+    return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsRepeat(const KeyKind::EnumType aKind)const
+bool Keyboard::IsRepeat(const KeyKind::EnumType kind)const
 {
-    return repeat_.Get(aKind);
+    return repeat_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsPulse(const KeyKind::EnumType aKind)const
+bool Keyboard::IsPulse(const KeyKind::EnumType kind)const
 {
-    return pulse_.Get(aKind);
+    return pulse_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsRelease(const KeyKind::EnumType aKind)const
+bool Keyboard::IsRelease(const KeyKind::EnumType kind)const
 {
-    return release_.Get(aKind);
+    return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------

@@ -18,13 +18,13 @@ public:
     /// @name コンストラクタ
     //@{
     FrameCounter(); ///< 総フレーム数0で作成。
-    FrameCounter(int aTotalFrame); ///< 総フレーム数を指定して作成。
+    FrameCounter(int totalFrame); ///< 総フレーム数を指定して作成。
     //@{
 
     /// @name リセット
     //@{
     void Reset(); ///< 設定済みの総フレーム数でリセット。
-    void Reset(int aTotalFrame); ///< 新しい総フレーム数を指定してリセット。
+    void Reset(int totalFrame); ///< 新しい総フレーム数を指定してリセット。
     //@}
 
     /// @name 更新

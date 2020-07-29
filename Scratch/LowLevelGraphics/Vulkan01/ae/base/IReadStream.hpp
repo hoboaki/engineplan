@@ -24,25 +24,25 @@ public:
     virtual pword_t RequireReadBufferAlignment()const = 0;
 
     /// @brief 指定のデータサイズを読み込む時に必要なバッファサイズを求める。
-    /// @param aSize 読み込みデータサイズ。
+    /// @param size 読み込みデータサイズ。
     /// @details
     /// 実行環境によっては実際のデータサイズよりも大きいバッファサイズを要求することがあるため、
     /// バッファ領域は必ずこの関数で求められたサイズを確保してください。
-    virtual pword_t CalcReadBufferSize(pword_t aSize)const = 0;
+    virtual pword_t CalcReadBufferSize(pword_t size)const = 0;
 
     /// @brief ストリームの位置を変更し変更後の位置を取得する。
     /// @return 変更後の位置。0は先頭を示す。
-    /// @param aOffset aOriginを基準としたオフセット位置。
-    /// @param aOrigin 変更の基準。
-    virtual pword_t Seek(int aOffset, SeekOrigin::EnumType aOrigin) = 0;
+    /// @param offset originを基準としたオフセット位置。
+    /// @param origin 変更の基準。
+    virtual pword_t Seek(int offset, SeekOrigin::EnumType origin) = 0;
 
     /// @brief データを読み込む。
     /// @return 実際に読み込んだバイト数。
-    /// @param aBuffer 読み込んだデータを格納するバッファの先頭アドレス。
-    /// @param aSize 読み込むバイト数。
+    /// @param buffer 読み込んだデータを格納するバッファの先頭アドレス。
+    /// @param size 読み込むバイト数。
     /// @details
     /// バッファには CalcReadBufferSize() で求められたサイズ分書き込まれるので注意してください。
-    virtual pword_t Read(ptr_t aBuffer, pword_t aSize) = 0;
+    virtual pword_t Read(ptr_t buffer, pword_t size) = 0;
 
     /// @brief 開いているストリームを閉じる。
     /// @details 

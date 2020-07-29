@@ -27,16 +27,16 @@ struct Math
 
     /// 最小値を取得する。
     template< typename T >
-    static const T Min(const T aA1, const T aA2)
+    static const T Min(const T a1, const T a2)
     {
-        return aA1 < aA2 ? aA1 : aA2;
+        return a1 < a2 ? a1 : a2;
     }
 
     /// 最大値を取得する。
     template< typename T >
-    static const T Max(const T aA1, const T aA2)
+    static const T Max(const T a1, const T a2)
     {
-        return aA1 < aA2 ? aA2 : aA1;
+        return a1 < a2 ? a2 : a1;
     }
 
     //@}
@@ -45,14 +45,14 @@ struct Math
     /// @name 符号操作
     //@{
     /// 絶対値を取得する。
-    static f32 AbsF32(f32 aVal)
+    static f32 AbsF32(f32 val)
     {
-        return aVal < 0 ? -1.0f * aVal : aVal;
+        return val < 0 ? -1.0f * val : val;
     }
     /// 絶対値を取得する。
-    static s32 AbsS32(s32 aVal)
+    static s32 AbsS32(s32 val)
     {
-        return aVal < 0 ? -1 * aVal : aVal;
+        return val < 0 ? -1 * val : val;
     }
     //@}
 
@@ -60,32 +60,32 @@ struct Math
     /// @name 範囲
     //@{
     /// @brief 汎用的なクランプ。
-    /// @return aMin <= result <= aMax
-    /// @param aValue 対象となる値。
-    /// @param aMin 最小値。
-    /// @param aMax 最大値。
+    /// @return min <= result <= max
+    /// @param value 対象となる値。
+    /// @param min 最小値。
+    /// @param max 最大値。
     template <typename T>
-    static T Clamp(T aValue, T aMin, T aMax)
+    static T Clamp(T value, T min, T max)
     { 
-        AE_BASE_ASSERT_LESS_EQUALS(aMin, aMax);
-        if (aValue < aMin) {
-            return aMin;
-        } else if (aMax < aValue) {
-            return aMax;
+        AE_BASE_ASSERT_LESS_EQUALS(min, max);
+        if (value < min) {
+            return min;
+        } else if (max < value) {
+            return max;
         }
-        return aValue;
+        return value;
     }
 
     /// @brief クランプする。
-    /// @return aMin <= result <= aMax
-    /// @param aValue 対象となる値。
-    /// @param aMin 最小値。
-    /// @param aMax 最大値。
-    static f32 ClampF32(f32 aValue, f32 aMin, f32 aMax);
+    /// @return min <= result <= max
+    /// @param value 対象となる値。
+    /// @param min 最小値。
+    /// @param max 最大値。
+    static f32 ClampF32(f32 value, f32 min, f32 max);
 
     /// @brief 範囲内の値か。
-    /// @return aMin <= aValue <= aMax ならtrue。
-    static bool IsInRangeF32(f32 aValue, f32 aMin, f32 aMax);
+    /// @return min <= value <= max ならtrue。
+    static bool IsInRangeF32(f32 value, f32 min, f32 max);
     //@}
 
     //============================================================
@@ -126,14 +126,14 @@ struct Math
     //@{
 
     /// @brief ２つの値を指定のレートで補間する。
-    /// @param aVal1 aRate == 0.0f のときに100%で返される値。
-    /// @param aVal2 aRate == 1.0f のときに100%で返される値。
-    /// @param aRate レート値。0.0f <= aRate <= 1.0f。
+    /// @param val1 rate == 0.0f のときに100%で返される値。
+    /// @param val2 rate == 1.0f のときに100%で返される値。
+    /// @param rate レート値。0.0f <= rate <= 1.0f。
     template< typename T >
-    static const T Interpolation(const T& aVal1, const T& aVal2, const f32 aRate)
+    static const T Interpolation(const T& val1, const T& val2, const f32 rate)
     {
-        AE_BASE_ASSERT_MIN_MAX(aRate, 0.0f, 1.0f);
-        return aVal1 + (aVal2 - aVal1) * aRate;
+        AE_BASE_ASSERT_MIN_MAX(rate, 0.0f, 1.0f);
+        return val1 + (val2 - val1) * rate;
     }
     //@}
 };
