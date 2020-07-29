@@ -23,12 +23,12 @@ public:
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
         /// @name WindowSystem環境でのカスタマイズ
         //@{
-    void setLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
-    int locationX()const;
-    int locationY()const;
-    int width()const;
-    int height()const;
-    bool isScreenDoubleBuffer()const;
+    void SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
+    int LocationX()const;
+    int LocationY()const;
+    int Width()const;
+    int Height()const;
+    bool IsScreenDoubleBuffer()const;
     //@}
 #endif
 

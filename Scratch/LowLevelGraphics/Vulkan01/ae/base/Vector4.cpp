@@ -98,474 +98,474 @@ const Vector4Pod Vector4Pod::NegUnitW()
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector4Pod::toXY()const
+const Vector2Pod Vector4Pod::ToXY()const
 {
     return Vector2(x, y);
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector4Pod::toXX()const
+const Vector2Pod Vector4Pod::ToXX()const
 {
     return Vector2(x, x);
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector4Pod::toYY()const
+const Vector2Pod Vector4Pod::ToYY()const
 {
     return Vector2(y, y);
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector4Pod::toZZ()const
+const Vector2Pod Vector4Pod::ToZZ()const
 {
     return Vector2(z, z);
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector4Pod::toWW()const
+const Vector2Pod Vector4Pod::ToWW()const
 {
     return Vector2(w, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector4Pod::toXYZ()const
+const Vector3Pod Vector4Pod::ToXYZ()const
 {
     return Vector3(x, y, z);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector4Pod::toXXX()const
+const Vector3Pod Vector4Pod::ToXXX()const
 {
     return Vector3(x, x, x);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector4Pod::toYYY()const
+const Vector3Pod Vector4Pod::ToYYY()const
 {
     return Vector3(y, y, y);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector4Pod::toZZZ()const
+const Vector3Pod Vector4Pod::ToZZZ()const
 {
     return Vector3(z, z, z);
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector4Pod::toWWW()const
+const Vector3Pod Vector4Pod::ToWWW()const
 {
     return Vector3(w, w, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toXYZ0()const
+const Vector4Pod Vector4Pod::ToXYZ0()const
 {
     return Vector4(x, y, z, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toXY0W()const
+const Vector4Pod Vector4Pod::ToXY0W()const
 {
     return Vector4(x, y, 0, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toXY00()const
+const Vector4Pod Vector4Pod::ToXY00()const
 {
     return Vector4(x, y, 0, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toX0ZW()const
+const Vector4Pod Vector4Pod::ToX0ZW()const
 {
     return Vector4(x, 0, z, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toX0Z0()const
+const Vector4Pod Vector4Pod::ToX0Z0()const
 {
     return Vector4(x, 0, z, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toX00W()const
+const Vector4Pod Vector4Pod::ToX00W()const
 {
     return Vector4(x, 0, 0, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toX000()const
+const Vector4Pod Vector4Pod::ToX000()const
 {
     return Vector4(x, 0, 0, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to0YZ0()const
+const Vector4Pod Vector4Pod::To0YZ0()const
 {
     return Vector4(0, y, z, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to0Y0W()const
+const Vector4Pod Vector4Pod::To0Y0W()const
 {
     return Vector4(0, y, 0, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to0Y00()const
+const Vector4Pod Vector4Pod::To0Y00()const
 {
     return Vector4(0, y, 0, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to00ZW()const
+const Vector4Pod Vector4Pod::To00ZW()const
 {
     return Vector4(0, 0, z, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to00Z0()const
+const Vector4Pod Vector4Pod::To00Z0()const
 {
     return Vector4(0, 0, z, 0);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::to000W()const
+const Vector4Pod Vector4Pod::To000W()const
 {
     return Vector4(0, 0, 0, w);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toXXXX()const
+const Vector4Pod Vector4Pod::ToXXXX()const
 {
     return Vector4(x, x, x, x);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toYYYY()const
+const Vector4Pod Vector4Pod::ToYYYY()const
 {
     return Vector4(y, y, y, y);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toZZZZ()const
+const Vector4Pod Vector4Pod::ToZZZZ()const
 {
     return Vector4(z, z, z, z);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::toWWWW()const
+const Vector4Pod Vector4Pod::ToWWWW()const
 {
     return Vector4(w, w, w, w);
 }
 
 //------------------------------------------------------------------------------
-bool Vector4Pod::equals(const Vector4Pod& aVec)const
+bool Vector4Pod::Equals(const Vector4Pod& vec)const
 {
-    return Math::IsEqualsF32(x, aVec.x)
-        && Math::IsEqualsF32(y, aVec.y)
-        && Math::IsEqualsF32(z, aVec.z)
-        && Math::IsEqualsF32(w, aVec.w);
+    return Math::IsEqualsF32(x, vec.x)
+        && Math::IsEqualsF32(y, vec.y)
+        && Math::IsEqualsF32(z, vec.z)
+        && Math::IsEqualsF32(w, vec.w);
 }
 
 //------------------------------------------------------------------------------
-bool Vector4Pod::equalsStrict(const Vector4Pod& aVec)const
+bool Vector4Pod::EqualsStrict(const Vector4Pod& vec)const
 {
-    return x == aVec.x && y == aVec.y && z == aVec.z && w == aVec.w;
+    return x == vec.x && y == vec.y && z == vec.z && w == vec.w;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::add(const float aVal)const
+const Vector4Pod Vector4Pod::Add(const float val)const
 {
     Vector4 vec(*this);
-    vec.addAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::sub(const float aVal)const
+const Vector4Pod Vector4Pod::Sub(const float val)const
 {
     Vector4 vec(*this);
-    vec.subAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::mul(const float aVal)const
+const Vector4Pod Vector4Pod::Mul(const float val)const
 {
     Vector4 vec(*this);
-    vec.mulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::div(const float aVal)const
+const Vector4Pod Vector4Pod::Div(const float val)const
 {
     Vector4 vec(*this);
-    vec.divAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::add(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Add(const Vector4Pod& val)const
 {
     Vector4 vec(*this);
-    vec.addAssign(aVal);
+    vec.AddAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::sub(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Sub(const Vector4Pod& val)const
 {
     Vector4 vec(*this);
-    vec.subAssign(aVal);
+    vec.SubAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::mul(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Mul(const Vector4Pod& val)const
 {
     Vector4 vec(*this);
-    vec.mulAssign(aVal);
+    vec.MulAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::div(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Div(const Vector4Pod& val)const
 {
     Vector4 vec(*this);
-    vec.divAssign(aVal);
+    vec.DivAssign(val);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::addAssign(const float aVal)
+void Vector4Pod::AddAssign(const float val)
 {
-    x += aVal;
-    y += aVal;
-    z += aVal;
-    w += aVal;
+    x += val;
+    y += val;
+    z += val;
+    w += val;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::subAssign(const float aVal)
+void Vector4Pod::SubAssign(const float val)
 {
-    x -= aVal;
-    y -= aVal;
-    z -= aVal;
-    w -= aVal;
+    x -= val;
+    y -= val;
+    z -= val;
+    w -= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::mulAssign(const float aVal)
+void Vector4Pod::MulAssign(const float val)
 {
-    x *= aVal;
-    y *= aVal;
-    z *= aVal;
-    w *= aVal;
+    x *= val;
+    y *= val;
+    z *= val;
+    w *= val;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::divAssign(const float aVal)
+void Vector4Pod::DivAssign(const float val)
 {
-    if (aVal == 0) {
+    if (val == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    mulAssign(1.0f / aVal);
+    MulAssign(1.0f / val);
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::addAssign(const Vector4Pod& aVal)
+void Vector4Pod::AddAssign(const Vector4Pod& val)
 {
-    x += aVal.x;
-    y += aVal.y;
-    z += aVal.z;
-    w += aVal.w;
+    x += val.x;
+    y += val.y;
+    z += val.z;
+    w += val.w;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::subAssign(const Vector4Pod& aVal)
+void Vector4Pod::SubAssign(const Vector4Pod& val)
 {
-    x -= aVal.x;
-    y -= aVal.y;
-    z -= aVal.z;
-    w -= aVal.w;
+    x -= val.x;
+    y -= val.y;
+    z -= val.z;
+    w -= val.w;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::mulAssign(const Vector4Pod& aVal)
+void Vector4Pod::MulAssign(const Vector4Pod& val)
 {
-    x *= aVal.x;
-    y *= aVal.y;
-    z *= aVal.z;
-    w *= aVal.w;
+    x *= val.x;
+    y *= val.y;
+    z *= val.z;
+    w *= val.w;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::divAssign(const Vector4Pod& aVal)
+void Vector4Pod::DivAssign(const Vector4Pod& val)
 {
-    AE_BASE_DIV_ASSIGN(x, aVal.x);
-    AE_BASE_DIV_ASSIGN(y, aVal.y);
-    AE_BASE_DIV_ASSIGN(z, aVal.z);
-    AE_BASE_DIV_ASSIGN(w, aVal.w);
+    AE_BASE_DIV_ASSIGN(x, val.x);
+    AE_BASE_DIV_ASSIGN(y, val.y);
+    AE_BASE_DIV_ASSIGN(z, val.z);
+    AE_BASE_DIV_ASSIGN(w, val.w);
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator+=(const float aVal)
+Vector4Pod& Vector4Pod::operator+=(const float val)
 {
-    addAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator-=(const float aVal)
+Vector4Pod& Vector4Pod::operator-=(const float val)
 {
-    subAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator*=(const float aVal)
+Vector4Pod& Vector4Pod::operator*=(const float val)
 {
-    mulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator/=(const float aVal)
+Vector4Pod& Vector4Pod::operator/=(const float val)
 {
-    divAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator+=(const Vector4Pod& aVal)
+Vector4Pod& Vector4Pod::operator+=(const Vector4Pod& val)
 {
-    addAssign(aVal);
+    AddAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator-=(const Vector4Pod& aVal)
+Vector4Pod& Vector4Pod::operator-=(const Vector4Pod& val)
 {
-    subAssign(aVal);
+    SubAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator*=(const Vector4Pod& aVal)
+Vector4Pod& Vector4Pod::operator*=(const Vector4Pod& val)
 {
-    mulAssign(aVal);
+    MulAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Vector4Pod& Vector4Pod::operator/=(const Vector4Pod& aVal)
+Vector4Pod& Vector4Pod::operator/=(const Vector4Pod& val)
 {
-    divAssign(aVal);
+    DivAssign(val);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator+(const float aVal)const
+const Vector4Pod Vector4Pod::operator+(const float val)const
 {
-    return add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator-(const float aVal)const
+const Vector4Pod Vector4Pod::operator-(const float val)const
 {
-    return sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator*(const float aVal)const
+const Vector4Pod Vector4Pod::operator*(const float val)const
 {
-    return mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator/(const float aVal)const
+const Vector4Pod Vector4Pod::operator/(const float val)const
 {
-    return div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator+(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::operator+(const Vector4Pod& val)const
 {
-    return add(aVal);
+    return Add(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator-(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::operator-(const Vector4Pod& val)const
 {
-    return sub(aVal);
+    return Sub(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator*(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::operator*(const Vector4Pod& val)const
 {
-    return mul(aVal);
+    return Mul(val);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::operator/(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::operator/(const Vector4Pod& val)const
 {
-    return div(aVal);
+    return Div(val);
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::operator-()const
 {
-    return neg();
+    return Neg();
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::min(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Min(const Vector4Pod& val)const
 {
     return Vector4(
-        Math::Min(x, aVal.x),
-        Math::Min(y, aVal.y),
-        Math::Min(z, aVal.z),
-        Math::Min(w, aVal.w)
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z),
+        Math::Min(w, val.w)
         );
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::max(const Vector4Pod& aVal)const
+const Vector4Pod Vector4Pod::Max(const Vector4Pod& val)const
 {
     return Vector4(
-        Math::Max(x, aVal.x),
-        Math::Max(y, aVal.y),
-        Math::Max(z, aVal.z),
-        Math::Max(w, aVal.w)
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z),
+        Math::Max(w, val.w)
         );
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::clamp(
-    const Vector4Pod& aMin,
-    const Vector4Pod& aMax
+const Vector4Pod Vector4Pod::Clamp(
+    const Vector4Pod& min,
+    const Vector4Pod& max
 )const
 {
-    return max(aMin).min(aMax);
+    return Max(min).Min(max);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::clampPositive()const
+const Vector4Pod Vector4Pod::ClampPositive()const
 {
-    return max(Zero());
+    return Max(Zero());
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::clampNegative()const
+const Vector4Pod Vector4Pod::ClampNegative()const
 {
-    return min(Zero());
+    return Min(Zero());
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::abs()const
+const Vector4Pod Vector4Pod::Abs()const
 {
     return Vector4(
         Math::AbsF32(x),
@@ -576,82 +576,82 @@ const Vector4Pod Vector4Pod::abs()const
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::neg()const
+const Vector4Pod Vector4Pod::Neg()const
 {
     Vector4 vec(*this);
-    vec.mulAssign(-1.0f);
+    vec.MulAssign(-1.0f);
     return vec;
 }
 
 //------------------------------------------------------------------------------
-f32 Vector4Pod::squareLength()const
+f32 Vector4Pod::SquareLength()const
 {
     return x * x + y * y + z * z + w * w;
 }
 
 //------------------------------------------------------------------------------
-f32 Vector4Pod::length()const
+f32 Vector4Pod::Length()const
 {
-    return Math::SqrtF32(squareLength());
+    return Math::SqrtF32(SquareLength());
 }
 
 //------------------------------------------------------------------------------
-f32 Vector4Pod::distance(const Vector4Pod& aVal)const
+f32 Vector4Pod::Distance(const Vector4Pod& val)const
 {
-    return sub(aVal).length();
+    return Sub(val).Length();
 }
 
 //------------------------------------------------------------------------------
-bool Vector4Pod::isZero()const
+bool Vector4Pod::IsZero()const
 {
-    return Math::IsZeroF32(length());
+    return Math::IsZeroF32(Length());
 }
 
 //------------------------------------------------------------------------------
-bool Vector4Pod::isZeroStrict()const
+bool Vector4Pod::IsZeroStrict()const
 {
     return x == 0 && y == 0 && z == 0 && w == 0;
 }
 
 //------------------------------------------------------------------------------
-bool Vector4Pod::isUnit()const
+bool Vector4Pod::IsUnit()const
 {
-    return Math::IsEqualsF32(length(), 1.0f);
+    return Math::IsEqualsF32(Length(), 1.0f);
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::unit()const
+const Vector4Pod Vector4Pod::Unit()const
 {
     Vector4 vec(*this);
-    vec.unitAssign();
+    vec.UnitAssign();
     return vec;
 }
 
 //------------------------------------------------------------------------------
-void Vector4Pod::unitAssign()
+void Vector4Pod::UnitAssign()
 {
-    if (isZeroStrict()) {
+    if (IsZeroStrict()) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
-    mulAssign(1.0f / length());
+    MulAssign(1.0f / Length());
 }
 
 //------------------------------------------------------------------------------
-f32 Vector4Pod::dot(const Vector4Pod& aVec)const
+f32 Vector4Pod::Dot(const Vector4Pod& vec)const
 {
-    return x * aVec.x + y * aVec.y + z * aVec.z + w * aVec.w;
+    return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Vector4Pod::toShortString()const
+const ::ae::base::ShortString Vector4Pod::ToShortString()const
 {
     return ::ae::base::ShortString::FromFormat(
         "%s,%s,%s,%s",
-        F32(x).toShortString().readPtr(),
-        F32(y).toShortString().readPtr(),
-        F32(z).toShortString().readPtr(),
-        F32(w).toShortString().readPtr()
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr(),
+        F32(z).ToShortString().ReadPtr(),
+        F32(w).ToShortString().ReadPtr()
         );
 }
 
@@ -662,45 +662,45 @@ Vector4::Vector4()
 }
 
 //------------------------------------------------------------------------------
-Vector4::Vector4(const Vector4Pod& aVec)
-: Vector4Pod(aVec)
+Vector4::Vector4(const Vector4Pod& vec)
+: Vector4Pod(vec)
 {
 }
 
 //------------------------------------------------------------------------------
-Vector4::Vector4(const float aV)
+Vector4::Vector4(const float v)
 {
-    x = aV;
-    y = aV;
-    z = aV;
-    w = aV;
+    this->x = v;
+    this->y = v;
+    this->z = v;
+    this->w = v;
 }
 
 //------------------------------------------------------------------------------
-Vector4::Vector4(const Vector2Pod& aXY, const float aZ, const float aW)
+Vector4::Vector4(const Vector2Pod& xY, const float z, const float w)
 {
-    x = aXY.x;
-    y = aXY.y;
-    z = aZ;
-    w = aW;
+    this->x = xY.x;
+    this->y = xY.y;
+    this->z = z;
+    this->w = w;
 }
 
 //------------------------------------------------------------------------------
-Vector4::Vector4(const Vector3Pod& aXYZ, const float aW)
+Vector4::Vector4(const Vector3Pod& xYZ, const float w)
 {
-    x = aXYZ.x;
-    y = aXYZ.y;
-    z = aXYZ.z;
-    w = aW;
+    this->x = xYZ.x;
+    this->y = xYZ.y;
+    this->z = xYZ.z;
+    this->w = w;
 }
 
 //------------------------------------------------------------------------------
-Vector4::Vector4(const float aX, const float aY, const float aZ, const float aW)
+Vector4::Vector4(const float x, const float y, const float z, const float w)
 {
-    x = aX;
-    y = aY;
-    z = aZ;
-    w = aW;
+    this->x = x;
+    this->y = y;
+    this->z = z;
+    this->w = w;
 }
 
 }} // namespace

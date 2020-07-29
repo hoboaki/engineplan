@@ -35,12 +35,12 @@ char  tArgChars[tArgCharsLength];
 char* tArgPtrs[tArgPtrsLength];
 
 // 指定の文字の最後のindex値取得。
-int tLastIndexOf(const char aCh, const char* aStr)
+int tLastIndexOf(const char ch, const char* str)
 {
-    AE_BASE_ASSERT_POINTER(aStr);
+    AE_BASE_ASSERT_POINTER(str);
     int index = -1;
-    for (int i = 0; aStr[i] != '\0'; ++i) {
-        if (aStr[i] == aCh) {
+    for (int i = 0; str[i] != '\0'; ++i) {
+        if (str[i] == ch) {
             index = i;
         }
     }
@@ -48,12 +48,12 @@ int tLastIndexOf(const char aCh, const char* aStr)
 }
 
 // 文字置き換え。
-void tReplaceChar(const char aTargetCh, const char aNewCh, char* aStr)
+void tReplaceChar(const char targetCh, const char newCh, char* str)
 {
-    AE_BASE_ASSERT_POINTER(aStr);
-    for (int i = 0; aStr[i] != '\0'; ++i) {
-        if (aStr[i] == aTargetCh) {
-            aStr[i] = aNewCh;
+    AE_BASE_ASSERT_POINTER(str);
+    for (int i = 0; str[i] != '\0'; ++i) {
+        if (str[i] == targetCh) {
+            str[i] = newCh;
         }
     }
 }
@@ -75,9 +75,9 @@ void tSetupExeInfo()
 }
 
 // 空白文字か
-bool tIsWhiteCh(const char aCh)
+bool tIsWhiteCh(const char ch)
 {
-    switch (aCh) {
+    switch (ch) {
         case ' ':
         case '\t':
         case '\r':
@@ -151,8 +151,8 @@ void tSetupArg()
 
 // main関数の共通部分。
 int tWinMainIN(
-    HINSTANCE aInstance,
-    int aCmdShow
+    HINSTANCE instance,
+    int cmdShow
     )
 {
     // 引数の作成
@@ -162,8 +162,8 @@ int tWinMainIN(
         tExeFileName,
         tExeDirPath
         );
-    AE_BASE_UNUSED(aInstance);
-    AE_BASE_UNUSED(aCmdShow);
+    AE_BASE_UNUSED(instance);
+    AE_BASE_UNUSED(cmdShow);
 
     // アプリケーション作成
     ::ae::base::Application app(arg);
@@ -176,41 +176,41 @@ int tWinMainIN(
 
 //------------------------------------------------------------------------------
 int WINAPI WinMain(
-    HINSTANCE aInstance,
-    HINSTANCE aPrevInstance,
-    LPSTR aCmdLine,
-    int aCmdShow
+    HINSTANCE instance,
+    HINSTANCE prevInstance,
+    LPSTR cmdLine,
+    int cmdShow
     )
 {
     // 実行ファイルのパス
-    GetModuleFileNameA(aInstance, tExeFilePath, tExeFilePathLength);
+    GetModuleFileNameA(instance, tExeFilePath, tExeFilePathLength);
     tSetupExeInfo();
 
     // 引数の解析
     {
         // まずコピー
-        ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength, aCmdLine);
+        ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength, cmdLine);
 
         // 解析開始
         tSetupArg();
     }
 
     // 引数の作成
-    AE_BASE_UNUSED(aInstance);
-    AE_BASE_UNUSED(aPrevInstance);
-    AE_BASE_UNUSED(aCmdLine);
-    AE_BASE_UNUSED(aCmdShow);
+    AE_BASE_UNUSED(instance);
+    AE_BASE_UNUSED(prevInstance);
+    AE_BASE_UNUSED(cmdLine);
+    AE_BASE_UNUSED(cmdShow);
     /// @todo 引数の解析
 
     // 実行
-    return tWinMainIN(aInstance, aCmdShow);
+    return tWinMainIN(instance, cmdShow);
 }
 
 //------------------------------------------------------------------------------
 #if !defined(AE_BASE_FINAL)
-int main(
-    const int aArgCount,
-    const char* aArgValues[]
+int Main(
+    const int argCount,
+    const char* argValues[]
     )
 {
     // フラグオン
@@ -220,8 +220,8 @@ int main(
     // C:\dirname\FileName.exe といった文字列が入っている。
     {
         // フルパス取得
-        AE_BASE_ASSERT_LESS_EQUALS(1, aArgCount);
-        const char* fullPath = aArgValues[0];
+        AE_BASE_ASSERT_LESS_EQUALS(1, argCount);
+        const char* fullPath = argValues[0];
 
         // フルパスを設定
         ::ae::base::StringTraits< char >::NCopy(tExeFilePath, tExeFilePathLength, fullPath);
@@ -232,13 +232,13 @@ int main(
 
     {// 引数
         int index = 0;
-        for (int i = 1; i < aArgCount && i < tArgPtrsLength; ++i) {
+        for (int i = 1; i < argCount && i < tArgPtrsLength; ++i) {
             const ::ae::base::StringTraits< char >::WriteResult result =
-                ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength - index, aArgValues[i]);
+                ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength - index, argValues[i]);
             tArgPtrs[i] = &tArgChars[index];
             index += ::ae::base::uint(result.length + 1);
         }
-        tArgCount = ::ae::base::uint(aArgCount - 1);
+        tArgCount = ::ae::base::uint(argCount - 1);
     }
 
     // 実行

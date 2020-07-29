@@ -18,37 +18,37 @@ public:
     /// @name コンストラクタ
     //@{
     FrameCounter(); ///< 総フレーム数0で作成。
-    FrameCounter(int aTotalFrame); ///< 総フレーム数を指定して作成。
+    FrameCounter(int totalFrame); ///< 総フレーム数を指定して作成。
     //@{
 
     /// @name リセット
     //@{
-    void reset(); ///< 設定済みの総フレーム数でリセット。
-    void reset(int aTotalFrame); ///< 新しい総フレーム数を指定してリセット。
+    void Reset(); ///< 設定済みの総フレーム数でリセット。
+    void Reset(int totalFrame); ///< 新しい総フレーム数を指定してリセット。
     //@}
 
     /// @name 更新
     //@{
     /// @brief フレームを1進める。
-    /// @details isEnd() 状態なら何もしません。
-    void advance();
+    /// @details IsEnd() 状態なら何もしません。
+    void Advance();
 
     /// @brief フレームを1進める。
-    /// @details isEnd() 状態で呼ぶとエラーになります。
-    void advanceStrict();
+    /// @details IsEnd() 状態で呼ぶとエラーになります。
+    void AdvanceStrict();
 
     /// @brief 最終フレームまで進める。
-    void toEnd();
+    void ToEnd();
     //@}
 
     /// @name 取得
     //@{
-    int  frame()const; ///< 現在のフレーム数。
-    int  totalFrame()const; ///< 総フレーム数。
-    bool  isEnd()const;     ///< 現在のフレームが総フレームに達しているか。
-    bool  isCounting()const; ///< 現在のフレームが総フレームに達していないか。
-    float rateFrame()const; ///< 0.0f <= 1.0f の範囲に正規化されたフレーム。
-    float invRateFrame()const; ///< 1.0f - rateFrame()。
+    int  Frame()const; ///< 現在のフレーム数。
+    int  TotalFrame()const; ///< 総フレーム数。
+    bool  IsEnd()const;     ///< 現在のフレームが総フレームに達しているか。
+    bool  IsCounting()const; ///< 現在のフレームが総フレームに達していないか。
+    float RateFrame()const; ///< 0.0f <= 1.0f の範囲に正規化されたフレーム。
+    float InvRateFrame()const; ///< 1.0f - RateFrame()。
     //@}
 
 private:

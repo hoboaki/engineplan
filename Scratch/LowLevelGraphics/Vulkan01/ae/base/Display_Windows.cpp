@@ -18,9 +18,9 @@ namespace {
 
 Pointer< Display_Ext > tCurrentDisplay;
 
-KeyKind::EnumType tToKeyKind(WPARAM aKey)
+KeyKind::EnumType tToKeyKind(WPARAM key)
 {
-    switch (aKey) {
+    switch (key) {
         case VK_BACK:   return KeyKind::BackSpace;
         case VK_TAB:    return KeyKind::Tab;
         case VK_RETURN: return KeyKind::Return;
@@ -126,37 +126,37 @@ KeyKind::EnumType tToKeyKind(WPARAM aKey)
     }
 }
 
-void tUpdateMouseBtn(MouseUpdateData& aData, WPARAM aWParam)
+void tUpdateMouseBtn(MouseUpdateData& data, WPARAM wParam)
 {
-    aData.hold.set(MouseBtnKind::L, (aWParam & MK_LBUTTON) != 0);
-    aData.hold.set(MouseBtnKind::R, (aWParam & MK_RBUTTON) != 0);
-    aData.hold.set(MouseBtnKind::M, (aWParam & MK_MBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::L, (wParam & MK_LBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::R, (wParam & MK_RBUTTON) != 0);
+    data.hold.Set(MouseBtnKind::M, (wParam & MK_MBUTTON) != 0);
 }
 
 } // namespace
 
 //------------------------------------------------------------------------------
-int Display::screenCount()const
+int Display::ScreenCount()const
 {
     return 1;
 }
 
 //------------------------------------------------------------------------------
-Screen& Display::screenAtIndex(const int aIndex)
+Screen& Display::ScreenAtIndex(const int index)
 {
-    AE_BASE_ASSERT_LESS(aIndex, screenCount());
-    AE_BASE_UNUSED(aIndex);
-    return mainScreen();
+    AE_BASE_ASSERT_LESS(index, ScreenCount());
+    AE_BASE_UNUSED(index);
+    return MainScreen();
 }
 
 //------------------------------------------------------------------------------
-Screen& Display::mainScreen()
+Screen& Display::MainScreen()
 {
     return *ext_.mainScreen;
 }
 
 //------------------------------------------------------------------------------
-void Display::show()
+void Display::Show()
 {
     ext_.isClosed = false;
     ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
@@ -164,13 +164,13 @@ void Display::show()
 }
 
 //------------------------------------------------------------------------------
-bool Display::isClosed()const
+bool Display::IsClosed()const
 {
     return ext_.isClosed;
 }
 
 //------------------------------------------------------------------------------
-Display_Ext::Display_Ext(const DisplayContext& aContext)
+Display_Ext::Display_Ext(const DisplayContext& context)
 : hinstance((HINSTANCE)GetModuleHandle(0))
 , hwindow()
 , windowClass()
@@ -202,7 +202,7 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
     const int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 
     // 矩形の計算
-    RECT rect = {0, 0, LONG(aContext.width()), LONG(aContext.height())};
+    RECT rect = {0, 0, LONG(context.Width()), LONG(context.Height())};
     AdjustWindowRect(
         &rect,
         style,
@@ -210,13 +210,13 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
         );
 
     // ウィンドウの作成
-    tCurrentDisplay.set(*this);
+    tCurrentDisplay.Set(*this);
     hwindow = CreateWindow(
         className,
         "Adel Engine Application", // Window Title
         style,
-        aContext.locationX(),
-        aContext.locationY(),
+        context.LocationX(),
+        context.LocationY(),
         rect.right - rect.left,
         rect.bottom - rect.top,
         0, // hWndParent
@@ -224,26 +224,26 @@ Display_Ext::Display_Ext(const DisplayContext& aContext)
         hinstance,
         0 // lpParam
         );
-    tCurrentDisplay.unset(*this);
+    tCurrentDisplay.Unset(*this);
 
     minSize.x = GetSystemMetrics(SM_CXMINTRACK);
     minSize.y = GetSystemMetrics(SM_CYMINTRACK) + 1;
 
     // メインスクリーンの作成
-    mainScreen.init(Ref(*this), aContext.width(), aContext.height());
+    mainScreen.Init(Ref(*this), context.Width(), context.Height());
 }
 
 //------------------------------------------------------------------------------
-void Display_Ext::pollEvent(Application&)
+void Display_Ext::PollEvent(Application&)
 {
     // pulseをクリア
-    keyboardUpdateData.pulse.clear();
+    keyboardUpdateData.pulse.Clear();
 
     // マウスのposUpdatedをクリア
     mouseUpdateData.posUpdated = false;
 
     // 今のディスプレイを設定
-    tCurrentDisplay.set(*this);
+    tCurrentDisplay.Set(*this);
 
     // メッセージ解析
     while (PeekMessage(&message, hwindow, 0, 0, PM_REMOVE) != 0) {
@@ -252,37 +252,37 @@ void Display_Ext::pollEvent(Application&)
     }
 
     // 今のディスプレイを設定解除
-    tCurrentDisplay.unset(*this);
+    tCurrentDisplay.Unset(*this);
 
     // マウスの座標変換
     if (mouseUpdateData.posUpdated) {
-        mouseUpdateData.pos.y = s16(int(mainScreen->height()) - 1 - mouseUpdateData.pos.y);
+        mouseUpdateData.pos.y = s16(int(mainScreen->Height()) - 1 - mouseUpdateData.pos.y);
     }
 
     // マウスのボタンが何か押されていたら強制的にposUpdatedを設定
-    if (mouseUpdateData.hold.isAnyOn()) {
+    if (mouseUpdateData.hold.IsAnyOn()) {
         mouseUpdateData.posUpdated = true;
     }
 
     // Hid更新
-    if (hidPtr.isValid()) {
-        hidPtr->Ext_().keyboard.update(keyboardUpdateData);
-        hidPtr->Ext_().mouse.update(mouseUpdateData);
+    if (hidPtr.IsValid()) {
+        hidPtr->Ext_().keyboard.Update(keyboardUpdateData);
+        hidPtr->Ext_().mouse.Update(mouseUpdateData);
     }
 }
 
 //------------------------------------------------------------------------------
-LRESULT Display_Ext::WindowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam)
+LRESULT Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    return tCurrentDisplay->windowProcess(aHWND, aMsg, aWParam, aLParam);
+    return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
 //------------------------------------------------------------------------------
-LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM aLParam)
-{
-    switch (aMsg) {
+LRESULT Display_Ext::WindowProcessLocal(
+    HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    switch (msg) {
         case WM_GETMINMAXINFO:  // set window's minimum size
-            ((MINMAXINFO*)aLParam)->ptMinTrackSize = minSize;
+            ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;
             return 0;
 
         case WM_SYSKEYDOWN:
@@ -293,19 +293,19 @@ LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM
 
         case WM_KEYDOWN:
         {
-            KeyKind::EnumType k = tToKeyKind(aWParam);
+            KeyKind::EnumType k = tToKeyKind(wParam);
             if (k < KeyKind::TERM) {
-                keyboardUpdateData.hold.set(k, true);
-                keyboardUpdateData.pulse.set(k, true);
+                keyboardUpdateData.hold.Set(k, true);
+                keyboardUpdateData.pulse.Set(k, true);
             }
         }
         break;
 
         case WM_KEYUP:
         {
-            KeyKind::EnumType k = tToKeyKind(aWParam);
+            KeyKind::EnumType k = tToKeyKind(wParam);
             if (k < KeyKind::TERM) {
-                keyboardUpdateData.hold.set(k, false);
+                keyboardUpdateData.hold.Set(k, false);
             }
         }
         break;
@@ -318,18 +318,18 @@ LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM
         case WM_RBUTTONUP:
         case WM_MOUSEMOVE:
         {
-            switch (aMsg) {
+            switch (msg) {
                 case WM_LBUTTONDOWN:
                 case WM_MBUTTONDOWN:
                 case WM_RBUTTONDOWN:
                 {// ボタンが押された
                     // 更新する前にキャプチャー設定
-                    if (mouseUpdateData.hold.isAllOff()) {
-                        SetCapture(aHWND);
+                    if (mouseUpdateData.hold.IsAllOff()) {
+                        SetCapture(hWND);
                     }
 
                     // 更新
-                    tUpdateMouseBtn(mouseUpdateData, aWParam);
+                    tUpdateMouseBtn(mouseUpdateData, wParam);
                 }
                 break;
 
@@ -338,10 +338,10 @@ LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM
                 case WM_RBUTTONUP:
                 {// ボタンが離された
                     // 更新
-                    tUpdateMouseBtn(mouseUpdateData, aWParam);
+                    tUpdateMouseBtn(mouseUpdateData, wParam);
 
                     // キャプチャー設定
-                    if (mouseUpdateData.hold.isAllOff()) {
+                    if (mouseUpdateData.hold.IsAllOff()) {
                         ReleaseCapture();
                     }
                 }
@@ -351,8 +351,8 @@ LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM
             }
 
             // 位置設定
-            const s16 mx = reinterpret_cast<const s16*>(&aLParam)[0];
-            const s16 my = reinterpret_cast<const s16*>(&aLParam)[1];
+            const s16 mx = reinterpret_cast<const s16*>(&lParam)[0];
+            const s16 my = reinterpret_cast<const s16*>(&lParam)[1];
             mouseUpdateData.pos = ScreenPos(mx, my);
             mouseUpdateData.posUpdated = true;
         }
@@ -364,7 +364,7 @@ LRESULT Display_Ext::windowProcess(HWND aHWND, UINT aMsg, WPARAM aWParam, LPARAM
             return 0;
     }
 
-    return DefWindowProc(aHWND, aMsg, aWParam, aLParam);
+    return DefWindowProc(hWND, msg, wParam, lParam);
 }
 
 }} // namespace

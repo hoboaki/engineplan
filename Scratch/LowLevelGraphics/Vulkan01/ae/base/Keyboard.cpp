@@ -16,11 +16,11 @@ Keyboard::Keyboard()
 }
 
 //------------------------------------------------------------------------------
-void Keyboard::update(const KeyboardUpdateData& aData)
+void Keyboard::Update(const KeyboardUpdateData& data)
 {
     // データ設定
     const KeyboardUpdateData  pre = data_;
-    data_ = aData;
+    data_ = data;
     const KeyboardUpdateData& cur = data_;
 
     // 更新
@@ -31,67 +31,67 @@ void Keyboard::update(const KeyboardUpdateData& aData)
 }
 
 //------------------------------------------------------------------------------
-const KeyboardUpdateData Keyboard::lastUpdateData()const
+const KeyboardUpdateData Keyboard::LastUpdateData()const
 {
     return data_;
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::isHold(const KeyKind::EnumType aKind)const
+bool Keyboard::IsHold(const KeyKind::EnumType kind)const
 {
-    return data_.hold.get(aKind);
+    return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::isTrigger(const KeyKind::EnumType aKind)const
+bool Keyboard::IsTrigger(const KeyKind::EnumType kind)const
 {
-    return trigger_.get(aKind);
+    return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::isRepeat(const KeyKind::EnumType aKind)const
+bool Keyboard::IsRepeat(const KeyKind::EnumType kind)const
 {
-    return repeat_.get(aKind);
+    return repeat_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::isPulse(const KeyKind::EnumType aKind)const
+bool Keyboard::IsPulse(const KeyKind::EnumType kind)const
 {
-    return pulse_.get(aKind);
+    return pulse_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::isRelease(const KeyKind::EnumType aKind)const
+bool Keyboard::IsRelease(const KeyKind::EnumType kind)const
 {
-    return release_.get(aKind);
+    return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::hold()const
+const KeyBitSet Keyboard::Hold()const
 {
     return data_.hold;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::trigger()const
+const KeyBitSet Keyboard::Trigger()const
 {
     return trigger_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::repeat()const
+const KeyBitSet Keyboard::Repeat()const
 {
     return repeat_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::pulse()const
+const KeyBitSet Keyboard::Pulse()const
 {
     return pulse_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::release()const
+const KeyBitSet Keyboard::Release()const
 {
     return release_;
 }

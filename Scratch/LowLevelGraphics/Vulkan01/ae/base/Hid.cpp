@@ -11,44 +11,44 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-Hid::Hid(Display& aDisplay)
-: display_(aDisplay)
+Hid::Hid(Display& display)
+: display_(display)
 , ext_()
 {
-    display_.Ext_().hidPtr.set(*this);
+    display_.Ext_().hidPtr.Set(*this);
 }
 
 //------------------------------------------------------------------------------
 Hid::~Hid()
 {
-    display_.Ext_().hidPtr.unset(*this);
+    display_.Ext_().hidPtr.Unset(*this);
 }
 
 //------------------------------------------------------------------------------
-const Keyboard Hid::keyboard()const
+const Keyboard Hid::Keyboard()const
 {
-    if (0 < keyboardCount()) {
-        return keyboardAtIndex(0);
+    if (0 < KeyboardCount()) {
+        return KeyboardAtIndex(0);
     }
     return Keyboard();
 }
 
 //------------------------------------------------------------------------------
-const Mouse Hid::mouse()const
+const Mouse Hid::Mouse()const
 {
-    if (0 < mouseCount()) {
-        return mouseAtIndex(0);
+    if (0 < MouseCount()) {
+        return MouseAtIndex(0);
     }
     return Mouse();
 }
 
 //------------------------------------------------------------------------------
-const Touch Hid::touch()const
+const Touch Hid::Touch()const
 {
-    if (0 < touchCount()) {
-        return touchAtIndex(0);
+    if (0 < TouchCount()) {
+        return TouchAtIndex(0);
     }
-    return Touch(0);
+    return base::Touch(0);
 }
 
 //------------------------------------------------------------------------------

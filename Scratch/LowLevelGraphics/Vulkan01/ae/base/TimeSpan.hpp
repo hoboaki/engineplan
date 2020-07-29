@@ -20,90 +20,90 @@ struct TimeSpanPod
 {
     /// @brief チック数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aTicks チック数。
-    static const TimeSpanPod FromTicks(s64 aTicks);
+    /// @param ticks チック数。
+    static const TimeSpanPod FromTicks(s64 ticks);
 
     /// @brief マイクロ秒数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aUsecs マイクロ秒数。
-    static const TimeSpanPod FromMicroseconds(s64 aUsecs);
+    /// @param usecs マイクロ秒数。
+    static const TimeSpanPod FromMicroseconds(s64 usecs);
 
     /// @brief ミリ秒数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aMsecs ミリ秒数。
-    static const TimeSpanPod FromMilliseconds(s64 aMsecs);
+    /// @param msecs ミリ秒数。
+    static const TimeSpanPod FromMilliseconds(s64 msecs);
 
     /// @brief 秒数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aSecs 秒数。
-    static const TimeSpanPod FromSeconds(s64 aSecs);
+    /// @param secs 秒数。
+    static const TimeSpanPod FromSeconds(s64 secs);
 
     /// @brief 分数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aMinutes 分数。
-    static const TimeSpanPod FromMinnutes(s64 aMinutes);
+    /// @param minutes 分数。
+    static const TimeSpanPod FromMinnutes(s64 minutes);
 
     /// @brief 時数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aHours 時数。
-    static const TimeSpanPod FromHours(s64 aHours);
+    /// @param hours 時数。
+    static const TimeSpanPod FromHours(s64 hours);
 
     /// @brief 日数から作成する。
     /// @return 作成された時間間隔。
-    /// @param aDays 日数。
-    static const TimeSpanPod FromDays(s64 aDays);
+    /// @param days 日数。
+    static const TimeSpanPod FromDays(s64 days);
 
     /// @brief チック数として取得する。
     /// @return チック数。
-    s64 ticks()const;
+    s64 Ticks()const;
 
     /// @brief マイクロ秒数として取得する。
     /// @return マイクロ秒数。小数点以下は切り捨て。
-    s64 microseconds()const;
+    s64 Microseconds()const;
 
     /// @brief ミリ秒数として取得する。
     /// @return ミリ秒数。小数点以下は切り捨て。
-    s64 milliseconds()const;
+    s64 Milliseconds()const;
 
     /// @brief 秒数として取得する。
     /// @return 秒数。小数点以下は切り捨て。
-    s64 seconds()const;
+    s64 Seconds()const;
 
     /// @brief 分数として取得する。
     /// @return 分数。小数点以下は切り捨て。
-    s64 minutes()const;
+    s64 Minutes()const;
 
     /// @brief 時数として取得する。
     /// @return 時数。小数点以下は切り捨て。
-    s64 hours()const;
+    s64 Hours()const;
 
     /// @brief 日数として取得する。
     /// @return 日数。小数点以下は切り捨て。
-    s64 days()const;
+    s64 Days()const;
 
     /// @brief 加算された時間間隔を取得する。
-    /// @param aTimeSpan 加算する時間間隔。
+    /// @param timeSpan 加算する時間間隔。
     /// @return 求められた時間間隔。
-    const TimeSpanPod add(const TimeSpanPod& aTimeSpan)const;
-    const TimeSpanPod operator+(const TimeSpanPod& aTimeSpan)const; ///< @copydoc add
+    const TimeSpanPod Add(const TimeSpanPod& timeSpan)const;
+    const TimeSpanPod operator+(const TimeSpanPod& timeSpan)const; ///< @copydoc add
 
     /// @brief 時間間隔を加算する。
     /// @return 加算された自分自身の参照。
-    /// @param aTimeSpan 加算する時間間隔。
-    TimeSpanPod& addAssign(const TimeSpanPod& aTimeSpan);
-    TimeSpanPod& operator+=(const TimeSpanPod& aTimeSpan); ///< @copydoc addAssign
+    /// @param timeSpan 加算する時間間隔。
+    TimeSpanPod& AddAssign(const TimeSpanPod& timeSpan);
+    TimeSpanPod& operator+=(const TimeSpanPod& timeSpan); ///< @copydoc addAssign
 
     /// @brief 減算された時間間隔を取得する。
-    /// @param aTimeSpan 減算する時間間隔。
+    /// @param timeSpan 減算する時間間隔。
     /// @return 求められた時間間隔。
-    const TimeSpanPod sub(const TimeSpanPod& aTimeSpan)const;
-    const TimeSpanPod operator-(const TimeSpanPod& aTimeSpan)const; ///< @copydoc sub
+    const TimeSpanPod Sub(const TimeSpanPod& timeSpan)const;
+    const TimeSpanPod operator-(const TimeSpanPod& timeSpan)const; ///< @copydoc sub
 
     /// @brief 時間間隔を減算する。
     /// @return 減算された自分自身の参照。
-    /// @param aTimeSpan 減算する時間間隔。
-    TimeSpanPod& subAssign(const TimeSpanPod& aTimeSpan);
-    TimeSpanPod& operator-=(const TimeSpanPod& aTimeSpan); ///< @copydoc subAssign
+    /// @param timeSpan 減算する時間間隔。
+    TimeSpanPod& SubAssign(const TimeSpanPod& timeSpan);
+    TimeSpanPod& operator-=(const TimeSpanPod& timeSpan); ///< @copydoc subAssign
 
     // 値。直接アクセスすることは想定していない。
     s64 ticks_;

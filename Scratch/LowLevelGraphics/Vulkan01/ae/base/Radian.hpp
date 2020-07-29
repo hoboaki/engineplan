@@ -24,8 +24,8 @@ struct RadianPod
 
     /// @name 変換
     //@{
-    const Angle     toAngle()const;  ///< 角度に変換。
-    const DegreePod toDegree()const; ///< 度に変換。
+    const Angle     ToAngle()const;  ///< 角度に変換。
+    const DegreePod ToDegree()const; ///< 度に変換。
     //@}
 };
 
@@ -36,8 +36,8 @@ public:
     /// @name コンストラクタ
     //@{
     Radian(); ///< 0度を作成。
-    Radian(float aRadian); ///< 値を指定して作成。
-    Radian(const RadianPod& aVal); ///< コピーして作成。
+    Radian(float radian); ///< 値を指定して作成。
+    Radian(const RadianPod& val); ///< コピーして作成。
     //@}
 };
 //@}

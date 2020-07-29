@@ -17,30 +17,30 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     /// ポインタを指定して作成。
-    explicit AutoPtr(T* aPtr = 0)
-        : ptr_(aPtr)
+    explicit AutoPtr(T* ptr = 0)
+        : ptr_(ptr)
     {
     }
 
     /// 破棄責任を委譲して作成。
-    AutoPtr(const AutoPtr<T>& aPtr)
+    AutoPtr(const AutoPtr<T>& ptr)
         : ptr_(0)
     {
-        *this = aPtr;
+        *this = ptr;
     }
 
     /// 破棄責任を委譲して作成。
     template< typename OtherType >
-    AutoPtr(const AutoPtr<OtherType>& aPtr)
+    AutoPtr(const AutoPtr<OtherType>& ptr)
         : ptr_(0)
     {
-        *this = aPtr;
+        *this = ptr;
     }
 
     /// デストラクタ
     ~AutoPtr()
     {
-        reset();
+        Reset();
     }
 
     //@}
@@ -48,27 +48,27 @@ public:
     /// @name 取得
     //@{
     /// ポインタが設定されていなければtrueを返す。
-    bool isNull()const
+    bool IsNull()const
     {
         return ptr_ == 0;
     }
 
     /// ポインタが設定されていればtrueを返す。
-    bool isValid()const
+    bool IsValid()const
     {
         return ptr_ != 0;
     }
 
     /// ポインタの参照を取得する。
-    T& ref()const
+    T& Ref()const
     {
-        AE_BASE_ASSERT(isValid());
+        AE_BASE_ASSERT(IsValid());
         return *ptr_;
     }
 
     /// @brief ポインタの値をそのまま取得する。
     /// @details 設定されていないときは0を返します。
-    T* get()const
+    T* Get()const
     {
         return ptr_;
     }
@@ -77,22 +77,22 @@ public:
     /// @name 変更
     //@{
     /// ポインタの破棄責任を剥奪し、抱えていたポインタを取得する。
-    T* release()
+    T* Release()
     {
-        AE_BASE_ASSERT(isValid());
+        AE_BASE_ASSERT(IsValid());
         T* ptr = ptr_;
         ptr_ = 0;
         return ptr;
     }
 
     /// ポインタを設定していない状態にする。
-    void reset()
+    void Reset()
     {
-        reset(0);
+        Reset(0);
     }
 
     /// ポインタをリセットする。
-    void reset(T* aPtr)
+    void Reset(T* ptr)
     {
         T* ptr = ptr_;
         ptr_ = 0;
@@ -100,42 +100,42 @@ public:
         {
             delete ptr;
         }
-        ptr_ = aPtr;
+        ptr_ = ptr;
     }
     //@}
 
     /// @name 演算子オーバーロード
     //@{
     /// 特別な代入演算子。
-    AutoPtr< T >& operator=(const AutoPtr< T >& aRHS)
+    AutoPtr< T >& operator=(const AutoPtr< T >& rHS)
     {
-        T* ptr = aRHS.ptr_;
-        aRHS.ptr_ = 0;
-        reset(ptr);
+        T* ptr = rHS.ptr_;
+        rHS.ptr_ = 0;
+        Reset(ptr);
         return *this;
     }
 
     /// 特別な代入演算子。
     template< typename OtherType >
-    AutoPtr< T >& operator=(const AutoPtr< OtherType >& aRHS)
+    AutoPtr< T >& operator=(const AutoPtr< OtherType >& rHS)
     {
-        T* ptr = aRHS.ptr_;
-        aRHS.ptr_ = 0;
-        reset(ptr);
+        T* ptr = rHS.ptr_;
+        rHS.ptr_ = 0;
+        Reset(ptr);
         return *this;
     }
 
     /// 参照演算子。
     T& operator*()const
     {
-        return ref();
+        return Ref();
     }
 
     /// 参照演算子
     T* operator->()const
     {
-        AE_BASE_ASSERT(isValid());
-        return get();
+        AE_BASE_ASSERT(IsValid());
+        return Get();
     }
     //@}
 

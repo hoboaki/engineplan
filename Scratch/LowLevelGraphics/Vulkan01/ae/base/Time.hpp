@@ -38,56 +38,56 @@ struct TimePod
 
     /// @brief 指定の日時から作成する。
     /// @return 作成された時間。
-    /// @param aYear 年。値の意味は Calendar::year と同じ。
-    /// @param aMonth 月。 値の意味は Calendar::month と同じ。
-    /// @param aDayOfMonth 日。値の意味は Calendar::dayOfMonth と同じ。
-    /// @param aHour 時。値の意味は Calendar::hour と同じ。
-    /// @param aMin 時。値の意味は Calendar::min と同じ。
-    /// @param aSec 秒。値の意味は Calendar::sec と同じ。
-    /// @param aMsec ミリ秒。値の意味は Calendar::msec と同じ。
-    /// @param aUsec マイクロ秒。値の意味は Calendar::usec と同じ。
+    /// @param year 年。値の意味は Calendar::year と同じ。
+    /// @param month 月。 値の意味は Calendar::month と同じ。
+    /// @param dayOfMonth 日。値の意味は Calendar::dayOfMonth と同じ。
+    /// @param hour 時。値の意味は Calendar::hour と同じ。
+    /// @param min 時。値の意味は Calendar::min と同じ。
+    /// @param sec 秒。値の意味は Calendar::sec と同じ。
+    /// @param msec ミリ秒。値の意味は Calendar::msec と同じ。
+    /// @param usec マイクロ秒。値の意味は Calendar::usec と同じ。
     /// @details
     /// ナノ秒以下は0として作成します。
     static const TimePod FromDate(
-        int aYear
-        , int aMonth
-        , int aDayOfMonth
-        , int aHour
-        , int aMin
-        , int aSec
-        , int aMsec
-        , int aUsec
+        int year
+        , int month
+        , int dayOfMonth
+        , int hour
+        , int min
+        , int sec
+        , int msec
+        , int usec
     );
 
 /// カレンダー情報を作成する。
-    const CalendarPod toCalendar()const;
+    const CalendarPod ToCalendar()const;
 
     /// @brief 加算された時間を取得する。
-    /// @param aTimeSpan 加算する時間。
+    /// @param timeSpan 加算する時間。
     /// @return 求められた時間。
-    const TimePod add(const TimeSpanPod& aTimeSpan)const;
-    const TimePod operator+(const TimeSpanPod& aTimeSpan)const; ///< @copydoc add
+    const TimePod Add(const TimeSpanPod& timeSpan)const;
+    const TimePod operator+(const TimeSpanPod& timeSpan)const; ///< @copydoc add
 
     /// @brief 時間を加算する。
     /// @return 加算された自分自身の参照。
-    /// @param aTimeSpan 加算する時間。
-    TimePod& addAssign(const TimeSpanPod& aTimeSpan);
-    TimePod& operator+=(const TimeSpanPod& aTimeSpan); ///< @copydoc addAssign
+    /// @param timeSpan 加算する時間。
+    TimePod& AddAssign(const TimeSpanPod& timeSpan);
+    TimePod& operator+=(const TimeSpanPod& timeSpan); ///< @copydoc addAssign
 
     /// @brief 減算された時間を取得する。
-    /// @param aTimeSpan 減算する時間。
+    /// @param timeSpan 減算する時間。
     /// @return 求められた時間。
-    const TimePod sub(const TimeSpanPod& aTimeSpan)const;
-    const TimePod operator-(const TimeSpanPod& aTimeSpan)const; ///< @copydoc sub
+    const TimePod Sub(const TimeSpanPod& timeSpan)const;
+    const TimePod operator-(const TimeSpanPod& timeSpan)const; ///< @copydoc sub
 
     /// @brief 時間を減算する。
     /// @return 減算された自分自身の参照。
-    /// @param aTimeSpan 減算する時間。
-    TimePod& subAssign(const TimeSpanPod& aTimeSpan);
-    TimePod& operator-=(const TimeSpanPod& aTimeSpan); ///< @copydoc subAssign
+    /// @param timeSpan 減算する時間。
+    TimePod& SubAssign(const TimeSpanPod& timeSpan);
+    TimePod& operator-=(const TimeSpanPod& timeSpan); ///< @copydoc subAssign
 
     /// チック値(1チック100ナノ秒)を取得する。
-    s64 ticks()const;
+    s64 Ticks()const;
 
     // 値。直接アクセスすることは想定していない。
     // 実質使えるのは0 <= val <= S64::MaxValue()まで。

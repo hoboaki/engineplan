@@ -21,15 +21,15 @@ public:
     MemBlock();
 
     /// アドレス・サイズを指定して作成。
-    MemBlock(ptr_t aAddr, pword_t aSize);
+    MemBlock(ptr_t addr, pword_t size);
     //@}
 
     /// @name プロパティの取得。
     //@{
-    bool    isNull()const; ///< 先頭アドレスが0か。
-    ptr_t   head()const; ///< 先頭アドレスを取得。
-    ptr_t   tail()const; ///< 終端アドレス( head() + size() )を取得。
-    pword_t size()const; ///< ブロックのバイト数を取得。
+    bool    IsNull()const; ///< 先頭アドレスが0か。
+    ptr_t   Head()const; ///< 先頭アドレスを取得。
+    ptr_t   Tail()const; ///< 終端アドレス( Head() + Size() )を取得。
+    pword_t Size()const; ///< ブロックのバイト数を取得。
     //@}
 
 private:

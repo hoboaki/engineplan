@@ -30,8 +30,8 @@ public:
 
     /// @name 角度の取得
     //@{
-    f32 rad()const; ///< radianで取得。
-    f32 deg()const; ///< degreeで取得。
+    f32 Rad()const; ///< radianで取得。
+    f32 Deg()const; ///< degreeで取得。
     //@}
 
 private:

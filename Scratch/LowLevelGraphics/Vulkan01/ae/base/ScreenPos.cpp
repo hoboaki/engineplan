@@ -8,21 +8,21 @@ namespace base {
 //------------------------------------------------------------------------------
 ScreenPos::ScreenPos()
 {
-    x = 0;
-    y = 0;
+    this->x = 0;
+    this->y = 0;
 }
 
 //------------------------------------------------------------------------------
-ScreenPos::ScreenPos(const sint16 aX, const sint16 aY)
+ScreenPos::ScreenPos(const sint16 x, const sint16 y)
 {
-    x = aX;
-    y = aY;
+    this->x = x;
+    this->y = y;
 }
 
 //------------------------------------------------------------------------------
-ScreenPos::ScreenPos(const ScreenPosPod& aObj)
+ScreenPos::ScreenPos(const ScreenPosPod& obj)
 {
-    static_cast<ScreenPosPod&>(*this) = aObj;
+    static_cast<ScreenPosPod&>(*this) = obj;
 }
 
 }} // namespace

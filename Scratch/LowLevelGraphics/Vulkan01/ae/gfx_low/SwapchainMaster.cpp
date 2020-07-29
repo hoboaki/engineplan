@@ -40,11 +40,11 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
     }
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
     {
-        auto const createInfo = vk::MetalSurfaceCreateInfoEXT().setPLayer(
+        auto const createInfo = vk::MetalSurfaceCreateInfoEXT().SetPLayer(
             static_cast<CAMetalLayer*>(caMetalLayer));
 
         auto result =
-            inst.createMetalSurfaceEXT(&createInfo, nullptr, &surface);
+            inst.CreateMetalSurfaceEXT(&createInfo, nullptr, &surface);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 #endif
@@ -67,7 +67,7 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 SwapchainMaster::~SwapchainMaster() {
     // 逆順に破棄
-    for (int i = swapchains_.count() - 1; 0 <= i; --i) {
+    for (int i = swapchains_.Count() - 1; 0 <= i; --i) {
         auto& swapchain = swapchains_[i];
         if (swapchain.PrvIsInitialized()) {
             DestroySwapchain(SwapchainHandle(&swapchain));
@@ -95,7 +95,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     // Entity を確保
     const uint32_t nextUniqueId = AcquireUniqueId();
     if (entity == nullptr) {
-        for (int entityIdx = 0; entityIdx < swapchains_.count(); ++entityIdx) {
+        for (int entityIdx = 0; entityIdx < swapchains_.Count(); ++entityIdx) {
             if (!swapchains_[entityIdx].PrvIsInitialized()) {
                 entity = &swapchains_[entityIdx];
                 break;
@@ -112,7 +112,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
         int(surfFormatCount), &device_.System().PrvTempWorkAllocator());
     result = physicalDevice.getSurfaceFormatsKHR(
-         surface_, &surfFormatCount, surfFormats.head());
+         surface_, &surfFormatCount, surfFormats.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     // サーフェスが対応するフォーマットを選択
@@ -162,12 +162,12 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     base::RuntimeArray<::vk::PresentModeKHR> presentModes(
         int(presentModeCount), &device_.System().PrvTempWorkAllocator());
     result = physicalDevice.getSurfacePresentModesKHR(
-        surface_, &presentModeCount, presentModes.head());
+        surface_, &presentModeCount, presentModes.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     vk::Extent2D swapchainExtent;
-    swapchainExtent.width = screen_.width();
-    swapchainExtent.height = screen_.height();
+    swapchainExtent.width = screen_.Width();
+    swapchainExtent.height = screen_.Height();
     // width and height are either both -1, or both not -1.
     //if (surfCapabilities.currentExtent.width == (uint32_t)-1) {
     //    // If the surface size is undefined, the size is set to
@@ -326,7 +326,7 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
             continue;
         }
         bool isFound = false;
-        for (int i = 0; i < swapchains_.count(); ++i) {
+        for (int i = 0; i < swapchains_.Count(); ++i) {
             if (swapchains_[i].PrvUniqueId() == uniqueId) {
                 isFound = true;
                 break;

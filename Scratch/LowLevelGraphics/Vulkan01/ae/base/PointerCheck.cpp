@@ -8,16 +8,16 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-bool PointerCheck::IsValid(const_anyptr_t aPtr)
+bool PointerCheck::IsValid(const_anyptr_t ptr)
 {
-    return aPtr != 0;
+    return ptr != 0;
 }
 
 //------------------------------------------------------------------------------
-bool PointerCheck::InvalidCheck(const_anyptr_t aPtr)
+bool PointerCheck::InvalidCheck(const_anyptr_t ptr)
 {
-    if (!IsValid(aPtr)) {
-        AE_BASE_ERROR_INVALID_VALUE(aPtr);
+    if (!IsValid(ptr)) {
+        AE_BASE_ERROR_INVALID_VALUE(ptr);
         return true;
     }
     return false;

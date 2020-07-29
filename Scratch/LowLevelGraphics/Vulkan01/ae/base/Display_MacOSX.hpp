@@ -25,9 +25,9 @@ class Display_Ext
 {
 public:
     //============================================================
-    static void CBKeyEvent(void* aEXT, int aUnicode, int aIsDown);
-    static void CBModKeyEvent(void* aEXT, int aIsShift, int aIsCtrl, int aIsAlt);
-    static void CBMouseEvent(void* aEXT, int aPressedButtons, float aX, float aY);
+    static void CBKeyEvent(void* eXT, int unicode, int isDown);
+    static void CBModKeyEvent(void* eXT, int isShift, int isCtrl, int isAlt);
+    static void CBMouseEvent(void* eXT, int pressedButtons, float x, float y);
 
     //============================================================
     AeBaseNSWindow* windowPtr;

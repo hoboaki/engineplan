@@ -63,13 +63,13 @@ System::System(const SystemCreateInfo& createInfo)
             base::RuntimeArray<::vk::LayerProperties> instanceLayers(
                 instanceLayerCount, &tempWorkAllocator_);
             result = vk::enumerateInstanceLayerProperties(
-                &instanceLayerCount, instanceLayers.head());
+                &instanceLayerCount, instanceLayers.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
             validationFound =
                 fCheckLayers(AE_BASE_ARRAY_LENGTH(instanceValidationLayers),
                     instanceValidationLayers, instanceLayerCount,
-                    instanceLayers.head());
+                    instanceLayers.Head());
             if (validationFound) {
                 enabledLayerCount_ =
                     AE_BASE_ARRAY_LENGTH(instanceValidationLayers);
@@ -101,7 +101,7 @@ System::System(const SystemCreateInfo& createInfo)
         base::RuntimeArray<::vk::ExtensionProperties> instanceExtensions(
             instanceExtensionCount, &tempWorkAllocator_);
         result = vk::enumerateInstanceExtensionProperties(
-            nullptr, &instanceExtensionCount, instanceExtensions.head());
+            nullptr, &instanceExtensionCount, instanceExtensions.Head());
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
         for (uint32_t i = 0; i < instanceExtensionCount; i++) {
@@ -312,7 +312,7 @@ void System::PrvQueueFamilyIndexTable(
     device.getQueueFamilyProperties(&queueFamilyCount, queueFamilyProperties);
 
     // -1 で初期化
-    resultRef.fill(-1);
+    resultRef.Fill(-1);
 
     // 最初に見つかった物を採用する
     for (uint32_t i = 0; i < queueFamilyCount; ++i) {

@@ -11,33 +11,33 @@ namespace base {
 namespace {
 
     // 範囲チェックをしつつ範囲外なら最小値を返す。
-int tYearCheck(const int aYear)
+int tYearCheck(const int year)
 {
-    if (aYear < Calendar::YearMin
-        || Calendar::YearMax < aYear
+    if (year < Calendar::YearMin
+        || Calendar::YearMax < year
         )
     {
-        AE_BASE_ERROR_INVALID_VALUE(aYear);
+        AE_BASE_ERROR_INVALID_VALUE(year);
         return Calendar::YearMin;
     }
-    return aYear;
+    return year;
 }
-int tMonthCheck(const int aMonth)
+int tMonthCheck(const int month)
 {
-    if (aMonth < Calendar::MonthMin
-        || Calendar::MonthMax < aMonth
+    if (month < Calendar::MonthMin
+        || Calendar::MonthMax < month
         )
     {
-        AE_BASE_ERROR_INVALID_VALUE(aMonth);
+        AE_BASE_ERROR_INVALID_VALUE(month);
         return Calendar::MonthMin;
     }
-    return aMonth;
+    return month;
 }
 
 } // namespace
 
 //------------------------------------------------------------------------------
-bool CalendarPod::IsLeapYear(const int aYear)
+bool CalendarPod::IsLeapYear(const int year)
 {
     // 閏年の定義
     // 1. 西暦年が4で割り切れる年は閏年
@@ -45,10 +45,12 @@ bool CalendarPod::IsLeapYear(const int aYear)
     // 3. ただし、西暦年が400で割り切れる年は閏年
     // 西暦4年は閏年と扱わなかったらしいという話もあるが
     // .Net4.0 の実装では西暦4年が閏年となっていたためそれに合わせる。
-    const int year = 1 + tYearCheck(aYear);
+    const int localYear = 1 + tYearCheck(year);
 
-    if ((year % 4) != 0 // 4で割り切れないので平年
-        || ((year % 100) == 0 && (year % 400) != 0) // 100 で割り切れ 400 で割り切れない年は平年
+    if ((localYear % 4) != 0  // 4で割り切れないので平年
+        || ((localYear % 100) == 0 &&
+               (localYear % 400) !=
+                   0)  // 100 で割り切れ 400 で割り切れない年は平年
         )
     {
         return false;
@@ -60,9 +62,9 @@ bool CalendarPod::IsLeapYear(const int aYear)
 
 //------------------------------------------------------------------------------
 int CalendarPod::DaysToDate(
-    const int aYear,
-    const int aMonth,
-    const int aDayOfMonth
+    const int year,
+    const int month,
+    const int dayOfMonth
     )
 {
     int days = 0;
@@ -70,31 +72,31 @@ int CalendarPod::DaysToDate(
     // 年
     {
         // 平年
-        days += aYear * 365;
+        days += year * 365;
 
         // 閏年補正
-        int addDays = aYear / 4;
-        addDays -= aYear / 100;
-        addDays += aYear / 400;
+        int addDays = year / 4;
+        addDays -= year / 100;
+        addDays += year / 400;
         days += addDays;
     }
 
     // 月
-    for (int i = 0; i < aMonth; ++i) {
-        days += DaysInMonth(aYear, i);
+    for (int i = 0; i < month; ++i) {
+        days += DaysInMonth(year, i);
     }
 
     // 日
-    days += aDayOfMonth;
+    days += dayOfMonth;
 
     return days;
 }
 
 //------------------------------------------------------------------------------
-const CalendarPod CalendarPod::FromDays(const int aDays)
+const CalendarPod CalendarPod::FromDays(const int days)
 {
     Calendar calendar;
-    int days = aDays;
+    int localDays = days;
     {// 年
         int year = 0;
         while (true) {
@@ -102,16 +104,16 @@ const CalendarPod CalendarPod::FromDays(const int aDays)
             const int totalDayOfYear = Calendar::DaysInYear(year);
 
             // 年を越すか計算
-            if (days < totalDayOfYear) {
+            if (localDays < totalDayOfYear) {
                 // 年は越さないので終了
                 calendar.year = u16(year);
-                calendar.dayOfYear = u16(days);
+                calendar.dayOfYear = u16(localDays);
                 break;
             }
 
             // 次の年へ
             ++year;
-            days -= totalDayOfYear;
+            localDays -= totalDayOfYear;
         }
     }
 
@@ -122,17 +124,17 @@ const CalendarPod CalendarPod::FromDays(const int aDays)
             const int totalDayOfMonth = Calendar::DaysInMonth(calendar.year, month);
 
             // 月を越すか計算
-            if (days < totalDayOfMonth) {
+            if (localDays < totalDayOfMonth) {
                 // 月は越さないので終了
                 calendar.month = u16(month);
-                calendar.dayOfMonth = u16(days);
-                calendar.dayOfWeek = u16((FirstDayOfWeek + aDays) % (DayOfWeekMax + 1));
+                calendar.dayOfMonth = u16(localDays);
+                calendar.dayOfWeek = u16((FirstDayOfWeek + localDays) % (DayOfWeekMax + 1));
                 break;
             }
 
             // 次の月へ
             ++month;
-            days -= totalDayOfMonth;
+            localDays -= totalDayOfMonth;
         }
     }
 
@@ -140,20 +142,20 @@ const CalendarPod CalendarPod::FromDays(const int aDays)
 }
 
 //------------------------------------------------------------------------------
-int CalendarPod::DaysInYear(const int aYear)
+int CalendarPod::DaysInYear(const int year)
 {
-    const int year = tYearCheck(aYear);
-    return uint(IsLeapYear(year) ? 366 : 365);
+    const int localYear = tYearCheck(year);
+    return uint(IsLeapYear(localYear) ? 366 : 365);
 }
 
 //------------------------------------------------------------------------------
 int CalendarPod::DaysInMonth(
-    const int aYear,
-    const int aMonth
+    const int year,
+    const int month
     )
 {
-    const int month = tMonthCheck(aMonth);
-    switch (month + 1) {// 直感的になるように+1
+    const int localMonth = tMonthCheck(month);
+    switch (localMonth + 1) {// 直感的になるように+1
         case 1:
         case 3:
         case 5:
@@ -170,10 +172,10 @@ int CalendarPod::DaysInMonth(
             return 30;
 
         case 2:
-            return IsLeapYear(tYearCheck(aYear)) ? 29 : 28;
+            return IsLeapYear(tYearCheck(year)) ? 29 : 28;
 
         default:
-            AE_BASE_ERROR_INVALID_VALUE(month);
+            AE_BASE_ERROR_INVALID_VALUE(localMonth);
             return 28; // fail safe code
     }
 }

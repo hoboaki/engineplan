@@ -39,7 +39,7 @@ public:
     : allocator_()
     , count_(0)
     , ptr_(nullptr) {
-        resize(count, allocator);
+        Resize(count, allocator);
     }
 
     /// 非推奨版。
@@ -47,7 +47,7 @@ public:
     : RuntimeArray(count, &allocator) {}
 
     /// デストラクタ。
-    ~RuntimeArray() { resize(0); }
+    ~RuntimeArray() { Resize(0); }
 
     //@}
 
@@ -55,22 +55,22 @@ public:
     //@{
     /// サイズを変更。
     /// @details 確保済配列領域を一度破棄＆再確保＆全要素デフォルトコンストラクタを呼ぶ。
-    void resize(const int count, IAllocator* allocator = &IAllocator::Default()) {
+    void Resize(const int count, IAllocator* allocator = &IAllocator::Default()) {
         // まず破棄処理
         if (ptr_ != nullptr) {
             // 逆順でデストラクタを呼び出す
             for (int i = count_; 0 < i; --i) {
-                at(i - 1).~ValueType();
+                At(i - 1).~ValueType();
             }
 
             ValueType* ptr = ptr_;
             ptr_ = nullptr;
-            allocator_->free(reinterpret_cast<ptr_t>(ptr));
+            allocator_->Free(reinterpret_cast<ptr_t>(ptr));
             count_ = 0;
         }
 
         // アロケータ変更
-        allocator_.reset(&PtrToRef(allocator));
+        allocator_.Reset(&PtrToRef(allocator));
 
         // 0なら確保せず終了
         count_ = count;
@@ -80,13 +80,13 @@ public:
 
         // デフォルト初期化
         ptr_ = reinterpret_cast<ValueType*>(
-            allocator_->alloc(sizeof(ValueType) * count_));
+            allocator_->Alloc(sizeof(ValueType) * count_));
         for (int i = 0; i < count; ++i) {
 #if defined(AE_BASE_COMPILER_MSVC)
 #pragma warning(push)
 #pragma warning(disable : 4345)
 #endif
-            new (&at(i)) ValueType();  // 初期値で初期化
+            new (&At(i)) ValueType();  // 初期値で初期化
 #if defined(AE_BASE_COMPILER_MSVC)
 #pragma warning(pop)
 #endif
@@ -94,7 +94,7 @@ public:
     }
 
     /// 全要素を指定の値で埋める。
-    void fill(const ValueType& value) {
+    void Fill(const ValueType& value) {
         for (int i = 0; i < count_; ++i) {
             ptr_[i] = value;
         }
@@ -104,22 +104,22 @@ public:
     /// @name アクセス
     //@{
     /// 配列長。
-    int count() const { return count_; }
+    int Count() const { return count_; }
 
     /// 0番目の要素のポインタ。 
-    ValueType* head() { 
+    ValueType* Head() { 
         AE_BASE_ASSERT_LESS(0, count_);
         return ptr_;
     }
 
     /// 0番目の要素のポインタ。
-    const ValueType* head() const {
+    const ValueType* Head() const {
         AE_BASE_ASSERT_LESS(0, count_);
         return ptr_;
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& at(const int index) {
+    ValueType& At(const int index) {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0];  // fail safe code
@@ -128,7 +128,7 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& at(const int index) const {
+    const ValueType& At(const int index) const {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0];  // fail safe code
@@ -148,14 +148,14 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    /// at() のエイリアス。
+    /// At() のエイリアス。
     ValueType& operator[](const int index) {
-        return at(index);
+        return At(index);
     }
 
-    /// at()const のエイリアス。
+    /// At()const のエイリアス。
     const ValueType& operator[](const int index) const {
-        return at(index);
+        return At(index);
     } 
     //@}
 

@@ -10,125 +10,125 @@ namespace {
 
 // ShortString作成用テンプレート関数。
 template< typename T >
-const ShortString tToShortString(const char* aFormat, const T& aValue)
+const ShortString tToShortString(const char* format, const T& value)
 {
     // note: ポインタチェックはFromtFormatでやっているので省略。
     return ShortString::FromFormat(
-        aFormat,
-        aValue
+        format,
+        value
         );
 }
 
 } // namespace
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const bool aVal)
+const ShortString ShortStringFactory::Create(const bool val)
 {
-    return ShortString(aVal ? "true" : "false");
+    return ShortString(val ? "true" : "false");
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const int aVal)
+const ShortString ShortStringFactory::Create(const int val)
 {
-    return tToShortString("%d", aVal);
+    return tToShortString("%d", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const u32 aVal)
+const ShortString ShortStringFactory::Create(const u32 val)
 {
-    return tToShortString("%u", aVal);
+    return tToShortString("%u", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const f32 aVal)
+const ShortString ShortStringFactory::Create(const f32 val)
 {
-    return tToShortString("%f", aVal);
+    return tToShortString("%f", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const f64 aVal)
+const ShortString ShortStringFactory::Create(const f64 val)
 {
-    return tToShortString("%f", aVal);
+    return tToShortString("%f", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const s8 aVal)
+const ShortString ShortStringFactory::Create(const s8 val)
 {
-    return tToShortString("%hhd", aVal);
+    return tToShortString("%hhd", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const s16 aVal)
+const ShortString ShortStringFactory::Create(const s16 val)
 {
-    return tToShortString("%hd", aVal);
+    return tToShortString("%hd", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const s64 aVal)
+const ShortString ShortStringFactory::Create(const s64 val)
 {
-    return tToShortString("%lld", aVal);
+    return tToShortString("%lld", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const u8 aVal)
+const ShortString ShortStringFactory::Create(const u8 val)
 {
-    return tToShortString("%hhu", aVal);
+    return tToShortString("%hhu", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const u16 aVal)
+const ShortString ShortStringFactory::Create(const u16 val)
 {
-    return tToShortString("%hu", aVal);
+    return tToShortString("%hu", val);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const u64 aVal)
+const ShortString ShortStringFactory::Create(const u64 val)
 {
-    return tToShortString("%llu", aVal);
+    return tToShortString("%llu", val);
 }
 
 //------------------------------------------------------------------------------
 #if !defined(AE_BASE_OS_WINDOWS)
-const ShortString ShortStringFactory::Create(pword_t aVal)
+const ShortString ShortStringFactory::Create(pword_t val)
 {
     if (sizeof(pword_t) == 4) {
-        return Create(u32(aVal));
+        return Create(u32(val));
     }
     else
     {
-        return Create(u64(aVal));
+        return Create(u64(val));
     }
 }
 #endif
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(ptr_t aPtr)
+const ShortString ShortStringFactory::Create(ptr_t ptr)
 {
-    return tToShortString("%p", aPtr);
+    return tToShortString("%p", ptr);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const_ptr_t aPtr)
+const ShortString ShortStringFactory::Create(const_ptr_t ptr)
 {
-    return tToShortString("%p", aPtr);
+    return tToShortString("%p", ptr);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(anyptr_t aPtr)
+const ShortString ShortStringFactory::Create(anyptr_t ptr)
 {
-    return tToShortString("%p", aPtr);
+    return tToShortString("%p", ptr);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const_anyptr_t aPtr)
+const ShortString ShortStringFactory::Create(const_anyptr_t ptr)
 {
-    return tToShortString("%p", aPtr);
+    return tToShortString("%p", ptr);
 }
 
 //------------------------------------------------------------------------------
-const ShortString ShortStringFactory::Create(const char* aPtr)
+const ShortString ShortStringFactory::Create(const char* ptr)
 {
-    return tToShortString("%s", aPtr);
+    return tToShortString("%s", ptr);
 }
 
 }} // namespace

@@ -47,9 +47,9 @@ struct EnumPodTmpl
     /// EnumPodTmpl< Color::EnumType, int > color;
     /// color = Color::Red; // 代入できる
     /// @endcode
-    EnumPodTmpl< TEnumType, TDataType >& operator=(const TEnumType aVal)
+    EnumPodTmpl< TEnumType, TDataType >& operator=(const TEnumType val)
     {
-        val_ = DataType(aVal);
+        val_ = DataType(val);
         return *this;
     }
 
@@ -57,9 +57,9 @@ struct EnumPodTmpl
     /// @details
     /// これを定義することで下記のコードが実行できるようになります。
     /// @code
-    /// void func( const EnumPodTmpl< Color , int >& aColor )
+    /// void func( const EnumPodTmpl< Color , int >& color )
     /// {
-    ///     Color var = aColor; // enumの値を取得できるのでこのように代入できる
+    ///     Color var = color; // enumの値を取得できるのでこのように代入できる
     /// }
     /// @endcode
     operator TEnumType()const
@@ -88,21 +88,21 @@ public:
     }
 
     /// 値を指定して作成。
-    EnumTmpl(const TEnumType aVal)
+    EnumTmpl(const TEnumType val)
     {
-        EnumPodTmpl< TEnumType, TDataType >::val_ = DataType(aVal);
+        EnumPodTmpl< TEnumType, TDataType >::val_ = DataType(val);
     }
     //@}
 };
 
 /// @name EnumTmpl EnumPodTmpl をラップする型。
 //@{
-template< typename TEnumType > class Enum8 : public EnumTmpl< TEnumType, s8  > { public: Enum8() {};  Enum8(const TEnumType aVal) { EnumTmpl< TEnumType, s8   >::val_ = s8(aVal); } };  ///< 8bitクラス版。
-template< typename TEnumType > class Enum16 : public EnumTmpl< TEnumType, s16 > { public: Enum16() {}; Enum16(const TEnumType aVal) { EnumTmpl< TEnumType, s16  >::val_ = s16(aVal); } };  ///< 16bitクラス版。
-template< typename TEnumType > class Enum32 : public EnumTmpl< TEnumType, s32 > { public: Enum32() {}; Enum32(const TEnumType aVal) { EnumTmpl< TEnumType, s32  >::val_ = s32(aVal); } }; ///< 32bitクラス版。
-template< typename TEnumType > class Enum64 : public EnumTmpl< TEnumType, s64 > { public: Enum64() {}; Enum64(const TEnumType aVal) { EnumTmpl< TEnumType, s64  >::val_ = s64(aVal); } }; ///< 64bitクラス版。
+template< typename TEnumType > class Enum8 : public EnumTmpl< TEnumType, s8  > { public: Enum8() {};  Enum8(const TEnumType val) { EnumTmpl< TEnumType, s8   >::val_ = S8(val); } };  ///< 8bitクラス版。
+template< typename TEnumType > class Enum16 : public EnumTmpl< TEnumType, s16 > { public: Enum16() {}; Enum16(const TEnumType val) { EnumTmpl< TEnumType, s16  >::val_ = s16(val); } };  ///< 16bitクラス版。
+template< typename TEnumType > class Enum32 : public EnumTmpl< TEnumType, s32 > { public: Enum32() {}; Enum32(const TEnumType val) { EnumTmpl< TEnumType, s32  >::val_ = s32(val); } }; ///< 32bitクラス版。
+template< typename TEnumType > class Enum64 : public EnumTmpl< TEnumType, s64 > { public: Enum64() {}; Enum64(const TEnumType val) { EnumTmpl< TEnumType, s64  >::val_ = s64(val); } }; ///< 64bitクラス版。
 
-template< typename TEnumType > class Enum : public Enum8< TEnumType > { public: Enum(const TEnumType aVal) { Enum8< TEnumType >::val_ = aVal; } }; ///< 標準のクラス版(8bit)。
+template< typename TEnumType > class Enum : public Enum8< TEnumType > { public: Enum(const TEnumType val) { Enum8< TEnumType >::val_ = val; } }; ///< 標準のクラス版(8bit)。
 //@}
 
 //@}

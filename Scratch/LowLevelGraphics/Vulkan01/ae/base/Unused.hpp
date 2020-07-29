@@ -12,12 +12,12 @@
 /// @details 関数の実装時に引数を使用しないときにこのマクロを使う。
 /// @code
 /// // 例
-/// void func( int aArg )
+/// void func( int arg )
 /// {
-///     AE_BASE_UNUSED( aArg ); // 変数未使用警告を回避できる。
+///     AE_BASE_UNUSED( arg ); // 変数未使用警告を回避できる。
 /// }
 /// @endcode
-#define AE_BASE_UNUSED( aVar ) ((void)aVar)
+#define AE_BASE_UNUSED( var ) ((void)var)
 
 //@}
 //@}

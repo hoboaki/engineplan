@@ -16,37 +16,37 @@ FrameCounter::FrameCounter()
 }
 
 //------------------------------------------------------------------------------
-FrameCounter::FrameCounter(const int aTotalFrame)
+FrameCounter::FrameCounter(const int totalFrame)
 : frame_(0)
-, totalFrame_(aTotalFrame)
+, totalFrame_(totalFrame)
 {
 }
 
 //------------------------------------------------------------------------------
-void FrameCounter::reset()
+void FrameCounter::Reset()
 {
     frame_ = 0;
 }
 
 //------------------------------------------------------------------------------
-void FrameCounter::reset(const int aTotalFrame)
+void FrameCounter::Reset(const int totalFrame)
 {
     frame_ = 0;
-    totalFrame_ = aTotalFrame;
+    totalFrame_ = totalFrame;
 }
 
 //------------------------------------------------------------------------------
-void FrameCounter::advance()
+void FrameCounter::Advance()
 {
-    if (isCounting()) {
-        advanceStrict();
+    if (IsCounting()) {
+        AdvanceStrict();
     }
 }
 
 //------------------------------------------------------------------------------
-void FrameCounter::advanceStrict()
+void FrameCounter::AdvanceStrict()
 {
-    if (isEnd()) {
+    if (IsEnd()) {
         AE_BASE_ASSERT_NOT_REACHED();
         return;
     }
@@ -54,40 +54,40 @@ void FrameCounter::advanceStrict()
 }
 
 //------------------------------------------------------------------------------
-void FrameCounter::toEnd()
+void FrameCounter::ToEnd()
 {
     frame_ = totalFrame_;
 }
 
 //------------------------------------------------------------------------------
-int FrameCounter::frame()const
+int FrameCounter::Frame()const
 {
     return frame_;
 
 }
 
 //------------------------------------------------------------------------------
-int FrameCounter::totalFrame()const
+int FrameCounter::TotalFrame()const
 {
     return totalFrame_;
 }
 
 //------------------------------------------------------------------------------
-bool FrameCounter::isEnd()const
+bool FrameCounter::IsEnd()const
 {
-    return !isCounting();
+    return !IsCounting();
 }
 
 //------------------------------------------------------------------------------
-bool FrameCounter::isCounting()const
+bool FrameCounter::IsCounting()const
 {
     return frame_ < totalFrame_;
 }
 
 //------------------------------------------------------------------------------
-float FrameCounter::rateFrame()const
+float FrameCounter::RateFrame()const
 {
-    if (isEnd()) {
+    if (IsEnd()) {
         return 1.0f;
     }
     else
@@ -97,9 +97,9 @@ float FrameCounter::rateFrame()const
 }
 
 //------------------------------------------------------------------------------
-float FrameCounter::invRateFrame()const
+float FrameCounter::InvRateFrame()const
 {
-    return 1.0f - rateFrame();
+    return 1.0f - RateFrame();
 }
 
 }} // namespace

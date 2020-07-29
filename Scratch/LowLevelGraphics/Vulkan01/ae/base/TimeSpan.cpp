@@ -6,142 +6,142 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromTicks(const s64 aTicks)
+const TimeSpanPod TimeSpanPod::FromTicks(const s64 ticks)
 {
-    TimeSpanPod obj = {aTicks};
+    TimeSpanPod obj = {ticks};
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromMicroseconds(const s64 aUsecs)
+const TimeSpanPod TimeSpanPod::FromMicroseconds(const s64 usecs)
 {
-    return FromTicks(aUsecs * 10);
+    return FromTicks(usecs * 10);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromMilliseconds(const s64 aMSecs)
+const TimeSpanPod TimeSpanPod::FromMilliseconds(const s64 mSecs)
 {
-    return FromMicroseconds(aMSecs * 1000);
+    return FromMicroseconds(mSecs * 1000);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromSeconds(const s64 aSecs)
+const TimeSpanPod TimeSpanPod::FromSeconds(const s64 secs)
 {
-    return FromMilliseconds(aSecs * 1000);
+    return FromMilliseconds(secs * 1000);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromMinnutes(const s64 aMins)
+const TimeSpanPod TimeSpanPod::FromMinnutes(const s64 mins)
 {
-    return FromSeconds(aMins * 60);
+    return FromSeconds(mins * 60);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromHours(const s64 aHours)
+const TimeSpanPod TimeSpanPod::FromHours(const s64 hours)
 {
-    return FromMinnutes(aHours * 60);
+    return FromMinnutes(hours * 60);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::FromDays(const s64 aDays)
+const TimeSpanPod TimeSpanPod::FromDays(const s64 days)
 {
-    return FromHours(aDays * 24);
+    return FromHours(days * 24);
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::ticks()const
+s64 TimeSpanPod::Ticks()const
 {
     return ticks_;
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::microseconds()const
+s64 TimeSpanPod::Microseconds()const
 {
     return ticks_ / 10;
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::milliseconds()const
+s64 TimeSpanPod::Milliseconds()const
 {
     return ticks_ / (1000 * 10);
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::seconds()const
+s64 TimeSpanPod::Seconds()const
 {
     return ticks_ / (1000 * 1000 * 10);
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::minutes()const
+s64 TimeSpanPod::Minutes()const
 {
     return ticks_ / (60 * 1000 * 1000 * 10);
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::hours()const
+s64 TimeSpanPod::Hours()const
 {
     return ticks_ / (s64(60) * 60 * 1000 * 1000 * 10);
 }
 
 //------------------------------------------------------------------------------
-s64 TimeSpanPod::days()const
+s64 TimeSpanPod::Days()const
 {
     return ticks_ / (s64(24) * 60 * 60 * 1000 * 1000 * 10);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::add(const TimeSpanPod& aTimeSpan)const
+const TimeSpanPod TimeSpanPod::Add(const TimeSpanPod& timeSpan)const
 {
     TimeSpanPod obj = *this;
-    obj += aTimeSpan;
+    obj += timeSpan;
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::operator+(const TimeSpanPod& aTimeSpan)const
+const TimeSpanPod TimeSpanPod::operator+(const TimeSpanPod& timeSpan)const
 {
-    return add(aTimeSpan);
+    return Add(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimeSpanPod& TimeSpanPod::addAssign(const TimeSpanPod& aTimeSpan)
+TimeSpanPod& TimeSpanPod::AddAssign(const TimeSpanPod& timeSpan)
 {
-    ticks_ += aTimeSpan.ticks_;
+    ticks_ += timeSpan.ticks_;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-TimeSpanPod& TimeSpanPod::operator+=(const TimeSpanPod& aTimeSpan)
+TimeSpanPod& TimeSpanPod::operator+=(const TimeSpanPod& timeSpan)
 {
-    return addAssign(aTimeSpan);
+    return AddAssign(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::sub(const TimeSpanPod& aTimeSpan)const
+const TimeSpanPod TimeSpanPod::Sub(const TimeSpanPod& timeSpan)const
 {
     TimeSpanPod obj = *this;
-    obj -= aTimeSpan;
+    obj -= timeSpan;
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const TimeSpanPod TimeSpanPod::operator-(const TimeSpanPod& aTimeSpan)const
+const TimeSpanPod TimeSpanPod::operator-(const TimeSpanPod& timeSpan)const
 {
-    return sub(aTimeSpan);
+    return Sub(timeSpan);
 }
 
 //------------------------------------------------------------------------------
-TimeSpanPod& TimeSpanPod::subAssign(const TimeSpanPod& aTimeSpan)
+TimeSpanPod& TimeSpanPod::SubAssign(const TimeSpanPod& timeSpan)
 {
-    ticks_ -= aTimeSpan.ticks_;
+    ticks_ -= timeSpan.ticks_;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-TimeSpanPod& TimeSpanPod::operator-=(const TimeSpanPod& aTimeSpan)
+TimeSpanPod& TimeSpanPod::operator-=(const TimeSpanPod& timeSpan)
 {
-    return subAssign(aTimeSpan);
+    return SubAssign(timeSpan);
 }
 
 }} // namespace

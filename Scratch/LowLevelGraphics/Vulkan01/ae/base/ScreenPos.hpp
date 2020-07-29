@@ -28,7 +28,7 @@ public:
     /// @name コンストラクタ。
     //@{
     ScreenPos(); ///< (0,0)で作成。
-    ScreenPos(s16 aX, s16 aY); ///< x,yを指定して作成。
+    ScreenPos(s16 x, s16 y); ///< x,yを指定して作成。
     ScreenPos(const ScreenPosPod&); ///< コピーして作成。
     //@}
 };

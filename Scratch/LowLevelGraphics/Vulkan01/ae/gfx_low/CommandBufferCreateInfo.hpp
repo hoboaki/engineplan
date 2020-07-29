@@ -22,20 +22,20 @@ namespace gfx_low {
 class CommandBufferCreateInfo {
 public:
     /// 属する Device。（初期値：nullptr）
-    gfx_low::Device* Device() const { return device_.get(); }
+    gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須） 
     CommandBufferCreateInfo& SetDevice(gfx_low::Device* device) {
-        device_.reset(device);
+        device_.Reset(device);
         return *this;
     }
 
     /// 属する Queue。（初期値：nullptr）
-    gfx_low::Queue* Queue() const { return queue_.get(); }
+    gfx_low::Queue* Queue() const { return queue_.Get(); }
 
     /// Queue() の設定。Level() == Primary の場合に設定必須。
     CommandBufferCreateInfo& SetQueue(gfx_low::Queue* queue) {
-        queue_.reset(queue);
+        queue_.Reset(queue);
         return *this;
     }
 

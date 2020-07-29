@@ -24,7 +24,7 @@ struct ScalerStruct : public PodStruct<T>
     static typename PodStruct<T>::ValueType MinValue() { return std::numeric_limits< typename PodStruct<T>::ValueType >::min(); } ///< 最小値を取得する。 @return 最小値。
 
     /// ShortStringに変換する。@return 変換された文字列。
-    const ShortString toShortString()const { return ::ae::base::ShortStringFactory::Create(PodStruct<T>::readRef()); }
+    const ShortString ToShortString()const { return ::ae::base::ShortStringFactory::Create(PodStruct<T>::ReadRef()); }
 
 private:
     typedef ::ae::base::PodStruct< T > SuperStruct; // 親クラスのエイリアス。

@@ -31,12 +31,12 @@ namespace base {
     ///     {
     ///         UnsetInstance();
     ///     }
-    ///     int value()const { return 1; }
+    ///     int Value()const { return 1; }
     /// };
     /// void func()
     /// {
     ///     // Managerが作成済みならこのようにアクセスできる
-    ///     return Manager::Instance().value();
+    ///     return Manager::Instance().Value();
     /// }
     /// @endcode
 template< typename T >
@@ -87,10 +87,10 @@ bool ExplicitSingleton<T>::IsCreated()
 }
 
 template< typename T >
-void ExplicitSingleton<T>::SetInstance(T& aRef)
+void ExplicitSingleton<T>::SetInstance(T& ref)
 {
     AE_BASE_ASSERT(!IsCreated());
-    sPtr = &aRef;
+    sPtr = &ref;
 }
 
 template< typename T >

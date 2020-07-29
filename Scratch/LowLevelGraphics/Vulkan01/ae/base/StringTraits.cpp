@@ -32,51 +32,51 @@ struct tImpl< char >
     static const char TERM_VALUE = '\0';
 
     // Lengthの実装。
-    static pword_t Length(const char* aStr)
+    static pword_t Length(const char* str)
     {
-        return std::strlen(aStr);
+        return std::strlen(str);
     }
 
     // Equalsの実装。
-    static bool Equals(const char* aStrA, const char* aStrB)
+    static bool Equals(const char* strA, const char* strB)
     {
-        return std::strcmp(aStrA, aStrB) == 0;
+        return std::strcmp(strA, strB) == 0;
     }
 
     // NCopyの実装。
     static int NCopy(
-        char* aBuffer,
-        const pword_t aBufferLength,
-        const char* aStr
+        char* buffer,
+        const pword_t bufferLength,
+        const char* str
         )
     {
-        return SNPrintf(aBuffer, aBufferLength, "%s", aStr);
+        return SNPrintf(buffer, bufferLength, "%s", str);
     }
 
     // SNPrintfの実装。
     static int SNPrintf(
-        char* aBuffer,
-        const pword_t aBufferLength,
-        const char* aFormat,
+        char* buffer,
+        const pword_t bufferLength,
+        const char* format,
         ...
         )
     {
         va_list arg;
-        va_start(arg, aFormat);
-        int result = VSNPrintf(aBuffer, aBufferLength, aFormat, arg);
+        va_start(arg, format);
+        int result = VSNPrintf(buffer, bufferLength, format, arg);
         va_end(arg);
         return result;
     }
 
     // VSNPrintfの実装。
     static int VSNPrintf(
-        char* aBuffer,
-        const pword_t aBufferLength,
-        const char* aFormat,
-        va_list aArg
+        char* buffer,
+        const pword_t bufferLength,
+        const char* format,
+        va_list arg
         )
     {
-        return vsnprintf(aBuffer, aBufferLength, aFormat, aArg);
+        return vsnprintf(buffer, bufferLength, format, arg);
     }
 };
 
@@ -88,51 +88,51 @@ struct tImpl< wchar_t >
     static const wchar_t TERM_VALUE = '\0';
 
     // Lengthの実装。
-    static pword_t Length(const wchar_t* aStr)
+    static pword_t Length(const wchar_t* str)
     {
-        return std::wcslen(aStr);
+        return std::wcslen(str);
     }
 
     // Equalsの実装。
-    static bool Equals(const wchar_t* aStrA, const wchar_t* aStrB)
+    static bool Equals(const wchar_t* strA, const wchar_t* strB)
     {
-        return std::wcscmp(aStrA, aStrB) == 0;
+        return std::wcscmp(strA, strB) == 0;
     }
 
     // NCopyの実装。
     static int NCopy(
-        wchar_t* aBuffer,
-        const pword_t aBufferLength,
-        const wchar_t* aStr
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* str
         )
     {
-        return SNPrintf(aBuffer, aBufferLength, L"%s", aStr);
+        return SNPrintf(buffer, bufferLength, L"%s", str);
     }
 
     // SNPrintfの実装。
     static int SNPrintf(
-        wchar_t* aBuffer,
-        const pword_t aBufferLength,
-        const wchar_t* aFormat,
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* format,
         ...
         )
     {
         va_list arg;
-        va_start(arg, aFormat);
-        int result = VSNPrintf(aBuffer, aBufferLength, aFormat, arg);
+        va_start(arg, format);
+        int result = VSNPrintf(buffer, bufferLength, format, arg);
         va_end(arg);
         return result;
     }
 
     // VSNPrintfの実装。
     static int VSNPrintf(
-        wchar_t* aBuffer,
-        const pword_t aBufferLength,
-        const wchar_t* aFormat,
-        va_list aArg
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* format,
+        va_list arg
         )
     {
-        return vswprintf(aBuffer, aBufferLength, aFormat, aArg);
+        return vswprintf(buffer, bufferLength, format, arg);
     }
 };
 
@@ -141,64 +141,64 @@ struct tImpl< wchar_t >
 namespace {
     // Lengthの実装。
 template < typename CharType >
-pword_t tLength(const CharType* aStr)
+pword_t tLength(const CharType* str)
 {
     // ポインタチェック。
-    if (PointerCheck::InvalidCheck(aStr)) {
+    if (PointerCheck::InvalidCheck(str)) {
         return 0;
     }
 
     // 結果を返す。
-    return tImpl< CharType >::Length(aStr);
+    return tImpl< CharType >::Length(str);
 }
 }
 
 // Lengthの実装(char版)。
 template <>
-pword_t StringTraits< char >::Length(const char* aStr)
+pword_t StringTraits< char >::Length(const char* str)
 {
-    return tLength< char >(aStr);
+    return tLength< char >(str);
 }
 
 // Lengthの実装(wchar_t版)。
 template <>
-pword_t StringTraits< wchar_t >::Length(const wchar_t* aStr)
+pword_t StringTraits< wchar_t >::Length(const wchar_t* str)
 {
-    return tLength< wchar_t >(aStr);
+    return tLength< wchar_t >(str);
 }
 
 //------------------------------------------------------------------------------
 namespace {
     // Equalsの実装。
 template < typename CharType >
-bool tEquals(const CharType* aStrA, const CharType* aStrB)
+bool tEquals(const CharType* strA, const CharType* strB)
 {
     // ポインタチェック。
-    if (PointerCheck::InvalidCheck(aStrA)
-        || PointerCheck::InvalidCheck(aStrB)
+    if (PointerCheck::InvalidCheck(strA)
+        || PointerCheck::InvalidCheck(strB)
         )
     {
         return 0;
     }
 
     // 結果を返す。
-    return tImpl< CharType >::Equals(aStrA, aStrB);
+    return tImpl< CharType >::Equals(strA, strB);
 }
 
 }
 
 // Equalsの実装(char版)。
 template <>
-bool StringTraits< char >::Equals(const char* aStrA, const char* aStrB)
+bool StringTraits< char >::Equals(const char* strA, const char* strB)
 {
-    return tEquals< char >(aStrA, aStrB);
+    return tEquals< char >(strA, strB);
 }
 
 // Equalsの実装(wchar_t版)。
 template <>
-bool StringTraits< wchar_t >::Equals(const wchar_t* aStrA, const wchar_t* aStrB)
+bool StringTraits< wchar_t >::Equals(const wchar_t* strA, const wchar_t* strB)
 {
-    return tEquals< wchar_t >(aStrA, aStrB);
+    return tEquals< wchar_t >(strA, strB);
 }
 
 //------------------------------------------------------------------------------
@@ -206,24 +206,24 @@ namespace {
 // NCopyStrictの実装。
 template< typename CharType >
 const typename StringTraits< CharType >::WriteResult tNCopyStrict(
-    CharType* aBuffer,
-    const pword_t aBufferLength,
-    const CharType* aStr
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* str
     )
 {
     // 結果用変数
     typename StringTraits< CharType >::WriteResult result = {};
 
     // ポインタチェック
-    if (PointerCheck::InvalidCheck(aBuffer)
-        || PointerCheck::InvalidCheck(aStr)
+    if (PointerCheck::InvalidCheck(buffer)
+        || PointerCheck::InvalidCheck(str)
         )
     {// 無効なポインタ
         return result;
     }
 
     // 実行
-    int ret = tImpl< CharType >::NCopy(aBuffer, aBufferLength, aStr);
+    int ret = tImpl< CharType >::NCopy(buffer, bufferLength, str);
     if (ret < 0) {
         // 失敗
         return result;
@@ -239,23 +239,23 @@ const typename StringTraits< CharType >::WriteResult tNCopyStrict(
 // NCopyStrictの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::NCopyStrict(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aStr
+    char* buffer,
+    const pword_t bufferLength,
+    const char* str
     )
 {
-    return tNCopyStrict< char >(aBuffer, aBufferLength, aStr);
+    return tNCopyStrict< char >(buffer, bufferLength, str);
 }
 
 // NCopyStrictの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::NCopyStrict(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aStr
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* str
     )
 {
-    return tNCopyStrict< wchar_t >(aBuffer, aBufferLength, aStr);
+    return tNCopyStrict< wchar_t >(buffer, bufferLength, str);
 }
 
 //------------------------------------------------------------------------------
@@ -263,9 +263,9 @@ namespace {
 // NCopyの実装。
 template< typename CharType >
 const typename StringTraits< CharType >::WriteResult tNCopy(
-    CharType* aBuffer,
-    const pword_t aBufferLength,
-    const CharType* aStr
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* str
     )
 {
     // 結果用変数
@@ -273,18 +273,18 @@ const typename StringTraits< CharType >::WriteResult tNCopy(
     WriteResult result = {};
 
     // バッファ長チェック
-    if (aBufferLength < 1) {
+    if (bufferLength < 1) {
         // 不正な引数
-        AE_BASE_ERROR_INVALID_VALUE(aBufferLength);
+        AE_BASE_ERROR_INVALID_VALUE(bufferLength);
         return result;
     }
 
     // 実行
-    result = StringTraits< CharType >::NCopyStrict(aBuffer, aBufferLength, aStr);
+    result = StringTraits< CharType >::NCopyStrict(buffer, bufferLength, str);
 
     // 終端文字設定
     if (!result.isSuccess
-        || aBufferLength <= result.length
+        || bufferLength <= result.length
         )
     {// 想定していないことが起きたときの処理
         // 本来あってはならない
@@ -295,7 +295,7 @@ const typename StringTraits< CharType >::WriteResult tNCopy(
         result = tmpResult;
 
         // 終端文字設定
-        aBuffer[0] = tImpl< CharType >::TERM_VALUE;
+        buffer[0] = tImpl< CharType >::TERM_VALUE;
     }
 
     // 結果を返す
@@ -307,23 +307,23 @@ const typename StringTraits< CharType >::WriteResult tNCopy(
 // NCopyの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::NCopy(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aStr
+    char* buffer,
+    const pword_t bufferLength,
+    const char* str
     )
 {
-    return tNCopy< char >(aBuffer, aBufferLength, aStr);
+    return tNCopy< char >(buffer, bufferLength, str);
 }
 
 // NCopyの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::NCopy(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aStr
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* str
     )
 {
-    return tNCopy< wchar_t >(aBuffer, aBufferLength, aStr);
+    return tNCopy< wchar_t >(buffer, bufferLength, str);
 }
 
 //------------------------------------------------------------------------------
@@ -331,25 +331,25 @@ namespace {
 // VSNPrintfStrictの実装。
 template< typename CharType >
 const typename StringTraits< CharType >::WriteResult tVSNPrintfStrict(
-    CharType* aBuffer,
-    const pword_t aBufferLength,
-    const CharType* aFormat,
-    va_list aArg
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* format,
+    va_list arg
     )
 {
     // 結果用変数
     typename StringTraits< CharType >::WriteResult result = {};
 
     // ポインタチェック
-    if (PointerCheck::InvalidCheck(aBuffer)
-        || PointerCheck::InvalidCheck(aFormat)
+    if (PointerCheck::InvalidCheck(buffer)
+        || PointerCheck::InvalidCheck(format)
         )
     {// 無効なポインタ
         return result;
     }
 
     // 実行
-    int ret = tImpl< CharType >::VSNPrintf(aBuffer, aBufferLength, aFormat, aArg);
+    int ret = tImpl< CharType >::VSNPrintf(buffer, bufferLength, format, arg);
     if (ret < 0) {
         // 失敗
         return result;
@@ -365,25 +365,25 @@ const typename StringTraits< CharType >::WriteResult tVSNPrintfStrict(
 // VSNPrintfStrictの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::VSNPrintfStrict(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aFormat,
-    va_list aArg
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    va_list arg
     )
 {
-    return tVSNPrintfStrict< char >(aBuffer, aBufferLength, aFormat, aArg);
+    return tVSNPrintfStrict< char >(buffer, bufferLength, format, arg);
 }
 
 // VSNPrintfStrictの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::VSNPrintfStrict(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aFormat,
-    va_list aArg
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
+    va_list arg
     )
 {
-    return tVSNPrintfStrict< wchar_t >(aBuffer, aBufferLength, aFormat, aArg);
+    return tVSNPrintfStrict< wchar_t >(buffer, bufferLength, format, arg);
 }
 
 //------------------------------------------------------------------------------
@@ -393,10 +393,10 @@ namespace {
 // VSNPrintfの実装。
 template< typename CharType >
 const typename StringTraits< CharType >::WriteResult tVSNPrintf(
-    CharType* aBuffer,
-    const pword_t aBufferLength,
-    const CharType* aFormat,
-    va_list aArg
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* format,
+    va_list arg
     )
 {
     // 結果用変数
@@ -404,18 +404,18 @@ const typename StringTraits< CharType >::WriteResult tVSNPrintf(
     WriteResult result = {};
 
     // バッファ長チェック
-    if (aBufferLength < 1) {
+    if (bufferLength < 1) {
         // 不正な引数
-        AE_BASE_ERROR_INVALID_VALUE(aBufferLength);
+        AE_BASE_ERROR_INVALID_VALUE(bufferLength);
         return result;
     }
 
     // 実行
-    result = StringTraits< CharType >::VSNPrintfStrict(aBuffer, aBufferLength, aFormat, aArg);
+    result = StringTraits< CharType >::VSNPrintfStrict(buffer, bufferLength, format, arg);
 
     // 終端文字設定
     if (!result.isSuccess
-        || aBufferLength <= result.length
+        || bufferLength <= result.length
         )
     {// 想定していないことが起きたときの処理
         // 本来あってはならない
@@ -426,7 +426,7 @@ const typename StringTraits< CharType >::WriteResult tVSNPrintf(
         result = tmpResult;
 
         // 終端文字設定
-        aBuffer[0] = tImpl< CharType >::TERM_VALUE;
+        buffer[0] = tImpl< CharType >::TERM_VALUE;
     }
 
     // 結果を返す
@@ -437,40 +437,40 @@ const typename StringTraits< CharType >::WriteResult tVSNPrintf(
 // VSNPrintfの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::VSNPrintf(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aFormat,
-    va_list aArg
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    va_list arg
     )
 {
-    return tVSNPrintf< char >(aBuffer, aBufferLength, aFormat, aArg);
+    return tVSNPrintf< char >(buffer, bufferLength, format, arg);
 }
 
 // VSNPrintfの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::VSNPrintf(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aFormat,
-    va_list aArg
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
+    va_list arg
     )
 {
-    return tVSNPrintf< wchar_t >(aBuffer, aBufferLength, aFormat, aArg);
+    return tVSNPrintf< wchar_t >(buffer, bufferLength, format, arg);
 }
 
 //------------------------------------------------------------------------------
 // SNPrintfStrictの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::SNPrintfStrict(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aFormat,
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
     ...
     )
 {
     va_list arg;
-    va_start(arg, aFormat);
-    const WriteResult result = VSNPrintfStrict(aBuffer, aBufferLength, aFormat, arg);
+    va_start(arg, format);
+    const WriteResult result = VSNPrintfStrict(buffer, bufferLength, format, arg);
     va_end(arg);
     return result;
 }
@@ -478,15 +478,15 @@ const StringTraits< char >::WriteResult StringTraits< char >::SNPrintfStrict(
 // SNPrintfStrictの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::SNPrintfStrict(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aFormat,
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
     ...
     )
 {
     va_list arg;
-    va_start(arg, aFormat);
-    const WriteResult result = VSNPrintfStrict(aBuffer, aBufferLength, aFormat, arg);
+    va_start(arg, format);
+    const WriteResult result = VSNPrintfStrict(buffer, bufferLength, format, arg);
     va_end(arg);
     return result;
 }
@@ -495,15 +495,15 @@ const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::SNPrintfStri
 // SNPrintfの実装(char版)。
 template <>
 const StringTraits< char >::WriteResult StringTraits< char >::SNPrintf(
-    char* aBuffer,
-    const pword_t aBufferLength,
-    const char* aFormat,
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
     ...
     )
 {
     va_list arg;
-    va_start(arg, aFormat);
-    const WriteResult result = VSNPrintf(aBuffer, aBufferLength, aFormat, arg);
+    va_start(arg, format);
+    const WriteResult result = VSNPrintf(buffer, bufferLength, format, arg);
     va_end(arg);
     return result;
 }
@@ -511,15 +511,15 @@ const StringTraits< char >::WriteResult StringTraits< char >::SNPrintf(
 // SNPrintfの実装(wchar_t版)。
 template <>
 const StringTraits< wchar_t >::WriteResult StringTraits< wchar_t >::SNPrintf(
-    wchar_t* aBuffer,
-    const pword_t aBufferLength,
-    const wchar_t* aFormat,
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
     ...
     )
 {
     va_list arg;
-    va_start(arg, aFormat);
-    const WriteResult result = VSNPrintf(aBuffer, aBufferLength, aFormat, arg);
+    va_start(arg, format);
+    const WriteResult result = VSNPrintf(buffer, bufferLength, format, arg);
     va_end(arg);
     return result;
 }

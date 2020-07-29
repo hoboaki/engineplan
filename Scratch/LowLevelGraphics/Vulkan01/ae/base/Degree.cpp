@@ -17,13 +17,13 @@ const float tToRadianRate = AE_BASE_PI / 180.0f;
 } // namespace
 
 //------------------------------------------------------------------------------
-const Angle DegreePod::toAngle()const
+const Angle DegreePod::ToAngle()const
 {
     return Angle(*this);
 }
 
 //------------------------------------------------------------------------------
-const RadianPod DegreePod::toRadian()const
+const RadianPod DegreePod::ToRadian()const
 {
     return Radian(value * tToRadianRate);
 }
@@ -36,15 +36,15 @@ Degree::Degree()
 }
 
 //------------------------------------------------------------------------------
-Degree::Degree(const float aDegree)
+Degree::Degree(const float degree)
 : DegreePod()
 {
-    value = aDegree;
+    value = degree;
 }
 
 //------------------------------------------------------------------------------
-Degree::Degree(const DegreePod& aVal)
-: DegreePod(aVal)
+Degree::Degree(const DegreePod& val)
+: DegreePod(val)
 {
 }
 

@@ -17,10 +17,10 @@ struct DivideCheck
 
     // アサートで止めつつ引数の値をそのまま返す。
     template< typename T >
-    static T Error(const T& aRetVal)
+    static T Error(const T& retVal)
     {
         AE_BASE_ASSERT_NOT_REACHED_MSG(AssertionMessage);
-        return aRetVal;
+        return retVal;
     }
 };
 
@@ -48,7 +48,7 @@ struct DivideCheck
 
 /// @brief lhs / rhsの0除算チェック。
 /// @details 0除算しようとした場合はエラー。エラーが無効なときは除算をせずに左辺を返す。
-#define AE_BASE_DIV( aLHS , aRHS ) ( aRHS != 0 ? ( aLHS / aRHS ) : ::ae::base::DivideCheck::Error( aLHS ) )
+#define AE_BASE_DIV( lHS , rHS ) ( rHS != 0 ? ( lHS / rHS ) : ::ae::base::DivideCheck::Error( lHS ) )
 
 //@}
 //@}

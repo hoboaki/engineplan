@@ -10,50 +10,50 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-int Hid::keyboardCount()const
+int Hid::KeyboardCount()const
 {
     return 1;
 }
 
 //------------------------------------------------------------------------------
-const Keyboard Hid::keyboardAtIndex(const int aIndex)const
+const Keyboard Hid::KeyboardAtIndex(const int index)const
 {
-    AE_BASE_ASSERT_LESS(aIndex, keyboardCount());
-    AE_BASE_UNUSED(aIndex);
+    AE_BASE_ASSERT_LESS(index, KeyboardCount());
+    AE_BASE_UNUSED(index);
     return ext_.keyboard;
 }
 
 //------------------------------------------------------------------------------
-int Hid::mouseCount()const
+int Hid::MouseCount()const
 {
     return 1;
 }
 
 //------------------------------------------------------------------------------
-const Mouse Hid::mouseAtIndex(const int aIndex)const
+const Mouse Hid::MouseAtIndex(const int index)const
 {
-    AE_BASE_ASSERT_LESS(aIndex, mouseCount());
-    AE_BASE_UNUSED(aIndex);
+    AE_BASE_ASSERT_LESS(index, MouseCount());
+    AE_BASE_UNUSED(index);
     return ext_.mouse;
 }
 
 //------------------------------------------------------------------------------
-int Hid::supportedTouchTapCount()const
+int Hid::SupportedTouchTapCount()const
 {
     return 0;
 }
 
 //------------------------------------------------------------------------------
-int Hid::touchCount()const
+int Hid::TouchCount()const
 {
     return 0;
 }
 
 //------------------------------------------------------------------------------
-const Touch Hid::touchAtIndex(const int)const
+const Touch Hid::TouchAtIndex(const int)const
 {
     AE_BASE_ASSERT_NOT_REACHED();
-    return Touch(1);
+    return base::Touch(1);
 }
 
 }} // namespace

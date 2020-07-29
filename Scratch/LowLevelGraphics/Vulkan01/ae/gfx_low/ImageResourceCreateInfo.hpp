@@ -20,9 +20,9 @@ class ImageResourceCreateInfo
 public:
     /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::Device* Device() const { return device_.get(); }
+    gfx_low::Device* Device() const { return device_.Get(); }
     ImageResourceCreateInfo& SetDevice(gfx_low::Device* system) {
-        device_.reset(system);
+        device_.Reset(system);
         return *this;
     }
     //@}
@@ -30,9 +30,9 @@ public:
     /// @name 内部処理用関数群
     //@{
     /// VkImage オブジェクト。こちらが指定されている場合はこれをそのまま使う。
-    ::vk::Image* PrvImagePtr() const { return imagePtr_.get(); }
+    ::vk::Image* PrvImagePtr() const { return imagePtr_.Get(); }
     ImageResourceCreateInfo& PrvSetImagePtr(::vk::Image* imagePtr) {
-        imagePtr_.reset(imagePtr);
+        imagePtr_.Reset(imagePtr);
         return *this;
     }
     //@}

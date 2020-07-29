@@ -44,23 +44,23 @@ struct Color4bPod
     //============================================================
     /// @name 変換
     //@{
-    const Color3bPod toRGB()const;
-    const Color3bPod toRRR()const;
-    const Color3bPod toGGG()const;
-    const Color3bPod toBBB()const;
-    const Color3bPod toAAA()const;
-    const Color4bPod toRRRR()const;
-    const Color4bPod toGGGG()const;
-    const Color4bPod toBBBB()const;
-    const Color4bPod toAAAA()const;
-    const Color4Pod toRGBAf()const;
+    const Color3bPod ToRGB()const;
+    const Color3bPod ToRRR()const;
+    const Color3bPod ToGGG()const;
+    const Color3bPod ToBBB()const;
+    const Color3bPod ToAAA()const;
+    const Color4bPod ToRRRR()const;
+    const Color4bPod ToGGGG()const;
+    const Color4bPod ToBBBB()const;
+    const Color4bPod ToAAAA()const;
+    const Color4Pod ToRGBAf()const;
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// r,g,b,a形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 
@@ -72,8 +72,8 @@ public:
     /// @name コンストラクタ
     //@{
     Color4b(); ///< Zero() で作成。
-    Color4b(const Color4bPod& aRGBA); ///< コピーして作成。
-    Color4b(u8 aR, u8 aG, u8 aB, u8 aA); ///< RGBAを指定して作成。
+    Color4b(const Color4bPod& rGBA); ///< コピーして作成。
+    Color4b(u8 r, u8 g, u8 b, u8 a); ///< RGBAを指定して作成。
     //@}
 };
 //@}

@@ -18,8 +18,8 @@ template< typename T >
 class Reference
 {
 public:
-    Reference(T& aRef)
-        : ptr_(&aRef)
+    Reference(T& ref)
+        : ptr_(&ref)
     {
     }
 

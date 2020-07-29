@@ -16,12 +16,12 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-void Thread::Sleep(const TimeSpanPod& aTimeSpan)
+void Thread::Sleep(const TimeSpanPod& timeSpan)
 {
 #if defined(AE_BASE_OS_WINDOWS)
-    ::Sleep(DWORD(::ae::base::Math::Max(s64(1), aTimeSpan.milliseconds())));
+    ::Sleep(DWORD(::ae::base::Math::Max(s64(1), timeSpan.Milliseconds())));
 #else    
-    usleep(useconds_t(::ae::base::Math::Max(s64(1), aTimeSpan.microseconds())));
+    Usleep(useconds_t(::ae::base::Math::Max(s64(1), timeSpan.Microseconds())));
 #endif
 }
 

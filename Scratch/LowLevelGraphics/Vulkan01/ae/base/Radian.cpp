@@ -14,13 +14,13 @@ namespace {
 const float tToDegreeRate = 180.0f / AE_BASE_PI;
 }
 //------------------------------------------------------------------------------
-const Angle RadianPod::toAngle()const
+const Angle RadianPod::ToAngle()const
 {
     return Angle(*this);
 }
 
 //------------------------------------------------------------------------------
-const DegreePod RadianPod::toDegree()const
+const DegreePod RadianPod::ToDegree()const
 {
     return Degree(value * tToDegreeRate);
 }
@@ -33,15 +33,15 @@ Radian::Radian()
 }
 
 //------------------------------------------------------------------------------
-Radian::Radian(const float aRadian)
+Radian::Radian(const float radian)
 : RadianPod()
 {
-    value = aRadian;
+    value = radian;
 }
 
 //------------------------------------------------------------------------------
-Radian::Radian(const RadianPod& aVal)
-: RadianPod(aVal)
+Radian::Radian(const RadianPod& val)
+: RadianPod(val)
 {
 }
 

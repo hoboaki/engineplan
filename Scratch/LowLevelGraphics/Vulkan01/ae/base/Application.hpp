@@ -45,18 +45,18 @@ public:
     ~Application();
 
     /// コマンドライン引数を取得する。
-    const Argument& argument()const;
+    const base::Argument& Argument() const;
 
     /// @brief アプリケーションの終了を要求する。
     /// @details 
     /// 任意のタイミングでアプリケーションを終了したい場合にこの関数を呼びます。@n
-    /// そうすると receiveEvent() は次の呼び出しで AppEvent::Quit を返します。 @n
-    void quit();
+    /// そうすると ReceiveEvent() は次の呼び出しで AppEvent::Quit を返します。 @n
+    void Quit();
 
     /// @name  イベント
     //@{
-    AppEvent::EnumType receiveEvent();   ///< 新しいイベントを受け取る。
-    AppEvent::EnumType lastEvent()const; ///< 最後に受け取ったイベントを取得する。
+    AppEvent::EnumType ReceiveEvent();   ///< 新しいイベントを受け取る。
+    AppEvent::EnumType LastEvent()const; ///< 最後に受け取ったイベントを取得する。
     //@}
 
     //============================================================
@@ -65,12 +65,12 @@ public:
     void unregisterDisplay_(Display&);
 
 private:
-    const Argument& argument_;
+    const base::Argument& argument_;
     Enum32< AppEvent::EnumType > lastEvent_;
     Pointer< Display > displayPtr_;
     Application_Ext ext_;
     //------------------------------------------------------------------------------
-    AppEvent::EnumType receiveEventCore();
+    AppEvent::EnumType ReceiveEventCore();
 };
 //@}
 

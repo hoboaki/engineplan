@@ -50,121 +50,121 @@ struct Vector3Pod
     //============================================================
     /// @name 変換
     //@{
-    const Vector2Pod toXY()const;
-    const Vector2Pod toXX()const;
-    const Vector2Pod toYY()const;
-    const Vector2Pod toZZ()const;
-    const Vector3Pod toX00()const;
-    const Vector3Pod toXY0()const;
-    const Vector3Pod to0Y0()const;
-    const Vector3Pod to0YZ()const;
-    const Vector3Pod to00Z()const;
-    const Vector3Pod toXXX()const;
-    const Vector3Pod toYYY()const;
-    const Vector3Pod toZZZ()const;
-    const Vector4Pod toXYZ0()const;
-    const Vector4Pod toXXXX()const;
-    const Vector4Pod toYYYY()const;
-    const Vector4Pod toZZZZ()const;
+    const Vector2Pod ToXY()const;
+    const Vector2Pod ToXX()const;
+    const Vector2Pod ToYY()const;
+    const Vector2Pod ToZZ()const;
+    const Vector3Pod ToX00()const;
+    const Vector3Pod ToXY0()const;
+    const Vector3Pod To0Y0()const;
+    const Vector3Pod To0YZ()const;
+    const Vector3Pod To00Z()const;
+    const Vector3Pod ToXXX()const;
+    const Vector3Pod ToYYY()const;
+    const Vector3Pod ToZZZ()const;
+    const Vector4Pod ToXYZ0()const;
+    const Vector4Pod ToXXXX()const;
+    const Vector4Pod ToYYYY()const;
+    const Vector4Pod ToZZZZ()const;
     //@}
 
     //============================================================
     /// @name 等価比較
     //@{
-    bool equals(const Vector3Pod&)const;       ///< 許容誤差を考慮した等価比較。
-    bool equalsStrict(const Vector3Pod&)const; ///< 許容誤差を許容しない等価比較。
+    bool Equals(const Vector3Pod&)const;       ///< 許容誤差を考慮した等価比較。
+    bool EqualsStrict(const Vector3Pod&)const; ///< 許容誤差を許容しない等価比較。
     //@}
 
     //============================================================
     /// @name 四則演算
     //@{
-    const Vector3Pod add(f32)const; ///< 各要素に値を加算した結果を取得する。
-    const Vector3Pod sub(f32)const; ///< 各要素から値を減算した結果を取得する。
-    const Vector3Pod mul(f32)const; ///< 各要素に値をかけた結果を取得する。
-    const Vector3Pod div(f32)const; ///< 各要素から値をわった結果を取得する。
-    const Vector3Pod add(const Vector3Pod&)const; ///< 対応する値同士を加算した結果を取得する。
-    const Vector3Pod sub(const Vector3Pod&)const; ///< 対応する値に対して減算した結果を取得する。
-    const Vector3Pod mul(const Vector3Pod&)const; ///< 対応する値同士をかけた結果を取得する。
-    const Vector3Pod div(const Vector3Pod&)const; ///< 対応する値に対して割り算をした結果を取得する。
-    void addAssign(f32); ///< 各要素に値を加算する。
-    void subAssign(f32); ///< 各要素から値を減算する。
-    void mulAssign(f32); ///< 各要素に値をかける。
-    void divAssign(f32); ///< 各要素から値をわる。
-    void addAssign(const Vector3Pod&); ///< 対応する値同士を加算する。
-    void subAssign(const Vector3Pod&); ///< 対応する値に対して減算する。
-    void mulAssign(const Vector3Pod&); ///< 対応する値同士をかける。
-    void divAssign(const Vector3Pod&); ///< 対応する値に対して割り算をする。       
+    const Vector3Pod Add(f32)const; ///< 各要素に値を加算した結果を取得する。
+    const Vector3Pod Sub(f32)const; ///< 各要素から値を減算した結果を取得する。
+    const Vector3Pod Mul(f32)const; ///< 各要素に値をかけた結果を取得する。
+    const Vector3Pod Div(f32)const; ///< 各要素から値をわった結果を取得する。
+    const Vector3Pod Add(const Vector3Pod&)const; ///< 対応する値同士を加算した結果を取得する。
+    const Vector3Pod Sub(const Vector3Pod&)const; ///< 対応する値に対して減算した結果を取得する。
+    const Vector3Pod Mul(const Vector3Pod&)const; ///< 対応する値同士をかけた結果を取得する。
+    const Vector3Pod Div(const Vector3Pod&)const; ///< 対応する値に対して割り算をした結果を取得する。
+    void AddAssign(f32); ///< 各要素に値を加算する。
+    void SubAssign(f32); ///< 各要素から値を減算する。
+    void MulAssign(f32); ///< 各要素に値をかける。
+    void DivAssign(f32); ///< 各要素から値をわる。
+    void AddAssign(const Vector3Pod&); ///< 対応する値同士を加算する。
+    void SubAssign(const Vector3Pod&); ///< 対応する値に対して減算する。
+    void MulAssign(const Vector3Pod&); ///< 対応する値同士をかける。
+    void DivAssign(const Vector3Pod&); ///< 対応する値に対して割り算をする。       
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Vector3Pod operator+(f32)const; ///< add()。
-    const Vector3Pod operator-(f32)const; ///< sub()。
-    const Vector3Pod operator*(f32)const; ///< mul()。
-    const Vector3Pod operator/(f32)const; ///< div()。
-    const Vector3Pod operator+(const Vector3Pod&)const; ///< add()。
-    const Vector3Pod operator-(const Vector3Pod&)const; ///< sub()。
-    const Vector3Pod operator*(const Vector3Pod&)const; ///< mul()。
-    const Vector3Pod operator/(const Vector3Pod&)const; ///< div()。
-    const Vector3Pod operator-()const; ///< neg()。
-    Vector3Pod& operator+=(f32); ///< addAssign()。
-    Vector3Pod& operator-=(f32); ///< subAssign()。
-    Vector3Pod& operator*=(f32); ///< mulAssign()。
-    Vector3Pod& operator/=(f32); ///< divAssign()。
-    Vector3Pod& operator+=(const Vector3Pod&); ///< addAssign()。
-    Vector3Pod& operator-=(const Vector3Pod&); ///< subAssign()。
-    Vector3Pod& operator*=(const Vector3Pod&); ///< mulAssign()。
-    Vector3Pod& operator/=(const Vector3Pod&); ///< divAssign()。
+    const Vector3Pod operator+(f32)const; ///< Add()。
+    const Vector3Pod operator-(f32)const; ///< Sub()。
+    const Vector3Pod operator*(f32)const; ///< Mul()。
+    const Vector3Pod operator/(f32)const; ///< Div()。
+    const Vector3Pod operator+(const Vector3Pod&)const; ///< Add()。
+    const Vector3Pod operator-(const Vector3Pod&)const; ///< Sub()。
+    const Vector3Pod operator*(const Vector3Pod&)const; ///< Mul()。
+    const Vector3Pod operator/(const Vector3Pod&)const; ///< Div()。
+    const Vector3Pod operator-()const; ///< Neg()。
+    Vector3Pod& operator+=(f32); ///< AddAssign()。
+    Vector3Pod& operator-=(f32); ///< SubAssign()。
+    Vector3Pod& operator*=(f32); ///< MulAssign()。
+    Vector3Pod& operator/=(f32); ///< DivAssign()。
+    Vector3Pod& operator+=(const Vector3Pod&); ///< AddAssign()。
+    Vector3Pod& operator-=(const Vector3Pod&); ///< SubAssign()。
+    Vector3Pod& operator*=(const Vector3Pod&); ///< MulAssign()。
+    Vector3Pod& operator/=(const Vector3Pod&); ///< DivAssign()。
     //@}
 
     //============================================================
     /// @name 選択
     //@{
-    const Vector3Pod min(const Vector3Pod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
-    const Vector3Pod max(const Vector3Pod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
+    const Vector3Pod Min(const Vector3Pod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
+    const Vector3Pod Max(const Vector3Pod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
     //@}
 
     //============================================================
     /// @name クランプ
     //@{
-    const Vector3Pod clamp(const Vector3Pod& aMin, const Vector3Pod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
-    const Vector3Pod clampPositive()const; ///< clamp( Zero() , Max() ) を取得する。
-    const Vector3Pod clampNegative()const; ///< clamp( Min() , Zero() ) を取得する。
+    const Vector3Pod Clamp(const Vector3Pod& min, const Vector3Pod& max)const; ///< min以上aMax以下になるようにクランプする。
+    const Vector3Pod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
+    const Vector3Pod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
 
     //============================================================
     /// @name 符号操作
     //@{
-    const Vector3Pod abs()const; ///< 各要素を正に置き換えたベクトルを取得。
-    const Vector3Pod neg()const; ///< 符号を反転させた結果を取得する。
+    const Vector3Pod Abs()const; ///< 各要素を正に置き換えたベクトルを取得。
+    const Vector3Pod Neg()const; ///< 符号を反転させた結果を取得する。
     //@}
 
     //============================================================
     /// @name 長さ＆正規化
     //@{
-    f32  squareLength()const;                ///< 長さの2乗を取得する。
-    f32  length()const;                      ///< 長さを取得する。
-    f32  distance(const Vector3Pod&)const; ///< あるベクトルとの距離を取得する。
-    bool isZero()const;                      ///< 長さが0か。許容誤差を許す。
-    bool isZeroStrict()const;                ///< 長さが0か。許容誤差を許さない。
-    bool isUnit()const;                      ///< 正規化済みか。許容誤差を許す。
-    const Vector3Pod unit()const;            ///< @brief 正規化したベクトルを取得する。 @details 長さ0のベクトルで正規化するとエラーになります。
-    void unitAssign();                       ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
+    f32  SquareLength()const;                ///< 長さの2乗を取得する。
+    f32  Length()const;                      ///< 長さを取得する。
+    f32  Distance(const Vector3Pod&)const; ///< あるベクトルとの距離を取得する。
+    bool IsZero()const;                      ///< 長さが0か。許容誤差を許す。
+    bool IsZeroStrict()const;                ///< 長さが0か。許容誤差を許さない。
+    bool IsUnit()const;                      ///< 正規化済みか。許容誤差を許す。
+    const Vector3Pod Unit()const;            ///< @brief 正規化したベクトルを取得する。 @details 長さ0のベクトルで正規化するとエラーになります。
+    void UnitAssign();                       ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
     //@}
 
     //============================================================
     /// @name 内積・外積
     //@{
-    f32 dot(const Vector3Pod&)const;                ///< あるベクトルとの内積を取得する。
-    const Vector3Pod cross(const Vector3Pod&)const; ///< あるベクトルとの外積を取得とる。
+    f32 Dot(const Vector3Pod&)const;                ///< あるベクトルとの内積を取得する。
+    const Vector3Pod Cross(const Vector3Pod&)const; ///< あるベクトルとの外積を取得とる。
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// x,y,z形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 
@@ -176,10 +176,10 @@ public:
     /// @name コンストラクタ
     //@{
     Vector3(); ///< Zero() で作成。
-    Vector3(const Vector3Pod& aXYZ); ///< コピーして作成。
-    Vector3(f32 aV); ///< 全要素同じ値で作成。
-    Vector3(const Vector2Pod& aXY, f32 aZ); ///< XYZを指定して作成。
-    Vector3(f32 aX, f32 aY, f32 aZ); ///< XYZを指定して作成。
+    Vector3(const Vector3Pod& xYZ); ///< コピーして作成。
+    Vector3(f32 v); ///< 全要素同じ値で作成。
+    Vector3(const Vector2Pod& xY, f32 z); ///< XYZを指定して作成。
+    Vector3(f32 x, f32 y, f32 z); ///< XYZを指定して作成。
     //@}
 };
 

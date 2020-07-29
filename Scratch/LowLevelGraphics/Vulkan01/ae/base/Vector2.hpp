@@ -51,116 +51,116 @@ struct Vector2Pod
     //============================================================
     /// @name 変換
     //@{
-    const Vector2Pod toX0()const;
-    const Vector2Pod to0Y()const;
-    const Vector2Pod toXX()const;
-    const Vector2Pod toYX()const;
-    const Vector2Pod toYY()const;
-    const Vector3Pod toXY0()const;
-    const Vector3Pod toXXX()const;
-    const Vector3Pod toYYY()const;
-    const Vector4Pod toXY00()const;
-    const Vector4Pod toXXXX()const;
-    const Vector4Pod toYYYY()const;
+    const Vector2Pod ToX0()const;
+    const Vector2Pod To0Y()const;
+    const Vector2Pod ToXX()const;
+    const Vector2Pod ToYX()const;
+    const Vector2Pod ToYY()const;
+    const Vector3Pod ToXY0()const;
+    const Vector3Pod ToXXX()const;
+    const Vector3Pod ToYYY()const;
+    const Vector4Pod ToXY00()const;
+    const Vector4Pod ToXXXX()const;
+    const Vector4Pod ToYYYY()const;
     //@}
 
     //============================================================
     /// @name 等価比較
     //@{
-    bool equals(const Vector2Pod&)const;       ///< 許容誤差を考慮した等価比較。
-    bool equalsStrict(const Vector2Pod&)const; ///< 許容誤差を許容しない等価比較。
+    bool Equals(const Vector2Pod&)const;       ///< 許容誤差を考慮した等価比較。
+    bool EqualsStrict(const Vector2Pod&)const; ///< 許容誤差を許容しない等価比較。
     //@}
 
     //============================================================
     /// @name 四則演算
     //@{
-    const Vector2Pod add(f32)const; ///< 各要素に値を加算した結果を取得する。
-    const Vector2Pod sub(f32)const; ///< 各要素から値を減算した結果を取得する。
-    const Vector2Pod mul(f32)const; ///< 各要素に値をかけた結果を取得する。
-    const Vector2Pod div(f32)const; ///< 各要素から値をわった結果を取得する。
-    const Vector2Pod add(const Vector2Pod&)const; ///< 対応する値同士を加算した結果を取得する。
-    const Vector2Pod sub(const Vector2Pod&)const; ///< 対応する値に対して減算した結果を取得する。
-    const Vector2Pod mul(const Vector2Pod&)const; ///< 対応する値同士をかけた結果を取得する。
-    const Vector2Pod div(const Vector2Pod&)const; ///< 対応する値に対して割り算をした結果を取得する。
-    void addAssign(f32); ///< 各要素に値を加算する。
-    void subAssign(f32); ///< 各要素から値を減算する。
-    void mulAssign(f32); ///< 各要素に値をかける。
-    void divAssign(f32); ///< 各要素から値をわる。
-    void addAssign(const Vector2Pod&); ///< 対応する値同士を加算する。
-    void subAssign(const Vector2Pod&); ///< 対応する値に対して減算する。
-    void mulAssign(const Vector2Pod&); ///< 対応する値同士をかける。
-    void divAssign(const Vector2Pod&); ///< 対応する値に対して割り算をする。       
+    const Vector2Pod Add(f32)const; ///< 各要素に値を加算した結果を取得する。
+    const Vector2Pod Sub(f32)const; ///< 各要素から値を減算した結果を取得する。
+    const Vector2Pod Mul(f32)const; ///< 各要素に値をかけた結果を取得する。
+    const Vector2Pod Div(f32)const; ///< 各要素から値をわった結果を取得する。
+    const Vector2Pod Add(const Vector2Pod&)const; ///< 対応する値同士を加算した結果を取得する。
+    const Vector2Pod Sub(const Vector2Pod&)const; ///< 対応する値に対して減算した結果を取得する。
+    const Vector2Pod Mul(const Vector2Pod&)const; ///< 対応する値同士をかけた結果を取得する。
+    const Vector2Pod Div(const Vector2Pod&)const; ///< 対応する値に対して割り算をした結果を取得する。
+    void AddAssign(f32); ///< 各要素に値を加算する。
+    void SubAssign(f32); ///< 各要素から値を減算する。
+    void MulAssign(f32); ///< 各要素に値をかける。
+    void DivAssign(f32); ///< 各要素から値をわる。
+    void AddAssign(const Vector2Pod&); ///< 対応する値同士を加算する。
+    void SubAssign(const Vector2Pod&); ///< 対応する値に対して減算する。
+    void MulAssign(const Vector2Pod&); ///< 対応する値同士をかける。
+    void DivAssign(const Vector2Pod&); ///< 対応する値に対して割り算をする。       
     //@}
 
     //============================================================
     /// @name 演算子オーバーロード
     //@{
-    const Vector2Pod operator+(f32)const; ///< add()。
-    const Vector2Pod operator-(f32)const; ///< sub()。
-    const Vector2Pod operator*(f32)const; ///< mul()。
-    const Vector2Pod operator/(f32)const; ///< div()。
-    const Vector2Pod operator+(const Vector2Pod&)const; ///< add()。
-    const Vector2Pod operator-(const Vector2Pod&)const; ///< sub()。
-    const Vector2Pod operator*(const Vector2Pod&)const; ///< mul()。
-    const Vector2Pod operator/(const Vector2Pod&)const; ///< div()。
-    const Vector2Pod operator-()const; ///< neg()。
-    Vector2Pod& operator+=(f32); ///< addAssign()。
-    Vector2Pod& operator-=(f32); ///< subAssign()。
-    Vector2Pod& operator*=(f32); ///< mulAssign()。
-    Vector2Pod& operator/=(f32); ///< divAssign()。
-    Vector2Pod& operator+=(const Vector2Pod&); ///< addAssign()。
-    Vector2Pod& operator-=(const Vector2Pod&); ///< subAssign()。
-    Vector2Pod& operator*=(const Vector2Pod&); ///< mulAssign()。
-    Vector2Pod& operator/=(const Vector2Pod&); ///< divAssign()。
+    const Vector2Pod operator+(f32)const; ///< Add()。
+    const Vector2Pod operator-(f32)const; ///< Sub()。
+    const Vector2Pod operator*(f32)const; ///< Mul()。
+    const Vector2Pod operator/(f32)const; ///< Div()。
+    const Vector2Pod operator+(const Vector2Pod&)const; ///< Add()。
+    const Vector2Pod operator-(const Vector2Pod&)const; ///< Sub()。
+    const Vector2Pod operator*(const Vector2Pod&)const; ///< Mul()。
+    const Vector2Pod operator/(const Vector2Pod&)const; ///< Div()。
+    const Vector2Pod operator-()const; ///< Neg()。
+    Vector2Pod& operator+=(f32); ///< AddAssign()。
+    Vector2Pod& operator-=(f32); ///< SubAssign()。
+    Vector2Pod& operator*=(f32); ///< MulAssign()。
+    Vector2Pod& operator/=(f32); ///< DivAssign()。
+    Vector2Pod& operator+=(const Vector2Pod&); ///< AddAssign()。
+    Vector2Pod& operator-=(const Vector2Pod&); ///< SubAssign()。
+    Vector2Pod& operator*=(const Vector2Pod&); ///< MulAssign()。
+    Vector2Pod& operator/=(const Vector2Pod&); ///< DivAssign()。
     //@}
 
     //============================================================
     /// @name 選択
     //@{
-    const Vector2Pod min(const Vector2Pod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
-    const Vector2Pod max(const Vector2Pod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
+    const Vector2Pod Min(const Vector2Pod&)const; ///< 指定のベクトルとの各要素の最小値を選択したベクトルを取得する。
+    const Vector2Pod Max(const Vector2Pod&)const; ///< 指定のベクトルとの各要素の最大値を選択したベクトルを取得する。
     //@}
 
     //============================================================
     /// @name クランプ
     //@{
-    const Vector2Pod clamp(const Vector2Pod& aMin, const Vector2Pod& aMax)const; ///< aMin以上aMax以下になるようにクランプする。
-    const Vector2Pod clampPositive()const; ///< clamp( Zero() , Max() ) を取得する。
-    const Vector2Pod clampNegative()const; ///< clamp( Min() , Zero() ) を取得する。
+    const Vector2Pod Clamp(const Vector2Pod& min, const Vector2Pod& max)const; ///< min以上aMax以下になるようにクランプする。
+    const Vector2Pod ClampPositive()const; ///< Clamp( Zero() , Max() ) を取得する。
+    const Vector2Pod ClampNegative()const; ///< Clamp( Min() , Zero() ) を取得する。
     //@}
 
     //============================================================
     /// @name 符号操作
     //@{
-    const Vector2Pod abs()const; ///< 各要素を正に置き換えたベクトルを取得。
-    const Vector2Pod neg()const; ///< 符号を反転させた結果を取得する。
+    const Vector2Pod Abs()const; ///< 各要素を正に置き換えたベクトルを取得。
+    const Vector2Pod Neg()const; ///< 符号を反転させた結果を取得する。
     //@}
 
     //============================================================
     /// @name 長さ＆正規化
     //@{
-    f32  squareLength()const;                ///< 長さの2乗を取得する。
-    f32  length()const;                      ///< 長さを取得する。
-    f32  distance(const Vector2Pod&)const; ///< あるベクトルとの距離を取得する。
-    bool isZero()const;                      ///< 長さが0か。許容誤差を許す。
-    bool isZeroStrict()const;                ///< 長さが0か。許容誤差を許さない。
-    bool isUnit()const;                      ///< 正規化済みか。許容誤差を許す。
-    const Vector2Pod unit()const;            ///< @brief 正規化したベクトルを取得する。 @details 長さ0のベクトルで正規化するとエラーになります。
-    void unitAssign();                       ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
+    f32  SquareLength()const;                ///< 長さの2乗を取得する。
+    f32  Length()const;                      ///< 長さを取得する。
+    f32  Distance(const Vector2Pod&)const; ///< あるベクトルとの距離を取得する。
+    bool IsZero()const;                      ///< 長さが0か。許容誤差を許す。
+    bool IsZeroStrict()const;                ///< 長さが0か。許容誤差を許さない。
+    bool IsUnit()const;                      ///< 正規化済みか。許容誤差を許す。
+    const Vector2Pod Unit()const;            ///< @brief 正規化したベクトルを取得する。 @details 長さ0のベクトルで正規化するとエラーになります。
+    void UnitAssign();                       ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
     //@}
 
     //============================================================
     /// @name 内積・外積
     //@{
-    f32 dot(const Vector2Pod&)const;     ///< あるベクトルとの内積(cosθ)を取得する。
-    f32 cross(const Vector2Pod&)const;   ///< あるベクトルとの外積(sinθ)を取得とる。
+    f32 Dot(const Vector2Pod&)const;     ///< あるベクトルとの内積(cosθ)を取得する。
+    f32 Cross(const Vector2Pod&)const;   ///< あるベクトルとの外積(sinθ)を取得とる。
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// x,y形式の文字列に変換。
-    const ShortString toShortString()const;
+    const ShortString ToShortString()const;
     //@}
 };
 
@@ -172,9 +172,9 @@ public:
     /// @name コンストラクタ
     //@{
     Vector2(); ///< Zero() で作成。
-    Vector2(const Vector2Pod& aXY); ///< コピーして作成。
-    Vector2(f32 aV); ///< 全要素同じ値で作成。
-    Vector2(f32 aX, f32 aY); ///< XYを指定して作成。
+    Vector2(const Vector2Pod& xY); ///< コピーして作成。
+    Vector2(f32 v); ///< 全要素同じ値で作成。
+    Vector2(f32 x, f32 y); ///< XYを指定して作成。
     //@}
 };
 

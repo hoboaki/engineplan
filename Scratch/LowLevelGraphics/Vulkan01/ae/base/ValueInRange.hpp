@@ -8,21 +8,21 @@
 /// @name 値範囲チェック
 //@{
 
-/// @brief aVal < aTermVal な値か調べる。
+/// @brief val < termVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_LESS(aVal, aTermVal) (aVal < aTermVal)
+#define AE_BASE_VALUE_IN_RANGE_LESS(val, termVal) (val < termVal)
 
-/// @brief aVal <= aMaxVal な値か調べる。
+/// @brief val <= maxVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_LESS_EQUALS(aVal, aMaxVal) (aVal <= aMaxVal)
+#define AE_BASE_VALUE_IN_RANGE_LESS_EQUALS(val, maxVal) (val <= maxVal)
 
-/// @brief aMinVal <= aVal < aTermVal な値か調べる。
+/// @brief minVal <= val < termVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_MIN_TERM(aMinVal, aVal, aTermVal) (aMinVal <= aVal && aVal < aTermVal)
+#define AE_BASE_VALUE_IN_RANGE_MIN_TERM(minVal, val, termVal) (minVal <= val && val < termVal)
 
-/// @brief aMinVal <= aVal <= aMaxVal な値か調べる。
+/// @brief minVal <= val <= maxVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_MIN_MAX(aMinVal, aVal, aMaxVal) (aMinVal <= aVal && aVal <= aMaxVal)
+#define AE_BASE_VALUE_IN_RANGE_MIN_MAX(minVal, val, maxVal) (minVal <= val && val <= maxVal)
 
 //@}
 //@}

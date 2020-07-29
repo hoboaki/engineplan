@@ -15,27 +15,27 @@ Angle::Angle()
 }
 
 //------------------------------------------------------------------------------
-Angle::Angle(const DegreePod& aDegree)
-: rad_(aDegree.toRadian().value)
+Angle::Angle(const DegreePod& degree)
+: rad_(degree.ToRadian().value)
 {
 }
 
 //------------------------------------------------------------------------------
-Angle::Angle(const RadianPod& aRadian)
-: rad_(aRadian.value)
+Angle::Angle(const RadianPod& radian)
+: rad_(radian.value)
 {
 }
 
 //------------------------------------------------------------------------------
-f32 Angle::rad()const
+f32 Angle::Rad()const
 {
     return rad_;
 }
 
 //------------------------------------------------------------------------------
-f32 Angle::deg()const
+f32 Angle::Deg()const
 {
-    return Radian(rad_).toDegree().value;
+    return Radian(rad_).ToDegree().value;
 }
 
 }} // namespace

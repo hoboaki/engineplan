@@ -15,12 +15,12 @@ Mouse::Mouse()
 }
 
 //------------------------------------------------------------------------------
-void Mouse::update(const MouseUpdateData& aData)
+void Mouse::Update(const MouseUpdateData& data)
 {
     // メモ
     const MouseUpdateData pre = data_;
-    const MouseUpdateData cur = aData;
-    data_ = aData;
+    const MouseUpdateData cur = data;
+    data_ = data;
 
     // 更新
     if (data_.posUpdated != 0) {
@@ -31,55 +31,55 @@ void Mouse::update(const MouseUpdateData& aData)
 }
 
 //------------------------------------------------------------------------------
-const MouseUpdateData Mouse::lastUpdateData()const
+const MouseUpdateData Mouse::LastUpdateData()const
 {
     return data_;
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::isPosUpdated()const
+bool Mouse::IsPosUpdated()const
 {
     return data_.posUpdated != 0;
 }
 
 //------------------------------------------------------------------------------
-const ScreenPosPod Mouse::pos()const
+const ScreenPosPod Mouse::Pos()const
 {
     return pos_;
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::isHold(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsHold(const MouseBtnKind::EnumType kind)const
 {
-    return data_.hold.get(aKind);
+    return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::isTrigger(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsTrigger(const MouseBtnKind::EnumType kind)const
 {
-    return trigger_.get(aKind);
+    return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::isRelease(const MouseBtnKind::EnumType aKind)const
+bool Mouse::IsRelease(const MouseBtnKind::EnumType kind)const
 {
-    return release_.get(aKind);
+    return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::hold()const
+const MouseBtnBitSet Mouse::Hold()const
 {
     return data_.hold;
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::trigger()const
+const MouseBtnBitSet Mouse::Trigger()const
 {
     return trigger_;
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::release()const
+const MouseBtnBitSet Mouse::Release()const
 {
     return release_;
 }

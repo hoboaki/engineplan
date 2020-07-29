@@ -27,7 +27,7 @@ namespace gfx_low {
 /// に転送する用のイメージバッファを複数所持することで
 /// アプリケーションは画面に表示されていないバッファに対して描画することが可能となります。
 ///
-/// 本オブジェクトの生成は SwapchainMaster::createSwapchain()
+/// 本オブジェクトの生成は SwapchainMaster::CreateSwapchain()
 /// で行い、SwapchainHandle を経由でアクセスします。
 class Swapchain {
 public:
@@ -40,7 +40,7 @@ public:
     //@{
     /// 所属する SwapchainMaster。
     gfx_low::SwapchainMaster& SwapchainMaster() const {
-        return swapchainMaster_.ref();
+        return swapchainMaster_.Ref();
     }
 
     /// RenderTarget 仕様情報。
@@ -60,7 +60,7 @@ public:
 
     /// アクティブなバックバッファを指す RenderTargetImageView を取得。
     RenderTargetImageView& CurrentRenderTargetImageView() const {
-        return frameProperties_[currentFrameIndex_].RenderTargetImageView.ref();
+        return frameProperties_[currentFrameIndex_].RenderTargetImageView.Ref();
     }
     //@}
 
@@ -78,7 +78,7 @@ public:
     void PrvFinalize();
 
     /// 初期化済みか。
-    bool PrvIsInitialized() const { return swapchainMaster_.isValid(); }
+    bool PrvIsInitialized() const { return swapchainMaster_.IsValid(); }
 
     ::vk::SwapchainKHR PrvInstance() const { return swapchain_; }
 

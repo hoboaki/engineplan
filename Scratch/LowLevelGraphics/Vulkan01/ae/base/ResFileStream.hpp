@@ -39,26 +39,26 @@ public:
     /// @name 関数
     //@{
     /// @brief  指定のデータサイズを読み込む時に必要なバッファサイズを求める。
-    /// @param aSize 読み込みデータサイズ。
+    /// @param size 読み込みデータサイズ。
     /// @details
     /// 実行環境によっては実際のデータサイズよりも大きいバッファサイズを要求することがあるため、
     /// バッファ領域は必ずこの関数で求められたサイズを確保してください。
-    static pword_t CalcReadBufferSize(pword_t aSize);
+    static pword_t CalcReadBufferSize(pword_t size);
     //@}
 
     /// @name コンストラクタとデストラクタ
     //@{
     /// @brief 何もせず作成する。
-    /// @details ファイルオープンは open() を使用してください。
+    /// @details ファイルオープンは Open() を使用してください。
     ResFileStream();
 
     /// @brief 指定のファイルをオープンしつつ作成する。
-    /// @param aPath オープンするファイルパス。
+    /// @param path オープンするファイルパス。
     /// @details オープンに失敗したらエラーになります。
-    ResFileStream(const char* aPath);
+    ResFileStream(const char* path);
 
     /// @brief デストラクタ
-    /// @details オープン中なら自動で close() を呼びます。
+    /// @details オープン中なら自動で Close() を呼びます。
     virtual ~ResFileStream();
     //@}
 
@@ -66,17 +66,17 @@ public:
     //@{
     /// @brief 指定のファイルをオープンする。
     /// @return オープンに成功したらtrue。
-    /// @param aPath オープンするファイルパス。
-    /// @details 既にオープンしている場合は自動で close() してからオープンします。
-    bool open(const char* aPath);
+    /// @param path オープンするファイルパス。
+    /// @details 既にオープンしている場合は自動で Close() してからオープンします。
+    bool Open(const char* path);
     //@}
 
     // IReadStreamの実装。
-    AE_BASE_OVERRIDE(pword_t requireReadBufferAlignment()const);
-    AE_BASE_OVERRIDE(pword_t calcReadBufferSize(pword_t aSize)const);
-    AE_BASE_OVERRIDE(pword_t seek(int aOffset, SeekOrigin::EnumType aOrigin));
-    AE_BASE_OVERRIDE(pword_t read(ptr_t aBuffer, pword_t aSize));
-    AE_BASE_OVERRIDE(void close());
+    AE_BASE_OVERRIDE(pword_t RequireReadBufferAlignment()const);
+    AE_BASE_OVERRIDE(pword_t CalcReadBufferSize(pword_t size)const);
+    AE_BASE_OVERRIDE(pword_t Seek(int offset, SeekOrigin::EnumType origin));
+    AE_BASE_OVERRIDE(pword_t Read(ptr_t buffer, pword_t size));
+    AE_BASE_OVERRIDE(void Close());
 
 private:
     ResFileStream_EXT ext_;

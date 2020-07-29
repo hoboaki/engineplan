@@ -32,11 +32,11 @@ DisplayContext::DisplayContext()
 , isScreenDoubleBuffer_(true)
 {
     // センタリング
-    setLocationToCenter();
+    SetLocationToCenter();
 }
 
 //------------------------------------------------------------------------------
-void DisplayContext::setLocationToCenter()
+void DisplayContext::SetLocationToCenter()
 {
 #if defined(AE_BASE_OS_WINDOWS)
     // 情報取得
@@ -69,31 +69,31 @@ void DisplayContext::setLocationToCenter()
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::locationX()const
+int DisplayContext::LocationX()const
 {
     return locationX_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::locationY()const
+int DisplayContext::LocationY()const
 {
     return locationY_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::width()const
+int DisplayContext::Width()const
 {
     return width_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::height()const
+int DisplayContext::Height()const
 {
     return height_;
 }
 
 //------------------------------------------------------------------------------
-bool DisplayContext::isScreenDoubleBuffer()const
+bool DisplayContext::IsScreenDoubleBuffer()const
 {
     return true;
 }

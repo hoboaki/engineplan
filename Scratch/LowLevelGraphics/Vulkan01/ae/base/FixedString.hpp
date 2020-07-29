@@ -34,37 +34,37 @@ struct FixedStringPod
 
     /// @brief printfフォーマットで文字列を作成する。
     /// @return 作成された文字列。
-    /// @param aFormat フォーマット文字列。
+    /// @param format フォーマット文字列。
     /// @details
     /// バッファ長が不足したときはAssertに失敗し長さ0の文字列を返します。
-    static const PodType FromFormat(const CharType* aFormat, ...)
+    static const PodType FromFormat(const CharType* format, ...)
     {
         PodType str;
         va_list arg;
-        va_start(arg, aFormat);
-        StringTraits< CharType >::VSNPrintf(str.buffer_, BufferLength, aFormat, arg);
+        va_start(arg, format);
+        StringTraits< CharType >::VSNPrintf(str.buffer_, BufferLength, format, arg);
         va_end(arg);
         return str;
     }
 
     /// @brief ポインタを取得する。
     /// @return バッファの先頭アドレス。
-    const CharType* readPtr()const { return buffer_; }
-    CharType*       ptr() { return buffer_; } ///< @copydoc readPtr
-    const CharType* ptr()const { return buffer_; } ///< @copydoc readPtr   
+    const CharType* ReadPtr()const { return buffer_; }
+    CharType*       Ptr() { return buffer_; } ///< @copydoc readPtr
+    const CharType* Ptr()const { return buffer_; } ///< @copydoc readPtr   
 
     /// @brief 指定文字列を設定する。
-    /// @param aStr 設定する文字列。
+    /// @param str 設定する文字列。
     /// @details 
     /// バッファ長が不足したときはAssertに失敗し長さ0に設定されます。
-    void set(const CharType* aStr)
+    void Set(const CharType* str)
     {
-        StringTraits< CharType >::NCopy(buffer_, BufferLength, aStr);
+        StringTraits< CharType >::NCopy(buffer_, BufferLength, str);
     }
 
     /// @brief 文字列の長さを取得する。
     /// @return 文字数(バイト長ではない)。終端文字は含めない。
-    size_t length()const
+    size_t Length()const
     {
         return StringTraits< CharType >::Length(buffer_);
     }
@@ -86,19 +86,19 @@ public:
     }
 
     /// 指定した文字列をコピーして作成。
-    FixedString(const CHAR_TYPE* aStr)
+    FixedString(const CHAR_TYPE* str)
         : SuperType()
     {
-        SuperType::set(aStr);
+        SuperType::Set(str);
     }
 
     /// コピーして作成。
     FixedString(
-        const FixedStringPod< CHAR_TYPE, BUFFER_LENGTH >& aObj
+        const FixedStringPod< CHAR_TYPE, BUFFER_LENGTH >& obj
     )
         : SuperType::PodType()
     {
-        static_cast<SuperType&>(*this) = aObj;
+        static_cast<SuperType&>(*this) = obj;
     }
 
 private:

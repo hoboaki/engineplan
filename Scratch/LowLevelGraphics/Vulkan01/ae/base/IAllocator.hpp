@@ -33,10 +33,10 @@ public:
     static IAllocator& Default();
 
     /// @brief デフォルトのアロケータを設定する。
-    /// @param aAllocator 指定するアロケータ。
+    /// @param allocator 指定するアロケータ。
     /// @details
     /// 指定するアロケータはデフォルトのアロケータの設定が書き換わるまで生存しつづける必要があります。
-    static void SetDefault(IAllocator& aAllocator);
+    static void SetDefault(IAllocator& allocator);
 
     /// @brief operator new/delete を使うアロケータ。
     static IAllocator& OperatorNewDelete();
@@ -46,13 +46,13 @@ public:
     //@{
     /// @brief メモリ確保。
     /// @return 確保したメモリブロックの先頭アドレス。
-    /// @param aSize 確保するメモリブロックのサイズ。
-    /// @param aAlignment 確保するメモリブロックのアライメント。
-    virtual ptr_t alloc(pword_t aSize, pword_t aAlignment = DefaultAlignment) = 0;
+    /// @param size 確保するメモリブロックのサイズ。
+    /// @param alignment 確保するメモリブロックのアライメント。
+    virtual ptr_t Alloc(pword_t size, pword_t alignment = DefaultAlignment) = 0;
 
     /// @brief メモリ解放。
-    /// @param aPtr 解放するメモリブロックの先頭アドレス。
-    virtual void free(ptr_t aPtr) = 0;
+    /// @param ptr 解放するメモリブロックの先頭アドレス。
+    virtual void Free(ptr_t ptr) = 0;
     //@}
 };
 //@}

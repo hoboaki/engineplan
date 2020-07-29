@@ -9,84 +9,84 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Random::Random()
-: mX(123456789)
-, mY(362436069)
-, mZ(521288629)
-, mW(88675123)
+: x_(123456789)
+, y_(362436069)
+, z_(521288629)
+, w_(88675123)
 {
 }
 
 //------------------------------------------------------------------------------
 Random::Random(
-    const u32 aX,
-    const u32 aY,
-    const u32 aZ,
-    const u32 aW
+    const u32 x,
+    const u32 y,
+    const u32 z,
+    const u32 w
     )
-: mX(aX)
-, mY(aY)
-, mZ(aZ)
-, mW(aW)
+: x_(x)
+, y_(y)
+, z_(z)
+, w_(w)
 {
 }
 
 //------------------------------------------------------------------------------
-u32 Random::rand()
+u32 Random::Rand()
 {
     u32 t = u32();
-    t = (mX ^ (mX << 11));
-    mX = mY;
-    mY = mZ;
-    mZ = mW;
-    mW = (mW ^ (mW >> 19)) ^ (t ^ (t >> 8));
-    return mW;
+    t = (x_ ^ (x_ << 11));
+    x_ = y_;
+    y_ = z_;
+    z_ = w_;
+    w_ = (w_ ^ (w_ >> 19)) ^ (t ^ (t >> 8));
+    return w_;
 }
 
 //------------------------------------------------------------------------------
-u32 Random::randU32(const u32 aTerm)
+u32 Random::RandU32(const u32 term)
 {
-    if (aTerm == 0) {
-        AE_BASE_ERROR_INVALID_VALUE(aTerm);
+    if (term == 0) {
+        AE_BASE_ERROR_INVALID_VALUE(term);
         return 0;
     }
-    return rand() % aTerm;
+    return Rand() % term;
 }
 
 //------------------------------------------------------------------------------
-s32 Random::randS32(const s32 aTerm)
+s32 Random::RandS32(const s32 term)
 {
-    if (aTerm == 0) {
-        AE_BASE_ERROR_INVALID_VALUE(aTerm);
+    if (term == 0) {
+        AE_BASE_ERROR_INVALID_VALUE(term);
         return 0;
     }
-    return rand() % aTerm;
+    return Rand() % term;
 }
 
 //------------------------------------------------------------------------------
-s32 Random::randS32(const s32 aMin, const s32 aMax)
+s32 Random::RandS32(const s32 min, const s32 max)
 {
-    if (aMin == aMax) {
-        return aMin;
+    if (min == max) {
+        return min;
     }
-    return aMin + randS32(aMax - aMin);
+    return min + RandS32(max - min);
 }
 
 //------------------------------------------------------------------------------
-f32 Random::randF32N()
+f32 Random::RandF32N()
 {
     return f32(rand() % 0x10000) / f32(0x10000);
 }
 
 //------------------------------------------------------------------------------
-f32 Random::randF32SN()
+f32 Random::RandF32SN()
 {
-    return -1.0f + 2.0f * randF32N();
+    return -1.0f + 2.0f * RandF32N();
 }
 
 //------------------------------------------------------------------------------
-unsigned int Random::operator()(const unsigned int aTerm)
+unsigned int Random::operator()(const unsigned int term)
 {
-    return rand() % (aTerm + 1);
+    return Rand() % (term + 1);
 }
 
 }} // namespace

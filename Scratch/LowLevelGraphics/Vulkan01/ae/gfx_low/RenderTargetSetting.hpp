@@ -24,13 +24,13 @@ public:
     //@{
     /// RenderTarget イメージを指す RenderTargetImageView。（初期値：nullptr）
     gfx_low::RenderTargetImageView* RenderTargetImageView() const {
-        return renderTargetImageView_.get();
+        return renderTargetImageView_.Get();
     }
 
     /// RenderTargetImageView() の設定。（設定必須）
     RenderTargetSetting& SetRenderTargetImageView(
         gfx_low::RenderTargetImageView* view) {
-        renderTargetImageView_.reset(view);
+        renderTargetImageView_.Reset(view);
         return *this;
     }
 

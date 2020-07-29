@@ -25,9 +25,9 @@ public:
     ScalerClass() : SuperClass() {}
 
     /// 指定された値で初期化する。
-    ScalerClass(const typename ScalerStruct<T>::ValueType aValue)
+    ScalerClass(const typename ScalerStruct<T>::ValueType value)
     {
-        SuperClass::value_ = aValue;
+        SuperClass::value_ = value;
     };
     //@}
 

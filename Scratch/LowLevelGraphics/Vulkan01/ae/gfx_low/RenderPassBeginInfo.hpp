@@ -35,7 +35,7 @@ public:
 
     /// 全 RenderTarget 設定情報。（初期値：nullptr）
     const RenderTargetSetting* RenderTargetSettings() const {
-        return renderTargetSettings_.get();
+        return renderTargetSettings_.Get();
     }
 
     /// RenderTargetSettings() の設定。
@@ -43,7 +43,7 @@ public:
     /// 長の配列ポインタ。
     RenderPassBeginInfo& SetRenderTargetSettings(
         const RenderTargetSetting* settings) {
-        renderTargetSettings_.reset(settings);
+        renderTargetSettings_.Reset(settings);
         return *this;
     }
 

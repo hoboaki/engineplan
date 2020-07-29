@@ -9,34 +9,34 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Screen::Screen(
-    Display_Ext& aOwner,
-    const int aWidth,
-    const int aHeight
+    Display_Ext& owner,
+    const int width,
+    const int height
     )
-: owner_(aOwner)
+: owner_(owner)
 , ext_()
-, width_(aWidth)
-, height_(aHeight)
+, width_(width)
+, height_(height)
 {
 }
 
 //------------------------------------------------------------------------------
-int Screen::width()const
+int Screen::Width()const
 {
     return width_;
 }
 
 //------------------------------------------------------------------------------
-int Screen::height()const
+int Screen::Height()const
 {
     return height_;
 }
 
 //------------------------------------------------------------------------------
-bool Screen::isContains(const ScreenPosPod& aPos)const
+bool Screen::IsContains(const ScreenPosPod& pos)const
 {
-    return 0 <= aPos.x && aPos.x < int(width_)
-        && 0 <= aPos.y && aPos.y < int(height_);
+    return 0 <= pos.x && pos.x < int(width_)
+        && 0 <= pos.y && pos.y < int(height_);
 }
 
 //------------------------------------------------------------------------------

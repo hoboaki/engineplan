@@ -27,19 +27,19 @@ public:
     //@{
 
     /// @brief コンストラクタ。
-    /// @param aCountMax 最大配列長。
-    /// @param aAllocator 配列データを確保する際に使用するアロケータ。
+    /// @param countMax 最大配列長。
+    /// @param allocator 配列データを確保する際に使用するアロケータ。
     /// @details 
     /// 配列長が0の場合、アロケートは走りません。
-    RuntimeMarray(int aCountMax, IAllocator& aAllocator = IAllocator::Default())
-        : allocator_(aAllocator)
-        , countMax_(aCountMax)
+    RuntimeMarray(int countMax, IAllocator& allocator = IAllocator::Default())
+        : allocator_(allocator)
+        , countMax_(countMax)
         , count_(0)
         , ptr_(0)
     {
-        if (0 < aCountMax)
+        if (0 < countMax)
         {
-            ptr_ = reinterpret_cast<ValueType*>(allocator_.alloc(sizeof(ValueType) * aCountMax));
+            ptr_ = reinterpret_cast<ValueType*>(allocator_.Alloc(sizeof(ValueType) * countMax));
         }
     }
 
@@ -52,12 +52,12 @@ public:
             for (int i = count_; 0 < i; --i)
             {
                 const int idx = i - 1;
-                at(idx).~ValueType();
+                At(idx).~ValueType();
             }
 
             ValueType* ptr = ptr_;
             ptr_ = 0;
-            allocator_.free(reinterpret_cast<ptr_t>(ptr));
+            allocator_.Free(reinterpret_cast<ptr_t>(ptr));
         }
     }
 
@@ -66,60 +66,60 @@ public:
     /// @name アクセス
     //@{
     /// 要素が１つもない状態か。
-    bool isEmpty()const
+    bool IsEmpty()const
     {
         return count_ == 0;
     }
 
     /// 要素数が最大の状態か。
-    bool isFull()const
+    bool IsFull()const
     {
         return count_ == countMax_;
     }
 
     /// 現在の要素数。
-    int count()const
+    int Count()const
     {
         return count_;
     }
 
     /// 最大の要素数。
-    int countMax()const
+    int CountMax()const
     {
         return countMax_;
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& at(const int aIndex)
+    ValueType& At(const int index)
     {
-        if (count_ <= aIndex)
+        if (count_ <= index)
         {
-            AE_BASE_ASSERT_LESS(aIndex, count_);
+            AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
         }
-        return ptr_[aIndex];
+        return ptr_[index];
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& at(const int aIndex)const
+    const ValueType& At(const int index)const
     {
-        if (count_ <= aIndex)
+        if (count_ <= index)
         {
-            AE_BASE_ASSERT_LESS(aIndex, count_);
+            AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
         }
-        return ptr_[aIndex];
+        return ptr_[index];
     }
 
     /// 最初の要素にアクセス。
-    ValueType& first() { return at(0); }
-    /// @copydoc first()
-    const ValueType& first()const { return at(0); }
+    ValueType& First() { return At(0); }
+    /// @copydoc First()
+    const ValueType& First()const { return At(0); }
 
     /// 最後の要素にアクセス。
-    ValueType& last() { return at(count_ - 1); }
-    /// @copydoc last()
-    const ValueType& last()const { return at(count_ - 1); }
+    ValueType& Last() { return At(count_ - 1); }
+    /// @copydoc Last()
+    const ValueType& Last()const { return At(count_ - 1); }
 
     //@}
 
@@ -127,20 +127,20 @@ public:
     //@{
 
     /// 全ての要素を削除する。
-    void clear()
+    void Clear()
     {
         count_ = 0;
     }
 
     /// 指定の要素を末尾に追加する。
-    void add(const ValueType& aVal)
+    void Add(const ValueType& val)
     {
-        if (isFull())
+        if (IsFull())
         {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
         }
-        ptr_[count_] = aVal;
+        ptr_[count_] = val;
         ++count_;
     }
 
@@ -156,8 +156,8 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int aIndex) { return at(aIndex); } ///< at() のエイリアス。
-    const ValueType& operator[](const int aIndex)const { return at(aIndex); } ///< at()const のエイリアス。
+    ValueType& operator[](const int index) { return At(index); } ///< At() のエイリアス。
+    const ValueType& operator[](const int index)const { return At(index); } ///< At()const のエイリアス。
     //@}
 
 private:
