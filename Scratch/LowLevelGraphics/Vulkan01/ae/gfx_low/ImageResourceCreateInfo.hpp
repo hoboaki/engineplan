@@ -30,8 +30,8 @@ public:
     /// @name 内部処理用関数群
     //@{
     /// VkImage オブジェクト。こちらが指定されている場合はこれをそのまま使う。
-    ::vk::Image* PrvImagePtr() const { return imagePtr_.Get(); }
-    ImageResourceCreateInfo& PrvSetImagePtr(::vk::Image* imagePtr) {
+    ::vk::Image* ImagePtr_() const { return imagePtr_.Get(); }
+    ImageResourceCreateInfo& SetImagePtr_(::vk::Image* imagePtr) {
         imagePtr_.Reset(imagePtr);
         return *this;
     }

@@ -17,12 +17,12 @@ public:
     /// Intel Ice Lake 世代のGPUなどは Normal を1つしか作れないようです。
     /// オンボードチップでも動くプログラムを書く場合は1つのQueueで動くことをサポートしてください。
     int CreatableQueueCount(QueueKind queueKind) const {
-        return PrvCreatableQueueCounts[int(queueKind)];
+        return CreatableQueueCounts_[int(queueKind)];
     }
 
     // internal
     ::std::array<int, static_cast<int>(QueueKind::TERM)>
-        PrvCreatableQueueCounts = {};
+        CreatableQueueCounts_ = {};
 };
 
 }  // namespace gfx_low

@@ -20,9 +20,9 @@ Queue::Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind kind,
 : device_(base::PtrToRef(device))
 , queue_(queue)
 , kind_(kind)
-, operations_(operationCountMax, device_.System().PrvObjectAllocator())
-, waitEvents_(operationCountMax, device_.System().PrvObjectAllocator())
-, signalEvents_(operationCountMax, device_.System().PrvObjectAllocator())
+, operations_(operationCountMax, device_.System().ObjectAllocator_())
+, waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
+, signalEvents_(operationCountMax, device_.System().ObjectAllocator_())
 , commandPool_(commandPool) {}
 
 //------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
 //------------------------------------------------------------------------------
 Queue& Queue::PushSwapchainWait(Swapchain* swapchain) {
     operations_.Add(Operation{OperationKind::SwapchainWait, swapchain});
-    PushEventWait(&base::PtrToRef(swapchain).PrvCurrentAcquireEvent());
+    PushEventWait(&base::PtrToRef(swapchain).CurrentAcquireEvent_());
     return *this;
 }
 
@@ -68,9 +68,9 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
     for (const auto& op : operations_) {
         if (op.kind == OperationKind::CommandExecute) {
             PushEventSignal(&base::PtrToRef(swapchain)
-                                 .PrvCurrentReadyToPresentEvent());
+                                 .CurrentReadyToPresentEvent_());
             PushEventWait(&base::PtrToRef(swapchain)
-                               .PrvCurrentReadyToPresentEvent());
+                               .CurrentReadyToPresentEvent_());
             break;
         }
     }
@@ -128,13 +128,13 @@ void Queue::Submit(Fence* fencePtr) {
             // Present 実行
             auto& swapchain = base::PtrToRef(static_cast<Swapchain*>(op.ptr));
             const uint32_t imageIndicies[] = {
-                uint32_t(swapchain.PrvCurrentBufferIndex())};
+                uint32_t(swapchain.CurrentBufferIndex_())};
             const auto presentInfo =
                 vk::PresentInfoKHR()
                     .setWaitSemaphoreCount(waitEvents_.Count())
                     .setPWaitSemaphores(&waitEvents_.First())
                     .setSwapchainCount(1)
-                    .setPSwapchains(&swapchain.PrvInstance())
+                    .setPSwapchains(&swapchain.Instance_())
                     .setPImageIndices(imageIndicies);
             const auto result = queue_.presentKHR(&presentInfo);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
@@ -148,7 +148,7 @@ void Queue::Submit(Fence* fencePtr) {
 
         case OperationKind::EventWait:
             waitEvents_.Add(
-                base::PtrToRef(static_cast<Event*>(op.ptr)).PrvInstance());
+                base::PtrToRef(static_cast<Event*>(op.ptr)).Instance_());
             break;
 
         case OperationKind::EventSignal:
@@ -170,7 +170,7 @@ void Queue::Submit(Fence* fencePtr) {
                 auto& nextOp = operations_[nextOpIdx];
                 if (nextOp.kind == OperationKind::EventSignal) {
                     signalEvents_.Add(
-                        static_cast<Event*>(nextOp.ptr)->PrvInstance());
+                        static_cast<Event*>(nextOp.ptr)->Instance_());
                     nextOp.kind =
                         OperationKind::NoOperation;  // 処理したので NoOperation
                                                      // に変更
@@ -181,8 +181,8 @@ void Queue::Submit(Fence* fencePtr) {
             ::vk::Fence nativeFence;
             if (fencePtr != nullptr) {
                 auto& fence = base::PtrToRef(fencePtr);
-                nativeFence = fence.PrvInstance();
-                fence.PrvOnSubmit();
+                nativeFence = fence.Instance_();
+                fence.OnSubmit_();
             }
 
             // 送信
@@ -196,7 +196,7 @@ void Queue::Submit(Fence* fencePtr) {
                         waitEvents_.IsEmpty() ? nullptr : &waitEvents_.First())
                     .setCommandBufferCount(1)
                     .setPCommandBuffers(&static_cast<CommandBuffer*>(op.ptr)
-                                             ->PrvInstance())
+                                             ->Instance_())
                     .setSignalSemaphoreCount(signalEvents_.Count())
                     .setPSignalSemaphores(signalEvents_.IsEmpty()
                                               ? nullptr

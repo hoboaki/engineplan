@@ -37,7 +37,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Image& PrvInstance() { return image_; }
+    ::vk::Image& Instance_() { return image_; }
     //@}
 
 private:

@@ -49,9 +49,9 @@ public:
 
     /// @name 内部処理用API
     //@{
-    static const int PrvSupportedAttachmentCountMax = 8;
+    static const int SupportedAttachmentCountMax_ = 8;
 
-    ::vk::Device& PrvInstance() { return device_; }
+    ::vk::Device& Instance_() { return device_; }
     //@}
 
 private:

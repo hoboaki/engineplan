@@ -25,7 +25,7 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 , screen_(base::PtrToRef(createInfo.Screen()))
 , surface_()
 , swapchains_(createInfo.SwapchainCountMax(),
-      &device_.System().PrvObjectAllocator()) {
+      &device_.System().ObjectAllocator_()) {
     // surface 作成
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
     {
@@ -34,7 +34,7 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
                 .setHinstance(screen_.display_().hinstance)
                 .setHwnd(screen_.display_().hwindow);
 
-        auto result = device_.System().PrvInstance().createWin32SurfaceKHR(
+        auto result = device_.System().Instance_().createWin32SurfaceKHR(
             &surfaceCreateInfo, nullptr, &surface_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
@@ -51,7 +51,7 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 
     // PhysicalDevice の SurfacePresent 対応確認
     {
-        auto pd = device_.System().PrvPhysicalDevice(device_.PhysicalDeviceIndex());
+        auto pd = device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
         uint32_t queueFamilyCount = 0;
         pd.getQueueFamilyProperties(
             &queueFamilyCount, static_cast<::vk::QueueFamilyProperties*>(nullptr));
@@ -69,11 +69,11 @@ SwapchainMaster::~SwapchainMaster() {
     // 逆順に破棄
     for (int i = swapchains_.Count() - 1; 0 <= i; --i) {
         auto& swapchain = swapchains_[i];
-        if (swapchain.PrvIsInitialized()) {
+        if (swapchain.IsInitialized_()) {
             DestroySwapchain(SwapchainHandle(&swapchain));
         }
     }
-    device_.System().PrvInstance().destroySurfaceKHR(surface_, nullptr);
+    device_.System().Instance_().destroySurfaceKHR(surface_, nullptr);
     surface_ = ::vk::SurfaceKHR();
 }
 
@@ -83,26 +83,26 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     const SwapchainHandle& oldSwapchain) {
     // メモ
     const auto& physicalDevice =
-        device_.System().PrvPhysicalDevice(device_.PhysicalDeviceIndex());
+        device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
 
     // 古い swapchain をメモ
     Swapchain* entity = nullptr;
     ::vk::SwapchainKHR oldSwapchainInstance;
     if (oldSwapchain.IsValid()) {
-        entity = &oldSwapchain.PrvEntity();
+        entity = &oldSwapchain.Entity_();
     }
 
     // Entity を確保
     const uint32_t nextUniqueId = AcquireUniqueId();
     if (entity == nullptr) {
         for (int entityIdx = 0; entityIdx < swapchains_.Count(); ++entityIdx) {
-            if (!swapchains_[entityIdx].PrvIsInitialized()) {
+            if (!swapchains_[entityIdx].IsInitialized_()) {
                 entity = &swapchains_[entityIdx];
                 break;
             }
         }
     }
-    entity->PrvFinalize();
+    entity->Finalize_();
 
     // サーフェスの対応フォーマットを取得
     uint32_t surfFormatCount = uint32_t();
@@ -110,7 +110,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         surface_, &surfFormatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
-        int(surfFormatCount), &device_.System().PrvTempWorkAllocator());
+        int(surfFormatCount), &device_.System().TempWorkAllocator_());
     result = physicalDevice.getSurfaceFormatsKHR(
          surface_, &surfFormatCount, surfFormats.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
@@ -160,7 +160,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     base::RuntimeArray<::vk::PresentModeKHR> presentModes(
-        int(presentModeCount), &device_.System().PrvTempWorkAllocator());
+        int(presentModeCount), &device_.System().TempWorkAllocator_());
     result = physicalDevice.getSurfacePresentModesKHR(
         surface_, &presentModeCount, presentModes.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
@@ -293,7 +293,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
             .setOldSwapchain(oldSwapchainInstance);
 
     ::vk::SwapchainKHR swapchain;
-    result = device_.PrvInstance().createSwapchainKHR(
+    result = device_.Instance_().createSwapchainKHR(
         &swapchain_ci, nullptr, &swapchain);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
@@ -301,7 +301,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         DestroySwapchainInstance(oldSwapchainInstance);
     }
 
-    entity->PrvInitialize(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
+    entity->Initialize_(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
 
     return SwapchainHandle(entity);
 }
@@ -309,12 +309,12 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 //------------------------------------------------------------------------------
 void SwapchainMaster::DestroySwapchain(const SwapchainHandle& swapchain) {
     AE_BASE_ASSERT(swapchain.IsValid());
-    auto& entity = swapchain.PrvEntity();
+    auto& entity = swapchain.Entity_();
     AE_BASE_ASSERT(this == &entity.SwapchainMaster());
 
     // 破棄
-    DestroySwapchainInstance(entity.PrvInstance());
-    entity.PrvFinalize();
+    DestroySwapchainInstance(entity.Instance_());
+    entity.Finalize_();
 }
 
 //------------------------------------------------------------------------------
@@ -322,12 +322,12 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
     uint32_t uniqueId = lastAcquireUniqueId_;
     while (true) {
         ++uniqueId;
-        if (uniqueId == Swapchain::PrvInvalidUniqueId) {
+        if (uniqueId == Swapchain::InvalidUniqueId_) {
             continue;
         }
         bool isFound = false;
         for (int i = 0; i < swapchains_.Count(); ++i) {
-            if (swapchains_[i].PrvUniqueId() == uniqueId) {
+            if (swapchains_[i].UniqueId_() == uniqueId) {
                 isFound = true;
                 break;
             }
@@ -343,7 +343,7 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
 
 //------------------------------------------------------------------------------
 void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance) {
-    device_.PrvInstance().destroySwapchainKHR(instance);
+    device_.Instance_().destroySwapchainKHR(instance);
 }
 
 }  // namespace gfx_low

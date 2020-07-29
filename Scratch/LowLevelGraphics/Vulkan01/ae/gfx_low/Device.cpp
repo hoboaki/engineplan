@@ -25,7 +25,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
 , device_()
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
 , queues_(createInfo.QueueCreateInfoCount(),
-      &::ae::base::PtrToRef(createInfo.System()).PrvObjectAllocator()) {
+      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
     const auto physicalDeviceIndex = createInfo.PhysicalDeviceIndex();
     AE_BASE_ASSERT_MIN_TERM(
         physicalDeviceIndex, 0, system_.PhysicalDeviceCount());
@@ -59,7 +59,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         queueCountTable;  // QueueKind ごとの作成総数
     ::ae::base::RuntimeArray<int> indexInQueueKindTable(queueCreateCount,
         &system_
-             .PrvTempWorkAllocator());  // 各 Queue が同じ QueueKind
+             .TempWorkAllocator_());  // 各 Queue が同じ QueueKind
                                              // における何個目の Queue かの情報
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto& queueCreateInfo = queueCreateInfos[queueIdx];
@@ -77,7 +77,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
             continue;
         }
         queuePriorityTable[queueKind].Resize(
-            queueCount, &system_.PrvTempWorkAllocator());
+            queueCount, &system_.TempWorkAllocator_());
     }
     const float priorityTable[int(QueuePriority::TERM)] = {
         -1.0f, 0.0f, 0.5f, 1.0f};
@@ -91,13 +91,13 @@ Device::Device(const DeviceCreateInfo& createInfo)
     }
 
     // QueueKind -> QueueFamilyIndex テーブル
-    System::PrvQueueFamilyIndexTableType queueFamilyIndexTable;
-    system_.PrvQueueFamilyIndexTable(
+    System::QueueFamilyIndexTableType_ queueFamilyIndexTable;
+    system_.QueueFamilyIndexTable_(
         &queueFamilyIndexTable, physicalDeviceIndex);
 
     // SwapchainExtension対応
     const auto& physicalDevice =
-        system_.PrvPhysicalDevice(physicalDeviceIndex);
+        system_.PhysicalDevice_(physicalDeviceIndex);
     uint32_t enabledExtensionCount = 0;
     const int extensionCountMax = 64;
     const char* extensionNames[extensionCountMax] = {};
@@ -112,7 +112,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         if (0 < deviceExtensionCount) {
             base::RuntimeArray<::vk::ExtensionProperties> deviceExtensions(
                 int(deviceExtensionCount),
-                &system_.PrvTempWorkAllocator());
+                &system_.TempWorkAllocator_());
             result = physicalDevice.enumerateDeviceExtensionProperties(
                 nullptr, &deviceExtensionCount, deviceExtensions.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
@@ -195,7 +195,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 Device::~Device() {
     for (int i = queues_.Count() - 1; 0 <= i; --i) {
-        device_.destroyCommandPool(queues_[i].PrvCommandPool(), nullptr);
+        device_.destroyCommandPool(queues_[i].CommandPool_(), nullptr);
     }
     queues_.Clear();
     device_.destroy(nullptr);

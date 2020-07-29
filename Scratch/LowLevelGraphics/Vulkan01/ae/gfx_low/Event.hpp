@@ -39,7 +39,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Semaphore& PrvInstance() { return semaphore_; }
+    ::vk::Semaphore& Instance_() { return semaphore_; }
     //@}
 
 private:

@@ -67,33 +67,33 @@ public:
     /// @name 内部処理用機能
     //@{
     /// 無効な UniqueId 値。
-    static const int PrvInvalidUniqueId = 0;
+    static const int InvalidUniqueId_ = 0;
 
     /// 初期化。
-    void PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
+    void Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
         const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
         ::vk::Format imageFormat);
 
     /// 後始末。
-    void PrvFinalize();
+    void Finalize_();
 
     /// 初期化済みか。
-    bool PrvIsInitialized() const { return swapchainMaster_.IsValid(); }
+    bool IsInitialized_() const { return swapchainMaster_.IsValid(); }
 
-    ::vk::SwapchainKHR PrvInstance() const { return swapchain_; }
+    ::vk::SwapchainKHR Instance_() const { return swapchain_; }
 
-    Event& PrvCurrentAcquireEvent() {
+    Event& CurrentAcquireEvent_() {
         return *frameProperties_[currentFrameIndex_].AcquireEvent;
     }
 
-    Event& PrvCurrentReadyToPresentEvent() {
+    Event& CurrentReadyToPresentEvent_() {
         return *frameProperties_[currentFrameIndex_].ReadyToPresentEvent;
     }
 
-    int PrvCurrentBufferIndex() const { return currentFrameIndex_; }
+    int CurrentBufferIndex_() const { return currentFrameIndex_; }
 
     /// ユニークID。古くなった Handle の Valid 判定で使う。
-    uint32_t PrvUniqueId() const { return uniqueId_; }
+    uint32_t UniqueId_() const { return uniqueId_; }
     //@}
 
 protected:
@@ -123,7 +123,7 @@ private:
     ::vk::SwapchainKHR swapchain_;
     gfx_low::RenderTargetSpecInfo renderTargetSpecInfo_;
     ::ae::base::RuntimeArray<FrameProperty> frameProperties_;
-    uint32_t uniqueId_ = PrvInvalidUniqueId;
+    uint32_t uniqueId_ = InvalidUniqueId_;
     int currentFrameIndex_ = int(); // 初期化直後は負の値が入っている
 };
 

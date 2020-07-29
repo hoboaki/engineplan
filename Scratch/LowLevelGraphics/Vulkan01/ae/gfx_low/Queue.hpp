@@ -85,9 +85,9 @@ public:
 
     ~Queue();
 
-    ::vk::Queue PrvInstance() { return queue_; }
+    ::vk::Queue Instance_() { return queue_; }
 
-    ::vk::CommandPool& PrvCommandPool() { return commandPool_; }
+    ::vk::CommandPool& CommandPool_() { return commandPool_; }
     //@}
 
 private:

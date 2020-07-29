@@ -39,8 +39,8 @@ public:
     /// @name 内部処理用関数群
     //@{
     /// Vulkan ライブラリのフォーマット。こちらが指定されている場合は Format() よりも優先して使う。
-    ::vk::Format PrvRawFormat() const { return rawFormat_; }
-    RenderTargetImageViewCreateInfo& PrvSetRawFormat(::vk::Format rawFormat) {
+    ::vk::Format RawFormat_() const { return rawFormat_; }
+    RenderTargetImageViewCreateInfo& SetRawFormat_(::vk::Format rawFormat) {
         rawFormat_ = rawFormat;
         return *this;
     }

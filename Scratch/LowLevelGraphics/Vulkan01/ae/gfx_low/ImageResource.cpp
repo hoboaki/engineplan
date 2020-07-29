@@ -14,8 +14,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , image_() {
     // 今は ImagePtr を使った方法しか対応しない
-    AE_BASE_ASSERT(createInfo.PrvImagePtr() != nullptr);
-    image_ = base::PtrToRef(createInfo.PrvImagePtr());
+    AE_BASE_ASSERT(createInfo.ImagePtr_() != nullptr);
+    image_ = base::PtrToRef(createInfo.ImagePtr_());
 }
 
 //------------------------------------------------------------------------------

@@ -28,17 +28,17 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , commandBuffer_()
 , completeEvent_(EventCreateInfo().SetDevice(&device_))
 , renderPassProperties_(createInfo.RenderPassCountMax(),
-      device_.System().PrvObjectAllocator()) {
+      device_.System().ObjectAllocator_()) {
     // 今は Primary のみサポート
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
 
     const auto allocateInfo =
         ::vk::CommandBufferAllocateInfo()
-            .setCommandPool(queuePtr_->PrvCommandPool())
+            .setCommandPool(queuePtr_->CommandPool_())
             .setLevel(::vk::CommandBufferLevel::ePrimary)
             .setCommandBufferCount(1);
 
-    auto result = device_.PrvInstance().allocateCommandBuffers(
+    auto result = device_.Instance_().allocateCommandBuffers(
         &allocateInfo, &commandBuffer_);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 }
@@ -46,8 +46,8 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 CommandBuffer::~CommandBuffer() {
     Reset();
-    device_.PrvInstance().freeCommandBuffers(
-        queuePtr_->PrvCommandPool(), commandBuffer_);
+    device_.Instance_().freeCommandBuffers(
+        queuePtr_->CommandPool_(), commandBuffer_);
 }
 
 //------------------------------------------------------------------------------
@@ -94,9 +94,9 @@ void CommandBuffer::Reset() {
     // コマンドバッファで作った情報をリセット
     for (int i = renderPassProperties_.Count() - 1; 0 <= i; --i) {
         auto& prop = renderPassProperties_[i];
-        device_.PrvInstance().destroyFramebuffer(
+        device_.Instance_().destroyFramebuffer(
             prop.framebuffer, nullptr);
-        device_.PrvInstance().destroyRenderPass(prop.renderPass, nullptr);
+        device_.Instance_().destroyRenderPass(prop.renderPass, nullptr);
     }
     renderPassProperties_.Clear();
 }
@@ -112,7 +112,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     {
         // RenderPass 作成
         std::array<::vk::AttachmentDescription,
-            Device::PrvSupportedAttachmentCountMax>
+            Device::SupportedAttachmentCountMax_>
             attachments;
         for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount();
              ++i) {
@@ -122,9 +122,9 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             auto& attachment = attachments[i];
 
             // @todo 普通の Format での指定
-            AE_BASE_ASSERT(renderTargetSpec.PrvNativeFormat() !=
+            AE_BASE_ASSERT(renderTargetSpec.NativeFormat_() !=
                            ::vk::Format::eUndefined);
-            attachment.setFormat(renderTargetSpec.PrvNativeFormat());
+            attachment.setFormat(renderTargetSpec.NativeFormat_());
 
             // その他の設定
             attachment.setSamples(::vk::SampleCountFlagBits::e1)
@@ -179,20 +179,20 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                                               .setDependencyCount(1)
                                               .setPDependencies(dependencies);
         {
-            const auto result = device_.PrvInstance().createRenderPass(
+            const auto result = device_.Instance_().createRenderPass(
                 &renderPassCreateInfo, nullptr, &prop.renderPass);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
     {
         // Framebuffer 生成
-        std::array<::vk::ImageView, Device::PrvSupportedAttachmentCountMax>
+        std::array<::vk::ImageView, Device::SupportedAttachmentCountMax_>
             imageViews;
         for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount();
              ++i) {
             imageViews[i] = info.RenderTargetSettings()[i]
                                 .RenderTargetImageView()
-                                ->PrvInstance();
+                                ->Instance_();
         }
 
         auto const createInfo =
@@ -204,14 +204,14 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setHeight(uint32_t(info.RenderArea().Height()))
                 .setLayers(1);
         {
-            const auto result = device_.PrvInstance().createFramebuffer(
+            const auto result = device_.Instance_().createFramebuffer(
                 &createInfo, nullptr, &prop.framebuffer);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
     renderPassProperties_.Add(prop);
 
-    std::array<::vk::ClearValue, Device::PrvSupportedAttachmentCountMax> clearValues;
+    std::array<::vk::ClearValue, Device::SupportedAttachmentCountMax_> clearValues;
     for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount(); ++i) {
         const auto color = info.RenderTargetSettings()[i].ClearColor();
         ::vk::ClearColorValue val;

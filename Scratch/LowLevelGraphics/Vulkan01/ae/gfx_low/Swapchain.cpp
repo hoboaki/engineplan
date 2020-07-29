@@ -17,12 +17,12 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 Swapchain::~Swapchain() {
-    AE_BASE_ASSERT(!PrvIsInitialized());
+    AE_BASE_ASSERT(!IsInitialized_());
 }
 
 //------------------------------------------------------------------------------
 void Swapchain::AcquireNextImage() {
-    AE_BASE_ASSERT(PrvIsInitialized());
+    AE_BASE_ASSERT(IsInitialized_());
     auto& device = swapchainMaster_->Device();
     {
         currentFrameIndex_ =
@@ -30,10 +30,10 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ = base::Math::Clamp(
             currentFrameIndex_, 0, frameProperties_.Count() - 1);
         auto currentBufferIdxUint = uint32_t();
-        auto result = device.PrvInstance().acquireNextImageKHR(swapchain_,
+        auto result = device.Instance_().acquireNextImageKHR(swapchain_,
             UINT64_MAX,
             frameProperties_[currentFrameIndex_]
-                .AcquireEvent->PrvInstance(),
+                .AcquireEvent->Instance_(),
             ::vk::Fence(), &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
@@ -41,34 +41,34 @@ void Swapchain::AcquireNextImage() {
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
+void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
     const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
     ::vk::Format imageFormat) {
-    AE_BASE_ASSERT(!PrvIsInitialized());
+    AE_BASE_ASSERT(!IsInitialized_());
     swapchainMaster_.Reset(swapchainMaster);
     swapchain_ = swapchain;
     renderTargetSpecInfo_ =
-        gfx_low::RenderTargetSpecInfo().PrvSetNativeFormat(imageFormat);
+        gfx_low::RenderTargetSpecInfo().SetNativeFormat_(imageFormat);
     {
         auto& device = swapchainMaster_->Device();
 
         auto swapchainImageCount = uint32_t();
         {
             const auto result =
-                device.PrvInstance().getSwapchainImagesKHR(swapchain_,
+                device.Instance_().getSwapchainImagesKHR(swapchain_,
                     &swapchainImageCount, static_cast<::vk::Image*>(nullptr));
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT_LESS(0, minImageCount);
         }
 
         frameProperties_.Resize(int(swapchainImageCount),
-            &swapchainMaster_->Device().System().PrvObjectAllocator());
+            &swapchainMaster_->Device().System().ObjectAllocator_());
 
         base::RuntimeArray<::vk::Image> swapchainImages(
             frameProperties_.Count(),
-            &device.System().PrvTempWorkAllocator());
+            &device.System().TempWorkAllocator_());
         {
-            const auto result = device.PrvInstance().getSwapchainImagesKHR(
+            const auto result = device.Instance_().getSwapchainImagesKHR(
                 swapchain_, &swapchainImageCount, swapchainImages.Head());
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
@@ -82,25 +82,25 @@ void Swapchain::PrvInitialize(gfx_low::SwapchainMaster* swapchainMaster,
             target.ImageResource.Init(
                 ImageResourceCreateInfo()
                     .SetDevice(&device)
-                    .PrvSetImagePtr(&swapchainImages[i]));
+                    .SetImagePtr_(&swapchainImages[i]));
             target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
                     .SetImageResource(target.ImageResource.Ptr())
-                    .PrvSetRawFormat(imageFormat));
+                    .SetRawFormat_(imageFormat));
         }
     }
     uniqueId_ = uniqueId_;
     currentFrameIndex_ = -1;
-    AE_BASE_ASSERT(PrvIsInitialized());
+    AE_BASE_ASSERT(IsInitialized_());
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::PrvFinalize() {
-    if (!PrvIsInitialized()) {
+void Swapchain::Finalize_() {
+    if (!IsInitialized_()) {
         return;
     }
-    uniqueId_ = PrvInvalidUniqueId;
+    uniqueId_ = InvalidUniqueId_;
     {
         auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.Count() - 1; 0 <= i; --i) {
@@ -113,7 +113,7 @@ void Swapchain::PrvFinalize() {
     }
     swapchain_ = ::vk::SwapchainKHR();
     swapchainMaster_.Reset();
-    AE_BASE_ASSERT(!PrvIsInitialized());
+    AE_BASE_ASSERT(!IsInitialized_());
 }
 
 }  // namespace gfx_low
