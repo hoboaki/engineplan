@@ -10,17 +10,28 @@ enum class ResourceMemoryKind {
     /// 無効値。
     Invalid,
 
-    /// GPU 専用メモリ。CPU からは直接参照することはできない。
+    /// GPU 専用メモリ。
+    /// @details
+    /// GPU が処理する上で最も高速なメモリの種類です。
+    /// CPU からは直接参照することはできないため、
+    /// CPU が用意したデータを DeviceLocal に配置したい場合は
+    /// コマンドを使って Shared 系のメモリから転送する必要があります。
     DeviceLocal,
 
-    /// GPU は読み書き、CPU は読み込みのみできるGPU・CPU共有メモリ。
-    SharedRead,
+    /// CPU 上でキャッシュしないGPU・CPU共有メモリ。
+    /// @details
+    /// Map/Unmap 時に FlushRange や InvalidateRange
+    /// が不要で扱いやすい種類です。
+    /// ただし、CPU からのアクセスよりも GPU
+    /// からのアクセススピードを優先する種類とも言えるため、
+    /// CPU上での読み書きの回数が少ないメモリでの使用を推奨します。
+    SharedNonCached,
 
     /// GPU は読み書き、CPU は書き込みのみできるGPU・CPU共有メモリ。
-    SharedWrite,
-
-    /// GPU・CPU 共には読み書きができるGPU・CPU共有メモリ。
-    SharedReadWrite,
+    /// @details
+    /// Map/Unmap 時に FlushRange や InvalidateRange が必要です。
+    /// 頻繁にCPU上で読み書きするメモリでの使用を推奨します。
+    SharedCached,
 
     TERM,
 };
