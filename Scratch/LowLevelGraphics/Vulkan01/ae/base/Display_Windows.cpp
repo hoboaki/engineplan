@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Display.hpp>
 
+// includes
 #include <ae/base/Application.hpp>
 #include <ae/base/KeyKind.hpp>
 #include <ae/base/Hid.hpp>

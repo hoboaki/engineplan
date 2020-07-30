@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Hid.hpp>
 
+// includes
 #include <ae/base/Display.hpp>
 #include <ae/base/Touch.hpp>
 #include <ae/base/Unused.hpp>

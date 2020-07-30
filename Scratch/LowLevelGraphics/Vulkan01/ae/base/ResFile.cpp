@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/ResFile.hpp>
 
+// includes
 #include <ae/base/AutoMemBlock.hpp>
 #include <ae/base/ResFileStream.hpp>
 

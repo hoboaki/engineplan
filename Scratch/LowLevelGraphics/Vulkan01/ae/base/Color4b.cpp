@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Color4b.hpp>
 
+// includes
 #include <ae/base/Color4.hpp>
 #include <ae/base/DivideCheck.hpp>
 #include <ae/base/Math.hpp>

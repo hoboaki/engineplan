@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/AutoMemBlock.hpp>
 
+// includes
 #include <ae/base/IAllocator.hpp>
 
 //------------------------------------------------------------------------------

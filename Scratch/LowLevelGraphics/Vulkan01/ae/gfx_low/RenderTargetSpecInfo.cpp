@@ -1,6 +1,8 @@
 // 文字コード：UTF-8
-#include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
+
+// includes
+#include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {

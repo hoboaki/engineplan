@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Degree.hpp>
 
+// includes
 #include <ae/base/Angle.hpp>
 #include <ae/base/Pi.hpp>
 #include <ae/base/Radian.hpp>

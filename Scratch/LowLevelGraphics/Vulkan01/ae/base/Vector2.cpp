@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Vector2.hpp>
 
+// includes
 #include <ae/base/DivideCheck.hpp>
 #include <ae/base/Infinity.hpp>
 #include <ae/base/Math.hpp>

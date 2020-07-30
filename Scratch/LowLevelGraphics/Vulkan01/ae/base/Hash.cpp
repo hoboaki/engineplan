@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Hash.hpp>
 
+// includes
 #include <ae/base/MemBlock.hpp>
 
 //------------------------------------------------------------------------------

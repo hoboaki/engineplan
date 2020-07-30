@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <ae/base/Thread.hpp>
 
+// includes
 #include <ae/base/Math.hpp>
 #include <ae/base/Os.hpp>
 #include <ae/base/TimeSpan.hpp>
