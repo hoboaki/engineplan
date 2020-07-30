@@ -4,6 +4,7 @@
 #define AE_BASE_INCLUDED_BUILTINTYPES_HPP
 
 #include <cstddef>
+#include <cstdint>
 
 //------------------------------------------------------------------------------
 namespace ae {
