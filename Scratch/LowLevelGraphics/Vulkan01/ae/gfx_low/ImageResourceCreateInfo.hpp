@@ -8,15 +8,14 @@ namespace ae {
 namespace gfx_low {
 class Device;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
 
 /// ImageResource の作成に必要な情報。
-class ImageResourceCreateInfo
-{
+class ImageResourceCreateInfo {
 public:
     /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
     //@{
@@ -42,6 +41,6 @@ private:
     base::Pointer<::vk::Image> imagePtr_;
 };
 
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

@@ -9,8 +9,8 @@ namespace ae {
 namespace gfx_low {
 class RenderPassSpecInfo;
 class RenderTargetSetting;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -51,8 +51,7 @@ public:
     base::Aabb2i RenderArea() const { return renderArea_; }
 
     /// RenderArea() の設定。
-    RenderPassBeginInfo& SetRenderArea(const base::Aabb2i& renderArea)
-    {
+    RenderPassBeginInfo& SetRenderArea(const base::Aabb2i& renderArea) {
         renderArea_ = renderArea;
         return *this;
     }
@@ -64,7 +63,7 @@ private:
     base::Aabb2i renderArea_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 // EOF

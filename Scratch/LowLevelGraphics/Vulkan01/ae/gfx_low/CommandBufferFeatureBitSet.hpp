@@ -12,6 +12,6 @@ namespace gfx_low {
 using CommandBufferFeatureBitSet =
     base::BitSet<static_cast<int>(CommandBufferFeature::TERM)>;
 
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

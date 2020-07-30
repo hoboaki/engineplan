@@ -16,7 +16,7 @@ public:
     /// イメージフォーマット。（初期値：Invalid）
     gfx_low::Format Format() const { return format_; }
 
-    /// Format() の設定。 
+    /// Format() の設定。
     RenderTargetSpecInfo& SetFormat(const gfx_low::Format format);
     //@}
 
@@ -25,9 +25,8 @@ public:
     /// Native フォーマット。Format() より優先される。
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
-    /// NativeFormat() 設定。 
-    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format)
-    {
+    /// NativeFormat() 設定。
+    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format) {
         nativeFormat_ = format;
         return *this;
     }
@@ -38,6 +37,6 @@ private:
     ::vk::Format nativeFormat_ = ::vk::Format::eUndefined;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

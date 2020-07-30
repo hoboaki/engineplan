@@ -11,10 +11,10 @@
 /// @def AE_BASE_NEWLINE
 /// @brief 環境に合った改行コード文字列を定義するマクロ。
 #if defined(AE_BASE_OS_WINDOWS)
-    #define AE_BASE_NEWLINE ("\r\n")
+#define AE_BASE_NEWLINE ("\r\n")
 #else
-    // デフォルトは\n
-    #define AE_BASE_NEWLINE ("\n")
+// デフォルトは\n
+#define AE_BASE_NEWLINE ("\n")
 #endif
 
 //@}

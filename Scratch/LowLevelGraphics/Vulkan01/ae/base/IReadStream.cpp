@@ -6,9 +6,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-IReadStream::~IReadStream()
-{
-}
+IReadStream::~IReadStream() {}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

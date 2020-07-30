@@ -25,6 +25,6 @@ Event::~Event() {
     device_.Instance_().destroySemaphore(semaphore_, nullptr);
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

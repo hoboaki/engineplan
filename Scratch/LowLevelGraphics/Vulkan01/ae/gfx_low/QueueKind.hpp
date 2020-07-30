@@ -7,20 +7,21 @@ namespace gfx_low {
 
 /// Queue の種類。
 enum class QueueKind {
-	/// 無効値。
-	Invalid,
+    /// 無効値。
+    Invalid,
 
-	/// Render、Present、Compute、Copy、をサポート。
-	Normal,
+    /// Render、Present、Compute、Copy、をサポート。
+    Normal,
 
-	/// Compute のみをサポート。
-	ComputeOnly,
+    /// Compute のみをサポート。
+    ComputeOnly,
 
-	/// Copy のみをサポート。
-	CopyOnly,
+    /// Copy のみをサポート。
+    CopyOnly,
 
-	TERM,
+    TERM,
 };
 
-}}
+} // namespace gfx_low
+} // namespace ae
 // EOF

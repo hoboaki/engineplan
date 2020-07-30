@@ -11,8 +11,7 @@ namespace ae {
 namespace base {
 
 // iOSのHid拡張。
-class Hid_Ext : public NonCopyable
-{
+class Hid_Ext : public NonCopyable {
 public:
     Touch touch;
 
@@ -20,6 +19,7 @@ public:
     Hid_Ext();
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

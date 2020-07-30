@@ -12,7 +12,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-RenderTargetImageView::RenderTargetImageView(const RenderTargetImageViewCreateInfo& createInfo)
+RenderTargetImageView::RenderTargetImageView(
+    const RenderTargetImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , imageView_() {
     // 今は RawFormat しか対応しない
@@ -21,8 +22,7 @@ RenderTargetImageView::RenderTargetImageView(const RenderTargetImageViewCreateIn
 
     auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
-            .setImage(
-                base::PtrToRef(createInfo.ImageResource()).Instance_())
+            .setImage(base::PtrToRef(createInfo.ImageResource()).Instance_())
             .setViewType(::vk::ImageViewType::e2D)
             .setFormat(imageFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(
@@ -37,6 +37,6 @@ RenderTargetImageView::~RenderTargetImageView() {
     device_.Instance_().destroyImageView(imageView_, nullptr);
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

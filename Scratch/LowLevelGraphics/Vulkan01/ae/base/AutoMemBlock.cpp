@@ -11,19 +11,13 @@ namespace base {
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock()
 : block_()
-, allocatorPtr_()
-{
-}
+, allocatorPtr_() {}
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(
-    const pword_t size,
-    IAllocator& allocator,
-    const pword_t alignment
-    )
+    const pword_t size, IAllocator& allocator, const pword_t alignment)
 : block_()
-, allocatorPtr_()
-{
+, allocatorPtr_() {
     // 確保
     ptr_t ptr = allocator.Alloc(size, alignment);
     if (ptr == 0) {
@@ -39,33 +33,27 @@ AutoMemBlock::AutoMemBlock(
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const MemBlock& block, IAllocator& allocator)
 : block_(block)
-, allocatorPtr_(allocator)
-{
-}
+, allocatorPtr_(allocator) {}
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const AutoMemBlock& other)
 : block_()
-, allocatorPtr_()
-{
+, allocatorPtr_() {
     *this = other;
 }
 
 //------------------------------------------------------------------------------
-AutoMemBlock::~AutoMemBlock()
-{
+AutoMemBlock::~AutoMemBlock() {
     Clear();
 }
 
 //------------------------------------------------------------------------------
-bool AutoMemBlock::IsEmpty()const
-{
+bool AutoMemBlock::IsEmpty() const {
     return allocatorPtr_.IsNull();
 }
 
 //------------------------------------------------------------------------------
-void AutoMemBlock::Clear()
-{
+void AutoMemBlock::Clear() {
     if (IsEmpty()) {
         return;
     }
@@ -75,15 +63,13 @@ void AutoMemBlock::Clear()
 }
 
 //------------------------------------------------------------------------------
-const MemBlock& AutoMemBlock::Ref()const
-{
+const MemBlock& AutoMemBlock::Ref() const {
     AE_BASE_ASSERT(!IsEmpty());
     return block_;
 }
 
 //------------------------------------------------------------------------------
-AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& rHS)
-{
+AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& rHS) {
     // まずクリア
     Clear();
 
@@ -100,16 +86,15 @@ AutoMemBlock& AutoMemBlock::operator=(const AutoMemBlock& rHS)
 }
 
 //------------------------------------------------------------------------------
-const MemBlock& AutoMemBlock::operator*()const
-{
+const MemBlock& AutoMemBlock::operator*() const {
     return Ref();
 }
 
 //------------------------------------------------------------------------------
-const MemBlock* AutoMemBlock::operator->()const
-{
+const MemBlock* AutoMemBlock::operator->() const {
     return &Ref();
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

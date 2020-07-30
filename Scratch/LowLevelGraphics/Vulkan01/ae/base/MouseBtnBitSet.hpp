@@ -15,9 +15,10 @@ namespace base {
 /// @brief マウスのボタンのビットセット。
 /// @details
 /// ビットのインデックスは MouseBtnKind を使用しています。
-typedef BitSet< MouseBtnKind::TERM > MouseBtnBitSet;
+typedef BitSet<MouseBtnKind::TERM> MouseBtnBitSet;
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -14,14 +14,15 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// マウスの更新データ。
-struct MouseUpdateData
-{
+struct MouseUpdateData {
     ScreenPos pos;
     MouseBtnBitSet hold;
-    BoolPod32 posUpdated; // trueならposは最新の値が入っている。falseならウィンドウ外でキャプチャに失敗している可能性がある。
+    BoolPod32
+        posUpdated; // trueならposは最新の値が入っている。falseならウィンドウ外でキャプチャに失敗している可能性がある。
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

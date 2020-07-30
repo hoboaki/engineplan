@@ -11,11 +11,10 @@ namespace ae {
 namespace base {
 
 // Windows環境でのApplicationの拡張。
-class Application_Ext
-{
+class Application_Ext {
 public:
     //============================================================
-    u64  prevUSec;
+    u64 prevUSec;
     Bool32 doQuit;
 
     //============================================================
@@ -23,6 +22,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

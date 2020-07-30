@@ -7,14 +7,16 @@
 namespace ae {
 namespace base {
 class Application;
-}}
+}
+} // namespace ae
 
 /// @addtogroup AeBase-System
 //@{
 
 /// @brief メイン関数の宣言。
 /// @return リターンコード。
-/// @details アプリケーションはこれを実装してアプリケーションを開始してください。
+/// @details
+/// アプリケーションはこれを実装してアプリケーションを開始してください。
 /// @code
 /// // 例
 /// int aemain( const ::ae::base::Application& )

@@ -10,10 +10,8 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// マウスのボタンの種類。
-struct MouseBtnKind
-{
-    enum EnumType
-    {
+struct MouseBtnKind {
+    enum EnumType {
         L, ///< 左。
         R, ///< 右。(副ボタン)
         M, ///< 中。(3ボタン)
@@ -23,6 +21,7 @@ struct MouseBtnKind
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

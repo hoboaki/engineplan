@@ -5,10 +5,10 @@
 #include <ae/gfx_low/SystemDebugLevel.hpp>
 
 namespace ae {
-    namespace base {
+namespace base {
 class IAllocator;
 }
-}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -28,7 +28,9 @@ public:
     SystemCreateInfo& SetDebugLevel(SystemDebugLevel level);
     //@}
 
-    /// @name オブジェクト生成時に確保・破棄時に解放されるメモリ用のアロケータ。nullptr 時はデフォルトアロケータを使用。（初期値：nullptr）
+    /// @name
+    /// オブジェクト生成時に確保・破棄時に解放されるメモリ用のアロケータ。nullptr
+    /// 時はデフォルトアロケータを使用。（初期値：nullptr）
     //@{
     ::ae::base::IAllocator* ObjectAllocator() const {
         return objectAllocator_.Get();
@@ -39,7 +41,8 @@ public:
     }
     //@}
 
-    /// @name 関数内で確保・関数終了時に解放されるメモリ用のアロケータ。nullptr 時はデフォルトアロケータを使用。（初期値：nullptr）
+    /// @name 関数内で確保・関数終了時に解放されるメモリ用のアロケータ。nullptr
+    /// 時はデフォルトアロケータを使用。（初期値：nullptr）
     //@{
     ::ae::base::IAllocator* TempWorkAllocator() const {
         return tempWorkAllocator_.Get();
@@ -50,13 +53,12 @@ public:
     }
     //@}
 
-
 private:
     SystemDebugLevel debugLevel_ = SystemDebugLevel::NoDebug;
     ::ae::base::Pointer<::ae::base::IAllocator> objectAllocator_;
     ::ae::base::Pointer<::ae::base::IAllocator> tempWorkAllocator_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

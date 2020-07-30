@@ -8,12 +8,12 @@ namespace ae {
 namespace base {
 
 // デフォルト環境でのApplicationの拡張。
-class Application_Ext
-{
+class Application_Ext {
 public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

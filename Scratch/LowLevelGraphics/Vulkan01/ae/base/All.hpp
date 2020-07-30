@@ -3,7 +3,8 @@
 #else
 #define AE_BASE_INCLUDED_AE_BASE_HPP
 
-/// @namespace AeBase AeLibraryの基本となるクラス・関数・マクロ群を定義する名前空間。
+/// @namespace AeBase
+/// AeLibraryの基本となるクラス・関数・マクロ群を定義する名前空間。
 
 /// @defgroup AeBase-Collection AeBase:コレクション
 #include <ae/base/BitSet.hpp>
@@ -39,10 +40,10 @@
 #include <ae/base/SeekOrigin.hpp>
 
 /// @defgroup AeBase-Hid AeBase:Hid
-#include <ae/base/KeyBitSet.hpp>
-#include <ae/base/Keyboard.hpp>
-#include <ae/base/KeyKind.hpp>
 #include <ae/base/Hid.hpp>
+#include <ae/base/KeyBitSet.hpp>
+#include <ae/base/KeyKind.hpp>
+#include <ae/base/Keyboard.hpp>
 #include <ae/base/Mouse.hpp>
 #include <ae/base/MouseBtnBitSet.hpp>
 #include <ae/base/MouseBtnKind.hpp>
@@ -101,10 +102,10 @@
 #include <ae/base/ExplicitSingleton.hpp>
 #include <ae/base/FrameCounter.hpp>
 #include <ae/base/Hash.hpp>
-#include <ae/base/Ref.hpp>
-#include <ae/base/Reference.hpp>
 #include <ae/base/Placement.hpp>
 #include <ae/base/Pointer.hpp>
+#include <ae/base/Ref.hpp>
+#include <ae/base/Reference.hpp>
 #include <ae/base/ScreenPos.hpp>
 #include <ae/base/Unused.hpp>
 #include <ae/base/ValueInRange.hpp>

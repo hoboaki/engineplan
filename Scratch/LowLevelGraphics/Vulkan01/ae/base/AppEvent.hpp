@@ -10,13 +10,11 @@ namespace base {
 /// @addtogroup AeBase-System
 //@{
 /// アプリケーションイベントの種類。
-struct AppEvent
-{
-    enum EnumType
-    {
-        Quit,     ///< 終了する。
+struct AppEvent {
+    enum EnumType {
+        Quit, ///< 終了する。
         Update, ///< 状態を更新する。
-        
+
         TERM,
 
         // alias
@@ -25,6 +23,7 @@ struct AppEvent
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

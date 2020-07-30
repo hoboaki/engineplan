@@ -8,11 +8,11 @@ namespace ae {
 namespace base {
 
 //デフォルト環境でのScreenの拡張。
-class Screen_Ext
-{
+class Screen_Ext {
 public:
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

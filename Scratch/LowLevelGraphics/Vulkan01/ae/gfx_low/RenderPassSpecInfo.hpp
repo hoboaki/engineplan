@@ -9,7 +9,7 @@ namespace ae {
 namespace gfx_low {
 class RenderTargetSpecInfo;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -34,8 +34,7 @@ public:
 
     /// RenderTarget の数と仕様の設定。
     RenderPassSpecInfo& SetRenderTargetSpecInfos(
-        const RenderTargetSpecInfo* renderTargetSpecInfos)
-    {
+        const RenderTargetSpecInfo* renderTargetSpecInfos) {
         renderTargetSpecInfos_.Reset(renderTargetSpecInfos);
         return *this;
     }
@@ -46,6 +45,6 @@ private:
     base::Pointer<const RenderTargetSpecInfo> renderTargetSpecInfos_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

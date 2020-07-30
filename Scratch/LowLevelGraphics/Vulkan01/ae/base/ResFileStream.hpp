@@ -16,19 +16,19 @@ namespace base {
 
 /// @addtogroup AeBase-IO
 //@{
-    /// @brief アプリケーションのリソースファイルを読み込むクラス。
-    /// @details
-    /// リソースファイルは読み込み専用です。書き込むことはできません。
-    /// @n
-    /// ルートディレクトリはOSによって異なります。 @n
-    /// Windowsだと ".exeファイルがあるディレクトリ" がルートになります。 @n
-    /// MacOSXだと ".app/Contents/Resources" がルートになります。@n
-    /// iOSだと ".app/" がルートになります。@n
-    /// @n
-    /// OSによっては想定しないファイルがリソースファイルと同じ場所に置かれることもあります。@n
-/// そのため "data" や "resource" といった名前のフォルダを１つほりそれ以下に全てのリソースファイルを配置することをおすすめします。@n
-class ResFileStream : public IReadStream
-{
+/// @brief アプリケーションのリソースファイルを読み込むクラス。
+/// @details
+/// リソースファイルは読み込み専用です。書き込むことはできません。
+/// @n
+/// ルートディレクトリはOSによって異なります。 @n
+/// Windowsだと ".exeファイルがあるディレクトリ" がルートになります。 @n
+/// MacOSXだと ".app/Contents/Resources" がルートになります。@n
+/// iOSだと ".app/" がルートになります。@n
+/// @n
+/// OSによっては想定しないファイルがリソースファイルと同じ場所に置かれることもあります。@n
+/// そのため "data" や "resource"
+/// といった名前のフォルダを１つほりそれ以下に全てのリソースファイルを配置することをおすすめします。@n
+class ResFileStream : public IReadStream {
 public:
     /// @name 定数
     //@{
@@ -67,13 +67,14 @@ public:
     /// @brief 指定のファイルをオープンする。
     /// @return オープンに成功したらtrue。
     /// @param path オープンするファイルパス。
-    /// @details 既にオープンしている場合は自動で Close() してからオープンします。
+    /// @details 既にオープンしている場合は自動で Close()
+    /// してからオープンします。
     bool Open(const char* path);
     //@}
 
     // IReadStreamの実装。
-    AE_BASE_OVERRIDE(pword_t RequireReadBufferAlignment()const);
-    AE_BASE_OVERRIDE(pword_t CalcReadBufferSize(pword_t size)const);
+    AE_BASE_OVERRIDE(pword_t RequireReadBufferAlignment() const);
+    AE_BASE_OVERRIDE(pword_t CalcReadBufferSize(pword_t size) const);
     AE_BASE_OVERRIDE(pword_t Seek(int offset, SeekOrigin::EnumType origin));
     AE_BASE_OVERRIDE(pword_t Read(ptr_t buffer, pword_t size));
     AE_BASE_OVERRIDE(void Close());
@@ -84,6 +85,7 @@ private:
 
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

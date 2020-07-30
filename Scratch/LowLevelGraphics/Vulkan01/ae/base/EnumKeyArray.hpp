@@ -38,7 +38,7 @@ public:
     ValueType& At(const int index) {
         if (index < 0 || Count() <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
-            return values_[0];  // fail safe code
+            return values_[0]; // fail safe code
         }
         return values_[index];
     }
@@ -47,7 +47,7 @@ public:
     const ValueType& At(const int index) const {
         if (index < 0 || Count() <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
-            return values_[0];  // fail safe code
+            return values_[0]; // fail safe code
         }
         return values_[index];
     }
@@ -88,6 +88,6 @@ public:
     ValueType values_[TEnumType::TERM];
 };
 
-}  // namespace base
-}  // namespace ae
+} // namespace base
+} // namespace ae
 // EOF

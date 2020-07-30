@@ -22,6 +22,6 @@ enum class AttachmentLoadOp {
     TERM,
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

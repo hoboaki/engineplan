@@ -9,14 +9,12 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-bool PointerCheck::IsValid(const_anyptr_t ptr)
-{
+bool PointerCheck::IsValid(const_anyptr_t ptr) {
     return ptr != 0;
 }
 
 //------------------------------------------------------------------------------
-bool PointerCheck::InvalidCheck(const_anyptr_t ptr)
-{
+bool PointerCheck::InvalidCheck(const_anyptr_t ptr) {
     if (!IsValid(ptr)) {
         AE_BASE_ERROR_INVALID_VALUE(ptr);
         return true;
@@ -24,5 +22,6 @@ bool PointerCheck::InvalidCheck(const_anyptr_t ptr)
     return false;
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

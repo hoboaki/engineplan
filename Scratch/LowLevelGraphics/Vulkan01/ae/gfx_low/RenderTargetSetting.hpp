@@ -11,7 +11,7 @@ namespace ae {
 namespace gfx_low {
 class RenderTargetImageView;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -81,6 +81,6 @@ private:
     base::Color4Pod clearColor_ = base::Color4Pod::Zero();
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

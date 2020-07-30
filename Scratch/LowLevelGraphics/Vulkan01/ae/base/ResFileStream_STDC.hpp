@@ -10,14 +10,14 @@ namespace ae {
 namespace base {
 
 // C標準ライブラリ用のResFileStream拡張。
-class ResFileStream_EXT
-{
+class ResFileStream_EXT {
 public:
     FILE* fp;
 
     ResFileStream_EXT();
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

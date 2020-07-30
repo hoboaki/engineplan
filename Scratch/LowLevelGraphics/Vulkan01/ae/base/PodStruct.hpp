@@ -14,9 +14,8 @@ namespace base {
 //@{
 /// @brief PodClassの既定クラスとなる構造体。
 /// @details バイナリデータの定義で使うことを想定しています。
-template< typename T >
-struct PodStruct
-{
+template <typename T>
+struct PodStruct {
     /// 値の型名。
     typedef T ValueType;
 
@@ -26,36 +25,38 @@ struct PodStruct
 
     /// @brief 値のポインタを取得。
     /// @return 値のポインタ。
-    const ValueType* Ptr()const { return &ReadRef(); }
-    ValueType*       Ptr() { return &Ref(); }     ///< @copydoc Ptr()const
+    const ValueType* Ptr() const { return &ReadRef(); }
+    ValueType* Ptr() { return &Ref(); } ///< @copydoc Ptr()const
 
     /// @brief コピーされた値を取得。
     /// @return コピーされた値。
-    const ValueType  Get()const { return ReadRef(); }
+    const ValueType Get() const { return ReadRef(); }
 
     /// @brief 値の参照を取得。
     /// @return 値の参照。
-    const ValueType& ReadRef()const { return value_; }
-    const ValueType& Ref()const { return value_; } ///< @copydoc readRef
-    ValueType&       Ref() { return value_; } ///< @copydoc readRef
+    const ValueType& ReadRef() const { return value_; }
+    const ValueType& Ref() const { return value_; } ///< @copydoc readRef
+    ValueType& Ref() { return value_; } ///< @copydoc readRef
     //@}
 
     /// @brief 暗黙変換の実装。
     /// @return 値の参照。
-    operator const ValueType& ()const { return ReadRef(); }
+    operator const ValueType&() const { return ReadRef(); }
 
     /// @brief 暗黙変換の実装。
     /// @return 値の参照。
-    operator ValueType& () { return Ref(); }
+    operator ValueType&() { return Ref(); }
 
     // 値。直接アクセスすることは想定していない。
     ValueType value_;
 
 private:
-    AE_BASE_STATIC_ASSERT(TypeTraits::IsPod< typename ValueType >::Value);         // Pod型のチェック。
+    AE_BASE_STATIC_ASSERT(
+        TypeTraits::IsPod<typename ValueType>::Value); // Pod型のチェック。
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

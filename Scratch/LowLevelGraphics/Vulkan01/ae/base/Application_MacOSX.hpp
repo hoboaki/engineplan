@@ -10,8 +10,7 @@ namespace ae {
 namespace base {
 
 // MacOSX環境でのApplicationの拡張。
-class Application_Ext
-{
+class Application_Ext {
 public:
     //============================================================
     s64 prevUpdateTicks;
@@ -23,6 +22,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

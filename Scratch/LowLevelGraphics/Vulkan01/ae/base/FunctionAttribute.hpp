@@ -26,18 +26,20 @@
 ///  {
 ///  public:
 ///      AE_BASE_OVERRIDE( void func() ); // オーバーライドしているのでOK。
-///      AE_BASE_OVERRIDE( void Foo() );  // オーバーライドしていないのでエラー。
+///      AE_BASE_OVERRIDE( void Foo() );  //
+///      オーバーライドしていないのでエラー。
 ///  };
 /// @endcode
 #if defined(AE_BASE_COMPILER_MSVC)
-#define AE_BASE_OVERRIDE( ... ) virtual __VA_ARGS__ override
+#define AE_BASE_OVERRIDE(...) virtual __VA_ARGS__ override
 #else
-#define AE_BASE_OVERRIDE( ... ) __VA_ARGS__
+#define AE_BASE_OVERRIDE(...) __VA_ARGS__
 #endif
 
 /// @def AE_BASE_FINAL
 /// @brief オーバーライド禁止チェック。
-/// @details 指定の関数が派生クラスでオーバーライドしていればコンパイルエラーにします。
+/// @details
+/// 指定の関数が派生クラスでオーバーライドしていればコンパイルエラーにします。
 /// @code
 ///  // [例]
 ///  // 継承元。
@@ -54,9 +56,9 @@
 ///  };
 /// @endcode
 #if defined(AE_BASE_COMPILER_MSVC)
-#define AE_BASE_FINAL( ... ) virtual __VA_ARGS__ sealed
+#define AE_BASE_FINAL(...) virtual __VA_ARGS__ sealed
 #else
-#define AE_BASE_FINAL( ... ) __VA_ARGS__
+#define AE_BASE_FINAL(...) __VA_ARGS__
 #endif
 
 //@}

@@ -7,8 +7,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class FenceCreateInfo;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -17,10 +17,11 @@ namespace gfx_low {
 /// CPU & GPU 間での同期を実現するクラス。
 /// @details
 /// Fence は GPU のタイミングを CPU 上で待つ同期を実現する際に使うクラスです。
-/// Queue::Submit() の引数で渡した後、Wait() を呼ぶことによって同期処理を行います。
+/// Queue::Submit() の引数で渡した後、Wait()
+/// を呼ぶことによって同期処理を行います。
 ///
-/// Queue::Submit() に渡した Fence は Wait() しないまま Queue::Submit() することはできません。
-/// その場合、必ず Wait() をしてください。
+/// Queue::Submit() に渡した Fence は Wait() しないまま Queue::Submit()
+/// することはできません。 その場合、必ず Wait() をしてください。
 class Fence {
 public:
     /// @name コンストラクタとデストラクタ
@@ -59,6 +60,6 @@ private:
     bool isActive_ = false;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

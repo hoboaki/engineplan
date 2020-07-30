@@ -15,8 +15,7 @@ namespace base {
 /// @brief タッチ入力。
 /// @details
 /// マルチタッチをサポートします。@n
-class Touch
-{
+class Touch {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
@@ -37,20 +36,20 @@ public:
     void Update(const TouchUpdateData& data);
 
     /// 前回の更新データを取得する。
-    const TouchUpdateData LastUpdateData()const;
+    const TouchUpdateData LastUpdateData() const;
     //@}
 
     /// @name 入力取得
     //@{
     /// @brief タップ入力の総数を取得。
-    int TapCount()const;
+    int TapCount() const;
 
     /// @brief 指定番目の入力を取得します。
     /// @details
     /// 0番がタッチ -> 1番がタッチ -> 0番がリリースされたとき
     /// 配列的には穴が空いてしまう状態になりますが
     /// 次のフレームでも1番のタッチ位置は取得できます。
-    const TouchTap TapAtIndex(int index)const;
+    const TouchTap TapAtIndex(int index) const;
     //@}
 
 private:
@@ -60,6 +59,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

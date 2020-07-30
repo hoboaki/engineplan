@@ -7,8 +7,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class EventCreateInfo;
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -16,14 +16,15 @@ namespace gfx_low {
 
 /// GPU 内での同期を実現するクラス。
 /// @details
-/// Event は GPU 内での同期を実現する際に使うクラスで、主に複数 Queue 間での同期に使われます。
-/// Queue::PushEventSignal() と Queue::PushEventWait() の関数を使って同期処理を行います。
+/// Event は GPU 内での同期を実現する際に使うクラスで、主に複数 Queue
+/// 間での同期に使われます。 Queue::PushEventSignal() と Queue::PushEventWait()
+/// の関数を使って同期処理を行います。
 ///
 /// Wait は Signal を受信するまでこれ以降の処理は行わないことを表します。
 /// Signal と Wait は１対１に対応しており、多対１や１対多には対応していません。
-/// もしそのような必要がある場合は複数の Event オブジェクトを使って実現してください。
-class Event
-{
+/// もしそのような必要がある場合は複数の Event
+/// オブジェクトを使って実現してください。
+class Event {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
@@ -47,6 +48,6 @@ private:
     ::vk::Semaphore semaphore_;
 };
 
-}
-}
+} // namespace gfx_low
+} // namespace ae
 // EOF

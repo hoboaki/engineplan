@@ -17,7 +17,7 @@
 ///     AE_BASE_UNUSED( arg ); // 変数未使用警告を回避できる。
 /// }
 /// @endcode
-#define AE_BASE_UNUSED( var ) ((void)var)
+#define AE_BASE_UNUSED(var) ((void)var)
 
 //@}
 //@}

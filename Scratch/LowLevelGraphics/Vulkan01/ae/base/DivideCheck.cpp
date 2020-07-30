@@ -7,6 +7,7 @@ namespace base {
 
 //------------------------------------------------------------------------------
 const char* const DivideCheck::AssertionMessage = "Division by zero error.";
-    
-}} // namespace
+
+} // namespace base
+} // namespace ae
 // EOF

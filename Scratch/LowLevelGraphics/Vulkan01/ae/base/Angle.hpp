@@ -9,7 +9,8 @@ namespace ae {
 namespace base {
 struct DegreePod;
 struct RadianPod;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -18,8 +19,7 @@ namespace base {
 /// @addtogroup AeBase-Math
 //@{
 /// 角度を示すクラス。
-class Angle
-{
+class Angle {
 public:
     /// @name コンストラクタ
     //@{
@@ -30,8 +30,8 @@ public:
 
     /// @name 角度の取得
     //@{
-    f32 Rad()const; ///< radianで取得。
-    f32 Deg()const; ///< degreeで取得。
+    f32 Rad() const; ///< radianで取得。
+    f32 Deg() const; ///< degreeで取得。
     //@}
 
 private:
@@ -39,6 +39,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

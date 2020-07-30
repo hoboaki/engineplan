@@ -8,7 +8,8 @@
 namespace ae {
 namespace base {
 class MemBlock;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -17,8 +18,7 @@ namespace base {
 /// @addtogroup AeBase-Util
 //@{
 /// ハッシュ値を求める関数群。
-struct Hash
-{
+struct Hash {
     /// CRC16の値を求める。
     static uint16 CRC16(const MemBlock&);
 
@@ -27,6 +27,7 @@ struct Hash
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

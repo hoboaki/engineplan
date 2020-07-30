@@ -16,13 +16,11 @@ namespace base {
 /// @details
 /// BIT_COUNTには扱うビット数を指定してください。 @n
 /// ALIGNMENTには要求するアライメント値を指定してください。 @n
-template < int BIT_COUNT, int ALIGNMENT = 4 >
-struct BitSetPod
-{
+template <int BIT_COUNT, int ALIGNMENT = 4>
+struct BitSetPod {
     //============================================================
     // private
-    enum
-    {
+    enum {
         ByteSizeRaw_ = (BIT_COUNT + 7) / 8,
         ByteSize_ = ByteSizeRaw_ + (ALIGNMENT - 1) / ALIGNMENT
     };
@@ -34,14 +32,13 @@ struct BitSetPod
     /// @name 型・定数
     //@{
     enum { BitCount = BIT_COUNT }; ///< ビット数。
-    typedef BitSetPod< BitCount > MyType; ///< 自分自身の型。
+    typedef BitSetPod<BitCount> MyType; ///< 自分自身の型。
     //@}
 
     /// @name 定数プロパティ
     //@{
     /// 全ビット true のオブジェクトを取得。
-    static MyType AllOn() 
-    {
+    static MyType AllOn() {
         MyType result;
         for (int i = 0; i < MyType::ByteSize_; ++i) {
             result.bits_[i] = 0xFF;
@@ -53,10 +50,8 @@ struct BitSetPod
     /// @name 全ビットの操作
     //@{
     /// 全ビットをfalseにする。
-    void Clear()
-    {
-        for (int i = 0; i < MyType::ByteSize_; ++i)
-        {
+    void Clear() {
+        for (int i = 0; i < MyType::ByteSize_; ++i) {
             bits_[i] = 0;
         }
     }
@@ -65,11 +60,9 @@ struct BitSetPod
     /// @name 各ビットの設定・取得
     //@{
     /// 指定番目のビットの値を設定する。
-    void Set(int index, bool flag)
-    {
+    void Set(int index, bool flag) {
         // チェック
-        if (BitCount <= index)
-        {
+        if (BitCount <= index) {
             AE_BASE_ERROR_INVALID_VALUE(index);
             return;
         }
@@ -81,23 +74,15 @@ struct BitSetPod
     }
 
     /// 指定番目のビットをたてる。
-    void On(int index)
-    {
-        Set(index, true);
-    }
+    void On(int index) { Set(index, true); }
 
     /// 指定番目のビットをおろす。
-    void Off(int index)
-    {
-        Set(index, false);
-    }
+    void Off(int index) { Set(index, false); }
 
     /// 指定番目のビットの値を取得する。
-    bool Get(int index)const
-    {
+    bool Get(int index) const {
         // チェック
-        if (BitCount <= index)
-        {
+        if (BitCount <= index) {
             AE_BASE_ERROR_INVALID_VALUE(index);
             return bool();
         }
@@ -108,29 +93,20 @@ struct BitSetPod
         return (val & mask) != 0 ? true : false;
     }
     /// 1つ以上のビットがたっているか。
-    bool IsAnyOn()const
-    {
-        for (int i = 0; i < ByteSize_; ++i)
-        {
-            if (bits_[i] != 0)
-            {
+    bool IsAnyOn() const {
+        for (int i = 0; i < ByteSize_; ++i) {
+            if (bits_[i] != 0) {
                 return true;
             }
         }
         return false;
     }
     /// 全てのビットがたっていない状態か。
-    bool IsAllOff()const
-    {
-        return !IsAnyOn();
-    }
+    bool IsAllOff() const { return !IsAnyOn(); }
     /// 全てのビットがたっている状態か。
-    bool IsAllOn()const
-    {
-        for (int i = 0; i < BitCount; ++i)
-        {
-            if (!Get(i))
-            {
+    bool IsAllOn() const {
+        for (int i = 0; i < BitCount; ++i) {
+            if (!Get(i)) {
                 return false;
             }
         }
@@ -141,74 +117,62 @@ struct BitSetPod
     /// @name 演算
     //@{
     /// ビットを反転した値を取得。
-    const MyType operator ~()const
-    {
+    const MyType operator~() const {
         MyType obj = *this;
-        for (int i = 0; i < ByteSize_; ++i)
-        {
+        for (int i = 0; i < ByteSize_; ++i) {
             obj.bits_[i] = ~obj.bits_[i];
         }
         return obj;
     }
 
     /// 論理積を取得。
-    const MyType operator &(const MyType& rHS)const
-    {
+    const MyType operator&(const MyType& rHS) const {
         MyType obj = *this;
-        for (int i = 0; i < ByteSize_; ++i)
-        {
+        for (int i = 0; i < ByteSize_; ++i) {
             obj.bits_[i] = bits_[i] & rHS.bits_[i];
         }
         return obj;
     }
 
     /// 論理和を取得。
-    const MyType operator |(const MyType& rHS)const
-    {
+    const MyType operator|(const MyType& rHS) const {
         MyType obj = *this;
-        for (int i = 0; i < ByteSize_; ++i)
-        {
+        for (int i = 0; i < ByteSize_; ++i) {
             obj.bits_[i] = bits_[i] | rHS.bits_[i];
         }
         return obj;
     }
 
     /// 排他的論理和を取得。
-    const MyType operator ^(const MyType& rHS)const
-    {
+    const MyType operator^(const MyType& rHS) const {
         MyType obj = *this;
-        for (int i = 0; i < ByteSize_; ++i)
-        {
+        for (int i = 0; i < ByteSize_; ++i) {
             obj.bits_[i] = bits_[i] ^ rHS.bits_[i];
         }
         return obj;
     }
-    //@} 
+    //@}
 };
 
 /// BitSetPod のクラス版。
-template < int BIT_COUNT, int ALIGNMENT = 4 >
-class BitSet : public BitSetPod< BIT_COUNT, ALIGNMENT >
-{
+template <int BIT_COUNT, int ALIGNMENT = 4>
+class BitSet : public BitSetPod<BIT_COUNT, ALIGNMENT> {
 public:
     /// @name コンストラクタ
     //@{
     /// 全てoffの状態で作成。
-    BitSet()
-    {
-        BitSetPod< BIT_COUNT, ALIGNMENT >::Clear();
-    }
+    BitSet() { BitSetPod<BIT_COUNT, ALIGNMENT>::Clear(); }
 
     /// コピーして作成。
-    BitSet(const BitSetPod< BIT_COUNT, ALIGNMENT >& obj)
-    {
-        static_cast<BitSetPod< BIT_COUNT, ALIGNMENT >&>(*this) = obj;
+    BitSet(const BitSetPod<BIT_COUNT, ALIGNMENT>& obj) {
+        static_cast<BitSetPod<BIT_COUNT, ALIGNMENT>&>(*this) = obj;
     }
 
     //@}
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -15,8 +15,8 @@ Fence::Fence(const FenceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , fence_() {
     const auto fenceCreateInfo = ::vk::FenceCreateInfo();
-    const auto result = device_.Instance_().createFence(
-        &fenceCreateInfo, nullptr, &fence_);
+    const auto result =
+        device_.Instance_().createFence(&fenceCreateInfo, nullptr, &fence_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
@@ -34,8 +34,8 @@ void Fence::Wait() {
 
     // 待機
     {
-        const auto result = device_.Instance_().waitForFences(
-            1, &fence_, VK_TRUE, UINT64_MAX);
+        const auto result =
+            device_.Instance_().waitForFences(1, &fence_, VK_TRUE, UINT64_MAX);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
@@ -54,6 +54,6 @@ void Fence::OnSubmit_() {
     isActive_ = true;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

@@ -34,7 +34,7 @@ bool fCheckLayers(uint32_t checkCount, char const* const* const checkNames,
     return true;
 }
 
-}  // namespace
+} // namespace
 
 //------------------------------------------------------------------------------
 System::System(const SystemCreateInfo& createInfo)
@@ -245,8 +245,7 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
             &queueFamilyCount, queueFamilyProperties);
 
         QueueFamilyIndexTableType_ queueFamilyIndexTable;
-        QueueFamilyIndexTable_(
-            &queueFamilyIndexTable, physicalDeviceIndex);
+        QueueFamilyIndexTable_(&queueFamilyIndexTable, physicalDeviceIndex);
 
         // Normal
         {
@@ -299,8 +298,7 @@ void System::DumpAllPhysicalDeviceInfo() const {
 
 //------------------------------------------------------------------------------
 void System::QueueFamilyIndexTable_(
-    QueueFamilyIndexTableType_* result,
-    const int physicalDeviceIndex) const {
+    QueueFamilyIndexTableType_* result, const int physicalDeviceIndex) const {
     auto& resultRef = ::ae::base::PtrToRef(result);
     AE_BASE_ASSERT_LESS(physicalDeviceIndex, physicalDeviceCount_);
     const auto device = physicalDevices_[physicalDeviceIndex];
@@ -346,6 +344,6 @@ void System::QueueFamilyIndexTable_(
 
 //------------------------------------------------------------------------------
 bool System::IsInstanceCreated = false;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

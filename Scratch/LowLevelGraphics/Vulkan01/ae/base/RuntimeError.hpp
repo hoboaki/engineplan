@@ -6,7 +6,8 @@
 namespace ae {
 namespace base {
 class IRuntimeErrorCallback;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -15,8 +16,7 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// 実行時エラーを扱う空間。
-struct RuntimeError
-{
+struct RuntimeError {
     /// @brief デフォルトで設定されているコールバックを取得する。
     /// @return コールバックオブジェクト。
     /// @see OnError
@@ -29,11 +29,13 @@ struct RuntimeError
     static void SetCallback(IRuntimeErrorCallback& callback);
 
     /// @brief エラーが起きたときに呼ばれる関数。
-    /// @details 実行時エラーが有効なビルドバージョンなら設定されているコールバックを呼びます。
+    /// @details
+    /// 実行時エラーが有効なビルドバージョンなら設定されているコールバックを呼びます。
     static void OnError();
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

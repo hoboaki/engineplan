@@ -29,6 +29,6 @@ Swapchain& SwapchainHandle::Ref() const {
     return entity_.Ref();
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

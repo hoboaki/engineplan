@@ -12,8 +12,7 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// コンソール用コールバックインターフェースクラス。
-class IConsoleCallback
-{
+class IConsoleCallback {
 public:
     virtual ~IConsoleCallback();
 
@@ -24,6 +23,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

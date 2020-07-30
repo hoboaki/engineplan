@@ -10,8 +10,8 @@ namespace gfx_low {
 class DeviceCreateInfo;
 class Queue;
 class System;
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -38,7 +38,7 @@ public:
 
     /// コンストラクタで渡した PhysicalDeviceIndex。
     int PhysicalDeviceIndex() const { return physicalDeviceIndex_; }
-    
+
     /// 保持している Queue の総数。
     int QueueCount() const { return queues_.Count(); }
 
@@ -61,6 +61,6 @@ private:
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

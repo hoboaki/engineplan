@@ -7,21 +7,22 @@ namespace gfx_low {
 
 /// Queue の実行優先度。
 enum class QueuePriority {
-	/// 無効値。
-	Invalid,
+    /// 無効値。
+    Invalid,
 
-	/// 通常。
-	Normal,
+    /// 通常。
+    Normal,
 
-	/// Normal より高い。非サポート環境では Normal と同じ優先度になる。
-	High,
+    /// Normal より高い。非サポート環境では Normal と同じ優先度になる。
+    High,
 
-	/// High より高い。非サポート環境では High もしくは Normal と同じ優先度になる。
-	Highest,
+    /// High より高い。非サポート環境では High もしくは Normal
+    /// と同じ優先度になる。
+    Highest,
 
-	TERM,
+    TERM,
 };
 
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

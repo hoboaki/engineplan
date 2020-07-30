@@ -67,10 +67,10 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
     // を登録しておきそれが完了するのを待ってから Present する
     for (const auto& op : operations_) {
         if (op.kind == OperationKind::CommandExecute) {
-            PushEventSignal(&base::PtrToRef(swapchain)
-                                 .CurrentReadyToPresentEvent_());
-            PushEventWait(&base::PtrToRef(swapchain)
-                               .CurrentReadyToPresentEvent_());
+            PushEventSignal(
+                &base::PtrToRef(swapchain).CurrentReadyToPresentEvent_());
+            PushEventWait(
+                &base::PtrToRef(swapchain).CurrentReadyToPresentEvent_());
             break;
         }
     }
@@ -140,7 +140,7 @@ void Queue::Submit(Fence* fencePtr) {
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT(
                 opIdx + 1 ==
-                operations_.Count());  // 今は最後しかサポートしていない
+                operations_.Count()); // 今は最後しかサポートしていない
 
             // Wait をクリア
             waitEvents_.Clear();
@@ -172,8 +172,8 @@ void Queue::Submit(Fence* fencePtr) {
                     signalEvents_.Add(
                         static_cast<Event*>(nextOp.ptr)->Instance_());
                     nextOp.kind =
-                        OperationKind::NoOperation;  // 処理したので NoOperation
-                                                     // に変更
+                        OperationKind::NoOperation; // 処理したので NoOperation
+                                                    // に変更
                 }
             }
 
@@ -195,8 +195,8 @@ void Queue::Submit(Fence* fencePtr) {
                     .setPWaitSemaphores(
                         waitEvents_.IsEmpty() ? nullptr : &waitEvents_.First())
                     .setCommandBufferCount(1)
-                    .setPCommandBuffers(&static_cast<CommandBuffer*>(op.ptr)
-                                             ->Instance_())
+                    .setPCommandBuffers(
+                        &static_cast<CommandBuffer*>(op.ptr)->Instance_())
                     .setSignalSemaphoreCount(signalEvents_.Count())
                     .setPSignalSemaphores(signalEvents_.IsEmpty()
                                               ? nullptr
@@ -232,6 +232,6 @@ int Queue::FindOperationIndex(const OperationKind kind, const int startIndex) {
     return -1;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

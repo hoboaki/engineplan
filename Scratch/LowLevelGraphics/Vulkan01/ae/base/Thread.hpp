@@ -6,7 +6,8 @@
 namespace ae {
 namespace base {
 struct TimeSpanPod;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -15,14 +16,14 @@ namespace base {
 /// @addtogroup AeBase-Thread
 //@{
 /// スレッド。
-class Thread
-{
+class Thread {
 public:
     /// 指定時間スリープする。
     static void Sleep(const TimeSpanPod&);
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

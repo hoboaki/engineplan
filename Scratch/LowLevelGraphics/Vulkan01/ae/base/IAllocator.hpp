@@ -3,8 +3,8 @@
 #else
 #define AE_BASE_INCLUDED_IALLOCATOR_HPP
 
-#include <memory>
 #include <ae/base/BuiltInTypes.hpp>
+#include <memory>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -13,8 +13,7 @@ namespace base {
 /// @addtogroup AeBase-Memory
 //@{
 /// アロケータインターフェース。
-class IAllocator
-{
+class IAllocator {
 public:
     virtual ~IAllocator();
 
@@ -27,7 +26,7 @@ public:
     //@}
 
     /// @name デフォルトのアロケータ
-    //@{        
+    //@{
     /// @brief デフォルトのアロケータ。
     /// @details 初期値は OperatorNewDelete() になっています。
     static IAllocator& Default();
@@ -57,7 +56,8 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -65,8 +65,8 @@ public:
 //@{
 extern void* operator new(std::size_t, ::ae::base::IAllocator&);
 extern void* operator new[](std::size_t, ::ae::base::IAllocator&);
-extern void  operator delete(void*, ::ae::base::IAllocator&);
-extern void  operator delete[](void*, ::ae::base::IAllocator&);
+extern void operator delete(void*, ::ae::base::IAllocator&);
+extern void operator delete[](void*, ::ae::base::IAllocator&);
 //@}
 //@}
 #endif

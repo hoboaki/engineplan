@@ -56,11 +56,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
     // 各 QueueKind の作成総数とIndex表を作成
     ::ae::base::EnumKeyArray<QueueKind, int>
-        queueCountTable;  // QueueKind ごとの作成総数
+        queueCountTable; // QueueKind ごとの作成総数
     ::ae::base::RuntimeArray<int> indexInQueueKindTable(queueCreateCount,
-        &system_
-             .TempWorkAllocator_());  // 各 Queue が同じ QueueKind
-                                             // における何個目の Queue かの情報
+        &system_.TempWorkAllocator_()); // 各 Queue が同じ QueueKind
+                                        // における何個目の Queue かの情報
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto& queueCreateInfo = queueCreateInfos[queueIdx];
         indexInQueueKindTable[queueIdx] =
@@ -92,12 +91,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
     // QueueKind -> QueueFamilyIndex テーブル
     System::QueueFamilyIndexTableType_ queueFamilyIndexTable;
-    system_.QueueFamilyIndexTable_(
-        &queueFamilyIndexTable, physicalDeviceIndex);
+    system_.QueueFamilyIndexTable_(&queueFamilyIndexTable, physicalDeviceIndex);
 
     // SwapchainExtension対応
-    const auto& physicalDevice =
-        system_.PhysicalDevice_(physicalDeviceIndex);
+    const auto& physicalDevice = system_.PhysicalDevice_(physicalDeviceIndex);
     uint32_t enabledExtensionCount = 0;
     const int extensionCountMax = 64;
     const char* extensionNames[extensionCountMax] = {};
@@ -111,8 +108,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
         if (0 < deviceExtensionCount) {
             base::RuntimeArray<::vk::ExtensionProperties> deviceExtensions(
-                int(deviceExtensionCount),
-                &system_.TempWorkAllocator_());
+                int(deviceExtensionCount), &system_.TempWorkAllocator_());
             result = physicalDevice.enumerateDeviceExtensionProperties(
                 nullptr, &deviceExtensionCount, deviceExtensions.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
@@ -207,6 +203,6 @@ gfx_low::Queue& Device::Queue(const int queueIndex) const {
     return queues_[queueIndex];
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

@@ -27,16 +27,15 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , features_(createInfo.Features())
 , commandBuffer_()
 , completeEvent_(EventCreateInfo().SetDevice(&device_))
-, renderPassProperties_(createInfo.RenderPassCountMax(),
-      device_.System().ObjectAllocator_()) {
+, renderPassProperties_(
+      createInfo.RenderPassCountMax(), device_.System().ObjectAllocator_()) {
     // 今は Primary のみサポート
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
 
-    const auto allocateInfo =
-        ::vk::CommandBufferAllocateInfo()
-            .setCommandPool(queuePtr_->CommandPool_())
-            .setLevel(::vk::CommandBufferLevel::ePrimary)
-            .setCommandBufferCount(1);
+    const auto allocateInfo = ::vk::CommandBufferAllocateInfo()
+                                  .setCommandPool(queuePtr_->CommandPool_())
+                                  .setLevel(::vk::CommandBufferLevel::ePrimary)
+                                  .setCommandBufferCount(1);
 
     auto result = device_.Instance_().allocateCommandBuffers(
         &allocateInfo, &commandBuffer_);
@@ -94,8 +93,7 @@ void CommandBuffer::Reset() {
     // コマンドバッファで作った情報をリセット
     for (int i = renderPassProperties_.Count() - 1; 0 <= i; --i) {
         auto& prop = renderPassProperties_[i];
-        device_.Instance_().destroyFramebuffer(
-            prop.framebuffer, nullptr);
+        device_.Instance_().destroyFramebuffer(prop.framebuffer, nullptr);
         device_.Instance_().destroyRenderPass(prop.renderPass, nullptr);
     }
     renderPassProperties_.Clear();
@@ -122,8 +120,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             auto& attachment = attachments[i];
 
             // @todo 普通の Format での指定
-            AE_BASE_ASSERT(renderTargetSpec.NativeFormat_() !=
-                           ::vk::Format::eUndefined);
+            AE_BASE_ASSERT(
+                renderTargetSpec.NativeFormat_() != ::vk::Format::eUndefined);
             attachment.setFormat(renderTargetSpec.NativeFormat_());
 
             // その他の設定
@@ -158,7 +156,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             vk::PipelineStageFlagBits::eEarlyFragmentTests |
             vk::PipelineStageFlagBits::eLateFragmentTests;
         vk::SubpassDependency const dependencies[1] = {
-            vk::SubpassDependency()  // Image layout transition
+            vk::SubpassDependency() // Image layout transition
                 .setSrcSubpass(VK_SUBPASS_EXTERNAL)
                 .setDstSubpass(0)
                 .setSrcStageMask(
@@ -211,7 +209,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     }
     renderPassProperties_.Add(prop);
 
-    std::array<::vk::ClearValue, Device::SupportedAttachmentCountMax_> clearValues;
+    std::array<::vk::ClearValue, Device::SupportedAttachmentCountMax_>
+        clearValues;
     for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount(); ++i) {
         const auto color = info.RenderTargetSettings()[i].ClearColor();
         ::vk::ClearColorValue val;
@@ -244,6 +243,6 @@ void CommandBuffer::CmdEndRenderPass() {
     activePass_.Set(int(CommandBufferFeature::Render), false);
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

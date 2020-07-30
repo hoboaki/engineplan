@@ -16,7 +16,8 @@ namespace ae {
 namespace base {
 class Application;
 class Hid;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -25,8 +26,7 @@ namespace base {
 /// @addtogroup AeBase-System
 //@{
 // Windows環境でのDisplayの拡張。
-class Display_Ext
-{
+class Display_Ext {
 public:
     //============================================================
     enum { KEY_NUM = 256 };
@@ -38,10 +38,10 @@ public:
     HINSTANCE hinstance;
     HWND hwindow;
     WNDCLASSEX windowClass;
-    MSG  message;
+    MSG message;
     POINT minSize;
-    Placement< Screen > mainScreen;
-    Pointer< Hid > hidPtr;
+    Placement<Screen> mainScreen;
+    Pointer<Hid> hidPtr;
     Bool32 isClosed;
     KeyboardUpdateData keyboardUpdateData;
     MouseUpdateData mouseUpdateData;
@@ -50,11 +50,12 @@ public:
     Display_Ext(const DisplayContext&);
 
     //============================================================
-    void    PollEvent(Application&);
+    void PollEvent(Application&);
     LRESULT WindowProcessLocal(HWND, UINT, WPARAM, LPARAM);
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

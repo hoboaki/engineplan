@@ -54,8 +54,10 @@ public:
     /// @name 変更処理
     //@{
     /// サイズを変更。
-    /// @details 確保済配列領域を一度破棄＆再確保＆全要素デフォルトコンストラクタを呼ぶ。
-    void Resize(const int count, IAllocator* allocator = &IAllocator::Default()) {
+    /// @details
+    /// 確保済配列領域を一度破棄＆再確保＆全要素デフォルトコンストラクタを呼ぶ。
+    void Resize(
+        const int count, IAllocator* allocator = &IAllocator::Default()) {
         // まず破棄処理
         if (ptr_ != nullptr) {
             // 逆順でデストラクタを呼び出す
@@ -86,7 +88,7 @@ public:
 #pragma warning(push)
 #pragma warning(disable : 4345)
 #endif
-            new (&At(i)) ValueType();  // 初期値で初期化
+            new (&At(i)) ValueType(); // 初期値で初期化
 #if defined(AE_BASE_COMPILER_MSVC)
 #pragma warning(pop)
 #endif
@@ -106,8 +108,8 @@ public:
     /// 配列長。
     int Count() const { return count_; }
 
-    /// 0番目の要素のポインタ。 
-    ValueType* Head() { 
+    /// 0番目の要素のポインタ。
+    ValueType* Head() {
         AE_BASE_ASSERT_LESS(0, count_);
         return ptr_;
     }
@@ -122,7 +124,7 @@ public:
     ValueType& At(const int index) {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
-            return ptr_[0];  // fail safe code
+            return ptr_[0]; // fail safe code
         }
         return ptr_[index];
     }
@@ -131,7 +133,7 @@ public:
     const ValueType& At(const int index) const {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
-            return ptr_[0];  // fail safe code
+            return ptr_[0]; // fail safe code
         }
         return ptr_[index];
     }
@@ -149,14 +151,10 @@ public:
     /// @name 演算子オーバーロード
     //@{
     /// At() のエイリアス。
-    ValueType& operator[](const int index) {
-        return At(index);
-    }
+    ValueType& operator[](const int index) { return At(index); }
 
     /// At()const のエイリアス。
-    const ValueType& operator[](const int index) const {
-        return At(index);
-    } 
+    const ValueType& operator[](const int index) const { return At(index); }
     //@}
 
 private:
@@ -166,7 +164,7 @@ private:
 };
 //@}
 
-}  // namespace base
-}  // namespace ae
+} // namespace base
+} // namespace ae
 #endif
 // EOF

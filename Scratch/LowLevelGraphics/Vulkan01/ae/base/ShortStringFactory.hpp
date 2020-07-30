@@ -13,8 +13,7 @@ namespace ae {
 namespace base {
 
 // ShortStringを作る関数群。
-class ShortStringFactory
-{
+class ShortStringFactory {
 public:
     // 特殊化された関数達。
     static const ::ae::base::ShortString Create(bool val);
@@ -38,25 +37,22 @@ public:
     static const ::ae::base::ShortString Create(const char* val);
 
     // デフォルトの実装。toShortString関数を使う。
-    template< typename T, class Cond = void >
-    class Impl
-    {
+    template <typename T, class Cond = void>
+    class Impl {
     public:
-        static const ::ae::base::ShortString Create(const T& obj)
-        {
+        static const ::ae::base::ShortString Create(const T& obj) {
             return obj.ToShortString();
         }
     };
 
     // 特殊化できなかったものは、Implに委譲。
-    template< typename T >
-    static const ::ae::base::ShortString Create(const T& obj)
-    {
-        return Impl< T >::Create(obj);
+    template <typename T>
+    static const ::ae::base::ShortString Create(const T& obj) {
+        return Impl<T>::Create(obj);
     };
 };
 
-
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

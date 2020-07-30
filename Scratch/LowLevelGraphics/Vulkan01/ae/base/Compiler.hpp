@@ -10,19 +10,19 @@
 
 /// MicrosoftVisualC使用時に定義されるプリプロセッサ。
 #define AE_BASE_COMPILER_MSVC
-#undef  AE_BASE_COMPILER_MSVC
+#undef AE_BASE_COMPILER_MSVC
 
 /// GNUC使用時に定義されるプリプロセッサ。
 #define AE_BASE_COMPILER_GNUC
-#undef  AE_BASE_COMPILER_GNUC
+#undef AE_BASE_COMPILER_GNUC
 
 // 選択
 #if defined(_MSC_VER)
-    #define AE_BASE_COMPILER_MSVC
+#define AE_BASE_COMPILER_MSVC
 #elif defined(__GNUC__)
-    #define AE_BASE_COMPILER_GNUC
+#define AE_BASE_COMPILER_GNUC
 #else
-    #error Unknown Compiler.
+#error Unknown Compiler.
 #endif
 
 //@}

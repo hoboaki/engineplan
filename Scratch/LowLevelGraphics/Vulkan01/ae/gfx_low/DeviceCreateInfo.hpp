@@ -7,8 +7,8 @@ namespace ae {
 namespace gfx_low {
 class QueueCreateInfo;
 class System;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -35,7 +35,8 @@ public:
     }
     //@}
 
-    /// @name 作成する Queue 郡の情報（最低１つ以上のQueueの指定が必須、初期値：0）
+    /// @name 作成する Queue
+    /// 郡の情報（最低１つ以上のQueueの指定が必須、初期値：0）
     //@{
     int QueueCreateInfoCount() const { return queueCreateInfosCount_; }
     const QueueCreateInfo* QueueCrateInfos() const {
@@ -56,6 +57,6 @@ private:
     ::ae::base::Pointer<const QueueCreateInfo> queueCreateInfos_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

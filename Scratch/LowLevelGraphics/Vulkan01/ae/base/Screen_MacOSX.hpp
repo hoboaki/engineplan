@@ -10,8 +10,7 @@ namespace ae {
 namespace base {
 
 // MacOSX環境でのScreenの拡張。
-class Screen_Ext
-{
+class Screen_Ext {
 public:
     //============================================================
     AeG3dNSOpenGLView* glView;
@@ -21,6 +20,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

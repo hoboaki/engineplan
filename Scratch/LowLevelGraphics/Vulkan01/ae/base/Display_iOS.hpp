@@ -12,26 +12,27 @@ struct AeBaseUIWindow;
 namespace ae {
 namespace base {
 class Hid;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace base {
 
 // MacOSX環境でのDisplayの拡張。
-class Display_Ext
-{
+class Display_Ext {
 public:
     //============================================================
     AeBaseUIWindow* windowPtr;
-    Placement< Screen > mainScreen;
-    Pointer< Hid > hidPtr;
+    Placement<Screen> mainScreen;
+    Pointer<Hid> hidPtr;
 
     //============================================================
     Display_Ext(const DisplayContext&);
     ~Display_Ext();
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

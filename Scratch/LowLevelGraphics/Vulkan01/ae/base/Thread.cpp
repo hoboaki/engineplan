@@ -7,9 +7,9 @@
 #include <ae/base/TimeSpan.hpp>
 
 #if defined(AE_BASE_OS_WINDOWS)
-    #include <ae/base/SdkHeader.hpp>
+#include <ae/base/SdkHeader.hpp>
 #else
-    #include <unistd.h>
+#include <unistd.h>
 #endif
 
 //------------------------------------------------------------------------------
@@ -17,14 +17,14 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-void Thread::Sleep(const TimeSpanPod& timeSpan)
-{
+void Thread::Sleep(const TimeSpanPod& timeSpan) {
 #if defined(AE_BASE_OS_WINDOWS)
     ::Sleep(DWORD(::ae::base::Math::Max(s64(1), timeSpan.Milliseconds())));
-#else    
+#else
     Usleep(useconds_t(::ae::base::Math::Max(s64(1), timeSpan.Microseconds())));
 #endif
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

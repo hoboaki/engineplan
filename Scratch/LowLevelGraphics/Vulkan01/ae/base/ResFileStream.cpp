@@ -11,30 +11,26 @@ namespace base {
 
 //------------------------------------------------------------------------------
 ResFileStream::ResFileStream()
-: ext_()
-{
-}
+: ext_() {}
 
 //------------------------------------------------------------------------------
 ResFileStream::ResFileStream(const char* path)
-: ext_()
-{
+: ext_() {
     const bool result = Open(path);
     AE_BASE_UNUSED(result);
     AE_BASE_ASSERT_MSGFMT(result, "Can't open resource file '%s'.", path);
 }
 
 //------------------------------------------------------------------------------
-pword_t ResFileStream::RequireReadBufferAlignment()const
-{
+pword_t ResFileStream::RequireReadBufferAlignment() const {
     return ReadBufferAlignment;
 }
 
 //------------------------------------------------------------------------------
-pword_t ResFileStream::CalcReadBufferSize(const pword_t size)const
-{
+pword_t ResFileStream::CalcReadBufferSize(const pword_t size) const {
     return CalcReadBufferSize(size);
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

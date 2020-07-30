@@ -21,10 +21,10 @@ public:
     }
 
     // internal
-    ::std::array<int, static_cast<int>(QueueKind::TERM)>
-        CreatableQueueCounts_ = {};
+    ::std::array<int, static_cast<int>(QueueKind::TERM)> CreatableQueueCounts_ =
+        {};
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

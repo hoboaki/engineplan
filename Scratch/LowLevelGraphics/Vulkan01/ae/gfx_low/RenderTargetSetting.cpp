@@ -28,8 +28,7 @@ RenderTargetSetting& RenderTargetSetting::SetFinalImageResourceState(
 
 //------------------------------------------------------------------------------
 RenderTargetSetting& RenderTargetSetting::SetLoadOp(
-    const AttachmentLoadOp loadOp)
-{
+    const AttachmentLoadOp loadOp) {
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     loadOp_ = loadOp;
@@ -45,6 +44,6 @@ RenderTargetSetting& RenderTargetSetting::SetStoreOp(
     return *this;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

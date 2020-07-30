@@ -30,11 +30,10 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ = base::Math::Clamp(
             currentFrameIndex_, 0, frameProperties_.Count() - 1);
         auto currentBufferIdxUint = uint32_t();
-        auto result = device.Instance_().acquireNextImageKHR(swapchain_,
-            UINT64_MAX,
-            frameProperties_[currentFrameIndex_]
-                .AcquireEvent->Instance_(),
-            ::vk::Fence(), &currentBufferIdxUint);
+        auto result =
+            device.Instance_().acquireNextImageKHR(swapchain_, UINT64_MAX,
+                frameProperties_[currentFrameIndex_].AcquireEvent->Instance_(),
+                ::vk::Fence(), &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
     }
@@ -65,8 +64,7 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
             &swapchainMaster_->Device().System().ObjectAllocator_());
 
         base::RuntimeArray<::vk::Image> swapchainImages(
-            frameProperties_.Count(),
-            &device.System().TempWorkAllocator_());
+            frameProperties_.Count(), &device.System().TempWorkAllocator_());
         {
             const auto result = device.Instance_().getSwapchainImagesKHR(
                 swapchain_, &swapchainImageCount, swapchainImages.Head());
@@ -80,9 +78,8 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
             target.ReadyToPresentEvent.Init(
                 EventCreateInfo().SetDevice(&device));
             target.ImageResource.Init(
-                ImageResourceCreateInfo()
-                    .SetDevice(&device)
-                    .SetImagePtr_(&swapchainImages[i]));
+                ImageResourceCreateInfo().SetDevice(&device).SetImagePtr_(
+                    &swapchainImages[i]));
             target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
@@ -116,6 +113,6 @@ void Swapchain::Finalize_() {
     AE_BASE_ASSERT(!IsInitialized_());
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

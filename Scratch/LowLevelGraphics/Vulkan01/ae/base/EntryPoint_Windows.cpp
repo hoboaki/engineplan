@@ -12,31 +12,29 @@
 #include <ae/base/Unused.hpp>
 
 //------------------------------------------------------------------------------
-#pragma warning(disable: 4996)
+#pragma warning(disable : 4996)
 
 //------------------------------------------------------------------------------
 namespace {
 
-enum
-{
-    tExeFilePathLength = 260,  // Windowsのファイル名はパスを含めて最長260文字。
+enum {
+    tExeFilePathLength = 260, // Windowsのファイル名はパスを含めて最長260文字。
     tExeFileNameLength = 260,
     tExeDirPathLength = 260,
     tArgCharsLength = 8192, // WindowsXP以降のコマンドライン引数の最長。
     tArgPtrsLength = ::ae::base::Argument::ArgCountMax
 };
 
-bool  tIsConsole = false;
-char  tExeFilePath[tExeFilePathLength];
-char  tExeFileName[tExeFileNameLength];
-char  tExeDirPath[tExeDirPathLength];
+bool tIsConsole = false;
+char tExeFilePath[tExeFilePathLength];
+char tExeFileName[tExeFileNameLength];
+char tExeDirPath[tExeDirPathLength];
 int tArgCount = 0;
-char  tArgChars[tArgCharsLength];
+char tArgChars[tArgCharsLength];
 char* tArgPtrs[tArgPtrsLength];
 
 // 指定の文字の最後のindex値取得。
-int tLastIndexOf(const char ch, const char* str)
-{
+int tLastIndexOf(const char ch, const char* str) {
     AE_BASE_ASSERT_POINTER(str);
     int index = -1;
     for (int i = 0; str[i] != '\0'; ++i) {
@@ -48,8 +46,7 @@ int tLastIndexOf(const char ch, const char* str)
 }
 
 // 文字置き換え。
-void tReplaceChar(const char targetCh, const char newCh, char* str)
-{
+void tReplaceChar(const char targetCh, const char newCh, char* str) {
     AE_BASE_ASSERT_POINTER(str);
     for (int i = 0; str[i] != '\0'; ++i) {
         if (str[i] == targetCh) {
@@ -59,39 +56,36 @@ void tReplaceChar(const char targetCh, const char newCh, char* str)
 }
 
 // tExeFilePathからtExeFileName,tExeDirPathを設定する
-void tSetupExeInfo()
-{
+void tSetupExeInfo() {
     // 最後の'\'の位置
     const int dirPathLength = tLastIndexOf('\\', tExeFilePath);
     AE_BASE_ASSERT_MIN_TERM(dirPathLength, 0, int(tExeDirPathLength));
 
     // ディレクトリパス
-    ::ae::base::StringTraits< char >::NCopy(tExeDirPath, tExeDirPathLength, tExeFilePath);
+    ::ae::base::StringTraits<char>::NCopy(
+        tExeDirPath, tExeDirPathLength, tExeFilePath);
     tExeDirPath[dirPathLength] = '\0';
     tReplaceChar('\\', '/', tExeDirPath);
 
     // ファイル名
-    ::ae::base::StringTraits< char >::NCopy(tExeFileName, tExeFileNameLength, &tExeFilePath[dirPathLength + 1]);
+    ::ae::base::StringTraits<char>::NCopy(
+        tExeFileName, tExeFileNameLength, &tExeFilePath[dirPathLength + 1]);
 }
 
 // 空白文字か
-bool tIsWhiteCh(const char ch)
-{
+bool tIsWhiteCh(const char ch) {
     switch (ch) {
-        case ' ':
-        case '\t':
-        case '\r':
-        case '\n':
-            return true;
-        default:
-            break;
+    case ' ':
+    case '\t':
+    case '\r':
+    case '\n': return true;
+    default: break;
     }
     return false;
 }
 
 // tArgCharsからtArgCountとaArgPtrsを設定する。
-void tSetupArg()
-{
+void tSetupArg() {
     int index = 0;
     while (tArgChars[index] != '\0') {
         // 空白文字をスキップする
@@ -119,10 +113,7 @@ void tSetupArg()
             tArgPtrs[tArgCount] = &tArgChars[index];
 
             // 次のダブルコーテーションまで探す
-            while (tArgChars[index] != '\0'
-                && tArgChars[index] != '\"'
-                )
-            {
+            while (tArgChars[index] != '\0' && tArgChars[index] != '\"') {
                 ++index;
             }
 
@@ -130,9 +121,7 @@ void tSetupArg()
             tArgChars[index] = '\0';
             ++index;
             ++tArgCount;
-        }
-        else
-        {// 通常
+        } else { // 通常
             // 先頭ポインタ設定
             tArgPtrs[tArgCount] = &tArgChars[index];
 
@@ -150,18 +139,10 @@ void tSetupArg()
 }
 
 // main関数の共通部分。
-int tWinMainIN(
-    HINSTANCE instance,
-    int cmdShow
-    )
-{
+int tWinMainIN(HINSTANCE instance, int cmdShow) {
     // 引数の作成
     const ::ae::base::Argument arg(
-        tArgCount,
-        tArgPtrs,
-        tExeFileName,
-        tExeDirPath
-        );
+        tArgCount, tArgPtrs, tExeFileName, tExeDirPath);
     AE_BASE_UNUSED(instance);
     AE_BASE_UNUSED(cmdShow);
 
@@ -176,12 +157,7 @@ int tWinMainIN(
 
 //------------------------------------------------------------------------------
 int WINAPI WinMain(
-    HINSTANCE instance,
-    HINSTANCE prevInstance,
-    LPSTR cmdLine,
-    int cmdShow
-    )
-{
+    HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow) {
     // 実行ファイルのパス
     GetModuleFileNameA(instance, tExeFilePath, tExeFilePathLength);
     tSetupExeInfo();
@@ -189,7 +165,8 @@ int WINAPI WinMain(
     // 引数の解析
     {
         // まずコピー
-        ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength, cmdLine);
+        ::ae::base::StringTraits<char>::NCopy(
+            tArgChars, tArgCharsLength, cmdLine);
 
         // 解析開始
         tSetupArg();
@@ -208,11 +185,7 @@ int WINAPI WinMain(
 
 //------------------------------------------------------------------------------
 #if !defined(AE_BASE_FINAL)
-int Main(
-    const int argCount,
-    const char* argValues[]
-    )
-{
+int Main(const int argCount, const char* argValues[]) {
     // フラグオン
     tIsConsole = true;
 
@@ -224,17 +197,19 @@ int Main(
         const char* fullPath = argValues[0];
 
         // フルパスを設定
-        ::ae::base::StringTraits< char >::NCopy(tExeFilePath, tExeFilePathLength, fullPath);
+        ::ae::base::StringTraits<char>::NCopy(
+            tExeFilePath, tExeFilePathLength, fullPath);
 
         // セットアップ
         tSetupExeInfo();
     }
 
-    {// 引数
+    { // 引数
         int index = 0;
         for (int i = 1; i < argCount && i < tArgPtrsLength; ++i) {
-            const ::ae::base::StringTraits< char >::WriteResult result =
-                ::ae::base::StringTraits< char >::NCopy(tArgChars, tArgCharsLength - index, argValues[i]);
+            const ::ae::base::StringTraits<char>::WriteResult result =
+                ::ae::base::StringTraits<char>::NCopy(
+                    tArgChars, tArgCharsLength - index, argValues[i]);
             tArgPtrs[i] = &tArgChars[index];
             index += ::ae::base::uint(result.length + 1);
         }

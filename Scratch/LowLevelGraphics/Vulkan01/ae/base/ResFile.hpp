@@ -8,7 +8,8 @@
 namespace ae {
 namespace base {
 class AutoMemBlock;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -18,8 +19,7 @@ namespace base {
 //@{
 /// @brief アプリケーションのリソースファイルにアクセスするクラス。
 /// @see ResFileStream
-class ResFile
-{
+class ResFile {
 public:
     /// @brief 指定のファイルを読み込む。
     /// @return 読み込んだデータ。
@@ -28,10 +28,12 @@ public:
     /// @details
     /// ファイルが見つからない場合、読み込めなかった場合はエラーになります。 @n
     /// 戻り値のMemBlockのサイズは読み込んだファイルのサイズと同じです。 @n
-    static const AutoMemBlock Read(const char* path, IAllocator& allocator = IAllocator::Default());
+    static const AutoMemBlock Read(
+        const char* path, IAllocator& allocator = IAllocator::Default());
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

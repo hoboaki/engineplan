@@ -1,8 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
-#include <ae/gfx_low/QueuePriority.hpp>
 #include <ae/gfx_low/QueueKind.hpp>
+#include <ae/gfx_low/QueuePriority.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -36,7 +36,7 @@ private:
     int operationCountMax_ = 0;
 };
 
-}  // namespace gfx_low
+} // namespace gfx_low
 
-}  // namespace ae
+} // namespace ae
 // EOF

@@ -10,11 +10,10 @@ namespace base {
 //------------------------------------------------------------------------------
 namespace {
 
-Pointer< Application > tPtr;
+Pointer<Application> tPtr;
 }
 //------------------------------------------------------------------------------
-Application& Application::Instance()
-{
+Application& Application::Instance() {
     return tPtr.Ref();
 }
 
@@ -23,47 +22,41 @@ ae::base::Application::Application(const base::Argument& argument)
 : argument_(argument)
 , lastEvent_(AppEvent::INVALID)
 , displayPtr_()
-, ext_()
-{
+, ext_() {
     tPtr.Set(*this);
 }
 
 //------------------------------------------------------------------------------
-Application::~Application()
-{
+Application::~Application() {
     tPtr.Unset();
 }
 
 //------------------------------------------------------------------------------
-const Argument& Application::Argument()const
-{
+const Argument& Application::Argument() const {
     return argument_;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::ReceiveEvent()
-{
+AppEvent::EnumType Application::ReceiveEvent() {
     lastEvent_ = ReceiveEventCore();
     return lastEvent_;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::LastEvent()const
-{
+AppEvent::EnumType Application::LastEvent() const {
     return lastEvent_;
 }
 
 //------------------------------------------------------------------------------
-void Application::registerDisplay_(Display& display)
-{
+void Application::registerDisplay_(Display& display) {
     displayPtr_.Set(display);
 }
 
 //------------------------------------------------------------------------------
-void Application::unregisterDisplay_(Display& display)
-{
+void Application::unregisterDisplay_(Display& display) {
     displayPtr_.Unset(display);
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

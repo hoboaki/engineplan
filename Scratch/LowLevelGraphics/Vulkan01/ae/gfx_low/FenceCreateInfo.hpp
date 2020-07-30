@@ -7,8 +7,8 @@
 namespace ae {
 namespace gfx_low {
 class Device;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -30,6 +30,6 @@ private:
     base::Pointer<gfx_low::Device> device_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

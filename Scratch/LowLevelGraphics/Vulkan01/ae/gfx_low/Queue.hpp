@@ -14,8 +14,8 @@ class Device;
 class Event;
 class Fence;
 class Swapchain;
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -54,8 +54,9 @@ public:
     /// Swapchain で Acquire したバッファを Screen に転送要求を出す。
     /// @param swapchain PushSwapchainWait で渡した swapchain オブジェクト。
     /// @details
-    /// Present を呼んだあとは Submit() するまで PushCommandBuffer() が呼べない制約があります。
-    /// また、Present を呼ぶ前は PushSwapchainWait() を呼んでおく必要があります。
+    /// Present を呼んだあとは Submit() するまで PushCommandBuffer()
+    /// が呼べない制約があります。 また、Present を呼ぶ前は PushSwapchainWait()
+    /// を呼んでおく必要があります。
     Queue& PushSwapchainPresent(Swapchain* swapchain);
     //@}
 
@@ -73,7 +74,8 @@ public:
     /// @name 送信
     //@{
     /// 追加済の全操作を GPU に送信する。
-    /// @param fencePtr 全操作が終了したときに Signal が送信される Fence オブジェクト。nullptr を指定した場合は何もしない。
+    /// @param fencePtr 全操作が終了したときに Signal が送信される Fence
+    /// オブジェクト。nullptr を指定した場合は何もしない。
     void Submit(Fence* fencePtr);
     //@}
 
@@ -91,8 +93,7 @@ public:
     //@}
 
 private:
-    enum class OperationKind
-    {
+    enum class OperationKind {
         NoOperation,
         SwapchainWait,
         SwapchainPresent,
@@ -102,13 +103,13 @@ private:
         TERM,
     };
 
-    struct Operation
-    {
+    struct Operation {
         OperationKind kind;
         void* ptr;
     };
 
-    /// 指定の Kind の操作が詰まれている最初のインデックスを取得する。見つからない場合は負の値を返す。
+    /// 指定の Kind
+    /// の操作が詰まれている最初のインデックスを取得する。見つからない場合は負の値を返す。
     int FindOperationIndex(OperationKind kind, int startIndex = 0);
 
     gfx_low::Device& device_;
@@ -120,6 +121,6 @@ private:
     ::vk::CommandPool commandPool_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

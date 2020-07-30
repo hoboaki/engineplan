@@ -9,13 +9,14 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-RenderTargetSpecInfo& RenderTargetSpecInfo::SetFormat(const gfx_low::Format format) {
+RenderTargetSpecInfo& RenderTargetSpecInfo::SetFormat(
+    const gfx_low::Format format) {
     AE_BASE_ASSERT_ENUM(format, Format);
     AE_BASE_ASSERT(format != gfx_low::Format::Invalid);
     format_ = format;
     return *this;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

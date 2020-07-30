@@ -10,22 +10,20 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-const AutoMemBlock ResFile::Read(
-    const char* path,
-    IAllocator& allocator
-    )
-{
+const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator) {
     // オープン
     ResFileStream stream;
     if (!stream.Open(path)) {
-        AE_BASE_ASSERT_NOT_REACHED_MSGFMT("ResFile named '%s' is failed to open.", path);
+        AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
+            "ResFile named '%s' is failed to open.", path);
         return AutoMemBlock();
     }
 
     // メモリ準備
     const pword_t size = stream.Seek(0, ::ae::base::SeekOrigin::End);
     const pword_t bufferSize = stream.CalcReadBufferSize(size);
-    ptr_t ptr = allocator.Alloc(bufferSize, stream.RequireReadBufferAlignment());
+    ptr_t ptr =
+        allocator.Alloc(bufferSize, stream.RequireReadBufferAlignment());
     if (ptr == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return AutoMemBlock();
@@ -40,5 +38,6 @@ const AutoMemBlock ResFile::Read(
     return AutoMemBlock(MemBlock(ptr, size), allocator);
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

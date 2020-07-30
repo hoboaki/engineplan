@@ -14,7 +14,7 @@ namespace ae {
 namespace gfx_low {
 class SwapchainMaster;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -44,8 +44,7 @@ public:
     }
 
     /// RenderTarget 仕様情報。
-    gfx_low::RenderTargetSpecInfo RenderTargetSpecInfo() const
-    {
+    gfx_low::RenderTargetSpecInfo RenderTargetSpecInfo() const {
         return renderTargetSpecInfo_;
     }
     //@}
@@ -55,7 +54,8 @@ public:
     /// 新しいバックバッファの要求をする。
     /// @details
     /// この関数が呼ばれるとアクティブなバックバッファが新しいものに切り替わります。
-    /// 本関数を呼んだあと、Queue::PushSwapchainWait() を必ず呼ぶようにしてください。
+    /// 本関数を呼んだあと、Queue::PushSwapchainWait()
+    /// を必ず呼ぶようにしてください。
     void AcquireNextImage();
 
     /// アクティブなバックバッファを指す RenderTargetImageView を取得。
@@ -71,8 +71,8 @@ public:
 
     /// 初期化。
     void Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
-        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
-        ::vk::Format imageFormat);
+        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId,
+        int minImageCount, ::vk::Format imageFormat);
 
     /// 後始末。
     void Finalize_();
@@ -127,6 +127,6 @@ private:
     int currentFrameIndex_ = int(); // 初期化直後は負の値が入っている
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

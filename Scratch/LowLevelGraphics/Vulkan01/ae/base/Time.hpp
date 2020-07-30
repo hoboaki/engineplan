@@ -10,7 +10,8 @@ namespace ae {
 namespace base {
 struct CalendarPod;
 struct TimeSpanPod;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -19,21 +20,23 @@ namespace base {
 /// @addtogroup AeBase-DateTime
 //@{
 /// @brief 時間を扱う構造体。
-/// @details 
+/// @details
 /// 最小単位(1チック)は100ナノ秒です。@n
 /// 0初期化時は0001/01/01 00:00:00.000.000.0を表します。@n
 /// 9999/12/31 23:59:59.999.999.9までサポートされています。@n
-/// 加算・減算に関してオーバーフロー対策は何もしていないためオーバーフローしてもエラーにはなりません。 @n
-struct TimePod
-{
+/// 加算・減算に関してオーバーフロー対策は何もしていないためオーバーフローしてもエラーにはなりません。
+/// @n
+struct TimePod {
     /// @brief 地域補正された現在時刻を取得する。
     /// @return 地域補正された現在時刻。
-    /// @details マイクロ秒まで扱えるようにしてありますが環境によってはそこまで精度が出ない場合があります。
+    /// @details
+    /// マイクロ秒まで扱えるようにしてありますが環境によってはそこまで精度が出ない場合があります。
     static const TimePod LocalTime();
 
     /// @brief 世界標準の現在時刻を取得する。
     /// @return 世界標準の現在時刻。
-    /// @details マイクロ秒まで扱えるようにしてありますが環境によってはそこまで精度が出ない場合があります。
+    /// @details
+    /// マイクロ秒まで扱えるようにしてありますが環境によってはそこまで精度が出ない場合があります。
     static const TimePod UniversalTime();
 
     /// @brief 指定の日時から作成する。
@@ -48,25 +51,18 @@ struct TimePod
     /// @param usec マイクロ秒。値の意味は Calendar::usec と同じ。
     /// @details
     /// ナノ秒以下は0として作成します。
-    static const TimePod FromDate(
-        int year
-        , int month
-        , int dayOfMonth
-        , int hour
-        , int min
-        , int sec
-        , int msec
-        , int usec
-    );
+    static const TimePod FromDate(int year, int month, int dayOfMonth, int hour,
+        int min, int sec, int msec, int usec);
 
-/// カレンダー情報を作成する。
-    const CalendarPod ToCalendar()const;
+    /// カレンダー情報を作成する。
+    const CalendarPod ToCalendar() const;
 
     /// @brief 加算された時間を取得する。
     /// @param timeSpan 加算する時間。
     /// @return 求められた時間。
-    const TimePod Add(const TimeSpanPod& timeSpan)const;
-    const TimePod operator+(const TimeSpanPod& timeSpan)const; ///< @copydoc add
+    const TimePod Add(const TimeSpanPod& timeSpan) const;
+    const TimePod operator+(
+        const TimeSpanPod& timeSpan) const; ///< @copydoc add
 
     /// @brief 時間を加算する。
     /// @return 加算された自分自身の参照。
@@ -77,8 +73,9 @@ struct TimePod
     /// @brief 減算された時間を取得する。
     /// @param timeSpan 減算する時間。
     /// @return 求められた時間。
-    const TimePod Sub(const TimeSpanPod& timeSpan)const;
-    const TimePod operator-(const TimeSpanPod& timeSpan)const; ///< @copydoc sub
+    const TimePod Sub(const TimeSpanPod& timeSpan) const;
+    const TimePod operator-(
+        const TimeSpanPod& timeSpan) const; ///< @copydoc sub
 
     /// @brief 時間を減算する。
     /// @return 減算された自分自身の参照。
@@ -87,7 +84,7 @@ struct TimePod
     TimePod& operator-=(const TimeSpanPod& timeSpan); ///< @copydoc subAssign
 
     /// チック値(1チック100ナノ秒)を取得する。
-    s64 Ticks()const;
+    s64 Ticks() const;
 
     // 値。直接アクセスすることは想定していない。
     // 実質使えるのは0 <= val <= S64::MaxValue()まで。
@@ -95,9 +92,10 @@ struct TimePod
 };
 
 /// TimePod のクラス版。
-typedef PodInheritClass< TimePod > Time;
+typedef PodInheritClass<TimePod> Time;
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

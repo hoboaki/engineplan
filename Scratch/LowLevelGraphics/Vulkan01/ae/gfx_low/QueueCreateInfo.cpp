@@ -25,13 +25,13 @@ QueueCreateInfo& QueueCreateInfo::SetPriority(const QueuePriority priority) {
 }
 
 //------------------------------------------------------------------------------
-QueueCreateInfo& QueueCreateInfo::SetOperationCountMax(const int operationCountMax)
-{
+QueueCreateInfo& QueueCreateInfo::SetOperationCountMax(
+    const int operationCountMax) {
     AE_BASE_ASSERT_LESS_EQUALS(0, operationCountMax);
     operationCountMax_ = operationCountMax;
     return *this;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

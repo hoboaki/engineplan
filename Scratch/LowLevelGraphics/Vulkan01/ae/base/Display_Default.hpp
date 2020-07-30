@@ -10,13 +10,13 @@ namespace ae {
 namespace base {
 
 // デフォルト環境でのDisplayの拡張。
-class Display_Ext
-{
+class Display_Ext {
 public:
     //============================================================
     Display_Ext(const DisplayContext&) {}
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

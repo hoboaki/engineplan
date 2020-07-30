@@ -10,8 +10,8 @@
 #include <ae/base/Screen.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
-#include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
+#include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 
@@ -24,8 +24,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 : device_(::ae::base::PtrToRef(createInfo.Device()))
 , screen_(base::PtrToRef(createInfo.Screen()))
 , surface_()
-, swapchains_(createInfo.SwapchainCountMax(),
-      &device_.System().ObjectAllocator_()) {
+, swapchains_(
+      createInfo.SwapchainCountMax(), &device_.System().ObjectAllocator_()) {
     // surface 作成
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
     {
@@ -51,13 +51,15 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 
     // PhysicalDevice の SurfacePresent 対応確認
     {
-        auto pd = device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
+        auto pd =
+            device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
         uint32_t queueFamilyCount = 0;
-        pd.getQueueFamilyProperties(
-            &queueFamilyCount, static_cast<::vk::QueueFamilyProperties*>(nullptr));
+        pd.getQueueFamilyProperties(&queueFamilyCount,
+            static_cast<::vk::QueueFamilyProperties*>(nullptr));
         AE_BASE_ASSERT_LESS_EQUALS(1, queueFamilyCount);
         ::vk::Bool32 isSupported = false;
-        for (uint32_t i = 0; i < queueFamilyCount && isSupported == VK_FALSE; ++i) {
+        for (uint32_t i = 0; i < queueFamilyCount && isSupported == VK_FALSE;
+             ++i) {
             pd.getSurfaceSupportKHR(i, surface_, &isSupported);
         }
         AE_BASE_ASSERT(isSupported == VK_TRUE);
@@ -106,13 +108,13 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 
     // サーフェスの対応フォーマットを取得
     uint32_t surfFormatCount = uint32_t();
-    auto result = physicalDevice.getSurfaceFormatsKHR(
-        surface_, &surfFormatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
+    auto result = physicalDevice.getSurfaceFormatsKHR(surface_,
+        &surfFormatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
         int(surfFormatCount), &device_.System().TempWorkAllocator_());
     result = physicalDevice.getSurfaceFormatsKHR(
-         surface_, &surfFormatCount, surfFormats.Head());
+        surface_, &surfFormatCount, surfFormats.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     // サーフェスが対応するフォーマットを選択
@@ -131,8 +133,8 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         };
         const ::vk::Format* findFormats =
             createInfo.IsSrgbFormat() ? srgbFormats : linearFormats;
-        for (int surfFmtIdx = 0;
-             surfFmtIdx < int(surfFormatCount) && format == ::vk::Format::eUndefined;
+        for (int surfFmtIdx = 0; surfFmtIdx < int(surfFormatCount) &&
+                                 format == ::vk::Format::eUndefined;
              ++surfFmtIdx) {
             const auto& surfFormat = surfFormats[surfFmtIdx];
             for (int fmtIdx = 0;
@@ -169,7 +171,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     swapchainExtent.width = screen_.Width();
     swapchainExtent.height = screen_.Height();
     // width and height are either both -1, or both not -1.
-    //if (surfCapabilities.currentExtent.width == (uint32_t)-1) {
+    // if (surfCapabilities.currentExtent.width == (uint32_t)-1) {
     //    // If the surface size is undefined, the size is set to
     //    // the size of the images requested.
     //    swapchainExtent.width = width;
@@ -301,7 +303,8 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
         DestroySwapchainInstance(oldSwapchainInstance);
     }
 
-    entity->Initialize_(this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
+    entity->Initialize_(
+        this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
 
     return SwapchainHandle(entity);
 }
@@ -346,6 +349,6 @@ void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance) {
     device_.Instance_().destroySwapchainKHR(instance);
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

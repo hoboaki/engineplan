@@ -21,8 +21,7 @@ public:
     Pointer()
     : ptr_(0) {}
     Pointer(T* obj)
-    : ptr_(obj) {
-    }
+    : ptr_(obj) {}
     Pointer(T& obj)
     : ptr_(0) {
         Set(obj);
@@ -83,11 +82,11 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    T* operator->() const { return Get(); }  ///< Get()のエイリアス。
-    T& operator*() const { return Ref(); }   ///< Ref()のエイリアス。
+    T* operator->() const { return Get(); } ///< Get()のエイリアス。
+    T& operator*() const { return Ref(); } ///< Ref()のエイリアス。
     bool operator==(const Pointer<T>& rHS) const {
         return Equals(rHS);
-    }  ///> Equals()のエイリアス。
+    } ///> Equals()のエイリアス。
     //@}
 
 private:
@@ -95,6 +94,6 @@ private:
 };
 //@}
 
-}  // namespace base
-}  // namespace ae
+} // namespace base
+} // namespace ae
 // EOF

@@ -5,7 +5,7 @@
 #include <ae/base/SdkHeader.hpp>
 
 #if defined(AE_BASE_OS_MACOSX)
-    #include <ae_mac_os/AeBaseNSScreen.h>
+#include <ae_mac_os/AeBaseNSScreen.h>
 #endif
 
 //------------------------------------------------------------------------------
@@ -16,11 +16,7 @@ namespace base {
 //------------------------------------------------------------------------------
 namespace {
 
-enum
-{
-    tDefaultWidth = 1280,
-    tDefaultHeight = 720
-};
+enum { tDefaultWidth = 1280, tDefaultHeight = 720 };
 
 }
 
@@ -30,15 +26,13 @@ DisplayContext::DisplayContext()
 , locationY_(0)
 , width_(tDefaultWidth)
 , height_(tDefaultHeight)
-, isScreenDoubleBuffer_(true)
-{
+, isScreenDoubleBuffer_(true) {
     // センタリング
     SetLocationToCenter();
 }
 
 //------------------------------------------------------------------------------
-void DisplayContext::SetLocationToCenter()
-{
+void DisplayContext::SetLocationToCenter() {
 #if defined(AE_BASE_OS_WINDOWS)
     // 情報取得
     HWND hwnd = GetDesktopWindow();
@@ -70,43 +64,37 @@ void DisplayContext::SetLocationToCenter()
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::LocationX()const
-{
+int DisplayContext::LocationX() const {
     return locationX_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::LocationY()const
-{
+int DisplayContext::LocationY() const {
     return locationY_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::Width()const
-{
+int DisplayContext::Width() const {
     return width_;
 }
 
 //------------------------------------------------------------------------------
-int DisplayContext::Height()const
-{
+int DisplayContext::Height() const {
     return height_;
 }
 
 //------------------------------------------------------------------------------
-bool DisplayContext::IsScreenDoubleBuffer()const
-{
+bool DisplayContext::IsScreenDoubleBuffer() const {
     return true;
 }
 
 //------------------------------------------------------------------------------
 #else // end of WindowSystem
 //------------------------------------------------------------------------------
-DisplayContext::DisplayContext()
-{
-}
+DisplayContext::DisplayContext() {}
 
 //------------------------------------------------------------------------------
 #endif // end of other OS
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

@@ -14,8 +14,7 @@ namespace base {
 /// @brief 乱数。
 /// @details
 /// アルゴリズムはxorshiftを採用しています。
-class Random
-{
+class Random {
 public:
     /// @name コンストラクタ
     //@{
@@ -42,6 +41,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -14,6 +14,6 @@ T& PtrToRef(T* ptr) {
     return *ptr;
 }
 
-}  // namespace base
-}  // namespace ae
+} // namespace base
+} // namespace ae
 // EOF

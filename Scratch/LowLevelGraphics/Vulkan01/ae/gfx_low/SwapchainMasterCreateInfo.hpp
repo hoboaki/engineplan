@@ -8,12 +8,12 @@ namespace ae {
 namespace base {
 class Screen;
 }
-}
+} // namespace ae
 namespace ae {
 namespace gfx_low {
 class Device;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -31,7 +31,8 @@ public:
     }
     //@}
 
-    /// @name 作成可能な Swapchain の最大作成数（設定可能な値：1以上、初期値：1）
+    /// @name 作成可能な Swapchain
+    /// の最大作成数（設定可能な値：1以上、初期値：1）
     //@{
     int SwapchainCountMax() const { return swapchainCountMax_; }
     SwapchainMasterCreateInfo& SetSwapchainCountMax(int count);
@@ -42,7 +43,7 @@ public:
     void* ExtInfoPtr() { return extInfoPtr_; }
     SwapchainMasterCreateInfo& SetExtInfoPtr(void* ptr) { extInfoPtr_ = ptr; }
     //@}
-    
+
     /// @name 対象 Surface を持つ Screen（設定必須、初期値：nullptr）
     //@{
     base::Screen* Screen() const { return screen_.Get(); }
@@ -66,6 +67,6 @@ private:
     int swapchainCountMax_ = 1;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

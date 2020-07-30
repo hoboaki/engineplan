@@ -11,8 +11,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class Queue;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -24,7 +24,7 @@ public:
     /// 属する Device。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
 
-    /// Device() の設定。（設定必須） 
+    /// Device() の設定。（設定必須）
     CommandBufferCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
@@ -42,16 +42,15 @@ public:
     /// CommandBuffer の階層レベル。（初期値：Primary）
     CommandBufferLevel Level() const { return level_; }
 
-    /// Level() の設定。 
+    /// Level() の設定。
     CommandBufferCreateInfo& SetLevel(CommandBufferLevel level);
 
     /// サポートする機能郡（初期値：全ビットtrue）
     CommandBufferFeatureBitSet Features() const { return features_; }
 
-    /// Features() の設定。 
+    /// Features() の設定。
     CommandBufferCreateInfo& SetFeatures(
-        const CommandBufferFeatureBitSet& features)
-    {
+        const CommandBufferFeatureBitSet& features) {
         features_ = features;
         return *this;
     }
@@ -71,6 +70,6 @@ private:
     int renderPassCountMax_ = 0;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

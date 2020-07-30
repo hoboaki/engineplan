@@ -7,7 +7,7 @@ namespace ae {
 namespace gfx_low {
 class SwapchainMaster;
 }
-}  // namespace ae
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -21,17 +21,17 @@ namespace gfx_low {
 /// Swapchain 作成時に　ImageCount は 2 に繰り上げられます。
 class SwapchainCreateInfo {
 public:
-    /// @name スワップチェインが抱えるイメージの枚数（設定できる値:1以上、初期値：2）
+    /// @name
+    /// スワップチェインが抱えるイメージの枚数（設定できる値:1以上、初期値：2）
     //@{
-    int ImageCount() const { return imageCount_;  }
+    int ImageCount() const { return imageCount_; }
     SwapchainCreateInfo& SetImageCount(int imageCount);
     //@}
 
     /// @name イメージを sRGB フォーマットにするか（初期値：false）
     //@{
     bool IsSrgbFormat() const { return isSrgbFormat_; }
-    SwapchainCreateInfo& SetIsSrgbFormat(bool isSrgbFormat)
-    {
+    SwapchainCreateInfo& SetIsSrgbFormat(bool isSrgbFormat) {
         isSrgbFormat_ = isSrgbFormat;
         return *this;
     }
@@ -43,6 +43,6 @@ private:
     bool isSrgbFormat_ = false;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

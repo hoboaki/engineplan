@@ -12,8 +12,7 @@ namespace base {
 /// @addtogroup AeBase-Util
 //@{
 /// フレームカウンター。
-class FrameCounter
-{
+class FrameCounter {
 public:
     /// @name コンストラクタ
     //@{
@@ -43,12 +42,12 @@ public:
 
     /// @name 取得
     //@{
-    int  Frame()const; ///< 現在のフレーム数。
-    int  TotalFrame()const; ///< 総フレーム数。
-    bool  IsEnd()const;     ///< 現在のフレームが総フレームに達しているか。
-    bool  IsCounting()const; ///< 現在のフレームが総フレームに達していないか。
-    float RateFrame()const; ///< 0.0f <= 1.0f の範囲に正規化されたフレーム。
-    float InvRateFrame()const; ///< 1.0f - RateFrame()。
+    int Frame() const; ///< 現在のフレーム数。
+    int TotalFrame() const; ///< 総フレーム数。
+    bool IsEnd() const; ///< 現在のフレームが総フレームに達しているか。
+    bool IsCounting() const; ///< 現在のフレームが総フレームに達していないか。
+    float RateFrame() const; ///< 0.0f <= 1.0f の範囲に正規化されたフレーム。
+    float InvRateFrame() const; ///< 1.0f - RateFrame()。
     //@}
 
 private:
@@ -57,6 +56,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -8,8 +8,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class ImageResource;
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -29,8 +29,11 @@ public:
 
     /// @name 対象となる ImageResource のポインタ（設定必須、初期値：nullptr）
     //@{
-    gfx_low::ImageResource* ImageResource() const { return imageResource_.Get(); }
-    RenderTargetImageViewCreateInfo& SetImageResource(gfx_low::ImageResource* system) {
+    gfx_low::ImageResource* ImageResource() const {
+        return imageResource_.Get();
+    }
+    RenderTargetImageViewCreateInfo& SetImageResource(
+        gfx_low::ImageResource* system) {
         imageResource_.Reset(system);
         return *this;
     }
@@ -38,7 +41,8 @@ public:
 
     /// @name 内部処理用関数群
     //@{
-    /// Vulkan ライブラリのフォーマット。こちらが指定されている場合は Format() よりも優先して使う。
+    /// Vulkan ライブラリのフォーマット。こちらが指定されている場合は Format()
+    /// よりも優先して使う。
     ::vk::Format RawFormat_() const { return rawFormat_; }
     RenderTargetImageViewCreateInfo& SetRawFormat_(::vk::Format rawFormat) {
         rawFormat_ = rawFormat;
@@ -52,6 +56,6 @@ private:
     ::vk::Format rawFormat_ = ::vk::Format::eUndefined;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

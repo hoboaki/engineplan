@@ -18,11 +18,13 @@
 
 /// @brief minVal <= val < termVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_MIN_TERM(minVal, val, termVal) (minVal <= val && val < termVal)
+#define AE_BASE_VALUE_IN_RANGE_MIN_TERM(minVal, val, termVal) \
+    (minVal <= val && val < termVal)
 
 /// @brief minVal <= val <= maxVal な値か調べる。
 /// @return 条件に当てはまればtrueを返し、そうでなければfalseを返す。
-#define AE_BASE_VALUE_IN_RANGE_MIN_MAX(minVal, val, maxVal) (minVal <= val && val <= maxVal)
+#define AE_BASE_VALUE_IN_RANGE_MIN_MAX(minVal, val, maxVal) \
+    (minVal <= val && val <= maxVal)
 
 //@}
 //@}

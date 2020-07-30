@@ -18,8 +18,7 @@ namespace base {
 /// キーボードのコピーをアプリケーションが持つことによって
 /// 「ポーズ中はキー情報を更新しないキーボード」といった
 /// 特殊なキーボードを作成することができます。
-class Keyboard
-{
+class Keyboard {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
@@ -33,25 +32,26 @@ public:
     void Update(const KeyboardUpdateData& data);
 
     /// 前回の更新データを取得する。
-    const KeyboardUpdateData LastUpdateData()const;
+    const KeyboardUpdateData LastUpdateData() const;
     //@}
 
     /// @name 状態取得
     //@{
-    bool IsHold(KeyKind::EnumType kind)const;    ///< 押されているか。
-    bool IsTrigger(KeyKind::EnumType kind)const; ///< 押された瞬間か。
-    bool IsRepeat(KeyKind::EnumType kind)const;  ///< 押しっぱなしの状態で入力が入ったか。
-    bool IsPulse(KeyKind::EnumType kind)const;   ///< IsTrigger() || IsRepeat()。
-    bool IsRelease(KeyKind::EnumType kind)const; ///< 離された瞬間か。
+    bool IsHold(KeyKind::EnumType kind) const; ///< 押されているか。
+    bool IsTrigger(KeyKind::EnumType kind) const; ///< 押された瞬間か。
+    bool IsRepeat(
+        KeyKind::EnumType kind) const; ///< 押しっぱなしの状態で入力が入ったか。
+    bool IsPulse(KeyKind::EnumType kind) const; ///< IsTrigger() || IsRepeat()。
+    bool IsRelease(KeyKind::EnumType kind) const; ///< 離された瞬間か。
     //@}
 
     /// @name ビットセット取得
     //@{
-    const KeyBitSet Hold()const;    ///< IsHold() のビットセット。
-    const KeyBitSet Trigger()const; ///< IsTrigger() のビットセット。
-    const KeyBitSet Repeat()const;  ///< IsRepeat() のビットセット。
-    const KeyBitSet Pulse()const;   ///< IsPulse() のビットセット。
-    const KeyBitSet Release()const; ///< IsRelease() のビットセット。
+    const KeyBitSet Hold() const; ///< IsHold() のビットセット。
+    const KeyBitSet Trigger() const; ///< IsTrigger() のビットセット。
+    const KeyBitSet Repeat() const; ///< IsRepeat() のビットセット。
+    const KeyBitSet Pulse() const; ///< IsPulse() のビットセット。
+    const KeyBitSet Release() const; ///< IsRelease() のビットセット。
     //@}
 
 private:
@@ -63,6 +63,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

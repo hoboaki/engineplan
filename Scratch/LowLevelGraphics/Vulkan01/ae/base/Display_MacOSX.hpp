@@ -14,15 +14,15 @@ struct AeBaseNSWindow;
 namespace ae {
 namespace base {
 class Hid;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace base {
 
 // MacOSX環境でのDisplayの拡張。
-class Display_Ext
-{
+class Display_Ext {
 public:
     //============================================================
     static void CBKeyEvent(void* eXT, int unicode, int isDown);
@@ -31,8 +31,8 @@ public:
 
     //============================================================
     AeBaseNSWindow* windowPtr;
-    Placement< Screen > mainScreen;
-    Pointer< Hid > hidPtr;
+    Placement<Screen> mainScreen;
+    Pointer<Hid> hidPtr;
     int isClosed;
     KeyboardUpdateData keyboardUpdateData;
     MouseUpdateData mouseUpdateData;
@@ -42,6 +42,7 @@ public:
     ~Display_Ext();
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

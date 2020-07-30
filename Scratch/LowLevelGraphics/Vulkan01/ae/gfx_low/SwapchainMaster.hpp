@@ -10,15 +10,15 @@ namespace ae {
 namespace base {
 class Screen;
 }
-}  // namespace ae
+} // namespace ae
 namespace ae {
 namespace gfx_low {
 class Device;
 class SwapchainCreateInfo;
 class Swapchain;
 class SwapchainMasterCreateInfo;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -50,9 +50,11 @@ public:
     //@{
     /// Swapchain を作成。
     /// @param oldSwapchain 新規作成する Swapchain に Present
-    /// 情報などを引き継ぎつつ破棄をする Swapchain。無効なハンドルを渡した場合、引き継ぎなどは行わない。
-    /// @details 
-    /// oldSwapchain はこの関数呼び出し後 IsValid() == false となり使えなくなります。
+    /// 情報などを引き継ぎつつ破棄をする
+    /// Swapchain。無効なハンドルを渡した場合、引き継ぎなどは行わない。
+    /// @details
+    /// oldSwapchain はこの関数呼び出し後 IsValid() == false
+    /// となり使えなくなります。
     SwapchainHandle CreateSwapchain(const SwapchainCreateInfo& createInfo,
         const SwapchainHandle& oldSwapchain = SwapchainHandle());
 
@@ -76,6 +78,6 @@ private:
     uint32_t lastAcquireUniqueId_ = 0;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

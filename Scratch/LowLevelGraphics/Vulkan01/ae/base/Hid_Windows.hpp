@@ -12,12 +12,13 @@ namespace ae {
 namespace base {
 
 // WindowsのHid拡張。
-class Hid_Ext : Noncopyable <Hid_Ext> {
+class Hid_Ext : Noncopyable<Hid_Ext> {
 public:
     Keyboard keyboard;
     Mouse mouse;
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

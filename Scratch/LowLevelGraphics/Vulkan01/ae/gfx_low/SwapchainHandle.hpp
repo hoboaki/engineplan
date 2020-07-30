@@ -8,8 +8,8 @@ namespace ae {
 namespace gfx_low {
 class Swapchain;
 class SwapchainMaster;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -20,8 +20,9 @@ namespace gfx_low {
 /// Swapchain 本体は SwapchainMaster が管理します。
 /// ユーザーは SwapchainMaster で生成した SwapchainHandle に対して操作を行い、
 /// 不要になったら SwapchainMaster に対して破棄要求を行います。
-/// 
-/// IsValid() == false なハンドルで各APIにアクセスした場合、アサーションエラーが発生します。
+///
+/// IsValid() == false
+/// なハンドルで各APIにアクセスした場合、アサーションエラーが発生します。
 class SwapchainHandle {
 public:
     /// @name コンストラクタ
@@ -63,6 +64,6 @@ private:
     uint32_t entityUniqueId_ = 0;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

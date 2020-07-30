@@ -8,8 +8,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class ImageResourceCreateInfo;
-}
-}
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -20,8 +20,7 @@ namespace gfx_low {
 /// イメージリソースはイメージのメモリ領域にまつわる機能を提供します。
 /// イメージリソースを GPU から識別できるようにするには
 /// 追加で ImageView や RenderTargetImageView 等のオブジェクトが必要です。
-class ImageResource
-{
+class ImageResource {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
@@ -45,6 +44,6 @@ private:
     ::vk::Image image_;
 };
 
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

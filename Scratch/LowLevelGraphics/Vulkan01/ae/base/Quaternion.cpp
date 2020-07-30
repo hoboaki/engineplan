@@ -19,32 +19,23 @@ Quaternion::Quaternion()
 : x(0)
 , y(0)
 , z(0)
-, w(1.0f)
-{
-}
+, w(1.0f) {}
 
 //------------------------------------------------------------------------------
 Quaternion::Quaternion(const f32 x, const f32 y, const f32 z, const f32 w)
 : x(x)
 , y(y)
 , z(z)
-, w(w)
-{
-}
+, w(w) {}
 
 //------------------------------------------------------------------------------
-Quaternion::Quaternion(
-    const Vector3Pod& axis,
-    const Angle& angle
-    )
+Quaternion::Quaternion(const Vector3Pod& axis, const Angle& angle)
 : x()
 , y()
 , z()
-, w()
-{
-    const Vector3 normalizedAxis = axis.IsZeroStrict()
-        ? Vector3()
-        : axis.Unit();
+, w() {
+    const Vector3 normalizedAxis =
+        axis.IsZeroStrict() ? Vector3() : axis.Unit();
     const Radian halfAngle = angle.Rad() * 0.5f;
     const f32 cosHalfAngle = Math::CosF32(halfAngle);
     const f32 sinHalfAngle = Math::SinF32(halfAngle);
@@ -55,36 +46,32 @@ Quaternion::Quaternion(
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::Mul(const Quaternion& rhs)const
-{
+const Quaternion Quaternion::Mul(const Quaternion& rhs) const {
     Quaternion quat(*this);
     quat.MulAssign(rhs);
     return quat;
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::MulAssign(const Quaternion& rhs)
-{
+Quaternion& Quaternion::MulAssign(const Quaternion& rhs) {
     const Quaternion& lhs = *this;
     *this = Quaternion(
-        lhs.w*rhs.x + lhs.x*rhs.w + lhs.y*rhs.z - lhs.z*rhs.y,
-        lhs.w*rhs.y - lhs.x*rhs.z + lhs.y*rhs.w + lhs.z*rhs.x,
-        lhs.w*rhs.z + lhs.x*rhs.y - lhs.y*rhs.x + lhs.z*rhs.w,
-        lhs.w*rhs.w - lhs.x*rhs.x - lhs.y*rhs.y - lhs.z*rhs.z
-        );
+        lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y,
+        lhs.w * rhs.y - lhs.x * rhs.z + lhs.y * rhs.w + lhs.z * rhs.x,
+        lhs.w * rhs.z + lhs.x * rhs.y - lhs.y * rhs.x + lhs.z * rhs.w,
+        lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod Quaternion::ToRotateMatrix()const
-{
-    const f32 lenSrc = Math::SqrtF32(w*w + x*x + y*y + z*z);
+const Matrix34Pod Quaternion::ToRotateMatrix() const {
+    const f32 lenSrc = Math::SqrtF32(w * w + x * x + y * y + z * z);
     if (lenSrc == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
         return Matrix34::Identity();
     }
 
-    const f32 len = 2.0f / (lenSrc*lenSrc);
+    const f32 len = 2.0f / (lenSrc * lenSrc);
     const f32 x2 = x * x * len;
     const f32 y2 = y * y * len;
     const f32 z2 = z * z * len;
@@ -109,29 +96,23 @@ const Matrix34Pod Quaternion::ToRotateMatrix()const
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::operator*(const Quaternion& rhs)const
-{
+const Quaternion Quaternion::operator*(const Quaternion& rhs) const {
     return Mul(rhs);
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::operator*=(const Quaternion& rhs)
-{
+Quaternion& Quaternion::operator*=(const Quaternion& rhs) {
     MulAssign(rhs);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Quaternion::ToShortString()const
-{
-    return ::ae::base::ShortString::FromFormat(
-        "%s,%s,%s,%s",
-        F32(x).ToShortString().ReadPtr(),
-        F32(y).ToShortString().ReadPtr(),
-        F32(z).ToShortString().ReadPtr(),
-        F32(w).ToShortString().ReadPtr()
-        );
+const ::ae::base::ShortString Quaternion::ToShortString() const {
+    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
+        F32(x).ToShortString().ReadPtr(), F32(y).ToShortString().ReadPtr(),
+        F32(z).ToShortString().ReadPtr(), F32(w).ToShortString().ReadPtr());
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

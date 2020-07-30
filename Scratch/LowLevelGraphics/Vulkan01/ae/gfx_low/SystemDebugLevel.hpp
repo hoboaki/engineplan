@@ -19,6 +19,6 @@ enum class SystemDebugLevel {
     TERM,
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

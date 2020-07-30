@@ -14,15 +14,18 @@ namespace base {
 /// @return bool値。範囲内ならtrue。
 /// @details
 /// 調査するEnumにTERMが定義されている必要があります。
-#define AE_BASE_ENUM_IS_VALID( enumType , enumValue ) ( 0 <= int( enumValue ) && int( enumValue ) <= enumType::TERM )
+#define AE_BASE_ENUM_IS_VALID(enumType, enumValue) \
+    (0 <= int(enumValue) && int(enumValue) <= enumType::TERM)
 
 /// @brief Enumの値が 0以上 TERM　未満であることをチェックするマクロ。
 /// @return bool値。範囲外ならtrue。
 /// @details
 /// 調査するEnumにTERMが定義されている必要があります。
-#define AE_BASE_ENUM_IS_INVALID( enumType , enumValue ) ( AE_BASE_ENUM_IS_VALID( enumType , enumValue ) == false )
+#define AE_BASE_ENUM_IS_INVALID(enumType, enumValue) \
+    (AE_BASE_ENUM_IS_VALID(enumType, enumValue) == false)
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

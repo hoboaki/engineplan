@@ -15,6 +15,6 @@ SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount) {
     return *this;
 }
 
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

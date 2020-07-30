@@ -10,19 +10,19 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// 実行時エラー用コールバックインターフェースクラス。
-class IRuntimeErrorCallback
-{
+class IRuntimeErrorCallback {
 public:
     // デストラクタ。
     virtual ~IRuntimeErrorCallback();
 
-       /// @brief エラーが起きたときに呼ばれる関数。
-       /// @details 
-       /// この関数ではアプリケーションを強制終了するなど致命的な時に実行したい処理を行ってください。
+    /// @brief エラーが起きたときに呼ばれる関数。
+    /// @details
+    /// この関数ではアプリケーションを強制終了するなど致命的な時に実行したい処理を行ってください。
     virtual void OnRuntimeError() = 0;
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -8,18 +8,19 @@
 #include <ae/base/Os.hpp>
 
 #if defined(AE_BASE_OS_MACOSX)
-    #include <ae/base/Screen_MacOSX.hpp>
+#include <ae/base/Screen_MacOSX.hpp>
 #elif defined(AE_BASE_OS_IOS)
-    #include <ae/base/Screen_iOS.hpp>
+#include <ae/base/Screen_iOS.hpp>
 #else
-    #include <ae/base/Screen_Default.hpp>
+#include <ae/base/Screen_Default.hpp>
 #endif
 
 namespace ae {
 namespace base {
 class Display_Ext;
 struct ScreenPosPod;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -29,10 +30,10 @@ namespace base {
 //@{
 /// @brief Displayが所持する描画領域。
 /// @details
-/// WindowsやMacOSXなどのWindowSystem環境では１つの Display に１つの Screen が存在します。 @n
-/// NintendoDSなど2枚の描画領域を持つ環境では１つの Display に２つの Screen が存在します。 @n
-class Screen : ::ae::base::Noncopyable<Screen>
-{
+/// WindowsやMacOSXなどのWindowSystem環境では１つの Display に１つの Screen
+/// が存在します。 @n NintendoDSなど2枚の描画領域を持つ環境では１つの Display
+/// に２つの Screen が存在します。 @n
+class Screen : ::ae::base::Noncopyable<Screen> {
 public:
     // コンストラクタ。システムが呼ぶ。
     Screen(Display_Ext& owner, int width, int height);
@@ -40,14 +41,14 @@ public:
     /// @name 解像度
     //@{
     /// 横ピクセル数。
-    int Width()const;
+    int Width() const;
 
     /// 縦ピクセル数。
-    int Height()const;
+    int Height() const;
 
     /// @brief 指定の位置がスクリーン内かどうか判定する。
     /// @return 0 <= pos.x < Width() && 0 <= pos.y < Height()
-    bool IsContains(const ScreenPosPod& pos)const;
+    bool IsContains(const ScreenPosPod& pos) const;
     //@}
 
     //============================================================
@@ -63,6 +64,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

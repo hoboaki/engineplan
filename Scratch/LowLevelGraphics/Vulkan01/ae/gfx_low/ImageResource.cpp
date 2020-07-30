@@ -21,6 +21,6 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 ImageResource::~ImageResource() {}
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

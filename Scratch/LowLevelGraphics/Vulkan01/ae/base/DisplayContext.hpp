@@ -14,21 +14,21 @@ namespace base {
 /// @addtogroup AeBase-System
 //@{
 /// Display クラスのコンテキスト。
-class DisplayContext
-{
+class DisplayContext {
 public:
     /// デフォルトの設定で作成する。
     DisplayContext();
 
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
-        /// @name WindowSystem環境でのカスタマイズ
-        //@{
-    void SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
-    int LocationX()const;
-    int LocationY()const;
-    int Width()const;
-    int Height()const;
-    bool IsScreenDoubleBuffer()const;
+    /// @name WindowSystem環境でのカスタマイズ
+    //@{
+    void
+    SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
+    int LocationX() const;
+    int LocationY() const;
+    int Width() const;
+    int Height() const;
+    bool IsScreenDoubleBuffer() const;
     //@}
 #endif
 
@@ -43,6 +43,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

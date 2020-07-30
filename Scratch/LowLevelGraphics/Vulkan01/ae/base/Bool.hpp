@@ -12,9 +12,8 @@ namespace base {
 /// @addtogroup AeBase-Types
 //@{
 /// @brief BoolTmpl のPod版。
-template< typename DATA_TYPE >
-struct BoolPodTmpl
-{
+template <typename DATA_TYPE>
+struct BoolPodTmpl {
     //============================================================
     // private
     DATA_TYPE val_;
@@ -35,8 +34,7 @@ struct BoolPodTmpl
     /// BoolPodTmpl< int > var;
     /// var = true; // 代入できる
     /// @endcode
-    BoolPodTmpl< DataType >& operator=(const bool val)
-    {
+    BoolPodTmpl<DataType>& operator=(const bool val) {
         val_ = DataType(val ? 1 : 0);
         return *this;
     }
@@ -50,10 +48,7 @@ struct BoolPodTmpl
     ///     bool var = val; // boolの値を取得できるのでこのように代入できる
     /// }
     /// @endcode
-    operator bool()const
-    {
-        return val_ != 0;
-    }
+    operator bool() const { return val_ != 0; }
     //@}
 };
 
@@ -63,42 +58,36 @@ struct BoolPodTmpl
 /// それをを防ぎたいときにこのテンプレート構造体を使います。 @n
 /// DATA_TYPEに指定した組み込み型を指定します。@n
 /// データとしては0以外の値が入っていたらtrueと扱います。@n
-template< typename DATA_TYPE >
-class BoolTmpl : public BoolPodTmpl< DATA_TYPE >
-{
+template <typename DATA_TYPE>
+class BoolTmpl : public BoolPodTmpl<DATA_TYPE> {
 public:
     /// @name コンストラクタ
     //@{
     /// falseとして作成。
-    BoolTmpl()
-    {
-        BoolPodTmpl< DATA_TYPE >::val_ = false;
-    }
+    BoolTmpl() { BoolPodTmpl<DATA_TYPE>::val_ = false; }
 
     /// 値を指定して作成。
-    BoolTmpl(const bool val)
-    {
-        BoolPodTmpl< DATA_TYPE >::val_ = val;
-    }
+    BoolTmpl(const bool val) { BoolPodTmpl<DATA_TYPE>::val_ = val; }
     //@}
 };
 
 /// @name BoolTmpl BoolPodTmpl のtypedef。
 //@{
-typedef BoolPodTmpl< u8  > BoolPod8;  ///< 8bitPod版。
-typedef BoolPodTmpl< u16 > BoolPod16; ///< 16bitPod版。
-typedef BoolPodTmpl< u32 > BoolPod32; ///< 32bitPod版。
-typedef BoolPodTmpl< u64 > BoolPod64; ///< 64bitPod版。
-typedef BoolTmpl< u8  >    Bool8;  ///< 8bitクラス版。
-typedef BoolTmpl< u16 >    Bool16; ///< 16bitクラス版。
-typedef BoolTmpl< u32 >    Bool32; ///< 32bitクラス版。
-typedef BoolTmpl< u64 >    Bool64; ///< 64bitクラス版。
-typedef Bool8    Bool;    ///< 標準のクラス版(8bit)。
+typedef BoolPodTmpl<u8> BoolPod8; ///< 8bitPod版。
+typedef BoolPodTmpl<u16> BoolPod16; ///< 16bitPod版。
+typedef BoolPodTmpl<u32> BoolPod32; ///< 32bitPod版。
+typedef BoolPodTmpl<u64> BoolPod64; ///< 64bitPod版。
+typedef BoolTmpl<u8> Bool8; ///< 8bitクラス版。
+typedef BoolTmpl<u16> Bool16; ///< 16bitクラス版。
+typedef BoolTmpl<u32> Bool32; ///< 32bitクラス版。
+typedef BoolTmpl<u64> Bool64; ///< 64bitクラス版。
+typedef Bool8 Bool; ///< 標準のクラス版(8bit)。
 typedef BoolPod8 BoolPod; ///< 標準のPod版(8bit)。
 //@}
 
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

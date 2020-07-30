@@ -8,7 +8,8 @@
 namespace ae {
 namespace base {
 class Aabb2;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -34,8 +35,7 @@ namespace base {
 ///     }
 /// }
 /// @endcode
-class Aabb2i
-{
+class Aabb2i {
 public:
     //------------------------------------------------------------------------------
     /// @name 定数
@@ -48,71 +48,78 @@ public:
     //@{
     Aabb2i(); ///< Aabb2i( Vector2i::Zero() ) で作成。
     Aabb2i(const Vector2iPod& begin); ///< Aabb2i( pos , 0 , 0 ) で作成。
-    Aabb2i(const Vector2iPod& begin, int width, int height); ///< 基準となる点とサイズを指定してAABBを作成。
+    Aabb2i(const Vector2iPod& begin, int width,
+        int height); ///< 基準となる点とサイズを指定してAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 点の取得
     //@{
-    const Vector2iPod Begin()const; ///< AABBの基準点を取得。
-    const Vector2iPod End()const;   ///< AABBの端点を取得。
-    const Vector2iPod Min()const;  ///< Begin() のエイリアス。
-    const Vector2iPod Term()const; ///< End() のエイリアス。
+    const Vector2iPod Begin() const; ///< AABBの基準点を取得。
+    const Vector2iPod End() const; ///< AABBの端点を取得。
+    const Vector2iPod Min() const; ///< Begin() のエイリアス。
+    const Vector2iPod Term() const; ///< End() のエイリアス。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 大きさの取得
     //@{
-    int Width()const;  ///< xの幅を取得。
-    int Height()const; ///< yの幅を取得。
+    int Width() const; ///< xの幅を取得。
+    int Height() const; ///< yの幅を取得。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 正領域
     //@{
-    bool IsPositive()const; ///< Begin() が (0,0) 以上か。
-    const Aabb2i ToPositive()const; ///< Begin() が (0,0) 未満なら (0,0) 以上になるようにしたAABBを取得する。
+    bool IsPositive() const; ///< Begin() が (0,0) 以上か。
+    const Aabb2i ToPositive() const; ///< Begin() が (0,0) 未満なら (0,0)
+                                     ///< 以上になるようにしたAABBを取得する。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 結合
     //@{
-    const Aabb2i Merge(const Aabb2i& aABB)const; ///< 自分自身と指定のAABBを含むAABBを取得。
-    void MergeAssign(const Aabb2i& aABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
+    const Aabb2i Merge(
+        const Aabb2i& aABB) const; ///< 自分自身と指定のAABBを含むAABBを取得。
+    void MergeAssign(
+        const Aabb2i& aABB); ///< 自分自身と指定のAABBを含むAABBに設定する。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 判定
     //@{
     /// @brief 指定のAABBが重なっているか。
-    /// @details 
+    /// @details
     /// Term() 線上は重なっていないとして判定します。
-    bool IsIntersects(const Aabb2i& aABB)const;
+    bool IsIntersects(const Aabb2i& aABB) const;
 
     /// @brief 指定の点を含んでいるか。
     /// @return Begin() <= pos && pos() < End()
-    bool IsContains(const Vector2iPod& pos)const;
+    bool IsContains(const Vector2iPod& pos) const;
 
     /// @brief 指定のAABBを含んでいるか。
     /// @details
     /// Term() 線上は重なっていないとして判定します。
-    bool IsContains(const Aabb2i& aABB)const;
+    bool IsContains(const Aabb2i& aABB) const;
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 四則演算
     //@{
-    const Aabb2i Add(const Vector2iPod& trans)const; ///< Min() Term() に値を加算した結果を取得する。
-    const Aabb2i Sub(const Vector2iPod& trans)const; ///< Min() Term() から値を減算した結果を取得する。
+    const Aabb2i Add(const Vector2iPod& trans)
+        const; ///< Min() Term() に値を加算した結果を取得する。
+    const Aabb2i Sub(const Vector2iPod& trans)
+        const; ///< Min() Term() から値を減算した結果を取得する。
     void AddAssign(const Vector2iPod& trans); ///< Min() Term() に値を加算する。
-    void SubAssign(const Vector2iPod& trans); ///< Min() Term() から値を減算する。
+    void SubAssign(
+        const Vector2iPod& trans); ///< Min() Term() から値を減算する。
     //@}
 
     //------------------------------------------------------------------------------
     /// @name 演算子オーバーロード
     //@{
-    const Aabb2i operator+(const Vector2iPod&)const; ///< Add() 。
-    const Aabb2i operator-(const Vector2iPod&)const; ///< Sub() 。
+    const Aabb2i operator+(const Vector2iPod&) const; ///< Add() 。
+    const Aabb2i operator-(const Vector2iPod&) const; ///< Sub() 。
     Aabb2i& operator+=(const Vector2iPod&); ///< AddAssign() 。
     Aabb2i& operator-=(const Vector2iPod&); ///< SubAssign() 。
     //@}
@@ -120,7 +127,7 @@ public:
     //------------------------------------------------------------------------------
     /// @name 変換
     //@{
-    const Aabb2 ToAABB2f()const; ///< Aabb2( Min() , Term() ) に変換。
+    const Aabb2 ToAABB2f() const; ///< Aabb2( Min() , Term() ) に変換。
     //@}
 
 private:
@@ -129,6 +136,7 @@ private:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

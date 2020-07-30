@@ -6,24 +6,22 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-ScreenPos::ScreenPos()
-{
+ScreenPos::ScreenPos() {
     this->x = 0;
     this->y = 0;
 }
 
 //------------------------------------------------------------------------------
-ScreenPos::ScreenPos(const sint16 x, const sint16 y)
-{
+ScreenPos::ScreenPos(const sint16 x, const sint16 y) {
     this->x = x;
     this->y = y;
 }
 
 //------------------------------------------------------------------------------
-ScreenPos::ScreenPos(const ScreenPosPod& obj)
-{
+ScreenPos::ScreenPos(const ScreenPosPod& obj) {
     static_cast<ScreenPosPod&>(*this) = obj;
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

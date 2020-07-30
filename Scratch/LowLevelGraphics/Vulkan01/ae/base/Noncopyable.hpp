@@ -26,6 +26,7 @@ struct Noncopyable {
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

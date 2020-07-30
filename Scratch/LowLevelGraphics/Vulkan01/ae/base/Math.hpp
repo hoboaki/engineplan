@@ -9,7 +9,8 @@
 namespace ae {
 namespace base {
 class Angle;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -17,25 +18,22 @@ namespace base {
 
 /// @addtogroup AeBase-Math
 //@{
-    /// @brief 数学系関数を集めた空間。
+/// @brief 数学系関数を集めた空間。
 //@{
-struct Math
-{
+struct Math {
     //============================================================
     /// @name 選択
     //@{
 
     /// 最小値を取得する。
-    template< typename T >
-    static const T Min(const T a1, const T a2)
-    {
+    template <typename T>
+    static const T Min(const T a1, const T a2) {
         return a1 < a2 ? a1 : a2;
     }
 
     /// 最大値を取得する。
-    template< typename T >
-    static const T Max(const T a1, const T a2)
-    {
+    template <typename T>
+    static const T Max(const T a1, const T a2) {
         return a1 < a2 ? a2 : a1;
     }
 
@@ -45,15 +43,9 @@ struct Math
     /// @name 符号操作
     //@{
     /// 絶対値を取得する。
-    static f32 AbsF32(f32 val)
-    {
-        return val < 0 ? -1.0f * val : val;
-    }
+    static f32 AbsF32(f32 val) { return val < 0 ? -1.0f * val : val; }
     /// 絶対値を取得する。
-    static s32 AbsS32(s32 val)
-    {
-        return val < 0 ? -1 * val : val;
-    }
+    static s32 AbsS32(s32 val) { return val < 0 ? -1 * val : val; }
     //@}
 
     //============================================================
@@ -65,8 +57,7 @@ struct Math
     /// @param min 最小値。
     /// @param max 最大値。
     template <typename T>
-    static T Clamp(T value, T min, T max)
-    { 
+    static T Clamp(T value, T min, T max) {
         AE_BASE_ASSERT_LESS_EQUALS(min, max);
         if (value < min) {
             return min;
@@ -129,9 +120,8 @@ struct Math
     /// @param val1 rate == 0.0f のときに100%で返される値。
     /// @param val2 rate == 1.0f のときに100%で返される値。
     /// @param rate レート値。0.0f <= rate <= 1.0f。
-    template< typename T >
-    static const T Interpolation(const T& val1, const T& val2, const f32 rate)
-    {
+    template <typename T>
+    static const T Interpolation(const T& val1, const T& val2, const f32 rate) {
         AE_BASE_ASSERT_MIN_MAX(rate, 0.0f, 1.0f);
         return val1 + (val2 - val1) * rate;
     }
@@ -140,6 +130,7 @@ struct Math
 //@}
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

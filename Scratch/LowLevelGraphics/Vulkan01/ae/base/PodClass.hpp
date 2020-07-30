@@ -12,27 +12,32 @@ namespace ae {
 namespace base {
 
 /// @addtogroup AeBase-Types
-//@{    
+//@{
 /// @brief Pod型のラッパーテンプレートクラス。
 /// @details
 /// boost::value_initializedのようにデフォルトコンストラクタで必ず初期化をすることで未初期化を防ぎます。
-template< typename T >
-class PodClass : public PodStruct<T>
-{
+template <typename T>
+class PodClass : public PodStruct<T> {
 public:
     /// Struct型のエイリアス。
     typedef ::ae::base::PodStruct<T> StructType;
 
-    PodClass() { StructType::Ref() = StructType::DefaultValue(); }   ///< 規定値で初期化される。
-    PodClass(const PodStruct<T>& value) { StructType::Ref() = value; } ///< 値を指定して初期化。
+    PodClass() {
+        StructType::Ref() = StructType::DefaultValue();
+    } ///< 規定値で初期化される。
+    PodClass(const PodStruct<T>& value) {
+        StructType::Ref() = value;
+    } ///< 値を指定して初期化。
 
 private:
     typedef StructType SuperClass;
-    AE_BASE_STATIC_ASSERT(TypeTraits::IsPod< StructType >::Value);
-    AE_BASE_STATIC_ASSERT(sizeof(SuperClass) == sizeof(ValueType)); // サイズが同じであることを保証。
+    AE_BASE_STATIC_ASSERT(TypeTraits::IsPod<StructType>::Value);
+    AE_BASE_STATIC_ASSERT(sizeof(SuperClass) ==
+                          sizeof(ValueType)); // サイズが同じであることを保証。
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

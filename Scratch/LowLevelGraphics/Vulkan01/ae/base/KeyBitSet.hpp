@@ -15,9 +15,10 @@ namespace base {
 /// @brief キーボードのキーのビットセット。
 /// @details
 /// ビットのインデックスは KeyKind を使用しています。
-typedef BitSet< KeyKind::TERM > KeyBitSet;
+typedef BitSet<KeyKind::TERM> KeyBitSet;
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

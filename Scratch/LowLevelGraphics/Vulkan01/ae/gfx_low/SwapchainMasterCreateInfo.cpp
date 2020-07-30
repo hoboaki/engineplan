@@ -16,6 +16,6 @@ SwapchainMasterCreateInfo& SwapchainMasterCreateInfo::SetSwapchainCountMax(
     return *this;
 }
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

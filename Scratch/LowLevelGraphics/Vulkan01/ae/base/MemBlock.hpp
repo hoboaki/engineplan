@@ -12,8 +12,7 @@ namespace base {
 /// @addtogroup AeBase-Memory
 //@{
 /// メモリブロック。
-class MemBlock
-{
+class MemBlock {
 public:
     /// @name コンストラクタ。
     //@{
@@ -26,18 +25,19 @@ public:
 
     /// @name プロパティの取得。
     //@{
-    bool    IsNull()const; ///< 先頭アドレスが0か。
-    ptr_t   Head()const; ///< 先頭アドレスを取得。
-    ptr_t   Tail()const; ///< 終端アドレス( Head() + Size() )を取得。
-    pword_t Size()const; ///< ブロックのバイト数を取得。
+    bool IsNull() const; ///< 先頭アドレスが0か。
+    ptr_t Head() const; ///< 先頭アドレスを取得。
+    ptr_t Tail() const; ///< 終端アドレス( Head() + Size() )を取得。
+    pword_t Size() const; ///< ブロックのバイト数を取得。
     //@}
 
 private:
-    ptr_t   addr_;
+    ptr_t addr_;
     pword_t size_;
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

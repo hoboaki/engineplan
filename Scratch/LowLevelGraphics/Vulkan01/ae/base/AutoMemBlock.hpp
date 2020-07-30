@@ -10,7 +10,8 @@
 namespace ae {
 namespace base {
 class IAllocator;
-}}
+}
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -18,21 +19,23 @@ namespace base {
 
 /// @addtogroup AeBase-Memory
 //@{
-    /// @brief MemBlockのオートポインタ。
-    /// @details
-    /// デストラクタで自分が抱えているMemBlockを解放します。 @n
-/// std::auto_ptr と同じようにインスタンスをコピーしたら破棄責任も移動します。 @n
-class AutoMemBlock
-{
+/// @brief MemBlockのオートポインタ。
+/// @details
+/// デストラクタで自分が抱えているMemBlockを解放します。 @n
+/// std::auto_ptr と同じようにインスタンスをコピーしたら破棄責任も移動します。
+/// @n
+class AutoMemBlock {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
     /// 空のオブジェクトを作成。
     AutoMemBlock();
 
-    /// @brief 指定のサイズのブロックを指定のアロケータから確保したメモリブロックを作成。
+    /// @brief
+    /// 指定のサイズのブロックを指定のアロケータから確保したメモリブロックを作成。
     /// @details メモリの確保に失敗したら IsEmpty() はtrueを返します。
-    AutoMemBlock(pword_t size, IAllocator& allocator = IAllocator::Default(), pword_t alignment = IAllocator::DefaultAlignment);
+    AutoMemBlock(pword_t size, IAllocator& allocator = IAllocator::Default(),
+        pword_t alignment = IAllocator::DefaultAlignment);
 
     /// @brief 指定のブロックを抱えたメモリブロックを作成。
     /// @param block メモリブロック。
@@ -49,15 +52,16 @@ public:
     /// @name 情報取得
     //@{
     /// @brief ブロックを保持していなければtrueを返す。
-    /// @details 抱えているブロックのサイズが0の場合でもブロックは保持しているのでfalseを返します。
-    bool IsEmpty()const;
+    /// @details
+    /// 抱えているブロックのサイズが0の場合でもブロックは保持しているのでfalseを返します。
+    bool IsEmpty() const;
 
     /// @brief 保持しているブロックを解放する。
     /// @details 保持していなければ何もしません。
     void Clear();
 
     /// ブロックの参照を取得する。
-    const MemBlock& Ref()const;
+    const MemBlock& Ref() const;
     //@}
 
     /// @name 演算子オーバーロード
@@ -66,18 +70,19 @@ public:
     AutoMemBlock& operator=(const AutoMemBlock& rHS);
 
     /// 参照演算子。
-    const MemBlock& operator*()const;
+    const MemBlock& operator*() const;
 
     /// アドレス演算子。
-    const MemBlock* operator->()const;
+    const MemBlock* operator->() const;
     //@}
 
 private:
     mutable MemBlock block_;
-    mutable Pointer< IAllocator > allocatorPtr_;
+    mutable Pointer<IAllocator> allocatorPtr_;
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

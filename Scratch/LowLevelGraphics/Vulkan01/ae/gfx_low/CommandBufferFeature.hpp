@@ -22,6 +22,6 @@ enum class CommandBufferFeature {
     TERM,
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

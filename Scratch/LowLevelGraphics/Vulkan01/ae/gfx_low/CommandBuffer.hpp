@@ -15,8 +15,8 @@ class CommandBufferCreateInfo;
 class Device;
 class RenderPassBeginInfo;
 class Queue;
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -114,8 +114,7 @@ public:
     //@}
 
 private:
-    struct RenderPassProperty
-    {
+    struct RenderPassProperty {
         ::vk::RenderPass renderPass;
         ::vk::Framebuffer framebuffer;
     };
@@ -131,6 +130,6 @@ private:
     base::RuntimeMarray<RenderPassProperty> renderPassProperties_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

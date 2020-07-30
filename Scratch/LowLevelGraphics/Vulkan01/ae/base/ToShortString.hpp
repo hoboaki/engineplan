@@ -10,7 +10,8 @@
 
 /// @brief 引数の値をShortStringに変換するマクロ。
 /// @return 変換された文字列。
-#define AE_BASE_TO_SHORT_STRING( val ) (::ae::base::ShortStringFactory::Create( val ))
+#define AE_BASE_TO_SHORT_STRING(val) \
+    (::ae::base::ShortStringFactory::Create(val))
 
 //@}
 #endif

@@ -9,48 +9,38 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-Screen::Screen(
-    Display_Ext& owner,
-    const int width,
-    const int height
-    )
+Screen::Screen(Display_Ext& owner, const int width, const int height)
 : owner_(owner)
 , ext_()
 , width_(width)
-, height_(height)
-{
-}
+, height_(height) {}
 
 //------------------------------------------------------------------------------
-int Screen::Width()const
-{
+int Screen::Width() const {
     return width_;
 }
 
 //------------------------------------------------------------------------------
-int Screen::Height()const
-{
+int Screen::Height() const {
     return height_;
 }
 
 //------------------------------------------------------------------------------
-bool Screen::IsContains(const ScreenPosPod& pos)const
-{
-    return 0 <= pos.x && pos.x < int(width_)
-        && 0 <= pos.y && pos.y < int(height_);
+bool Screen::IsContains(const ScreenPosPod& pos) const {
+    return 0 <= pos.x && pos.x < int(width_) && 0 <= pos.y &&
+           pos.y < int(height_);
 }
 
 //------------------------------------------------------------------------------
-Display_Ext& Screen::display_()
-{
+Display_Ext& Screen::display_() {
     return owner_;
 }
 
 //------------------------------------------------------------------------------
-Screen_Ext& Screen::Ext_()
-{
+Screen_Ext& Screen::Ext_() {
     return ext_;
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

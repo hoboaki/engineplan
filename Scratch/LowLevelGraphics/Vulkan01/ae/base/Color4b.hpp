@@ -10,7 +10,8 @@ namespace ae {
 namespace base {
 struct Color3bPod;
 struct Color4Pod;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -19,17 +20,16 @@ namespace base {
 /// @addtogroup AeBase-Util
 //@{
 /// 8bit符号無し整数をRGBAの順に並べた色構造体。
-struct Color4bPod
-{
+struct Color4bPod {
     //============================================================
     /// @name 定数取得
     //@{
-    static const Color4bPod Zero();     ///< 0の色。
-    static const Color4bPod One();      ///< R,G,B,Aが全て255の色。
-    static const Color4bPod UnitR();    ///< Rだけ1の色。
-    static const Color4bPod UnitG();    ///< Gだけ1の色。
-    static const Color4bPod UnitB();    ///< Bだけ1の色。
-    static const Color4bPod UnitA();    ///< Aだけ1の色。
+    static const Color4bPod Zero(); ///< 0の色。
+    static const Color4bPod One(); ///< R,G,B,Aが全て255の色。
+    static const Color4bPod UnitR(); ///< Rだけ1の色。
+    static const Color4bPod UnitG(); ///< Gだけ1の色。
+    static const Color4bPod UnitB(); ///< Bだけ1の色。
+    static const Color4bPod UnitA(); ///< Aだけ1の色。
     //@}
 
     //============================================================
@@ -44,29 +44,28 @@ struct Color4bPod
     //============================================================
     /// @name 変換
     //@{
-    const Color3bPod ToRGB()const;
-    const Color3bPod ToRRR()const;
-    const Color3bPod ToGGG()const;
-    const Color3bPod ToBBB()const;
-    const Color3bPod ToAAA()const;
-    const Color4bPod ToRRRR()const;
-    const Color4bPod ToGGGG()const;
-    const Color4bPod ToBBBB()const;
-    const Color4bPod ToAAAA()const;
-    const Color4Pod ToRGBAf()const;
+    const Color3bPod ToRGB() const;
+    const Color3bPod ToRRR() const;
+    const Color3bPod ToGGG() const;
+    const Color3bPod ToBBB() const;
+    const Color3bPod ToAAA() const;
+    const Color4bPod ToRRRR() const;
+    const Color4bPod ToGGGG() const;
+    const Color4bPod ToBBBB() const;
+    const Color4bPod ToAAAA() const;
+    const Color4Pod ToRGBAf() const;
     //@}
 
     //============================================================
     /// @name ユーティリティ
     //@{
     /// r,g,b,a形式の文字列に変換。
-    const ShortString ToShortString()const;
+    const ShortString ToShortString() const;
     //@}
 };
 
 /// Color4bPod のクラス版。
-class Color4b : public Color4bPod
-{
+class Color4b : public Color4bPod {
 public:
     //============================================================
     /// @name コンストラクタ
@@ -78,6 +77,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

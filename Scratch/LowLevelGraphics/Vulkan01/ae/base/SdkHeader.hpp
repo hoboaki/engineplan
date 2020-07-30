@@ -6,9 +6,9 @@
 #include <ae/base/Os.hpp>
 
 #if defined(AE_BASE_OS_WINDOWS)
-    #include <windows.h>
-    #undef min
-    #undef max
+#include <windows.h>
+#undef min
+#undef max
 #endif
 
 #endif

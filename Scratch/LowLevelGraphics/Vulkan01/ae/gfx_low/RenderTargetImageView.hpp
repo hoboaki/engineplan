@@ -7,8 +7,8 @@ namespace ae {
 namespace gfx_low {
 class Device;
 class RenderTargetImageViewCreateInfo;
-}
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -39,6 +39,6 @@ private:
     ::vk::ImageView imageView_;
 };
 
-}  // namespace gfx_low
-}  // namespace ae
+} // namespace gfx_low
+} // namespace ae
 // EOF

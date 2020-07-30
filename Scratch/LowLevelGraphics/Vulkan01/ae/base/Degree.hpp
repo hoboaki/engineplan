@@ -7,9 +7,10 @@
 
 namespace ae {
 namespace base {
-class  Angle;
+class Angle;
 struct RadianPod;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -18,20 +19,18 @@ namespace base {
 /// @addtogroup AeBase-Math
 //@{
 /// 度を扱う構造体。
-struct DegreePod
-{
+struct DegreePod {
     f32 value; ///< 度の値。
 
     /// @name 変換
     //@{
-    const Angle     ToAngle()const;  ///< 角度に変換。
-    const RadianPod ToRadian()const; ///< ラジアンに変換。
+    const Angle ToAngle() const; ///< 角度に変換。
+    const RadianPod ToRadian() const; ///< ラジアンに変換。
     //@}
 };
 
 /// DegreePod のクラス版。
-class Degree : public DegreePod
-{
+class Degree : public DegreePod {
 public:
     /// @name コンストラクタ
     //@{
@@ -42,6 +41,7 @@ public:
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

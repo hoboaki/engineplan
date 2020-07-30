@@ -22,7 +22,8 @@ namespace ae {
 namespace base {
 class Argument;
 class Display;
-}}
+} // namespace base
+} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -30,12 +31,12 @@ namespace base {
 
 /// @addtogroup AeBase-System
 //@{
-    /// @brief アプリケーションの全体を扱うクラス。
-    /// @details
-    /// このクラスのインスタンスはフレームワークによって生成されます。@n
-/// xmain 関数が呼ばれた時点でこのクラスは生成されているため Instance() を使ってアクセスできます。@n
-class Application : ::ae::base::Noncopyable<Application>
-{
+/// @brief アプリケーションの全体を扱うクラス。
+/// @details
+/// このクラスのインスタンスはフレームワークによって生成されます。@n
+/// xmain 関数が呼ばれた時点でこのクラスは生成されているため Instance()
+/// を使ってアクセスできます。@n
+class Application : ::ae::base::Noncopyable<Application> {
 public:
     /// インスタンスにアクセス。
     static Application& Instance();
@@ -48,15 +49,17 @@ public:
     const base::Argument& Argument() const;
 
     /// @brief アプリケーションの終了を要求する。
-    /// @details 
+    /// @details
     /// 任意のタイミングでアプリケーションを終了したい場合にこの関数を呼びます。@n
-    /// そうすると ReceiveEvent() は次の呼び出しで AppEvent::Quit を返します。 @n
+    /// そうすると ReceiveEvent() は次の呼び出しで AppEvent::Quit を返します。
+    /// @n
     void Quit();
 
     /// @name  イベント
     //@{
-    AppEvent::EnumType ReceiveEvent();   ///< 新しいイベントを受け取る。
-    AppEvent::EnumType LastEvent()const; ///< 最後に受け取ったイベントを取得する。
+    AppEvent::EnumType ReceiveEvent(); ///< 新しいイベントを受け取る。
+    AppEvent::EnumType LastEvent()
+        const; ///< 最後に受け取ったイベントを取得する。
     //@}
 
     //============================================================
@@ -66,14 +69,15 @@ public:
 
 private:
     const base::Argument& argument_;
-    Enum32< AppEvent::EnumType > lastEvent_;
-    Pointer< Display > displayPtr_;
+    Enum32<AppEvent::EnumType> lastEvent_;
+    Pointer<Display> displayPtr_;
     Application_Ext ext_;
     //------------------------------------------------------------------------------
     AppEvent::EnumType ReceiveEventCore();
 };
 //@}
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

@@ -12,13 +12,13 @@ namespace ae {
 namespace base {
 
 // MacOSXのHid拡張。
-class Hid_Ext : public NonCopyable
-{
+class Hid_Ext : public NonCopyable {
 public:
     Keyboard keyboard;
     Mouse mouse;
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 #endif
 // EOF

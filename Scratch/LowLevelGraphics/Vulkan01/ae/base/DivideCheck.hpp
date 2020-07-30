@@ -10,21 +10,20 @@ namespace ae {
 namespace base {
 
 // 割り算チェックで使うモノたち用空間。
-struct DivideCheck
-{
+struct DivideCheck {
     // Assert用メッセージ文字列。
     static const char* const AssertionMessage;
 
     // アサートで止めつつ引数の値をそのまま返す。
-    template< typename T >
-    static T Error(const T& retVal)
-    {
+    template <typename T>
+    static T Error(const T& retVal) {
         AE_BASE_ASSERT_NOT_REACHED_MSG(AssertionMessage);
         return retVal;
     }
 };
 
-}} // namespace
+} // namespace base
+} // namespace ae
 
 /// @addtogroup AeBase-Debug
 //@{
@@ -32,23 +31,23 @@ struct DivideCheck
 //@{
 
 /// @brief lhs /= rhs, operator /=の0除算チェック。
-/// @details 0除算しようとした場合はエラー。エラーが無効なときは除算をせずに続行する。
-#define AE_BASE_DIV_ASSIGN( lhs , rhs ) \
-    do \
-    { \
-        if ( rhs == 0 ) \
-        { \
-            AE_BASE_ASSERT_NOT_REACHED_MSG( ::ae::base::DivideCheck::AssertionMessage ); \
-        } \
-        else \
-        { \
-            lhs /= rhs; \
-        } \
-    } while(0)
+/// @details
+/// 0除算しようとした場合はエラー。エラーが無効なときは除算をせずに続行する。
+#define AE_BASE_DIV_ASSIGN(lhs, rhs)                        \
+    do {                                                    \
+        if (rhs == 0) {                                     \
+            AE_BASE_ASSERT_NOT_REACHED_MSG(                 \
+                ::ae::base::DivideCheck::AssertionMessage); \
+        } else {                                            \
+            lhs /= rhs;                                     \
+        }                                                   \
+    } while (0)
 
 /// @brief lhs / rhsの0除算チェック。
-/// @details 0除算しようとした場合はエラー。エラーが無効なときは除算をせずに左辺を返す。
-#define AE_BASE_DIV( lHS , rHS ) ( rHS != 0 ? ( lHS / rHS ) : ::ae::base::DivideCheck::Error( lHS ) )
+/// @details
+/// 0除算しようとした場合はエラー。エラーが無効なときは除算をせずに左辺を返す。
+#define AE_BASE_DIV(lHS, rHS) \
+    (rHS != 0 ? (lHS / rHS) : ::ae::base::DivideCheck::Error(lHS))
 
 //@}
 //@}
