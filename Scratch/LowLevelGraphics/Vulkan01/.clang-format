@@ -18,6 +18,13 @@ ColumnLimit: 80
 # 連続空行は1まで認める
 MaxEmptyLinesToKeep: 1
 
+
+# コメントを縦にそろえない
+AlignTrailingComments: false
+
+# 行末コメントの前に入れるスペース数
+SpacesBeforeTrailingComments: 1
+
 # インライン関数のみ1行での記述を許可
 AllowShortFunctionsOnASingleLine: Inline
 
