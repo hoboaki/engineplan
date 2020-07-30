@@ -121,6 +121,10 @@
     <ClInclude Include="ae\base\Endian.hpp" />
     <ClInclude Include="ae\base\EntryPoint.hpp" />
     <ClInclude Include="ae\base\Enum.hpp" />
+    <ClInclude Include="ae\base\EnumBitSet.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\base\EnumCheck.hpp" />
     <ClInclude Include="ae\base\EnumKeyArray.hpp">
       <SubType>
