@@ -104,7 +104,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
 
-    activePass_.Set(int(CommandBufferFeature::Render), true);
+    activePass_.Set(CommandBufferFeature::Render, true);
 
     RenderPassProperty prop;
     {
@@ -237,10 +237,10 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdEndRenderPass() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
-    AE_BASE_ASSERT(activePass_.Get(int(CommandBufferFeature::Render)));
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
 
     commandBuffer_.endRenderPass();
-    activePass_.Set(int(CommandBufferFeature::Render), false);
+    activePass_.Set(CommandBufferFeature::Render, false);
 }
 
 } // namespace gfx_low
