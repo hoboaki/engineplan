@@ -49,23 +49,24 @@ struct EnumBitSetPod {
     /// @name 各ビットの設定・取得
     //@{
     /// 指定番目のビットの値を設定する。
-    void Set(EnumType index, bool flag) {
+    MyType& Set(EnumType index, bool flag) {
         // チェック
         if (BitCount <= int(index)) {
             AE_BASE_ERROR_INVALID_VALUE(int(index));
-            return;
+            return *this;
         }
 
         // 設定
         const auto mask = DataType(1 << DataType(index));
         bits_ = (bits_ & ~mask) | (flag ? mask : 0);
+        return *this;
     }
 
     /// 指定番目のビットをたてる。
-    void On(EnumType index) { Set(index, true); }
+    MyType& On(EnumType index) { return Set(index, true); }
 
     /// 指定番目のビットをおろす。
-    void Off(EnumType index) { Set(index, false); }
+    MyType& Off(EnumType index) { return Set(index, false); }
 
     /// 指定番目のビットの値を取得する。
     bool Get(EnumType index) const {
