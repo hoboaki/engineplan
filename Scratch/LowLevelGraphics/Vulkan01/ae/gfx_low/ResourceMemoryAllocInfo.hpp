@@ -28,9 +28,11 @@ public:
     }
 
     /// 確保するメモリサイズ。（初期値：0）
+    /// @details
+    /// 0 の場合はメモリ確保時に IsValid() == false な ResourceMemory を返します。
     size_t Size() const { return size_; }
 
-    /// Size() の設定。（設定必須）
+    /// Size() の設定。
     ResourceMemoryAllocInfo& SetSize(size_t size) {
         size_ = size;
         return *this;

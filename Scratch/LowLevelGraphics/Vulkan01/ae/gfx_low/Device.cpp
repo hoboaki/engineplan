@@ -2,6 +2,7 @@
 #include <ae/gfx_low/Device.hpp>
 
 // includes
+#include <ae/base/ArrayLength.hpp>
 #include <ae/base/EnumKeyArray.hpp>
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeArray.hpp>
@@ -27,8 +28,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
 , device_()
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
 , queues_(createInfo.QueueCreateInfoCount(),
-      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) 
-, isDeviceLocalMemoryShared_() {
+      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
     const auto physicalDeviceIndex = createInfo.PhysicalDeviceIndex();
     AE_BASE_ASSERT_MIN_TERM(
         physicalDeviceIndex, 0, system_.PhysicalDeviceCount());
@@ -38,8 +38,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
     AE_BASE_ASSERT_LESS(0, queueCreateCount);
     const auto* queueCreateInfos = createInfo.QueueCrateInfos();
     AE_BASE_ASSERT_POINTER(queueCreateInfos);
-
-
 
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
     // Queue の作成数が上限を越えていないかのチェック
@@ -193,15 +191,13 @@ Device::Device(const DeviceCreateInfo& createInfo)
     }
 
     // GPUメモリが共有メモリか調べる
-    { 
+    {
         const auto mask = ::vk::MemoryPropertyFlagBits::eDeviceLocal |
                           ::vk::MemoryPropertyFlagBits::eHostVisible;
-        ::vk::PhysicalDeviceMemoryProperties memoryProperties;
-        physicalDevice.getMemoryProperties(&memoryProperties);
+        physicalDevice.getMemoryProperties(&memoryProps_);
         isDeviceLocalMemoryShared_ = false;
-        for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; ++i) {
-            if ((memoryProperties.memoryTypes[i].propertyFlags & mask) ==
-                mask) {
+        for (uint32_t i = 0; i < memoryProps_.memoryTypeCount; ++i) {
+            if ((memoryProps_.memoryTypes[i].propertyFlags & mask) == mask) {
                 isDeviceLocalMemoryShared_ = true;
                 break;
             }
@@ -227,6 +223,11 @@ gfx_low::Queue& Device::Queue(const int queueIndex) const {
 //------------------------------------------------------------------------------
 ResourceMemory Device::AllocResourceMemory(
     const ResourceMemoryAllocInfo& allocInfo) {
+    // 0 専用対応
+    if (allocInfo.Size() == 0) {
+        return ResourceMemory();
+    }
+
     const auto result = TryToAllocResoureceMemory(allocInfo);
     AE_BASE_ASSERT(result.IsValid());
     return result;
@@ -234,16 +235,60 @@ ResourceMemory Device::AllocResourceMemory(
 
 //------------------------------------------------------------------------------
 ResourceMemory Device::TryToAllocResoureceMemory(
-    const ResourceMemoryAllocInfo& allocInfo)
-{
-    // @todo 実装
-    AE_BASE_ASSERT_NOT_REACHED();
-    return ResourceMemory();
+    const ResourceMemoryAllocInfo& allocInfo) {
+    // チェック
+    AE_BASE_ASSERT(allocInfo.Kind() != ResourceMemoryKind::Invalid);
+        
+    // 0 専用対応
+    if (allocInfo.Size() == 0) {
+        return ResourceMemory();
+    }
+
+    // メモリフラグマスクの作成
+    const ::vk::Flags<::vk::MemoryPropertyFlagBits> memoryMaskTable[] = {
+        ::vk::MemoryPropertyFlagBits(0), // Invalid,
+        ::vk::MemoryPropertyFlagBits::eDeviceLocal, // DeviceLocal,
+        ::vk::MemoryPropertyFlagBits::eHostVisible |
+            ::vk::MemoryPropertyFlagBits::eHostCoherent, // SharedNonCached,
+        ::vk::MemoryPropertyFlagBits::eHostVisible |
+            ::vk::MemoryPropertyFlagBits::eHostCoherent |
+            ::vk::MemoryPropertyFlagBits::eHostCached, // SharedCached
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(memoryMaskTable, int(ResourceMemoryKind::TERM));
+    const auto memoryMask = memoryMaskTable[int(allocInfo.Kind())];
+    
+    // 適切なメモリタイプを探す
+    int memoryTypeIndex = -1;
+    for (int i = 0; i < int(memoryProps_.memoryTypeCount); ++i) {
+        if ((memoryProps_.memoryTypes[i].propertyFlags & memoryMask) ==
+            memoryMask) {
+            memoryTypeIndex = i;
+            break;
+        }
+    }
+    if (memoryTypeIndex < 0) {
+        // 確保失敗
+        return ResourceMemory();
+    }
+
+    // 確保
+    ::vk::DeviceMemory memory;
+    {
+        const auto allocateInfo =
+            ::vk::MemoryAllocateInfo()
+                .setAllocationSize(allocInfo.Size())
+                .setMemoryTypeIndex(uint32_t(memoryTypeIndex));
+        if (device_.allocateMemory(&allocateInfo, nullptr, &memory) !=
+            ::vk::Result::eSuccess) {
+            // 確保失敗
+            return ResourceMemory();
+        }
+    }
+    return ResourceMemory(memory);
 }
 
 //------------------------------------------------------------------------------
-void Device::FreeResourceMemory(const ResourceMemory& memory)
-{
+void Device::FreeResourceMemory(const ResourceMemory& memory) {
     AE_BASE_ASSERT(memory.IsValid());
     device_.freeMemory(memory.Instance_());
 }

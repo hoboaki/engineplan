@@ -80,9 +80,10 @@ public:
 private:
     gfx_low::System& system_;
     ::vk::Device device_;
-    int physicalDeviceIndex_;
+    const int physicalDeviceIndex_;
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
-    bool isDeviceLocalMemoryShared_;
+    ::vk::PhysicalDeviceMemoryProperties memoryProps_ = {};
+    bool isDeviceLocalMemoryShared_ = bool();
 };
 
 } // namespace gfx_low

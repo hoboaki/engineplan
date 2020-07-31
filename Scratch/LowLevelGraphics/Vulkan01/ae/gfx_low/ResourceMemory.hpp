@@ -33,6 +33,9 @@ public:
 
     /// @name 内部処理用機能
     //@{
+    ResourceMemory(const ::vk::DeviceMemory& instance)
+    : instance_(instance) {}
+
     ::vk::DeviceMemory Instance_() const { return instance_; }
     //@}
 
