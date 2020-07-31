@@ -17,6 +17,8 @@
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
+#include <ae/gfx_low/ResourceMemory.hpp>
+#include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
@@ -73,6 +75,35 @@ int aemain(::ae::base::Application* app) {
         // 更にデバッグダンプ
         AE_BASE_COUTFMT_LINE("IsDeviceLocalMemoryShared: %d",
             gfxLowDevice->IsDeviceLocalMemoryShared() ? 1 : 0);
+
+        // メモリ確保テスト
+        {
+            ::ae::gfx_low::ResourceMemory memory;
+
+            // 確保できる前提のコード
+            memory = gfxLowDevice->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                    .SetSize(4096));
+            gfxLowDevice->FreeResourceMemory(memory);
+            memory = gfxLowDevice->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                    .SetSize(4096));
+            gfxLowDevice->FreeResourceMemory(memory);
+            memory = gfxLowDevice->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedCached)
+                    .SetSize(4096));
+            gfxLowDevice->FreeResourceMemory(memory);
+
+            // 確保に失敗する前提のコード
+            memory = gfxLowDevice->TryToAllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                    .SetSize(1024ull * 1024ull * 1024ull * 1024ull * 1024ull));
+            AE_BASE_ASSERT(!memory.IsValid());
+        }
     }
     auto& queue = gfxLowDevice->Queue(0);
 

@@ -28,7 +28,7 @@ public:
     /// @name プロパティ
     //@{
     /// 有効なメモリを指し示しているか。
-    bool IsValid() const { return instance_ == ::vk::DeviceMemory(); }
+    bool IsValid() const { return instance_ != ::vk::DeviceMemory(); }
     //@}
 
     /// @name 内部処理用機能

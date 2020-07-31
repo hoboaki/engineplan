@@ -228,13 +228,13 @@ ResourceMemory Device::AllocResourceMemory(
         return ResourceMemory();
     }
 
-    const auto result = TryToAllocResoureceMemory(allocInfo);
+    const auto result = TryToAllocResourceMemory(allocInfo);
     AE_BASE_ASSERT(result.IsValid());
     return result;
 }
 
 //------------------------------------------------------------------------------
-ResourceMemory Device::TryToAllocResoureceMemory(
+ResourceMemory Device::TryToAllocResourceMemory(
     const ResourceMemoryAllocInfo& allocInfo) {
     // チェック
     AE_BASE_ASSERT(allocInfo.Kind() != ResourceMemoryKind::Invalid);

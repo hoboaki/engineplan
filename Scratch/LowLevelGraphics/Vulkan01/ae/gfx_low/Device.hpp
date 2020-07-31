@@ -62,7 +62,7 @@ public:
     ResourceMemory AllocResourceMemory(const ResourceMemoryAllocInfo& allocInfo);
 
     /// リソースメモリの確保を試み、もし失敗したら IsValid() == false なオブジェクトを返す。
-    ResourceMemory TryToAllocResoureceMemory(
+    ResourceMemory TryToAllocResourceMemory(
         const ResourceMemoryAllocInfo& allocInfo);
 
     /// リソースメモリを破棄する。
