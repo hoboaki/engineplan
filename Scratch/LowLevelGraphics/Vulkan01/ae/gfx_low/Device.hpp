@@ -9,6 +9,8 @@ namespace ae {
 namespace gfx_low {
 class DeviceCreateInfo;
 class Queue;
+class ResourceMemory;
+class ResourceMemoryAllocInfo;
 class System;
 } // namespace gfx_low
 } // namespace ae
@@ -50,6 +52,22 @@ public:
     bool IsDeviceLocalMemoryShared() const {
         return isDeviceLocalMemoryShared_;
     }
+    //@}
+
+    /// @name リソースメモリ
+    //@{
+    /// リソースメモリを確保する。
+    /// @details メモリ確保に失敗したら ASSERTION FAILED し、
+    /// FINAL 版では IsValid() == false なオブジェクトを返します。
+    ResourceMemory AllocResourceMemory(const ResourceMemoryAllocInfo& allocInfo);
+
+    /// リソースメモリの確保を試み、もし失敗したら IsValid() == false なオブジェクトを返す。
+    ResourceMemory TryToAllocResoureceMemory(
+        const ResourceMemoryAllocInfo& allocInfo);
+
+    /// リソースメモリを破棄する。
+    /// @param memory IsValid() == true なオブジェクト。
+    void FreeResourceMemory(const ResourceMemory& memory);
     //@}
 
     /// @name 内部処理用API

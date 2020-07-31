@@ -1,0 +1,47 @@
+// 文字コード：UTF-8
+#pragma once
+
+#include <ae/gfx_low/ResourceMemoryKind.hpp>
+#include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
+
+//------------------------------------------------------------------------------
+namespace ae {
+namespace gfx_low {
+
+/// ResourceMemory 確保に必要な情報。
+class ResourceMemoryAllocInfo {
+public:
+    /// メモリの種類。（初期値：Invalid）
+    ResourceMemoryKind Kind() const { return kind_; }
+
+    /// Kind() の設定。（設定必須）
+    ResourceMemoryAllocInfo& SetKind(ResourceMemoryKind kind);
+
+    /// 使用方法を示すビットセット。（初期値：全てOff）
+    ResourceMemoryUsageBitSet UsageBitSet() const { return usageBitSet_; }
+
+    /// UsageBitSet() の設定。（設定必須）
+    ResourceMemoryAllocInfo& SetUsageBitSet(
+        const ResourceMemoryUsageBitSet& usageBitSet) {
+        usageBitSet_ = usageBitSet;
+        return *this;
+    }
+
+    /// 確保するメモリサイズ。（初期値：0）
+    size_t Size() const { return size_; }
+
+    /// Size() の設定。（設定必須）
+    ResourceMemoryAllocInfo& SetSize(size_t size) {
+        size_ = size;
+        return *this;
+    }
+
+private:
+    ResourceMemoryKind kind_ = ResourceMemoryKind::Invalid;
+    ResourceMemoryUsageBitSet usageBitSet_;
+    size_t size_ = 0;
+};
+
+} // namespace gfx_low
+} // namespace ae
+// EOF

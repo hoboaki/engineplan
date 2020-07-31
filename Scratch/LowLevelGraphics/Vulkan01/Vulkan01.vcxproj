@@ -234,6 +234,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ResourceMemory.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ResourceMemoryAllocInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryKind.hpp">
       <SubType>
       </SubType>
@@ -479,6 +487,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderTargetSpecInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ResourceMemoryAllocInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

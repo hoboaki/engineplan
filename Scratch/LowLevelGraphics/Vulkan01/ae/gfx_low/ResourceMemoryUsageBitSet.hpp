@@ -9,7 +9,7 @@ namespace ae {
 namespace gfx_low {
 
 /// ResourceMemoryUsage を扱う BitSet。
-using ResourceMemoryUsageBitSet = ::ae::base::EnumBitSet<ResourceMemoryUsage>;
+using ResourceMemoryUsageBitSet = ::ae::base::EnumBitSet32<ResourceMemoryUsage>;
 
 } // namespace gfx_low
 } // namespace ae

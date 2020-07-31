@@ -12,6 +12,8 @@
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
+#include <ae/gfx_low/ResourceMemory.hpp>
+#include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
 
@@ -220,6 +222,30 @@ Device::~Device() {
 //------------------------------------------------------------------------------
 gfx_low::Queue& Device::Queue(const int queueIndex) const {
     return queues_[queueIndex];
+}
+
+//------------------------------------------------------------------------------
+ResourceMemory Device::AllocResourceMemory(
+    const ResourceMemoryAllocInfo& allocInfo) {
+    const auto result = TryToAllocResoureceMemory(allocInfo);
+    AE_BASE_ASSERT(result.IsValid());
+    return result;
+}
+
+//------------------------------------------------------------------------------
+ResourceMemory Device::TryToAllocResoureceMemory(
+    const ResourceMemoryAllocInfo& allocInfo)
+{
+    // @todo 実装
+    AE_BASE_ASSERT_NOT_REACHED();
+    return ResourceMemory();
+}
+
+//------------------------------------------------------------------------------
+void Device::FreeResourceMemory(const ResourceMemory& memory)
+{
+    AE_BASE_ASSERT(memory.IsValid());
+    device_.freeMemory(memory.Instance_());
 }
 
 } // namespace gfx_low
