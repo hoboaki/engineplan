@@ -69,6 +69,10 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::DeviceCreateInfo()
                 .SetSystem(gfxLowSystem.get())
                 .SetQueueCreateInfos(queueCount, queueCreateInfos)));
+
+        // 更にデバッグダンプ
+        AE_BASE_COUTFMT_LINE("IsDeviceLocalMemoryShared: %d",
+            gfxLowDevice->IsDeviceLocalMemoryShared() ? 1 : 0);
     }
     auto& queue = gfxLowDevice->Queue(0);
 

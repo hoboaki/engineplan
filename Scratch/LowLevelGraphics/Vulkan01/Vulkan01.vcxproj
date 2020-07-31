@@ -335,6 +335,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ResourceMemoryUsageBitSet.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\SdkHeader.hpp">
       <SubType>
       </SubType>

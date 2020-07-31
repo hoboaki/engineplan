@@ -25,7 +25,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
 , device_()
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
 , queues_(createInfo.QueueCreateInfoCount(),
-      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
+      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) 
+, isDeviceLocalMemoryShared_() {
     const auto physicalDeviceIndex = createInfo.PhysicalDeviceIndex();
     AE_BASE_ASSERT_MIN_TERM(
         physicalDeviceIndex, 0, system_.PhysicalDeviceCount());
@@ -35,6 +36,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
     AE_BASE_ASSERT_LESS(0, queueCreateCount);
     const auto* queueCreateInfos = createInfo.QueueCrateInfos();
     AE_BASE_ASSERT_POINTER(queueCreateInfos);
+
+
 
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
     // Queue の作成数が上限を越えていないかのチェック
@@ -185,6 +188,22 @@ Device::Device(const DeviceCreateInfo& createInfo)
             device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
             queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(),
             commandPool);
+    }
+
+    // GPUメモリが共有メモリか調べる
+    { 
+        const auto mask = ::vk::MemoryPropertyFlagBits::eDeviceLocal |
+                          ::vk::MemoryPropertyFlagBits::eHostVisible;
+        ::vk::PhysicalDeviceMemoryProperties memoryProperties;
+        physicalDevice.getMemoryProperties(&memoryProperties);
+        isDeviceLocalMemoryShared_ = false;
+        for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; ++i) {
+            if ((memoryProperties.memoryTypes[i].propertyFlags & mask) ==
+                mask) {
+                isDeviceLocalMemoryShared_ = true;
+                break;
+            }
+        }
     }
 }
 

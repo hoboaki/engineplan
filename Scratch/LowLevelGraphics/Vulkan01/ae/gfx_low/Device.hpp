@@ -45,6 +45,11 @@ public:
     /// 指定番目の Queue の取得。
     /// @param queueIndex [0, QueueCount())
     gfx_low::Queue& Queue(int queueIndex) const;
+
+    /// ResourceMemoryKind::DeviceLocal タイプが共有メモリ上に配置されるか。
+    bool IsDeviceLocalMemoryShared() const {
+        return isDeviceLocalMemoryShared_;
+    }
     //@}
 
     /// @name 内部処理用API
@@ -59,6 +64,7 @@ private:
     ::vk::Device device_;
     int physicalDeviceIndex_;
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
+    bool isDeviceLocalMemoryShared_;
 };
 
 } // namespace gfx_low

@@ -480,6 +480,9 @@
     <ClInclude Include="ae\base\EnumBitSet.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ResourceMemoryUsageBitSet.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc">

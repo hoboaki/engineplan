@@ -10,12 +10,19 @@ enum class ResourceMemoryKind {
     /// 無効値。
     Invalid,
 
-    /// GPU 専用メモリ。
+    /// GPU にとって最も高速なメモリ。
     /// @details
     /// GPU が処理する上で最も高速なメモリの種類です。
-    /// CPU からは直接参照することはできないため、
+    ///
+    /// Device::IsDeviceLocalMemoryShared() が true のデバイスは
+    /// 共有メモリを DeviceLocal メモリとして扱うため、
+    /// SharedNonCached と同じ扱いになります。
+    ///
+    /// Device::IsDeviceLocalMemoryShared() が false のデバイスは
+    /// メモリの内容を CPU からは直接参照することはできません。
     /// CPU が用意したデータを DeviceLocal に配置したい場合は
-    /// コマンドを使って Shared 系のメモリから転送する必要があります。
+    /// コマンドを使って Shared 系のメモリから転送する必要があり、
+    /// 逆に読み取りたい場合は Shared 系メモリに転送する必要があります。
     DeviceLocal,
 
     /// CPU 上でキャッシュしないGPU・CPU共有メモリ。
