@@ -184,40 +184,72 @@
   - シェーダーオブジェクト生成について調べたが，Vulkan DX12 Metal すべてバイナリ指定可能。
   - となると，抽象化ライブラリではシェーダーリソースはバッファで渡すようにしておくとよさそう。
   - その際，バッファの特性にシェーダーバイナリを指定させる。
-- 抽象化
+- 抽象化（メモリ・オブジェクト）
   - リソースオブジェクトは Image と Buffer の２種あると全ライブラリカバーできる。
   - リソースっぽいのが分かるように ImageResource と BufferResource と名付ける。
   - リソースオブジェクトに割り当てるメモリは ResourceHeap・ResourceMemory 的な名前で扱う。
+- 抽象化（メモリ情報）
+  - Vulkan のみリソースオブジェクトを元に取得する方式を採用している。
+  - コードを書く側としてはリソースオブジェクトを作る前に CreateInfo (DESC) を元に引数にサイズ計算してくれると嬉しい。
+  - 解決策として Device オブジェクトで CreateInfo のハッシュ値をキーにメモリ情報のデータベースを作っておけばなんとかなりそう。
 
 ### Vulkan
 
-- VkDeviceMemory がバッファ。メモリ領域のハンドル。
-- バッファ特性（Map 可能不可能・メモリ配置場所など）を指定して vkAllocateMemory で確保する。
-- あらかじめ大きい領域を確保しておいてそれを分けて使う，というのは可能。
-- ユーザー側の指定した領域を割り当てたい場合は vkAllocateMemory に渡すコールバックオブジェクトで割り当てたいポインタを返す。
-- リソースオブジェクトとしては VkImage と VkBuffer の２種類。前者はテクスチャ系用，後者はそれ以外。
-- vkBindImageMemory vkBindBufferMemory でバッファを割り当てる。offset 指定も可能。
-- シェーダーオブジェクト，コマンドバッファ，デスクリプタはバッファでは扱わない。
+- メモリ
+  - VkDeviceMemory がバッファ。メモリ領域のハンドル。
+  - バッファ特性（Map 可能不可能・メモリ配置場所など）を指定して vkAllocateMemory で確保する。
+  - あらかじめ大きい領域を確保しておいてそれを分けて使う，というのは可能。
+  - ユーザー側の指定した領域を割り当てたい場合は vkAllocateMemory に渡すコールバックオブジェクトで割り当てたいポインタを返す。
+- リソースオブジェクト
+  - リソースオブジェクトとしては VkImage と VkBuffer の２種類。前者はテクスチャ系用，後者はそれ以外。
+  - vkBindImageMemory vkBindBufferMemory でバッファを割り当てる。offset 指定も可能。
+  - シェーダーオブジェクト，コマンドバッファ，デスクリプタはバッファでは扱わない。
+- メモリ情報
+  - 必要なメモリサイズ＆アライメントの情報は vkGetImageMemoryRequirements VvkGetBufferMemoryRequirements 関数で取得できる。
+  - これらは引数に VkImage や VkBuffer を要求するため、リソース系オブジェクトを作成したあとでないと情報が取得できない。
+- コピー元バッファ
+  - コピー元バッファは VkBuffer として作成。
+  - メモリ情報の取得は通常時と変わらない。
 
 ### DirectX 12
 
-- バッファとしては Heap として表現される。大きい Heap を作って細かく分割して使うことは可能。
-- Heap 作成時にバッファ特性を指定する。
-- ユーザー側の指定した領域を割り当てる方法はなさそう。
-- バッファ領域を特定のリソースとして定義するのは Resource (ID3DResource) オブジェクト。
-- Resource はメモリ領域とテクスチャなら Width，Height, Format などの情報を持つ。
-- 更にその Resource を GPU が扱えるようにするために View がでてくる。
-- View はデスクリプタの扱いになるのでこの項では扱わない。
-- ちなみに頂点バッファとインデックスバッファは View と名の付くオブジェクトはあるがデスクリプタ扱いではなく単なる構造体。
-- シェーダーオブジェクト，コマンドバッファ，デスクリプタはバッファでは扱わない。
+- メモリ
+  - バッファとしては Heap として表現される。大きい Heap を作って細かく分割して使うことは可能。
+  - Heap 作成時にバッファ特性を指定する。
+  - ユーザー側の指定した領域を割り当てる方法はなさそう。
+- リソースオブジェクト
+  - バッファ領域を特定のリソースとして定義するのは Resource (ID3DResource) オブジェクト。
+  - Resource はメモリ領域とテクスチャなら Width，Height, Format などの情報を持つ。
+  - 更にその Resource を GPU が扱えるようにするために View がでてくる。
+  - View はデスクリプタの扱いになるのでこの項では扱わない。
+  - ちなみに頂点バッファとインデックスバッファは View と名の付くオブジェクトはあるがデスクリプタ扱いではなく単なる構造体。
+  - シェーダーオブジェクト，コマンドバッファ，デスクリプタはバッファでは扱わない。
+- メモリ情報
+  - 必要なメモリサイズ＆アライメントの情報は [GetResourceAllocationInfo()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourceallocationinfo) で取得できる。
+  - これは引数に ResourceDesc を要求されるため、リソース作成前に取得可能。
+- コピー元バッファ
+  - GPUメモリへの転送元用のバッファは　Buffer タイプのリソースで作る。
+  - 必要なメモリサイズは [GetCopyableFootprints method()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcopyablefootprints) で取得できる。
+  - コピー先の RESOUCE_DESC があれば取得できるようだ。
+  - ちなみに、DX12はテクスチャのコピー元バッファに対して[１行あたりのバイトサイズや１サブリソースあたりにサイズやアライメントに制約](https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/upload-and-readback-of-texture-data)がある。
+  - [こちらのサイト](https://glhub.blogspot.com/2016/07/dx12-getcopyablefootprints.html)にこの辺りの解説がある。分かりやすい。
 
 ### Metal
 
-- MTLHeap でバッファ領域を確保。
-- Device.makeHeap で作成可能。引数でバッファ特性を指定。
-- MTLHeap.makeBuffer や MTLHeap.makeTexture で MTLBuffer MTLTexture を作成。どちらも MTLResource と呼ばれるもの
-- View （＝デスクリプタ）の概念はないので，コマンドバッファにはこれら MTLResource をそのまま設定。
-- シェーダーオブジェクト，コマンドバッファはバッファでは扱わない。
+- メモリ
+  - MTLHeap でバッファ領域を確保。
+  - Device.makeHeap で作成可能。引数でバッファ特性を指定。
+- リソースオブジェクト
+  - MTLHeap.makeBuffer や MTLHeap.makeTexture で MTLBuffer MTLTexture を作成。どちらも MTLResource と呼ばれるもの
+  - View （＝デスクリプタ）の概念はないので，コマンドバッファにはこれら MTLResource をそのまま設定。
+  - シェーダーオブジェクト，コマンドバッファはバッファでは扱わない。
+- メモリ情報
+  - 必要なメモリサイズ＆アライメントの情報は [Device.heapBufferSizeAndAlign](https://developer.apple.com/documentation/metal/mtldevice/1649922-heapbuffersizeandalign) や [Device.heapTextureSizeAndAlign](https://developer.apple.com/documentation/metal/mtldevice/1649927-heaptexturesizeandalign) で取得可能。
+  - MTLBuffer や MTLTexture を作成する前に取得可能。
+- コピー元バッファ
+  - GPUメモリへの転送元用のバッファは MTLBuffer でも MTLTexture でも良いように見える。
+  - Buffer に転送するなら Bufferで、Texture に転送するなら Texture で作成するのがシンプル。
+  - Buffer to Buffer の場合は[オフセット値やサイズ値が 4 の倍数にするといった制約がOSによってある](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copyfrombuffer?language=objc)。
 
 ## シェーダーオブジェクト生成
 
