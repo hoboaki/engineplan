@@ -3,6 +3,12 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
+namespace ae {
+namespace gfx_low {
+class ResourceMemoryAddress;
+}
+} // namespace ae
+
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
@@ -29,6 +35,10 @@ public:
     //@{
     /// 有効なメモリを指し示しているか。
     bool IsValid() const { return instance_ != ::vk::DeviceMemory(); }
+
+    /// ResourceMemoryAddress オブジェクトを取得。
+    /// @param offset 先頭からのオフセットバイト数。
+    ResourceMemoryAddress Address(size_t offset = 0) const;
     //@}
 
     /// @name 内部処理用機能
