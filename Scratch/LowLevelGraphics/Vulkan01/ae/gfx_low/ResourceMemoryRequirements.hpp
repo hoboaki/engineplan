@@ -7,14 +7,14 @@
 namespace ae {
 namespace gfx_low {
 
-/// リソースが要求する ResoureceMemory の必要条件。
-class ResourceMemoryRequirement {
+/// リソースが要求する ResoureceMemory の要件。
+class ResourceMemoryRequirements {
 public:
     /// 使用方法を示すビットセット。（初期値：全てOff）
     ResourceMemoryUsageBitSet UsageBitSet() const { return usageBitSet_; }
 
     /// UsageBitSet() の設定。（設定必須）
-    ResourceMemoryRequirement& SetUsageBitSet(
+    ResourceMemoryRequirements& SetUsageBitSet(
         const ResourceMemoryUsageBitSet& usageBitSet) {
         usageBitSet_ = usageBitSet;
         return *this;
@@ -27,7 +27,7 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    ResourceMemoryRequirement& SetSize(size_t size) {
+    ResourceMemoryRequirements& SetSize(size_t size) {
         size_ = size;
         return *this;
     }
@@ -36,7 +36,7 @@ public:
     size_t Alignment() const { return alignment_; }
 
     /// Alignment() の設定。
-    ResourceMemoryRequirement& SetAlignment(size_t alignment) {
+    ResourceMemoryRequirements& SetAlignment(size_t alignment) {
         alignment_ = alignment;
         return *this;
     }

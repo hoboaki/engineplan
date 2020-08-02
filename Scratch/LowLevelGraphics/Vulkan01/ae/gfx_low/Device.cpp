@@ -16,7 +16,7 @@
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
-#include <ae/gfx_low/ResourceMemoryRequirement.hpp>
+#include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
 
@@ -296,7 +296,7 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
 }
 
 //------------------------------------------------------------------------------
-ResourceMemoryRequirement Device::CalcResourceMemoryRequirement(const ImageResourceSpecInfo& specInfo)
+ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(const ImageResourceSpecInfo& specInfo)
 {
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
     // 一時的に VkImage を作成して求める。
@@ -315,7 +315,7 @@ ResourceMemoryRequirement Device::CalcResourceMemoryRequirement(const ImageResou
         device_.destroyImage(tmpImage, nullptr);
     }   
 
-    return ResourceMemoryRequirement()
+    return ResourceMemoryRequirements()
         .SetSize(reqs.size)
         .SetAlignment(reqs.alignment)
         .SetUsageBitSet(ResourceMemoryUsageBitSet());

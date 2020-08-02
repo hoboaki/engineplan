@@ -278,7 +278,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ResourceMemoryRequirement.hpp">
+    <ClInclude Include="ae\gfx_low\ResourceMemoryRequirements.hpp">
       <SubType>
       </SubType>
     </ClInclude>

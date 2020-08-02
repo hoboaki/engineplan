@@ -12,7 +12,7 @@ class ImageResourceSpecInfo;
 class Queue;
 class ResourceMemory;
 class ResourceMemoryAllocInfo;
-class ResourceMemoryRequirement;
+class ResourceMemoryRequirements;
 class System;
 } // namespace gfx_low
 } // namespace ae
@@ -73,8 +73,8 @@ public:
     /// @param memory IsValid() == true なオブジェクト。
     void FreeResourceMemory(const ResourceMemory& memory);
 
-    /// 指定のイメージリソースのリソースメモリ必要条件を計算して返す。
-    ResourceMemoryRequirement CalcResourceMemoryRequirement(
+    /// 指定のイメージリソースのリソースメモリ要件を計算して返す。
+    ResourceMemoryRequirements CalcResourceMemoryRequirements(
         const ImageResourceSpecInfo& specInfo);
     //@}
 

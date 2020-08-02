@@ -6,7 +6,7 @@
 
 namespace ae {
 namespace gfx_low {
-class ResourceMemoryRequirement;
+class ResourceMemoryRequirements;
 }
 } // namespace ae
 
@@ -54,8 +54,8 @@ public:
         return *this;
     }
 
-    /// ResourceMemoryRequirement の要件を各パラメータに設定する。
-    ResourceMemoryAllocInfo& Set(const ResourceMemoryRequirement& requirement);
+    /// ResourceMemoryRequirements の要件を各パラメータに設定する。
+    ResourceMemoryAllocInfo& Set(const ResourceMemoryRequirements& requirement);
 
 private:
     ResourceMemoryKind kind_ = ResourceMemoryKind::Invalid;

@@ -3,7 +3,7 @@
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
-#include <ae/gfx_low/ResourceMemoryRequirement.hpp>
+#include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -20,7 +20,7 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
 
 //------------------------------------------------------------------------------
 ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::Set(
-    const ResourceMemoryRequirement& requirement)
+    const ResourceMemoryRequirements& requirement)
 {
     SetUsageBitSet(requirement.UsageBitSet());
     SetSize(requirement.Size());
