@@ -258,6 +258,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageResourceTiling.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemory.hpp">
       <SubType>
       </SubType>
@@ -503,6 +507,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ImageResourceCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

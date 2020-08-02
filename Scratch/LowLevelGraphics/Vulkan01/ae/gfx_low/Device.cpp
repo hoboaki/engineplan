@@ -293,6 +293,18 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
     device_.freeMemory(memory.Instance_());
 }
 
+////------------------------------------------------------------------------------
+//ResourceMemoryRequirement Device::CalcResourceMemoryRequirement(const ImageResourceSpecInfo& specInfo)
+//{
+//    // Vulkan 環境は VkImage を作成しないと値が取得できないため
+//    // 一時的に VkImage を作成して求める。
+//    // 将来的には同じ specInfo が渡された場合は
+//    // 前回求めた値を返すようにして無駄な VkImage 生成を省略したい。
+//    // @todo 計算結果のキャッシュ対応
+//
+//    const auto createInfo = ::vk::ImageCreateInfo().
+//}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

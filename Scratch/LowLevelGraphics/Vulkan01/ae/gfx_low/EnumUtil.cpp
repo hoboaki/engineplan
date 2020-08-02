@@ -38,18 +38,112 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::Format EnumUtil::ToFormat(const ImageFormat format) {
+    AE_BASE_ASSERT_ENUM(format, ImageFormat);
+    AE_BASE_ASSERT(format != ImageFormat::Invalid);
+    const ::vk::Format table[] = {
+        ::vk::Format::eUndefined, // Invalid
+
+        ::vk::Format::eR8Sint, // R8Sint
+        ::vk::Format::eR8Snorm, // R8Snorm
+        ::vk::Format::eR8Uint, // R8Uint
+        ::vk::Format::eR8Unorm, // R8Unorm
+        ::vk::Format::eR16Sfloat, // R16Sfloat
+        ::vk::Format::eR16Sint, // R16Sint
+        ::vk::Format::eR16Snorm, // R16Snorm
+        ::vk::Format::eR16Uint, // R16Uint
+        ::vk::Format::eR16Unorm, // R16Unorm
+
+        ::vk::Format::eR8G8Sint, // R8G8Sint
+        ::vk::Format::eR8G8Snorm, // R8G8Snorm
+        ::vk::Format::eR8G8Uint, // R8G8Uint
+        ::vk::Format::eR8G8Unorm, // R8G8Unorm
+        ::vk::Format::eR16G16Sfloat, // R16G16Sfloat
+        ::vk::Format::eR16G16Sint, // R16G16Sint
+        ::vk::Format::eR16G16Snorm, // R16G16Snorm
+        ::vk::Format::eR16G16Uint, // R16G16Uint
+        ::vk::Format::eR16G16Unorm, // R16G16Unorm
+
+        ::vk::Format::eB10G11R11UfloatPack32, // R11G11B10Ufloat
+
+        ::vk::Format::eR8G8B8A8Uint, // R8G8B8A8Uint
+        ::vk::Format::eR8G8B8A8Unorm, // R8G8B8A8Unorm
+        ::vk::Format::eR8G8B8A8Srgb, // R8G8B8A8UnormSrgb
+        ::vk::Format::eA2R10G10B10UintPack32, // R10G10B10A2Uint
+        ::vk::Format::eA2R10G10B10UnormPack32, // R10G10B10A2Unorm
+        ::vk::Format::eR16G16B16A16Sfloat, // R16G16B16A16Sfloat
+        ::vk::Format::eR16G16B16A16Sint, // R16G16B16A16Sint
+        ::vk::Format::eR16G16B16A16Snorm, // R16G16B16A16Snorm
+        ::vk::Format::eR16G16B16A16Uint, // R16G16B16A16Uint
+        ::vk::Format::eR16G16B16A16Unorm, // R16G16B16A16Unorm
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageFormat::TERM));
+    return table[int(format)];
+}
+
+//------------------------------------------------------------------------------
 ::vk::ImageLayout EnumUtil::ToImageLayoutForColorAttachment(
     const ImageResourceState state) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     const ::vk::ImageLayout table[] = {
-        ::vk::ImageLayout::eUndefined, // Invalid
+        ::vk::ImageLayout(-1), // Invalid
         ::vk::ImageLayout::eUndefined, // Unknown
         ::vk::ImageLayout::eColorAttachmentOptimal, // RenderTarget
         ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceState::TERM));
     return table[int(state)];
+}
+
+//------------------------------------------------------------------------------
+::vk::ImageType EnumUtil::ToImageType(const ImageKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, ImageKind);
+    AE_BASE_ASSERT(kind != ImageKind::Invalid);
+    const ::vk::ImageType table[] = {
+        ::vk::ImageType(-1), // Invalid
+        ::vk::ImageType::e1D, // Image1d
+        ::vk::ImageType::e2D, // Image2d
+        ::vk::ImageType::e3D, // Image3d
+        ::vk::ImageType::e2D, // ImageCube
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageKind::TERM));
+    return table[int(kind)];
+}
+
+//------------------------------------------------------------------------------
+::vk::ImageTiling EnumUtil::ToImageTiling(const ImageResourceTiling tiling) {
+    AE_BASE_ASSERT_ENUM(tiling, ImageResourceTiling);
+    AE_BASE_ASSERT(tiling != ImageResourceTiling::Invalid);
+    const ::vk::ImageTiling table[] = {
+        ::vk::ImageTiling(-1), // Invalid
+        ::vk::ImageTiling::eLinear, // Linear
+        ::vk::ImageTiling::eOptimal, // Optimal
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceTiling::TERM));
+    return table[int(tiling)];
+}
+
+//------------------------------------------------------------------------------
+::vk::ImageUsageFlags EnumUtil::ToImageUsageFlags(
+    const ImageResourceUsageBitSet& usageBitSet) {
+    const ::vk::ImageUsageFlagBits table[] = {
+        ::vk::ImageUsageFlagBits(0), // Invalid
+        ::vk::ImageUsageFlagBits::eTransferSrc, // CopySrc
+        ::vk::ImageUsageFlagBits::eTransferDst, // CopyDst
+        ::vk::ImageUsageFlagBits::eSampled, // SampledImage
+        ::vk::ImageUsageFlagBits::eStorage, // StorageImage
+        ::vk::ImageUsageFlagBits::eColorAttachment, // RenderTargetImage
+        ::vk::ImageUsageFlagBits::eDepthStencilAttachment, // DepthStencilImage
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceUsage::TERM));
+    auto result = ::vk::ImageUsageFlags();
+    for (int i = 0; i < int(ImageResourceUsage::TERM); ++i) {
+        if (usageBitSet.Get(ImageResourceUsage(i))) {
+            result |= table[i];
+        }
+    }
+    return ::vk::ImageUsageFlags();
 }
 
 } // namespace gfx_low

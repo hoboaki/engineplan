@@ -8,9 +8,11 @@
 namespace ae {
 namespace gfx_low {
 class DeviceCreateInfo;
+class ImageResourceSpecInfo;
 class Queue;
 class ResourceMemory;
 class ResourceMemoryAllocInfo;
+class ResourceMemoryRequirement;
 class System;
 } // namespace gfx_low
 } // namespace ae
@@ -59,15 +61,21 @@ public:
     /// リソースメモリを確保する。
     /// @details メモリ確保に失敗したら ASSERTION FAILED し、
     /// FINAL 版では IsValid() == false なオブジェクトを返します。
-    ResourceMemory AllocResourceMemory(const ResourceMemoryAllocInfo& allocInfo);
+    ResourceMemory AllocResourceMemory(
+        const ResourceMemoryAllocInfo& allocInfo);
 
-    /// リソースメモリの確保を試み、もし失敗したら IsValid() == false なオブジェクトを返す。
+    /// リソースメモリの確保を試み、もし失敗したら IsValid() == false
+    /// なオブジェクトを返す。
     ResourceMemory TryToAllocResourceMemory(
         const ResourceMemoryAllocInfo& allocInfo);
 
     /// リソースメモリを破棄する。
     /// @param memory IsValid() == true なオブジェクト。
     void FreeResourceMemory(const ResourceMemory& memory);
+
+    /// 指定のイメージリソースのリソースメモリ必要条件を計算して返す。
+    ResourceMemoryRequirement CalcResourceMemoryRequirement(
+        const ImageResourceSpecInfo& specInfo);
     //@}
 
     /// @name 内部処理用API

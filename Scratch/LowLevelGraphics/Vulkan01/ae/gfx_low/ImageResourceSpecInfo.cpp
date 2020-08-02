@@ -26,8 +26,17 @@ ImageResourceSpecInfo& ImageResourceSpecInfo::SetFormat(
 }
 
 //------------------------------------------------------------------------------
-ImageResourceSpecInfo& ImageResourceSpecInfo::SetMipLevels(const int mipLevels)
-{
+ImageResourceSpecInfo& ImageResourceSpecInfo::SetTiling(
+    const ImageResourceTiling tiling) {
+    AE_BASE_ASSERT_ENUM(tiling, ImageResourceTiling);
+    AE_BASE_ASSERT(tiling != ImageResourceTiling::Invalid);
+    tiling_ = tiling;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
+ImageResourceSpecInfo& ImageResourceSpecInfo::SetMipLevels(
+    const int mipLevels) {
     AE_BASE_ASSERT_LESS_EQUALS(1, mipLevels);
     mipLevels_ = mipLevels;
     return *this;

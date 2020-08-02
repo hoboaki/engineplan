@@ -3,6 +3,7 @@
 
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ImageResourceSpecInfo.hpp>
+#include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
@@ -41,6 +42,12 @@ public:
         return *this;
     }
 
+    /// 初期状態。（初期値：Unknown）
+    ImageResourceState InitialState() const { return initialState_; }
+
+    /// InitialState() の設定。 
+    ImageResourceCreateInfo& SetInitialState(ImageResourceState state);
+
     /// イメージデータのメモリアドレス。（初期値：IsValid() == false なアドレス） 
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
 
@@ -62,11 +69,15 @@ public:
         imagePtr_.Reset(imagePtr);
         return *this;
     }
+
+    /// VkImageCreateInfo へ変換。
+    ::vk::ImageCreateInfo NativeCreateInfo_() const;
     //@}
 
 private:
     base::Pointer<gfx_low::Device> device_;
     ImageResourceSpecInfo specInfo_;
+    ImageResourceState initialState_ = ImageResourceState::Unknown;
     ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> imagePtr_;
 };

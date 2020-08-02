@@ -4,6 +4,7 @@
 #include <ae/base/Extent3i.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageKind.hpp>
+#include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
@@ -26,6 +27,12 @@ public:
 
     /// Format() の設定。
     ImageResourceSpecInfo& SetFormat(ImageFormat format);
+
+    /// ピクセルの並び方。（初期値：Invalid)
+    ImageResourceTiling Tiling() const { return tiling_; }
+
+    /// Tiling() の設定。
+    ImageResourceSpecInfo& SetTiling(ImageResourceTiling tiling);
 
     /// イメージ範囲。（初期値：0,0,0）
     base::Extent3i Extent() const { return extent_; }
@@ -71,6 +78,7 @@ public:
 private:
     ImageKind kind_ = ImageKind::Invalid;
     ImageFormat format_ = ImageFormat::Invalid;
+    ImageResourceTiling tiling_ = ImageResourceTiling::Invalid;
     base::Extent3i extent_;
     int mipLevels_ = 1;
     int arrayLength_ = 1;

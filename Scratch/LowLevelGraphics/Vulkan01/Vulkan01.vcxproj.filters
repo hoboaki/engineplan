@@ -513,6 +513,9 @@
     <ClInclude Include="ae\gfx_low\ImageResourceUsageBitSet.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageResourceTiling.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc">
@@ -763,6 +766,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageResourceSpecInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ImageResourceCreateInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
