@@ -6,8 +6,8 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
-#include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
+#include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
@@ -126,14 +126,18 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
 
             // その他の設定
             attachment.setSamples(::vk::SampleCountFlagBits::e1)
-                .setLoadOp(EnumUtil::ToAttachmentLoadOp(renderTargetSetting.LoadOp()))
-                .setStoreOp(EnumUtil::ToAttachmentStoreOp(renderTargetSetting.StoreOp()))
+                .setLoadOp(InternalEnumUtil::ToAttachmentLoadOp(
+                    renderTargetSetting.LoadOp()))
+                .setStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
+                    renderTargetSetting.StoreOp()))
                 .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
                 .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare)
-                .setInitialLayout(EnumUtil::ToImageLayoutForColorAttachment(
-                    renderTargetSetting.InitialImageResourceState()))
-                .setFinalLayout(EnumUtil::ToImageLayoutForColorAttachment(
-                    renderTargetSetting.FinalImageResourceState()));
+                .setInitialLayout(
+                    InternalEnumUtil::ToImageLayoutForColorAttachment(
+                        renderTargetSetting.InitialImageResourceState()))
+                .setFinalLayout(
+                    InternalEnumUtil::ToImageLayoutForColorAttachment(
+                        renderTargetSetting.FinalImageResourceState()));
         }
 
         auto const colorReference =

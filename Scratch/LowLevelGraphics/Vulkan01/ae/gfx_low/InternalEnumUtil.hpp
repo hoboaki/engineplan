@@ -14,8 +14,8 @@
 namespace ae {
 namespace gfx_low {
 
-/// Enum に関する便利関数郡。
-struct EnumUtil {
+/// 内部実装用 Enum に関する便利関数郡。
+struct InternalEnumUtil {
     static ::vk::AttachmentLoadOp ToAttachmentLoadOp(AttachmentLoadOp loadOp);
     static ::vk::AttachmentStoreOp ToAttachmentStoreOp(AttachmentStoreOp storeOp);
     static ::vk::Format ToFormat(ImageFormat format);

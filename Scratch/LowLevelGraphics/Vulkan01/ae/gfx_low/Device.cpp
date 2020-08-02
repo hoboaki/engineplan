@@ -9,7 +9,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/RuntimeMarray.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
-#include <ae/gfx_low/EnumUtil.hpp>
+#include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>

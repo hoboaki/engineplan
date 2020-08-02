@@ -3,7 +3,7 @@
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
-#include <ae/gfx_low/EnumUtil.hpp>
+#include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -22,15 +22,15 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetInitialState(
 ::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const {
     return ::vk::ImageCreateInfo()
         .setImageType(vk::ImageType::e2D)
-        .setFormat(EnumUtil::ToFormat(specInfo_.Format()))
+        .setFormat(InternalEnumUtil::ToFormat(specInfo_.Format()))
         .setExtent({uint32_t(specInfo_.Extent().width),
             uint32_t(specInfo_.Extent().height),
             uint32_t(specInfo_.Extent().depth)})
         .setMipLevels(uint32_t(specInfo_.MipLevels()))
         .setArrayLayers(uint32_t(specInfo_.ArrayLength()))
         .setSamples(vk::SampleCountFlagBits::e1)
-        .setTiling(EnumUtil::ToImageTiling(specInfo_.Tiling()))
-        .setUsage(EnumUtil::ToImageUsageFlags(specInfo_.UsageBitSet()))
+        .setTiling(InternalEnumUtil::ToImageTiling(specInfo_.Tiling()))
+        .setUsage(InternalEnumUtil::ToImageUsageFlags(specInfo_.UsageBitSet()))
         .setSharingMode(vk::SharingMode::eExclusive)
         .setQueueFamilyIndexCount(0)
         .setPQueueFamilyIndices(nullptr)

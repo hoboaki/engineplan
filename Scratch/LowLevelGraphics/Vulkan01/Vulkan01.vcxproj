@@ -230,7 +230,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\EnumUtil.hpp">
+    <ClInclude Include="ae\gfx_low\InternalEnumUtil.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -494,7 +494,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
+    <ClCompile Include="ae\gfx_low\InternalEnumUtil.cpp">
       <SubType>
       </SubType>
     </ClCompile>

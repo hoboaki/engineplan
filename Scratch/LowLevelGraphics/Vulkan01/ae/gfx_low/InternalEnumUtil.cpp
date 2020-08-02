@@ -1,5 +1,5 @@
 // 文字コード：UTF-8
-#include <ae/gfx_low/EnumUtil.hpp>
+#include <ae/gfx_low/InternalEnumUtil.hpp>
 
 // includes
 #include <ae/base/ArrayLength.hpp>
@@ -11,7 +11,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-::vk::AttachmentLoadOp EnumUtil::ToAttachmentLoadOp(const AttachmentLoadOp loadOp) {
+::vk::AttachmentLoadOp InternalEnumUtil::ToAttachmentLoadOp(
+    const AttachmentLoadOp loadOp) {
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     const ::vk::AttachmentLoadOp table[] = {
@@ -25,7 +26,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::AttachmentStoreOp EnumUtil::ToAttachmentStoreOp(const AttachmentStoreOp storeOp) {
+::vk::AttachmentStoreOp InternalEnumUtil::ToAttachmentStoreOp(
+    const AttachmentStoreOp storeOp) {
     AE_BASE_ASSERT_ENUM(storeOp, AttachmentStoreOp);
     AE_BASE_ASSERT(storeOp != AttachmentStoreOp::Invalid);
     const ::vk::AttachmentStoreOp table[] = {
@@ -38,7 +40,7 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::Format EnumUtil::ToFormat(const ImageFormat format) {
+::vk::Format InternalEnumUtil::ToFormat(const ImageFormat format) {
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     const ::vk::Format table[] = {
@@ -82,7 +84,7 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageLayout EnumUtil::ToImageLayoutForColorAttachment(
+::vk::ImageLayout InternalEnumUtil::ToImageLayoutForColorAttachment(
     const ImageResourceState state) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
@@ -97,7 +99,7 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageType EnumUtil::ToImageType(const ImageKind kind) {
+::vk::ImageType InternalEnumUtil::ToImageType(const ImageKind kind) {
     AE_BASE_ASSERT_ENUM(kind, ImageKind);
     AE_BASE_ASSERT(kind != ImageKind::Invalid);
     const ::vk::ImageType table[] = {
@@ -112,7 +114,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageTiling EnumUtil::ToImageTiling(const ImageResourceTiling tiling) {
+::vk::ImageTiling InternalEnumUtil::ToImageTiling(
+    const ImageResourceTiling tiling) {
     AE_BASE_ASSERT_ENUM(tiling, ImageResourceTiling);
     AE_BASE_ASSERT(tiling != ImageResourceTiling::Invalid);
     const ::vk::ImageTiling table[] = {
@@ -125,7 +128,7 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageUsageFlags EnumUtil::ToImageUsageFlags(
+::vk::ImageUsageFlags InternalEnumUtil::ToImageUsageFlags(
     const ImageResourceUsageBitSet& usageBitSet) {
     const ::vk::ImageUsageFlagBits table[] = {
         ::vk::ImageUsageFlagBits(0), // Invalid

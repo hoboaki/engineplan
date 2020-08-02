@@ -465,9 +465,6 @@
     <ClInclude Include="ae\gfx_low\CommandBufferState.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\EnumUtil.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryUsage.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -514,6 +511,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryRequirements.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\InternalEnumUtil.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -750,9 +750,6 @@
     <ClCompile Include="ae\gfx_low\Fence.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ae\gfx_low\ResourceMemoryAllocInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -769,6 +766,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageResourceCreateInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalEnumUtil.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
