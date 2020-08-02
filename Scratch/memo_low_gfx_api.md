@@ -214,7 +214,7 @@
 ### DirectX 12
 
 - メモリ
-  - バッファとしては Heap として表現される。大きい Heap を作って細かく分割して使うことは可能。
+  - バッファとしては [Heap](https://docs.microsoft.com/ja-jp/windows/win32/api/d3d12/nf-d3d12-id3d12device-createheap) として表現される。大きい Heap を作って細かく分割して使うことは可能。
   - Heap 作成時にバッファ特性を指定する。
   - ユーザー側の指定した領域を割り当てる方法はなさそう。
 - リソースオブジェクト
