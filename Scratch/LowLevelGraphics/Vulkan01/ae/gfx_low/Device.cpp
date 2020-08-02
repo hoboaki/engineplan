@@ -11,10 +11,12 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
+#include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
+#include <ae/gfx_low/ResourceMemoryRequirement.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
 
@@ -293,17 +295,31 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
     device_.freeMemory(memory.Instance_());
 }
 
-////------------------------------------------------------------------------------
-//ResourceMemoryRequirement Device::CalcResourceMemoryRequirement(const ImageResourceSpecInfo& specInfo)
-//{
-//    // Vulkan 環境は VkImage を作成しないと値が取得できないため
-//    // 一時的に VkImage を作成して求める。
-//    // 将来的には同じ specInfo が渡された場合は
-//    // 前回求めた値を返すようにして無駄な VkImage 生成を省略したい。
-//    // @todo 計算結果のキャッシュ対応
-//
-//    const auto createInfo = ::vk::ImageCreateInfo().
-//}
+//------------------------------------------------------------------------------
+ResourceMemoryRequirement Device::CalcResourceMemoryRequirement(const ImageResourceSpecInfo& specInfo)
+{
+    // Vulkan 環境は VkImage を作成しないと値が取得できないため
+    // 一時的に VkImage を作成して求める。
+    // 将来的には同じ specInfo が渡された場合は
+    // 前回求めた値を返すようにして無駄な VkImage 生成を省略したい。
+    // @todo 計算結果のキャッシュ対応
+
+
+    vk::MemoryRequirements reqs;
+    {
+        ::vk::Image tmpImage;
+        const auto createInfo =
+            ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
+        auto result = device_.createImage(&createInfo, nullptr, &tmpImage);
+        device_.getImageMemoryRequirements(tmpImage, &reqs);
+        device_.destroyImage(tmpImage, nullptr);
+    }   
+
+    return ResourceMemoryRequirement()
+        .SetSize(reqs.size)
+        .SetAlignment(reqs.alignment)
+        .SetUsageBitSet(ResourceMemoryUsageBitSet());
+}
 
 } // namespace gfx_low
 } // namespace ae
