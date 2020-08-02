@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -27,6 +28,18 @@ public:
         device_.Reset(device);
         return *this;
     }
+
+    /// イメージデータのメモリアドレス。（初期値：IsValid() == false なアドレス） 
+    ResourceMemoryAddress DataAddress() const { return dataAddress_; }
+
+    /// DataAddress() の設定。 
+    ImageResourceCreateInfo& SetDataAddress(
+        const ResourceMemoryAddress& dataAddress)
+    {
+        dataAddress_ = dataAddress;
+        return *this;
+    }
+
     //@}
 
     /// @name 内部処理用関数群
@@ -41,6 +54,7 @@ public:
 
 private:
     base::Pointer<gfx_low::Device> device_;
+    ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> imagePtr_;
 };
 
