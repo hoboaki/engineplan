@@ -37,6 +37,12 @@ public:
     Extent3i()
     : Extent3i(0, 0, 0) {}
 
+    /// コピーして作成。
+    Extent3i(const Extent3iPod& rhs)
+    { 
+        *this = rhs;
+    }
+
     /// Extent2i と depth を指定して初期化。
     /// @details
     /// 全要素が 0 以上である必要があります。

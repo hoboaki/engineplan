@@ -28,6 +28,12 @@ public:
     Extent2i()
     : Extent2i(0, 0) {}
 
+    /// コピーして作成。
+    Extent2i(const Extent2iPod& rhs)
+    { 
+        *this = rhs;
+    }
+
     /// 各要素を指定して初期化。
     /// @details
     /// 全要素が 0 以上である必要があります。
