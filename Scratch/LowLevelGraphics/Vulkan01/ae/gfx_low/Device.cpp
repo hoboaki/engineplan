@@ -9,9 +9,10 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/RuntimeMarray.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
-#include <ae/gfx_low/InternalEnumUtil.hpp>
+#include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
+#include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
@@ -318,7 +319,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(const ImageRes
     return ResourceMemoryRequirements()
         .SetSize(reqs.size)
         .SetAlignment(reqs.alignment)
-        .SetUsageBitSet(ResourceMemoryUsageBitSet());
+        .SetUsageBitSet(EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
 }
 
 } // namespace gfx_low
