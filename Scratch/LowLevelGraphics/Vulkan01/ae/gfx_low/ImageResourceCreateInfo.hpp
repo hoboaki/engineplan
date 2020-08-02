@@ -1,8 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
-#include <ae/base/Extent3i.hpp>
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/ImageResourceSpecInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
@@ -30,20 +30,14 @@ public:
         return *this;
     }
 
-    /// イメージ範囲。（初期値：0,0,0） 
-    base::Extent3i Extent() const { return extent_; }
+    /// データ構造に関する仕様情報。（初期値：デフォルトコンストラクタ値）
+    ImageResourceSpecInfo SpecInfo() const { return specInfo_; }
 
-    /// 2次元用 Extent() の設定。
-    ImageResourceCreateInfo& SetExtent(const base::Extent2iPod& extent) {
-        extent_ = base::Extent3i(extent, 1);
-        return *this;
-    }
-
-    /// Extent() の設定。
-    /// @details 2次元イメージの場合は depth に 1 を入れてください。
-    ImageResourceCreateInfo& SetExtent(const base::Extent3iPod& extent)
+    /// SpecInfo() の設定。 
+    ImageResourceCreateInfo& SetSpecInfo(
+        const ImageResourceSpecInfo& specInfo)
     {
-        extent_ = extent;
+        specInfo_ = specInfo;
         return *this;
     }
 
@@ -72,7 +66,7 @@ public:
 
 private:
     base::Pointer<gfx_low::Device> device_;
-    base::Extent3i extent_;
+    ImageResourceSpecInfo specInfo_;
     ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> imagePtr_;
 };
