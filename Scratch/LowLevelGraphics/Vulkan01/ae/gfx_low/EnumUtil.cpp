@@ -11,11 +11,11 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-::vk::AttachmentLoadOp EnumUtil::ToNative(const AttachmentLoadOp loadOp) {
+::vk::AttachmentLoadOp EnumUtil::ToAttachmentLoadOp(const AttachmentLoadOp loadOp) {
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     const ::vk::AttachmentLoadOp table[] = {
-        ::vk::AttachmentLoadOp::eDontCare, // Invalid
+        ::vk::AttachmentLoadOp(-1), // Invalid
         ::vk::AttachmentLoadOp::eDontCare, // DontCare
         ::vk::AttachmentLoadOp::eLoad, // Load
         ::vk::AttachmentLoadOp::eClear, // Clear
@@ -25,11 +25,11 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::AttachmentStoreOp EnumUtil::ToNative(const AttachmentStoreOp storeOp) {
+::vk::AttachmentStoreOp EnumUtil::ToAttachmentStoreOp(const AttachmentStoreOp storeOp) {
     AE_BASE_ASSERT_ENUM(storeOp, AttachmentStoreOp);
     AE_BASE_ASSERT(storeOp != AttachmentStoreOp::Invalid);
     const ::vk::AttachmentStoreOp table[] = {
-        ::vk::AttachmentStoreOp::eDontCare, // Invalid
+        ::vk::AttachmentStoreOp(-1), // Invalid
         ::vk::AttachmentStoreOp::eDontCare, // DontCare
         ::vk::AttachmentStoreOp::eStore, // Store
     };

@@ -126,8 +126,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
 
             // その他の設定
             attachment.setSamples(::vk::SampleCountFlagBits::e1)
-                .setLoadOp(EnumUtil::ToNative(renderTargetSetting.LoadOp()))
-                .setStoreOp(EnumUtil::ToNative(renderTargetSetting.StoreOp()))
+                .setLoadOp(EnumUtil::ToAttachmentLoadOp(renderTargetSetting.LoadOp()))
+                .setStoreOp(EnumUtil::ToAttachmentStoreOp(renderTargetSetting.StoreOp()))
                 .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
                 .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare)
                 .setInitialLayout(EnumUtil::ToImageLayoutForColorAttachment(

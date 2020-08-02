@@ -16,8 +16,8 @@ namespace gfx_low {
 
 /// Enum に関する便利関数郡。
 struct EnumUtil {
-    static ::vk::AttachmentLoadOp ToNative(AttachmentLoadOp loadOp);
-    static ::vk::AttachmentStoreOp ToNative(AttachmentStoreOp storeOp);
+    static ::vk::AttachmentLoadOp ToAttachmentLoadOp(AttachmentLoadOp loadOp);
+    static ::vk::AttachmentStoreOp ToAttachmentStoreOp(AttachmentStoreOp storeOp);
     static ::vk::Format ToFormat(ImageFormat format);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
