@@ -3,6 +3,7 @@
 
 #include <ae/base/Extent3i.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
+#include <ae/gfx_low/ImageKind.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -13,7 +14,13 @@ class ImageResourceSpecInfo {
 public:
     /// @name プロパティ
     //@{
-    /// イメージフォーマット。
+    /// イメージの種類。（初期値：Invalid）
+    ImageKind Kind() const { return kind_; }
+
+    /// Kind() の設定。
+    ImageResourceSpecInfo& SetKind(ImageKind kind);
+
+    /// イメージフォーマット。（初期値：Invalid)
     ImageFormat Format() const { return format_; }
 
     /// Format() の設定。
@@ -34,11 +41,28 @@ public:
         extent_ = extent;
         return *this;
     }
+
+    /// ミップマップレベル。（初期値：1） 
+    int MipLevels() const { return mipLevels_; }
+
+    /// MipLevels() の設定。
+    /// @param mipLevels 1以上。
+    ImageResourceSpecInfo& SetMipLevels(int mipLevels);
+
+    /// テクスチャ配列の配列長。（初期値：1）
+    int ArrayLength() const { return arrayLength_; }
+
+    /// ArrayLength() の設定。
+    /// @param arrayLength 1以上。
+    ImageResourceSpecInfo& SetArrayLength(int arrayLength);
     //@}
 
 private:
-    ImageFormat format_;
+    ImageKind kind_ = ImageKind::Invalid;
+    ImageFormat format_ = ImageFormat::Invalid;
     base::Extent3i extent_;
+    int mipLevels_ = 1;
+    int arrayLength_ = 1;
 };
 
 } // namespace gfx_low
