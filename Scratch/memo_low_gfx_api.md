@@ -210,6 +210,10 @@
 - コピー元バッファ
   - コピー元バッファは VkBuffer として作成。
   - メモリ情報の取得は通常時と変わらない。
+- キューブマップ
+  - 参考サイトは[こちら](https://satellitnorden.wordpress.com/2018/01/23/vulkan-adventures-cube-map-tutorial/)。
+  - VkImageCreateInfo::flags で VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT を指定、VkImageCreateInfo::arrayLayers に 6 を指定する。
+  - VkImageViewCreate では viewType に VK_IMAGE_VIEW_TYPE_CUBEを指定、subresourceRange.layerCount に 6 を指定。
 
 ### DirectX 12
 
@@ -233,6 +237,10 @@
   - コピー先の RESOUCE_DESC があれば取得できるようだ。
   - ちなみに、DX12はテクスチャのコピー元バッファに対して[１行あたりのバイトサイズや１サブリソースあたりにサイズやアライメントに制約](https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/upload-and-readback-of-texture-data)がある。
   - [こちらのサイト](https://glhub.blogspot.com/2016/07/dx12-getcopyablefootprints.html)にこの辺りの解説がある。分かりやすい。
+- キューブマップ
+  - RESOURCE_DESC の DepthOrArraySize に 6 を代入してリソースを作成。
+  - [SHADER_RESOURCE_VIEW_DESC](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_resource_view_desc) の ViewDimension で D3D12_SRV_DIMENSION_TEXTURECUBE を指定。 
+  - 参考サイトは[こちら](https://blog.techlab-xe.net/directx12-cubemap-1/)。
 
 ### Metal
 
@@ -250,6 +258,8 @@
   - GPUメモリへの転送元用のバッファは MTLBuffer でも MTLTexture でも良いように見える。
   - Buffer に転送するなら Bufferで、Texture に転送するなら Texture で作成するのがシンプル。
   - Buffer to Buffer の場合は[オフセット値やサイズ値が 4 の倍数にするといった制約がOSによってある](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copyfrombuffer?language=objc)。
+- キューブマップ
+  - [MTLTextureDescriptor.textureType](https://developer.apple.com/documentation/metal/mtltexturedescriptor/1516228-texturetype) で指定して作成。
 
 ## シェーダーオブジェクト生成
 
