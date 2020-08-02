@@ -1,33 +1,20 @@
 // 文字コード：UTF-8
 #pragma once
 
-#include <ae/gfx_low/ResourceMemoryKind.hpp>
 #include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
-
-namespace ae {
-namespace gfx_low {
-class ResourceMemoryRequirement;
-}
-} // namespace ae
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
 
-/// ResourceMemory 確保に必要な情報。
-class ResourceMemoryAllocInfo {
+/// リソースが要求する ResoureceMemory の必要条件。
+class ResourceMemoryRequirement {
 public:
-    /// メモリの種類。（初期値：Invalid）
-    ResourceMemoryKind Kind() const { return kind_; }
-
-    /// Kind() の設定。（設定必須）
-    ResourceMemoryAllocInfo& SetKind(ResourceMemoryKind kind);
-
     /// 使用方法を示すビットセット。（初期値：全てOff）
     ResourceMemoryUsageBitSet UsageBitSet() const { return usageBitSet_; }
 
     /// UsageBitSet() の設定。（設定必須）
-    ResourceMemoryAllocInfo& SetUsageBitSet(
+    ResourceMemoryRequirement& SetUsageBitSet(
         const ResourceMemoryUsageBitSet& usageBitSet) {
         usageBitSet_ = usageBitSet;
         return *this;
@@ -40,7 +27,7 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    ResourceMemoryAllocInfo& SetSize(size_t size) {
+    ResourceMemoryRequirement& SetSize(size_t size) {
         size_ = size;
         return *this;
     }
@@ -49,16 +36,12 @@ public:
     size_t Alignment() const { return alignment_; }
 
     /// Alignment() の設定。
-    ResourceMemoryAllocInfo& SetAlignment(size_t alignment) {
+    ResourceMemoryRequirement& SetAlignment(size_t alignment) {
         alignment_ = alignment;
         return *this;
     }
 
-    /// ResourceMemoryRequirement の要件を各パラメータに設定する。
-    ResourceMemoryAllocInfo& Set(const ResourceMemoryRequirement& requirement);
-
 private:
-    ResourceMemoryKind kind_ = ResourceMemoryKind::Invalid;
     ResourceMemoryUsageBitSet usageBitSet_;
     size_t size_ = 0;
     size_t alignment_ = 0;

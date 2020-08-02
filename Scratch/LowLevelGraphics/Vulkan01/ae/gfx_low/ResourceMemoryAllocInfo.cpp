@@ -3,6 +3,7 @@
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
+#include <ae/gfx_low/ResourceMemoryRequirement.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -14,6 +15,16 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
     AE_BASE_ASSERT_ENUM(kind, ResourceMemoryKind);
     AE_BASE_ASSERT(kind != ResourceMemoryKind::Invalid);
     kind_ = kind;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
+ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::Set(
+    const ResourceMemoryRequirement& requirement)
+{
+    SetUsageBitSet(requirement.UsageBitSet());
+    SetSize(requirement.Size());
+    SetAlignment(requirement.Alignment());
     return *this;
 }
 
