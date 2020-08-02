@@ -294,7 +294,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\Format.hpp">
+    <ClInclude Include="ae\gfx_low\ImageFormat.hpp">
       <SubType>
       </SubType>
     </ClInclude>

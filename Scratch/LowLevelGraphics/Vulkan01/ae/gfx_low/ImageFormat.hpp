@@ -5,7 +5,7 @@
 namespace ae {
 namespace gfx_low {
 
-/// バッファフォーマット。
+/// イメージリソースのフォーマット。
 /// @details
 /// 列挙値の名前がメモリ上における要素の並び順を表しているわけではありません。
 /// 例えば　R8G8 というフォーマットがメモリ的には G
@@ -13,7 +13,7 @@ namespace gfx_low {
 /// 配置の仕様は動作プラットフォームに依存します。
 ///
 /// （開発用メモ）非圧縮名前順、圧縮名前順で列挙値を定義しています。
-enum class Format {
+enum class ImageFormat {
     /// 無効値。
     Invalid,
 

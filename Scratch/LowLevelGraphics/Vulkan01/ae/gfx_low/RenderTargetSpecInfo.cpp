@@ -9,11 +9,11 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-RenderTargetSpecInfo& RenderTargetSpecInfo::SetFormat(
-    const gfx_low::Format format) {
-    AE_BASE_ASSERT_ENUM(format, Format);
-    AE_BASE_ASSERT(format != gfx_low::Format::Invalid);
-    format_ = format;
+RenderTargetSpecInfo& RenderTargetSpecInfo::SetImageFormat(
+    const gfx_low::ImageFormat imageFormat) {
+    AE_BASE_ASSERT_ENUM(imageFormat, ImageFormat);
+    AE_BASE_ASSERT(imageFormat != gfx_low::ImageFormat::Invalid);
+    imageFormat_ = imageFormat;
     return *this;
 }
 
