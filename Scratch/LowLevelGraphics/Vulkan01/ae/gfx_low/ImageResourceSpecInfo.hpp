@@ -4,6 +4,7 @@
 #include <ae/base/Extent3i.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageKind.hpp>
+#include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -55,6 +56,16 @@ public:
     /// ArrayLength() の設定。
     /// @param arrayLength 1以上。
     ImageResourceSpecInfo& SetArrayLength(int arrayLength);
+
+    /// 使用方法を示すビットセット。（初期値：全てOff）
+    ImageResourceUsageBitSet UsageBitSet() const { return usageBitSet_; }
+
+    /// UsageBitSet() の設定。（設定必須）
+    ImageResourceSpecInfo& SetUsageBitSet(
+        const ImageResourceUsageBitSet& usageBitSet) {
+        usageBitSet_ = usageBitSet;
+        return *this;
+    }
     //@}
 
 private:
@@ -63,6 +74,7 @@ private:
     base::Extent3i extent_;
     int mipLevels_ = 1;
     int arrayLength_ = 1;
+    ImageResourceUsageBitSet usageBitSet_;
 };
 
 } // namespace gfx_low
