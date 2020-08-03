@@ -18,23 +18,26 @@ namespace gfx_low {
 /// RenderTargetImageView オブジェクト作成に必要な情報。
 class RenderTargetImageViewCreateInfo {
 public:
-    /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
+    /// @name プロパティ
     //@{
+    /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
-    RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* system) {
-        device_.Reset(system);
+
+    /// Device() の設定。（設定必須） 
+    RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+        device_.Reset(device);
         return *this;
     }
-    //@}
 
-    /// @name 対象となる ImageResource のポインタ（設定必須、初期値：nullptr）
-    //@{
+    /// 対象となる ImageResource のポインタ。（初期値：nullptr）
     gfx_low::ImageResource* ImageResource() const {
         return imageResource_.Get();
     }
+
+    /// ImageResource の設定。（設定必須）
     RenderTargetImageViewCreateInfo& SetImageResource(
-        gfx_low::ImageResource* system) {
-        imageResource_.Reset(system);
+        gfx_low::ImageResource* imageResource) {
+        imageResource_.Reset(imageResource);
         return *this;
     }
     //@}
