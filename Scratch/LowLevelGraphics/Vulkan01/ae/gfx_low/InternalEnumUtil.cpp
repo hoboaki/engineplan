@@ -155,7 +155,7 @@ namespace gfx_low {
             result |= table[i];
         }
     }
-    return ::vk::ImageUsageFlags();
+    return result;
 }
 
 //------------------------------------------------------------------------------

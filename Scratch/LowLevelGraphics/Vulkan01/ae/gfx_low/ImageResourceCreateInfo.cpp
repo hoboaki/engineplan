@@ -21,7 +21,7 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetInitialState(
 //------------------------------------------------------------------------------
 ::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const {
     return ::vk::ImageCreateInfo()
-        .setImageType(vk::ImageType::e2D)
+        .setImageType(InternalEnumUtil::ToImageType(specInfo_.Kind()))
         .setFormat(InternalEnumUtil::ToFormat(specInfo_.Format()))
         .setExtent({uint32_t(specInfo_.Extent().width),
             uint32_t(specInfo_.Extent().height),
