@@ -22,7 +22,7 @@ RenderTargetImageView::RenderTargetImageView(
 
     auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
-            .setImage(base::PtrToRef(createInfo.ImageResource()).Instance_())
+            .setImage(base::PtrToRef(createInfo.Resource()).Instance_())
             .setViewType(::vk::ImageViewType::e2D)
             .setFormat(imageFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(

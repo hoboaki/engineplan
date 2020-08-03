@@ -83,7 +83,7 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
             target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)
-                    .SetImageResource(target.ImageResource.Ptr())
+                    .SetResource(target.ImageResource.Ptr())
                     .SetRawFormat_(imageFormat));
         }
     }

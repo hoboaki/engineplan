@@ -23,21 +23,18 @@ public:
     /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
 
-    /// Device() の設定。（設定必須） 
+    /// Device() の設定。（設定必須）
     RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
     }
 
     /// 対象となる ImageResource のポインタ。（初期値：nullptr）
-    gfx_low::ImageResource* ImageResource() const {
-        return imageResource_.Get();
-    }
+    ImageResource* Resource() const { return resource_.Get(); }
 
     /// ImageResource の設定。（設定必須）
-    RenderTargetImageViewCreateInfo& SetImageResource(
-        gfx_low::ImageResource* imageResource) {
-        imageResource_.Reset(imageResource);
+    RenderTargetImageViewCreateInfo& SetResource(ImageResource* imageResource) {
+        resource_.Reset(imageResource);
         return *this;
     }
     //@}
@@ -55,7 +52,7 @@ public:
 
 private:
     base::Pointer<gfx_low::Device> device_;
-    base::Pointer<gfx_low::ImageResource> imageResource_;
+    base::Pointer<ImageResource> resource_;
     ::vk::Format rawFormat_ = ::vk::Format::eUndefined;
 };
 
