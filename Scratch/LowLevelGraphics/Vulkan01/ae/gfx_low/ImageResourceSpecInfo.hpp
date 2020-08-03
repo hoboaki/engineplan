@@ -17,7 +17,7 @@ class ImageResourceSpecInfo {
 public:
     /// @name プロパティ
     //@{
-    /// イメージの種類。（初期値：Invalid）
+    /// イメージリソースの種類。（初期値：Invalid）
     ImageResourceKind Kind() const { return kind_; }
 
     /// Kind() の設定。
