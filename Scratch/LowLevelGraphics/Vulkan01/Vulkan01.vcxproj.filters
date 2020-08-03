@@ -498,9 +498,6 @@
     <ClInclude Include="ae\gfx_low\ImageResourceSpecInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ImageKind.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ae\gfx_low\ImageResourceUsage.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -529,6 +526,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\ImageViewKind.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageResourceKind.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

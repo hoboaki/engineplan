@@ -4,7 +4,7 @@
 #include <ae/gfx_low/AttachmentLoadOp.hpp>
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
-#include <ae/gfx_low/ImageKind.hpp>
+#include <ae/gfx_low/ImageResourceKind.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
@@ -23,7 +23,7 @@ struct InternalEnumUtil {
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
     static ::vk::ImageTiling ToImageTiling(ImageResourceTiling tiling);
-    static ::vk::ImageType ToImageType(ImageKind kind);
+    static ::vk::ImageType ToImageType(ImageResourceKind kind);
     static ::vk::ImageUsageFlags ToImageUsageFlags(
         const ImageResourceUsageBitSet& usageBitSet);
     static ::vk::ImageViewType ToImageViewType(ImageViewKind kind);

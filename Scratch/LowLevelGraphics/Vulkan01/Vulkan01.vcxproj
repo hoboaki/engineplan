@@ -262,7 +262,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ImageKind.hpp">
+    <ClInclude Include="ae\gfx_low\ImageResourceKind.hpp">
       <SubType>
       </SubType>
     </ClInclude>

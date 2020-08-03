@@ -4,7 +4,7 @@
 #include <ae/base/Extent2i.hpp>
 #include <ae/base/Extent3i.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
-#include <ae/gfx_low/ImageKind.hpp>
+#include <ae/gfx_low/ImageResourceKind.hpp>
 #include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 
@@ -18,10 +18,10 @@ public:
     /// @name プロパティ
     //@{
     /// イメージの種類。（初期値：Invalid）
-    ImageKind Kind() const { return kind_; }
+    ImageResourceKind Kind() const { return kind_; }
 
     /// Kind() の設定。
-    ImageResourceSpecInfo& SetKind(ImageKind kind);
+    ImageResourceSpecInfo& SetKind(ImageResourceKind kind);
 
     /// イメージフォーマット。（初期値：Invalid)
     ImageFormat Format() const { return format_; }
@@ -80,7 +80,7 @@ public:
     //@}
 
 private:
-    ImageKind kind_ = ImageKind::Invalid;
+    ImageResourceKind kind_ = ImageResourceKind::Invalid;
     ImageFormat format_ = ImageFormat::Invalid;
     ImageResourceTiling tiling_ = ImageResourceTiling::Invalid;
     base::Extent3i extent_;

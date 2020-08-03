@@ -9,9 +9,9 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-ImageResourceSpecInfo& ImageResourceSpecInfo::SetKind(const ImageKind kind) {
-    AE_BASE_ASSERT_ENUM(kind, ImageKind);
-    AE_BASE_ASSERT(kind != ImageKind::Invalid);
+ImageResourceSpecInfo& ImageResourceSpecInfo::SetKind(const ImageResourceKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, ImageResourceKind);
+    AE_BASE_ASSERT(kind != ImageResourceKind::Invalid);
     kind_ = kind;
     return *this;
 }

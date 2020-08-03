@@ -108,9 +108,9 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageType InternalEnumUtil::ToImageType(const ImageKind kind) {
-    AE_BASE_ASSERT_ENUM(kind, ImageKind);
-    AE_BASE_ASSERT(kind != ImageKind::Invalid);
+::vk::ImageType InternalEnumUtil::ToImageType(const ImageResourceKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, ImageResourceKind);
+    AE_BASE_ASSERT(kind != ImageResourceKind::Invalid);
     const ::vk::ImageType table[] = {
         ::vk::ImageType(-1), // Invalid
         ::vk::ImageType::e1D, // Image1d
@@ -118,7 +118,7 @@ namespace gfx_low {
         ::vk::ImageType::e3D, // Image3d
         ::vk::ImageType::e2D, // ImageCube
     };
-    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageKind::TERM));
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceKind::TERM));
     return table[int(kind)];
 }
 

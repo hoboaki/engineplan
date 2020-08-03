@@ -5,8 +5,8 @@
 namespace ae {
 namespace gfx_low {
 
-/// イメージの種類。
-enum class ImageKind {
+/// イメージリソースの種類。
+enum class ImageResourceKind {
     /// 無効値。
     Invalid,
 

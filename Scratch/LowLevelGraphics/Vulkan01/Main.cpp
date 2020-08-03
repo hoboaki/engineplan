@@ -134,7 +134,7 @@ int aemain(::ae::base::Application* app) {
         const auto format = ::ae::gfx_low::ImageFormat::D32Sfloat;
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
-                .SetKind(::ae::gfx_low::ImageKind::Image2d)
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
                 .SetFormat(format)
                 .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
                 .SetExtent(::ae::base::Extent2i(display.MainScreen().Width(),
