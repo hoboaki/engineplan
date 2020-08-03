@@ -37,6 +37,8 @@ public:
         resource_.Reset(imageResource);
         return *this;
     }
+
+    // @todo サブリソースレンジ指定。
     //@}
 
     /// @name 内部処理用関数群
