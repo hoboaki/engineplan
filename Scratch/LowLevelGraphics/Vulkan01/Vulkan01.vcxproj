@@ -230,7 +230,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DepthStencilImageView.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DepthStencilImageViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\EnumUtil.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageViewKind.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -495,6 +507,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\CommandBufferCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DepthStencilImageView.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DepthStencilImageViewCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

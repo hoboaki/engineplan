@@ -158,6 +158,25 @@ namespace gfx_low {
     return ::vk::ImageUsageFlags();
 }
 
+//------------------------------------------------------------------------------
+::vk::ImageViewType InternalEnumUtil::ToImageViewType(
+    const ImageViewKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, ImageViewKind);
+    AE_BASE_ASSERT(kind != ImageViewKind::Invalid);
+    const ::vk::ImageViewType table[] = {
+        ::vk::ImageViewType(-1), // Invalid
+        ::vk::ImageViewType::e1D, // Image1d
+        ::vk::ImageViewType::e2D, // Image2d
+        ::vk::ImageViewType::e3D, // Image3d
+        ::vk::ImageViewType::eCube, // ImageCube
+        ::vk::ImageViewType::e1DArray, // Image1dArray
+        ::vk::ImageViewType::e2DArray, // Image2dArray
+        ::vk::ImageViewType::eCubeArray, // ImageCubeArray
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageViewKind::TERM));
+    return table[int(kind)];
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

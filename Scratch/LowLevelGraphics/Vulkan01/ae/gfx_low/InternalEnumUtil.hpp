@@ -8,6 +8,7 @@
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
+#include <ae/gfx_low/ImageViewKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
@@ -25,6 +26,7 @@ struct InternalEnumUtil {
     static ::vk::ImageType ToImageType(ImageKind kind);
     static ::vk::ImageUsageFlags ToImageUsageFlags(
         const ImageResourceUsageBitSet& usageBitSet);
+    static ::vk::ImageViewType ToImageViewType(ImageViewKind kind);
 };
 
 } // namespace gfx_low

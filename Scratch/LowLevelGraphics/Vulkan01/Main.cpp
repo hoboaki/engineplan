@@ -8,6 +8,8 @@
 #include <ae/base/SdkHeader.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/DepthStencilImageView.hpp>
+#include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
@@ -126,12 +128,14 @@ int aemain(::ae::base::Application* app) {
 
     // DepthBuffer 作成
     ::ae::gfx_low::UniqueResourceMemory depthBufferMemory;
-    ::std::unique_ptr<::ae::gfx_low::ImageResource> depthImage;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> depthBufferImage;
+    ::std::unique_ptr<::ae::gfx_low::DepthStencilImageView> depthBufferView;
     {
-        auto specInfo =
+        const auto format = ::ae::gfx_low::ImageFormat::D32Sfloat;
+        const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageKind::Image2d)
-                .SetFormat(::ae::gfx_low::ImageFormat::D32Sfloat)
+                .SetFormat(format)
                 .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
                 .SetExtent(::ae::base::Extent2i(display.MainScreen().Width(),
                     display.MainScreen().Height()))
@@ -143,11 +147,17 @@ int aemain(::ae::base::Application* app) {
                 .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
                 .SetParams(
                     gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
-        depthImage.reset(new ::ae::gfx_low::ImageResource(
+        depthBufferImage.reset(new ::ae::gfx_low::ImageResource(
             ::ae::gfx_low::ImageResourceCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetSpecInfo(specInfo)
                 .SetDataAddress(*depthBufferMemory)));
+        depthBufferView.reset(new ::ae::gfx_low::DepthStencilImageView(
+            ::ae::gfx_low::DepthStencilImageViewCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetResource(depthBufferImage.get())
+                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                .SetFormat(format)));
     }
 
     // CommandBuffer の作成
