@@ -78,6 +78,15 @@ namespace gfx_low {
         ::vk::Format::eR16G16B16A16Snorm, // R16G16B16A16Snorm
         ::vk::Format::eR16G16B16A16Uint, // R16G16B16A16Uint
         ::vk::Format::eR16G16B16A16Unorm, // R16G16B16A16Unorm
+
+        ::vk::Format::eD16Unorm, // D16Unorm
+        ::vk::Format::eD32Sfloat, // D32Sfloat
+
+        ::vk::Format::eD16UnormS8Uint, // D16UnormS8Uint
+        ::vk::Format::eD24UnormS8Uint, // D24UnormS8Uint
+        ::vk::Format::eD32SfloatS8Uint, // D32SfloatS8Uint
+
+        ::vk::Format::eS8Uint, // S8Uint
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageFormat::TERM));
     return table[int(format)];

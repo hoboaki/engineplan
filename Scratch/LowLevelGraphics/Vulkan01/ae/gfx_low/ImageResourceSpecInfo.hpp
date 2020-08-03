@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/Extent3i.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageKind.hpp>

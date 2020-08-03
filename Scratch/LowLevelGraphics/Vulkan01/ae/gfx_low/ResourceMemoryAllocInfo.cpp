@@ -19,7 +19,7 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
 }
 
 //------------------------------------------------------------------------------
-ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::Set(
+ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetParams(
     const ResourceMemoryRequirements& requirement)
 {
     SetUsageBitSet(requirement.UsageBitSet());
