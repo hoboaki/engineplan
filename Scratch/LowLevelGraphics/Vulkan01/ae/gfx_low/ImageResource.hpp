@@ -42,6 +42,8 @@ public:
 private:
     gfx_low::Device& device_;
     ::vk::Image image_;
+    /// ImagePtr を使って作ったか。
+    bool isCreatedByImagePtr_;
 };
 
 } // namespace gfx_low
