@@ -231,8 +231,7 @@ int aemain(::ae::base::Application* app) {
                         .SetRenderTargetSettings(renderTargetSettings)
                         .SetRenderArea(
                             ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
-                                display.MainScreen().Width(),
-                                display.MainScreen().Height())));
+                                display.MainScreen().Extent())));
                 cmd.CmdEndRenderPass();
             }
         }

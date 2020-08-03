@@ -3,6 +3,7 @@
 
 // includes
 #include <ae/base/Aabb2.hpp>
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Aabb2i::Aabb2i(const Vector2iPod& begin, const int width, const int height)
 }
 
 //------------------------------------------------------------------------------
+Aabb2i::Aabb2i(const Vector2iPod& begin, const Extent2iPod& extent)
+: Aabb2i(begin, extent.width, extent.height) {}
+
+//------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::Begin() const {
     return min_;
 }
@@ -61,6 +66,11 @@ int Aabb2i::Width() const {
 //------------------------------------------------------------------------------
 int Aabb2i::Height() const {
     return int(term_.y - min_.y);
+}
+
+//------------------------------------------------------------------------------
+Extent2iPod Aabb2i::Extent() const {
+    return Extent2i(Width(), Height());
 }
 
 //------------------------------------------------------------------------------

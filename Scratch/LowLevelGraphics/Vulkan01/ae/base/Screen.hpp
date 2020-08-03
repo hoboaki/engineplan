@@ -4,6 +4,7 @@
 #define AE_BASE_INCLUDED_SCREEN_HPP
 
 #include <ae/base/BuiltInTypes.hpp>
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/NonCopyable.hpp>
 #include <ae/base/Os.hpp>
 
@@ -45,6 +46,9 @@ public:
 
     /// 縦ピクセル数。
     int Height() const;
+
+    /// 範囲。
+    Extent2iPod Extent() const { return Extent2i(Width(), Height()); }
 
     /// @brief 指定の位置がスクリーン内かどうか判定する。
     /// @return 0 <= pos.x < Width() && 0 <= pos.y < Height()
