@@ -12,6 +12,8 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
+#include <ae/gfx_low/ImageResource.hpp>
+#include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
@@ -19,12 +21,14 @@
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
+#include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
 #include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <ae/gfx_low/SystemCreateInfo.hpp>
+#include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <memory>
 
 extern int WINAPI DemoWinMain(
@@ -119,6 +123,32 @@ int aemain(::ae::base::Application* app) {
     const int swapchainImageCount = 3;
     auto swapchain = swapchainMaster->CreateSwapchain(
         ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
+
+    // DepthBuffer 作成
+    ::ae::gfx_low::UniqueResourceMemory depthBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> depthImage;
+    {
+        auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageKind::Image2d)
+                .SetFormat(::ae::gfx_low::ImageFormat::D32Sfloat)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetExtent(::ae::base::Extent2i(display.MainScreen().Width(),
+                    display.MainScreen().Height()))
+                .SetUsageBitSet(::ae::gfx_low::ImageResourceUsageBitSet().Set(
+                    ::ae::gfx_low::ImageResourceUsage::DepthStencilImage,
+                    true));
+        depthBufferMemory.Reset(gfxLowDevice.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetParams(
+                    gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
+        depthImage.reset(new ::ae::gfx_low::ImageResource(
+            ::ae::gfx_low::ImageResourceCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*depthBufferMemory)));
+    }
 
     // CommandBuffer の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers(
