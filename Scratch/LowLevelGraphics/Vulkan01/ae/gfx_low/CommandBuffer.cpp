@@ -5,6 +5,9 @@
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/DepthStencilImageView.hpp>
+#include <ae/gfx_low/DepthStencilSetting.hpp>
+#include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
@@ -13,6 +16,7 @@
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderTargetImageView.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
+#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
@@ -107,6 +111,10 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     activePass_.Set(CommandBufferFeature::Render, true);
 
     RenderPassProperty prop;
+    const bool hasDepthStencil = info.DepthStencilSettingPtr() != nullptr;
+    const int attachmentsCount = info.RenderPassSpecInfo().RenderTargetCount() +
+                                 (hasDepthStencil ? 1 : 0);
+    const int depthStencilIdx = hasDepthStencil ? attachmentsCount - 1 : -1;
     {
         // RenderPass 作成
         std::array<::vk::AttachmentDescription,
@@ -114,30 +122,52 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             attachments;
         for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount();
              ++i) {
-            const auto& renderTargetSpec =
+            const auto& spec =
                 info.RenderPassSpecInfo().RenderTargetSpecInfos()[i];
-            const auto& renderTargetSetting = info.RenderTargetSettings()[i];
+            const auto& setting = info.RenderTargetSettings()[i];
             auto& attachment = attachments[i];
 
             const auto format =
-                renderTargetSpec.NativeFormat_() != ::vk::Format::eUndefined
-                    ? renderTargetSpec.NativeFormat_()
-                    : InternalEnumUtil::ToFormat(renderTargetSpec.ImageFormat());
-            
+                spec.NativeFormat_() != ::vk::Format::eUndefined
+                    ? spec.NativeFormat_()
+                    : InternalEnumUtil::ToFormat(spec.ImageFormat());
+
             attachment.setFormat(format)
                 .setSamples(::vk::SampleCountFlagBits::e1)
-                .setLoadOp(InternalEnumUtil::ToAttachmentLoadOp(
-                    renderTargetSetting.LoadOp()))
-                .setStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
-                    renderTargetSetting.StoreOp()))
+                .setLoadOp(
+                    InternalEnumUtil::ToAttachmentLoadOp(setting.LoadOp()))
+                .setStoreOp(
+                    InternalEnumUtil::ToAttachmentStoreOp(setting.StoreOp()))
                 .setStencilLoadOp(vk::AttachmentLoadOp::eDontCare)
                 .setStencilStoreOp(vk::AttachmentStoreOp::eDontCare)
                 .setInitialLayout(
                     InternalEnumUtil::ToImageLayoutForColorAttachment(
-                        renderTargetSetting.InitialImageResourceState()))
+                        setting.InitialImageResourceState()))
                 .setFinalLayout(
                     InternalEnumUtil::ToImageLayoutForColorAttachment(
-                        renderTargetSetting.FinalImageResourceState()));
+                        setting.FinalImageResourceState()));
+        }
+        if (info.DepthStencilSettingPtr() != nullptr) {
+            const auto& spec = base::PtrToRef(
+                info.RenderPassSpecInfo().DepthStencilSpecInfoPtr());
+            const auto& setting = base::PtrToRef(info.DepthStencilSettingPtr());
+            auto& attachment = attachments[depthStencilIdx];
+            attachment.setFormat(InternalEnumUtil::ToFormat(spec.ImageFormat()))
+                .setSamples(::vk::SampleCountFlagBits::e1)
+                .setLoadOp(
+                    InternalEnumUtil::ToAttachmentLoadOp(setting.DepthLoadOp()))
+                .setStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
+                    setting.DepthStoreOp()))
+                .setStencilLoadOp(InternalEnumUtil::ToAttachmentLoadOp(
+                    setting.StencilLoadOp()))
+                .setStencilStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
+                    setting.StencilStoreOp()))
+                .setInitialLayout(
+                    InternalEnumUtil::ToImageLayoutForColorAttachment(
+                        setting.InitialImageResourceState()))
+                .setFinalLayout(
+                    InternalEnumUtil::ToImageLayoutForColorAttachment(
+                        setting.FinalImageResourceState()));
         }
 
         auto const colorReference =
@@ -174,7 +204,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
         };
 
         auto const renderPassCreateInfo = vk::RenderPassCreateInfo()
-                                              .setAttachmentCount(1)
+                                              .setAttachmentCount(attachmentsCount)
                                               .setPAttachments(&attachments[0])
                                               .setSubpassCount(1)
                                               .setPSubpasses(&subpass)
@@ -196,11 +226,17 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                                 .RenderTargetImageView()
                                 ->Instance_();
         }
+        if (hasDepthStencil) {
+            imageViews[depthStencilIdx] =
+                base::PtrToRef(info.DepthStencilSettingPtr())
+                    .DepthStencilImageView()
+                    ->Instance_();
+        }
 
         auto const createInfo =
             vk::FramebufferCreateInfo()
                 .setRenderPass(prop.renderPass)
-                .setAttachmentCount(1)
+                .setAttachmentCount(attachmentsCount)
                 .setPAttachments(&imageViews[0])
                 .setWidth(uint32_t(info.RenderArea().Width()))
                 .setHeight(uint32_t(info.RenderArea().Height()))
@@ -222,6 +258,12 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             std::array<float, 4>({color.r, color.g, color.b, color.a});
         clearValues[i].setColor(val);
     }
+    if (hasDepthStencil) {
+        const auto& setting = base::PtrToRef(info.DepthStencilSettingPtr());
+        clearValues[depthStencilIdx].setDepthStencil(
+            ::vk::ClearDepthStencilValue(setting.DepthClearValue(),
+                uint32_t(setting.StencilClearValue())));
+    }
 
     auto const passInfo =
         ::vk::RenderPassBeginInfo()
@@ -232,7 +274,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                                  info.RenderArea().Begin().y),
                     ::vk::Extent2D(uint32_t(info.RenderArea().Width()),
                         uint32_t(info.RenderArea().Height()))))
-            .setClearValueCount(1)
+            .setClearValueCount(attachmentsCount)
             .setPClearValues(&clearValues[0]);
 
     commandBuffer_.beginRenderPass(passInfo, vk::SubpassContents::eInline);

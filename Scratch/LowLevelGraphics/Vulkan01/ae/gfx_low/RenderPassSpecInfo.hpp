@@ -2,7 +2,6 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
-#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <array>
 
 namespace ae {
