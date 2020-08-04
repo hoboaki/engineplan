@@ -22,6 +22,8 @@ struct InternalEnumUtil {
     static ::vk::Format ToFormat(ImageFormat format);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
+    static ::vk::ImageLayout ToImageLayoutForDepthStencilAttachment(
+        ImageResourceState state, ImageFormat format);
     static ::vk::ImageTiling ToImageTiling(ImageResourceTiling tiling);
     static ::vk::ImageType ToImageType(ImageResourceKind kind);
     static ::vk::ImageUsageFlags ToImageUsageFlags(

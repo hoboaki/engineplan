@@ -5,6 +5,7 @@
 #include <ae/base/ArrayLength.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/StaticAssert.hpp>
+#include <ae/gfx_low/EnumUtil.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -102,9 +103,51 @@ namespace gfx_low {
         ::vk::ImageLayout::eUndefined, // Unknown
         ::vk::ImageLayout::eColorAttachmentOptimal, // RenderTarget
         ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
+        ::vk::ImageLayout(-1), // DepthStencil
+        ::vk::ImageLayout(-1), // DepthStencilReadOnly
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceState::TERM));
-    return table[int(state)];
+    const auto result = table[int(state)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::ImageLayout InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
+    const ImageResourceState state, const ImageFormat format) {
+    AE_BASE_ASSERT_ENUM(state, ImageResourceState);
+    AE_BASE_ASSERT(state != ImageResourceState::Invalid);
+    const bool hasDepth = EnumUtil::HasDepthComponent(format);
+    const bool hasStencil = EnumUtil::HasStencilComponent(format);
+    AE_BASE_ASSERT(hasDepth || hasStencil);
+    switch (state) {
+    case ImageResourceState::Unknown: return ::vk::ImageLayout::eUndefined;
+    case ImageResourceState::DepthStencil: 
+        if (hasDepth && hasStencil) {
+            return ::vk::ImageLayout::eDepthStencilAttachmentOptimal;
+        } else if (hasDepth) {
+            return ::vk::ImageLayout::eDepthStencilAttachmentOptimal;
+        } else if (hasStencil) {
+            return ::vk::ImageLayout::eDepthStencilAttachmentOptimal;
+        }
+        AE_BASE_ASSERT_NOT_REACHED();
+        break;
+    case ImageResourceState::DepthStencilReadOnly:
+        if (hasDepth && hasStencil) {
+            return ::vk::ImageLayout::eDepthStencilReadOnlyOptimal;
+        } else if (hasDepth) {
+            return ::vk::ImageLayout::eDepthStencilReadOnlyOptimal;
+        } else if (hasStencil) {
+            return ::vk::ImageLayout::eDepthStencilReadOnlyOptimal;
+        }
+        AE_BASE_ASSERT_NOT_REACHED();
+        break;
+    default: 
+        AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
+            "Invalid state(%d) for depth stencil attachment.", int(state));
+        break;
+    }
+    return ::vk::ImageLayout(-1);
 }
 
 //------------------------------------------------------------------------------

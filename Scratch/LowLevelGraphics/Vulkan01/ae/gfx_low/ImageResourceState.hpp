@@ -27,10 +27,10 @@ enum class ImageResourceState {
     PresentSrc,
 
     /// RenderPass の DepthStencil として Read/Write される状態。
-    // DepthStencil,
+    DepthStencil,
 
     /// RenderPass の DepthStencil として Read のみされる状態。
-    // DepthStencilReadOnly,
+    DepthStencilReadOnly,
 
     TERM,
 };

@@ -120,12 +120,16 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
         std::array<::vk::AttachmentDescription,
             Device::SupportedAttachmentCountMax_>
             attachments;
+        std::array<::vk::AttachmentReference,
+            Device::SupportedAttachmentCountMax_>
+            attachmentRefs;
         for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount();
              ++i) {
             const auto& spec =
                 info.RenderPassSpecInfo().RenderTargetSpecInfos()[i];
             const auto& setting = info.RenderTargetSettings()[i];
             auto& attachment = attachments[i];
+            auto& attachmentRef = attachmentRefs[i];
 
             const auto format =
                 spec.NativeFormat_() != ::vk::Format::eUndefined
@@ -146,12 +150,15 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setFinalLayout(
                     InternalEnumUtil::ToImageLayoutForColorAttachment(
                         setting.FinalImageResourceState()));
+            attachmentRef.setAttachment(i).setLayout(
+                ::vk::ImageLayout::eColorAttachmentOptimal);
         }
         if (info.DepthStencilSettingPtr() != nullptr) {
             const auto& spec = base::PtrToRef(
                 info.RenderPassSpecInfo().DepthStencilSpecInfoPtr());
             const auto& setting = base::PtrToRef(info.DepthStencilSettingPtr());
             auto& attachment = attachments[depthStencilIdx];
+            auto& attachmentRef = attachmentRefs[depthStencilIdx];
             attachment.setFormat(InternalEnumUtil::ToFormat(spec.ImageFormat()))
                 .setSamples(::vk::SampleCountFlagBits::e1)
                 .setLoadOp(
@@ -163,34 +170,50 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setStencilStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
                     setting.StencilStoreOp()))
                 .setInitialLayout(
-                    InternalEnumUtil::ToImageLayoutForColorAttachment(
-                        setting.InitialImageResourceState()))
+                    InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
+                        setting.InitialImageResourceState(), spec.ImageFormat()))
                 .setFinalLayout(
-                    InternalEnumUtil::ToImageLayoutForColorAttachment(
-                        setting.FinalImageResourceState()));
+                    InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
+                        setting.FinalImageResourceState(), spec.ImageFormat()));
+            attachmentRef.setAttachment(depthStencilIdx)
+                .setLayout(::vk::ImageLayout::eDepthStencilAttachmentOptimal);
         }
-
-        auto const colorReference =
-            vk::AttachmentReference().setAttachment(0).setLayout(
-                vk::ImageLayout::eColorAttachmentOptimal);
 
         auto const subpass =
             vk::SubpassDescription()
                 .setPipelineBindPoint(vk::PipelineBindPoint::eGraphics)
                 .setInputAttachmentCount(0)
                 .setPInputAttachments(nullptr)
-                .setColorAttachmentCount(1)
-                .setPColorAttachments(&colorReference)
+                .setColorAttachmentCount(
+                    info.RenderPassSpecInfo().RenderTargetCount())
+                .setPColorAttachments(&attachmentRefs[0])
                 .setPResolveAttachments(nullptr)
-                .setPDepthStencilAttachment(nullptr)
+                .setPDepthStencilAttachment(
+                    hasDepthStencil ? &attachmentRefs[depthStencilIdx]
+                                    : nullptr)
                 .setPreserveAttachmentCount(0)
                 .setPPreserveAttachments(nullptr);
 
-        vk::PipelineStageFlags stages =
-            vk::PipelineStageFlagBits::eEarlyFragmentTests |
-            vk::PipelineStageFlagBits::eLateFragmentTests;
-        vk::SubpassDependency const dependencies[1] = {
-            vk::SubpassDependency() // Image layout transition
+        std::array<::vk::SubpassDependency, 2> dependencies;
+        if (hasDepthStencil) {
+            const ::vk::PipelineStageFlags stages =
+                ::vk::PipelineStageFlagBits::eEarlyFragmentTests |
+                ::vk::PipelineStageFlagBits::eLateFragmentTests;
+            dependencies[0] =
+                ::vk::SubpassDependency()
+                    .setSrcSubpass(VK_SUBPASS_EXTERNAL)
+                    .setDstSubpass(0)
+                    .setSrcStageMask(stages)
+                    .setDstStageMask(stages)
+                    .setSrcAccessMask(
+                        vk::AccessFlagBits::eDepthStencilAttachmentWrite)
+                    .setDstAccessMask(
+                        vk::AccessFlagBits::eDepthStencilAttachmentRead |
+                        vk::AccessFlagBits::eDepthStencilAttachmentWrite)
+                    .setDependencyFlags(vk::DependencyFlags());
+        }
+        dependencies[hasDepthStencil ? 1 : 0] =
+            ::vk::SubpassDependency()
                 .setSrcSubpass(VK_SUBPASS_EXTERNAL)
                 .setDstSubpass(0)
                 .setSrcStageMask(
@@ -200,16 +223,15 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setSrcAccessMask(vk::AccessFlagBits())
                 .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite |
                                   vk::AccessFlagBits::eColorAttachmentRead)
-                .setDependencyFlags(vk::DependencyFlags()),
-        };
+                .setDependencyFlags(vk::DependencyFlags());
 
         auto const renderPassCreateInfo = vk::RenderPassCreateInfo()
                                               .setAttachmentCount(attachmentsCount)
                                               .setPAttachments(&attachments[0])
                                               .setSubpassCount(1)
                                               .setPSubpasses(&subpass)
-                                              .setDependencyCount(1)
-                                              .setPDependencies(dependencies);
+                                              .setDependencyCount(hasDepthStencil ? 2 : 1)
+                                              .setPDependencies(&dependencies[0]);
         {
             const auto result = device_.Instance_().createRenderPass(
                 &renderPassCreateInfo, nullptr, &prop.renderPass);

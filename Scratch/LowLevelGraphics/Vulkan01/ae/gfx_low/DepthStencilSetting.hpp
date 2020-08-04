@@ -24,13 +24,13 @@ public:
     //@{
     /// DepthStencil イメージを指す DepthStencilImageView。（初期値：nullptr）
     gfx_low::DepthStencilImageView* DepthStencilImageView() const {
-        return renderTargetImageView_.Get();
+        return depthStencilImageView_.Get();
     }
 
     /// DepthStencilImageView() の設定。（設定必須）
     DepthStencilSetting& SetDepthStencilImageView(
         gfx_low::DepthStencilImageView* view) {
-        renderTargetImageView_.Reset(view);
+        depthStencilImageView_.Reset(view);
         return *this;
     }
 
@@ -90,7 +90,7 @@ public:
     //@}
 
 private:
-    base::Pointer<gfx_low::DepthStencilImageView> renderTargetImageView_;
+    base::Pointer<gfx_low::DepthStencilImageView> depthStencilImageView_;
     ImageResourceState initialImageResourceState_ = ImageResourceState::Invalid;
     ImageResourceState finalImageResourceState_ = ImageResourceState::Invalid;
     AttachmentLoadOp depthLoadOp_ = AttachmentLoadOp::Invalid;

@@ -10,6 +10,8 @@
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
+#include <ae/gfx_low/DepthStencilSetting.hpp>
+#include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
@@ -127,15 +129,15 @@ int aemain(::ae::base::Application* app) {
         ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
 
     // DepthBuffer 作成
+    const auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
     ::ae::gfx_low::UniqueResourceMemory depthBufferMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> depthBufferImage;
     ::std::unique_ptr<::ae::gfx_low::DepthStencilImageView> depthBufferView;
     {
-        const auto format = ::ae::gfx_low::ImageFormat::D32Sfloat;
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
-                .SetFormat(format)
+                .SetFormat(depthBufferFormat)
                 .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
                 .SetExtent(::ae::base::Extent2i(display.MainScreen().Width(),
                     display.MainScreen().Height()))
@@ -157,7 +159,7 @@ int aemain(::ae::base::Application* app) {
                 .SetDevice(gfxLowDevice.get())
                 .SetResource(depthBufferImage.get())
                 .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
-                .SetFormat(format)));
+                .SetFormat(depthBufferFormat)));
     }
 
     // CommandBuffer の作成
@@ -220,15 +222,36 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
                                     .ToRGBAf()),
                     };
+                const auto depthStencilSpecInfo =
+                    ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(
+                        depthBufferFormat);
+                const auto depthStencilSetting =
+                    ::ae::gfx_low::DepthStencilSetting()
+                        .SetDepthStencilImageView(depthBufferView.get())
+                        .SetInitialImageResourceState(
+                            ::ae::gfx_low::ImageResourceState::Unknown)
+                        .SetFinalImageResourceState(
+                            ::ae::gfx_low::ImageResourceState::DepthStencil)
+                        .SetDepthLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
+                        .SetDepthStoreOp(
+                            ::ae::gfx_low::AttachmentStoreOp::Store)
+                        .SetDepthClearValue(0.0f)
+                        .SetStencilLoadOp(
+                            ::ae::gfx_low::AttachmentLoadOp::Clear)
+                        .SetStencilStoreOp(
+                            ::ae::gfx_low::AttachmentStoreOp::Store)
+                        .SetStencilClearValue(0);
 
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo()
                         .SetRenderPassSpecInfo(
                             ::ae::gfx_low::RenderPassSpecInfo()
                                 .SetRenderTargetCount(1)
-                                .SetRenderTargetSpecInfos(
-                                    renderTargetSpecInfos))
+                                .SetRenderTargetSpecInfos(renderTargetSpecInfos)
+                                .SetDepthStencilSpecInfoPtr(
+                                    &depthStencilSpecInfo))
                         .SetRenderTargetSettings(renderTargetSettings)
+                        .SetDepthStencilSettingPtr(&depthStencilSetting)
                         .SetRenderArea(
                             ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
                                 display.MainScreen().Extent())));
