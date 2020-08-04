@@ -23,7 +23,9 @@ namespace gfx_low {
         ::vk::AttachmentLoadOp::eClear, // Clear
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(AttachmentLoadOp::TERM));
-    return table[int(loadOp)];
+    const auto result = table[int(loadOp)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -37,7 +39,9 @@ namespace gfx_low {
         ::vk::AttachmentStoreOp::eStore, // Store
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(AttachmentStoreOp::TERM));
-    return table[int(storeOp)];
+    const auto result = table[int(storeOp)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -143,7 +147,9 @@ namespace gfx_low {
         ::vk::ImageType::e2D, // ImageCube
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceKind::TERM));
-    return table[int(kind)];
+    const auto result = table[int(kind)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -157,7 +163,9 @@ namespace gfx_low {
         ::vk::ImageTiling::eOptimal, // Optimal
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceTiling::TERM));
-    return table[int(tiling)];
+    const auto result = table[int(tiling)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -179,6 +187,7 @@ namespace gfx_low {
             result |= table[i];
         }
     }
+    AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
     return result;
 }
 
@@ -198,7 +207,9 @@ namespace gfx_low {
         ::vk::ImageViewType::eCubeArray, // ImageCubeArray
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageViewKind::TERM));
-    return table[int(kind)];
+    const auto result = table[int(kind)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 } // namespace gfx_low
