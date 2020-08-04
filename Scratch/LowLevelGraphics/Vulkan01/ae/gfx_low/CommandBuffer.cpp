@@ -119,13 +119,13 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             const auto& renderTargetSetting = info.RenderTargetSettings()[i];
             auto& attachment = attachments[i];
 
-            // @todo 普通の Format での指定
-            AE_BASE_ASSERT(
-                renderTargetSpec.NativeFormat_() != ::vk::Format::eUndefined);
-            attachment.setFormat(renderTargetSpec.NativeFormat_());
-
-            // その他の設定
-            attachment.setSamples(::vk::SampleCountFlagBits::e1)
+            const auto format =
+                renderTargetSpec.NativeFormat_() != ::vk::Format::eUndefined
+                    ? renderTargetSpec.NativeFormat_()
+                    : InternalEnumUtil::ToFormat(renderTargetSpec.ImageFormat());
+            
+            attachment.setFormat(format)
+                .setSamples(::vk::SampleCountFlagBits::e1)
                 .setLoadOp(InternalEnumUtil::ToAttachmentLoadOp(
                     renderTargetSetting.LoadOp()))
                 .setStoreOp(InternalEnumUtil::ToAttachmentStoreOp(
