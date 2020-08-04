@@ -238,6 +238,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DepthStencilSetting.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DepthStencilSpecInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\EnumUtil.hpp">
       <SubType>
       </SubType>
@@ -515,6 +523,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\DepthStencilImageViewCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DepthStencilSetting.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DepthStencilSpecInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

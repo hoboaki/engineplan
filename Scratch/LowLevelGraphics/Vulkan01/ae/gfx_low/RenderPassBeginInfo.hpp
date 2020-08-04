@@ -7,6 +7,7 @@
 
 namespace ae {
 namespace gfx_low {
+class DepthStencilSetting;
 class RenderPassSpecInfo;
 class RenderTargetSetting;
 } // namespace gfx_low
@@ -47,6 +48,21 @@ public:
         return *this;
     }
 
+    /// DepthStencil 設定情報。（初期値：nullptr）
+    const DepthStencilSetting* DepthStencilSettingPtr() const {
+        return depthStencilSettingPtr_.Get();
+    }
+
+    /// DepthStencilSettingPtr() の設定。
+    /// @details
+    /// RenderPassSpecInfo() で DepthStencil
+    /// を使う仕様になっている場合は設定必須です。
+    RenderPassBeginInfo& SetDepthStencilSettingPtr(
+        const DepthStencilSetting* settingPtr) {
+        depthStencilSettingPtr_.Reset(settingPtr);
+        return *this;
+    }
+
     /// 描画範囲。（初期値：Aabb2iデフォルトコンストラクタの値）
     base::Aabb2i RenderArea() const { return renderArea_; }
 
@@ -60,6 +76,7 @@ public:
 private:
     gfx_low::RenderPassSpecInfo renderPassSpecInfo_;
     base::Pointer<const RenderTargetSetting> renderTargetSettings_;
+    base::Pointer<const DepthStencilSetting> depthStencilSettingPtr_;
     base::Aabb2i renderArea_;
 };
 

@@ -7,8 +7,9 @@
 
 namespace ae {
 namespace gfx_low {
+class DepthStencilSpecInfo;
 class RenderTargetSpecInfo;
-}
+} // namespace gfx_low
 } // namespace ae
 
 //------------------------------------------------------------------------------
@@ -38,11 +39,26 @@ public:
         renderTargetSpecInfos_.Reset(renderTargetSpecInfos);
         return *this;
     }
+
+    /// DepthStencil の仕様情報のポインタ。（初期値：nullptr）
+    const DepthStencilSpecInfo* DepthStencilSpecInfoPtr() const {
+        return depthStencilSpecInfoPtr_.Get();
+    }
+
+    /// DepthStencilSpecInfo() の設定。
+    /// @param specInfoPtr nullptr を指定すると DepthStencil
+    /// を使わない扱いになる。
+    RenderPassSpecInfo& SetDepthStencilSpecInfoPtr(
+        const DepthStencilSpecInfo* sptecInfoPtr) {
+        depthStencilSpecInfoPtr_.Reset(sptecInfoPtr);
+        return *this;
+    }
     //@}
 
 private:
     int renderTargetCount_ = 0;
     base::Pointer<const RenderTargetSpecInfo> renderTargetSpecInfos_;
+    base::Pointer<const DepthStencilSpecInfo> depthStencilSpecInfoPtr_;
 };
 
 } // namespace gfx_low
