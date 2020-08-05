@@ -17,6 +17,8 @@
  *
  * Author: Jeremy Hayes <jeremy@lunarg.com>
  */
+#define UV_AS_COLOR_MODE (1)
+
 #if defined(VK_USE_PLATFORM_XLIB_KHR) || defined(VK_USE_PLATFORM_XCB_KHR)
 #include <X11/Xutil.h>
 #elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
@@ -2034,10 +2036,15 @@ void Demo::prepare_descriptor_layout() {
             .setStageFlags(vk::ShaderStageFlagBits::eFragment)
             .setPImmutableSamplers(nullptr)};
 
+#if defined(UV_AS_COLOR_MODE)
+    auto const descriptor_layout =
+        vk::DescriptorSetLayoutCreateInfo().setBindingCount(1).setPBindings(
+            layout_bindings);
+#else
     auto const descriptor_layout =
         vk::DescriptorSetLayoutCreateInfo().setBindingCount(2).setPBindings(
             layout_bindings);
-
+#endif
     auto result = device.createDescriptorSetLayout(&descriptor_layout, nullptr,
                                                    &desc_layout);
     VERIFY(result == vk::Result::eSuccess);
@@ -2105,7 +2112,11 @@ void Demo::prepare_descriptor_set() {
         buffer_info.setBuffer(swapchain_image_resources[i].uniform_buffer);
         writes[0].setDstSet(swapchain_image_resources[i].descriptor_set);
         writes[1].setDstSet(swapchain_image_resources[i].descriptor_set);
+#if defined(UV_AS_COLOR_MODE)
+        device.updateDescriptorSets(1, writes, 0, nullptr);
+#else
         device.updateDescriptorSets(2, writes, 0, nullptr);
+#endif
     }
 }
 
@@ -2131,7 +2142,11 @@ void Demo::prepare_framebuffers() {
 
 vk::ShaderModule Demo::prepare_fs() {
     const uint32_t fragShaderCode[] = {
+#if defined(UV_AS_COLOR_MODE)
+#include "uv_as_color.frag.inc"
+#else
 #include "cube.frag.inc"
+#endif
     };
 
     frag_shader_module =
@@ -2580,7 +2595,11 @@ void Demo::prepare_textures() {
 
 vk::ShaderModule Demo::prepare_vs() {
     const uint32_t vertShaderCode[] = {
-#include "cube.vert.inc"
+#if defined(UV_AS_COLOR_MODE)
+    #include "uv_as_color.vert.inc"
+#else
+    #include "cube.vert.inc"
+#endif
     };
 
     vert_shader_module =
