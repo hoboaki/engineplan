@@ -5,6 +5,7 @@
 #include <ae/base/Angle.hpp>
 #include <ae/base/AppEvent.hpp>
 #include <ae/base/Application.hpp>
+#include <ae/base/ArrayLength.hpp>
 #include <ae/base/Color4b.hpp>
 #include <ae/base/Console.hpp>
 #include <ae/base/Degree.hpp>
@@ -37,6 +38,7 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
 #include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
@@ -428,9 +430,35 @@ int aemain(::ae::base::Application* app) {
             void* mappedMemory = gfxLowDevice->MapResourceMemory(
                 uniformBufferMemory->NativeObject_(), region);
             std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxLowDevice->UnmapResourceMemory(uniformBufferMemory->NativeObject_());
+            gfxLowDevice->UnmapResourceMemory(
+                uniformBufferMemory->NativeObject_());
         }
     }
+
+    
+    // RenderPassSpecInfo の作成
+    const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
+        swapchain->RenderTargetSpecInfo(),
+    };
+    const auto depthStencilSpecInfo =
+        ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(depthBufferFormat);
+    const auto renderPassSpecInfo =
+        ::ae::gfx_low::RenderPassSpecInfo()
+            .SetRenderTargetCount(AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos))
+            .SetRenderTargetSpecInfos(renderTargetSpecInfos)
+            .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
+
+    // DescriptorSetSpecInfo の作成
+    const ::ae::gfx_low::ShaderBindingInfo uniformBufferBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo().SetStages(
+            ::ae::gfx_low::ShaderBindingStageBitSet()
+                .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
+                .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))};
+    const auto descriptorSetSpecInfo =
+        ::ae::gfx_low::DescriptorSetSpecInfo()
+            .SetUniformBufferCount(
+                AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos))
+            .SetUniformBufferBindingInfos(uniformBufferBindingInfos);
 
     // GraphicsPipeline 生成
     std::unique_ptr<::ae::gfx_low::GraphicsPipeline> pipeline;
@@ -438,11 +466,13 @@ int aemain(::ae::base::Application* app) {
         pipeline.reset(new ::ae::gfx_low::GraphicsPipeline(
             ::ae::gfx_low::GraphicsPipelineCreateInfo()
                 .SetDevice(gfxLowDevice.get())
+                .SetRenderPassSpecInfo(renderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::GraphicsPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(vertShader.get())
                         .SetEntryPointNamePtr("main"))
+                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::GraphicsPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
@@ -484,10 +514,6 @@ int aemain(::ae::base::Application* app) {
             // クリアカラー参考
             // https://www.colordic.org/colorscheme/7005
             {
-                const ::ae::gfx_low::RenderTargetSpecInfo
-                    renderTargetSpecInfos[] = {
-                        swapchain->RenderTargetSpecInfo(),
-                    };
                 const ::ae::gfx_low::RenderTargetSetting
                     renderTargetSettings[] = {
                         ::ae::gfx_low::RenderTargetSetting()
@@ -503,9 +529,6 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
                                     .ToRGBAf()),
                     };
-                const auto depthStencilSpecInfo =
-                    ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(
-                        depthBufferFormat);
                 const auto depthStencilSetting =
                     ::ae::gfx_low::DepthStencilSetting()
                         .SetDepthStencilImageView(depthBufferView.get())
@@ -525,12 +548,7 @@ int aemain(::ae::base::Application* app) {
 
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo()
-                        .SetRenderPassSpecInfo(
-                            ::ae::gfx_low::RenderPassSpecInfo()
-                                .SetRenderTargetCount(1)
-                                .SetRenderTargetSpecInfos(renderTargetSpecInfos)
-                                .SetDepthStencilSpecInfoPtr(
-                                    &depthStencilSpecInfo))
+                        .SetRenderPassSpecInfo(renderPassSpecInfo)
                         .SetRenderTargetSettings(renderTargetSettings)
                         .SetDepthStencilSettingPtr(&depthStencilSetting)
                         .SetRenderArea(
