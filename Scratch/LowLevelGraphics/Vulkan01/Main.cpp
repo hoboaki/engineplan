@@ -302,9 +302,11 @@ int aemain(::ae::base::Application* app) {
                 .SetSize(sizeof(fUniformDataType))
                 .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
                     ::ae::gfx_low::BufferResourceUsage::UniformBuffer, true));
+        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+            sizeof(fUniformDataType));
         uniformBufferMemory.Reset(gfxLowDevice.get(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                 .SetParams(
                     gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
         uniformBufferResource.reset(new ::ae::gfx_low::BufferResource(
@@ -316,8 +318,7 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::UniformBufferViewCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetResource(uniformBufferResource.get())
-                .SetRegion(::ae::gfx_low::ResourceMemoryRegion().SetSize(
-                    sizeof(fUniformDataType)))));
+                .SetRegion(region)));
 
         // データ設定
         {
@@ -359,6 +360,11 @@ int aemain(::ae::base::Application* app) {
                 data.attr[i][2] = 0;
                 data.attr[i][3] = 0;
             }
+
+            void* mappedMemory = gfxLowDevice->MapResourceMemory(
+                uniformBufferMemory->NativeObject_(), region);
+            std::memcpy(mappedMemory, &data, sizeof(data));
+            gfxLowDevice->UnmapResourceMemory(uniformBufferMemory->NativeObject_());
         }
     }
 

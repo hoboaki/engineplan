@@ -18,6 +18,7 @@
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
+#include <ae/gfx_low/ResourceMemoryRegion.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
@@ -336,8 +337,9 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
     vk::MemoryRequirements reqs;
     {
         ::vk::Buffer tmpBuffer;
-        const auto createInfo =
-            BufferResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
+        const auto createInfo = BufferResourceCreateInfo()
+                                    .SetSpecInfo(specInfo)
+                                    .NativeCreateInfo_();
         auto result =
             nativeObject_.createBuffer(&createInfo, nullptr, &tmpBuffer);
         nativeObject_.getBufferMemoryRequirements(tmpBuffer, &reqs);
@@ -349,6 +351,20 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         .SetAlignment(reqs.alignment)
         .SetUsageBitSet(
             EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
+}
+
+//------------------------------------------------------------------------------
+uint8_t* Device::MapResourceMemory(
+    const ResourceMemory& resourceMemory, const ResourceMemoryRegion& region) {
+    const auto result = nativeObject_.mapMemory(
+        resourceMemory.NativeObject_(), region.Offset(), region.Size());
+    AE_BASE_ASSERT(result.result == ::vk::Result::eSuccess);
+    return static_cast<uint8_t*>(result.value);
+}
+
+//------------------------------------------------------------------------------
+void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
+    nativeObject_.unmapMemory(resourceMemory.NativeObject_());
 }
 
 } // namespace gfx_low
