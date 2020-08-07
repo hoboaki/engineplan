@@ -51,7 +51,7 @@ namespace gfx_low {
         ::vk::BufferUsageFlagBits(0), // Invalid
         ::vk::BufferUsageFlagBits::eTransferSrc, // CopySrc
         ::vk::BufferUsageFlagBits::eTransferDst, // CopyDst
-        ::vk::BufferUsageFlagBits::eUniformBuffer, // SampledBuffer
+        ::vk::BufferUsageFlagBits::eUniformBuffer, // UniformBuffer
         ::vk::BufferUsageFlagBits::eStorageBuffer, // StorageBuffer
         ::vk::BufferUsageFlagBits::eIndexBuffer, // IndexBuffer
         ::vk::BufferUsageFlagBits::eVertexBuffer, // VertexBuffer
