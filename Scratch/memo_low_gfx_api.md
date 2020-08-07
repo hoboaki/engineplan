@@ -310,33 +310,54 @@
 
 ## デスクリプタ・デスクリプタプール
 
-- Vulkan がデスクリプタプールはトリガー時に１つしか使えず一番制約がきつい。
-- なのでそれにあわせておけば抽象化は簡単。
-- 注意点として DirectX 12 のみ RenderTargetView DepthStencilView という概念が必要。
-- なので，抽象化時も ImageView だけでなくその２つも用意しておくとよさそう。Vulkan では無駄になっちゃうけど。
+- 全般
+  - Vulkan がデスクリプタプールはトリガー時に１つしか使えず一番制約がきびしい。
+  - なのでそれにあわせておけば抽象化は簡単。
+  - 注意点として DirectX 12 のみ RenderTargetView DepthStencilView という概念が必要。
+  - なので，抽象化時も ImageView だけでなくその２つも用意しておくとよさそう。Vulkan では無駄になっちゃうけど。
+- 抽象化設計（バインディング）
+  - buffer(uniform/storage), image(read/write), sampler の３つをそれぞれ 0 からの通し番号で扱う。
 
 ### Vulkan
 
-- VkDescriptorPool がデスクリプタプール。
-- VkDescriptorSet とデスクリプタの最大数を引数で指定して VkDescriptorPool を作成。
-- VkDescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
-- １つの DescriptorPool に複数タイプのデスクリプタを作成することが可能。タイプについては[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorType.html)。
-- VkDescriptorSet を作るときは１つの VkDescriptorPool しか指定できない。
-- VkDescriptorSet を更新するのは vkUpdateDescriptorSets で。
-- VkDescriptorSet は vkCmdBindDescriptorSets でコマンドバッファに設定。その際 vkPipeline オブジェクトも要求される。
+- デスクリプタプール
+  - VkDescriptorPool がデスクリプタプール。
+  - VkDescriptorSet とデスクリプタの最大数を引数で指定して VkDescriptorPool を作成。
+  - VkDescriptorPool の抱えるメモリ領域は VkAllocationCallbacks でカスタマイズは可能。
+  - １つの DescriptorPool に複数タイプのデスクリプタを作成することが可能。タイプについては[こちら](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorType.html)。
+  - VkDescriptorSet を作るときは１つの VkDescriptorPool しか指定できない。
+- デスクリプタの更新・設定
+  - VkDescriptorSet を更新するのは vkUpdateDescriptorSets で。
+  - VkDescriptorSet は vkCmdBindDescriptorSets でコマンドバッファに設定。その際 vkPipeline オブジェクトも要求される。
+- バインディング
+  - [参考記事](https://qiita.com/lriki/items/934804030d56fd88dcc8)。
+  - 抽象化のヒントも載っているのでそのまま採用できそう。
 
 ### DirectX 12
 
-- ID3D12DescriptorHeap がデスクリプタプール。
-- 最大デスクリプタ数やタイプなどを引数指定して ID3D12Device.CreateDescriptorHeap() で作成。
-- ID3D12DescriptorHeap は１つに１つき１タイプを扱う。タイプについては[こちら](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_type)。
-- ID3D12DescriptorHeap が抱えるメモリ領域を指定できる手段はない。
-- ID3D12GraphicsCommandList.SetDescriptorHeaps で使用する ID3D12DescriptorHeap を複数設定。
-- デスクリプタの設定は ID3D12GraphicsCommandList.SetGraphicsRootDescriptorTable で。
+- デスクリプタプール
+  - ID3D12DescriptorHeap がデスクリプタプール。
+  - 最大デスクリプタ数やタイプなどを引数指定して ID3D12Device.CreateDescriptorHeap() で作成。
+  - ID3D12DescriptorHeap は１つに１つき１タイプを扱う。タイプについては[こちら](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_descriptor_heap_type)。
+  - ID3D12DescriptorHeap が抱えるメモリ領域を指定できる手段はない。
+- デスクリプタの更新・設定
+  - ID3D12GraphicsCommandList.SetDescriptorHeaps で使用する ID3D12DescriptorHeap を複数設定。
+  - デスクリプタの設定は ID3D12GraphicsCommandList.SetGraphicsRootDescriptorTable で。
+- バインディング
+  - [参考記事](https://qiita.com/em7dfggbcadd9/items/b5a9b71a6ae29d86da50)。
+  - RootSignature 作成時に渡す D3D12_ROOT_PARAMETER で指定。
+  - HLSL シェーダー上で指定するレジスタ番号もここで指定。
+  - 実際に渡す流すデスクリプタは CommandList の SetGraphicsRootConstantBufferView() や SetGraphicsRootDescriptorTable() で設定。
+  - これら関数の第１引数は RootSignature 作成時のインデックスに対応する。
 
 ### Metal
 
-- デスクリプタの概念がなく，コマンドバッファ（CommandEncoder）に setBuffer やら setTexture していく。
+- デスクリプタ全般
+  - デスクリプタの概念がなく，コマンドバッファ（CommandEncoder）に setBuffer やら setTexture していく。
+- バインディング
+  - [参考ドキュメント](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf)
+  - [参考コード](https://github.com/shu223/MetalBook/blob/master/03_MetalShaderImageRender/MetalShaderImageRender/Shaders.metal)
+  - buffer、texture, sampler でそれぞれ通し番号がある。
 
 # コマンド・フロー
 
