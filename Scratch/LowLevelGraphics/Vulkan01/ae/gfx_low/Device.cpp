@@ -8,6 +8,7 @@
 #include <ae/base/RuntimeArray.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/RuntimeMarray.hpp>
+#include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
@@ -314,6 +315,33 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
         nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
         nativeObject_.destroyImage(tmpImage, nullptr);
+    }
+
+    return ResourceMemoryRequirements()
+        .SetSize(reqs.size)
+        .SetAlignment(reqs.alignment)
+        .SetUsageBitSet(
+            EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
+}
+
+//------------------------------------------------------------------------------
+ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
+    const BufferResourceSpecInfo& specInfo) {
+    // Vulkan 環境は VkBuffer を作成しないと値が取得できないため
+    // 一時的に VkBuffer を作成して求める。
+    // 将来的には同じ specInfo が渡された場合は
+    // 前回求めた値を返すようにして無駄な VkBuffer 生成を省略したい。
+    // @todo 計算結果のキャッシュ対応
+
+    vk::MemoryRequirements reqs;
+    {
+        ::vk::Buffer tmpBuffer;
+        const auto createInfo =
+            BufferResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
+        auto result =
+            nativeObject_.createBuffer(&createInfo, nullptr, &tmpBuffer);
+        nativeObject_.getBufferMemoryRequirements(tmpBuffer, &reqs);
+        nativeObject_.destroyBuffer(tmpBuffer, nullptr);
     }
 
     return ResourceMemoryRequirements()

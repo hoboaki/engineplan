@@ -8,6 +8,7 @@
 namespace ae {
 namespace gfx_low {
 class DeviceCreateInfo;
+class BufferResourceSpecInfo;
 class ImageResourceSpecInfo;
 class Queue;
 class ResourceMemory;
@@ -76,6 +77,10 @@ public:
     /// 指定のイメージリソースのリソースメモリ要件を計算して返す。
     ResourceMemoryRequirements CalcResourceMemoryRequirements(
         const ImageResourceSpecInfo& specInfo);
+
+    /// 指定のバッファリソースのリソースメモリ要件を計算して返す。
+    ResourceMemoryRequirements CalcResourceMemoryRequirements(
+        const BufferResourceSpecInfo& specInfo);
     //@}
 
     /// @name 内部処理用API
