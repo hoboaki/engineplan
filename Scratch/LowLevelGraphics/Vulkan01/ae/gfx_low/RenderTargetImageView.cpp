@@ -15,7 +15,7 @@ namespace gfx_low {
 RenderTargetImageView::RenderTargetImageView(
     const RenderTargetImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, imageView_() {
+, nativeObject_() {
     // 今は RawFormat しか対応しない
     auto imageFormat = createInfo.RawFormat_();
     AE_BASE_ASSERT(imageFormat != ::vk::Format::eUndefined);
@@ -28,13 +28,13 @@ RenderTargetImageView::RenderTargetImageView(
             .setSubresourceRange(::vk::ImageSubresourceRange(
                 ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
     const auto result = device_.NativeObject_().createImageView(
-        &imageViewCreateInfo, nullptr, &imageView_);
+        &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 RenderTargetImageView::~RenderTargetImageView() {
-    device_.NativeObject_().destroyImageView(imageView_, nullptr);
+    device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
 } // namespace gfx_low

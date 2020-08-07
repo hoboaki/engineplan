@@ -248,7 +248,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
              ++i) {
             imageViews[i] = info.RenderTargetSettings()[i]
                                 .RenderTargetImageView()
-                                ->Instance_();
+                                ->NativeObject_();
         }
         if (hasDepthStencil) {
             imageViews[depthStencilIdx] =
