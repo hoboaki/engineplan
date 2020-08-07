@@ -226,6 +226,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\BufferResource.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\BufferResourceCreateInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
+    <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
     <ClInclude Include="ae\gfx_low\CommandBufferState.hpp">
       <SubType>
       </SubType>
@@ -510,6 +518,11 @@
     <ClCompile Include="ae\base\Vector3i.cpp" />
     <ClCompile Include="ae\base\Vector4.cpp" />
     <ClCompile Include="ae\base\Vector4i.cpp" />
+    <ClCompile Include="ae\gfx_low\BufferResource.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\BufferResourceCreateInfo.cpp" />
     <ClCompile Include="ae\gfx_low\CommandBuffer.cpp">
       <SubType>
       </SubType>

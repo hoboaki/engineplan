@@ -45,6 +45,29 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::BufferUsageFlags InternalEnumUtil::ToBufferUsageFlags(
+    const BufferResourceUsageBitSet& usageBitSet) {
+    const ::vk::BufferUsageFlagBits table[] = {
+        ::vk::BufferUsageFlagBits(0), // Invalid
+        ::vk::BufferUsageFlagBits::eTransferSrc, // CopySrc
+        ::vk::BufferUsageFlagBits::eTransferDst, // CopyDst
+        ::vk::BufferUsageFlagBits::eUniformBuffer, // SampledBuffer
+        ::vk::BufferUsageFlagBits::eStorageBuffer, // StorageBuffer
+        ::vk::BufferUsageFlagBits::eIndexBuffer, // IndexBuffer
+        ::vk::BufferUsageFlagBits::eVertexBuffer, // VertexBuffer
+        ::vk::BufferUsageFlagBits::eIndirectBuffer, // IndirectBuffer
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(BufferResourceUsage::TERM));
+    auto result = ::vk::BufferUsageFlags();
+    for (int i = 0; i < int(BufferResourceUsage::TERM); ++i) {
+        if (usageBitSet.Get(BufferResourceUsage(i))) {
+            result |= table[i];
+        }
+    }
+    AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
+    return result;
+}
+//------------------------------------------------------------------------------
 ::vk::Format InternalEnumUtil::ToFormat(const ImageFormat format) {
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);

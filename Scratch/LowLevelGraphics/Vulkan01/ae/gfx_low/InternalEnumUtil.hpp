@@ -3,6 +3,7 @@
 
 #include <ae/gfx_low/AttachmentLoadOp.hpp>
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
+#include <ae/gfx_low/BufferResourceUsageBitSet.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageResourceKind.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
@@ -18,7 +19,10 @@ namespace gfx_low {
 /// 内部実装用 Enum に関する便利関数郡。
 struct InternalEnumUtil {
     static ::vk::AttachmentLoadOp ToAttachmentLoadOp(AttachmentLoadOp loadOp);
-    static ::vk::AttachmentStoreOp ToAttachmentStoreOp(AttachmentStoreOp storeOp);
+    static ::vk::AttachmentStoreOp ToAttachmentStoreOp(
+        AttachmentStoreOp storeOp);
+    static ::vk::BufferUsageFlags ToBufferUsageFlags(
+        const BufferResourceUsageBitSet& usageBitSet);
     static ::vk::Format ToFormat(ImageFormat format);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
