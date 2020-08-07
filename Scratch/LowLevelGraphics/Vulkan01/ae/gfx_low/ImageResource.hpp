@@ -36,14 +36,14 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Image& Instance_() { return image_; }
+    ::vk::Image& NativeObject_() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::Device& device_;
-    ::vk::Image image_;
+    ::vk::Image nativeObject_;
     /// ImagePtr を使って作ったか。
-    bool isCreatedByImagePtr_;
+    bool isCreatedByNativeObjectPtr_;
 };
 
 } // namespace gfx_low

@@ -13,13 +13,13 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, image_()
-, isCreatedByImagePtr_(false) {
-    // ImagePtr からの作成
-    if (createInfo.ImagePtr_() != nullptr) {
-        AE_BASE_ASSERT(createInfo.ImagePtr_() != nullptr);
-        image_ = base::PtrToRef(createInfo.ImagePtr_());
-        isCreatedByImagePtr_ = true;
+, nativeObject_()
+, isCreatedByNativeObjectPtr_(false) {
+    // NativeObjectPtr からの作成
+    if (createInfo.NativeObjectPtr_() != nullptr) {
+        AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
+        nativeObject_ = base::PtrToRef(createInfo.NativeObjectPtr_());
+        isCreatedByNativeObjectPtr_ = true;
         return;    
     }
     
@@ -27,7 +27,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     { 
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
         const auto result = device_.Instance_().createImage(
-                &nativeCreateInfo, nullptr, &image_);
+                &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
@@ -35,7 +35,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
         const auto result = device_.Instance_().bindImageMemory(
-            image_,
+            nativeObject_,
             createInfo.DataAddress().Memory().Instance_(),
             createInfo.DataAddress().Offset()
             );
@@ -45,14 +45,14 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 ImageResource::~ImageResource() {
-    // ImagePtr から作った場合は何もしない
-    if (isCreatedByImagePtr_) {
-        image_ = ::vk::Image();
+    // NativeObjectPtr から作った場合は何もしない
+    if (isCreatedByNativeObjectPtr_) {
+        nativeObject_ = ::vk::Image();
         return;
     }
 
-    device_.Instance_().destroyImage(image_, nullptr);
-    image_ = ::vk::Image();
+    device_.Instance_().destroyImage(nativeObject_, nullptr);
+    nativeObject_ = ::vk::Image();
 }
 
 } // namespace gfx_low

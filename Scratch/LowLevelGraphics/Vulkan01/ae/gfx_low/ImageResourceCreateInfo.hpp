@@ -64,9 +64,9 @@ public:
     /// @name 内部処理用関数群
     //@{
     /// VkImage オブジェクト。こちらが指定されている場合はこれをそのまま使う。
-    ::vk::Image* ImagePtr_() const { return imagePtr_.Get(); }
-    ImageResourceCreateInfo& SetImagePtr_(::vk::Image* imagePtr) {
-        imagePtr_.Reset(imagePtr);
+    ::vk::Image* NativeObjectPtr_() const { return nativeObjectPtr_.Get(); }
+    ImageResourceCreateInfo& SetNativeObjectPtr_(::vk::Image* nativeObjectPtr) {
+        nativeObjectPtr_.Reset(nativeObjectPtr);
         return *this;
     }
 
@@ -79,7 +79,7 @@ private:
     ImageResourceSpecInfo specInfo_;
     ImageResourceState initialState_ = ImageResourceState::Unknown;
     ResourceMemoryAddress dataAddress_;
-    base::Pointer<::vk::Image> imagePtr_;
+    base::Pointer<::vk::Image> nativeObjectPtr_;
 };
 
 } // namespace gfx_low

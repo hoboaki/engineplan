@@ -37,14 +37,14 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Buffer& Instance_() { return buffer_; }
+    ::vk::Buffer& NativeObject_() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::Device& device_;
-    ::vk::Buffer buffer_;
-    /// BufferPtr を使って作ったか。
-    bool isCreatedByBufferPtr_;
+    ::vk::Buffer nativeObject_;
+    /// NativeObjectPtr を使って作ったか。
+    bool isCreatedByNativeObjectPtr_;
 };
 
 } // namespace gfx_low

@@ -78,7 +78,7 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
             target.ReadyToPresentEvent.Init(
                 EventCreateInfo().SetDevice(&device));
             target.ImageResource.Init(
-                ImageResourceCreateInfo().SetDevice(&device).SetImagePtr_(
+                ImageResourceCreateInfo().SetDevice(&device).SetNativeObjectPtr_(
                     &swapchainImages[i]));
             target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()

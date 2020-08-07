@@ -57,9 +57,9 @@ public:
     /// @name 内部処理用関数群
     //@{
     /// VkBuffer オブジェクト。こちらが指定されている場合はこれをそのまま使う。
-    ::vk::Buffer* BufferPtr_() const { return bufferPtr_.Get(); }
-    BufferResourceCreateInfo& SetBufferPtr_(::vk::Buffer* bufferPtr) {
-        bufferPtr_.Reset(bufferPtr);
+    ::vk::Buffer* NativeObjectPtr_() const { return nativeObjectPtr_.Get(); }
+    BufferResourceCreateInfo& SetBufferPtr_(::vk::Buffer* nativeObjectPtr) {
+        nativeObjectPtr_.Reset(nativeObjectPtr);
         return *this;
     }
 
@@ -71,7 +71,7 @@ private:
     base::Pointer<gfx_low::Device> device_;
     BufferResourceSpecInfo specInfo_;
     ResourceMemoryAddress dataAddress_;
-    base::Pointer<::vk::Buffer> bufferPtr_;
+    base::Pointer<::vk::Buffer> nativeObjectPtr_;
 };
 
 } // namespace gfx_low
