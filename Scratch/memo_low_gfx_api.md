@@ -323,6 +323,24 @@
     - GLSL と MSL において image(write) のコード上バインド番号は image(read) の最大番号 + 1 からスタート。
     - HLSL において image(write) のコード上バインド番号は buffer(storage) の最大番号 + 1 からスタート。
 
+```c++
+DescriptorSetSpecInfo
+
+UniformBufferBindingInfo
+SampledImageBindingInfo
+SamplerBindingInfo
+StorageBufferBindingInfo
+StorageImageBindingInfo
+
+DescriptorSet
+
+SetUniformBufferView(index, view)
+SetSampledImageView(index, view)
+SetSampler(index, sampler)
+SetStorageBufferView(index, view))
+SetStorageImageView(index, view))
+```
+
 ### Vulkan
 
 - デスクリプタプール
