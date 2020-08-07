@@ -31,8 +31,7 @@ DepthStencilImageView::DepthStencilImageView(
 }
 
 //------------------------------------------------------------------------------
-DepthStencilImageView::~DepthStencilImageView()
-{
+DepthStencilImageView::~DepthStencilImageView() {
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 

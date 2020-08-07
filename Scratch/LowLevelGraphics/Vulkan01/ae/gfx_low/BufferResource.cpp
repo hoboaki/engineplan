@@ -3,8 +3,8 @@
 
 // includes
 #include <ae/base/PtrToRef.hpp>
-#include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/BufferResourceCreateInfo.hpp>
+#include <ae/gfx_low/Device.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -34,8 +34,8 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
     // メモリ割り当て
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
-        const auto result = device_.NativeObject_().bindBufferMemory(nativeObject_,
-            createInfo.DataAddress().Memory().NativeObject_(),
+        const auto result = device_.NativeObject_().bindBufferMemory(
+            nativeObject_, createInfo.DataAddress().Memory().NativeObject_(),
             createInfo.DataAddress().Offset());
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }

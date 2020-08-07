@@ -51,7 +51,7 @@ public:
         return *this;
     }
 
-    /// ミップマップレベル。（初期値：1） 
+    /// ミップマップレベル。（初期値：1）
     int MipLevels() const { return mipLevels_; }
 
     /// MipLevels() の設定。
@@ -61,7 +61,8 @@ public:
     /// テクスチャ配列の配列長。（初期値：1）
     /// @details
     /// Kind() == Cube のときは 6面 で 1 配列長を表します。
-    /// 例えば ArrayLength() == 2 のときは 6 面の Cube が 2 つあるということを表します。
+    /// 例えば ArrayLength() == 2 のときは 6 面の Cube が 2
+    /// つあるということを表します。
     int ArrayLength() const { return arrayLength_; }
 
     /// ArrayLength() の設定。

@@ -30,10 +30,10 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ = base::Math::Clamp(
             currentFrameIndex_, 0, frameProperties_.Count() - 1);
         auto currentBufferIdxUint = uint32_t();
-        auto result =
-            device.NativeObject_().acquireNextImageKHR(swapchain_, UINT64_MAX,
-                frameProperties_[currentFrameIndex_].AcquireEvent->NativeObject_(),
-                ::vk::Fence(), &currentBufferIdxUint);
+        auto result = device.NativeObject_().acquireNextImageKHR(swapchain_,
+            UINT64_MAX,
+            frameProperties_[currentFrameIndex_].AcquireEvent->NativeObject_(),
+            ::vk::Fence(), &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
     }
@@ -78,8 +78,9 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
             target.ReadyToPresentEvent.Init(
                 EventCreateInfo().SetDevice(&device));
             target.ImageResource.Init(
-                ImageResourceCreateInfo().SetDevice(&device).SetNativeObjectPtr_(
-                    &swapchainImages[i]));
+                ImageResourceCreateInfo()
+                    .SetDevice(&device)
+                    .SetNativeObjectPtr_(&swapchainImages[i]));
             target.RenderTargetImageView.Init(
                 RenderTargetImageViewCreateInfo()
                     .SetDevice(&device)

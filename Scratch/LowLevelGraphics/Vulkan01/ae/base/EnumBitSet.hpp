@@ -12,7 +12,8 @@ namespace base {
 //@{
 /// @brief Enum 値を Key とする BitSet(Pod版)。
 /// @details
-/// TEnumType には enum class の型を、TDataType には uint32_t などフラグを管理するデータ型を指定してください。
+/// TEnumType には enum class の型を、TDataType には uint32_t
+/// などフラグを管理するデータ型を指定してください。
 template <typename TEnumType, typename TDataType>
 struct EnumBitSetPod {
     /// @name 内部処理用機能
@@ -42,8 +43,7 @@ struct EnumBitSetPod {
     /// @name 全ビットの操作
     //@{
     /// 全ビットをfalseにする。
-    void Clear() { bits_ = 0;
-    }
+    void Clear() { bits_ = 0; }
     //@}
 
     /// @name 各ビットの設定・取得
@@ -82,8 +82,7 @@ struct EnumBitSetPod {
     }
 
     /// 1つ以上のビットがたっているか。
-    bool IsAnyOn() const { return bits_ != 0;
-    }
+    bool IsAnyOn() const { return bits_ != 0; }
     /// 全てのビットがたっていない状態か。
     bool IsAllOff() const { return !IsAnyOn(); }
     /// 全てのビットがたっている状態か。
@@ -96,13 +95,11 @@ struct EnumBitSetPod {
     /// @name 演算
     //@{
     /// ビットを反転した値を取得。
-    const MyType operator~() const {
-        return MyType{ ~bits_ };
-    }
+    const MyType operator~() const { return MyType{~bits_}; }
 
     /// 論理積を取得。
     const MyType operator&(const MyType& rhs) const {
-        return MyType { bits_ & rhs.bits_ };
+        return MyType{bits_ & rhs.bits_};
     }
 
     /// 論理和を取得。

@@ -17,8 +17,7 @@ public:
 
     /// Size() の設定。
     /// @param size 0以上。
-    BufferResourceSpecInfo& SetSize(size_t size)
-    {
+    BufferResourceSpecInfo& SetSize(size_t size) {
         size_ = size;
         return *this;
     }

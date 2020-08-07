@@ -24,7 +24,7 @@ public:
     /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
 
-    /// Device() の設定。（設定必須） 
+    /// Device() の設定。（設定必須）
     BufferResourceCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
@@ -33,21 +33,20 @@ public:
     /// データ構造に関する仕様情報。（初期値：デフォルトコンストラクタ値）
     BufferResourceSpecInfo SpecInfo() const { return specInfo_; }
 
-    /// SpecInfo() の設定。 
+    /// SpecInfo() の設定。
     BufferResourceCreateInfo& SetSpecInfo(
-        const BufferResourceSpecInfo& specInfo)
-    {
+        const BufferResourceSpecInfo& specInfo) {
         specInfo_ = specInfo;
         return *this;
     }
 
-    /// イメージデータのメモリアドレス。（初期値：IsValid() == false なアドレス） 
+    /// イメージデータのメモリアドレス。（初期値：IsValid() == false
+    /// なアドレス）
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
 
-    /// DataAddress() の設定。 
+    /// DataAddress() の設定。
     BufferResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress)
-    {
+        const ResourceMemoryAddress& dataAddress) {
         dataAddress_ = dataAddress;
         return *this;
     }

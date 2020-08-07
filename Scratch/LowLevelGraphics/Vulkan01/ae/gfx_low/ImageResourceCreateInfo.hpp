@@ -25,7 +25,7 @@ public:
     /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
 
-    /// Device() の設定。（設定必須） 
+    /// Device() の設定。（設定必須）
     ImageResourceCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
@@ -34,10 +34,9 @@ public:
     /// データ構造に関する仕様情報。（初期値：デフォルトコンストラクタ値）
     ImageResourceSpecInfo SpecInfo() const { return specInfo_; }
 
-    /// SpecInfo() の設定。 
+    /// SpecInfo() の設定。
     ImageResourceCreateInfo& SetSpecInfo(
-        const ImageResourceSpecInfo& specInfo)
-    {
+        const ImageResourceSpecInfo& specInfo) {
         specInfo_ = specInfo;
         return *this;
     }
@@ -45,16 +44,16 @@ public:
     /// 初期状態。（初期値：Unknown）
     ImageResourceState InitialState() const { return initialState_; }
 
-    /// InitialState() の設定。 
+    /// InitialState() の設定。
     ImageResourceCreateInfo& SetInitialState(ImageResourceState state);
 
-    /// イメージデータのメモリアドレス。（初期値：IsValid() == false なアドレス） 
+    /// イメージデータのメモリアドレス。（初期値：IsValid() == false
+    /// なアドレス）
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
 
-    /// DataAddress() の設定。 
+    /// DataAddress() の設定。
     ImageResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress)
-    {
+        const ResourceMemoryAddress& dataAddress) {
         dataAddress_ = dataAddress;
         return *this;
     }

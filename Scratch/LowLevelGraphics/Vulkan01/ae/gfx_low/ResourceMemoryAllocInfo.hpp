@@ -55,7 +55,8 @@ public:
     }
 
     /// ResourceMemoryRequirements の要件を各パラメータに設定する。
-    ResourceMemoryAllocInfo& SetParams(const ResourceMemoryRequirements& requirement);
+    ResourceMemoryAllocInfo& SetParams(
+        const ResourceMemoryRequirements& requirement);
 
 private:
     ResourceMemoryKind kind_ = ResourceMemoryKind::Invalid;

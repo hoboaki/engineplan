@@ -17,7 +17,8 @@ public:
     gfx_low::ImageFormat ImageFormat() const { return imageFormat_; }
 
     /// ImageFormat() の設定。
-    RenderTargetSpecInfo& SetImageFormat(const gfx_low::ImageFormat imageFormat);
+    RenderTargetSpecInfo& SetImageFormat(
+        const gfx_low::ImageFormat imageFormat);
     //@}
 
     /// @name 内部処理用機能群

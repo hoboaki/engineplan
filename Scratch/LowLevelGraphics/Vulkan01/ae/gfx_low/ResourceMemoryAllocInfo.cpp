@@ -20,8 +20,7 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
 
 //------------------------------------------------------------------------------
 ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetParams(
-    const ResourceMemoryRequirements& requirement)
-{
+    const ResourceMemoryRequirements& requirement) {
     SetUsageBitSet(requirement.UsageBitSet());
     SetSize(requirement.Size());
     SetAlignment(requirement.Alignment());

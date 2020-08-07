@@ -9,7 +9,7 @@ namespace ae {
 namespace base {
 class Aabb2;
 struct Extent2iPod;
-}
+} // namespace base
 } // namespace ae
 
 //------------------------------------------------------------------------------
@@ -51,7 +51,9 @@ public:
     Aabb2i(const Vector2iPod& begin); ///< Aabb2i( pos , 0 , 0 ) で作成。
     Aabb2i(const Vector2iPod& begin, int width,
         int height); ///< 基準となる点とサイズを指定してAABBを作成。
-    Aabb2i(const Vector2iPod& begin, const Extent2iPod& extent); ///< 基準となる点と範囲を指定してAABBを作成。
+    Aabb2i(const Vector2iPod& begin,
+        const Extent2iPod&
+            extent); ///< 基準となる点と範囲を指定してAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------

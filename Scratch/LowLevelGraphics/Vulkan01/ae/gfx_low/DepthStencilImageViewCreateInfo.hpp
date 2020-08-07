@@ -31,9 +31,7 @@ public:
     }
 
     /// 対象となる ImageResource のポインタ。（初期値：nullptr）
-    ImageResource* Resource() const {
-        return resource_.Get();
-    }
+    ImageResource* Resource() const { return resource_.Get(); }
 
     /// ImageResource の設定。（設定必須）
     DepthStencilImageViewCreateInfo& SetResource(
@@ -53,7 +51,7 @@ public:
 
     /// Format() の設定。
     DepthStencilImageViewCreateInfo& SetFormat(ImageFormat format);
-    
+
     // @todo サブリソースレンジ指定。
     //@}
 

@@ -171,7 +171,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                     setting.StencilStoreOp()))
                 .setInitialLayout(
                     InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
-                        setting.InitialImageResourceState(), spec.ImageFormat()))
+                        setting.InitialImageResourceState(),
+                        spec.ImageFormat()))
                 .setFinalLayout(
                     InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
                         setting.FinalImageResourceState(), spec.ImageFormat()));
@@ -225,13 +226,14 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                                   vk::AccessFlagBits::eColorAttachmentRead)
                 .setDependencyFlags(vk::DependencyFlags());
 
-        auto const renderPassCreateInfo = vk::RenderPassCreateInfo()
-                                              .setAttachmentCount(attachmentsCount)
-                                              .setPAttachments(&attachments[0])
-                                              .setSubpassCount(1)
-                                              .setPSubpasses(&subpass)
-                                              .setDependencyCount(hasDepthStencil ? 2 : 1)
-                                              .setPDependencies(&dependencies[0]);
+        auto const renderPassCreateInfo =
+            vk::RenderPassCreateInfo()
+                .setAttachmentCount(attachmentsCount)
+                .setPAttachments(&attachments[0])
+                .setSubpassCount(1)
+                .setPSubpasses(&subpass)
+                .setDependencyCount(hasDepthStencil ? 2 : 1)
+                .setPDependencies(&dependencies[0]);
         {
             const auto result = device_.NativeObject_().createRenderPass(
                 &renderPassCreateInfo, nullptr, &prop.renderPass);

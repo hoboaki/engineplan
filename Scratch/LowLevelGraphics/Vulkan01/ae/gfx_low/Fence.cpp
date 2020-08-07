@@ -15,8 +15,8 @@ Fence::Fence(const FenceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_() {
     const auto fenceCreateInfo = ::vk::FenceCreateInfo();
-    const auto result =
-        device_.NativeObject_().createFence(&fenceCreateInfo, nullptr, &nativeObject_);
+    const auto result = device_.NativeObject_().createFence(
+        &fenceCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
@@ -34,14 +34,15 @@ void Fence::Wait() {
 
     // 待機
     {
-        const auto result =
-            device_.NativeObject_().waitForFences(1, &nativeObject_, VK_TRUE, UINT64_MAX);
+        const auto result = device_.NativeObject_().waitForFences(
+            1, &nativeObject_, VK_TRUE, UINT64_MAX);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
     // 内部状態をリセット
     {
-        const auto result = device_.NativeObject_().resetFences(1, &nativeObject_);
+        const auto result =
+            device_.NativeObject_().resetFences(1, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
     isActive_ = false;

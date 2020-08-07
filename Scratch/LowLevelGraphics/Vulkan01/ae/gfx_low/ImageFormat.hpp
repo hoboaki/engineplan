@@ -50,7 +50,6 @@ enum class ImageFormat {
     R16G16B16A16Uint,
     R16G16B16A16Unorm,
 
-    
     D16Unorm,
     D32Sfloat,
 

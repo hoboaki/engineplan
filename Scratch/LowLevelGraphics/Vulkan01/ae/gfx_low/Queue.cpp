@@ -202,7 +202,8 @@ void Queue::Submit(Fence* fencePtr) {
                                               ? nullptr
                                               : &signalEvents_.First());
             {
-                const auto result = nativeObject_.submit(1, &submitInfo, nativeFence);
+                const auto result =
+                    nativeObject_.submit(1, &submitInfo, nativeFence);
                 AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
 

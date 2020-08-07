@@ -20,14 +20,14 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
         nativeObject_ = base::PtrToRef(createInfo.NativeObjectPtr_());
         isCreatedByNativeObjectPtr_ = true;
-        return;    
+        return;
     }
-    
+
     // VkImage の作成
-    { 
+    {
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
         const auto result = device_.NativeObject_().createImage(
-                &nativeCreateInfo, nullptr, &nativeObject_);
+            &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
@@ -35,10 +35,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
         const auto result = device_.NativeObject_().bindImageMemory(
-            nativeObject_,
-            createInfo.DataAddress().Memory().NativeObject_(),
-            createInfo.DataAddress().Offset()
-            );
+            nativeObject_, createInfo.DataAddress().Memory().NativeObject_(),
+            createInfo.DataAddress().Offset());
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 }

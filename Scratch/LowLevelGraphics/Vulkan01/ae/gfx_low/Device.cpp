@@ -10,9 +10,9 @@
 #include <ae/base/RuntimeMarray.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/EnumUtil.hpp>
-#include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
+#include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
@@ -182,8 +182,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
                     .setQueueFamilyIndex(queueFamilyIndex)
                     .setFlags(
                         ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
-            const auto result =
-                nativeObject_.createCommandPool(&createInfo, nullptr, &commandPool);
+            const auto result = nativeObject_.createCommandPool(
+                &createInfo, nullptr, &commandPool);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
         const auto& queueCreateInfo = queueCreateInfos[i];
@@ -241,7 +241,7 @@ ResourceMemory Device::TryToAllocResourceMemory(
     const ResourceMemoryAllocInfo& allocInfo) {
     // チェック
     AE_BASE_ASSERT(allocInfo.Kind() != ResourceMemoryKind::Invalid);
-        
+
     // 0 専用対応
     if (allocInfo.Size() == 0) {
         return ResourceMemory();
@@ -259,7 +259,7 @@ ResourceMemory Device::TryToAllocResourceMemory(
     };
     AE_BASE_ARRAY_LENGTH_CHECK(memoryMaskTable, int(ResourceMemoryKind::TERM));
     const auto memoryMask = memoryMaskTable[int(allocInfo.Kind())];
-    
+
     // 適切なメモリタイプを探す
     int memoryTypeIndex = -1;
     for (int i = 0; i < int(memoryProps_.memoryTypeCount); ++i) {
@@ -297,29 +297,30 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
 }
 
 //------------------------------------------------------------------------------
-ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(const ImageResourceSpecInfo& specInfo)
-{
+ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
+    const ImageResourceSpecInfo& specInfo) {
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
     // 一時的に VkImage を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
     // 前回求めた値を返すようにして無駄な VkImage 生成を省略したい。
     // @todo 計算結果のキャッシュ対応
 
-
     vk::MemoryRequirements reqs;
     {
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result = nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
+        auto result =
+            nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
         nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
         nativeObject_.destroyImage(tmpImage, nullptr);
-    }   
+    }
 
     return ResourceMemoryRequirements()
         .SetSize(reqs.size)
         .SetAlignment(reqs.alignment)
-        .SetUsageBitSet(EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
+        .SetUsageBitSet(
+            EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
 }
 
 } // namespace gfx_low
