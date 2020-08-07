@@ -25,6 +25,8 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
+#include <ae/gfx_low/GraphicsPipeline.hpp>
+#include <ae/gfx_low/GraphicsPipelineCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -428,6 +430,24 @@ int aemain(::ae::base::Application* app) {
             std::memcpy(mappedMemory, &data, sizeof(data));
             gfxLowDevice->UnmapResourceMemory(uniformBufferMemory->NativeObject_());
         }
+    }
+
+    // GraphicsPipeline 生成
+    std::unique_ptr<::ae::gfx_low::GraphicsPipeline> pipeline;
+    {
+        pipeline.reset(new ::ae::gfx_low::GraphicsPipeline(
+            ::ae::gfx_low::GraphicsPipelineCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetShaderInfo(
+                    ::ae::gfx_low::GraphicsPipelineShaderStage::Vertex,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(vertShader.get())
+                        .SetEntryPointNamePtr("main"))
+                .SetShaderInfo(
+                    ::ae::gfx_low::GraphicsPipelineShaderStage::Fragment,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(fragShader.get())
+                        .SetEntryPointNamePtr("main"))));
     }
 
     // メインループ

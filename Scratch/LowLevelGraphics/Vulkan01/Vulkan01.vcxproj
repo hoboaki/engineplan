@@ -234,6 +234,22 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\GraphicsPipeline.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\GraphicsPipelineCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\GraphicsPipelineShaderStage.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\PipelineShaderInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryRegion.hpp">
       <SubType>
       </SubType>
@@ -571,6 +587,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\GraphicsPipeline.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\GraphicsPipelineCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

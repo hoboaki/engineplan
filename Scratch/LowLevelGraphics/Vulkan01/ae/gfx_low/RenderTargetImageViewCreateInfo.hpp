@@ -32,7 +32,7 @@ public:
     /// 対象となる ImageResource のポインタ。（初期値：nullptr）
     ImageResource* Resource() const { return resource_.Get(); }
 
-    /// ImageResource の設定。（設定必須）
+    /// Resource() の設定。（設定必須）
     RenderTargetImageViewCreateInfo& SetResource(ImageResource* imageResource) {
         resource_.Reset(imageResource);
         return *this;
