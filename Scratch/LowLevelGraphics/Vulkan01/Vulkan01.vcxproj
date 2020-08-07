@@ -234,6 +234,14 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\PolygonFrontFace.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RasterizeCullMode.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\GraphicsPipeline.hpp">
       <SubType>
       </SubType>
@@ -246,7 +254,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\PipelineRasterizerInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\PipelineShaderInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RasterizeFillMode.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -623,6 +639,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageResourceSpecInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\PipelineRasterizeInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -5,6 +5,7 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/GraphicsPipelineShaderStage.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
+#include <ae/gfx_low/PipelineRasterizerInfo.hpp>
 #include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 
 namespace ae {
@@ -38,6 +39,7 @@ public:
     GraphicsPipelineCreateInfo& SetShaderInfo(GraphicsPipelineShaderStage stage,
         const PipelineShaderInfo& shaderInfo);
 
+
     /// プリミティブトポロジの種類。（初期値：Invalid）
     gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
         return primitiveTopologyKind_;
@@ -46,6 +48,17 @@ public:
     /// PrimitiveTopologyKind() の設定。
     GraphicsPipelineCreateInfo& SetPrimitiveTopologyKind(
         gfx_low::PrimitiveTopologyKind kind);
+
+    /// ラスタライザ情報。（初期値：デフォルトコンストラクタの値）
+    PipelineRasterizerInfo RasterizerInfo() const { return rasterizerInfo_; }
+
+    /// RasterizerInfo() の設定。
+    GraphicsPipelineCreateInfo& SetRasterizerInfo(
+        const PipelineRasterizerInfo& info)
+    {
+        rasterizerInfo_ = info;
+        return *this;
+    }
     //@}
 
 private:
@@ -54,6 +67,7 @@ private:
         shaderInfos_;
     gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
         PrimitiveTopologyKind::Invalid;
+    PipelineRasterizerInfo rasterizerInfo_;
 };
 
 } // namespace gfx_low

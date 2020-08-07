@@ -449,7 +449,10 @@ int aemain(::ae::base::Application* app) {
                         .SetResource(fragShader.get())
                         .SetEntryPointNamePtr("main"))
                 .SetPrimitiveTopologyKind(
-                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)));
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
+                .SetRasterizerInfo(
+                    ::ae::gfx_low::PipelineRasterizerInfo().SetFrontFace(
+                        ::ae::gfx_low::PolygonFrontFace::CounterClockwise))));
     }
 
     // メインループ
