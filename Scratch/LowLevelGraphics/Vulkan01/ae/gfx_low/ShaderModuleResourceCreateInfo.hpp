@@ -2,9 +2,9 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
-#include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 
 namespace ae {
 namespace gfx_low {
@@ -42,6 +42,9 @@ public:
 
     /// バイトコードデータのメモリアドレス。（初期値：IsValid() == false
     /// なアドレス）
+    /// @details
+    /// ShaderModuleResource
+    /// 作成時点でこのアドレスに有効なバイトコードデータが可能されている必要があります。
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
 
     /// DataAddress() の設定。

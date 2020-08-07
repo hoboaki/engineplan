@@ -48,16 +48,16 @@ public:
     : nativeObject_(instance) {}
 
     ResourceMemory(void* head)
-    : head_(head) {}
+    : head_(static_cast<uint8_t*>(head)) {}
 
     ::vk::DeviceMemory NativeObject_() const { return nativeObject_; }
 
-    void* Head_() const { return head_; }
+    uint8_t* Head_() const { return head_; }
     //@}
 
 private:
     ::vk::DeviceMemory nativeObject_ = ::vk::DeviceMemory();
-    void* head_ = nullptr;
+    uint8_t* head_ = nullptr;
 };
 
 } // namespace gfx_low

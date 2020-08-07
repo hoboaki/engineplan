@@ -34,11 +34,13 @@ public:
     //@{
     /// 所属する Device。
     gfx_low::Device& Device() const { return device_; }
+
+    ::vk::ShaderModule& NativeObject() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::Device& device_;
-    const ResourceMemoryAddress data_;
+    ::vk::ShaderModule nativeObject_;
 };
 
 } // namespace gfx_low
