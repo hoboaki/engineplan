@@ -4,8 +4,9 @@
 #include <ae/base/EnumKeyArray.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/GraphicsPipelineShaderStage.hpp>
-#include <ae/gfx_low/PipelineShaderInfo.hpp>
+#include <ae/gfx_low/PipelineDepthStencilInfo.hpp>
 #include <ae/gfx_low/PipelineRasterizerInfo.hpp>
+#include <ae/gfx_low/PipelineShaderInfo.hpp>
 #include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 
 namespace ae {
@@ -39,7 +40,6 @@ public:
     GraphicsPipelineCreateInfo& SetShaderInfo(GraphicsPipelineShaderStage stage,
         const PipelineShaderInfo& shaderInfo);
 
-
     /// プリミティブトポロジの種類。（初期値：Invalid）
     gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
         return primitiveTopologyKind_;
@@ -54,9 +54,20 @@ public:
 
     /// RasterizerInfo() の設定。
     GraphicsPipelineCreateInfo& SetRasterizerInfo(
-        const PipelineRasterizerInfo& info)
-    {
+        const PipelineRasterizerInfo& info) {
         rasterizerInfo_ = info;
+        return *this;
+    }
+
+    /// デプステスト・ステンシルテスト情報。（初期値：デフォルトコンストラクタの値）
+    PipelineDepthStencilInfo DepthStencilInfo() const {
+        return depthStencilInfo_;
+    }
+
+    /// DepthStencilInfo() の設定。
+    GraphicsPipelineCreateInfo& SetDepthStencilInfo(
+        const PipelineDepthStencilInfo& info) {
+        depthStencilInfo_ = info;
         return *this;
     }
     //@}
@@ -68,6 +79,7 @@ private:
     gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
         PrimitiveTopologyKind::Invalid;
     PipelineRasterizerInfo rasterizerInfo_;
+    PipelineDepthStencilInfo depthStencilInfo_;
 };
 
 } // namespace gfx_low

@@ -452,7 +452,13 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
                     ::ae::gfx_low::PipelineRasterizerInfo().SetFrontFace(
-                        ::ae::gfx_low::PolygonFrontFace::CounterClockwise))));
+                        ::ae::gfx_low::PolygonFrontFace::CounterClockwise))
+                .SetDepthStencilInfo(
+                    ::ae::gfx_low::PipelineDepthStencilInfo()
+                        .SetDepthTestEnable(true)
+                        .SetDepthWriteEnable(true)
+                        .SetDepthCompareOp(
+                            ::ae::gfx_low::CompareOp::LessEqual))));
     }
 
     // メインループ

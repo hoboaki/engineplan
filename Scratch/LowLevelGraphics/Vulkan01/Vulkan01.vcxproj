@@ -234,6 +234,14 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\CompareOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\PipelineDepthStencilInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\PolygonFrontFace.hpp">
       <SubType>
       </SubType>
@@ -277,6 +285,14 @@
     <ClInclude Include="ae\gfx_low\ShaderModuleResource.hpp" />
     <ClInclude Include="ae\gfx_low\ShaderModuleResourceCreateInfo.hpp" />
     <ClInclude Include="ae\gfx_low\ShaderModuleResourceSpecInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\StencilOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\StencilOpInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\UniformBufferView.hpp">
       <SubType>
       </SubType>
@@ -642,7 +658,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\PipelineRasterizeInfo.cpp">
+    <ClCompile Include="ae\gfx_low\PipelineDepthStencilInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\PipelineRasterizerInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -679,6 +699,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ShaderModuleResource.cpp" />
+    <ClCompile Include="ae\gfx_low\StencilOpinfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\Swapchain.cpp">
       <SubType>
       </SubType>
