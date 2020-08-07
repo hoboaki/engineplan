@@ -238,6 +238,9 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderModuleResource.hpp" />
+    <ClInclude Include="ae\gfx_low\ShaderModuleResourceCreateInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\ShaderModuleResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\UniformBufferView.hpp">
       <SubType>
       </SubType>
@@ -627,6 +630,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\ShaderModuleResource.cpp" />
     <ClCompile Include="ae\gfx_low\Swapchain.cpp">
       <SubType>
       </SubType>

@@ -20,6 +20,7 @@
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <array>
 
@@ -352,6 +353,16 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         .SetUsageBitSet(
             EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
 }
+
+//------------------------------------------------------------------------------
+ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
+    const ShaderModuleResourceSpecInfo& specInfo) {
+    return ResourceMemoryRequirements()
+        .SetSize(specInfo.Size())
+        .SetAlignment(sizeof(size_t))
+        .SetUsageBitSet(ResourceMemoryUsageBitSet().Set(ResourceMemoryUsage::CompiledShaderModule, true));
+}
+
 
 //------------------------------------------------------------------------------
 uint8_t* Device::MapResourceMemory(

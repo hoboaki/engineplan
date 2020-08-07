@@ -552,9 +552,6 @@
     <ClInclude Include="ae\gfx_low\BufferResource.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ShaderResourceImageView.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ae\gfx_low\UniformBufferView.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -562,6 +559,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryRegion.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderModuleResource.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderModuleResourceCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderResourceImageView.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderModuleResourceSpecInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -844,6 +853,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\UniformBufferView.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ShaderModuleResource.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

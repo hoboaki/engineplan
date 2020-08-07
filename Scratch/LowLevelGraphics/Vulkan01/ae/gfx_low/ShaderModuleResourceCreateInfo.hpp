@@ -2,7 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
-#include <ae/gfx_low/BufferResourceSpecInfo.hpp>
+#include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
@@ -16,8 +16,8 @@ class Device;
 namespace ae {
 namespace gfx_low {
 
-/// BufferResource の作成に必要な情報。
-class BufferResourceCreateInfo {
+/// ShaderModuleResource の作成に必要な情報。
+class ShaderModuleResourceCreateInfo {
 public:
     /// @name プロパティ
     //@{
@@ -25,27 +25,27 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    BufferResourceCreateInfo& SetDevice(gfx_low::Device* device) {
+    ShaderModuleResourceCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
     }
 
     /// データ構造に関する仕様情報。（初期値：デフォルトコンストラクタ値）
-    BufferResourceSpecInfo SpecInfo() const { return specInfo_; }
+    ShaderModuleResourceSpecInfo SpecInfo() const { return specInfo_; }
 
     /// SpecInfo() の設定。
-    BufferResourceCreateInfo& SetSpecInfo(
-        const BufferResourceSpecInfo& specInfo) {
+    ShaderModuleResourceCreateInfo& SetSpecInfo(
+        const ShaderModuleResourceSpecInfo& specInfo) {
         specInfo_ = specInfo;
         return *this;
     }
 
-    /// バッファデータのメモリアドレス。（初期値：IsValid() == false
+    /// バイトコードデータのメモリアドレス。（初期値：IsValid() == false
     /// なアドレス）
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
 
     /// DataAddress() の設定。
-    BufferResourceCreateInfo& SetDataAddress(
+    ShaderModuleResourceCreateInfo& SetDataAddress(
         const ResourceMemoryAddress& dataAddress) {
         dataAddress_ = dataAddress;
         return *this;
@@ -53,24 +53,10 @@ public:
 
     //@}
 
-    /// @name 内部処理用関数群
-    //@{
-    /// VkBuffer オブジェクト。こちらが指定されている場合はこれをそのまま使う。
-    ::vk::Buffer* NativeObjectPtr_() const { return nativeObjectPtr_.Get(); }
-    BufferResourceCreateInfo& SetBufferPtr_(::vk::Buffer* nativeObjectPtr) {
-        nativeObjectPtr_.Reset(nativeObjectPtr);
-        return *this;
-    }
-
-    /// VkBufferCreateInfo へ変換。
-    ::vk::BufferCreateInfo NativeCreateInfo_() const;
-    //@}
-
 private:
     base::Pointer<gfx_low::Device> device_;
-    BufferResourceSpecInfo specInfo_;
+    ShaderModuleResourceSpecInfo specInfo_;
     ResourceMemoryAddress dataAddress_;
-    base::Pointer<::vk::Buffer> nativeObjectPtr_;
 };
 
 } // namespace gfx_low

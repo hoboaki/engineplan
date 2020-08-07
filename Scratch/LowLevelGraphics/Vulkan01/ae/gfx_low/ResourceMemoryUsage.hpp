@@ -43,8 +43,8 @@ enum class ResourceMemoryUsage {
     /// インダイレクト引数用バッファ。
     IndirectBuffer,
 
-    /// コンパイル済シェーダ。
-    CompiledShader,
+    /// コンパイル済シェーダモジュール。
+    CompiledShaderModule,
 
     TERM,
 };

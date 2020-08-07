@@ -15,6 +15,7 @@ class ResourceMemory;
 class ResourceMemoryAllocInfo;
 class ResourceMemoryRegion;
 class ResourceMemoryRequirements;
+class ShaderModuleResourceSpecInfo;
 class System;
 } // namespace gfx_low
 } // namespace ae
@@ -82,6 +83,10 @@ public:
     /// 指定のバッファリソースのリソースメモリ要件を計算して返す。
     ResourceMemoryRequirements CalcResourceMemoryRequirements(
         const BufferResourceSpecInfo& specInfo);
+
+    /// 指定のシェーダーモジュールリソースのリソースメモリ要件を計算して返す。
+    ResourceMemoryRequirements CalcResourceMemoryRequirements(
+        const ShaderModuleResourceSpecInfo& specInfo);
 
     /// 指定のリソースメモリの指定範囲に対して CPU による読み書きを開始する。
     /// @return region で指定した範囲の先頭アドレス。

@@ -14,7 +14,7 @@ class ShaderResourceImageViewCreateInfo;
 namespace ae {
 namespace gfx_low {
 
-/// シェーダーが参照するイメージとしてのビューデスクリプタ。
+/// シェーダーが参照するイメージ用ビューデスクリプタ。
 class ShaderResourceImageView {
 public:
     /// @name コンストラクタとデストラクタ
