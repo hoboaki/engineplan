@@ -18,8 +18,7 @@ UniformBufferView::UniformBufferView(
     const UniformBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, offset_(createInfo.Offset())
-, size_(createInfo.Size()) {}
+, region_(createInfo.Region()) {}
 
 //------------------------------------------------------------------------------
 UniformBufferView::~UniformBufferView() {}

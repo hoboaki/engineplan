@@ -2,10 +2,11 @@
 #pragma once
 
 #include <ae/gfx_low/SdkHeader.hpp>
-#include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
+#include <ae/gfx_low/ResourceMemoryRegion.hpp>
 
 namespace ae {
 namespace gfx_low {
+class BufferResource;
 class Device;
 class UniformBufferViewCreateInfo;
 } // namespace gfx_low
@@ -33,15 +34,13 @@ public:
     /// @name 内部処理用機能
     //@{
     BufferResource& BufferResource_() { return bufferResource_; }
-    size_t Offset_() { return offset_; }
-    size_t Size_() { return size_; }
+    ResourceMemoryRegion Region_() { return region_; }
     //@}
 
 private:
     gfx_low::Device& device_;
     gfx_low::BufferResource& bufferResource_;
-    const size_t offset_;
-    const size_t size_;
+    const ResourceMemoryRegion region_;
 };
 
 } // namespace gfx_low

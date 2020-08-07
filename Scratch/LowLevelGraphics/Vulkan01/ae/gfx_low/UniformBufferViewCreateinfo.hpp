@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/ResourceMemoryRegion.hpp>
 
 namespace ae {
 namespace gfx_low {
@@ -38,33 +39,20 @@ public:
         return *this;
     }
 
-    /// 参照するデータアドレスのオフセット値。（初期値：0）
-    size_t Offset() const { return offset_; }
+    /// 参照するデータの範囲。（初期値：デフォルトコンストラクタの値）
+    ResourceMemoryRegion Region() const { return region_; }
 
-    /// Offset() の設定。
-    /// @param offset [0, Resource() のデータサイズ)
-    UniformBufferViewCreateInfo& SetOffset(size_t offset) {
-        offset_ = offset;
+    /// Region() の設定。
+    UniformBufferViewCreateInfo& SetRegion(const ResourceMemoryRegion& region) {
+        region_ = region;
         return *this;
     }
-
-    /// 参照するデータのオフセットアドレスからのサイズ。 （初期値：0）
-    size_t Size() const { return size_; }
-
-    /// Size() の設定
-    /// @param size Offset() + size が Resource() のデータサイズ以下となる値。
-    UniformBufferViewCreateInfo& SetSize(size_t size)
-    {
-        size_ = size;
-        return *this;;
-    }
-
+    //@}
 
 private:
     base::Pointer<gfx_low::Device> device_;
     base::Pointer<gfx_low::BufferResource> resource_;
-    size_t offset_ = 0;
-    size_t size_ = 0;
+    ResourceMemoryRegion region_;
     
 };
 

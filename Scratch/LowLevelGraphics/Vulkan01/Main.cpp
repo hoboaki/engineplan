@@ -316,18 +316,20 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::UniformBufferViewCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetResource(uniformBufferResource.get())
-                .SetSize(sizeof(fUniformDataType))));
+                .SetRegion(::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                    sizeof(fUniformDataType)))));
 
         // データ設定
         {
-            //vec3 eye = {0.0f, 3.0f, 5.0f};
-            //vec3 origin = {0, 0, 0};
-            //vec3 up = {0.0f, 1.0f, 0.0};
-            //mat4x4_perspective(projection_matrix,
+            // vec3 eye = {0.0f, 3.0f, 5.0f};
+            // vec3 origin = {0, 0, 0};
+            // vec3 up = {0.0f, 1.0f, 0.0};
+            // mat4x4_perspective(projection_matrix,
             //    (float)degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
-            //mat4x4_look_at(view_matrix, eye, origin, up);
-            //mat4x4_identity(model_matrix);
-            //projection_matrix[1][1] *= -1;  // Flip projection matrix from GL to Vulkan orientation.
+            // mat4x4_look_at(view_matrix, eye, origin, up);
+            // mat4x4_identity(model_matrix);
+            // projection_matrix[1][1] *= -1;  // Flip projection matrix from GL
+            // to Vulkan orientation.
 
             auto proj = ::ae::base::Matrix44::Perspective(
                 ::ae::base::Angle(::ae::base::Degree(45.0f)),
@@ -357,8 +359,6 @@ int aemain(::ae::base::Application* app) {
                 data.attr[i][2] = 0;
                 data.attr[i][3] = 0;
             }
-
-
         }
     }
 
