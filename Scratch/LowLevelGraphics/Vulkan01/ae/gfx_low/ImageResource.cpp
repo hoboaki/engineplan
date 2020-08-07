@@ -26,7 +26,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     // VkImage の作成
     { 
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
-        const auto result = device_.Instance_().createImage(
+        const auto result = device_.NativeObject_().createImage(
                 &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
@@ -34,9 +34,9 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     // メモリ割り当て
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
-        const auto result = device_.Instance_().bindImageMemory(
+        const auto result = device_.NativeObject_().bindImageMemory(
             nativeObject_,
-            createInfo.DataAddress().Memory().Instance_(),
+            createInfo.DataAddress().Memory().NativeObject_(),
             createInfo.DataAddress().Offset()
             );
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
@@ -51,7 +51,7 @@ ImageResource::~ImageResource() {
         return;
     }
 
-    device_.Instance_().destroyImage(nativeObject_, nullptr);
+    device_.NativeObject_().destroyImage(nativeObject_, nullptr);
     nativeObject_ = ::vk::Image();
 }
 

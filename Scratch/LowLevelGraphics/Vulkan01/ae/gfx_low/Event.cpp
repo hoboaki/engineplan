@@ -13,16 +13,16 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 Event::Event(const EventCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, semaphore_() {
+, nativeObject_() {
     const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
-    const auto result = device_.Instance_().createSemaphore(
-        &semaphoreCreateInfo, nullptr, &semaphore_);
+    const auto result = device_.NativeObject_().createSemaphore(
+        &semaphoreCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 Event::~Event() {
-    device_.Instance_().destroySemaphore(semaphore_, nullptr);
+    device_.NativeObject_().destroySemaphore(nativeObject_, nullptr);
 }
 
 } // namespace gfx_low

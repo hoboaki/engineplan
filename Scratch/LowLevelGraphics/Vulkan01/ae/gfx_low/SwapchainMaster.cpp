@@ -34,7 +34,7 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
                 .setHinstance(screen_.display_().hinstance)
                 .setHwnd(screen_.display_().hwindow);
 
-        auto result = device_.System().Instance_().createWin32SurfaceKHR(
+        auto result = device_.System().NativeObject_().createWin32SurfaceKHR(
             &surfaceCreateInfo, nullptr, &surface_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
@@ -75,7 +75,7 @@ SwapchainMaster::~SwapchainMaster() {
             DestroySwapchain(SwapchainHandle(&swapchain));
         }
     }
-    device_.System().Instance_().destroySurfaceKHR(surface_, nullptr);
+    device_.System().NativeObject_().destroySurfaceKHR(surface_, nullptr);
     surface_ = ::vk::SurfaceKHR();
 }
 
@@ -295,7 +295,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
             .setOldSwapchain(oldSwapchainInstance);
 
     ::vk::SwapchainKHR swapchain;
-    result = device_.Instance_().createSwapchainKHR(
+    result = device_.NativeObject_().createSwapchainKHR(
         &swapchain_ci, nullptr, &swapchain);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
@@ -346,7 +346,7 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
 
 //------------------------------------------------------------------------------
 void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance) {
-    device_.Instance_().destroySwapchainKHR(instance);
+    device_.NativeObject_().destroySwapchainKHR(instance);
 }
 
 } // namespace gfx_low

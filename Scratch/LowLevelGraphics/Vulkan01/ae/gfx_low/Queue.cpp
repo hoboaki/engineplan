@@ -18,7 +18,7 @@ namespace gfx_low {
 Queue::Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind kind,
     int operationCountMax, const ::vk::CommandPool& commandPool)
 : device_(base::PtrToRef(device))
-, queue_(queue)
+, nativeObject_(queue)
 , kind_(kind)
 , operations_(operationCountMax, device_.System().ObjectAllocator_())
 , waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
@@ -136,7 +136,7 @@ void Queue::Submit(Fence* fencePtr) {
                     .setSwapchainCount(1)
                     .setPSwapchains(&swapchain.Instance_())
                     .setPImageIndices(imageIndicies);
-            const auto result = queue_.presentKHR(&presentInfo);
+            const auto result = nativeObject_.presentKHR(&presentInfo);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT(
                 opIdx + 1 ==
@@ -148,7 +148,7 @@ void Queue::Submit(Fence* fencePtr) {
 
         case OperationKind::EventWait:
             waitEvents_.Add(
-                base::PtrToRef(static_cast<Event*>(op.ptr)).Instance_());
+                base::PtrToRef(static_cast<Event*>(op.ptr)).NativeObject_());
             break;
 
         case OperationKind::EventSignal:
@@ -170,7 +170,7 @@ void Queue::Submit(Fence* fencePtr) {
                 auto& nextOp = operations_[nextOpIdx];
                 if (nextOp.kind == OperationKind::EventSignal) {
                     signalEvents_.Add(
-                        static_cast<Event*>(nextOp.ptr)->Instance_());
+                        static_cast<Event*>(nextOp.ptr)->NativeObject_());
                     nextOp.kind =
                         OperationKind::NoOperation; // 処理したので NoOperation
                                                     // に変更
@@ -181,7 +181,7 @@ void Queue::Submit(Fence* fencePtr) {
             ::vk::Fence nativeFence;
             if (fencePtr != nullptr) {
                 auto& fence = base::PtrToRef(fencePtr);
-                nativeFence = fence.Instance_();
+                nativeFence = fence.NativeObject_();
                 fence.OnSubmit_();
             }
 
@@ -196,13 +196,13 @@ void Queue::Submit(Fence* fencePtr) {
                         waitEvents_.IsEmpty() ? nullptr : &waitEvents_.First())
                     .setCommandBufferCount(1)
                     .setPCommandBuffers(
-                        &static_cast<CommandBuffer*>(op.ptr)->Instance_())
+                        &static_cast<CommandBuffer*>(op.ptr)->NativeObject_())
                     .setSignalSemaphoreCount(signalEvents_.Count())
                     .setPSignalSemaphores(signalEvents_.IsEmpty()
                                               ? nullptr
                                               : &signalEvents_.First());
             {
-                const auto result = queue_.submit(1, &submitInfo, nativeFence);
+                const auto result = nativeObject_.submit(1, &submitInfo, nativeFence);
                 AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             }
 

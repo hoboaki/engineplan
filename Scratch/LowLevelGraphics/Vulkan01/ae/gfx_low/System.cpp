@@ -177,7 +177,7 @@ System::System(const SystemCreateInfo& createInfo)
                 .setPpEnabledLayerNames(instanceValidationLayers)
                 .setEnabledExtensionCount(enabledExtensionCount_)
                 .setPpEnabledExtensionNames(extensionNames_);
-        auto result = ::vk::createInstance(&instInfo, nullptr, &instance_);
+        auto result = ::vk::createInstance(&instInfo, nullptr, &nativeObject_);
         if (result == vk::Result::eErrorIncompatibleDriver) {
             AE_BASE_ASSERT_NOT_REACHED_MSG(
                 "Cannot find a compatible Vulkan installable client driver "
@@ -202,12 +202,12 @@ System::System(const SystemCreateInfo& createInfo)
     // GPU列挙
     {
         uint32_t physicalDeviceCount;
-        result = instance_.enumeratePhysicalDevices(
+        result = nativeObject_.enumeratePhysicalDevices(
             &physicalDeviceCount, static_cast<vk::PhysicalDevice*>(nullptr));
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_MIN_TERM(
             int(physicalDeviceCount), 1, PhysicalDeviceCountMax);
-        result = instance_.enumeratePhysicalDevices(
+        result = nativeObject_.enumeratePhysicalDevices(
             &physicalDeviceCount, &physicalDevices_[0]);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         physicalDeviceCount_ = int(physicalDeviceCount);
@@ -217,8 +217,8 @@ System::System(const SystemCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 System::~System() {
     // インスタンス破棄
-    instance_.destroy(nullptr);
-    instance_ = ::vk::Instance();
+    nativeObject_.destroy(nullptr);
+    nativeObject_ = ::vk::Instance();
 
     // 複数作成防止
     AE_BASE_ASSERT(IsInstanceCreated);

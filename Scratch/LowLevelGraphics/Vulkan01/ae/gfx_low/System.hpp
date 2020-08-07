@@ -48,7 +48,7 @@ public:
 
     /// @name 内部処理用
     //@{
-    ::vk::Instance& Instance_() { return instance_; }
+    ::vk::Instance& NativeObject_() { return nativeObject_; }
 
     ::ae::base::IAllocator& ObjectAllocator_() const {
         return objectAllocator_;
@@ -82,7 +82,7 @@ private:
 
     ::ae::base::IAllocator& objectAllocator_;
     ::ae::base::IAllocator& tempWorkAllocator_;
-    ::vk::Instance instance_;
+    ::vk::Instance nativeObject_;
     int enabledExtensionCount_ = 0;
     int enabledLayerCount_ = 0;
     int physicalDeviceCount_ = 0;

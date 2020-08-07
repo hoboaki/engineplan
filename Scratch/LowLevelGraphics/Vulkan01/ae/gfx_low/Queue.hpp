@@ -87,7 +87,7 @@ public:
 
     ~Queue();
 
-    ::vk::Queue Instance_() { return queue_; }
+    ::vk::Queue NativeObject_() { return nativeObject_; }
 
     ::vk::CommandPool& CommandPool_() { return commandPool_; }
     //@}
@@ -113,7 +113,7 @@ private:
     int FindOperationIndex(OperationKind kind, int startIndex = 0);
 
     gfx_low::Device& device_;
-    ::vk::Queue queue_;
+    ::vk::Queue nativeObject_;
     const QueueKind kind_;
     base::RuntimeMarray<Operation> operations_;
     base::RuntimeMarray<::vk::Semaphore> waitEvents_;

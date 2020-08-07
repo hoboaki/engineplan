@@ -40,12 +40,12 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Semaphore& Instance_() { return semaphore_; }
+    ::vk::Semaphore& NativeObject_() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::Device& device_;
-    ::vk::Semaphore semaphore_;
+    ::vk::Semaphore nativeObject_;
 };
 
 } // namespace gfx_low

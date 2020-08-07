@@ -48,7 +48,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Fence& Instance_() { return fence_; }
+    ::vk::Fence& NativeObject_() { return nativeObject_; }
 
     /// Submit 時に呼ぶ処理。
     void OnSubmit_();
@@ -56,7 +56,7 @@ public:
 
 private:
     gfx_low::Device& device_;
-    ::vk::Fence fence_;
+    ::vk::Fence nativeObject_;
     bool isActive_ = false;
 };
 

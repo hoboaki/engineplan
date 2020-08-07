@@ -31,12 +31,12 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::ImageView& Instance_() { return imageView_; }
+    ::vk::ImageView& NativeObject_() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::Device& device_;
-    ::vk::ImageView imageView_;
+    ::vk::ImageView nativeObject_;
 };
 
 } // namespace gfx_low

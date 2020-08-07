@@ -108,7 +108,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::CommandBuffer& Instance_() { return commandBuffer_; }
+    ::vk::CommandBuffer& NativeObject_() { return nativeObject_; }
 
     Event& CompleteEvent_() { return completeEvent_; }
     //@}
@@ -123,7 +123,7 @@ private:
     const base::Pointer<Queue> queuePtr_;
     const CommandBufferLevel level_;
     const CommandBufferFeatureBitSet features_;
-    ::vk::CommandBuffer commandBuffer_;
+    ::vk::CommandBuffer nativeObject_;
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;
     CommandBufferFeatureBitSet activePass_;

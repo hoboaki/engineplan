@@ -26,7 +26,7 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
     // VkBuffer の作成
     {
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
-        const auto result = device_.Instance_().createBuffer(
+        const auto result = device_.NativeObject_().createBuffer(
             &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
@@ -34,8 +34,8 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
     // メモリ割り当て
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
-        const auto result = device_.Instance_().bindBufferMemory(nativeObject_,
-            createInfo.DataAddress().Memory().Instance_(),
+        const auto result = device_.NativeObject_().bindBufferMemory(nativeObject_,
+            createInfo.DataAddress().Memory().NativeObject_(),
             createInfo.DataAddress().Offset());
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
@@ -49,7 +49,7 @@ BufferResource::~BufferResource() {
         return;
     }
 
-    device_.Instance_().destroyBuffer(nativeObject_, nullptr);
+    device_.NativeObject_().destroyBuffer(nativeObject_, nullptr);
     nativeObject_ = ::vk::Buffer();
 }
 

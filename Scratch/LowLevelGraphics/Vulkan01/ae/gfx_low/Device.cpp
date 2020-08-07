@@ -28,7 +28,7 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 Device::Device(const DeviceCreateInfo& createInfo)
 : system_(::ae::base::PtrToRef(createInfo.System()))
-, device_()
+, nativeObject_()
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
 , queues_(createInfo.QueueCreateInfoCount(),
       &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
@@ -167,7 +167,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
                           .setPEnabledFeatures(nullptr);
     {
         auto result =
-            physicalDevice.createDevice(&deviceInfo, nullptr, &device_);
+            physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 
@@ -183,12 +183,12 @@ Device::Device(const DeviceCreateInfo& createInfo)
                     .setFlags(
                         ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
             const auto result =
-                device_.createCommandPool(&createInfo, nullptr, &commandPool);
+                nativeObject_.createCommandPool(&createInfo, nullptr, &commandPool);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
         const auto& queueCreateInfo = queueCreateInfos[i];
         queues_.Add(this,
-            device_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
+            nativeObject_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
             queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(),
             commandPool);
     }
@@ -211,11 +211,11 @@ Device::Device(const DeviceCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 Device::~Device() {
     for (int i = queues_.Count() - 1; 0 <= i; --i) {
-        device_.destroyCommandPool(queues_[i].CommandPool_(), nullptr);
+        nativeObject_.destroyCommandPool(queues_[i].CommandPool_(), nullptr);
     }
     queues_.Clear();
-    device_.destroy(nullptr);
-    device_ = ::vk::Device();
+    nativeObject_.destroy(nullptr);
+    nativeObject_ = ::vk::Device();
 }
 
 //------------------------------------------------------------------------------
@@ -281,7 +281,7 @@ ResourceMemory Device::TryToAllocResourceMemory(
             ::vk::MemoryAllocateInfo()
                 .setAllocationSize(allocInfo.Size())
                 .setMemoryTypeIndex(uint32_t(memoryTypeIndex));
-        if (device_.allocateMemory(&allocateInfo, nullptr, &memory) !=
+        if (nativeObject_.allocateMemory(&allocateInfo, nullptr, &memory) !=
             ::vk::Result::eSuccess) {
             // 確保失敗
             return ResourceMemory();
@@ -293,7 +293,7 @@ ResourceMemory Device::TryToAllocResourceMemory(
 //------------------------------------------------------------------------------
 void Device::FreeResourceMemory(const ResourceMemory& memory) {
     AE_BASE_ASSERT(memory.IsValid());
-    device_.freeMemory(memory.Instance_());
+    nativeObject_.freeMemory(memory.NativeObject_());
 }
 
 //------------------------------------------------------------------------------
@@ -311,9 +311,9 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(const ImageRes
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result = device_.createImage(&createInfo, nullptr, &tmpImage);
-        device_.getImageMemoryRequirements(tmpImage, &reqs);
-        device_.destroyImage(tmpImage, nullptr);
+        auto result = nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
+        nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
+        nativeObject_.destroyImage(tmpImage, nullptr);
     }   
 
     return ResourceMemoryRequirements()

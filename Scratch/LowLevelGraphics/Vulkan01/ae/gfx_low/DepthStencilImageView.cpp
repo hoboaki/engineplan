@@ -17,7 +17,7 @@ namespace gfx_low {
 DepthStencilImageView::DepthStencilImageView(
     const DepthStencilImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, imageView_() {
+, nativeObject_() {
     auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
@@ -25,15 +25,15 @@ DepthStencilImageView::DepthStencilImageView(
             .setFormat(InternalEnumUtil::ToFormat(createInfo.Format()))
             .setSubresourceRange(::vk::ImageSubresourceRange(
                 ::vk::ImageAspectFlagBits::eDepth, 0, 1, 0, 1));
-    const auto result = device_.Instance_().createImageView(
-        &imageViewCreateInfo, nullptr, &imageView_);
+    const auto result = device_.NativeObject_().createImageView(
+        &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 DepthStencilImageView::~DepthStencilImageView()
 {
-    device_.Instance_().destroyImageView(imageView_, nullptr);
+    device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
 } // namespace gfx_low

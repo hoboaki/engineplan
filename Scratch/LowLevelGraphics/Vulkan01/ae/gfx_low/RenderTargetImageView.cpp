@@ -27,14 +27,14 @@ RenderTargetImageView::RenderTargetImageView(
             .setFormat(imageFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(
                 ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
-    const auto result = device_.Instance_().createImageView(
+    const auto result = device_.NativeObject_().createImageView(
         &imageViewCreateInfo, nullptr, &imageView_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 RenderTargetImageView::~RenderTargetImageView() {
-    device_.Instance_().destroyImageView(imageView_, nullptr);
+    device_.NativeObject_().destroyImageView(imageView_, nullptr);
 }
 
 } // namespace gfx_low

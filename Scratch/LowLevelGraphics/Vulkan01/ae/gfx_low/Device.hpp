@@ -82,12 +82,12 @@ public:
     //@{
     static const int SupportedAttachmentCountMax_ = 8;
 
-    ::vk::Device& Instance_() { return device_; }
+    ::vk::Device& NativeObject_() { return nativeObject_; }
     //@}
 
 private:
     gfx_low::System& system_;
-    ::vk::Device device_;
+    ::vk::Device nativeObject_;
     const int physicalDeviceIndex_;
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
     ::vk::PhysicalDeviceMemoryProperties memoryProps_ = {};

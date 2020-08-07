@@ -28,13 +28,13 @@ public:
     //@{
     /// IsValid() == false なオブジェクトを作成。
     ResourceMemory()
-    : instance_() {}
+    : nativeObject_() {}
     //@}
 
     /// @name プロパティ
     //@{
     /// 有効なメモリを指し示しているか。
-    bool IsValid() const { return instance_ != ::vk::DeviceMemory(); }
+    bool IsValid() const { return nativeObject_ != ::vk::DeviceMemory(); }
 
     /// ResourceMemoryAddress オブジェクトを取得。
     /// @param offset 先頭からのオフセットバイト数。
@@ -44,13 +44,13 @@ public:
     /// @name 内部処理用機能
     //@{
     ResourceMemory(const ::vk::DeviceMemory& instance)
-    : instance_(instance) {}
+    : nativeObject_(instance) {}
 
-    ::vk::DeviceMemory Instance_() const { return instance_; }
+    ::vk::DeviceMemory NativeObject_() const { return nativeObject_; }
     //@}
 
 private:
-    ::vk::DeviceMemory instance_;
+    ::vk::DeviceMemory nativeObject_;
 };
 
 } // namespace gfx_low

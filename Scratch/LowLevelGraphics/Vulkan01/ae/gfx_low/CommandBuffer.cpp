@@ -29,7 +29,7 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , queuePtr_(createInfo.Queue())
 , level_(createInfo.Level())
 , features_(createInfo.Features())
-, commandBuffer_()
+, nativeObject_()
 , completeEvent_(EventCreateInfo().SetDevice(&device_))
 , renderPassProperties_(
       createInfo.RenderPassCountMax(), device_.System().ObjectAllocator_()) {
@@ -41,16 +41,16 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
                                   .setLevel(::vk::CommandBufferLevel::ePrimary)
                                   .setCommandBufferCount(1);
 
-    auto result = device_.Instance_().allocateCommandBuffers(
-        &allocateInfo, &commandBuffer_);
+    auto result = device_.NativeObject_().allocateCommandBuffers(
+        &allocateInfo, &nativeObject_);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 }
 
 //------------------------------------------------------------------------------
 CommandBuffer::~CommandBuffer() {
     Reset();
-    device_.Instance_().freeCommandBuffers(
-        queuePtr_->CommandPool_(), commandBuffer_);
+    device_.NativeObject_().freeCommandBuffers(
+        queuePtr_->CommandPool_(), nativeObject_);
 }
 
 //------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void CommandBuffer::BeginRecord() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
     const auto beginInfo =
         ::vk::CommandBufferBeginInfo().setPInheritanceInfo(nullptr);
-    const auto result = commandBuffer_.begin(&beginInfo);
+    const auto result = nativeObject_.begin(&beginInfo);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recording;
 }
@@ -67,7 +67,7 @@ void CommandBuffer::BeginRecord() {
 //------------------------------------------------------------------------------
 void CommandBuffer::EndRecord() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
-    const ::vk::Result result = commandBuffer_.end();
+    const ::vk::Result result = nativeObject_.end();
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recorded;
 }
@@ -90,15 +90,15 @@ void CommandBuffer::Reset() {
     }
 
     // コマンドバッファをリセット
-    const auto result = commandBuffer_.reset(::vk::CommandBufferResetFlags(0));
+    const auto result = nativeObject_.reset(::vk::CommandBufferResetFlags(0));
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Initial;
 
     // コマンドバッファで作った情報をリセット
     for (int i = renderPassProperties_.Count() - 1; 0 <= i; --i) {
         auto& prop = renderPassProperties_[i];
-        device_.Instance_().destroyFramebuffer(prop.framebuffer, nullptr);
-        device_.Instance_().destroyRenderPass(prop.renderPass, nullptr);
+        device_.NativeObject_().destroyFramebuffer(prop.framebuffer, nullptr);
+        device_.NativeObject_().destroyRenderPass(prop.renderPass, nullptr);
     }
     renderPassProperties_.Clear();
 }
@@ -233,7 +233,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                                               .setDependencyCount(hasDepthStencil ? 2 : 1)
                                               .setPDependencies(&dependencies[0]);
         {
-            const auto result = device_.Instance_().createRenderPass(
+            const auto result = device_.NativeObject_().createRenderPass(
                 &renderPassCreateInfo, nullptr, &prop.renderPass);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
@@ -252,7 +252,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             imageViews[depthStencilIdx] =
                 base::PtrToRef(info.DepthStencilSettingPtr())
                     .DepthStencilImageView()
-                    ->Instance_();
+                    ->NativeObject_();
         }
 
         auto const createInfo =
@@ -264,7 +264,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setHeight(uint32_t(info.RenderArea().Height()))
                 .setLayers(1);
         {
-            const auto result = device_.Instance_().createFramebuffer(
+            const auto result = device_.NativeObject_().createFramebuffer(
                 &createInfo, nullptr, &prop.framebuffer);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
@@ -299,7 +299,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
             .setClearValueCount(attachmentsCount)
             .setPClearValues(&clearValues[0]);
 
-    commandBuffer_.beginRenderPass(passInfo, vk::SubpassContents::eInline);
+    nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eInline);
 }
 
 //------------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void CommandBuffer::CmdEndRenderPass() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
 
-    commandBuffer_.endRenderPass();
+    nativeObject_.endRenderPass();
     activePass_.Set(CommandBufferFeature::Render, false);
 }
 
