@@ -1,11 +1,20 @@
 // 文字コード：UTF-8
+#include <ae/base/EntryPoint.hpp>
+
+// includes
+#include <ae/base/Angle.hpp>
 #include <ae/base/AppEvent.hpp>
 #include <ae/base/Application.hpp>
 #include <ae/base/Color4b.hpp>
 #include <ae/base/Console.hpp>
+#include <ae/base/Degree.hpp>
 #include <ae/base/Display.hpp>
+#include <ae/base/Matrix44.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/SdkHeader.hpp>
+#include <ae/base/Vector3.hpp>
+#include <ae/gfx_low/BufferResource.hpp>
+#include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
@@ -32,11 +41,114 @@
 #include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <ae/gfx_low/SystemCreateInfo.hpp>
+#include <ae/gfx_low/UniformBufferView.hpp>
+#include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <memory>
 
 extern int WINAPI DemoWinMain(
     HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
+
+//------------------------------------------------------------------------------
+namespace {
+
+struct fUniformDataType {
+    float mvp[4][4];
+    float position[12 * 3][4];
+    float attr[12 * 3][4];
+};
+
+// clang-format off
+const float fPositionData[] = {
+    -1.0f,-1.0f,-1.0f,  // -X side
+    -1.0f,-1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+
+    -1.0f,-1.0f,-1.0f,  // -Z side
+     1.0f, 1.0f,-1.0f,
+     1.0f,-1.0f,-1.0f,
+    -1.0f,-1.0f,-1.0f,
+    -1.0f, 1.0f,-1.0f,
+     1.0f, 1.0f,-1.0f,
+
+    -1.0f,-1.0f,-1.0f,  // -Y side
+     1.0f,-1.0f,-1.0f,
+     1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f,-1.0f,
+     1.0f,-1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+
+    -1.0f, 1.0f,-1.0f,  // +Y side
+    -1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f,-1.0f,
+     1.0f, 1.0f, 1.0f,
+     1.0f, 1.0f,-1.0f,
+
+     1.0f, 1.0f,-1.0f,  // +X side
+     1.0f, 1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f,-1.0f,-1.0f,
+     1.0f, 1.0f,-1.0f,
+
+    -1.0f, 1.0f, 1.0f,  // +Z side
+    -1.0f,-1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+    -1.0f,-1.0f, 1.0f,
+     1.0f,-1.0f, 1.0f,
+     1.0f, 1.0f, 1.0f,
+};
+
+const float fUvBufferData[] = {
+    0.0f, 1.0f,  // -X side
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+    1.0f, 0.0f,
+    0.0f, 0.0f,
+    0.0f, 1.0f,
+
+    1.0f, 1.0f,  // -Z side
+    0.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+    0.0f, 0.0f,
+
+    1.0f, 0.0f,  // -Y side
+    1.0f, 1.0f,
+    0.0f, 1.0f,
+    1.0f, 0.0f,
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+
+    1.0f, 0.0f,  // +Y side
+    0.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+
+    1.0f, 0.0f,  // +X side
+    0.0f, 0.0f,
+    0.0f, 1.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+
+    0.0f, 0.0f,  // +Z side
+    0.0f, 1.0f,
+    1.0f, 0.0f,
+    0.0f, 1.0f,
+    1.0f, 1.0f,
+    1.0f, 0.0f,
+};
+// clang-format on
+
+} // namespace
 
 //------------------------------------------------------------------------------
 int aemain(::ae::base::Application* app) {
@@ -178,6 +290,76 @@ int aemain(::ae::base::Application* app) {
     for (int i = 0; i < fences.CountMax(); ++i) {
         fences.Add(
             ::ae::gfx_low::FenceCreateInfo().SetDevice(gfxLowDevice.get()));
+    }
+
+    // UniformBuffer の作成
+    ::ae::gfx_low::UniqueResourceMemory uniformBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::BufferResource> uniformBufferResource;
+    ::std::unique_ptr<::ae::gfx_low::UniformBufferView> uniformBufferView;
+    {
+        const auto specInfo =
+            ::ae::gfx_low::BufferResourceSpecInfo()
+                .SetSize(sizeof(fUniformDataType))
+                .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
+                    ::ae::gfx_low::BufferResourceUsage::UniformBuffer, true));
+        uniformBufferMemory.Reset(gfxLowDevice.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetParams(
+                    gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
+        uniformBufferResource.reset(new ::ae::gfx_low::BufferResource(
+            ::ae::gfx_low::BufferResourceCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*uniformBufferMemory)));
+        uniformBufferView.reset(new ::ae::gfx_low::UniformBufferView(
+            ::ae::gfx_low::UniformBufferViewCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetResource(uniformBufferResource.get())
+                .SetSize(sizeof(fUniformDataType))));
+
+        // データ設定
+        {
+            //vec3 eye = {0.0f, 3.0f, 5.0f};
+            //vec3 origin = {0, 0, 0};
+            //vec3 up = {0.0f, 1.0f, 0.0};
+            //mat4x4_perspective(projection_matrix,
+            //    (float)degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
+            //mat4x4_look_at(view_matrix, eye, origin, up);
+            //mat4x4_identity(model_matrix);
+            //projection_matrix[1][1] *= -1;  // Flip projection matrix from GL to Vulkan orientation.
+
+            auto proj = ::ae::base::Matrix44::Perspective(
+                ::ae::base::Angle(::ae::base::Degree(45.0f)),
+                1.0f, // aspect
+                0.1f, // near
+                100.0f // far
+            );
+            proj.m[1][1] *= -1.0f;
+            auto view = ::ae::base::Matrix44::LookAt(
+                ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
+                ::ae::base::Vector3::Zero(), // targetPos
+                ::ae::base::Vector3::UnitY() // upVec
+            );
+            auto model = ::ae::base::Matrix44::Identity();
+            auto vp = proj * view;
+            auto mvp = vp * model;
+
+            fUniformDataType data;
+            memcpy(data.mvp, &mvp, sizeof(mvp));
+            for (int i = 0; i < 12 * 3; ++i) {
+                data.position[i][0] = fPositionData[i * 3];
+                data.position[i][1] = fPositionData[i * 3 + 1];
+                data.position[i][2] = fPositionData[i * 3 + 2];
+                data.position[i][3] = 1.0f;
+                data.attr[i][0] = fUvBufferData[2 * i];
+                data.attr[i][1] = fUvBufferData[2 * i + 1];
+                data.attr[i][2] = 0;
+                data.attr[i][3] = 0;
+            }
+
+
+        }
     }
 
     // メインループ
