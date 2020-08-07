@@ -250,6 +250,20 @@ ResourceMemory Device::TryToAllocResourceMemory(
         return ResourceMemory();
     }
 
+    // CompiledShaderModule 用処理
+    if (allocInfo.UsageBitSet().Get(
+            ResourceMemoryUsage::CompiledShaderModule)) {
+        // CompiledShaderModule 以外のフラグがたっていないことを確認
+        AE_BASE_ASSERT(
+            ResourceMemoryUsageBitSet(allocInfo.UsageBitSet())
+                .Set(ResourceMemoryUsage::CompiledShaderModule, false)
+                .IsAllOff());
+
+        // CPU用のメモリを確保して返す
+        return ResourceMemory(
+            system_.ObjectAllocator_().Alloc(allocInfo.Size()));
+    }
+
     // メモリフラグマスクの作成
     const ::vk::Flags<::vk::MemoryPropertyFlagBits> memoryMaskTable[] = {
         ::vk::MemoryPropertyFlagBits(0), // Invalid,
@@ -296,6 +310,10 @@ ResourceMemory Device::TryToAllocResourceMemory(
 //------------------------------------------------------------------------------
 void Device::FreeResourceMemory(const ResourceMemory& memory) {
     AE_BASE_ASSERT(memory.IsValid());
+    if (memory.Head_() != nullptr) {
+        system_.ObjectAllocator_().Free(memory.Head_());
+        return;
+    }
     nativeObject_.freeMemory(memory.NativeObject_());
 }
 
@@ -367,6 +385,12 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 //------------------------------------------------------------------------------
 uint8_t* Device::MapResourceMemory(
     const ResourceMemory& resourceMemory, const ResourceMemoryRegion& region) {
+    AE_BASE_ASSERT(resourceMemory.IsValid());
+    // CompiledShaderModule 用処理
+    if (resourceMemory.Head_() != nullptr) {
+        return resourceMemory.Head_();
+    }
+
     const auto result = nativeObject_.mapMemory(
         resourceMemory.NativeObject_(), region.Offset(), region.Size());
     AE_BASE_ASSERT(result.result == ::vk::Result::eSuccess);
@@ -375,6 +399,11 @@ uint8_t* Device::MapResourceMemory(
 
 //------------------------------------------------------------------------------
 void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
+    // CompiledShaderModule 用処理
+    if (resourceMemory.Head_() != nullptr) {
+        return;
+    }
+
     nativeObject_.unmapMemory(resourceMemory.NativeObject_());
 }
 

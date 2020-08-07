@@ -35,6 +35,8 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/ShaderModuleResource.hpp>
+#include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainCreateInfo.hpp>
 #include <ae/gfx_low/SwapchainMaster.hpp>
@@ -145,6 +147,22 @@ const float fUvBufferData[] = {
     0.0f, 1.0f,
     1.0f, 1.0f,
     1.0f, 0.0f,
+};
+
+const uint32_t fVertShaderCode[] = {
+#if defined(UV_AS_COLOR_MODE)
+#include "uv_as_color.vert.inc"
+#else
+#include "cube.vert.inc"
+#endif
+};
+
+const uint32_t fFragShaderCode[] = {
+#if defined(UV_AS_COLOR_MODE)
+#include "uv_as_color.frag.inc"
+#else
+#include "cube.frag.inc"
+#endif
 };
 // clang-format on
 
@@ -290,6 +308,50 @@ int aemain(::ae::base::Application* app) {
     for (int i = 0; i < fences.CountMax(); ++i) {
         fences.Add(
             ::ae::gfx_low::FenceCreateInfo().SetDevice(gfxLowDevice.get()));
+    }
+
+    // Shader の作成
+    ::ae::gfx_low::UniqueResourceMemory vertShaderMemory;
+    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> vertShader;
+    ::ae::gfx_low::UniqueResourceMemory fragShaderMemory;
+    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> fragShader;
+    {
+        const auto size = sizeof(fVertShaderCode);
+        const auto specInfo =
+            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
+        vertShaderMemory.Reset(gfxLowDevice.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
+        std::memcpy(gfxLowDevice->MapResourceMemory(*vertShaderMemory,
+                        ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
+            fVertShaderCode, size);
+        gfxLowDevice->UnmapResourceMemory(*vertShaderMemory);
+        vertShader.reset(new ::ae::gfx_low::ShaderModuleResource(
+            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*vertShaderMemory)));
+    }
+    {
+        const auto size = sizeof(fFragShaderCode);
+        const auto specInfo =
+            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
+        fragShaderMemory.Reset(gfxLowDevice.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
+        std::memcpy(gfxLowDevice->MapResourceMemory(*fragShaderMemory,
+                        ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
+            fFragShaderCode, size);
+        gfxLowDevice->UnmapResourceMemory(*fragShaderMemory);
+        fragShader.reset(new ::ae::gfx_low::ShaderModuleResource(
+            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*fragShaderMemory)));
     }
 
     // UniformBuffer の作成
