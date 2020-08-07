@@ -316,7 +316,12 @@
   - 注意点として DirectX 12 のみ RenderTargetView DepthStencilView という概念が必要。
   - なので，抽象化時も ImageView だけでなくその２つも用意しておくとよさそう。Vulkan では無駄になっちゃうけど。
 - 抽象化設計（バインディング）
-  - buffer(uniform/storage), image(read/write), sampler の３つをそれぞれ 0 からの通し番号で扱う。
+  - C++ API 上では buffer(uniform), buffer(storage), image(read), image(write), sampler の５つをそれぞれ 0 からの通し番号で扱う。
+  - GLSL や MSL は buffer や image ２種を区別しない。そして DX12 は buffer(storage) と image(write) を区別しない仕様となっているため配慮が必要。
+  - なのでそれぞれのシェーダーコードの制約を設ける。
+    - GLSL と MSL において buffer(storage) のコード上バインド番号は buffer(uniform) の最大番号 + 1 からスタート。
+    - GLSL と MSL において image(write) のコード上バインド番号は image(read) の最大番号 + 1 からスタート。
+    - DX12 において image(write) のコード上バインド番号は buffer(storage) の最大番号 + 1 からスタート。
 
 ### Vulkan
 
