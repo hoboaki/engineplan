@@ -447,7 +447,9 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::GraphicsPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(fragShader.get())
-                        .SetEntryPointNamePtr("main"))));
+                        .SetEntryPointNamePtr("main"))
+                .SetPrimitiveTopologyKind(
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)));
     }
 
     // メインループ
