@@ -355,6 +355,7 @@ SetStorageImageView(index, view))
 - バインディング
   - [参考記事](https://qiita.com/lriki/items/934804030d56fd88dcc8)。
   - 抽象化のヒントも載っているのでそのまま採用できそう。
+  - テクスチャとサンプラを分けてバインディングする方法は[こちら](https://blog.techlab-xe.net/vulkan-independ-texture-and-sampler/)。
 
 ### DirectX 12
 
