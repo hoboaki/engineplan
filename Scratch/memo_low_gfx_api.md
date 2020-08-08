@@ -614,12 +614,13 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
   - レンダーターゲット
   - loadOp storeOp
   - レンダーターゲットクリアカラー
-- パイプラインステート（RenderPipeline/ComputePipeline）
+- パイプラインステート（[RenderPipeline](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor)/ComputePipeline）
   - シェーダー
   - 頂点バッファレイアウト
   - レンダーターゲットのフォーマット
   - マルチサンプリングオプション
   - コンスタントバッファビューの書き込み可能属性指定（なにこれ？）
+  - ブレンドステート
 - アーギュメントバッファ（全部指定する必要なし・シェーダーバインド宣言＆実体として扱い可能・MTLFunction から生成可能）
   - コンスタントバッファビュー・ストレージバッファビュー（MTLBuffer : MTLResource）
   - テクスチャビュー（MTLTexture : MTLResource）
@@ -632,7 +633,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
     - FrontFace
     - DepthBias 系
   - デプスステンシルステート
-  - ブレントステート
+  - ブレントステートのコンスタントカラー
   - アーギュメントバッファで指定できる各パラメータ
   - ビューポート
   - シザー矩形
