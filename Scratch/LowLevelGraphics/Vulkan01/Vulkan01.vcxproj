@@ -278,15 +278,15 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipeline.hpp">
+    <ClInclude Include="ae\gfx_low\RenderPipeline.hpp">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipelineCreateInfo.hpp">
+    <ClInclude Include="ae\gfx_low\RenderPipelineCreateInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipelineShaderStage.hpp">
+    <ClInclude Include="ae\gfx_low\RenderPipelineShaderStage.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -674,11 +674,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\GraphicsPipeline.cpp">
+    <ClCompile Include="ae\gfx_low\RenderPipeline.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\GraphicsPipelineCreateInfo.cpp">
+    <ClCompile Include="ae\gfx_low\RenderPipelineCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

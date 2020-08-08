@@ -573,16 +573,7 @@
     <ClInclude Include="ae\gfx_low\ShaderModuleResourceSpecInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipelineCreateInfo.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ae\gfx_low\PipelineShaderInfo.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipelineShaderStage.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ae\gfx_low\GraphicsPipeline.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\PrimitiveTopologyKind.hpp">
@@ -643,6 +634,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderTargetComponent.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPipelineShaderStage.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPipelineCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPipeline.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -930,12 +930,6 @@
     <ClCompile Include="ae\gfx_low\ShaderModuleResource.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\GraphicsPipelineCreateInfo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ae\gfx_low\GraphicsPipeline.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ae\gfx_low\PipelineRasterizerInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -952,6 +946,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderTargetBlendInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderPipelineCreateInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderPipeline.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

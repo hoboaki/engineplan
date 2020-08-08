@@ -5,9 +5,9 @@
 namespace ae {
 namespace gfx_low {
 
-/// グラフィックスパイプラインにおけるプログラマブルシェーダーをアサインできるステージを表す列挙値。
+/// レンダーパイプラインにおけるプログラマブルシェーダーをアサインできるステージを表す列挙値。
 /// @todo テッセレーションなど他のステージの対応。
-enum class GraphicsPipelineShaderStage {
+enum class RenderPipelineShaderStage {
     /// 無効値。
     Invalid,
 

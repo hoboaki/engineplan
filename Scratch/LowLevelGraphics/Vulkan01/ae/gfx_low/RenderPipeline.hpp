@@ -6,7 +6,7 @@
 namespace ae {
 namespace gfx_low {
 class Device;
-class GraphicsPipelineCreateInfo;
+class RenderPipelineCreateInfo;
 } // namespace gfx_low
 } // namespace ae
 
@@ -14,13 +14,13 @@ class GraphicsPipelineCreateInfo;
 namespace ae {
 namespace gfx_low {
 
-/// グラフィックスパイプラインを扱うクラス。
-class GraphicsPipeline {
+/// レンダーパイプラインを扱うクラス。
+class RenderPipeline {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    GraphicsPipeline(const GraphicsPipelineCreateInfo& createInfo);
-    ~GraphicsPipeline();
+    RenderPipeline(const RenderPipelineCreateInfo& createInfo);
+    ~RenderPipeline();
     //@}
 
     /// @name プロパティ

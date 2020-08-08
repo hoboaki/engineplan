@@ -1,5 +1,5 @@
 // 文字コード：UTF-8
-#include <ae/gfx_low/GraphicsPipelineCreateInfo.hpp>
+#include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
@@ -9,23 +9,23 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-PipelineShaderInfo GraphicsPipelineCreateInfo::ShaderInfo(
-    const GraphicsPipelineShaderStage stage) const {
-    AE_BASE_ASSERT(stage != GraphicsPipelineShaderStage::Invalid);
+PipelineShaderInfo RenderPipelineCreateInfo::ShaderInfo(
+    const RenderPipelineShaderStage stage) const {
+    AE_BASE_ASSERT(stage != RenderPipelineShaderStage::Invalid);
     return shaderInfos_[stage];
 }
 
 //------------------------------------------------------------------------------
-GraphicsPipelineCreateInfo& GraphicsPipelineCreateInfo::SetShaderInfo(
-    const GraphicsPipelineShaderStage stage,
+RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetShaderInfo(
+    const RenderPipelineShaderStage stage,
     const PipelineShaderInfo& shaderInfo) {
-    AE_BASE_ASSERT(stage != GraphicsPipelineShaderStage::Invalid);
+    AE_BASE_ASSERT(stage != RenderPipelineShaderStage::Invalid);
     shaderInfos_[stage] = shaderInfo;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-GraphicsPipelineCreateInfo& GraphicsPipelineCreateInfo::SetPrimitiveTopologyKind(
+RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetPrimitiveTopologyKind(
     const gfx_low::PrimitiveTopologyKind kind) {
     AE_BASE_ASSERT_ENUM(kind, gfx_low::PrimitiveTopologyKind);
     AE_BASE_ASSERT(kind != gfx_low::PrimitiveTopologyKind::Invalid);

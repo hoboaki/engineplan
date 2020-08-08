@@ -4,13 +4,13 @@
 #include <ae/base/EnumKeyArray.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
-#include <ae/gfx_low/GraphicsPipelineShaderStage.hpp>
 #include <ae/gfx_low/PipelineBlendInfo.hpp>
 #include <ae/gfx_low/PipelineDepthStencilInfo.hpp>
 #include <ae/gfx_low/PipelineRasterizerInfo.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
 #include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
+#include <ae/gfx_low/RenderPipelineShaderStage.hpp>
 
 namespace ae {
 namespace gfx_low {
@@ -22,8 +22,8 @@ class Device;
 namespace ae {
 namespace gfx_low {
 
-/// GraphicsPipeline オブジェクト作成に必要な情報。
-class GraphicsPipelineCreateInfo {
+/// RenderPipeline オブジェクト作成に必要な情報。
+class RenderPipelineCreateInfo {
 public:
     /// @name プロパティ
     //@{
@@ -31,7 +31,7 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    GraphicsPipelineCreateInfo& SetDevice(gfx_low::Device* device) {
+    RenderPipelineCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
     }
@@ -42,17 +42,17 @@ public:
     }
 
     /// RenderPassSpecInfo() の設定。（設定必須）
-    GraphicsPipelineCreateInfo& SetRenderPassSpecInfo(
+    RenderPipelineCreateInfo& SetRenderPassSpecInfo(
         const gfx_low::RenderPassSpecInfo& info) {
         renderPassSpecInfo_ = info;
         return *this;
     }
 
     /// 指定シェーダーステージのシェーダー情報。（初期値：デフォルトコンストラクタの値）
-    PipelineShaderInfo ShaderInfo(GraphicsPipelineShaderStage stage) const;
+    PipelineShaderInfo ShaderInfo(RenderPipelineShaderStage stage) const;
 
     /// ShaderInfo() の設定。（設定必須）
-    GraphicsPipelineCreateInfo& SetShaderInfo(GraphicsPipelineShaderStage stage,
+    RenderPipelineCreateInfo& SetShaderInfo(RenderPipelineShaderStage stage,
         const PipelineShaderInfo& shaderInfo);
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
@@ -61,7 +61,7 @@ public:
     }
 
     /// DescriptorSetSpecInfo() の設定。
-    GraphicsPipelineCreateInfo& SetDescriptorSetSpecInfo(
+    RenderPipelineCreateInfo& SetDescriptorSetSpecInfo(
         const gfx_low::DescriptorSetSpecInfo& info) {
         descriptorSetSpecInfo_ = info;
         return *this;
@@ -73,14 +73,14 @@ public:
     }
 
     /// PrimitiveTopologyKind() の設定。
-    GraphicsPipelineCreateInfo& SetPrimitiveTopologyKind(
+    RenderPipelineCreateInfo& SetPrimitiveTopologyKind(
         gfx_low::PrimitiveTopologyKind kind);
 
     /// ラスタライザ情報。（初期値：デフォルトコンストラクタの値）
     PipelineRasterizerInfo RasterizerInfo() const { return rasterizerInfo_; }
 
     /// RasterizerInfo() の設定。
-    GraphicsPipelineCreateInfo& SetRasterizerInfo(
+    RenderPipelineCreateInfo& SetRasterizerInfo(
         const PipelineRasterizerInfo& info) {
         rasterizerInfo_ = info;
         return *this;
@@ -92,7 +92,7 @@ public:
     }
 
     /// DepthStencilInfo() の設定。
-    GraphicsPipelineCreateInfo& SetDepthStencilInfo(
+    RenderPipelineCreateInfo& SetDepthStencilInfo(
         const PipelineDepthStencilInfo& info) {
         depthStencilInfo_ = info;
         return *this;
@@ -104,7 +104,7 @@ public:
     }
 
     /// BlendInfo() の設定。
-    GraphicsPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info) {
+    RenderPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info) {
         blendInfo_ = info;
         return *this;
     }
@@ -113,7 +113,7 @@ public:
 private:
     base::Pointer<gfx_low::Device> device_;
     gfx_low::RenderPassSpecInfo renderPassSpecInfo_;
-    base::EnumKeyArray<GraphicsPipelineShaderStage, PipelineShaderInfo>
+    base::EnumKeyArray<RenderPipelineShaderStage, PipelineShaderInfo>
         shaderInfos_;
     gfx_low::DescriptorSetSpecInfo descriptorSetSpecInfo_;
     PipelineRasterizerInfo rasterizerInfo_;

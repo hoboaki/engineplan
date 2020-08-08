@@ -26,14 +26,14 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
-#include <ae/gfx_low/GraphicsPipeline.hpp>
-#include <ae/gfx_low/GraphicsPipelineCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
+#include <ae/gfx_low/RenderPipeline.hpp>
+#include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetBlendInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
@@ -462,7 +462,7 @@ int aemain(::ae::base::Application* app) {
             .SetUniformBufferBindingInfos(uniformBufferBindingInfos);
 
     // GraphicsPipeline 生成
-    std::unique_ptr<::ae::gfx_low::GraphicsPipeline> pipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
     {
         const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
             ::ae::gfx_low::RenderTargetBlendInfo(),
@@ -470,18 +470,18 @@ int aemain(::ae::base::Application* app) {
         AE_BASE_ARRAY_LENGTH_CHECK(
             blendInfos, AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
 
-        pipeline.reset(new ::ae::gfx_low::GraphicsPipeline(
-            ::ae::gfx_low::GraphicsPipelineCreateInfo()
+        pipeline.reset(new ::ae::gfx_low::RenderPipeline(
+            ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
                 .SetShaderInfo(
-                    ::ae::gfx_low::GraphicsPipelineShaderStage::Vertex,
+                    ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(vertShader.get())
                         .SetEntryPointNamePtr("main"))
                 .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
                 .SetShaderInfo(
-                    ::ae::gfx_low::GraphicsPipelineShaderStage::Fragment,
+                    ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(fragShader.get())
                         .SetEntryPointNamePtr("main"))
