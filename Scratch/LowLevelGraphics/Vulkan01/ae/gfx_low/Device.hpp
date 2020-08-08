@@ -101,6 +101,7 @@ public:
 
     /// @name 内部処理用API
     //@{
+    /// DX12 とあわせて 8 を最大数としている。
     static const int SupportedAttachmentCountMax_ = 8;
 
     ::vk::Device& NativeObject_() { return nativeObject_; }
