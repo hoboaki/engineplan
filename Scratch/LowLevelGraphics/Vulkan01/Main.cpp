@@ -34,6 +34,7 @@
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
+#include <ae/gfx_low/RenderTargetBlendInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
@@ -463,6 +464,12 @@ int aemain(::ae::base::Application* app) {
     // GraphicsPipeline 生成
     std::unique_ptr<::ae::gfx_low::GraphicsPipeline> pipeline;
     {
+        const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
+            ::ae::gfx_low::RenderTargetBlendInfo(),
+        };
+        AE_BASE_ARRAY_LENGTH_CHECK(
+            blendInfos, AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
+
         pipeline.reset(new ::ae::gfx_low::GraphicsPipeline(
             ::ae::gfx_low::GraphicsPipelineCreateInfo()
                 .SetDevice(gfxLowDevice.get())
@@ -487,8 +494,9 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PipelineDepthStencilInfo()
                         .SetDepthTestEnable(true)
                         .SetDepthWriteEnable(true)
-                        .SetDepthCompareOp(
-                            ::ae::gfx_low::CompareOp::LessEqual))));
+                        .SetDepthCompareOp(::ae::gfx_low::CompareOp::LessEqual))
+                .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
+                                  .SetRenderTargetBlendInfos(blendInfos))));
     }
 
     // メインループ
@@ -545,6 +553,7 @@ int aemain(::ae::base::Application* app) {
                         .SetStencilStoreOp(
                             ::ae::gfx_low::AttachmentStoreOp::Store)
                         .SetStencilClearValue(0);
+
 
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo()

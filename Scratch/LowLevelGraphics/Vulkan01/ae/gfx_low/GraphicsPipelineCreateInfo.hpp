@@ -5,6 +5,7 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
 #include <ae/gfx_low/GraphicsPipelineShaderStage.hpp>
+#include <ae/gfx_low/PipelineBlendInfo.hpp>
 #include <ae/gfx_low/PipelineDepthStencilInfo.hpp>
 #include <ae/gfx_low/PipelineRasterizerInfo.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
@@ -96,6 +97,17 @@ public:
         depthStencilInfo_ = info;
         return *this;
     }
+
+    /// ブレンド処理の情報。（初期値：デフォルトコンストラクタの値）
+    PipelineBlendInfo BlendInfo() const {
+        return blendInfo_;
+    }
+
+    /// BlendInfo() の設定。
+    GraphicsPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info) {
+        blendInfo_ = info;
+        return *this;
+    }
     //@}
 
 private:
@@ -106,6 +118,7 @@ private:
     gfx_low::DescriptorSetSpecInfo descriptorSetSpecInfo_;
     PipelineRasterizerInfo rasterizerInfo_;
     PipelineDepthStencilInfo depthStencilInfo_;
+    PipelineBlendInfo blendInfo_;
     gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
         PrimitiveTopologyKind::Invalid;
 };
