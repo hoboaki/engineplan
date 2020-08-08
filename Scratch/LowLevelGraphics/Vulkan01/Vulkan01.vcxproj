@@ -226,6 +226,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\BlendFactor.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\BlendOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\BufferResource.hpp">
       <SubType>
       </SubType>
@@ -239,6 +247,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\DescriptorSetSpecInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\LogicOp.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -719,7 +731,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ShaderModuleResource.cpp" />
-    <ClCompile Include="ae\gfx_low\StencilOpinfo.cpp">
+    <ClCompile Include="ae\gfx_low\StencilOpInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
