@@ -11,7 +11,7 @@ enum class BlendOp {
     Invalid,
 
     /// 加算。
-    And,
+    Add,
 
     /// Src - Dst の減算。　
     Subtract,

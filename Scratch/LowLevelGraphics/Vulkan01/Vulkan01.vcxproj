@@ -242,6 +242,14 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\RenderTargetComponent.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderTargetComponentBitSet.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\CompareOp.hpp">
       <SubType>
       </SubType>
@@ -251,6 +259,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\LogicOp.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\PipelineBlendInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -291,6 +303,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\PrimitiveTopologyKind.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderTargetBlendInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -690,6 +706,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\PipelineBlendInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\PipelineDepthStencilInfo.cpp">
       <SubType>
       </SubType>
@@ -707,6 +727,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderPassSpecInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderTargetBlendInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
