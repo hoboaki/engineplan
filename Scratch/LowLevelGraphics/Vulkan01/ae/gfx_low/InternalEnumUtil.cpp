@@ -45,6 +45,86 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::BlendFactor InternalEnumUtil::ToBlendFactorForColor(
+    const BlendFactor factor) {
+    AE_BASE_ASSERT_ENUM(factor, BlendFactor);
+    AE_BASE_ASSERT(factor != BlendFactor::Invalid);
+    const ::vk::BlendFactor table[] = {
+        ::vk::BlendFactor(-1), // Invalid,
+        ::vk::BlendFactor::eZero,
+        ::vk::BlendFactor::eOne,
+        ::vk::BlendFactor::eSrcColor,
+        ::vk::BlendFactor::eOneMinusSrcColor,
+        ::vk::BlendFactor::eDstColor,
+        ::vk::BlendFactor::eOneMinusDstColor,
+        ::vk::BlendFactor::eSrcAlpha,
+        ::vk::BlendFactor::eOneMinusSrcAlpha,
+        ::vk::BlendFactor::eDstAlpha,
+        ::vk::BlendFactor::eOneMinusDstAlpha,
+        ::vk::BlendFactor::eConstantColor, // Constant
+        ::vk::BlendFactor::eOneMinusConstantColor, // OneMinusConstant
+        ::vk::BlendFactor::eSrcAlphaSaturate,
+        ::vk::BlendFactor::eSrc1Color,
+        ::vk::BlendFactor::eOneMinusSrc1Color,
+        ::vk::BlendFactor::eSrc1Alpha,
+        ::vk::BlendFactor::eOneMinusSrc1Alpha,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(BlendFactor::TERM));
+    const auto result = table[int(factor)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::BlendFactor InternalEnumUtil::ToBlendFactorForAlpha(
+    const BlendFactor factor) {
+    AE_BASE_ASSERT_ENUM(factor, BlendFactor);
+    AE_BASE_ASSERT(factor != BlendFactor::Invalid);
+    const ::vk::BlendFactor table[] = {
+        ::vk::BlendFactor(-1), // Invalid,
+        ::vk::BlendFactor::eZero,
+        ::vk::BlendFactor::eOne,
+        ::vk::BlendFactor::eSrcColor,
+        ::vk::BlendFactor::eOneMinusSrcColor,
+        ::vk::BlendFactor::eDstColor,
+        ::vk::BlendFactor::eOneMinusDstColor,
+        ::vk::BlendFactor::eSrcAlpha,
+        ::vk::BlendFactor::eOneMinusSrcAlpha,
+        ::vk::BlendFactor::eDstAlpha,
+        ::vk::BlendFactor::eOneMinusDstAlpha,
+        ::vk::BlendFactor::eConstantAlpha, // Constant
+        ::vk::BlendFactor::eOneMinusConstantAlpha, // OneMinusConstant
+        ::vk::BlendFactor::eSrcAlphaSaturate,
+        ::vk::BlendFactor::eSrc1Color,
+        ::vk::BlendFactor::eOneMinusSrc1Color,
+        ::vk::BlendFactor::eSrc1Alpha,
+        ::vk::BlendFactor::eOneMinusSrc1Alpha,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(BlendFactor::TERM));
+    const auto result = table[int(factor)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::BlendOp InternalEnumUtil::ToBlendOp(const BlendOp op) {
+    AE_BASE_ASSERT_ENUM(op, BlendOp);
+    AE_BASE_ASSERT(op != BlendOp::Invalid);
+    const ::vk::BlendOp table[] = {
+        ::vk::BlendOp(-1), // Invalid,
+        ::vk::BlendOp::eAdd,
+        ::vk::BlendOp::eSubtract,
+        ::vk::BlendOp::eReverseSubtract,
+        ::vk::BlendOp::eMin,
+        ::vk::BlendOp::eMax,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(BlendOp::TERM));
+    const auto result = table[int(op)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::BufferUsageFlags InternalEnumUtil::ToBufferUsageFlags(
     const BufferResourceUsageBitSet& usageBitSet) {
     const ::vk::BufferUsageFlagBits table[] = {
@@ -59,7 +139,8 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(BufferResourceUsage::TERM));
     auto result = ::vk::BufferUsageFlags();
-    for (int i = 0; i < int(BufferResourceUsage::TERM); ++i) {
+    for (int i = int(BufferResourceUsage::Invalid) + 1;
+         i < int(BufferResourceUsage::TERM); ++i) {
         if (usageBitSet.Get(BufferResourceUsage(i))) {
             result |= table[i];
         }
@@ -67,6 +148,66 @@ namespace gfx_low {
     AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
     return result;
 }
+
+//------------------------------------------------------------------------------
+::vk::ColorComponentFlags InternalEnumUtil::ToColorComponentFlags(
+    const RenderTargetComponentBitSet& componentBitSet) {
+    const ::vk::ColorComponentFlagBits table[] = {
+        ::vk::ColorComponentFlagBits(0), // Invalid
+        ::vk::ColorComponentFlagBits::eR,
+        ::vk::ColorComponentFlagBits::eG,
+        ::vk::ColorComponentFlagBits::eB,
+        ::vk::ColorComponentFlagBits::eA,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(RenderTargetComponent::TERM));
+    auto result = ::vk::ColorComponentFlags();
+    for (int i = int(RenderTargetComponent::Invalid) + 1;
+         i < int(RenderTargetComponent::TERM); ++i) {
+        if (componentBitSet.Get(RenderTargetComponent(i))) {
+            result |= table[i];
+        }
+    }
+    AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::CompareOp InternalEnumUtil::ToCompareOp(const CompareOp op) {
+    AE_BASE_ASSERT_ENUM(op, CompareOp);
+    AE_BASE_ASSERT(op != CompareOp::Invalid);
+    const ::vk::CompareOp table[] = {
+        ::vk::CompareOp(-1), // Invalid,
+        ::vk::CompareOp::eNever,
+        ::vk::CompareOp::eLess,
+        ::vk::CompareOp::eEqual,
+        ::vk::CompareOp::eLessOrEqual,
+        ::vk::CompareOp::eGreater,
+        ::vk::CompareOp::eNotEqual,
+        ::vk::CompareOp::eGreaterOrEqual,
+        ::vk::CompareOp::eAlways,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(CompareOp::TERM));
+    const auto result = table[int(op)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::CullModeFlags InternalEnumUtil::ToCullModeFlags(const RasterizeCullMode mode) {
+    AE_BASE_ASSERT_ENUM(mode, RasterizeCullMode);
+    AE_BASE_ASSERT(mode != RasterizeCullMode::Invalid);
+    // Vulkan は BitFlag だが gfx_low の仕様は enum なので複数ビット返すことはない
+    const ::vk::CullModeFlags table[] = {
+        ::vk::CullModeFlags(-1), // Invalid,
+        ::vk::CullModeFlagBits::eNone,
+        ::vk::CullModeFlagBits::eFront,
+        ::vk::CullModeFlagBits::eBack,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(RasterizeCullMode::TERM));
+    const auto result = table[int(mode)];
+    return table[int(mode)];
+}
+
 //------------------------------------------------------------------------------
 ::vk::Format InternalEnumUtil::ToFormat(const ImageFormat format) {
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
@@ -118,6 +259,22 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageFormat::TERM));
     return table[int(format)];
+}
+
+
+//------------------------------------------------------------------------------
+::vk::FrontFace InternalEnumUtil::ToFrontFace(const PolygonFrontFace face) {
+    AE_BASE_ASSERT_ENUM(face, PolygonFrontFace);
+    AE_BASE_ASSERT(face != PolygonFrontFace::Invalid);
+    const ::vk::FrontFace table[] = {
+        ::vk::FrontFace(-1), // Invalid,
+        ::vk::FrontFace::eClockwise,
+        ::vk::FrontFace::eCounterClockwise,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(PolygonFrontFace::TERM));
+    const auto result = table[int(face)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -231,6 +388,79 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageViewKind::TERM));
     const auto result = table[int(kind)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::PolygonMode InternalEnumUtil::ToPolygonMode(
+    const RasterizeFillMode kind) {
+    AE_BASE_ASSERT_ENUM(kind, RasterizeFillMode);
+    AE_BASE_ASSERT(kind != RasterizeFillMode::Invalid);
+    const ::vk::PolygonMode table[] = {
+        ::vk::PolygonMode(-1), // Invalid
+        ::vk::PolygonMode::eLine, // Wireframe,
+        ::vk::PolygonMode::eFill, // Solid,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(RasterizeFillMode::TERM));
+    const auto result = table[int(kind)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::PrimitiveTopology InternalEnumUtil::ToPrimitiveTopology(
+    const PrimitiveTopologyKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, PrimitiveTopologyKind);
+    AE_BASE_ASSERT(kind != PrimitiveTopologyKind::Invalid);
+    const ::vk::PrimitiveTopology table[] = {
+        ::vk::PrimitiveTopology(-1), // Invalid
+        ::vk::PrimitiveTopology::ePointList,
+        ::vk::PrimitiveTopology::eLineList,
+        ::vk::PrimitiveTopology::eLineStrip,
+        ::vk::PrimitiveTopology::eTriangleList,
+        ::vk::PrimitiveTopology::eTriangleStrip,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(PrimitiveTopologyKind::TERM));
+    const auto result = table[int(kind)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::ShaderStageFlagBits InternalEnumUtil::ToShaderStageFlagBits(
+    const RenderPipelineShaderStage stage) {
+    AE_BASE_ASSERT_ENUM(stage, RenderPipelineShaderStage);
+    AE_BASE_ASSERT(stage != RenderPipelineShaderStage::Invalid);
+    const ::vk::ShaderStageFlagBits table[] = {
+        ::vk::ShaderStageFlagBits(-1), // Invalid
+        ::vk::ShaderStageFlagBits::eVertex,
+        ::vk::ShaderStageFlagBits::eGeometry,
+        ::vk::ShaderStageFlagBits::eFragment,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(RenderPipelineShaderStage::TERM));
+    const auto result = table[int(stage)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
+::vk::StencilOp InternalEnumUtil::ToStencilOp(const StencilOp op) {
+    AE_BASE_ASSERT_ENUM(op, StencilOp);
+    AE_BASE_ASSERT(op != StencilOp::Invalid);
+    const ::vk::StencilOp table[] = {
+        ::vk::StencilOp(-1), // Invalid,
+        ::vk::StencilOp::eKeep,
+        ::vk::StencilOp::eZero,
+        ::vk::StencilOp::eReplace,
+        ::vk::StencilOp::eIncrementAndClamp,
+        ::vk::StencilOp::eDecrementAndClamp,
+        ::vk::StencilOp::eInvert,
+        ::vk::StencilOp::eIncrementAndWrap,
+        ::vk::StencilOp::eDecrementAndWrap,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(StencilOp::TERM));
+    const auto result = table[int(op)];
     AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
     return result;
 }

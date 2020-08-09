@@ -3,14 +3,24 @@
 
 #include <ae/gfx_low/AttachmentLoadOp.hpp>
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
+#include <ae/gfx_low/BlendFactor.hpp>
+#include <ae/gfx_low/BlendOp.hpp>
 #include <ae/gfx_low/BufferResourceUsageBitSet.hpp>
+#include <ae/gfx_low/CompareOp.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageResourceKind.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
+#include <ae/gfx_low/PolygonFrontFace.hpp>
+#include <ae/gfx_low/PrimitiveTopologyKind.hpp>
+#include <ae/gfx_low/RasterizeCullMode.hpp>
+#include <ae/gfx_low/RasterizeFillMode.hpp>
+#include <ae/gfx_low/RenderPipelineShaderStage.hpp>
+#include <ae/gfx_low/RenderTargetComponentBitSet.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <ae/gfx_low/StencilOp.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -21,9 +31,17 @@ struct InternalEnumUtil {
     static ::vk::AttachmentLoadOp ToAttachmentLoadOp(AttachmentLoadOp loadOp);
     static ::vk::AttachmentStoreOp ToAttachmentStoreOp(
         AttachmentStoreOp storeOp);
+    static ::vk::BlendFactor ToBlendFactorForColor(BlendFactor factor);
+    static ::vk::BlendFactor ToBlendFactorForAlpha(BlendFactor factor);
+    static ::vk::BlendOp ToBlendOp(BlendOp op);
     static ::vk::BufferUsageFlags ToBufferUsageFlags(
         const BufferResourceUsageBitSet& usageBitSet);
+    static ::vk::ColorComponentFlags ToColorComponentFlags(
+        const RenderTargetComponentBitSet& componentBitSet);
+    static ::vk::CompareOp ToCompareOp(CompareOp op);
+    static ::vk::CullModeFlags ToCullModeFlags(RasterizeCullMode mode);
     static ::vk::Format ToFormat(ImageFormat format);
+    static ::vk::FrontFace ToFrontFace(PolygonFrontFace face);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
     static ::vk::ImageLayout ToImageLayoutForDepthStencilAttachment(
@@ -33,6 +51,12 @@ struct InternalEnumUtil {
     static ::vk::ImageUsageFlags ToImageUsageFlags(
         const ImageResourceUsageBitSet& usageBitSet);
     static ::vk::ImageViewType ToImageViewType(ImageViewKind kind);
+    static ::vk::PolygonMode ToPolygonMode(RasterizeFillMode mode);
+    static ::vk::PrimitiveTopology ToPrimitiveTopology(
+        PrimitiveTopologyKind kind);
+    static ::vk::ShaderStageFlagBits ToShaderStageFlagBits(
+        RenderPipelineShaderStage stage);
+    static ::vk::StencilOp ToStencilOp(StencilOp op);
 };
 
 } // namespace gfx_low

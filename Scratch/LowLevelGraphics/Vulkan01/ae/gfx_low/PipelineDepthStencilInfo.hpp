@@ -66,6 +66,15 @@ public:
         return *this;
     }
 
+    /// ステンシルの参照値。（初期値：0）
+    uint8_t StencilReference() const { return stencilReference_; }
+
+    /// StencilReference() の設定。
+    PipelineDepthStencilInfo& SetStencilReference(uint8_t value) {
+        stencilReference_ = value;
+        return *this;
+    }
+
     /// 表面に対するステンシル演算情報。（初期値：デフォルトコンストラクタの値）
     StencilOpInfo FrontFaceStencilOpInfo() const {
         return frontFaceStencilOpInfo_;
@@ -97,6 +106,7 @@ private:
     CompareOp depthCompareOp_ = CompareOp::Never;
     uint8_t stencilReadMask_ = 0;
     uint8_t stencilWriteMask_ = 0;
+    uint8_t stencilReference_ = 0;
     bool depthTestEnable_ = false;
     bool depthWriteEnable_ = false;
     bool stencilTestEnable_ = false;

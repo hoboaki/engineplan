@@ -36,6 +36,8 @@ public:
 
 private:
     gfx_low::Device& device_;
+    ::vk::DescriptorSetLayout descriptorSetLayout_;
+    ::vk::PipelineLayout pipelineLayout_;
     ::vk::Pipeline nativeObject_;
 };
 

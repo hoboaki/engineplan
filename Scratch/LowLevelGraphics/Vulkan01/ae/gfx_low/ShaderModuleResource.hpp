@@ -34,8 +34,12 @@ public:
     //@{
     /// 所属する Device。
     gfx_low::Device& Device() const { return device_; }
+    //@}
 
-    ::vk::ShaderModule& NativeObject() { return nativeObject_; }
+    /// @name 内部処理用機能
+    //@{
+    ::vk::ShaderModule& NativeObject_() { return nativeObject_; }
+    const ::vk::ShaderModule& NativeObject_() const { return nativeObject_; }
     //@}
 
 private:
