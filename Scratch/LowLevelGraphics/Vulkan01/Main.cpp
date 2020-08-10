@@ -24,6 +24,8 @@
 #include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
+#include <ae/gfx_low/DescriptorSet.hpp>
+#include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
@@ -458,6 +460,15 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::DescriptorKind::UniformBuffer,
             AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
             uniformBufferBindingInfos);
+
+    // DescriptorSet の作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
+        swapchainImageCount);
+    for (int i = 0; i < swapchainImageCount; ++i) {
+        descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
+                               .SetDevice(gfxLowDevice.get())
+                               .SetSpecInfo(descriptorSetSpecInfo));
+    }
 
     // GraphicsPipeline 生成
     std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
