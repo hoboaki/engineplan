@@ -10,6 +10,8 @@
 #include <ae/base/Console.hpp>
 #include <ae/base/Degree.hpp>
 #include <ae/base/Display.hpp>
+#include <ae/base/Extent2.hpp>
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/Matrix44.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/SdkHeader.hpp>
@@ -39,6 +41,7 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
 #include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
@@ -51,6 +54,7 @@
 #include <ae/gfx_low/UniformBufferView.hpp>
 #include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
+#include <ae/gfx_low/ViewportSetting.hpp>
 #include <memory>
 
 extern int WINAPI DemoWinMain(
@@ -428,16 +432,16 @@ int aemain(::ae::base::Application* app) {
         }
     }
 
-    
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
         swapchain->RenderTargetSpecInfo(),
     };
+    const int renderTargetCount = AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos);
     const auto depthStencilSpecInfo =
         ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(depthBufferFormat);
     const auto renderPassSpecInfo =
         ::ae::gfx_low::RenderPassSpecInfo()
-            .SetRenderTargetCount(AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos))
+            .SetRenderTargetCount(renderTargetCount)
             .SetRenderTargetSpecInfos(renderTargetSpecInfos)
             .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
 
@@ -468,8 +472,7 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
-                .SetShaderInfo(
-                    ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
+                .SetShaderInfo(::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(vertShader.get())
                         .SetEntryPointNamePtr("main"))
@@ -548,7 +551,6 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::AttachmentStoreOp::Store)
                         .SetStencilClearValue(0);
 
-
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo()
                         .SetRenderPassSpecInfo(renderPassSpecInfo)
@@ -557,6 +559,29 @@ int aemain(::ae::base::Application* app) {
                         .SetRenderArea(
                             ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
                                 display.MainScreen().Extent())));
+
+                // Viewport
+                {
+                    const ::ae::gfx_low::ViewportSetting settings[] = {
+                        ::ae::gfx_low::ViewportSetting().SetRect(
+                            ::ae::base::Aabb2(::ae::base::Vector2::Zero(),
+                                display.MainScreen().Extent().ToExtent2())),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
+                    cmd.CmdSetViewports(renderTargetCount, settings);
+                }
+
+                // Scissor
+                {
+                    const ::ae::gfx_low::ScissorSetting settings[] = {
+                        ::ae::gfx_low::ScissorSetting().SetRect(
+                            ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
+                                display.MainScreen().Extent())),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
+                    cmd.CmdSetScissors(renderTargetCount, settings);
+                }
+
                 cmd.CmdEndRenderPass();
             }
         }
