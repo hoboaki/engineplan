@@ -107,6 +107,8 @@ void CommandBuffer::Reset() {
 void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT_LESS_EQUALS(info.RenderPassSpecInfo().RenderTargetCount(),
+        Device::SupportedRenderTargetCountMax_);
 
     activePass_.Set(CommandBufferFeature::Render, true);
 

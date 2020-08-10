@@ -39,6 +39,7 @@ private:
     static constexpr int DescriptorSetLayoutsCountMax_ = 3;
 
     gfx_low::Device& device_;
+    ::vk::RenderPass renderPass_;
     std::array<::vk::DescriptorSetLayout, DescriptorSetLayoutsCountMax_>
         descriptorSetLayouts_;
     ::vk::PipelineLayout pipelineLayout_;

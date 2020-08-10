@@ -4,12 +4,15 @@
 // includes
 #include <ae/base/ArrayLength.hpp>
 #include <ae/base/PtrToRef.hpp>
+#include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetBlendInfo.hpp>
+#include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
+
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
@@ -20,6 +23,122 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 , descriptorSetLayouts_()
 , pipelineLayout_()
 , nativeObject_() {
+    // RenderPass(Spec)
+    {
+        AE_BASE_ASSERT_LESS_EQUALS(
+            createInfo.RenderPassSpecInfo().RenderTargetCount(),
+            Device::SupportedRenderTargetCountMax_);
+        const auto specInfo = createInfo.RenderPassSpecInfo();
+        const bool hasDepthStencil = specInfo.DepthStencilSpecInfoPtr() != nullptr;
+        const int attachmentsCount =
+            specInfo.RenderTargetCount() + (hasDepthStencil ? 1 : 0);
+        const int depthStencilIdx = hasDepthStencil ? attachmentsCount - 1 : -1;
+
+        std::array<::vk::AttachmentDescription,
+            Device::SupportedAttachmentCountMax_>
+            attachments;
+        std::array<::vk::AttachmentReference,
+            Device::SupportedAttachmentCountMax_>
+            attachmentRefs;
+        for (int i = 0; i < specInfo.RenderTargetCount();
+             ++i) {
+            const auto& spec = specInfo.RenderTargetSpecInfos()[i];
+            auto& attachment = attachments[i];
+            auto& attachmentRef = attachmentRefs[i];
+
+            const auto format =
+                spec.NativeFormat_() != ::vk::Format::eUndefined
+                    ? spec.NativeFormat_()
+                    : InternalEnumUtil::ToFormat(spec.ImageFormat());
+
+            attachment.setFormat(format)
+                .setSamples(::vk::SampleCountFlagBits::e1)
+                .setLoadOp(::vk::AttachmentLoadOp::eDontCare)
+                .setStoreOp(::vk::AttachmentStoreOp::eDontCare)
+                .setStencilLoadOp(::vk::AttachmentLoadOp::eDontCare)
+                .setStencilStoreOp(::vk::AttachmentStoreOp::eDontCare)
+                .setInitialLayout(::vk::ImageLayout::eUndefined)
+                .setFinalLayout(::vk::ImageLayout::eUndefined);
+            attachmentRef.setAttachment(i).setLayout(
+                ::vk::ImageLayout::eColorAttachmentOptimal);
+        }
+        if (hasDepthStencil) {
+            const auto& spec = base::PtrToRef(
+                specInfo.DepthStencilSpecInfoPtr());
+            auto& attachment = attachments[depthStencilIdx];
+            auto& attachmentRef = attachmentRefs[depthStencilIdx];
+            attachment.setFormat(InternalEnumUtil::ToFormat(spec.ImageFormat()))
+                .setSamples(::vk::SampleCountFlagBits::e1)
+                .setLoadOp(::vk::AttachmentLoadOp::eDontCare)
+                .setStoreOp(::vk::AttachmentStoreOp::eDontCare)
+                .setStencilLoadOp(::vk::AttachmentLoadOp::eDontCare)
+                .setStencilStoreOp(::vk::AttachmentStoreOp::eDontCare)
+                .setInitialLayout(::vk::ImageLayout::eUndefined)
+                .setFinalLayout(::vk::ImageLayout::eUndefined);
+            attachmentRef.setAttachment(depthStencilIdx)
+                .setLayout(::vk::ImageLayout::eDepthStencilAttachmentOptimal);
+        }
+
+        auto const subpass =
+            vk::SubpassDescription()
+                .setPipelineBindPoint(vk::PipelineBindPoint::eGraphics)
+                .setInputAttachmentCount(0)
+                .setPInputAttachments(nullptr)
+                .setColorAttachmentCount(specInfo.RenderTargetCount())
+                .setPColorAttachments(&attachmentRefs[0])
+                .setPResolveAttachments(nullptr)
+                .setPDepthStencilAttachment(
+                    hasDepthStencil ? &attachmentRefs[depthStencilIdx]
+                                    : nullptr)
+                .setPreserveAttachmentCount(0)
+                .setPPreserveAttachments(nullptr);
+
+        std::array<::vk::SubpassDependency, 2> dependencies;
+        if (hasDepthStencil) {
+            const ::vk::PipelineStageFlags stages =
+                ::vk::PipelineStageFlagBits::eEarlyFragmentTests |
+                ::vk::PipelineStageFlagBits::eLateFragmentTests;
+            dependencies[0] =
+                ::vk::SubpassDependency()
+                    .setSrcSubpass(VK_SUBPASS_EXTERNAL)
+                    .setDstSubpass(0)
+                    .setSrcStageMask(stages)
+                    .setDstStageMask(stages)
+                    .setSrcAccessMask(
+                        vk::AccessFlagBits::eDepthStencilAttachmentWrite)
+                    .setDstAccessMask(
+                        vk::AccessFlagBits::eDepthStencilAttachmentRead |
+                        vk::AccessFlagBits::eDepthStencilAttachmentWrite)
+                    .setDependencyFlags(vk::DependencyFlags());
+        }
+        dependencies[hasDepthStencil ? 1 : 0] =
+            ::vk::SubpassDependency()
+                .setSrcSubpass(VK_SUBPASS_EXTERNAL)
+                .setDstSubpass(0)
+                .setSrcStageMask(
+                    vk::PipelineStageFlagBits::eColorAttachmentOutput)
+                .setDstStageMask(
+                    vk::PipelineStageFlagBits::eColorAttachmentOutput)
+                .setSrcAccessMask(vk::AccessFlagBits())
+                .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite |
+                                  vk::AccessFlagBits::eColorAttachmentRead)
+                .setDependencyFlags(vk::DependencyFlags());
+
+        const auto renderPassCreateInfo =
+            vk::RenderPassCreateInfo()
+                .setAttachmentCount(attachmentsCount)
+                .setPAttachments(&attachments[0])
+                .setSubpassCount(1)
+                .setPSubpasses(&subpass)
+                .setDependencyCount(hasDepthStencil ? 2 : 1)
+                .setPDependencies(&dependencies[0]);
+        {
+            const auto result = device_.NativeObject_().createRenderPass(
+                &renderPassCreateInfo, nullptr, &renderPass_);
+            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        }
+    }
+
     // DescriptorSetLayout
     {
         // Buffer, Image, Sampler の順番で DescriptorSet 番号を確保する。
@@ -268,31 +387,33 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPDynamicStates(dynamicStates)
                 .setDynamicStateCount(AE_BASE_ARRAY_LENGTH(dynamicStates));
 
-        // const auto nativeCreateInfo = ::vk::GraphicsPipelineCreateInfo()
-        //    .setStageCount(shaderStageInfosCount)
-        //    .setPStages(&shaderStageInfos[0])
-        //    .setPVertexInputState(&vertexInputInfo)
-        //    .setPInputAssemblyState(&inputAssemblyInfo)
-        //    .setPViewportState(&viewportInfo)
-        //    .setPRasterizationState(&rasterizationInfo)
-        //    .setPMultisampleState(&multisampleInfo)
-        //    .setPDepthStencilState(&depthStencilInfo)
-        //    .setPColorBlendState(&colorBlendInfo)
-        //    .setPDynamicState(&dynamicStateInfo)
-        //    .setLayout(pipeline_layout)
-        //    .setRenderPass(render_pass);
+         const auto nativeCreateInfo = ::vk::GraphicsPipelineCreateInfo()
+            .setStageCount(shaderStageInfosCount)
+            .setPStages(&shaderStageInfos[0])
+            .setPVertexInputState(&vertexInputInfo)
+            .setPInputAssemblyState(&inputAssemblyInfo)
+            .setPViewportState(&viewportInfo)
+            .setPRasterizationState(&rasterizationInfo)
+            .setPMultisampleState(&multisampleInfo)
+            .setPDepthStencilState(&depthStencilInfo)
+            .setPColorBlendState(&colorBlendInfo)
+            .setPDynamicState(&dynamicStateInfo)
+            .setLayout(pipelineLayout_)
+            .setRenderPass(renderPass_);
 
-        //{
-        //    const auto result =
-        //    device_.NativeObject_().createGraphicsPipelines(
-        //        nullptr, 1, &nativeCreateInfo, nullptr, &nativeObject_);
-        //    AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-        //}
+        {
+            const auto result =
+            device_.NativeObject_().createGraphicsPipelines(
+                nullptr, 1, &nativeCreateInfo, nullptr, &nativeObject_);
+            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        }
     }
 }
 
 //------------------------------------------------------------------------------
 RenderPipeline::~RenderPipeline() {
+    device_.NativeObject_().destroyPipeline(nativeObject_, nullptr);
+    nativeObject_ = ::vk::Pipeline();
     device_.NativeObject_().destroyPipelineLayout(pipelineLayout_, nullptr);
     pipelineLayout_ = ::vk::PipelineLayout();
     for (int i = descriptorSetLayoutsCount_ - 1; 0 <= i; --i) {
@@ -300,6 +421,8 @@ RenderPipeline::~RenderPipeline() {
             descriptorSetLayouts_[i], nullptr);
         descriptorSetLayouts_[i] = ::vk::DescriptorSetLayout();
     }
+    device_.NativeObject_().destroyRenderPass(renderPass_);
+    renderPass_ = ::vk::RenderPass();
 }
 
 } // namespace gfx_low
