@@ -58,19 +58,20 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         };
 
     // Buffer
-    if (0 < info.UniformBufferInfosCount() ||
-        0 < info.StorageBufferInfosCount()) {
+    if (0 < info.BindingInfosCount(DescriptorKind::UniformBuffer) ||
+        0 < info.BindingInfosCount(DescriptorKind::StorageBuffer)) {
         // UniformBuffer
-        for (int i = 0; i < info.UniformBufferInfosCount(); ++i) {
+        for (int i = 0; i < info.BindingInfosCount(DescriptorKind::UniformBuffer); ++i) {
             addBinding(bindingsCount, &bindings[0], i,
-                info.UniformBufferInfos(),
+                info.BindingInfos(DescriptorKind::UniformBuffer),
                 ::vk::DescriptorType::eUniformBuffer);
         }
 
         // StorageBuffer
-        for (int i = 0; i < info.StorageBufferInfosCount(); ++i) {
+        for (int i = 0;
+             i < info.BindingInfosCount(DescriptorKind::StorageBuffer); ++i) {
             addBinding(bindingsCount, &bindings[0], i,
-                info.StorageBufferInfos(),
+                info.BindingInfos(DescriptorKind::StorageBuffer),
                 ::vk::DescriptorType::eStorageBuffer);
         }
 
@@ -80,17 +81,21 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     }
 
     // Image
-    if (0 < info.SampledImageInfosCount() ||
-        0 < info.StorageImageInfosCount()) {
+    if (0 < info.BindingInfosCount(DescriptorKind::SampledImage) ||
+        0 < info.BindingInfosCount(DescriptorKind::StorageImage)) {
         // SampledImage
-        for (int i = 0; i < info.SampledImageInfosCount(); ++i) {
-            addBinding(bindingsCount, &bindings[0], i, info.SampledImageInfos(),
+        for (int i = 0;
+             i < info.BindingInfosCount(DescriptorKind::SampledImage); ++i) {
+            addBinding(bindingsCount, &bindings[0], i,
+                info.BindingInfos(DescriptorKind::SampledImage),
                 ::vk::DescriptorType::eSampledImage);
         }
 
         // StorageImage
-        for (int i = 0; i < info.StorageImageInfosCount(); ++i) {
-            addBinding(bindingsCount, &bindings[0], i, info.StorageImageInfos(),
+        for (int i = 0;
+             i < info.BindingInfosCount(DescriptorKind::StorageImage); ++i) {
+            addBinding(bindingsCount, &bindings[0], i,
+                info.BindingInfos(DescriptorKind::StorageImage),
                 ::vk::DescriptorType::eStorageImage);
         }
 
@@ -100,9 +105,11 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     }
 
     // Sampler
-    if (0 < info.SamplerInfosCount()) {
-        for (int i = 0; i < info.SamplerInfosCount(); ++i) {
-            addBinding(bindingsCount, &bindings[0], i, info.SamplerInfos(),
+    if (0 < info.BindingInfosCount(DescriptorKind::Sampler)) {
+        for (int i = 0;
+             i < info.BindingInfosCount(DescriptorKind::Sampler); ++i) {
+            addBinding(bindingsCount, &bindings[0], i,
+                info.BindingInfos(DescriptorKind::Sampler),
                 ::vk::DescriptorType::eSampler);
         }
 

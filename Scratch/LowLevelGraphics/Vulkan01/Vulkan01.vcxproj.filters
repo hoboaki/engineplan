@@ -660,6 +660,15 @@
     <ClInclude Include="ae\gfx_low\InternalDescriptorSetLayouts.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DescriptorSet.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DescriptorSetCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DescriptorKind.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc">
@@ -981,7 +990,10 @@
     <ClCompile Include="ae\base\Extent3.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ae\gfx_low\InternalDescriptorLayouts.cpp">
+    <ClCompile Include="ae\gfx_low\DescriptorSet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalDescriptorSetLayouts.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

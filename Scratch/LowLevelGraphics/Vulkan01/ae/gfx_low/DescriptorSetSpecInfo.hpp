@@ -1,7 +1,9 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <ae/base/EnumKeyArray.hpp>
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/DescriptorKind.hpp>
 
 namespace ae {
 namespace gfx_low {
@@ -20,113 +22,35 @@ class DescriptorSetSpecInfo {
 public:
     /// @name プロパティ
     //@{
-    /// UniformBuffer のバインド情報の数。（初期値：0）
-    int UniformBufferInfosCount() const { return uniformBufferInfosCount_; }
+    /// 指定のデスクリプタ種類のバインド情報の数。（初期値：0）
+    int BindingInfosCount(DescriptorKind kind) const { 
+        return infos_[kind].infosCount; 
+    }
 
-    /// UniformBufferInfosCount() の設定。
+    /// 指定のデスクリプタ種類のバインド情報郡。（初期値：nullptr）
+    const ShaderBindingInfo* BindingInfos(DescriptorKind kind) const {
+        return infos_[kind].infos.Get();
+    }
+
+    /// BindingInfosCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetUniformBufferInfosCount(int count);
+    /// @infos count == 0 のときは nullptr を指定。それ以外のときは配列のポインタを指定。
+    DescriptorSetSpecInfo& SetBindingInfos(DescriptorKind kind, int count,
+        const ShaderBindingInfo* infosPtr = nullptr);
 
-    /// UniformBuffer のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* UniformBufferInfos() const {
-        return uniformBufferInfos_.Get();
-    }
-
-    /// UniformBufferInfos() 設定。
-    DescriptorSetSpecInfo& SetUniformBufferInfos(
-        const ShaderBindingInfo* infos) {
-        uniformBufferInfos_.Reset(infos);
-        return *this;
-    }
-
-    /// StorageBufferInfos のバインド情報数。（初期値：0）
-    int StorageBufferInfosCount() const { return storageBufferInfosCount_; }
-
-    /// StorageBufferInfosCount() の設定。
-    /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetStorageBufferInfosCount(int count);
-
-    /// StorageBuffer のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* StorageBufferInfos() const {
-        return storageBufferInfos_.Get();
-    }
-
-    /// StorageBufferInfos() 設定。
-    DescriptorSetSpecInfo& SetStorageBufferInfos(
-        const ShaderBindingInfo* infos) {
-        storageBufferInfos_.Reset(infos);
-        return *this;
-    }
-
-    /// SampledImage のバインド情報数。（初期値：0）
-    int SampledImageInfosCount() const { return sampledImageInfosCount_; }
-
-    /// SampledImageInfosCount() の設定。
-    /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetSampledImageInfosCount(int count);
-
-    /// SampledImage のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* SampledImageInfos() const {
-        return sampledImageInfos_.Get();
-    }
-
-    /// SampledImageInfos() 設定。
-    DescriptorSetSpecInfo& SetSampledImageInfos(
-        const ShaderBindingInfo* infos) {
-        sampledImageInfos_.Reset(infos);
-        return *this;
-    }
-
-    /// StorageImage のバインド情報数。（初期値：0）
-    int StorageImageInfosCount() const { return storageImageInfosCount_; }
-
-    /// StorageImageInfosCount() の設定。
-    /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetStorageImageInfosCount(int count);
-
-    /// StorageImage のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* StorageImageInfos() const {
-        return storageImageInfos_.Get();
-    }
-
-    /// StorageImageInfos() 設定。
-    DescriptorSetSpecInfo& SetStorageImageInfos(
-        const ShaderBindingInfo* infos) {
-        storageImageInfos_.Reset(infos);
-        return *this;
-    }
-
-    /// Sampler のバインド数。（初期値：0）
-    int SamplerInfosCount() const { return samplerInfosCount_; }
-
-    /// SamplerCount() の設定。
-    /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetSamplerInfosCount(int count);
-
-    /// Sampler のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* SamplerInfos() const {
-        return samplerInfos_.Get();
-    }
-
-    /// SamplerInfos() 設定。
-    DescriptorSetSpecInfo& SetSamplerInfos(
-        const ShaderBindingInfo* infos) {
-        samplerInfos_.Reset(infos);
-        return *this;
-    }
+    /// 指定のデスクリプタ種類の総バインド数を計算して取得。（初期値：0）
+    int TotalBindingCount(DescriptorKind kind) const;
     //@}
 
 private:
-    int uniformBufferInfosCount_ = 0;
-    int storageBufferInfosCount_ = 0;
-    int sampledImageInfosCount_ = 0;
-    int storageImageInfosCount_ = 0;
-    int samplerInfosCount_ = 0;
-    base::Pointer<const ShaderBindingInfo> uniformBufferInfos_;
-    base::Pointer<const ShaderBindingInfo> storageBufferInfos_;
-    base::Pointer<const ShaderBindingInfo> sampledImageInfos_;
-    base::Pointer<const ShaderBindingInfo> storageImageInfos_;
-    base::Pointer<const ShaderBindingInfo> samplerInfos_;
+    class DescriptorInfo
+    {
+    public:
+        int infosCount = 0;
+        base::Pointer<const ShaderBindingInfo> infos;
+    };
+
+    base::EnumKeyArray<DescriptorKind, DescriptorInfo> infos_;
 };
 
 } // namespace gfx_low

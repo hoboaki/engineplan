@@ -250,6 +250,10 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\DescriptorKind.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\DescriptorSet.hpp">
       <SubType>
       </SubType>

@@ -454,10 +454,10 @@ int aemain(::ae::base::Application* app) {
                     .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
             .SetBindingIndex(0)};
     const auto descriptorSetSpecInfo =
-        ::ae::gfx_low::DescriptorSetSpecInfo()
-            .SetUniformBufferInfosCount(
-                AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos))
-            .SetUniformBufferInfos(uniformBufferBindingInfos);
+        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
+            ::ae::gfx_low::DescriptorKind::UniformBuffer,
+            AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
+            uniformBufferBindingInfos);
 
     // GraphicsPipeline 生成
     std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
