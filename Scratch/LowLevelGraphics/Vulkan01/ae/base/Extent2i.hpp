@@ -1,6 +1,12 @@
 // 文字コード：UTF-8
 #pragma once
 
+namespace ae {
+namespace base {
+struct Extent2Pod;
+}
+} // namespace ae
+
 //------------------------------------------------------------------------------
 namespace ae {
 namespace base {
@@ -16,6 +22,12 @@ struct Extent2iPod {
 
     /// 縦幅。
     int height;
+    //@}
+
+    /// @name 変換
+    //@{
+    /// 浮動小数版に変換。
+    Extent2Pod ToExtent2() const;
     //@}
 };
 

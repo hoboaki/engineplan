@@ -2,11 +2,17 @@
 #include <ae/base/Extent2i.hpp>
 
 // includes
+#include <ae/base/Extent2.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace base {
+
+//------------------------------------------------------------------------------
+Extent2Pod Extent2iPod::ToExtent2() const {
+    return Extent2(float(width), float(height));
+}
 
 //------------------------------------------------------------------------------
 Extent2i::Extent2i(int width, int height) {
