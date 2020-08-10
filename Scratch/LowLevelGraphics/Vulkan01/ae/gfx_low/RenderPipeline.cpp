@@ -128,7 +128,15 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
     // PipelineLayout
     {
+        AE_BASE_ASSERT_LESS(0, descriptorSetLayoutsCount_);
+        const auto pipelineLayoutCreateInfo =
+            ::vk::PipelineLayoutCreateInfo()
+                .setSetLayoutCount(descriptorSetLayoutsCount_)
+                .setPSetLayouts(&descriptorSetLayouts_[0]);
 
+        const auto result = device_.NativeObject_().createPipelineLayout(
+            &pipelineLayoutCreateInfo, nullptr, &pipelineLayout_);
+        AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 
     // Pipeline
@@ -285,6 +293,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 RenderPipeline::~RenderPipeline() {
+    device_.NativeObject_().destroyPipelineLayout(pipelineLayout_, nullptr);
+    pipelineLayout_ = ::vk::PipelineLayout();
     for (int i = descriptorSetLayoutsCount_ - 1; 0 <= i; --i) {
         device_.NativeObject_().destroyDescriptorSetLayout(
             descriptorSetLayouts_[i], nullptr);
