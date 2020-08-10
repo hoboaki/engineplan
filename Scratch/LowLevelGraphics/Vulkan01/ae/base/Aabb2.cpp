@@ -3,6 +3,7 @@
 
 // includes
 #include <ae/base/Aabb2i.hpp>
+#include <ae/base/Extent2.hpp>
 #include <ae/base/Math.hpp>
 
 //------------------------------------------------------------------------------
@@ -23,6 +24,11 @@ Aabb2::Aabb2(const Vector2Pod& pos)
 Aabb2::Aabb2(const Vector2Pod& pos1, const Vector2Pod& pos2)
 : min_(pos1.Min(pos2))
 , max_(pos1.Max(pos2)) {}
+
+//------------------------------------------------------------------------------
+Aabb2::Aabb2(const Vector2Pod& pos, const Extent2Pod& extent)
+: min_(pos)
+, max_(pos.x + extent.width, pos.y + extent.height) {}
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::Min() const {
@@ -87,6 +93,11 @@ float Aabb2::Width() const {
 //------------------------------------------------------------------------------
 float Aabb2::Height() const {
     return max_.y - min_.y;
+}
+
+//------------------------------------------------------------------------------
+Extent2Pod Aabb2::Extent() const {
+    return Extent2(max_.x - min_.x, max_.y - min_.y);
 }
 
 //------------------------------------------------------------------------------

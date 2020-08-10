@@ -8,6 +8,7 @@
 namespace ae {
 namespace base {
 class Aabb2i;
+struct Extent2Pod;
 }
 } // namespace ae
 
@@ -30,6 +31,7 @@ public:
     Aabb2(const Vector2Pod& pos); ///< 1点を含むAABBを作成。
     Aabb2(const Vector2Pod& pos1,
         const Vector2Pod& pos2); ///< 2点を含むAABBを作成。
+    Aabb2(const Vector2Pod& pos, const Extent2Pod& extent); ///< 基準となる点と範囲を指定してAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------
@@ -53,6 +55,7 @@ public:
     //@{
     float Width() const; ///< xの幅を取得。
     float Height() const; ///< yの幅を取得。
+    Extent2Pod Extent() const; ///< 範囲を取得。
     const Vector2Pod Size() const; ///< Vector2( Width() , Height() ) を取得。
     const Vector2Pod HalfSize() const; ///< Size() * 0.5f を取得。
     //@}
