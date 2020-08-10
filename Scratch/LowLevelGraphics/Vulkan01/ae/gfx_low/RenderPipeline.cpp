@@ -20,7 +20,7 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, descriptorSetLayouts_()
+, descriptorSetLayouts_(&device_, createInfo.DescriptorSetSpecInfo())
 , pipelineLayout_()
 , nativeObject_() {
     // RenderPass(Spec)
@@ -140,119 +140,15 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
         }
     }
 
-    // DescriptorSetLayout
-    {
-        // Buffer, Image, Sampler の順番で DescriptorSet 番号を確保する。
-        // Buffer は UniformBuffer StorageBuffer の順番で Binding
-        // 番号を確保する。 Texture は SampledImage、StorageImage の順番で
-        // Binding 番号を確保する。
-
-        // 各 DescriptorSetLayou 内でこの数まで binding を記述できる。
-        // スタック上に確保することで new/delete オーバーヘッドをなくす。
-        constexpr int bindingsCountMax = 64;
-        int bindingsCount = 0;
-        std::array<::vk::DescriptorSetLayoutBinding, bindingsCountMax> bindings;
-        const auto info = createInfo.DescriptorSetSpecInfo();
-
-        // 汎用的な確保関数
-        auto addBinding = [bindingsCountMax](int& bindingsCount,
-                              ::vk::DescriptorSetLayoutBinding* bindingsPtr,
-                              const int bindingInfosIdx,
-                              const ShaderBindingInfo* bindingInfosPtr,
-                              const ::vk::DescriptorType descriptorType) {
-            AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
-            const auto& info =
-                base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
-            bindingsPtr[bindingsCount] =
-                ::vk::DescriptorSetLayoutBinding()
-                    .setBinding(info.BindingIndex())
-                    .setDescriptorType(descriptorType)
-                    .setDescriptorCount(info.BindingCount())
-                    .setStageFlags(
-                        InternalEnumUtil::ToShaderStageFlags(info.Stages()))
-                    .setPImmutableSamplers(nullptr);
-            ++bindingsCount;
-        };
-        auto addSetLayout =
-            [](gfx_low::Device& device, int& layoutsCount,
-                ::vk::DescriptorSetLayout* layoutsPtr, int& bindingsCount,
-                const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
-                AE_BASE_ASSERT_LESS(
-                    layoutsCount, DescriptorSetLayoutsCountMax_);
-
-                const auto info = ::vk::DescriptorSetLayoutCreateInfo()
-                                      .setBindingCount(bindingsCount)
-                                      .setPBindings(bindingsPtr);
-                const auto result =
-                    device.NativeObject_().createDescriptorSetLayout(
-                        &info, nullptr, &layoutsPtr[layoutsCount]);
-                AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-                ++layoutsCount;
-                bindingsCount = 0;
-            };
-
-        // Buffer
-        if (0 < info.UniformBufferCount() || 0 < info.StorageBufferCount()) {
-            // UniformBuffer
-            for (int i = 0; i < info.UniformBufferCount(); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
-                    info.UniformBufferBindingInfos(),
-                    ::vk::DescriptorType::eUniformBuffer);
-            }
-
-            // StorageBuffer
-            for (int i = 0; i < info.StorageBufferCount(); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
-                    info.StorageBufferBindingInfos(),
-                    ::vk::DescriptorType::eStorageBuffer);
-            }
-
-            // 作成
-            addSetLayout(device_, descriptorSetLayoutsCount_,
-                &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
-        }
-
-        // Image
-        if (0 < info.SampledImageCount() || 0 < info.StorageImageCount()) {
-            // SampledImage
-            for (int i = 0; i < info.SampledImageCount(); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
-                    info.SampledImageBindingInfos(),
-                    ::vk::DescriptorType::eSampledImage);
-            }
-
-            // StorageImage
-            for (int i = 0; i < info.StorageImageCount(); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
-                    info.StorageImageBindingInfos(),
-                    ::vk::DescriptorType::eStorageImage);
-            }
-
-            // 作成
-            addSetLayout(device_, descriptorSetLayoutsCount_,
-                &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
-        }
-
-        // Sampler
-        if (0 < info.SamplerCount()) {
-            for (int i = 0; i < info.SamplerCount(); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
-                    info.SamplerBindingInfos(), ::vk::DescriptorType::eSampler);
-            }
-
-            // 作成
-            addSetLayout(device_, descriptorSetLayoutsCount_,
-                &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
-        }
-    }
-
     // PipelineLayout
     {
-        AE_BASE_ASSERT_LESS(0, descriptorSetLayoutsCount_);
+        AE_BASE_ASSERT_LESS(
+            0, descriptorSetLayouts_.DescriptorSetLayoutsCount());
         const auto pipelineLayoutCreateInfo =
             ::vk::PipelineLayoutCreateInfo()
-                .setSetLayoutCount(descriptorSetLayoutsCount_)
-                .setPSetLayouts(&descriptorSetLayouts_[0]);
+                .setSetLayoutCount(
+                    descriptorSetLayouts_.DescriptorSetLayoutsCount())
+                .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
 
         const auto result = device_.NativeObject_().createPipelineLayout(
             &pipelineLayoutCreateInfo, nullptr, &pipelineLayout_);
@@ -417,11 +313,6 @@ RenderPipeline::~RenderPipeline() {
     nativeObject_ = ::vk::Pipeline();
     device_.NativeObject_().destroyPipelineLayout(pipelineLayout_, nullptr);
     pipelineLayout_ = ::vk::PipelineLayout();
-    for (int i = descriptorSetLayoutsCount_ - 1; 0 <= i; --i) {
-        device_.NativeObject_().destroyDescriptorSetLayout(
-            descriptorSetLayouts_[i], nullptr);
-        descriptorSetLayouts_[i] = ::vk::DescriptorSetLayout();
-    }
     device_.NativeObject_().destroyRenderPass(renderPass_);
     renderPass_ = ::vk::RenderPass();
 }

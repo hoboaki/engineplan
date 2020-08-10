@@ -455,9 +455,9 @@ int aemain(::ae::base::Application* app) {
             .SetBindingIndex(0)};
     const auto descriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
-            .SetUniformBufferCount(
+            .SetUniformBufferInfosCount(
                 AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos))
-            .SetUniformBufferBindingInfos(uniformBufferBindingInfos);
+            .SetUniformBufferInfos(uniformBufferBindingInfos);
 
     // GraphicsPipeline 生成
     std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;

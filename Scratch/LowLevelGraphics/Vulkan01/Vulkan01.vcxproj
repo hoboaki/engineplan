@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -250,6 +250,18 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\DescriptorSet.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DescriptorSetCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\InternalDescriptorSetLayouts.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\RenderTargetComponent.hpp">
       <SubType>
       </SubType>
@@ -686,6 +698,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\DescriptorSet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\DescriptorSetSpecInfo.cpp">
       <SubType>
       </SubType>
@@ -695,6 +711,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalDescriptorSetLayouts.cpp">
       <SubType>
       </SubType>
     </ClCompile>

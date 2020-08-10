@@ -657,6 +657,9 @@
     <ClInclude Include="ae\base\Extent3.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\InternalDescriptorSetLayouts.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc">
@@ -976,6 +979,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\base\Extent3.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalDescriptorLayouts.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

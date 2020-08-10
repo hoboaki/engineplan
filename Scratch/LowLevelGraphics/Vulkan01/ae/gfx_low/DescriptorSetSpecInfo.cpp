@@ -9,34 +9,42 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetUniformBufferCount(
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetUniformBufferInfosCount(
     const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
-    uniformBufferCount_ = count;
+    uniformBufferInfosCount_ = count;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetStorageBufferCount(
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetStorageBufferInfosCount(
     const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
-    storageBufferCount_ = count;
+    storageBufferInfosCount_ = count;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetSampledImageCount(
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetSampledImageInfosCount(
     const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
-    sampledImageCount_ = count;
+    sampledImageInfosCount_ = count;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetStorageImageCount(
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetStorageImageInfosCount(
     const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
-    storageImageCount_ = count;
+    storageImageInfosCount_ = count;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetSamplerInfosCount(
+    const int count) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    samplerInfosCount_ = count;
     return *this;
 }
 

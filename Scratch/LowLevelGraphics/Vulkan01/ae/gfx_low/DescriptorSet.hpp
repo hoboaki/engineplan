@@ -7,8 +7,8 @@
 
 namespace ae {
 namespace gfx_low {
+class DescriptorSetCreateInfo;
 class Device;
-class RenderPipelineCreateInfo;
 } // namespace gfx_low
 } // namespace ae
 
@@ -16,13 +16,13 @@ class RenderPipelineCreateInfo;
 namespace ae {
 namespace gfx_low {
 
-/// レンダーパイプラインを扱うクラス。
-class RenderPipeline {
+/// デスクリプタセットを扱うクラス。
+class DescriptorSet {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    RenderPipeline(const RenderPipelineCreateInfo& createInfo);
-    ~RenderPipeline();
+    DescriptorSet(const DescriptorSetCreateInfo& createInfo);
+    ~DescriptorSet();
     //@}
 
     /// @name プロパティ
@@ -33,15 +33,21 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ::vk::Pipeline& NativeObject_() { return nativeObject_; }
+    ::vk::DescriptorSet* NativeObjects_() { return &nativeObjects_[0]; }
+
+    const InternalDescriptorSetLayouts& Layouts_() const {
+        return descriptorSetLayouts_;
+    }
     //@}
 
 private:
     gfx_low::Device& device_;
     InternalDescriptorSetLayouts descriptorSetLayouts_;
-    ::vk::RenderPass renderPass_;
-    ::vk::PipelineLayout pipelineLayout_;
-    ::vk::Pipeline nativeObject_;
+    ::vk::DescriptorPool descriptorPool_;
+    std::array<::vk::DescriptorSet,
+        InternalDescriptorSetLayouts::DescriptorSetLayoutsCountMax>
+        nativeObjects_;
+
 };
 
 } // namespace gfx_low

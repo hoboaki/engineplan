@@ -15,117 +15,118 @@ namespace ae {
 namespace gfx_low {
 
 /// DescriptorSet の仕様情報。
+/// @todo インラインコンスタント対応。
 class DescriptorSetSpecInfo {
 public:
     /// @name プロパティ
     //@{
-    /// UniformBuffer のバインド数。（初期値：0）
-    int UniformBufferCount() const { return uniformBufferCount_; }
+    /// UniformBuffer のバインド情報の数。（初期値：0）
+    int UniformBufferInfosCount() const { return uniformBufferInfosCount_; }
 
-    /// UniformBufferCount() の設定。
+    /// UniformBufferInfosCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetUniformBufferCount(int count);
+    DescriptorSetSpecInfo& SetUniformBufferInfosCount(int count);
 
     /// UniformBuffer のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* UniformBufferBindingInfos() const {
-        return uniformBufferBindingInfos_.Get();
+    const ShaderBindingInfo* UniformBufferInfos() const {
+        return uniformBufferInfos_.Get();
     }
 
-    /// UniformBufferBindingInfos() 設定。
-    DescriptorSetSpecInfo& SetUniformBufferBindingInfos(
+    /// UniformBufferInfos() 設定。
+    DescriptorSetSpecInfo& SetUniformBufferInfos(
         const ShaderBindingInfo* infos) {
-        uniformBufferBindingInfos_.Reset(infos);
+        uniformBufferInfos_.Reset(infos);
         return *this;
     }
 
-    /// StorageBuffer のバインド数。（初期値：0）
-    int StorageBufferCount() const { return storageBufferCount_; }
+    /// StorageBufferInfos のバインド情報数。（初期値：0）
+    int StorageBufferInfosCount() const { return storageBufferInfosCount_; }
 
-    /// StorageBufferCount() の設定。
+    /// StorageBufferInfosCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetStorageBufferCount(int count);
+    DescriptorSetSpecInfo& SetStorageBufferInfosCount(int count);
 
     /// StorageBuffer のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* StorageBufferBindingInfos() const {
-        return storageBufferBindingInfos_.Get();
+    const ShaderBindingInfo* StorageBufferInfos() const {
+        return storageBufferInfos_.Get();
     }
 
-    /// StorageBufferBindingInfos() 設定。
-    DescriptorSetSpecInfo& SetStorageBufferBindingInfos(
+    /// StorageBufferInfos() 設定。
+    DescriptorSetSpecInfo& SetStorageBufferInfos(
         const ShaderBindingInfo* infos) {
-        storageBufferBindingInfos_.Reset(infos);
+        storageBufferInfos_.Reset(infos);
         return *this;
     }
 
-    /// SampledImage のバインド数。（初期値：0）
-    int SampledImageCount() const { return sampledImageCount_; }
+    /// SampledImage のバインド情報数。（初期値：0）
+    int SampledImageInfosCount() const { return sampledImageInfosCount_; }
 
-    /// SampledImageCount() の設定。
+    /// SampledImageInfosCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetSampledImageCount(int count);
+    DescriptorSetSpecInfo& SetSampledImageInfosCount(int count);
 
     /// SampledImage のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* SampledImageBindingInfos() const {
-        return sampledImageBindingInfos_.Get();
+    const ShaderBindingInfo* SampledImageInfos() const {
+        return sampledImageInfos_.Get();
     }
 
-    /// SampledImageBindingInfos() 設定。
-    DescriptorSetSpecInfo& SetSampledImageBindingInfos(
+    /// SampledImageInfos() 設定。
+    DescriptorSetSpecInfo& SetSampledImageInfos(
         const ShaderBindingInfo* infos) {
-        sampledImageBindingInfos_.Reset(infos);
+        sampledImageInfos_.Reset(infos);
         return *this;
     }
 
-    /// StorageImage のバインド数。（初期値：0）
-    int StorageImageCount() const { return storageImageCount_; }
+    /// StorageImage のバインド情報数。（初期値：0）
+    int StorageImageInfosCount() const { return storageImageInfosCount_; }
 
-    /// StorageImageCount() の設定。
+    /// StorageImageInfosCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetStorageImageCount(int count);
+    DescriptorSetSpecInfo& SetStorageImageInfosCount(int count);
 
     /// StorageImage のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* StorageImageBindingInfos() const {
-        return storageImageBindingInfos_.Get();
+    const ShaderBindingInfo* StorageImageInfos() const {
+        return storageImageInfos_.Get();
     }
 
-    /// StorageImageBindingInfos() 設定。
-    DescriptorSetSpecInfo& SetStorageImageBindingInfos(
+    /// StorageImageInfos() 設定。
+    DescriptorSetSpecInfo& SetStorageImageInfos(
         const ShaderBindingInfo* infos) {
-        storageImageBindingInfos_.Reset(infos);
+        storageImageInfos_.Reset(infos);
         return *this;
     }
 
     /// Sampler のバインド数。（初期値：0）
-    int SamplerCount() const { return samplerCount_; }
+    int SamplerInfosCount() const { return samplerInfosCount_; }
 
     /// SamplerCount() の設定。
     /// @param count 0 以上。
-    DescriptorSetSpecInfo& SetSamplerCount(int count);
+    DescriptorSetSpecInfo& SetSamplerInfosCount(int count);
 
     /// Sampler のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* SamplerBindingInfos() const {
-        return samplerBindingInfos_.Get();
+    const ShaderBindingInfo* SamplerInfos() const {
+        return samplerInfos_.Get();
     }
 
-    /// SamplerBindingInfos() 設定。
-    DescriptorSetSpecInfo& SetSamplerBindingInfos(
+    /// SamplerInfos() 設定。
+    DescriptorSetSpecInfo& SetSamplerInfos(
         const ShaderBindingInfo* infos) {
-        samplerBindingInfos_.Reset(infos);
+        samplerInfos_.Reset(infos);
         return *this;
     }
     //@}
 
 private:
-    int uniformBufferCount_ = 0;
-    int storageBufferCount_ = 0;
-    int sampledImageCount_ = 0;
-    int storageImageCount_ = 0;
-    int samplerCount_ = 0;
-    base::Pointer<const ShaderBindingInfo> uniformBufferBindingInfos_;
-    base::Pointer<const ShaderBindingInfo> storageBufferBindingInfos_;
-    base::Pointer<const ShaderBindingInfo> sampledImageBindingInfos_;
-    base::Pointer<const ShaderBindingInfo> storageImageBindingInfos_;
-    base::Pointer<const ShaderBindingInfo> samplerBindingInfos_;
+    int uniformBufferInfosCount_ = 0;
+    int storageBufferInfosCount_ = 0;
+    int sampledImageInfosCount_ = 0;
+    int storageImageInfosCount_ = 0;
+    int samplerInfosCount_ = 0;
+    base::Pointer<const ShaderBindingInfo> uniformBufferInfos_;
+    base::Pointer<const ShaderBindingInfo> storageBufferInfos_;
+    base::Pointer<const ShaderBindingInfo> sampledImageInfos_;
+    base::Pointer<const ShaderBindingInfo> storageImageInfos_;
+    base::Pointer<const ShaderBindingInfo> samplerInfos_;
 };
 
 } // namespace gfx_low
