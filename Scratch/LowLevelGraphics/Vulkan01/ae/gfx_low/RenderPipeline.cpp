@@ -29,7 +29,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
             createInfo.RenderPassSpecInfo().RenderTargetCount(),
             Device::SupportedRenderTargetCountMax_);
         const auto specInfo = createInfo.RenderPassSpecInfo();
-        const bool hasDepthStencil = specInfo.DepthStencilSpecInfoPtr() != nullptr;
+        const bool hasDepthStencil =
+            specInfo.DepthStencilSpecInfoPtr() != nullptr;
         const int attachmentsCount =
             specInfo.RenderTargetCount() + (hasDepthStencil ? 1 : 0);
         const int depthStencilIdx = hasDepthStencil ? attachmentsCount - 1 : -1;
@@ -40,8 +41,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
         std::array<::vk::AttachmentReference,
             Device::SupportedAttachmentCountMax_>
             attachmentRefs;
-        for (int i = 0; i < specInfo.RenderTargetCount();
-             ++i) {
+        for (int i = 0; i < specInfo.RenderTargetCount(); ++i) {
             const auto& spec = specInfo.RenderTargetSpecInfos()[i];
             auto& attachment = attachments[i];
             auto& attachmentRef = attachmentRefs[i];
@@ -58,13 +58,13 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setStencilLoadOp(::vk::AttachmentLoadOp::eDontCare)
                 .setStencilStoreOp(::vk::AttachmentStoreOp::eDontCare)
                 .setInitialLayout(::vk::ImageLayout::eUndefined)
-                .setFinalLayout(::vk::ImageLayout::eUndefined);
+                .setFinalLayout(::vk::ImageLayout::eColorAttachmentOptimal);
             attachmentRef.setAttachment(i).setLayout(
                 ::vk::ImageLayout::eColorAttachmentOptimal);
         }
         if (hasDepthStencil) {
-            const auto& spec = base::PtrToRef(
-                specInfo.DepthStencilSpecInfoPtr());
+            const auto& spec =
+                base::PtrToRef(specInfo.DepthStencilSpecInfoPtr());
             auto& attachment = attachments[depthStencilIdx];
             auto& attachmentRef = attachmentRefs[depthStencilIdx];
             attachment.setFormat(InternalEnumUtil::ToFormat(spec.ImageFormat()))
@@ -74,7 +74,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setStencilLoadOp(::vk::AttachmentLoadOp::eDontCare)
                 .setStencilStoreOp(::vk::AttachmentStoreOp::eDontCare)
                 .setInitialLayout(::vk::ImageLayout::eUndefined)
-                .setFinalLayout(::vk::ImageLayout::eUndefined);
+                .setFinalLayout(
+                    ::vk::ImageLayout::eDepthStencilAttachmentOptimal);
             attachmentRef.setAttachment(depthStencilIdx)
                 .setLayout(::vk::ImageLayout::eDepthStencilAttachmentOptimal);
         }
@@ -387,23 +388,23 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPDynamicStates(dynamicStates)
                 .setDynamicStateCount(AE_BASE_ARRAY_LENGTH(dynamicStates));
 
-         const auto nativeCreateInfo = ::vk::GraphicsPipelineCreateInfo()
-            .setStageCount(shaderStageInfosCount)
-            .setPStages(&shaderStageInfos[0])
-            .setPVertexInputState(&vertexInputInfo)
-            .setPInputAssemblyState(&inputAssemblyInfo)
-            .setPViewportState(&viewportInfo)
-            .setPRasterizationState(&rasterizationInfo)
-            .setPMultisampleState(&multisampleInfo)
-            .setPDepthStencilState(&depthStencilInfo)
-            .setPColorBlendState(&colorBlendInfo)
-            .setPDynamicState(&dynamicStateInfo)
-            .setLayout(pipelineLayout_)
-            .setRenderPass(renderPass_);
+        const auto nativeCreateInfo =
+            ::vk::GraphicsPipelineCreateInfo()
+                .setStageCount(shaderStageInfosCount)
+                .setPStages(&shaderStageInfos[0])
+                .setPVertexInputState(&vertexInputInfo)
+                .setPInputAssemblyState(&inputAssemblyInfo)
+                .setPViewportState(&viewportInfo)
+                .setPRasterizationState(&rasterizationInfo)
+                .setPMultisampleState(&multisampleInfo)
+                .setPDepthStencilState(&depthStencilInfo)
+                .setPColorBlendState(&colorBlendInfo)
+                .setPDynamicState(&dynamicStateInfo)
+                .setLayout(pipelineLayout_)
+                .setRenderPass(renderPass_);
 
         {
-            const auto result =
-            device_.NativeObject_().createGraphicsPipelines(
+            const auto result = device_.NativeObject_().createGraphicsPipelines(
                 nullptr, 1, &nativeCreateInfo, nullptr, &nativeObject_);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
