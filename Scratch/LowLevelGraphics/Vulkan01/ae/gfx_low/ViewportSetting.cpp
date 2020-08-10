@@ -14,8 +14,8 @@ ViewportSetting& ViewportSetting::SetDepthRange(
     AE_BASE_ASSERT_MIN_MAX(depthMin, 0.0f, 1.0f);
     AE_BASE_ASSERT_MIN_MAX(depthMax, 0.0f, 1.0f);
     AE_BASE_ASSERT_LESS_EQUALS(depthMin, depthMax);
-    depthMin_ = depthMin;
-    depthMax_ = depthMax;
+    minDepth_ = depthMin;
+    maxDepth_ = depthMax;
     return *this;
 }
 

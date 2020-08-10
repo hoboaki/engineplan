@@ -15,6 +15,8 @@ class CommandBufferCreateInfo;
 class Device;
 class RenderPassBeginInfo;
 class Queue;
+class ScissorSetting;
+class ViewportSetting;
 } // namespace gfx_low
 } // namespace ae
 
@@ -104,6 +106,25 @@ public:
     /// @details
     /// 開始・終了コマンドに詳細ついてはクラスの説明を参照してください。
     void CmdEndRenderPass();
+    //@}
+
+    /// @name Render コマンド郡
+    //@{
+    /// ビューポートの設定。
+    /// @param count settings の配列長。
+    /// @param settings 設定値の配列。
+    /// @details
+    /// count は CmdBeginRenderPass で指定した RenderTarget
+    /// の数と等しい必要があります。
+    void CmdSetViewports(int count, const ViewportSetting* settings);
+
+    /// シザーの設定。
+    /// @param count settings の配列長。
+    /// @param settings 設定値の配列。
+    /// @details
+    /// count は CmdBeginRenderPass で指定した RenderTarget
+    /// の数と等しい必要があります。
+    void CmdSetScissors(int count, const ScissorSetting* settings);
     //@}
 
     /// @name 内部処理用機能

@@ -2,6 +2,8 @@
 #include <ae/gfx_low/CommandBuffer.hpp>
 
 // includes
+#include <ae/base/Extent2.hpp>
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
@@ -17,7 +19,9 @@
 #include <ae/gfx_low/RenderTargetImageView.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
+#include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/System.hpp>
+#include <ae/gfx_low/ViewportSetting.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -313,6 +317,46 @@ void CommandBuffer::CmdEndRenderPass() {
 
     nativeObject_.endRenderPass();
     activePass_.Set(CommandBufferFeature::Render, false);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetViewports(
+    const int count, const ViewportSetting* settings) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    AE_BASE_ASSERT_POINTER(settings);
+    std::array<::vk::Viewport, Device::SupportedRenderTargetCountMax_>
+        viewports;
+    for (int i = 0; i < count; ++i) {
+        const auto& setting = settings[i];
+        viewports[i] = ::vk::Viewport()
+                           .setX(setting.Rect().Min().x)
+                           .setY(setting.Rect().Min().y)
+                           .setWidth(setting.Rect().Width())
+                           .setHeight(setting.Rect().Height())
+                           .setMinDepth(setting.MinDepth())
+                           .setMaxDepth(setting.MaxDepth());
+    }
+    nativeObject_.setViewport(0, count, &viewports[0]);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetScissors(
+    const int count, const ScissorSetting* settings) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    AE_BASE_ASSERT_POINTER(settings);
+    std::array<::vk::Rect2D, Device::SupportedRenderTargetCountMax_> rects;
+    for (int i = 0; i < count; ++i) {
+        const auto& setting = settings[i];
+        rects[i] =
+            ::vk::Rect2D({setting.Rect().Begin().x, setting.Rect().Begin().y},
+                {uint32_t(setting.Rect().Width()),
+                    uint32_t(setting.Rect().Height())});
+    }
+    nativeObject_.setScissor(0, count, &rects[0]);
 }
 
 } // namespace gfx_low

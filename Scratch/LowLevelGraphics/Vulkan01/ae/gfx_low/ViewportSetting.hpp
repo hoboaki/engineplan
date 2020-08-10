@@ -22,13 +22,13 @@ public:
     }
 
     /// 深度範囲の最小値。 
-    float DepthMin() const
+    float MinDepth() const
     { 
-        return depthMin_;
+        return minDepth_;
     }
 
     /// 深度範囲の最大値。
-    float DepthMax() const { return depthMax_; }
+    float MaxDepth() const { return maxDepth_; }
 
     /// DepthMin() と DepthMax() の設定。
     /// @param depthMin [0.0f, 1.0f]。
@@ -38,8 +38,8 @@ public:
 
 private:
     base::Aabb2 rect_;
-    float depthMin_ = 0.0f;
-    float depthMax_ = 1.0f;
+    float minDepth_ = 0.0f;
+    float maxDepth_ = 1.0f;
 };
 
 } // namespace gfx_low
