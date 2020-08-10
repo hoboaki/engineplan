@@ -22,7 +22,7 @@ public:
     }
 
     /// バインディングする際の番号。（初期値：0）
-    /// @details 配列の場合は先頭の番号として扱われます。
+    /// @details HLSL において、配列の場合は先頭の番号として扱われます。
     int BindingIndex() const { return bindingIndex_; }
 
     /// BindingIndex() の設定。
