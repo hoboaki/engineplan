@@ -445,6 +445,26 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::ShaderStageFlags InternalEnumUtil::ToShaderStageFlags(
+    const ShaderBindingStageBitSet& stages) {
+    const ::vk::ShaderStageFlagBits table[] = {
+        ::vk::ShaderStageFlagBits(0), // Invalid
+        ::vk::ShaderStageFlagBits::eVertex,
+        ::vk::ShaderStageFlagBits::eGeometry,
+        ::vk::ShaderStageFlagBits::eFragment,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ShaderBindingStage::TERM));
+    auto result = ::vk::ShaderStageFlags();
+    for (int i = 0; i < int(ShaderBindingStage::TERM); ++i) {
+        if (stages.Get(ShaderBindingStage(i))) {
+            result |= table[i];
+        }
+    }
+    AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::StencilOp InternalEnumUtil::ToStencilOp(const StencilOp op) {
     AE_BASE_ASSERT_ENUM(op, StencilOp);
     AE_BASE_ASSERT(op != StencilOp::Invalid);

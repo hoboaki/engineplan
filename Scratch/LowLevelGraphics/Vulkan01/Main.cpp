@@ -451,10 +451,12 @@ int aemain(::ae::base::Application* app) {
 
     // DescriptorSetSpecInfo の作成
     const ::ae::gfx_low::ShaderBindingInfo uniformBufferBindingInfos[] = {
-        ::ae::gfx_low::ShaderBindingInfo().SetStages(
-            ::ae::gfx_low::ShaderBindingStageBitSet()
-                .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
-                .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))};
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(
+                ::ae::gfx_low::ShaderBindingStageBitSet()
+                    .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
+                    .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
+            .SetBindingIndex(0)};
     const auto descriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetUniformBufferCount(

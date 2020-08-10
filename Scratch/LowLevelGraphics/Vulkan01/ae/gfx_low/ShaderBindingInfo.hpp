@@ -1,7 +1,7 @@
 // 文字コード：UTF-8
 #pragma once
 
-#include <ae/gfx_low/ShaderBindingBitSet.hpp>
+#include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -20,10 +20,28 @@ public:
         stages_ = stages;
         return *this;
     }
+
+    /// バインディングする際の番号。（初期値：0）
+    /// @details 配列の場合は先頭の番号として扱われます。
+    int BindingIndex() const { return bindingIndex_; }
+
+    /// BindingIndex() の設定。
+    /// @param index 0以上。
+    ShaderBindingInfo& SetBindingIndex(int index);
+
+    ///  バインディングする個数。（初期値：1）
+    /// @details 配列の場合はこの値を配列長として扱います。
+    int BindingCount() const { return bindingCount_;}
+
+    /// BindingCount() の設定。
+    /// @param count 1以上。
+    ShaderBindingInfo& SetBindingCount(int count);
     //@}
 
 private:
     ShaderBindingStageBitSet stages_;
+    int bindingIndex_ = 0;
+    int bindingCount_ = 1;
 };
 
 } // namespace gfx_low

@@ -20,6 +20,7 @@
 #include <ae/gfx_low/RenderPipelineShaderStage.hpp>
 #include <ae/gfx_low/RenderTargetComponentBitSet.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 #include <ae/gfx_low/StencilOp.hpp>
 
 //------------------------------------------------------------------------------
@@ -56,6 +57,8 @@ struct InternalEnumUtil {
         PrimitiveTopologyKind kind);
     static ::vk::ShaderStageFlagBits ToShaderStageFlagBits(
         RenderPipelineShaderStage stage);
+    static ::vk::ShaderStageFlags ToShaderStageFlags(
+        const ShaderBindingStageBitSet& stages);
     static ::vk::StencilOp ToStencilOp(StencilOp op);
 };
 

@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <array>
 
 namespace ae {
 namespace gfx_low {
@@ -35,10 +36,14 @@ public:
     //@}
 
 private:
+    static constexpr int DescriptorSetLayoutsCountMax_ = 3;
+
     gfx_low::Device& device_;
-    ::vk::DescriptorSetLayout descriptorSetLayout_;
+    std::array<::vk::DescriptorSetLayout, DescriptorSetLayoutsCountMax_>
+        descriptorSetLayouts_;
     ::vk::PipelineLayout pipelineLayout_;
     ::vk::Pipeline nativeObject_;
+    int descriptorSetLayoutsCount_ = 0;
 };
 
 } // namespace gfx_low

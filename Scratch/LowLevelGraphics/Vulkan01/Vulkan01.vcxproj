@@ -314,7 +314,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ShaderBindingBitSet.hpp">
+    <ClInclude Include="ae\gfx_low\ShaderBindingStageBitSet.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -751,6 +751,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ResourceMemoryAllocInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ShaderBindingInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
