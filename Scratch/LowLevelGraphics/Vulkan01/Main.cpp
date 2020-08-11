@@ -620,7 +620,8 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // Draw
-                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                cmd.CmdDraw(
+                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
 
                 cmd.CmdEndRenderPass();
             }
