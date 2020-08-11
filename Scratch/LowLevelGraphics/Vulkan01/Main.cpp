@@ -404,7 +404,8 @@ int aemain(::ae::base::Application* app) {
 
             auto proj = ::ae::base::Matrix44::Perspective(
                 ::ae::base::Angle(::ae::base::Degree(45.0f)),
-                1.0f, // aspect
+                float(display.MainScreen().Width()) /
+                    display.MainScreen().Height(), // aspect
                 0.1f, // near
                 100.0f // far
             );
