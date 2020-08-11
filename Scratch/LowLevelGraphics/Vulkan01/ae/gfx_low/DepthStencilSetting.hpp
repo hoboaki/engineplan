@@ -62,7 +62,7 @@ public:
     /// DepthStoreOp() の設定。（設定必須）
     DepthStencilSetting& SetDepthStoreOp(AttachmentStoreOp storeOp);
 
-    /// デプスのクリア値。（初期値：0.0f）
+    /// デプスのクリア値。（初期値：1.0f）
     float DepthClearValue() const { return depthClearValue_; }
 
     /// DepthClearValue() の設定。
@@ -97,7 +97,7 @@ private:
     AttachmentStoreOp depthStoreOp_ = AttachmentStoreOp::Invalid;
     AttachmentLoadOp stencilLoadOp_ = AttachmentLoadOp::Invalid;
     AttachmentStoreOp stencilStoreOp_ = AttachmentStoreOp::Invalid;
-    float depthClearValue_ = 0.0f;
+    float depthClearValue_ = 1.0f;
     int stencilClearValue_ = 0;
 };
 

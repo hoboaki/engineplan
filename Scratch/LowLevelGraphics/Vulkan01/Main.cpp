@@ -575,7 +575,7 @@ int aemain(::ae::base::Application* app) {
                         .SetDepthLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
                         .SetDepthStoreOp(
                             ::ae::gfx_low::AttachmentStoreOp::Store)
-                        .SetDepthClearValue(0.0f)
+                        .SetDepthClearValue(1.0f)
                         .SetStencilLoadOp(
                             ::ae::gfx_low::AttachmentLoadOp::Clear)
                         .SetStencilStoreOp(
