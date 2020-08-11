@@ -143,11 +143,11 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
     // PipelineLayout
     {
         AE_BASE_ASSERT_LESS(
-            0, descriptorSetLayouts_.DescriptorSetLayoutsCount());
+            0, descriptorSetLayouts_.DescriptorSetLayoutCount());
         const auto pipelineLayoutCreateInfo =
             ::vk::PipelineLayoutCreateInfo()
                 .setSetLayoutCount(
-                    descriptorSetLayouts_.DescriptorSetLayoutsCount())
+                    descriptorSetLayouts_.DescriptorSetLayoutCount())
                 .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
 
         const auto result = device_.NativeObject_().createPipelineLayout(

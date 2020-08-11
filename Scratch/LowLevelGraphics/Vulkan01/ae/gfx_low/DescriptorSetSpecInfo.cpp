@@ -19,7 +19,7 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
         AE_BASE_ASSERT_POINTER(infosPtr);
     }
 
-    infos_[kind].infosCount = count;
+    infos_[kind].infoCount = count;
     infos_[kind].infos.Reset(infosPtr);
     return *this;
 }
@@ -31,7 +31,7 @@ int DescriptorSetSpecInfo::TotalBindingCount(
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     const auto& info = infos_[kind];
     int total = 0;
-    for (int i = 0; i < info.infosCount; ++i) {
+    for (int i = 0; i < info.infoCount; ++i) {
         total += info.infos.Get()[i].ElemCount();
     }
     return total;

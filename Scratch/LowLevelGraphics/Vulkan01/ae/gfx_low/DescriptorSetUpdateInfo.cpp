@@ -12,7 +12,7 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
     }
-    uniformBufferInfosCount_ = count;
+    uniformBufferInfoCount_ = count;
     uniformBufferInfos_.Reset(infos);
     return *this;
 }

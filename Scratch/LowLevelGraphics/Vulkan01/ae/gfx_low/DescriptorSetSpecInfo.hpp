@@ -23,8 +23,8 @@ public:
     /// @name プロパティ
     //@{
     /// 指定のデスクリプタ種類のバインド情報の数。（初期値：0）
-    int BindingInfosCount(DescriptorKind kind) const { 
-        return infos_[kind].infosCount; 
+    int BindingInfoCount(DescriptorKind kind) const { 
+        return infos_[kind].infoCount; 
     }
 
     /// 指定のデスクリプタ種類のバインド情報郡。（初期値：nullptr）
@@ -32,7 +32,7 @@ public:
         return infos_[kind].infos.Get();
     }
 
-    /// BindingInfosCount() BindingInfos() の設定。
+    /// BindingInfoCount() BindingInfos() の設定。
     /// @param count 0 以上。
     /// @infos count == 0 のときは nullptr を指定。それ以外のときは配列のポインタを指定。
     DescriptorSetSpecInfo& SetBindingInfos(DescriptorKind kind, int count,
@@ -46,7 +46,7 @@ private:
     class DescriptorInfo
     {
     public:
-        int infosCount = 0;
+        int infoCount = 0;
         base::Pointer<const ShaderBindingInfo> infos;
     };
 

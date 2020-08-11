@@ -36,7 +36,7 @@ public:
 
     /// @name プロパティ
     //@{
-    int DescriptorSetLayoutsCount() const { return descriptorSetLayoutsCount_; }
+    int DescriptorSetLayoutCount() const { return descriptorSetLayoutCount_; }
 
     const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const {
         return &descriptorSetLayouts_[0];
@@ -51,7 +51,7 @@ private:
     gfx_low::Device& device_;
     std::array<::vk::DescriptorSetLayout, DescriptorSetLayoutsCountMax>
         descriptorSetLayouts_;
-    int descriptorSetLayoutsCount_ = 0;
+    int descriptorSetLayoutCount_ = 0;
     base::EnumKeyArray<DescriptorKind, int> descriptorSetLayoutIndexes_;
 };
 

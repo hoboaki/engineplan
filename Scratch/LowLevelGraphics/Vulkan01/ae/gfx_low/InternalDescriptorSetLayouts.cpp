@@ -61,14 +61,14 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         };
 
     // Buffer
-    if (0 < info.BindingInfosCount(DescriptorKind::UniformBuffer) ||
-        0 < info.BindingInfosCount(DescriptorKind::StorageBuffer)) {
+    if (0 < info.BindingInfoCount(DescriptorKind::UniformBuffer) ||
+        0 < info.BindingInfoCount(DescriptorKind::StorageBuffer)) {
         // UniformBuffer
-        if (0 < info.BindingInfosCount(DescriptorKind::UniformBuffer)) {
+        if (0 < info.BindingInfoCount(DescriptorKind::UniformBuffer)) {
             descriptorSetLayoutIndexes_[DescriptorKind::UniformBuffer] =
                 bindingsCount;
             for (int i = 0;
-                 i < info.BindingInfosCount(DescriptorKind::UniformBuffer);
+                 i < info.BindingInfoCount(DescriptorKind::UniformBuffer);
                  ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::UniformBuffer),
@@ -77,11 +77,11 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         }
 
         // StorageBuffer
-        if (0 < info.BindingInfosCount(DescriptorKind::StorageBuffer)) {
+        if (0 < info.BindingInfoCount(DescriptorKind::StorageBuffer)) {
             descriptorSetLayoutIndexes_[DescriptorKind::StorageBuffer] =
                 bindingsCount;
             for (int i = 0;
-                 i < info.BindingInfosCount(DescriptorKind::StorageBuffer);
+                 i < info.BindingInfoCount(DescriptorKind::StorageBuffer);
                  ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::StorageBuffer),
@@ -90,19 +90,19 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutsCount_,
+        addSetLayout(device_, descriptorSetLayoutCount_,
             &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
     }
 
     // Image
-    if (0 < info.BindingInfosCount(DescriptorKind::SampledImage) ||
-        0 < info.BindingInfosCount(DescriptorKind::StorageImage)) {
+    if (0 < info.BindingInfoCount(DescriptorKind::SampledImage) ||
+        0 < info.BindingInfoCount(DescriptorKind::StorageImage)) {
         // SampledImage
-        if (0 < info.BindingInfosCount(DescriptorKind::SampledImage)) {
+        if (0 < info.BindingInfoCount(DescriptorKind::SampledImage)) {
             descriptorSetLayoutIndexes_[DescriptorKind::SampledImage] =
                 bindingsCount;
             for (int i = 0;
-                 i < info.BindingInfosCount(DescriptorKind::SampledImage);
+                 i < info.BindingInfoCount(DescriptorKind::SampledImage);
                  ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::SampledImage),
@@ -111,11 +111,11 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         }
 
         // StorageImage
-        if (0 < info.BindingInfosCount(DescriptorKind::StorageImage)) {
+        if (0 < info.BindingInfoCount(DescriptorKind::StorageImage)) {
             descriptorSetLayoutIndexes_[DescriptorKind::StorageImage] =
                 bindingsCount;
             for (int i = 0;
-                 i < info.BindingInfosCount(DescriptorKind::StorageImage);
+                 i < info.BindingInfoCount(DescriptorKind::StorageImage);
                  ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::StorageImage),
@@ -124,14 +124,14 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutsCount_,
+        addSetLayout(device_, descriptorSetLayoutCount_,
             &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
     }
 
     // Sampler
-    if (0 < info.BindingInfosCount(DescriptorKind::Sampler)) {
+    if (0 < info.BindingInfoCount(DescriptorKind::Sampler)) {
         descriptorSetLayoutIndexes_[DescriptorKind::Sampler] = bindingsCount;
-        for (int i = 0; i < info.BindingInfosCount(DescriptorKind::Sampler);
+        for (int i = 0; i < info.BindingInfoCount(DescriptorKind::Sampler);
              ++i) {
             addBinding(bindingsCount, &bindings[0], i,
                 info.BindingInfos(DescriptorKind::Sampler),
@@ -139,14 +139,14 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutsCount_,
+        addSetLayout(device_, descriptorSetLayoutCount_,
             &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
     }
 }
 
 //------------------------------------------------------------------------------
 InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
-    for (int i = descriptorSetLayoutsCount_ - 1; 0 <= i; --i) {
+    for (int i = descriptorSetLayoutCount_ - 1; 0 <= i; --i) {
         device_.NativeObject_().destroyDescriptorSetLayout(
             descriptorSetLayouts_[i], nullptr);
         descriptorSetLayouts_[i] = ::vk::DescriptorSetLayout();

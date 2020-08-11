@@ -21,7 +21,7 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
 , descriptorPool_()
 , nativeObjects_() {
     // デスクリプタが不要なら何もしない
-    if (descriptorSetLayouts_.DescriptorSetLayoutsCount() == 0) {
+    if (descriptorSetLayouts_.DescriptorSetLayoutCount() == 0) {
         return;
     }
 
@@ -30,54 +30,54 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
     // DescriptorPool
     {
         constexpr int sizesCountMax = 5;
-        int sizesCount = 0;
+        int sizeCount = 0;
         std::array<::vk::DescriptorPoolSize, sizesCountMax> sizes_;
-        if (0 < specInfo.BindingInfosCount(DescriptorKind::UniformBuffer)) {
-            sizes_[sizesCount] =
+        if (0 < specInfo.BindingInfoCount(DescriptorKind::UniformBuffer)) {
+            sizes_[sizeCount] =
                 ::vk::DescriptorPoolSize()
                     .setType(::vk::DescriptorType::eUniformBuffer)
                     .setDescriptorCount(specInfo.TotalBindingCount(
                         DescriptorKind::UniformBuffer));
-            ++sizesCount;
+            ++sizeCount;
         }
-        if (0 < specInfo.BindingInfosCount(DescriptorKind::StorageBuffer)) {
-            sizes_[sizesCount] =
+        if (0 < specInfo.BindingInfoCount(DescriptorKind::StorageBuffer)) {
+            sizes_[sizeCount] =
                 ::vk::DescriptorPoolSize()
                     .setType(::vk::DescriptorType::eStorageBuffer)
                     .setDescriptorCount(specInfo.TotalBindingCount(
                         DescriptorKind::StorageBuffer));
-            ++sizesCount;
+            ++sizeCount;
         }
-        if (0 < specInfo.BindingInfosCount(DescriptorKind::SampledImage)) {
-            sizes_[sizesCount] =
+        if (0 < specInfo.BindingInfoCount(DescriptorKind::SampledImage)) {
+            sizes_[sizeCount] =
                 ::vk::DescriptorPoolSize()
                     .setType(::vk::DescriptorType::eSampledImage)
                     .setDescriptorCount(specInfo.TotalBindingCount(
                         DescriptorKind::SampledImage));
-            ++sizesCount;
+            ++sizeCount;
         }
-        if (0 < specInfo.BindingInfosCount(DescriptorKind::StorageImage)) {
-            sizes_[sizesCount] =
+        if (0 < specInfo.BindingInfoCount(DescriptorKind::StorageImage)) {
+            sizes_[sizeCount] =
                 ::vk::DescriptorPoolSize()
                     .setType(::vk::DescriptorType::eStorageImage)
                     .setDescriptorCount(specInfo.TotalBindingCount(
                         DescriptorKind::StorageImage));
-            ++sizesCount;
+            ++sizeCount;
         }
-        if (0 < specInfo.BindingInfosCount(DescriptorKind::Sampler)) {
-            sizes_[sizesCount] =
+        if (0 < specInfo.BindingInfoCount(DescriptorKind::Sampler)) {
+            sizes_[sizeCount] =
                 ::vk::DescriptorPoolSize()
                     .setType(::vk::DescriptorType::eSampler)
                     .setDescriptorCount(
                         specInfo.TotalBindingCount(DescriptorKind::Sampler));
-            ++sizesCount;
+            ++sizeCount;
         }
-        AE_BASE_ASSERT_LESS(0, sizesCount);
+        AE_BASE_ASSERT_LESS(0, sizeCount);
 
         const auto nativeCreateInfo =
             ::vk::DescriptorPoolCreateInfo()
-                .setMaxSets(descriptorSetLayouts_.DescriptorSetLayoutsCount())
-                .setPoolSizeCount(sizesCount)
+                .setMaxSets(descriptorSetLayouts_.DescriptorSetLayoutCount())
+                .setPoolSizeCount(sizeCount)
                 .setPPoolSizes(&sizes_[0]);
         const auto result = device_.NativeObject_().createDescriptorPool(
             &nativeCreateInfo, nullptr, &descriptorPool_);
@@ -90,7 +90,7 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
             ::vk::DescriptorSetAllocateInfo()
                 .setDescriptorPool(descriptorPool_)
                 .setDescriptorSetCount(
-                    descriptorSetLayouts_.DescriptorSetLayoutsCount())
+                    descriptorSetLayouts_.DescriptorSetLayoutCount())
                 .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
         const auto result = device_.NativeObject_().allocateDescriptorSets(
             &allocInfo, &nativeObjects_[0]);
@@ -101,7 +101,7 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 DescriptorSet::~DescriptorSet() {
     // デスクリプタが不要なら何もしない
-    if (descriptorSetLayouts_.DescriptorSetLayoutsCount() == 0) {
+    if (descriptorSetLayouts_.DescriptorSetLayoutCount() == 0) {
         return;
     }
 
@@ -115,48 +115,48 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
     // 1回の Update でこの数だけの DescriptorInfo を扱える。
     // また、スタック上に確保することで new/delete オーバーヘッドをなくす。
     constexpr int writesCountMax = 64;
-    int writesCount = 0;
-    int buffersCount = 0;
-    int imagesCount = 0;
+    int writeCount = 0;
+    int bufferCount = 0;
+    int imageCount = 0;
     std::array<::vk::WriteDescriptorSet, writesCountMax> writes;
     std::array<::vk::DescriptorBufferInfo, writesCountMax> buffers;
     std::array<::vk::DescriptorImageInfo, writesCountMax> images;
 
     // UniformBuffer
-    for (int infoIdx = 0; infoIdx < info.UniformBufferInfosCount(); ++infoIdx) {
+    for (int infoIdx = 0; infoIdx < info.UniformBufferInfoCount(); ++infoIdx) {
         const auto& descInfo =
             base::PtrToRef(&info.UniformBufferInfos()[infoIdx]);
         const auto descSetIdx = descriptorSetLayouts_.DescriptorSetLayoutIndex(
             DescriptorKind::UniformBuffer);
         AE_BASE_ASSERT_LESS_EQUALS(0, descSetIdx);
-        writes[writesCount] =
+        writes[writeCount] =
             ::vk::WriteDescriptorSet()
                 .setDstSet(nativeObjects_[descSetIdx])
                 .setDstBinding(descInfo.Region().BindingIndex())
                 .setDstArrayElement(descInfo.Region().ElemOffset())
                 .setDescriptorCount(descInfo.Region().ElemCount())
                 .setDescriptorType(::vk::DescriptorType::eUniformBuffer)
-                .setPBufferInfo(&buffers[buffersCount]);
-        ++writesCount;
+                .setPBufferInfo(&buffers[bufferCount]);
+        ++writeCount;
 
         for (int viewIdx = 0; viewIdx < descInfo.Region().ElemCount();
              ++viewIdx) {
             const auto& view =
                 base::PtrToRef(base::PtrToRef(&descInfo.Views()[viewIdx]));
-            buffers[buffersCount] =
+            buffers[bufferCount] =
                 ::vk::DescriptorBufferInfo()
                     .setBuffer(view.BufferResource_().NativeObject_())
                     .setOffset(view.Region_().Offset())
                     .setRange(view.Region_().Size());
-            ++buffersCount;
+            ++bufferCount;
         }
     }
 
-    AE_BASE_ASSERT_LESS_EQUALS(writesCount, writesCountMax);
-    AE_BASE_ASSERT_LESS_EQUALS(buffersCount, int(buffers.size()));
-    AE_BASE_ASSERT_LESS_EQUALS(imagesCount, int(images.size()));
+    AE_BASE_ASSERT_LESS_EQUALS(writeCount, writesCountMax);
+    AE_BASE_ASSERT_LESS_EQUALS(bufferCount, int(buffers.size()));
+    AE_BASE_ASSERT_LESS_EQUALS(imageCount, int(images.size()));
     device_.NativeObject_().updateDescriptorSets(
-        writesCount, &writes[0], 0, nullptr);
+        writeCount, &writes[0], 0, nullptr);
 }
 
 } // namespace gfx_low

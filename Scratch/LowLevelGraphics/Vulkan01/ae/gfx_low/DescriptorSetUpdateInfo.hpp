@@ -20,7 +20,7 @@ public:
     /// @name プロパティ
     //@{
     /// UniformBuffer 用デスクリプタ情報の数。（初期値：0）
-    int UniformBufferInfosCount() const { return uniformBufferInfosCount_; }
+    int UniformBufferInfoCount() const { return uniformBufferInfoCount_; }
 
     /// UniformBuffer
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
@@ -28,13 +28,13 @@ public:
         return uniformBufferInfos_.Get();
     }
 
-    /// UniformBufferInfosCount() UniformBufferInfos() の設定。
+    /// UniformBufferInfoCount() UniformBufferInfos() の設定。
     DescriptorSetUpdateInfo& SetUniformBufferInfos(
         int count, const UniformBufferDescriptorInfo* infos);
     //@}
 
 private:
-    int uniformBufferInfosCount_ = 0;
+    int uniformBufferInfoCount_ = 0;
     base::Pointer<const UniformBufferDescriptorInfo> uniformBufferInfos_;
 };
 

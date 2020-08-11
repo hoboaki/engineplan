@@ -333,7 +333,7 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
         AE_BASE_ASSERT(currentRenderPipeline_.IsValid());
         nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eGraphics,
             currentRenderPipeline_->PipelineLayout_(), 0,
-            descriptorSet.Layouts_().DescriptorSetLayoutsCount(),
+            descriptorSet.Layouts_().DescriptorSetLayoutCount(),
             descriptorSet.NativeObjects_(), 0, nullptr);
     } else if (activePass_.Get(CommandBufferFeature::Compute)) {
         // 未実装
