@@ -140,6 +140,10 @@ public:
     /// count は CmdBeginRenderPass で指定した RenderTarget
     /// の数と等しい必要があります。
     void CmdSetScissors(int count, const ScissorSetting* settings);
+
+    /// 設定済のレンダーパイプラインに基づいて描画処理を開始する。
+    /// @param vertexCount 処理する頂点数。
+    void CmdDraw(int vertexCount);
     //@}
 
     /// @name 内部処理用機能

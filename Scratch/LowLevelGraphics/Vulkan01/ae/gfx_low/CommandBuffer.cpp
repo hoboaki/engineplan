@@ -391,6 +391,13 @@ void CommandBuffer::CmdSetScissors(
     nativeObject_.setScissor(0, count, &rects[0]);
 }
 
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdDraw(const int vertexCount) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    nativeObject_.draw(vertexCount, 1, 0, 0);
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

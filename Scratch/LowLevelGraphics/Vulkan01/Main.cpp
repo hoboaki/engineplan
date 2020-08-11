@@ -241,11 +241,14 @@ int aemain(::ae::base::Application* app) {
             gfxLowDevice->FreeResourceMemory(memory);
 
             // 確保に失敗する前提のコード
-            memory = gfxLowDevice->TryToAllocResourceMemory(
-                ::ae::gfx_low::ResourceMemoryAllocInfo()
-                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
-                    .SetSize(1024ull * 1024ull * 1024ull * 1024ull * 1024ull));
-            AE_BASE_ASSERT(!memory.IsValid());
+            if (false) {
+                memory = gfxLowDevice->TryToAllocResourceMemory(
+                    ::ae::gfx_low::ResourceMemoryAllocInfo()
+                        .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                        .SetSize(
+                            1024ull * 1024ull * 1024ull * 1024ull * 1024ull));
+                AE_BASE_ASSERT(!memory.IsValid());
+            }
         }
     }
     auto& queue = gfxLowDevice->Queue(0);
@@ -472,8 +475,7 @@ int aemain(::ae::base::Application* app) {
                                .SetSpecInfo(descriptorSetSpecInfo));
 
         const ::ae::gfx_low::UniformBufferView* uniformBufferViews[] = {
-            uniformBufferView.get()
-        };
+            uniformBufferView.get()};
         const ::ae::gfx_low::UniformBufferDescriptorInfo uniformBufferDescs[] =
             {
                 ::ae::gfx_low::UniformBufferDescriptorInfo()
@@ -614,6 +616,9 @@ int aemain(::ae::base::Application* app) {
                     AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
                     cmd.CmdSetScissors(renderTargetCount, settings);
                 }
+
+                // Draw
+                cmd.CmdDraw(12 * 3);
 
                 cmd.CmdEndRenderPass();
             }
