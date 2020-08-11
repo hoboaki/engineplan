@@ -29,19 +29,19 @@ public:
     /// @param index 0以上。
     ShaderBindingInfo& SetBindingIndex(int index);
 
-    ///  バインディングする個数。（初期値：1）
+    ///  バインディングする要素数。（初期値：1）
     /// @details 配列の場合はこの値を配列長として扱います。
-    int BindingCount() const { return bindingCount_;}
+    int BindingElemCount() const { return bindingElemCount_;}
 
-    /// BindingCount() の設定。
+    /// BindingElemCount() の設定。
     /// @param count 1以上。
-    ShaderBindingInfo& SetBindingCount(int count);
+    ShaderBindingInfo& SetBindingElemCount(int count);
     //@}
 
 private:
     ShaderBindingStageBitSet stages_;
     int bindingIndex_ = 0;
-    int bindingCount_ = 1;
+    int bindingElemCount_ = 1;
 };
 
 } // namespace gfx_low

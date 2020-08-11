@@ -34,7 +34,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             ::vk::DescriptorSetLayoutBinding()
                 .setBinding(info.BindingIndex())
                 .setDescriptorType(descriptorType)
-                .setDescriptorCount(info.BindingCount())
+                .setDescriptorCount(info.BindingElemCount())
                 .setStageFlags(
                     InternalEnumUtil::ToShaderStageFlags(info.Stages()))
                 .setPImmutableSamplers(nullptr);

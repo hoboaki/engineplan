@@ -17,9 +17,9 @@ ShaderBindingInfo& ShaderBindingInfo::SetBindingIndex(const int index) {
 
 
 //------------------------------------------------------------------------------
-ShaderBindingInfo& ShaderBindingInfo::SetBindingCount(const int count) {
+ShaderBindingInfo& ShaderBindingInfo::SetBindingElemCount(const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(1, count);
-    bindingCount_ = count;
+    bindingElemCount_ = count;
     return *this;
 }
 
