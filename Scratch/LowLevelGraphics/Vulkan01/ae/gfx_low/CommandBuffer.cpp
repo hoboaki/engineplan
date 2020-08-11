@@ -12,6 +12,7 @@
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -392,10 +393,10 @@ void CommandBuffer::CmdSetScissors(
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdDraw(const int vertexCount) {
+void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
-    nativeObject_.draw(vertexCount, 1, 0, 0);
+    nativeObject_.draw(info.VertexCount(), info.InstanceCount(), info.VertexOffset(), info.InstanceOffset());
 }
 
 } // namespace gfx_low

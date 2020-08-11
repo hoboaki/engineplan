@@ -29,6 +29,7 @@
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
+#include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
@@ -619,7 +620,7 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // Draw
-                cmd.CmdDraw(12 * 3);
+                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
 
                 cmd.CmdEndRenderPass();
             }
