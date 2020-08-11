@@ -12,8 +12,10 @@
 namespace ae {
 namespace gfx_low {
 class CommandBufferCreateInfo;
+class DescriptorSet;
 class Device;
 class RenderPassBeginInfo;
+class RenderPipeline;
 class Queue;
 class ScissorSetting;
 class ViewportSetting;
@@ -108,8 +110,21 @@ public:
     void CmdEndRenderPass();
     //@}
 
+    /// @name Render & Compute 共通コマンド郡
+    //@{
+    /// デスクリプタセットを設定。
+    /// @details
+    /// パイプライン設定前に呼ぶことはできません。
+    void CmdSetDescriptorSet(const DescriptorSet& descriptorSet);
+    //@}
+
     /// @name Render コマンド郡
     //@{
+    /// レンダーパイプラインを設定。
+    /// @details CmdBeginRenderPass を呼んでから Draw 系コマンドを積む前に
+    /// 必ず設定する必要があります。
+    void CmdSetRenderPipeline(const RenderPipeline& pipeline);
+
     /// ビューポートの設定。
     /// @param count settings の配列長。
     /// @param settings 設定値の配列。
@@ -149,6 +164,7 @@ private:
     CommandBufferState state_ = CommandBufferState::Initial;
     CommandBufferFeatureBitSet activePass_;
     base::RuntimeMarray<RenderPassProperty> renderPassProperties_;
+    base::Pointer<const RenderPipeline> currentRenderPipeline_;
 };
 
 } // namespace gfx_low

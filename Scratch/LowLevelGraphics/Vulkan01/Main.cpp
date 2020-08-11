@@ -589,6 +589,10 @@ int aemain(::ae::base::Application* app) {
                             ::ae::base::Aabb2i(::ae::base::Vector2i::Zero(),
                                 display.MainScreen().Extent())));
 
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*pipeline);
+                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
+
                 // Viewport
                 {
                     const ::ae::gfx_low::ViewportSetting settings[] = {

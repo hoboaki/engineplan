@@ -34,6 +34,9 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::Pipeline& NativeObject_() { return nativeObject_; }
+    const ::vk::Pipeline NativeObject_() const { return nativeObject_; }
+
+    ::vk::PipelineLayout PipelineLayout_() const { return pipelineLayout_; }
     //@}
 
 private:

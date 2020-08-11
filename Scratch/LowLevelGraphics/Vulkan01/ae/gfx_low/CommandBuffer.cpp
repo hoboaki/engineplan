@@ -10,12 +10,14 @@
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
+#include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
+#include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderTargetImageView.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
@@ -115,6 +117,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
         Device::SupportedRenderTargetCountMax_);
 
     activePass_.Set(CommandBufferFeature::Render, true);
+    currentRenderPipeline_.Reset();
 
     RenderPassProperty prop;
     const bool hasDepthStencil = info.DepthStencilSettingPtr() != nullptr;
@@ -317,6 +320,35 @@ void CommandBuffer::CmdEndRenderPass() {
 
     nativeObject_.endRenderPass();
     activePass_.Set(CommandBufferFeature::Render, false);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render) ||
+                   activePass_.Get(CommandBufferFeature::Compute));
+
+    if (activePass_.Get(CommandBufferFeature::Render)) {
+        AE_BASE_ASSERT(currentRenderPipeline_.IsValid());
+        nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eGraphics,
+            currentRenderPipeline_->PipelineLayout_(), 0,
+            descriptorSet.Layouts_().DescriptorSetLayoutsCount(),
+            descriptorSet.NativeObjects_(), 0, nullptr);
+    } else if (activePass_.Get(CommandBufferFeature::Compute)) {
+        // 未実装
+        AE_BASE_ASSERT_NOT_REACHED();        
+    } else {
+        AE_BASE_ASSERT_NOT_REACHED();
+    }
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    nativeObject_.bindPipeline(
+        ::vk::PipelineBindPoint::eGraphics, pipeline.NativeObject_());
+    currentRenderPipeline_.Reset(&pipeline);
 }
 
 //------------------------------------------------------------------------------
