@@ -26,6 +26,7 @@
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
+#include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
@@ -53,6 +54,7 @@
 #include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <ae/gfx_low/SystemCreateInfo.hpp>
+#include <ae/gfx_low/UniformBufferDescriptorInfo.hpp>
 #include <ae/gfx_low/UniformBufferView.hpp>
 #include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
@@ -468,6 +470,22 @@ int aemain(::ae::base::Application* app) {
         descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
                                .SetDevice(gfxLowDevice.get())
                                .SetSpecInfo(descriptorSetSpecInfo));
+
+        const ::ae::gfx_low::UniformBufferView* uniformBufferViews[] = {
+            uniformBufferView.get()
+        };
+        const ::ae::gfx_low::UniformBufferDescriptorInfo uniformBufferDescs[] =
+            {
+                ::ae::gfx_low::UniformBufferDescriptorInfo()
+                    .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                   .SetBindingIndex(0)
+                                   .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                       uniformBufferViews)))
+                    .SetViews(uniformBufferViews),
+            };
+        descriptorSets[i].Update(
+            ::ae::gfx_low::DescriptorSetUpdateInfo().SetUniformBufferInfos(
+                AE_BASE_ARRAY_LENGTH(uniformBufferDescs), uniformBufferDescs));
     }
 
     // GraphicsPipeline 生成

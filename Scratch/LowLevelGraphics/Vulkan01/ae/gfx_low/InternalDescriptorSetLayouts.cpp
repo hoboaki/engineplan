@@ -16,6 +16,9 @@ namespace gfx_low {
 InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     Device* device, const DescriptorSetSpecInfo& info)
 : device_(base::PtrToRef(device)) {
+    // 初期化
+    descriptorSetLayoutIndexes_.Fill(-1);
+
     // 各 DescriptorSetLayou 内でこの数まで binding を記述できる。
     // また、スタック上に確保することで new/delete オーバーヘッドをなくす。
     constexpr int bindingsCountMax = 64;
@@ -61,18 +64,29 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     if (0 < info.BindingInfosCount(DescriptorKind::UniformBuffer) ||
         0 < info.BindingInfosCount(DescriptorKind::StorageBuffer)) {
         // UniformBuffer
-        for (int i = 0; i < info.BindingInfosCount(DescriptorKind::UniformBuffer); ++i) {
-            addBinding(bindingsCount, &bindings[0], i,
-                info.BindingInfos(DescriptorKind::UniformBuffer),
-                ::vk::DescriptorType::eUniformBuffer);
+        if (0 < info.BindingInfosCount(DescriptorKind::UniformBuffer)) {
+            descriptorSetLayoutIndexes_[DescriptorKind::UniformBuffer] =
+                bindingsCount;
+            for (int i = 0;
+                 i < info.BindingInfosCount(DescriptorKind::UniformBuffer);
+                 ++i) {
+                addBinding(bindingsCount, &bindings[0], i,
+                    info.BindingInfos(DescriptorKind::UniformBuffer),
+                    ::vk::DescriptorType::eUniformBuffer);
+            }
         }
 
         // StorageBuffer
-        for (int i = 0;
-             i < info.BindingInfosCount(DescriptorKind::StorageBuffer); ++i) {
-            addBinding(bindingsCount, &bindings[0], i,
-                info.BindingInfos(DescriptorKind::StorageBuffer),
-                ::vk::DescriptorType::eStorageBuffer);
+        if (0 < info.BindingInfosCount(DescriptorKind::StorageBuffer)) {
+            descriptorSetLayoutIndexes_[DescriptorKind::StorageBuffer] =
+                bindingsCount;
+            for (int i = 0;
+                 i < info.BindingInfosCount(DescriptorKind::StorageBuffer);
+                 ++i) {
+                addBinding(bindingsCount, &bindings[0], i,
+                    info.BindingInfos(DescriptorKind::StorageBuffer),
+                    ::vk::DescriptorType::eStorageBuffer);
+            }
         }
 
         // 作成
@@ -84,19 +98,29 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     if (0 < info.BindingInfosCount(DescriptorKind::SampledImage) ||
         0 < info.BindingInfosCount(DescriptorKind::StorageImage)) {
         // SampledImage
-        for (int i = 0;
-             i < info.BindingInfosCount(DescriptorKind::SampledImage); ++i) {
-            addBinding(bindingsCount, &bindings[0], i,
-                info.BindingInfos(DescriptorKind::SampledImage),
-                ::vk::DescriptorType::eSampledImage);
+        if (0 < info.BindingInfosCount(DescriptorKind::SampledImage)) {
+            descriptorSetLayoutIndexes_[DescriptorKind::SampledImage] =
+                bindingsCount;
+            for (int i = 0;
+                 i < info.BindingInfosCount(DescriptorKind::SampledImage);
+                 ++i) {
+                addBinding(bindingsCount, &bindings[0], i,
+                    info.BindingInfos(DescriptorKind::SampledImage),
+                    ::vk::DescriptorType::eSampledImage);
+            }
         }
 
         // StorageImage
-        for (int i = 0;
-             i < info.BindingInfosCount(DescriptorKind::StorageImage); ++i) {
-            addBinding(bindingsCount, &bindings[0], i,
-                info.BindingInfos(DescriptorKind::StorageImage),
-                ::vk::DescriptorType::eStorageImage);
+        if (0 < info.BindingInfosCount(DescriptorKind::StorageImage)) {
+            descriptorSetLayoutIndexes_[DescriptorKind::StorageImage] =
+                bindingsCount;
+            for (int i = 0;
+                 i < info.BindingInfosCount(DescriptorKind::StorageImage);
+                 ++i) {
+                addBinding(bindingsCount, &bindings[0], i,
+                    info.BindingInfos(DescriptorKind::StorageImage),
+                    ::vk::DescriptorType::eStorageImage);
+            }
         }
 
         // 作成
@@ -106,8 +130,9 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
 
     // Sampler
     if (0 < info.BindingInfosCount(DescriptorKind::Sampler)) {
-        for (int i = 0;
-             i < info.BindingInfosCount(DescriptorKind::Sampler); ++i) {
+        descriptorSetLayoutIndexes_[DescriptorKind::Sampler] = bindingsCount;
+        for (int i = 0; i < info.BindingInfosCount(DescriptorKind::Sampler);
+             ++i) {
             addBinding(bindingsCount, &bindings[0], i,
                 info.BindingInfos(DescriptorKind::Sampler),
                 ::vk::DescriptorType::eSampler);
@@ -126,6 +151,13 @@ InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
             descriptorSetLayouts_[i], nullptr);
         descriptorSetLayouts_[i] = ::vk::DescriptorSetLayout();
     }
+}
+
+//------------------------------------------------------------------------------
+int InternalDescriptorSetLayouts::DescriptorSetLayoutIndex(
+    const DescriptorKind kind) const {
+    AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
+    return descriptorSetLayoutIndexes_[kind];
 }
 
 } // namespace gfx_low

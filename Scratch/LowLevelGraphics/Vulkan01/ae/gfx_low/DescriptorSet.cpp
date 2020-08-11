@@ -105,12 +105,7 @@ DescriptorSet::~DescriptorSet() {
         return;
     }
 
-    {
-        const auto result = device_.NativeObject_().freeDescriptorSets(
-            descriptorPool_, descriptorSetLayouts_.DescriptorSetLayoutsCount(),
-            &nativeObjects_[0]);
-        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-    }
+    // DescriptorSet の free は DescriptorPool の破棄時に一括でされるため不要
     device_.NativeObject_().destroyDescriptorPool(descriptorPool_, nullptr);
     descriptorPool_ = ::vk::DescriptorPool();
 }
@@ -131,8 +126,12 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
     for (int infoIdx = 0; infoIdx < info.UniformBufferInfosCount(); ++infoIdx) {
         const auto& descInfo =
             base::PtrToRef(&info.UniformBufferInfos()[infoIdx]);
+        const auto descSetIdx = descriptorSetLayouts_.DescriptorSetLayoutIndex(
+            DescriptorKind::UniformBuffer);
+        AE_BASE_ASSERT_LESS_EQUALS(0, descSetIdx);
         writes[writesCount] =
             ::vk::WriteDescriptorSet()
+                .setDstSet(nativeObjects_[descSetIdx])
                 .setDstBinding(descInfo.Region().BindingIndex())
                 .setDstArrayElement(descInfo.Region().ElemOffset())
                 .setDescriptorCount(descInfo.Region().ElemCount())
