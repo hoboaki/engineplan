@@ -12,7 +12,9 @@
 #include <ae/base/Display.hpp>
 #include <ae/base/Extent2.hpp>
 #include <ae/base/Extent2i.hpp>
+#include <ae/base/Matrix34.hpp>
 #include <ae/base/Matrix44.hpp>
+#include <ae/base/Quaternion.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/base/SdkHeader.hpp>
 #include <ae/base/Vector3.hpp>
@@ -390,55 +392,6 @@ int aemain(::ae::base::Application* app) {
                 .SetDevice(gfxLowDevice.get())
                 .SetResource(uniformBufferResource.get())
                 .SetRegion(region)));
-
-        // データ設定
-        {
-            // vec3 eye = {0.0f, 3.0f, 5.0f};
-            // vec3 origin = {0, 0, 0};
-            // vec3 up = {0.0f, 1.0f, 0.0};
-            // mat4x4_perspective(projection_matrix,
-            //    (float)degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
-            // mat4x4_look_at(view_matrix, eye, origin, up);
-            // mat4x4_identity(model_matrix);
-            // projection_matrix[1][1] *= -1;  // Flip projection matrix from GL
-            // to Vulkan orientation.
-
-            auto proj = ::ae::base::Matrix44::Perspective(
-                ::ae::base::Angle(::ae::base::Degree(45.0f)),
-                float(display.MainScreen().Width()) /
-                    display.MainScreen().Height(), // aspect
-                0.1f, // near
-                100.0f // far
-            );
-            proj.m[1][1] *= -1.0f;
-            auto view = ::ae::base::Matrix44::LookAt(
-                ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
-                ::ae::base::Vector3::Zero(), // targetPos
-                ::ae::base::Vector3::UnitY() // upVec
-            );
-            auto model = ::ae::base::Matrix44::Identity();
-            auto vp = proj * view;
-            auto mvp = vp * model;
-
-            fUniformDataType data;
-            memcpy(data.mvp, &mvp, sizeof(mvp));
-            for (int i = 0; i < 12 * 3; ++i) {
-                data.position[i][0] = fPositionData[i * 3];
-                data.position[i][1] = fPositionData[i * 3 + 1];
-                data.position[i][2] = fPositionData[i * 3 + 2];
-                data.position[i][3] = 1.0f;
-                data.attr[i][0] = fUvBufferData[2 * i];
-                data.attr[i][1] = fUvBufferData[2 * i + 1];
-                data.attr[i][2] = 0;
-                data.attr[i][3] = 0;
-            }
-
-            void* mappedMemory = gfxLowDevice->MapResourceMemory(
-                uniformBufferMemory->NativeObject_(), region);
-            std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxLowDevice->UnmapResourceMemory(
-                uniformBufferMemory->NativeObject_());
-        }
     }
 
     // RenderPassSpecInfo の作成
@@ -531,6 +484,7 @@ int aemain(::ae::base::Application* app) {
 
     // メインループ
     int bufferIndex = 0;
+    int frameCount = 0;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.IsClosed()) {
@@ -544,6 +498,61 @@ int aemain(::ae::base::Application* app) {
 
         // Swapchain バッファ確保要求
         swapchain->AcquireNextImage();
+
+        // ユニフォームバッファ更新
+        // （画面更新を確認するために毎フレーム更新）
+        {
+            // vec3 eye = {0.0f, 3.0f, 5.0f};
+            // vec3 origin = {0, 0, 0};
+            // vec3 up = {0.0f, 1.0f, 0.0};
+            // mat4x4_perspective(projection_matrix,
+            //    (float)degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
+            // mat4x4_look_at(view_matrix, eye, origin, up);
+            // mat4x4_identity(model_matrix);
+            // projection_matrix[1][1] *= -1;  // Flip projection matrix
+            // from GL to Vulkan orientation.
+
+            auto proj = ::ae::base::Matrix44::Perspective(
+                ::ae::base::Angle(::ae::base::Degree(45.0f)),
+                float(display.MainScreen().Width()) /
+                    display.MainScreen().Height(), // aspect
+                0.1f, // near
+                100.0f // far
+            );
+            proj.m[1][1] *= -1.0f;
+            auto view = ::ae::base::Matrix44::LookAt(
+                ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
+                ::ae::base::Vector3::Zero(), // targetPos
+                ::ae::base::Vector3::UnitY() // upVec
+            );
+            auto model = ::ae::base::Quaternion(::ae::base::Vector3::UnitY(),
+                ::ae::base::Degree(3.0f * frameCount))
+                             .ToRotateMatrix()
+                             .ToMatrix44();
+            auto vp = proj * view;
+            auto mvp = vp * model;
+
+            fUniformDataType data;
+            memcpy(data.mvp, &mvp, sizeof(mvp));
+            for (int i = 0; i < 12 * 3; ++i) {
+                data.position[i][0] = fPositionData[i * 3];
+                data.position[i][1] = fPositionData[i * 3 + 1];
+                data.position[i][2] = fPositionData[i * 3 + 2];
+                data.position[i][3] = 1.0f;
+                data.attr[i][0] = fUvBufferData[2 * i];
+                data.attr[i][1] = fUvBufferData[2 * i + 1];
+                data.attr[i][2] = 0;
+                data.attr[i][3] = 0;
+            }
+
+            const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                sizeof(fUniformDataType));
+            void* mappedMemory = gfxLowDevice->MapResourceMemory(
+                uniformBufferMemory->NativeObject_(), region);
+            std::memcpy(mappedMemory, &data, sizeof(data));
+            gfxLowDevice->UnmapResourceMemory(
+                uniformBufferMemory->NativeObject_());
+        }
 
         // コマンドバッファ作成
         auto& cmd = commandBuffers[bufferIndex];
@@ -642,6 +651,7 @@ int aemain(::ae::base::Application* app) {
 
         // バッファを進める
         bufferIndex = (bufferIndex + 1) % swapchainImageCount;
+        ++frameCount;
     }
 
     // GPU 完了同期
