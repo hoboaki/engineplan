@@ -8,6 +8,7 @@
 namespace ae {
 namespace gfx_low {
 class DescriptorSetCreateInfo;
+class DescriptorSetUpdateInfo;
 class Device;
 } // namespace gfx_low
 } // namespace ae
@@ -29,6 +30,14 @@ public:
     //@{
     /// 所属する Device。
     gfx_low::Device& Device() const { return device_; }
+    //@}
+
+    /// @name 操作
+    //@{
+    /// デスクリプタセットの内容を更新する。
+    /// @details
+    /// 更新は本オブジェクトを GPU が参照していないときに行ってください。
+    void Update(const DescriptorSetUpdateInfo& info);
     //@}
 
     /// @name 内部処理用機能

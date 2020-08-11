@@ -17,7 +17,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     Device* device, const DescriptorSetSpecInfo& info)
 : device_(base::PtrToRef(device)) {
     // 各 DescriptorSetLayou 内でこの数まで binding を記述できる。
-    // スタック上に確保することで new/delete オーバーヘッドをなくす。
+    // また、スタック上に確保することで new/delete オーバーヘッドをなくす。
     constexpr int bindingsCountMax = 64;
     int bindingsCount = 0;
     std::array<::vk::DescriptorSetLayoutBinding, bindingsCountMax> bindings;

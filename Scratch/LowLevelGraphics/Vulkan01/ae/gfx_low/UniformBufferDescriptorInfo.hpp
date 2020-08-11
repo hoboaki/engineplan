@@ -29,11 +29,11 @@ public:
     }
 
     /// ユニフォームバッファビューの配列ポインタ。（初期値：nullptr）
-    const UniformBufferView* Views() const { return views_.Get(); }
+    const UniformBufferView** Views() const { return views_.Get(); }
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    UniformBufferDescriptorInfo& SetViews(const UniformBufferView* views) {
+    UniformBufferDescriptorInfo& SetViews(const UniformBufferView** views) {
         views_.Reset(views);
         return *this;
         ;
@@ -42,7 +42,7 @@ public:
 
 private:
     ShaderBindingRegion region_;
-    base::Pointer<const UniformBufferView> views_;
+    base::Pointer<const UniformBufferView*> views_;
 };
 
 } // namespace gfx_low

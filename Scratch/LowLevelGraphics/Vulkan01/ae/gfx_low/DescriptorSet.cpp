@@ -3,8 +3,12 @@
 
 // includes
 #include <ae/base/PtrToRef.hpp>
+#include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
+#include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/UniformBufferDescriptorInfo.hpp>
+#include <ae/gfx_low/UniformBufferView.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -109,6 +113,51 @@ DescriptorSet::~DescriptorSet() {
     }
     device_.NativeObject_().destroyDescriptorPool(descriptorPool_, nullptr);
     descriptorPool_ = ::vk::DescriptorPool();
+}
+
+//------------------------------------------------------------------------------
+void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
+    // 1回の Update でこの数だけの DescriptorInfo を扱える。
+    // また、スタック上に確保することで new/delete オーバーヘッドをなくす。
+    constexpr int writesCountMax = 64;
+    int writesCount = 0;
+    int buffersCount = 0;
+    int imagesCount = 0;
+    std::array<::vk::WriteDescriptorSet, writesCountMax> writes;
+    std::array<::vk::DescriptorBufferInfo, writesCountMax> buffers;
+    std::array<::vk::DescriptorImageInfo, writesCountMax> images;
+
+    // UniformBuffer
+    for (int infoIdx = 0; infoIdx < info.UniformBufferInfosCount(); ++infoIdx) {
+        const auto& descInfo =
+            base::PtrToRef(&info.UniformBufferInfos()[infoIdx]);
+        writes[writesCount] =
+            ::vk::WriteDescriptorSet()
+                .setDstBinding(descInfo.Region().BindingIndex())
+                .setDstArrayElement(descInfo.Region().ElemOffset())
+                .setDescriptorCount(descInfo.Region().ElemCount())
+                .setDescriptorType(::vk::DescriptorType::eUniformBuffer)
+                .setPBufferInfo(&buffers[buffersCount]);
+        ++writesCount;
+
+        for (int viewIdx = 0; viewIdx < descInfo.Region().ElemCount();
+             ++viewIdx) {
+            const auto& view =
+                base::PtrToRef(base::PtrToRef(&descInfo.Views()[viewIdx]));
+            buffers[buffersCount] =
+                ::vk::DescriptorBufferInfo()
+                    .setBuffer(view.BufferResource_().NativeObject_())
+                    .setOffset(view.Region_().Offset())
+                    .setRange(view.Region_().Size());
+            ++buffersCount;
+        }
+    }
+
+    AE_BASE_ASSERT_LESS_EQUALS(writesCount, writesCountMax);
+    AE_BASE_ASSERT_LESS_EQUALS(buffersCount, int(buffers.size()));
+    AE_BASE_ASSERT_LESS_EQUALS(imagesCount, int(images.size()));
+    device_.NativeObject_().updateDescriptorSets(
+        writesCount, &writes[0], 0, nullptr);
 }
 
 } // namespace gfx_low

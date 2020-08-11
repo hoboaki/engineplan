@@ -38,6 +38,7 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::Buffer& NativeObject_() { return nativeObject_; }
+    const ::vk::Buffer& NativeObject_() const { return nativeObject_; }
     //@}
 
 private:

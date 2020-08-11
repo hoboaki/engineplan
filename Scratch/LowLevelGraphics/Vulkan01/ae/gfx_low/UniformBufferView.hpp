@@ -34,7 +34,8 @@ public:
     /// @name 内部処理用機能
     //@{
     BufferResource& BufferResource_() { return bufferResource_; }
-    ResourceMemoryRegion Region_() { return region_; }
+    const BufferResource& BufferResource_() const { return bufferResource_; }
+    ResourceMemoryRegion Region_() const { return region_; }
     //@}
 
 private:
