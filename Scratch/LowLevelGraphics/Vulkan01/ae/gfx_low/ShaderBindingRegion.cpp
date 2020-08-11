@@ -1,5 +1,5 @@
 // 文字コード：UTF-8
-#include <ae/gfx_low/ShaderBindingInfo.hpp>
+#include <ae/gfx_low/ShaderBindingRegion.hpp>
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
@@ -9,15 +9,21 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-ShaderBindingInfo& ShaderBindingInfo::SetBindingIndex(const int index) {
+ShaderBindingRegion& ShaderBindingRegion::SetBindingIndex(const int index) {
     AE_BASE_ASSERT_LESS_EQUALS(0, index);
     bindingIndex_ = index;
     return *this;
 }
 
+//------------------------------------------------------------------------------
+ShaderBindingRegion& ShaderBindingRegion::SetElemOffset(const int offset) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, offset);
+    elemOffset_ = offset;
+    return *this;
+}
 
 //------------------------------------------------------------------------------
-ShaderBindingInfo& ShaderBindingInfo::SetElemCount(const int count) {
+ShaderBindingRegion& ShaderBindingRegion::SetElemCount(const int count) {
     AE_BASE_ASSERT_LESS_EQUALS(1, count);
     elemCount_ = count;
     return *this;

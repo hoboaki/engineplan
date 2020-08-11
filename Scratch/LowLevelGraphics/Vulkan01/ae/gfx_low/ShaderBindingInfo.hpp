@@ -31,17 +31,17 @@ public:
 
     ///  バインディングする要素数。（初期値：1）
     /// @details 配列の場合はこの値を配列長として扱います。
-    int BindingElemCount() const { return bindingElemCount_;}
+    int ElemCount() const { return elemCount_;}
 
-    /// BindingElemCount() の設定。
+    /// ElemCount() の設定。
     /// @param count 1以上。
-    ShaderBindingInfo& SetBindingElemCount(int count);
+    ShaderBindingInfo& SetElemCount(int count);
     //@}
 
 private:
     ShaderBindingStageBitSet stages_;
     int bindingIndex_ = 0;
-    int bindingElemCount_ = 1;
+    int elemCount_ = 1;
 };
 
 } // namespace gfx_low

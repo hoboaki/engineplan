@@ -262,6 +262,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DescriptorSetUpdateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\InternalDescriptorSetLayouts.hpp">
       <SubType>
       </SubType>
@@ -342,6 +346,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ShaderBindingRegion.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ShaderBindingStageBitSet.hpp">
       <SubType>
       </SubType>
@@ -362,6 +370,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\StencilOpInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\UniformBufferDescriptorInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -710,6 +722,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\DescriptorSetUpdateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\Device.cpp">
       <SubType>
       </SubType>
@@ -803,6 +819,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ShaderBindingInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ShaderBindingRegion.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -32,7 +32,7 @@ public:
         return infos_[kind].infos.Get();
     }
 
-    /// BindingInfosCount() の設定。
+    /// BindingInfosCount() BindingInfos() の設定。
     /// @param count 0 以上。
     /// @infos count == 0 のときは nullptr を指定。それ以外のときは配列のポインタを指定。
     DescriptorSetSpecInfo& SetBindingInfos(DescriptorKind kind, int count,

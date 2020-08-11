@@ -32,7 +32,7 @@ int DescriptorSetSpecInfo::TotalBindingCount(
     const auto& info = infos_[kind];
     int total = 0;
     for (int i = 0; i < info.infosCount; ++i) {
-        total += info.infos.Get()[i].BindingElemCount();
+        total += info.infos.Get()[i].ElemCount();
     }
     return total;
 }
