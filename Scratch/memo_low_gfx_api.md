@@ -644,6 +644,40 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
   - 描画系（プリミティブトポロジは引数で指定）
   - コンピュート
 
+## 頂点属性指定
+
+- データフォーマットは[Metal 形式](https://developer.apple.com/documentation/metal/mtlvertexformat)
+が良さそう。Vulkan や DX12 は画像フォーマットと共有で使用可能か否かが分かりづらいので。
+- location 番号や attribute は連番縛りでよさそう。なので Metal と同じようにインデックス値＝IDという指定方法に。
+- DX12 のみ文字列指定なのでこれは HLSL 用に追加情報で設定する形式をとる。
+- コマンドバッファに渡すのは DX12 に合わせて VertexBufferView オブジェクト＋スロット番号にしておけば抽象化が簡単。
+
+### Vulkan
+
+- 参考記事は[こちら](https://vulkan-tutorial.com/Vertex_buffers/Vertex_input_description)。
+- GLSL コード上での頂点属性バインドは location=n で指定。
+- ランタイム側ではパイプラインオブジェクト生成時に渡す [VkVertexInputBindingDescription](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVertexInputBindingDescription.html) と [VkVertexInputAttributeDescription](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkVertexInputAttributeDescription.html) で指定。
+  - VkVertexInputBindingDescription ではスロット番号（binding）と１頂点データあたりの大きさを指定。
+  - VkVertexInputAttributeDescription では location 番号、スロット番号、データフォーマット、オフセット値を指定。
+- コマンドバッファに渡す bindVertexBuffers ではスロット番号、VkBuffer オブジェクト、VkBuffer のオフセット値を指定。
+
+### DirectX 12
+
+- HLSL コード上での頂点属性バインドは[こちら](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics)のページに書かれているラベルを付けて指定。
+- ランタイム側では D3D12_INPUT_ELEMENT_DESC で上記のラベル（文字列）やデータフォーマット、オフセット値、スロット番号を指定し、パイプラインオブジェクト作成時の情報として渡す。
+- コマンドリストに渡すのは VertexBufferView とスロット番号。
+- VertexBufferView 作成時にはバッファ領域を示すGPUメモリアドレス、１頂点データあたりの大きさ、バッファのサイズを指定。
+
+### Metal
+
+- MSL コード上での頂点属性バインドは[こちら](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf)の5.2.4 を参照。VertexInput のattribute(n) で指定しているのがそれ。
+- ランタイム側ではパイプラインオブジェクト生成時に渡す[MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor)で指定。
+  - [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) では１頂点データあたりの大きさを指定。
+  - MTLVertexBufferLayoutDescriptor の index がスロット番号に対応する。
+  - [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) ではデータフォーマット、オフセット値、スロット番号（bufferIndex）を指定。
+  - MTLVertexAttributeDescriptor のインデックスが MSL コード上の attribute(n) の n に対応する。
+- コマンドエンコーダの setVertexBuffer() でMTLBuffer オブジェクト、バッファ内オフセット、スロット番号を指定。
+
 ## キューの並列実行
 
 - Queue の優先度は DirectX 12 形式を採用。Metal では優先度の概念はないがそこは断念。
