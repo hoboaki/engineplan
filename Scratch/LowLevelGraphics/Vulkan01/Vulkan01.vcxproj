@@ -611,7 +611,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\VertexAttributeInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\VertexBufferLayoutInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\VertexFormat.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\VertexStepRate.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -876,6 +888,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\UniqueResourceMemory.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\VertexAttributeInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\VertexBufferLayoutInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
