@@ -22,6 +22,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 #include <ae/gfx_low/StencilOp.hpp>
+#include <ae/gfx_low/VertexFormat.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -42,6 +43,7 @@ struct InternalEnumUtil {
     static ::vk::CompareOp ToCompareOp(CompareOp op);
     static ::vk::CullModeFlags ToCullModeFlags(RasterizeCullMode mode);
     static ::vk::Format ToFormat(ImageFormat format);
+    static ::vk::Format ToFormat(VertexFormat format);
     static ::vk::FrontFace ToFrontFace(PolygonFrontFace face);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);

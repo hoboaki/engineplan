@@ -261,6 +261,81 @@ namespace gfx_low {
     return table[int(format)];
 }
 
+//------------------------------------------------------------------------------
+::vk::Format InternalEnumUtil::ToFormat(const VertexFormat format) {
+    AE_BASE_ASSERT_ENUM(format, VertexFormat);
+    AE_BASE_ASSERT(format != VertexFormat::Invalid);
+    const ::vk::Format table[] = {
+        ::vk::Format::eUndefined, // Invalid
+
+        ::vk::Format::eR8Sint, // Sint8x1
+        ::vk::Format::eR8G8Sint, // Sint8x2
+        ::vk::Format::eR8G8B8Sint, // Sint8x3
+        ::vk::Format::eR8G8B8A8Sint, // Sint8x4
+
+        ::vk::Format::eR8Snorm, // Snorm8x1
+        ::vk::Format::eR8G8Snorm, // Snorm8x2
+        ::vk::Format::eR8G8B8Snorm, // Snorm8x3
+        ::vk::Format::eR8G8B8A8Snorm, // Snorm8x4
+
+        ::vk::Format::eR8Uint, // Uint8x1
+        ::vk::Format::eR8G8Uint, // Uint8x2
+        ::vk::Format::eR8G8B8Uint, // Uint8x3
+        ::vk::Format::eR8G8B8A8Uint, // Uint8x4
+
+        ::vk::Format::eR8Unorm, // Unorm8x1
+        ::vk::Format::eR8G8Unorm, // Unorm8x2
+        ::vk::Format::eR8G8B8Unorm, // Unorm8x3
+        ::vk::Format::eR8G8B8A8Unorm, // Unorm8x4
+
+        ::vk::Format::eR16Sfloat, // Sfloat16x1
+        ::vk::Format::eR16G16Sfloat, // Sfloat16x2
+        ::vk::Format::eR16G16B16Sfloat, // Sfloat16x3
+        ::vk::Format::eR16G16B16A16Sfloat, // Sfloat16x4
+
+        ::vk::Format::eR16Sint, // Sint16x1
+        ::vk::Format::eR16G16Sint, // Sint16x2
+        ::vk::Format::eR16G16B16Sint, // Sint16x3
+        ::vk::Format::eR16G16B16A16Sint, // Sint16x4
+
+        ::vk::Format::eR16Snorm, // Snorm16x1
+        ::vk::Format::eR16G16Snorm, // Snorm16x2
+        ::vk::Format::eR16G16B16Snorm, // Snorm16x3
+        ::vk::Format::eR16G16B16A16Snorm, // Snorm16x4
+
+        ::vk::Format::eR16Uint, // Uint16x1
+        ::vk::Format::eR16G16Uint, // Uint16x2
+        ::vk::Format::eR16G16B16Uint, // Uint16x3
+        ::vk::Format::eR16G16B16A16Uint, // Uint16x4
+
+        ::vk::Format::eR16Unorm, // Unorm16x1
+        ::vk::Format::eR16G16Unorm, // Unorm16x2
+        ::vk::Format::eR16G16B16Unorm, // Unorm16x3
+        ::vk::Format::eR16G16B16A16Unorm, // Unorm16x4
+
+        ::vk::Format::eR32Sfloat, // Sfloat32x1
+        ::vk::Format::eR32G32Sfloat, // Sfloat32x2
+        ::vk::Format::eR32G32B32Sfloat, // Sfloat32x3
+        ::vk::Format::eR32G32B32A32Sfloat, // Sfloat32x4
+
+        ::vk::Format::eR32Sint, // Sint32x1
+        ::vk::Format::eR32G32Sint, // Sint32x2
+        ::vk::Format::eR32G32B32Sint, // Sint32x3
+        ::vk::Format::eR32G32B32A32Sint, // Sint32x4
+
+        ::vk::Format::eR32Uint, // Uint32x1
+        ::vk::Format::eR32G32Uint, // Uint32x2
+        ::vk::Format::eR32G32B32Uint, // Uint32x3
+        ::vk::Format::eR32G32B32A32Uint, // Uint32x4
+
+        ::vk::Format::eB4G4R4A4UnormPack16, // UnormB4G4R4A4
+
+        ::vk::Format::eA2R10G10B10SnormPack32, // SnormR10G10B10A2
+        ::vk::Format::eA2R10G10B10UnormPack32, // UnormR10G10B10A2
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(VertexFormat::TERM));
+    return table[int(format)];
+}
 
 //------------------------------------------------------------------------------
 ::vk::FrontFace InternalEnumUtil::ToFrontFace(const PolygonFrontFace face) {
