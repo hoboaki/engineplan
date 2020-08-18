@@ -668,7 +668,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 ### DirectX 12
 
 - HLSL コード上での頂点属性バインドは[こちら](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics)のページに書かれているラベルを付けて指定。
-- ランタイム側では D3D12_INPUT_ELEMENT_DESC で上記のラベル（文字列）やデータフォーマット、オフセット値、スロット番号を指定し、パイプラインオブジェクト作成時の情報として渡す。
+- ランタイム側では [D3D12_INPUT_ELEMENT_DESC](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_input_element_desc) で上記のラベル（文字列）やデータフォーマット、オフセット値、スロット番号を指定し、パイプラインオブジェクト作成時の情報として渡す。
 - コマンドリストに渡すのは VertexBufferView とスロット番号。
 - VertexBufferView 作成時にはバッファ領域を示すGPUメモリアドレス、１頂点データあたりの大きさ、バッファのサイズを指定。
 
