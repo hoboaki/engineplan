@@ -1,39 +1,23 @@
-/*
- * Copyright (c) 2015-2016 The Khronos Group Inc.
- * Copyright (c) 2015-2016 Valve Corporation
- * Copyright (c) 2015-2016 LunarG, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/*
- * Vertex shader used by Cube demo.
- */
+// 文字コード：UTF-8
 #version 400
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
+
 layout(std140, binding = 0) uniform buf {
-    mat4 MVP;
-} ubuf;
+    mat4 mvp;
+} Ubuf;
 
-layout (location = 0) in vec3 pos;
-layout (location = 1) in vec2 uv0;
+layout (location = 0) in vec3 Position;
+layout (location = 1) in vec2 Uv0;
 
-layout (location = 0) out vec2 texcoord;
-layout (location = 1) out vec3 frag_pos;
+layout (location = 0) out vec2 Texcoord;
+layout (location = 1) out vec3 FragPos;
 
 void main() 
 {
-   texcoord = uv0;
-   gl_Position = ubuf.MVP * vec4(pos, 1.0);
-   frag_pos = gl_Position.xyz;
+   Texcoord = Uv0;
+   gl_Position = Ubuf.mvp * vec4(Position, 1.0);
+   FragPos = gl_Position.xyz;
 }
+
+// EOF
