@@ -17,7 +17,7 @@
  *
  * Author: Jeremy Hayes <jeremy@lunarg.com>
  */
-#define UV_AS_COLOR_MODE (1)
+#define UV_AS_COLOR_MODE (0)
 
 #if defined(VK_USE_PLATFORM_XLIB_KHR) || defined(VK_USE_PLATFORM_XCB_KHR)
 #include <X11/Xutil.h>

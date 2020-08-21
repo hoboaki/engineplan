@@ -176,11 +176,11 @@ const float fUvBufferData[] = {
 };
 
 const uint32_t fVertShaderCode[] = {
-#include "uv_as_color2.vert.inc"
+#include "uv_as_color.vert.inc"
 };
 
 const uint32_t fFragShaderCode[] = {
-#include "uv_as_color2.frag.inc"
+#include "uv_as_color.frag.inc"
 };
 // clang-format on
 
