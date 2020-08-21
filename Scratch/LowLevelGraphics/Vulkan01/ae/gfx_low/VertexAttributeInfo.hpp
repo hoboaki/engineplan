@@ -8,6 +8,7 @@ namespace ae {
 namespace gfx_low {
 
 /// 頂点属性に関する情報。
+/// @todo HLSL 用の文字列ラベル対応。
 class VertexAttributeInfo {
 public:
     /// @name プロパティ

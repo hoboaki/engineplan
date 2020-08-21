@@ -8,6 +8,7 @@
 #include <ae/gfx_low/PipelineDepthStencilInfo.hpp>
 #include <ae/gfx_low/PipelineRasterizerInfo.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
+#include <ae/gfx_low/PipelineVertexInputInfo.hpp>
 #include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipelineShaderStage.hpp>
@@ -54,8 +55,8 @@ public:
     PipelineShaderInfo ShaderInfo(RenderPipelineShaderStage stage) const;
 
     /// ShaderInfo() の設定。（設定必須）
-    RenderPipelineCreateInfo& SetShaderInfo(RenderPipelineShaderStage stage,
-        const PipelineShaderInfo& shaderInfo);
+    RenderPipelineCreateInfo& SetShaderInfo(
+        RenderPipelineShaderStage stage, const PipelineShaderInfo& shaderInfo);
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
     gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const {
@@ -66,6 +67,16 @@ public:
     RenderPipelineCreateInfo& SetDescriptorSetSpecInfo(
         const gfx_low::DescriptorSetSpecInfo& info) {
         descriptorSetSpecInfo_ = info;
+        return *this;
+    }
+
+    /// 頂点入力情報。（初期値：デフォルトコンストラクタの値）
+    PipelineVertexInputInfo VertexInputInfo() const { return vertexInputInfo_; }
+
+    /// VertexInfo() の設定。
+    RenderPipelineCreateInfo& SetVertexInputInfo(
+        const PipelineVertexInputInfo& info) {
+        vertexInputInfo_ = info;
         return *this;
     }
 
@@ -101,9 +112,7 @@ public:
     }
 
     /// ブレンド処理の情報。（初期値：デフォルトコンストラクタの値）
-    PipelineBlendInfo BlendInfo() const {
-        return blendInfo_;
-    }
+    PipelineBlendInfo BlendInfo() const { return blendInfo_; }
 
     /// BlendInfo() の設定。
     RenderPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info) {
@@ -118,6 +127,7 @@ private:
     base::EnumKeyArray<RenderPipelineShaderStage, PipelineShaderInfo>
         shaderInfos_;
     gfx_low::DescriptorSetSpecInfo descriptorSetSpecInfo_;
+    PipelineVertexInputInfo vertexInputInfo_;
     PipelineRasterizerInfo rasterizerInfo_;
     PipelineDepthStencilInfo depthStencilInfo_;
     PipelineBlendInfo blendInfo_;
