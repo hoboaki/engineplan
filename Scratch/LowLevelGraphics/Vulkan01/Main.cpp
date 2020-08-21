@@ -61,6 +61,9 @@
 #include <ae/gfx_low/UniformBufferView.hpp>
 #include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
+#include <ae/gfx_low/VertexAttributeInfo.hpp>
+#include <ae/gfx_low/VertexBufferView.hpp>
+#include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <memory>
 
@@ -72,8 +75,15 @@ namespace {
 
 struct fUniformDataType {
     float mvp[4][4];
-    float position[12 * 3][4];
-    float attr[12 * 3][4];
+};
+
+struct fVertexType {
+    float position[3];
+    float uv0[2];
+};
+
+struct fVertexBufferType {
+    fVertexType v[12 * 3];
 };
 
 // clang-format off
@@ -166,11 +176,11 @@ const float fUvBufferData[] = {
 };
 
 const uint32_t fVertShaderCode[] = {
-#include "uv_as_color.vert.inc"
+#include "uv_as_color2.vert.inc"
 };
 
 const uint32_t fFragShaderCode[] = {
-#include "uv_as_color.frag.inc"
+#include "uv_as_color2.frag.inc"
 };
 // clang-format on
 
@@ -365,6 +375,65 @@ int aemain(::ae::base::Application* app) {
                 .SetDataAddress(*fragShaderMemory)));
     }
 
+    // VertexBuffer の作成
+    ::ae::gfx_low::UniqueResourceMemory vertexBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::BufferResource> vertexBufferResource;
+    ::std::unique_ptr<::ae::gfx_low::VertexBufferView> vertexBufferView;
+    const auto vertexBufferLayoutInfo =
+        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(sizeof(fVertexType));
+    const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
+        ::ae::gfx_low::VertexAttributeInfo().SetFormat(
+            ::ae::gfx_low::VertexFormat::Sfloat32x3),
+        ::ae::gfx_low::VertexAttributeInfo()
+            .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
+            .SetOffset(offsetof(fVertexType, uv0)),
+    };
+    {
+        const auto specInfo =
+            ::ae::gfx_low::BufferResourceSpecInfo()
+                .SetSize(sizeof(fVertexBufferType))
+                .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
+                    ::ae::gfx_low::BufferResourceUsage::VertexBuffer, true));
+        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+            sizeof(fVertexBufferType));
+        vertexBufferMemory.Reset(gfxLowDevice.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxLowDevice->CalcResourceMemoryRequirements(specInfo)));
+        vertexBufferResource.reset(new ::ae::gfx_low::BufferResource(
+            ::ae::gfx_low::BufferResourceCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*vertexBufferMemory)));
+        vertexBufferView.reset(new ::ae::gfx_low::VertexBufferView(
+            ::ae::gfx_low::VertexBufferViewCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetResource(vertexBufferResource.get())
+                .SetRegion(region)
+                .SetLayoutInfo(vertexBufferLayoutInfo)));
+
+        // バッファ更新
+        {
+            fVertexBufferType data;
+            for (int i = 0; i < 12 * 3; ++i) {
+                data.v[i].position[0] = fPositionData[i * 3];
+                data.v[i].position[1] = fPositionData[i * 3 + 1];
+                data.v[i].position[2] = fPositionData[i * 3 + 2];
+                data.v[i].uv0[0] = fUvBufferData[2 * i];
+                data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
+            }
+
+            const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                sizeof(fVertexBufferType));
+            void* mappedMemory = gfxLowDevice->MapResourceMemory(
+                vertexBufferMemory->NativeObject_(), region);
+            std::memcpy(mappedMemory, &data, sizeof(data));
+            gfxLowDevice->UnmapResourceMemory(
+                vertexBufferMemory->NativeObject_());
+        }
+    }
+
     // UniformBuffer の作成
     ::ae::gfx_low::UniqueResourceMemory uniformBufferMemory;
     ::std::unique_ptr<::ae::gfx_low::BufferResource> uniformBufferResource;
@@ -462,12 +531,19 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(vertShader.get())
                         .SetEntryPointNamePtr("main"))
-                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(fragShader.get())
                         .SetEntryPointNamePtr("main"))
+                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
+                .SetVertexInputInfo(
+                    ::ae::gfx_low::PipelineVertexInputInfo()
+                        .SetBufferCount(1)
+                        .SetBufferLayoutInfos(&vertexBufferLayoutInfo)
+                        .SetAttributeCount(
+                            AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
+                        .SetAttributeInfos(vertexAttrInfos))
                 .SetPrimitiveTopologyKind(
                     ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
@@ -534,16 +610,6 @@ int aemain(::ae::base::Application* app) {
 
             fUniformDataType data;
             memcpy(data.mvp, &mvp, sizeof(mvp));
-            for (int i = 0; i < 12 * 3; ++i) {
-                data.position[i][0] = fPositionData[i * 3];
-                data.position[i][1] = fPositionData[i * 3 + 1];
-                data.position[i][2] = fPositionData[i * 3 + 2];
-                data.position[i][3] = 1.0f;
-                data.attr[i][0] = fUvBufferData[2 * i];
-                data.attr[i][1] = fUvBufferData[2 * i + 1];
-                data.attr[i][2] = 0;
-                data.attr[i][3] = 0;
-            }
 
             const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(fUniformDataType));
@@ -629,6 +695,7 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // Draw
+                cmd.CmdSetVertexBuffer(0, *vertexBufferView);
                 cmd.CmdDraw(
                     ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
 
