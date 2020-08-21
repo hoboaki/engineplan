@@ -623,6 +623,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\VertexBufferView.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\VertexBufferViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\VertexFormat.hpp">
       <SubType>
       </SubType>
@@ -904,6 +912,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\VertexBufferLayoutInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\VertexBufferView.cpp">
       <SubType>
       </SubType>
     </ClCompile>

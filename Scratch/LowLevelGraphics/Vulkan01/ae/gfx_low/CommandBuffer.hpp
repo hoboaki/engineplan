@@ -19,6 +19,7 @@ class RenderPassBeginInfo;
 class RenderPipeline;
 class Queue;
 class ScissorSetting;
+class VertexBufferView;
 class ViewportSetting;
 } // namespace gfx_low
 } // namespace ae
@@ -141,6 +142,10 @@ public:
     /// count は CmdBeginRenderPass で指定した RenderTarget
     /// の数と等しい必要があります。
     void CmdSetScissors(int count, const ScissorSetting* settings);
+
+    /// 頂点バッファの設定。
+    /// @param slotIndex [0, PipelineVertexInputInfo::BufferCount())
+    void CmdSetVertexBuffer(int slotIndex, const VertexBufferView& view);
 
     /// 設定済のレンダーパイプラインに基づいてドローコールをする。
     void CmdDraw(const DrawCallInfo& info);

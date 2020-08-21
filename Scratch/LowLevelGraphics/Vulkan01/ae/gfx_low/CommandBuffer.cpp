@@ -6,6 +6,7 @@
 #include <ae/base/Extent2i.hpp>
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeAssert.hpp>
+#include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
@@ -24,6 +25,7 @@
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/System.hpp>
+#include <ae/gfx_low/VertexBufferView.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 
 //------------------------------------------------------------------------------
@@ -390,6 +392,18 @@ void CommandBuffer::CmdSetScissors(
                     uint32_t(setting.Rect().Height())});
     }
     nativeObject_.setScissor(0, count, &rects[0]);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetVertexBuffer(
+    const int slotIndex, const VertexBufferView& view)
+{
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT_LESS_EQUALS(0, slotIndex);
+    const auto offset = ::vk::DeviceSize(view.Region_().Offset());
+    nativeObject_.bindVertexBuffers(uint32_t(slotIndex), 1,
+        &view.BufferResource_().NativeObject_(), &offset);
 }
 
 //------------------------------------------------------------------------------
