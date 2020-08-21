@@ -23,6 +23,7 @@
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 #include <ae/gfx_low/StencilOp.hpp>
 #include <ae/gfx_low/VertexFormat.hpp>
+#include <ae/gfx_low/VertexStepRate.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -62,6 +63,7 @@ struct InternalEnumUtil {
     static ::vk::ShaderStageFlags ToShaderStageFlags(
         const ShaderBindingStageBitSet& stages);
     static ::vk::StencilOp ToStencilOp(StencilOp op);
+    static ::vk::VertexInputRate ToVertexInputRate(VertexStepRate stepRate);
 };
 
 } // namespace gfx_low

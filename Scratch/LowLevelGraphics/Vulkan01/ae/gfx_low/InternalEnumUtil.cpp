@@ -560,6 +560,21 @@ namespace gfx_low {
     return result;
 }
 
+//------------------------------------------------------------------------------
+::vk::VertexInputRate InternalEnumUtil::ToVertexInputRate(const VertexStepRate stepRate) {
+    AE_BASE_ASSERT_ENUM(stepRate, VertexStepRate);
+    AE_BASE_ASSERT(stepRate != VertexStepRate::Invalid);
+    const ::vk::VertexInputRate table[] = {
+        ::vk::VertexInputRate(-1), // Invalid,
+        ::vk::VertexInputRate::eVertex,
+        ::vk::VertexInputRate::eInstance,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(VertexStepRate::TERM));
+    const auto result = table[int(stepRate)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

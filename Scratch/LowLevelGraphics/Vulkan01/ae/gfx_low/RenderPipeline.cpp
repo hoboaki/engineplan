@@ -12,6 +12,8 @@
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
+#include <ae/gfx_low/VertexAttributeInfo.hpp>
+#include <ae/gfx_low/VertexBufferLayoutInfo.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -177,7 +179,58 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
             ++shaderStageInfosCount;
         }
 
-        const ::vk::PipelineVertexInputStateCreateInfo vertexInputInfo;
+        constexpr int vertexBufferCountMax = 16;
+        constexpr int vertexAttributeCountMax = 16;
+        std::array<::vk::VertexInputBindingDescription, vertexBufferCountMax> vertexBindingDescs;
+        std::array<::vk::VertexInputAttributeDescription, vertexAttributeCountMax>
+            vertexAttrDescs;
+        {
+            const auto vertexInputInfo = createInfo.VertexInputInfo();
+            AE_BASE_ASSERT_MIN_MAX(
+                vertexInputInfo.BufferCount(), 0, vertexBufferCountMax);
+            AE_BASE_ASSERT_MIN_MAX(
+                vertexInputInfo.AttributeCount(), 0, vertexAttributeCountMax);
+            if (0 < vertexInputInfo.BufferCount()) {
+                const auto* infos =
+                    &base::PtrToRef(vertexInputInfo.BufferLayoutInfos());
+                for (int i = 0; i < vertexInputInfo.BufferCount(); ++i) {
+                    const auto& info = infos[i];
+                    AE_BASE_ASSERT_LESS_EQUALS(0, info.Stride());
+                    vertexBindingDescs[i] =
+                        ::vk::VertexInputBindingDescription()
+                            .setBinding(uint32_t(i))
+                            .setInputRate(InternalEnumUtil::ToVertexInputRate(
+                                info.StepRate()))
+                            .setStride(info.Stride());
+                }
+            }
+            if (0 < vertexInputInfo.AttributeCount()) {
+                const auto* infos =
+                    &base::PtrToRef(vertexInputInfo.AttributeInfos());
+                for (int i = 0; i < vertexInputInfo.AttributeCount(); ++i) {
+                    const auto& info = infos[i];
+                    AE_BASE_ASSERT_MIN_TERM(
+                        info.Slot(), 0, vertexInputInfo.BufferCount());
+                    AE_BASE_ASSERT_MIN_TERM(info.Offset(), 0,
+                        int(vertexBindingDescs[info.Slot()].stride));
+                    vertexAttrDescs[i] =
+                        ::vk::VertexInputAttributeDescription()
+                            .setBinding(uint32_t(info.Slot()))
+                            .setLocation(uint32_t(i))
+                            .setFormat(
+                                InternalEnumUtil::ToFormat(info.Format()))
+                            .setOffset(uint32_t(info.Offset()));
+                }
+            }
+        }
+        const auto vertexInputInfo =
+            ::vk::PipelineVertexInputStateCreateInfo()
+                .setVertexBindingDescriptionCount(
+                    uint32_t(createInfo.VertexInputInfo().BufferCount()))
+                .setPVertexBindingDescriptions(&vertexBindingDescs[0])
+                .setVertexAttributeDescriptionCount(
+                    uint32_t(createInfo.VertexInputInfo().AttributeCount()))
+                .setPVertexAttributeDescriptions(&vertexAttrDescs[0]);
 
         const auto inputAssemblyInfo =
             ::vk::PipelineInputAssemblyStateCreateInfo().setTopology(
