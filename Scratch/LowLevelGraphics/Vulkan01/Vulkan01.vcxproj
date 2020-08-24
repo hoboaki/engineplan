@@ -270,6 +270,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageSubresourceLayout.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ImageSubresourceLocation.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\InternalDescriptorSetLayouts.hpp">
       <SubType>
       </SubType>
@@ -767,6 +775,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\ImageSubresourceLocation.cpp">
       <SubType>
       </SubType>
     </ClCompile>
