@@ -10,6 +10,8 @@ namespace gfx_low {
 class DeviceCreateInfo;
 class BufferResourceSpecInfo;
 class ImageResourceSpecInfo;
+class ImageSubresourceLayout;
+class ImageSubresourceLocation;
 class Queue;
 class ResourceMemory;
 class ResourceMemoryAllocInfo;
@@ -78,15 +80,15 @@ public:
 
     /// 指定のイメージリソースのリソースメモリ要件を計算して返す。
     ResourceMemoryRequirements CalcResourceMemoryRequirements(
-        const ImageResourceSpecInfo& specInfo);
+        const ImageResourceSpecInfo& specInfo) const;
 
     /// 指定のバッファリソースのリソースメモリ要件を計算して返す。
     ResourceMemoryRequirements CalcResourceMemoryRequirements(
-        const BufferResourceSpecInfo& specInfo);
+        const BufferResourceSpecInfo& specInfo) const;
 
     /// 指定のシェーダーモジュールリソースのリソースメモリ要件を計算して返す。
     ResourceMemoryRequirements CalcResourceMemoryRequirements(
-        const ShaderModuleResourceSpecInfo& specInfo);
+        const ShaderModuleResourceSpecInfo& specInfo) const;
 
     /// 指定のリソースメモリの指定範囲に対して CPU による読み書きを開始する。
     /// @return region で指定した範囲の先頭アドレス。
@@ -97,6 +99,14 @@ public:
 
     /// 指定のリソースメモリに対する CPU による読み書きを終了する。
     void UnmapResourceMemory(const ResourceMemory& resourceMemory);
+    //@}
+
+    /// @name イメージに関するユーティリティ
+    //@{
+    /// 指定のイメージサブリソースのデータレイアウトを計算して返す。
+    ImageSubresourceLayout CalcImageSubresourceLayout(
+        const ImageResourceSpecInfo& specInfo,
+        const ImageSubresourceLocation& location) const;
     //@}
 
     /// @name 内部処理用API

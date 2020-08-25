@@ -12,6 +12,8 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
+#include <ae/gfx_low/ImageSubresourceLayout.hpp>
+#include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -319,7 +321,7 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const ImageResourceSpecInfo& specInfo) {
+    const ImageResourceSpecInfo& specInfo) const {
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
     // 一時的に VkImage を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
@@ -346,7 +348,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const BufferResourceSpecInfo& specInfo) {
+    const BufferResourceSpecInfo& specInfo) const {
     // Vulkan 環境は VkBuffer を作成しないと値が取得できないため
     // 一時的に VkBuffer を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
@@ -374,7 +376,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const ShaderModuleResourceSpecInfo& specInfo) {
+    const ShaderModuleResourceSpecInfo& specInfo) const {
     return ResourceMemoryRequirements()
         .SetSize(specInfo.Size())
         .SetAlignment(sizeof(size_t))
@@ -406,6 +408,43 @@ void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
 
     nativeObject_.unmapMemory(resourceMemory.NativeObject_());
 }
+
+
+//------------------------------------------------------------------------------
+ImageSubresourceLayout Device::CalcImageSubresourceLayout(
+    const ImageResourceSpecInfo& specInfo,
+    const ImageSubresourceLocation& location) const {
+    // Vulkan 環境は VkImage を作成しないと値が取得できないため
+    // 一時的に VkImage を作成して求める。
+    // 将来的には同じ specInfo が渡された場合は
+    // 前回求めた値を返すようにして無駄な VkImage 生成を省略したい。
+    // @todo 計算結果のキャッシュ対応
+
+    ::vk::SubresourceLayout layout;
+    {
+        ::vk::Image tmpImage;
+        const auto createInfo =
+            ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
+        auto result =
+            nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
+
+        
+        const int layerCountPerArrayIndex =
+            specInfo.Kind() == ImageResourceKind::ImageCube ? 6 : 1;
+        const auto subres =
+            ::vk::ImageSubresource()
+                .setAspectMask(vk::ImageAspectFlagBits::eColor)
+                .setMipLevel(location.MipLevel())
+                .setArrayLayer(location.FaceIndex() +
+                               location.ArrayIndex() * layerCountPerArrayIndex);
+
+        nativeObject_.getImageSubresourceLayout(tmpImage, &subres, &layout);
+        nativeObject_.destroyImage(tmpImage, nullptr);
+    }
+
+    return ImageSubresourceLayout(layout.offset, layout.rowPitch, layout.depthPitch);
+}
+
 
 } // namespace gfx_low
 } // namespace ae
