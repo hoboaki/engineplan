@@ -36,6 +36,8 @@
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
+#include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
+#include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
@@ -431,6 +433,129 @@ int aemain(::ae::base::Application* app) {
             std::memcpy(mappedMemory, &data, sizeof(data));
             gfxLowDevice->UnmapResourceMemory(
                 vertexBufferMemory->NativeObject_());
+        }
+    }
+
+    // ポリゴンに貼り付けるテクスチャの作成
+    ::ae::gfx_low::UniqueResourceMemory textureMemory;
+    ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> copySrcTextureImage;
+    {
+        const auto extent = ::ae::base::Extent2i(256, 256);
+        const auto baseSpecInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetFormat(::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb)
+                .SetExtent(extent);
+        ::ae::gfx_low::ImageSubresourceDataInfo dataInfo;
+
+        if (gfxLowDevice->IsDeviceLocalMemoryShared()) {
+            // デバイスメモリが共有メモリの場合
+            // コピーは不要のため共有メモリ上にテクスチャメモリを配置し
+            // GPU からもそのデータを参照するようにする
+            const auto specInfo =
+                ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
+                    .SetTiling(::ae::gfx_low::ImageResourceTiling::Linear)
+                    .SetUsageBitSet(
+                        ::ae::gfx_low::ImageResourceUsageBitSet().Set(
+                            ::ae::gfx_low::ImageResourceUsage::SampledImage,
+                            true));
+            textureMemory.Reset(gfxLowDevice.get(),
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                    .SetParams(gfxLowDevice->CalcResourceMemoryRequirements(
+                        specInfo)));
+            textureImage.reset(new ::ae::gfx_low::ImageResource(
+                ::ae::gfx_low::ImageResourceCreateInfo()
+                    .SetDevice(gfxLowDevice.get())
+                    .SetSpecInfo(specInfo)
+                    .SetDataAddress(textureMemory->Address())
+                    .SetInitialState(
+                        ::ae::gfx_low::ImageResourceState::Unknown)));
+            dataInfo = gfxLowDevice->CalcImageSubresourceDataInfo(
+                specInfo, ::ae::gfx_low::ImageSubresourceLocation());
+        } else {
+            // デバイスメモリが専用メモリの場合
+            // 共有メモリから専用メモリへのコピーが必要のため
+            // ２つずつオブジェクトを作る
+            {
+                const auto specInfo =
+                    ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
+                        .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                        .SetUsageBitSet(
+                            ::ae::gfx_low::ImageResourceUsageBitSet()
+                                .Set(::ae::gfx_low::ImageResourceUsage::
+                                         SampledImage,
+                                    true)
+                                .Set(::ae::gfx_low::ImageResourceUsage::CopyDst,
+                                    true));
+                textureMemory.Reset(gfxLowDevice.get(),
+                    ::ae::gfx_low::ResourceMemoryAllocInfo()
+                        .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                        .SetParams(gfxLowDevice->CalcResourceMemoryRequirements(
+                            specInfo)));
+                textureImage.reset(new ::ae::gfx_low::ImageResource(
+                    ::ae::gfx_low::ImageResourceCreateInfo()
+                        .SetDevice(gfxLowDevice.get())
+                        .SetSpecInfo(specInfo)
+                        .SetDataAddress(textureMemory->Address())
+                        .SetInitialState(
+                            ::ae::gfx_low::ImageResourceState::Unknown)));
+            }
+            {
+                const auto specInfo =
+                    ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
+                        .SetTiling(::ae::gfx_low::ImageResourceTiling::Linear)
+                        .SetUsageBitSet(
+                            ::ae::gfx_low::ImageResourceUsageBitSet().Set(
+                                ::ae::gfx_low::ImageResourceUsage::CopySrc,
+                                true));
+                copySrcTextureMemory.Reset(gfxLowDevice.get(),
+                    ::ae::gfx_low::ResourceMemoryAllocInfo()
+                        .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                        .SetParams(gfxLowDevice->CalcResourceMemoryRequirements(
+                            specInfo)));
+                copySrcTextureImage.reset(new ::ae::gfx_low::ImageResource(
+                    ::ae::gfx_low::ImageResourceCreateInfo()
+                        .SetDevice(gfxLowDevice.get())
+                        .SetSpecInfo(specInfo)
+                        .SetDataAddress(copySrcTextureMemory->Address())
+                        .SetInitialState(
+                            ::ae::gfx_low::ImageResourceState::Unknown)));
+                dataInfo = gfxLowDevice->CalcImageSubresourceDataInfo(
+                    specInfo, ::ae::gfx_low::ImageSubresourceLocation());
+            }
+        }
+
+        // テクスチャイメージをプログラムコードで作成
+        {
+            auto& targetMemory = gfxLowDevice->IsDeviceLocalMemoryShared()
+                                    ? textureMemory
+                                    : copySrcTextureMemory;
+            uint8_t* dst = gfxLowDevice->MapResourceMemory(
+                *targetMemory, ::ae::gfx_low::ResourceMemoryRegion().SetOffset(dataInfo.Offset()).SetSize(dataInfo.RowPitch() * extent.height));
+            const ::ae::base::Color4bPod rgbColors[] = {
+                ::ae::base::Color4b(0xFF, 0xFF, 0xFF, 0xFF),
+                ::ae::base::Color4b(0xFF, 0xFF, 0, 0xFF),
+                ::ae::base::Color4b(0, 0xFF, 0xFF, 0xFF),
+                ::ae::base::Color4b(0, 0xFF, 0, 0xFF),
+                ::ae::base::Color4b(0xFF, 0, 0xFF, 0xFF),
+                ::ae::base::Color4b(0xFF, 0, 0, 0xFF),
+                ::ae::base::Color4b(0, 0, 0xFF, 0xFF),
+            };
+            for (int y = 0; y < extent.height; ++y) {
+                for (int x = 0; x < extent.width; ++x) {
+                    const int colorIndex = x / (extent.width / AE_BASE_ARRAY_LENGTH(rgbColors));
+                    const auto& color = rgbColors[colorIndex];
+                    const size_t baseOffset = y * dataInfo.RowPitch() + x * 4;
+                    dst[baseOffset + 0] = color.r;
+                    dst[baseOffset + 1] = color.g;
+                    dst[baseOffset + 2] = color.b;
+                    dst[baseOffset + 3] = color.a;
+                }
+            }
+            gfxLowDevice->UnmapResourceMemory(*targetMemory);
         }
     }
 
