@@ -10,7 +10,7 @@ namespace gfx_low {
 class DeviceCreateInfo;
 class BufferResourceSpecInfo;
 class ImageResourceSpecInfo;
-class ImageSubresourceLayout;
+class ImageSubresourceDataInfo;
 class ImageSubresourceLocation;
 class Queue;
 class ResourceMemory;
@@ -103,8 +103,8 @@ public:
 
     /// @name イメージに関するユーティリティ
     //@{
-    /// 指定のイメージサブリソースのデータレイアウトを計算して返す。
-    ImageSubresourceLayout CalcImageSubresourceLayout(
+    /// 指定のイメージサブリソースのデータ情報を計算して返す。
+    ImageSubresourceDataInfo CalcImageSubresourceDataInfo(
         const ImageResourceSpecInfo& specInfo,
         const ImageSubresourceLocation& location) const;
     //@}

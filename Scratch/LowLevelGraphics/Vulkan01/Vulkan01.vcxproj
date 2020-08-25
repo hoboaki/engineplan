@@ -270,7 +270,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ImageSubresourceLayout.hpp">
+    <ClInclude Include="ae\gfx_low\ImageSubresourceDataInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>

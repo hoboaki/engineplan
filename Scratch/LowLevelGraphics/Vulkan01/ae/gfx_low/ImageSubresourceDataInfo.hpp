@@ -5,16 +5,16 @@
 namespace ae {
 namespace gfx_low {
 
-/// ImageSubresource のデータレイアウト。
-class ImageSubresourceLayout {
+/// ImageSubresource のデータ情報。
+class ImageSubresourceDataInfo {
 public:
     /// @name コンストラクタ
     //@{
     /// 全て0で作成。
-    ImageSubresourceLayout() {}
+    ImageSubresourceDataInfo() {}
 
     /// 初期値を指定して作成。
-    ImageSubresourceLayout(size_t offset, size_t rowPitch, size_t depthPitch)
+    ImageSubresourceDataInfo(size_t offset, size_t rowPitch, size_t depthPitch)
     : offset_(offset)
     , rowPitch_(rowPitch)
     , depthPitch_(depthPitch) {}

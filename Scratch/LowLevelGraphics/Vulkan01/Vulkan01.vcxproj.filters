@@ -705,7 +705,7 @@
     <ClInclude Include="ae\gfx_low\ImageSubresourceLocation.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ae\gfx_low\ImageSubresourceLayout.hpp">
+    <ClInclude Include="ae\gfx_low\ImageSubresourceDataInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

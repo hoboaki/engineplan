@@ -12,7 +12,7 @@
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/EnumUtil.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
-#include <ae/gfx_low/ImageSubresourceLayout.hpp>
+#include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/PhysicalDeviceInfo.hpp>
@@ -411,7 +411,7 @@ void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
 
 
 //------------------------------------------------------------------------------
-ImageSubresourceLayout Device::CalcImageSubresourceLayout(
+ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
     const ImageResourceSpecInfo& specInfo,
     const ImageSubresourceLocation& location) const {
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
@@ -442,7 +442,7 @@ ImageSubresourceLayout Device::CalcImageSubresourceLayout(
         nativeObject_.destroyImage(tmpImage, nullptr);
     }
 
-    return ImageSubresourceLayout(layout.offset, layout.rowPitch, layout.depthPitch);
+    return ImageSubresourceDataInfo(layout.offset, layout.rowPitch, layout.depthPitch);
 }
 
 
