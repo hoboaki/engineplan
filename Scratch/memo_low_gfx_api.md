@@ -63,7 +63,7 @@
         - [Vulkan](#vulkan-13)
         - [DirectX 12](#directx-12-12)
         - [Metal](#metal-12)
-    - [イメージのコピー・アップロード](#イメージのコピー・アップロード)
+    - [イメージのアップロード](#イメージのアップロード)
         - [Vulkan](#vulkan-14)
         - [DirectX 12](#directx-12-13)
         - [Metal](#metal-13)
@@ -850,7 +850,16 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 - [MTLCommandBuffer.waitUntilCompleted()](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) で待つ。
 - タイムアウトの指定はないが、addCompletedHandler によるコールバックを使うことでシグナルできればタイムアウトっぽいことができる。
 
-## イメージのコピー・アップロード
+## イメージのアップロード
+
+- 転送元と転送先の指定について
+  - 転送元の一部をコピーする方法はいずれのライブラリにもなく、転送元画像をまるまるコピーする方式しかない模様。
+  - 転送先指定について Vulkan のみ指定可能だったがそれ以外のライブラリにはなかった。
+- 転送する単位について
+  - Vulkan、Metal は複数のレイヤー（配列範囲）を１回のコールでコピーすることが可能。DX12 は１つずつのみ。
+- 抽象化設計
+  - 指定するパラメータは Vulkan のものに加えて、srcFormat、rowPitch、depthPitch を指定する。
+  - 画像は DX12 にあわせて１枚（１面）ずつのコピーのみ対応する。
 
 ### Vulkan
 
@@ -861,7 +870,7 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
   - サブリソースの位置指定では、COLOR/DEPTH/STENCIL のビット指定、mipLevel、配列インデックスと配列要素数の指定をする。
   - ちなみに、Vulkan はキューブマップの各面を配列インデックス0～5で扱う。
   - 他のライブラリとの互換を考えると配列要素数は指定できないようにして１画像ずつのコピーしかサポートしないようにするのもありかもしれない。
-- ここまで ImageToImage の説明をしてきたが、イメージのアップロード目的では BufferToImage を使うものらしい。（裏は取れていないけど、DX12のサンプルコードもそうなっていたのでそういうものなのかなぁという印象）
+- ここまで ImageToImage の説明をしてきたが、イメージのアップロード目的では BufferToImage を使うものらしい。（裏は取れていないけど、VulkanもDX12もサンプルコードではそうなっていたのでそういうものなのかなぁという印象）
 - BufferToImage コピーは [vkCmdCopyBufferToImage](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage.html) で実行。
   - 引数に指定する [VkBufferImageCopy](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferImageCopy.html) で細かい指定をする。
   - bufferRowLength、bufferImageHeight で src の横幅縦幅を指定。
@@ -878,6 +887,8 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 
 ### Metal
 
+- [MTLBlitCommandEncoder.copy()](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400752-copy) で BufferToImage コピーを実行。（圧縮テクスチャ用は[こちら](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400771-copy)）
+- sourceBytesPerRow、sourceBytesPerImage（depthPitch）、sourceSize（w/h/d）、destinationSlice、destinationLevel、destinationOrigin（オフセットxyz）を指定。
 
 
 # 最適化
