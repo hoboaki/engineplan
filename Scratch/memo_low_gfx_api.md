@@ -63,15 +63,19 @@
         - [Vulkan](#vulkan-13)
         - [DirectX 12](#directx-12-12)
         - [Metal](#metal-12)
-- [最適化](#最適化)
-    - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
+    - [イメージのコピー・アップロード](#イメージのコピー・アップロード)
         - [Vulkan](#vulkan-14)
         - [DirectX 12](#directx-12-13)
         - [Metal](#metal-13)
-    - [インダイレクト引数描画](#インダイレクト引数描画)
+- [最適化](#最適化)
+    - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
         - [Vulkan](#vulkan-15)
         - [DirectX 12](#directx-12-14)
         - [Metal](#metal-14)
+    - [インダイレクト引数描画](#インダイレクト引数描画)
+        - [Vulkan](#vulkan-16)
+        - [DirectX 12](#directx-12-15)
+        - [Metal](#metal-15)
     - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
 - [付録](#付録)
     - [参考](#参考)
@@ -845,6 +849,36 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 
 - [MTLCommandBuffer.waitUntilCompleted()](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) で待つ。
 - タイムアウトの指定はないが、addCompletedHandler によるコールバックを使うことでシグナルできればタイムアウトっぽいことができる。
+
+## イメージのコピー・アップロード
+
+### Vulkan
+
+- [vkCmdCopyImage](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImage.html) で ImageToImage コピーを実行。
+  - 引数で src/dst の VkImage オブジェクトと src/dst の VkImageLayout、そして領域を示す VkImageCopy 郡を指定。
+  - [VkImageLayout](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageLayout.html) はその時点でのイメージの状態を渡す。
+  - [VkImageCopy](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageCopy.html) ではピクセルの領域指定とサブリソース位置の指定をする。
+  - サブリソースの位置指定では、COLOR/DEPTH/STENCIL のビット指定、mipLevel、配列インデックスと配列要素数の指定をする。
+  - ちなみに、Vulkan はキューブマップの各面を配列インデックス0～5で扱う。
+  - 他のライブラリとの互換を考えると配列要素数は指定できないようにして１画像ずつのコピーしかサポートしないようにするのもありかもしれない。
+- ここまで ImageToImage の説明をしてきたが、イメージのアップロード目的では BufferToImage を使うものらしい。（裏は取れていないけど、DX12のサンプルコードもそうなっていたのでそういうものなのかなぁという印象）
+- BufferToImage コピーは [vkCmdCopyBufferToImage](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage.html) で実行。
+  - 引数に指定する [VkBufferImageCopy](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferImageCopy.html) で細かい指定をする。
+  - bufferRowLength、bufferImageHeight で src の横幅縦幅を指定。
+  - bufferRowLength については純粋にピクセル数でいいのか否かが読み解けなかった。RowPitch にラウンドアップされた値を入れるのかと一瞬思ったがバイト数ではなくピクセル数をいれるものらしいのでおそらくそれはなさそう。
+
+### DirectX 12
+
+- [ID3D12GraphicsCommandList::CopyTextureRegion](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-copytextureregion) で ImageToImage もしくは BufferToImage コピーを行う。
+- src/dst は D3D12_TEXTURE_COPY_LOCATION オブジェクトで指定。
+- D3D12_TEXTURE_COPY_LOCATION では ID3D12Resource オブジェクトと SubresourceIndex を指定する。
+- src リソースがテクスチャリソースではなくバッファリソースの場合は SubresourceIndex 指定ではなく PlacedFootprint で指定する必要がある模様。
+- イメージのアップロード目的であれば src リソースはバッファリソースなので PlacedFootprint で指定することになる。
+- PlacedFootprint で指定する場合は、width、height、depth、rowPitch、format を指定する。
+
+### Metal
+
+
 
 # 最適化
 
