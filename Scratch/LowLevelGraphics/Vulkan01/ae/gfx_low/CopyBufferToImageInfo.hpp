@@ -4,6 +4,7 @@
 #include <ae/base/Extent2i.hpp>
 #include <ae/base/Extent3i.hpp>
 #include <ae/base/Pointer.hpp>
+#include <ae/base/Vector3i.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
@@ -106,6 +107,19 @@ public:
         return *this;
     }
 
+    /// コピー先の始点となる座標。（初期値：0,0,0） 
+    base::Vector3i DstImageOffset() const { return dstImageOffset_; }
+
+    /// DstImageOffset() の設定。
+    /// @param offset xyz それぞれ 0 以上の値。
+    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector3iPod& offset);
+
+    /// 2次元用 DstImageOffset() の設定。
+    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector2iPod& offset)
+    {
+        return SetDstImageOffset(base::Vector3i(offset, 0));
+    }
+
     /// コピー処理をする時点でのコピー先サブリソースのイメージリソースの状態。（初期値：Invalid）
     ImageResourceState DstImageResourceState() const {
         return dstImageResourceState_;
@@ -125,6 +139,7 @@ private:
     base::Extent3i srcBufferImageExtent_;
     ImageSubresourceLocation dstSubresourceLocation_;
     ImageResourceState dstImageResourceState_ = ImageResourceState::Invalid;
+    base::Vector3i dstImageOffset_;
 };
 
 } // namespace gfx_low

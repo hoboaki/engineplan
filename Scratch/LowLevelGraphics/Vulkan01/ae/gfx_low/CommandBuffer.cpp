@@ -8,6 +8,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
@@ -15,6 +16,7 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
+#include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
@@ -110,6 +112,38 @@ void CommandBuffer::Reset() {
         device_.NativeObject_().destroyRenderPass(prop.renderPass, nullptr);
     }
     renderPassProperties_.Clear();
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+
+    const auto copyInfo =
+        ::vk::BufferImageCopy()
+            .setBufferOffset(info.SrcBufferOffset())
+            .setBufferRowLength(info.SrcBufferImageExtent().width)
+            .setBufferImageHeight(info.SrcBufferImageExtent().height)
+            .setImageOffset(::vk::Offset3D(info.DstImageOffset().x,
+                info.DstImageOffset().y, info.DstImageOffset().z))
+            .setImageSubresource(
+                ::vk::ImageSubresourceLayers()
+                    .setAspectMask(::vk::ImageAspectFlagBits::eColor)
+                    .setMipLevel(info.DstSubresourceLocation().MipLevel())
+                    .setBaseArrayLayer(info.DstSubresourceLocation().ArrayIndex())
+                    .setLayerCount(1)
+                )
+            .setImageExtent(
+                ::vk::Extent3D(uint32_t(info.SrcBufferImageExtent().width),
+                    uint32_t(info.SrcBufferImageExtent().height),
+                    uint32_t(info.SrcBufferImageExtent().depth)));
+
+    nativeObject_.copyBufferToImage(
+        base::PtrToRef(info.SrcBufferResource()).NativeObject_(),
+        base::PtrToRef(info.DstImageResource()).NativeObject_(),
+        InternalEnumUtil::ToImageLayout(info.DstImageResourceState()),
+        1, // regionCount
+        &copyInfo);
 }
 
 //------------------------------------------------------------------------------
@@ -339,7 +373,7 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
             descriptorSet.NativeObjects_(), 0, nullptr);
     } else if (activePass_.Get(CommandBufferFeature::Compute)) {
         // 未実装
-        AE_BASE_ASSERT_NOT_REACHED();        
+        AE_BASE_ASSERT_NOT_REACHED();
     } else {
         AE_BASE_ASSERT_NOT_REACHED();
     }
@@ -396,8 +430,7 @@ void CommandBuffer::CmdSetScissors(
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetVertexBuffer(
-    const int slotIndex, const VertexBufferView& view)
-{
+    const int slotIndex, const VertexBufferView& view) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, slotIndex);
@@ -410,7 +443,8 @@ void CommandBuffer::CmdSetVertexBuffer(
 void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
-    nativeObject_.draw(info.VertexCount(), info.InstanceCount(), info.VertexOffset(), info.InstanceOffset());
+    nativeObject_.draw(info.VertexCount(), info.InstanceCount(),
+        info.VertexOffset(), info.InstanceOffset());
 }
 
 } // namespace gfx_low

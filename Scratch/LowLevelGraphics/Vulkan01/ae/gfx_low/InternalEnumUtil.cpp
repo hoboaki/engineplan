@@ -353,6 +353,27 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::ImageLayout InternalEnumUtil::ToImageLayout(
+    const ImageResourceState state) {
+    AE_BASE_ASSERT_ENUM(state, ImageResourceState);
+    AE_BASE_ASSERT(state != ImageResourceState::Invalid);
+    const ::vk::ImageLayout table[] = {
+        ::vk::ImageLayout(-1), // Invalid
+        ::vk::ImageLayout::eUndefined, // Unknown
+        ::vk::ImageLayout::eColorAttachmentOptimal, // RenderTarget
+        ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
+        ::vk::ImageLayout::eDepthStencilAttachmentOptimal, // DepthStencil
+        ::vk::ImageLayout::eDepthStencilReadOnlyOptimal, // DepthStencilReadOnly
+        ::vk::ImageLayout::eTransferSrcOptimal, // CopySrcOptimal
+        ::vk::ImageLayout::eTransferDstOptimal, // CopyDstOptimal
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceState::TERM));
+    const auto result = table[int(state)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::ImageLayout InternalEnumUtil::ToImageLayoutForColorAttachment(
     const ImageResourceState state) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);

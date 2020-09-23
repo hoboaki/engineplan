@@ -19,6 +19,17 @@ CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
     return *this;
 }
 
+//------------------------------------------------------------------------------
+CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageOffset(
+    const base::Vector3iPod& offset)
+{
+    AE_BASE_ASSERT_LESS_EQUALS(0, offset.x);
+    AE_BASE_ASSERT_LESS_EQUALS(0, offset.y);
+    AE_BASE_ASSERT_LESS_EQUALS(0, offset.z);
+    dstImageOffset_ = offset;
+    return *this;
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

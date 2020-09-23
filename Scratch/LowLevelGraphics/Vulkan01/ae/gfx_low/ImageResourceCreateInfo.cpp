@@ -28,13 +28,13 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetInitialState(
             uint32_t(specInfo_.Extent().depth)})
         .setMipLevels(uint32_t(specInfo_.MipLevels()))
         .setArrayLayers(uint32_t(specInfo_.ArrayLength()))
-        .setSamples(vk::SampleCountFlagBits::e1)
+        .setSamples(::vk::SampleCountFlagBits::e1)
         .setTiling(InternalEnumUtil::ToImageTiling(specInfo_.Tiling()))
         .setUsage(InternalEnumUtil::ToImageUsageFlags(specInfo_.UsageBitSet()))
-        .setSharingMode(vk::SharingMode::eExclusive)
+        .setSharingMode(::vk::SharingMode::eExclusive)
         .setQueueFamilyIndexCount(0)
         .setPQueueFamilyIndices(nullptr)
-        .setInitialLayout(vk::ImageLayout::eUndefined);
+        .setInitialLayout(InternalEnumUtil::ToImageLayout(initialState_));
 }
 
 } // namespace gfx_low

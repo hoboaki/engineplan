@@ -12,6 +12,7 @@
 namespace ae {
 namespace gfx_low {
 class CommandBufferCreateInfo;
+class CopyBufferToImageInfo;
 class DescriptorSet;
 class Device;
 class DrawCallInfo;
@@ -97,6 +98,12 @@ public:
     /// 記録済みの情報があればリセットする。
     /// @details BeginRecord() / EndRecord() の間では呼べません。
     void Reset();
+    //@}
+
+    /// @name コピーコマンド
+    //@{
+    /// BufferResource から ImageResource へのコピー処理をする。
+    void CmdCopyBufferToImage(const CopyBufferToImageInfo& info);
     //@}
 
     /// @name Render コマンド追加の開始・終了
