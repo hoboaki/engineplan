@@ -364,6 +364,8 @@ namespace gfx_low {
         ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
         ::vk::ImageLayout(-1), // DepthStencil
         ::vk::ImageLayout(-1), // DepthStencilReadOnly
+        ::vk::ImageLayout::eTransferSrcOptimal, // TransferSrcOptimal
+        ::vk::ImageLayout::eTransferDstOptimal, // TransferDstOptimal
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceState::TERM));
     const auto result = table[int(state)];
@@ -383,6 +385,8 @@ namespace gfx_low {
         ::vk::ImageLayout(-1), // PresentSrc
         ::vk::ImageLayout::eDepthStencilAttachmentOptimal, // DepthStencil
         ::vk::ImageLayout::eDepthStencilReadOnlyOptimal, // DepthStencilReadOnly
+        ::vk::ImageLayout::eTransferSrcOptimal, // TransferSrcOptimal
+        ::vk::ImageLayout::eTransferDstOptimal, // TransferDstOptimal
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageResourceState::TERM));
     const auto result = table[int(state)];

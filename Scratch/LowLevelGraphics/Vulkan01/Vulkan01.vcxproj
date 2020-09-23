@@ -250,6 +250,10 @@
     <ClInclude Include="ae\gfx_low\BufferResourceSpecInfo.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsage.hpp" />
     <ClInclude Include="ae\gfx_low\BufferResourceUsageBitSet.hpp" />
+    <ClInclude Include="ae\gfx_low\CopyBufferToImageInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\DescriptorKind.hpp">
       <SubType>
       </SubType>
@@ -735,6 +739,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\CommandBufferCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\CopyBufferToImageInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>

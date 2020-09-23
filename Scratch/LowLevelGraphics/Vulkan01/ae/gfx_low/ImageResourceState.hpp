@@ -32,6 +32,12 @@ enum class ImageResourceState {
     /// RenderPass の DepthStencil として Read のみされる状態。
     DepthStencilReadOnly,
 
+    /// タイリングが Optimal な転送元として指定できる状態。
+    TransferSrcOptimal,
+
+    /// タイリングが Optimal な転送先として指定できる状態。
+    TransferDstOptimal,
+
     TERM,
 };
 
