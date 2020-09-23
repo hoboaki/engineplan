@@ -38,7 +38,7 @@ public:
     : Extent3i(0, 0, 0) {}
 
     /// コピーして作成。
-    Extent3i(const Extent3iPod& rhs) { *this = rhs; }
+    Extent3i(const Extent3iPod& rhs) : Extent3iPod(rhs) {}
 
     /// Extent2i と depth を指定して初期化。
     /// @details

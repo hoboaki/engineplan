@@ -38,7 +38,7 @@ public:
     : Extent3(0, 0, 0) {}
 
     /// コピーして作成。
-    Extent3(const Extent3Pod& rhs) { *this = rhs; }
+    Extent3(const Extent3Pod& rhs) : Extent3Pod(rhs) {}
 
     /// Extent2i と depth を指定して初期化。
     /// @details

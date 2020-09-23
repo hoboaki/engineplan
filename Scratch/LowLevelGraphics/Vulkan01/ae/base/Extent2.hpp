@@ -29,7 +29,7 @@ public:
     : Extent2(0, 0) {}
 
     /// コピーして作成。
-    Extent2(const Extent2Pod& rhs) { *this = rhs; }
+    Extent2(const Extent2Pod& rhs) : Extent2Pod(rhs) {}
 
     /// 各要素を指定して初期化。
     /// @details
