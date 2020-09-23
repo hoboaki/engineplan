@@ -440,7 +440,7 @@ int aemain(::ae::base::Application* app) {
     ::ae::gfx_low::UniqueResourceMemory textureMemory;
     ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
-    ::std::unique_ptr<::ae::gfx_low::ImageResource> copySrcTextureImage;
+    ::std::unique_ptr<::ae::gfx_low::BufferResource> copySrcTextureBuffer;
     {
         const auto extent = ::ae::base::Extent2i(256, 256);
         const auto baseSpecInfo =
@@ -511,20 +511,25 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::ImageResourceUsageBitSet().Set(
                                 ::ae::gfx_low::ImageResourceUsage::CopySrc,
                                 true));
+                dataInfo = gfxLowDevice->CalcImageSubresourceDataInfo(
+                    specInfo, ::ae::gfx_low::ImageSubresourceLocation());
                 copySrcTextureMemory.Reset(gfxLowDevice.get(),
                     ::ae::gfx_low::ResourceMemoryAllocInfo()
                         .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                         .SetParams(gfxLowDevice->CalcResourceMemoryRequirements(
                             specInfo)));
-                copySrcTextureImage.reset(new ::ae::gfx_low::ImageResource(
-                    ::ae::gfx_low::ImageResourceCreateInfo()
+                copySrcTextureBuffer.reset(new ::ae::gfx_low::BufferResource(
+                    ::ae::gfx_low::BufferResourceCreateInfo()
                         .SetDevice(gfxLowDevice.get())
-                        .SetSpecInfo(specInfo)
-                        .SetDataAddress(copySrcTextureMemory->Address())
-                        .SetInitialState(
-                            ::ae::gfx_low::ImageResourceState::Unknown)));
-                dataInfo = gfxLowDevice->CalcImageSubresourceDataInfo(
-                    specInfo, ::ae::gfx_low::ImageSubresourceLocation());
+                        .SetSpecInfo(
+                            ::ae::gfx_low::BufferResourceSpecInfo()
+                                .SetSize(dataInfo.RowPitch() * extent.height)
+                                .SetUsageBitSet(
+                                    ::ae::gfx_low::BufferResourceUsageBitSet()
+                                        .Set(::ae::gfx_low::
+                                                 BufferResourceUsage::CopySrc,
+                                            true)))
+                        .SetDataAddress(copySrcTextureMemory->Address())));
             }
         }
 
