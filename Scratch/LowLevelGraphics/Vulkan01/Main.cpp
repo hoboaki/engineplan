@@ -22,6 +22,7 @@
 #include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
@@ -441,6 +442,7 @@ int aemain(::ae::base::Application* app) {
     ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
     ::std::unique_ptr<::ae::gfx_low::BufferResource> copySrcTextureBuffer;
+    ::ae::gfx_low::CopyBufferToImageInfo copyBufferToImageInfo;
     {
         const auto extent = ::ae::base::Extent2i(256, 256);
         const auto baseSpecInfo =
@@ -531,6 +533,17 @@ int aemain(::ae::base::Application* app) {
                                             true)))
                         .SetDataAddress(copySrcTextureMemory->Address())));
             }
+
+            // コピー用情報を先行して作成しておく
+            copyBufferToImageInfo =
+                ::ae::gfx_low::CopyBufferToImageInfo()
+                    .SetSrcBufferResource(copySrcTextureBuffer.get())
+                    .SetSrcBufferRowPitch(dataInfo.RowPitch())
+                    .SetSrcBufferDepthPitch(dataInfo.DepthPitch())
+                    .SetSrcBufferImageExtent(extent)
+                    .SetDstImageResource(textureImage.get())
+                    .SetDstImageResourceState(
+                        ::ae::gfx_low::ImageResourceState::CopyDstOptimal);
         }
 
         // テクスチャイメージをプログラムコードで作成
@@ -691,6 +704,7 @@ int aemain(::ae::base::Application* app) {
     // メインループ
     int bufferIndex = 0;
     int frameCount = 0;
+    bool isCopiedTexture = false;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.IsClosed()) {
@@ -754,6 +768,12 @@ int aemain(::ae::base::Application* app) {
         auto& cmd = commandBuffers[bufferIndex];
         cmd.BeginRecord();
         {
+            // テクスチャのアップロード
+            if (!isCopiedTexture && copySrcTextureBuffer.get() != nullptr) {
+                cmd.CmdCopyBufferToImage(copyBufferToImageInfo);
+                isCopiedTexture = true;
+            }
+
             // クリアカラー参考
             // https://www.colordic.org/colorscheme/7005
             {

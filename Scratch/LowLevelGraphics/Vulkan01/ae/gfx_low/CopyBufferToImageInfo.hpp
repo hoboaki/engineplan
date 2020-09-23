@@ -78,9 +78,9 @@ public:
     }
 
     /// 2次元用 SrcBufferImageExtent() の設定。
-    CopyBufferToImageInfo& SetExtent(const base::Extent2iPod& extent) {
-        srcBufferImageExtent_ = base::Extent3i(extent, 1);
-        return *this;
+    CopyBufferToImageInfo& SetSrcBufferImageExtent(
+        const base::Extent2iPod& extent) {
+        return SetSrcBufferImageExtent(base::Extent3i(extent, 1));
     }
 
     /// コピー先となる ImageResource
