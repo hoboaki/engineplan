@@ -472,9 +472,7 @@ int aemain(::ae::base::Application* app) {
                 ::ae::gfx_low::ImageResourceCreateInfo()
                     .SetDevice(gfxLowDevice.get())
                     .SetSpecInfo(specInfo)
-                    .SetDataAddress(textureMemory->Address())
-                    .SetInitialState(
-                        ::ae::gfx_low::ImageResourceState::Unknown)));
+                    .SetDataAddress(textureMemory->Address())));
             dataInfo = gfxLowDevice->CalcImageSubresourceDataInfo(
                 specInfo, ::ae::gfx_low::ImageSubresourceLocation());
         } else {
@@ -501,9 +499,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::ImageResourceCreateInfo()
                         .SetDevice(gfxLowDevice.get())
                         .SetSpecInfo(specInfo)
-                        .SetDataAddress(textureMemory->Address())
-                        .SetInitialState(
-                            ::ae::gfx_low::ImageResourceState::Unknown)));
+                        .SetDataAddress(textureMemory->Address())));
             }
             {
                 const auto specInfo =
@@ -543,7 +539,7 @@ int aemain(::ae::base::Application* app) {
                     .SetSrcBufferImageExtent(extent)
                     .SetDstImageResource(textureImage.get())
                     .SetDstImageResourceState(
-                        ::ae::gfx_low::ImageResourceState::CopyDstOptimal);
+                        ::ae::gfx_low::ImageResourceState::CopyDst);
         }
 
         // テクスチャイメージをプログラムコードで作成

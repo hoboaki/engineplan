@@ -13,8 +13,8 @@ CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
     const ImageResourceState state) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
 
-    // 現時点では CopyDstOptimal のみサポート
-    AE_BASE_ASSERT(state == ImageResourceState::CopyDstOptimal);
+    // 現時点では CopyDst のみサポート
+    AE_BASE_ASSERT(state == ImageResourceState::CopyDst);
     dstImageResourceState_ = state;
     return *this;
 }

@@ -18,6 +18,7 @@ enum class ImageResourceState {
     Invalid,
 
     /// 特定の状態を示さない状態。
+    /// @details ImageResource 作成直後はこの状態です。
     Unknown,
 
     /// RenderPass の RenderTarget として Read/Write される状態。
@@ -32,11 +33,11 @@ enum class ImageResourceState {
     /// RenderPass の DepthStencil として Read のみされる状態。
     DepthStencilReadOnly,
 
-    /// Tiling が Optimal なコピー元として指定できる状態。
-    CopySrcOptimal,
+    /// コピー元として指定できる状態。
+    CopySrc,
 
-    /// Tiling が Optimal なコピー先として指定できる状態。
-    CopyDstOptimal,
+    /// なコピー先として指定できる状態。
+    CopyDst,
 
     TERM,
 };

@@ -41,12 +41,6 @@ public:
         return *this;
     }
 
-    /// 初期状態。（初期値：Unknown）
-    ImageResourceState InitialState() const { return initialState_; }
-
-    /// InitialState() の設定。
-    ImageResourceCreateInfo& SetInitialState(ImageResourceState state);
-
     /// イメージデータのメモリアドレス。（初期値：IsValid() == false
     /// なアドレス）
     ResourceMemoryAddress DataAddress() const { return dataAddress_; }
@@ -76,7 +70,6 @@ public:
 private:
     base::Pointer<gfx_low::Device> device_;
     ImageResourceSpecInfo specInfo_;
-    ImageResourceState initialState_ = ImageResourceState::Unknown;
     ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> nativeObjectPtr_;
 };

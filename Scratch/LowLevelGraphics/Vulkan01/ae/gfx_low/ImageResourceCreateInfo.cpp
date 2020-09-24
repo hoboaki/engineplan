@@ -10,15 +10,6 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-ImageResourceCreateInfo& ImageResourceCreateInfo::SetInitialState(
-    const ImageResourceState state) {
-    AE_BASE_ASSERT_ENUM(state, ImageResourceState);
-    AE_BASE_ASSERT(state != ImageResourceState::Invalid);
-    initialState_ = state;
-    return *this;
-}
-
-//------------------------------------------------------------------------------
 ::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const {
     return ::vk::ImageCreateInfo()
         .setImageType(InternalEnumUtil::ToImageType(specInfo_.Kind()))
@@ -34,7 +25,7 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetInitialState(
         .setSharingMode(::vk::SharingMode::eExclusive)
         .setQueueFamilyIndexCount(0)
         .setPQueueFamilyIndices(nullptr)
-        .setInitialLayout(InternalEnumUtil::ToImageLayout(initialState_));
+        .setInitialLayout(::vk::ImageLayout::eUndefined);
 }
 
 } // namespace gfx_low
