@@ -36,6 +36,7 @@
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
+#include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
@@ -700,7 +701,7 @@ int aemain(::ae::base::Application* app) {
     // メインループ
     int bufferIndex = 0;
     int frameCount = 0;
-    bool isCopiedTexture = false;
+    bool isFinishedSetupTexture = false;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.IsClosed()) {
@@ -764,10 +765,36 @@ int aemain(::ae::base::Application* app) {
         auto& cmd = commandBuffers[bufferIndex];
         cmd.BeginRecord();
         {
-            // テクスチャのアップロード
-            if (!isCopiedTexture && copySrcTextureBuffer.get() != nullptr) {
-                cmd.CmdCopyBufferToImage(copyBufferToImageInfo);
-                isCopiedTexture = true;
+            // テクスチャのセットアップ
+            if (!isFinishedSetupTexture) {
+                if (copySrcTextureBuffer.get() == nullptr) {
+                    // デバイスメモリが共有メモリの場合はメモリバリアのみ設定して終了
+                    cmd.CmdImageResourceBarrier(
+                        ::ae::gfx_low::ImageResourceBarrierInfo()
+                            .SetResource(textureImage.get())
+                            .SetOldState(
+                                ::ae::gfx_low::ImageResourceState::Unknown)
+                            .SetNewState(::ae::gfx_low::ImageResourceState::
+                                    ShaderResourceReadOnly));
+                } else {
+                    // デバイスメモリが専用メモリの場合はアップロードとメモリバリアを設定
+                    cmd.CmdImageResourceBarrier(
+                        ::ae::gfx_low::ImageResourceBarrierInfo()
+                            .SetResource(textureImage.get())
+                            .SetOldState(
+                                ::ae::gfx_low::ImageResourceState::Unknown)
+                            .SetNewState(
+                                ::ae::gfx_low::ImageResourceState::CopyDst));
+                    cmd.CmdCopyBufferToImage(copyBufferToImageInfo);
+                    cmd.CmdImageResourceBarrier(
+                        ::ae::gfx_low::ImageResourceBarrierInfo()
+                            .SetResource(textureImage.get())
+                            .SetOldState(
+                                ::ae::gfx_low::ImageResourceState::CopyDst)
+                            .SetNewState(
+                                ::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
+                }
+                isFinishedSetupTexture = true;
             }
 
             // クリアカラー参考

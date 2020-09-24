@@ -17,6 +17,7 @@
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
+#include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
@@ -115,6 +116,78 @@ void CommandBuffer::Reset() {
 }
 
 //------------------------------------------------------------------------------
+void CommandBuffer::CmdImageResourceBarrier(
+    const ImageResourceBarrierInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+
+    // アクセスマスクの作成
+    auto toAccessMaskFunc = [](const ImageResourceState state) {
+        ::vk::AccessFlags mask;
+        switch (state) {
+        case ImageResourceState::RenderTarget:
+            mask = ::vk::AccessFlagBits::eColorAttachmentWrite;
+            break;
+        case ImageResourceState::PresentSrc:
+            mask = ::vk::AccessFlagBits::eMemoryRead;
+            break;
+        case ImageResourceState::DepthStencil:
+            mask = ::vk::AccessFlagBits::eDepthStencilAttachmentWrite;
+            break;
+        case ImageResourceState::DepthStencilReadOnly:
+            mask = ::vk::AccessFlagBits::eShaderRead |
+                   ::vk::AccessFlagBits::eInputAttachmentRead;
+            break;
+        case ImageResourceState::ShaderResourceReadOnly:
+            mask = ::vk::AccessFlagBits::eShaderRead |
+                   ::vk::AccessFlagBits::eInputAttachmentRead;
+            break;
+        case ImageResourceState::ShaderResource:
+            mask = ::vk::AccessFlagBits::eShaderRead |
+                   ::vk::AccessFlagBits::eShaderWrite |
+                   ::vk::AccessFlagBits::eInputAttachmentRead;
+            break;
+        case ImageResourceState::CopySrc:
+            mask = ::vk::AccessFlagBits::eTransferRead;
+            break;
+        case ImageResourceState::CopyDst:
+            mask = ::vk::AccessFlagBits::eTransferWrite;
+            break;
+        default: break;
+        }
+        return mask;
+    };
+
+    const auto barrier =
+        ::vk::ImageMemoryBarrier()
+            .setSrcAccessMask(toAccessMaskFunc(info.OldState()))
+            .setDstAccessMask(toAccessMaskFunc(info.NewState()))
+            .setOldLayout(InternalEnumUtil::ToImageLayout(info.OldState()))
+            .setNewLayout(InternalEnumUtil::ToImageLayout(info.NewState()))
+            .setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED)
+            .setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED)
+            .setImage(base::PtrToRef(info.Resource()).NativeObject_())
+            .setSubresourceRange(::vk::ImageSubresourceRange(
+                ::vk::ImageAspectFlagBits::eColor |
+                    ::vk::ImageAspectFlagBits::eDepth |
+                    ::vk::ImageAspectFlagBits::eStencil,
+                0, // baseMipLevel
+                1, // levelCount
+                0, // baseArrayLayer
+                1 // layerCount
+                ));
+    nativeObject_.pipelineBarrier(::vk::PipelineStageFlagBits::eTopOfPipe,
+        ::vk::PipelineStageFlagBits::eTopOfPipe, ::vk::DependencyFlagBits(),
+        0, // memoryBarrierCount,
+        nullptr, // memoryBarriers
+        0, // bufferMemoryBarrierCount,
+        nullptr, // bufferMemoryBarriers
+        1, // imageMemoryBarrierCount,
+        &barrier // imageMemoryBarriers
+    );
+}
+
+//------------------------------------------------------------------------------
 void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
@@ -130,9 +203,9 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
                 ::vk::ImageSubresourceLayers()
                     .setAspectMask(::vk::ImageAspectFlagBits::eColor)
                     .setMipLevel(info.DstSubresourceLocation().MipLevel())
-                    .setBaseArrayLayer(info.DstSubresourceLocation().ArrayIndex())
-                    .setLayerCount(1)
-                )
+                    .setBaseArrayLayer(
+                        info.DstSubresourceLocation().ArrayIndex())
+                    .setLayerCount(1))
             .setImageExtent(
                 ::vk::Extent3D(uint32_t(info.SrcBufferImageExtent().width),
                     uint32_t(info.SrcBufferImageExtent().height),

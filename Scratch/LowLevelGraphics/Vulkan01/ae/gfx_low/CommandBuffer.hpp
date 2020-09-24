@@ -16,6 +16,7 @@ class CopyBufferToImageInfo;
 class DescriptorSet;
 class Device;
 class DrawCallInfo;
+class ImageResourceBarrierInfo;
 class RenderPassBeginInfo;
 class RenderPipeline;
 class Queue;
@@ -99,6 +100,13 @@ public:
     /// @details BeginRecord() / EndRecord() の間では呼べません。
     void Reset();
     //@}
+
+    /// @name 同期コマンド
+    //@{
+    /// イメージリソースに対するバリアフェンス設定をする。
+    void CmdImageResourceBarrier(const ImageResourceBarrierInfo& info);
+    //@}
+
 
     /// @name コピーコマンド
     //@{

@@ -33,10 +33,16 @@ enum class ImageResourceState {
     /// RenderPass の DepthStencil として Read のみされる状態。
     DepthStencilReadOnly,
 
+    /// シェーダーから Read/Write される状態。
+    ShaderResource,
+
+    /// シェーダーから Read される状態。
+    ShaderResourceReadOnly,
+
     /// コピー元として指定できる状態。
     CopySrc,
 
-    /// なコピー先として指定できる状態。
+    /// コピー先として指定できる状態。
     CopyDst,
 
     TERM,

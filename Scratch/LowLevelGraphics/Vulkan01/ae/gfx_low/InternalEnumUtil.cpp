@@ -364,6 +364,8 @@ namespace gfx_low {
         ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
         ::vk::ImageLayout::eDepthStencilAttachmentOptimal, // DepthStencil
         ::vk::ImageLayout::eDepthStencilReadOnlyOptimal, // DepthStencilReadOnly
+        ::vk::ImageLayout::eGeneral, // ShaderResource
+        ::vk::ImageLayout::eShaderReadOnlyOptimal, // ShaderResourceReadOnly
         ::vk::ImageLayout::eTransferSrcOptimal, // CopySrc
         ::vk::ImageLayout::eTransferDstOptimal, // CopyDst
     };
@@ -385,6 +387,8 @@ namespace gfx_low {
         ::vk::ImageLayout::ePresentSrcKHR, // PresentSrc
         ::vk::ImageLayout(-1), // DepthStencil
         ::vk::ImageLayout(-1), // DepthStencilReadOnly
+        ::vk::ImageLayout::eGeneral, // ShaderResource
+        ::vk::ImageLayout::eShaderReadOnlyOptimal, // ShaderResourceReadOnly
         ::vk::ImageLayout::eTransferSrcOptimal, // CopySrc
         ::vk::ImageLayout::eTransferDstOptimal, // CopyDst
     };
@@ -406,6 +410,8 @@ namespace gfx_low {
         ::vk::ImageLayout(-1), // PresentSrc
         ::vk::ImageLayout::eDepthStencilAttachmentOptimal, // DepthStencil
         ::vk::ImageLayout::eDepthStencilReadOnlyOptimal, // DepthStencilReadOnly
+        ::vk::ImageLayout::eGeneral, // ShaderResource
+        ::vk::ImageLayout::eShaderReadOnlyOptimal, // ShaderResourceReadOnly
         ::vk::ImageLayout::eTransferSrcOptimal, // CopySrc
         ::vk::ImageLayout::eTransferDstOptimal, // CopyDst
     };
