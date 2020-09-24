@@ -195,8 +195,8 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
     const auto copyInfo =
         ::vk::BufferImageCopy()
             .setBufferOffset(info.SrcBufferOffset())
-            .setBufferRowLength(info.SrcBufferImageExtent().width)
-            .setBufferImageHeight(info.SrcBufferImageExtent().height)
+            .setBufferRowLength(info.SrcImageExtent().width)
+            .setBufferImageHeight(info.SrcImageExtent().height)
             .setImageOffset(::vk::Offset3D(info.DstImageOffset().x,
                 info.DstImageOffset().y, info.DstImageOffset().z))
             .setImageSubresource(
@@ -207,9 +207,9 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
                         info.DstSubresourceLocation().ArrayIndex())
                     .setLayerCount(1))
             .setImageExtent(
-                ::vk::Extent3D(uint32_t(info.SrcBufferImageExtent().width),
-                    uint32_t(info.SrcBufferImageExtent().height),
-                    uint32_t(info.SrcBufferImageExtent().depth)));
+                ::vk::Extent3D(uint32_t(info.SrcImageExtent().width),
+                    uint32_t(info.SrcImageExtent().height),
+                    uint32_t(info.SrcImageExtent().depth)));
 
     nativeObject_.copyBufferToImage(
         base::PtrToRef(info.SrcBufferResource()).NativeObject_(),

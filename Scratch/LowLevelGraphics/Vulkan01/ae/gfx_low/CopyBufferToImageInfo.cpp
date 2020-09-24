@@ -9,6 +9,15 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
+CopyBufferToImageInfo& CopyBufferToImageInfo::SetSrcImageFormat(
+    const ImageFormat format) {
+    AE_BASE_ASSERT_ENUM(format, ImageFormat);
+    AE_BASE_ASSERT(format != ImageFormat::Invalid);
+    srcImageFormat_ = format;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
 CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
     const ImageResourceState state) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);

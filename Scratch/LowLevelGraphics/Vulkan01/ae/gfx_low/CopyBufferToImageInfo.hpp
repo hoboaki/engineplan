@@ -5,6 +5,7 @@
 #include <ae/base/Extent3i.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/base/Vector3i.hpp>
+#include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
@@ -65,23 +66,29 @@ public:
         return *this;
     }
 
-    /// コピー元イメージデータの範囲。（初期値：すべて0）
-    base::Extent3i SrcBufferImageExtent() const {
-        return srcBufferImageExtent_;
+    /// コピー元イメージデータの大きさ。（初期値：すべて0）
+    base::Extent3i SrcImageExtent() const {
+        return srcImageExtent_;
     }
 
-    /// SrcBufferImageExtent() の設定。（設定必須）
-    CopyBufferToImageInfo& SetSrcBufferImageExtent(
+    /// SrcImageExtent() の設定。（設定必須）
+    CopyBufferToImageInfo& SetSrcImageExtent(
         const base::Extent3iPod& extent) {
-        srcBufferImageExtent_ = extent;
+        srcImageExtent_ = extent;
         return *this;
     }
 
-    /// 2次元用 SrcBufferImageExtent() の設定。
-    CopyBufferToImageInfo& SetSrcBufferImageExtent(
+    /// 2次元用 SrcImageExtent() の設定。
+    CopyBufferToImageInfo& SetSrcImageExtent(
         const base::Extent2iPod& extent) {
-        return SetSrcBufferImageExtent(base::Extent3i(extent, 1));
+        return SetSrcImageExtent(base::Extent3i(extent, 1));
     }
+
+    /// コピー元イメージデータのフォーマット。（初期値：Invalid）
+    ImageFormat SrcImageFormat() const { return srcImageFormat_; }
+
+    /// SrcImageFormat() の設定。（設定必須）
+    CopyBufferToImageInfo& SetSrcImageFormat(ImageFormat format);
 
     /// コピー先となる ImageResource
     /// のポインタ。（初期値：nullptr）
@@ -136,10 +143,11 @@ private:
     size_t srcBufferOffset_ = 0;
     size_t srcBufferRowPitch_ = 0;
     size_t srcBufferDepthPitch_ = 0;
-    base::Extent3i srcBufferImageExtent_;
+    base::Extent3i srcImageExtent_;
     ImageSubresourceLocation dstSubresourceLocation_;
-    ImageResourceState dstImageResourceState_ = ImageResourceState::Invalid;
     base::Vector3i dstImageOffset_;
+    ImageFormat srcImageFormat_ = ImageFormat::Invalid;
+    ImageResourceState dstImageResourceState_ = ImageResourceState::Invalid;
 };
 
 } // namespace gfx_low

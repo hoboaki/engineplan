@@ -446,10 +446,11 @@ int aemain(::ae::base::Application* app) {
     ::ae::gfx_low::CopyBufferToImageInfo copyBufferToImageInfo;
     {
         const auto extent = ::ae::base::Extent2i(256, 256);
+        const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
         const auto baseSpecInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
-                .SetFormat(::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb)
+                .SetFormat(format)
                 .SetExtent(extent);
         ::ae::gfx_low::ImageSubresourceDataInfo dataInfo;
 
@@ -537,7 +538,8 @@ int aemain(::ae::base::Application* app) {
                     .SetSrcBufferResource(copySrcTextureBuffer.get())
                     .SetSrcBufferRowPitch(dataInfo.RowPitch())
                     .SetSrcBufferDepthPitch(dataInfo.DepthPitch())
-                    .SetSrcBufferImageExtent(extent)
+                    .SetSrcImageFormat(format)
+                    .SetSrcImageExtent(extent)
                     .SetDstImageResource(textureImage.get())
                     .SetDstImageResourceState(
                         ::ae::gfx_low::ImageResourceState::CopyDst);
