@@ -199,8 +199,11 @@ void CommandBuffer::CmdImageResourceBarrier(
                 0, // baseArrayLayer
                 1 // layerCount
                 ));
-    nativeObject_.pipelineBarrier(::vk::PipelineStageFlagBits::eTopOfPipe,
-        ::vk::PipelineStageFlagBits::eTopOfPipe, ::vk::DependencyFlagBits(),
+    nativeObject_.pipelineBarrier(::vk::PipelineStageFlagBits::eAllGraphics |
+                                      ::vk::PipelineStageFlagBits::eAllCommands,
+        ::vk::PipelineStageFlagBits::eAllGraphics |
+            ::vk::PipelineStageFlagBits::eAllCommands,
+        ::vk::DependencyFlagBits(),
         0, // memoryBarrierCount,
         nullptr, // memoryBarriers
         0, // bufferMemoryBarrierCount,
