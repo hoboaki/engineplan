@@ -14,6 +14,7 @@ namespace gfx_low {
 ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_()
+, nativeFormat_()
 , isCreatedByNativeObjectPtr_(false) {
     // NativeObjectPtr からの作成
     if (createInfo.NativeObjectPtr_() != nullptr) {
@@ -29,6 +30,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
         const auto result = device_.NativeObject_().createImage(
             &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+        nativeFormat_ = nativeCreateInfo.format;
     }
 
     // メモリ割り当て

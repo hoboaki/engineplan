@@ -37,11 +37,13 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::Image& NativeObject_() { return nativeObject_; }
+    ::vk::Format NativeFormat_() const { return nativeFormat_; }
     //@}
 
 private:
     gfx_low::Device& device_;
     ::vk::Image nativeObject_;
+    ::vk::Format nativeFormat_;
     /// ImagePtr を使って作ったか。
     bool isCreatedByNativeObjectPtr_;
 };
