@@ -226,6 +226,18 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\SamplerAddressMode.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SamplerBorderColor.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SamplerCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\AttachmentLoadOp.hpp">
       <SubType>
       </SubType>
@@ -363,6 +375,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\ResourceMemoryRegion.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SamplerMinMagFilter.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SamplerMipmapMode.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -883,6 +903,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ResourceMemoryAllocInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SamplerCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
