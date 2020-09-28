@@ -20,6 +20,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     if (createInfo.NativeObjectPtr_() != nullptr) {
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
         nativeObject_ = base::PtrToRef(createInfo.NativeObjectPtr_());
+        nativeFormat_ = createInfo.NativeFormat_();
         isCreatedByNativeObjectPtr_ = true;
         return;
     }
