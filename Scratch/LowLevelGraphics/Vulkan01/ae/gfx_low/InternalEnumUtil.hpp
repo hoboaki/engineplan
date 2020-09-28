@@ -19,8 +19,12 @@
 #include <ae/gfx_low/RasterizeFillMode.hpp>
 #include <ae/gfx_low/RenderPipelineShaderStage.hpp>
 #include <ae/gfx_low/RenderTargetComponentBitSet.hpp>
-#include <ae/gfx_low/SdkHeader.hpp>
+#include <ae/gfx_low/SamplerAddressMode.hpp>
+#include <ae/gfx_low/SamplerBorderColor.hpp>
+#include <ae/gfx_low/SamplerMinMagFilter.hpp>
+#include <ae/gfx_low/SamplerMipmapMode.hpp>
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
+#include <ae/gfx_low/SdkHeader.hpp>
 #include <ae/gfx_low/StencilOp.hpp>
 #include <ae/gfx_low/VertexFormat.hpp>
 #include <ae/gfx_low/VertexStepRate.hpp>
@@ -37,12 +41,14 @@ struct InternalEnumUtil {
     static ::vk::BlendFactor ToBlendFactorForColor(BlendFactor factor);
     static ::vk::BlendFactor ToBlendFactorForAlpha(BlendFactor factor);
     static ::vk::BlendOp ToBlendOp(BlendOp op);
+    static ::vk::BorderColor ToBorderColor(SamplerBorderColor color);
     static ::vk::BufferUsageFlags ToBufferUsageFlags(
         const BufferResourceUsageBitSet& usageBitSet);
     static ::vk::ColorComponentFlags ToColorComponentFlags(
         const RenderTargetComponentBitSet& componentBitSet);
     static ::vk::CompareOp ToCompareOp(CompareOp op);
     static ::vk::CullModeFlags ToCullModeFlags(RasterizeCullMode mode);
+    static ::vk::Filter ToFilter(SamplerMinMagFilter filter);
     static ::vk::Format ToFormat(ImageFormat format);
     static ::vk::Format ToFormat(VertexFormat format);
     static ::vk::FrontFace ToFrontFace(PolygonFrontFace face);
@@ -59,6 +65,8 @@ struct InternalEnumUtil {
     static ::vk::PolygonMode ToPolygonMode(RasterizeFillMode mode);
     static ::vk::PrimitiveTopology ToPrimitiveTopology(
         PrimitiveTopologyKind kind);
+    static ::vk::SamplerAddressMode ToSamplerAddressMode(SamplerAddressMode mode);
+    static ::vk::SamplerMipmapMode ToSamplerMipmapMode(SamplerMipmapMode mode);
     static ::vk::ShaderStageFlagBits ToShaderStageFlagBits(
         RenderPipelineShaderStage stage);
     static ::vk::ShaderStageFlags ToShaderStageFlags(

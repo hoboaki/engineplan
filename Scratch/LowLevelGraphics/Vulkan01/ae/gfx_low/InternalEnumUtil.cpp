@@ -125,6 +125,22 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::BorderColor InternalEnumUtil::ToBorderColor(const SamplerBorderColor color) {
+    AE_BASE_ASSERT_ENUM(color, SamplerBorderColor);
+    AE_BASE_ASSERT(color != SamplerBorderColor::Invalid);
+    const ::vk::BorderColor table[] = {
+        ::vk::BorderColor(-1), // Invalid,
+        ::vk::BorderColor::eFloatTransparentBlack,
+        ::vk::BorderColor::eFloatOpaqueBlack,
+        ::vk::BorderColor::eFloatOpaqueWhite,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerBorderColor::TERM));
+    const auto result = table[int(color)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::BufferUsageFlags InternalEnumUtil::ToBufferUsageFlags(
     const BufferResourceUsageBitSet& usageBitSet) {
     const ::vk::BufferUsageFlagBits table[] = {
@@ -193,10 +209,12 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::CullModeFlags InternalEnumUtil::ToCullModeFlags(const RasterizeCullMode mode) {
+::vk::CullModeFlags InternalEnumUtil::ToCullModeFlags(
+    const RasterizeCullMode mode) {
     AE_BASE_ASSERT_ENUM(mode, RasterizeCullMode);
     AE_BASE_ASSERT(mode != RasterizeCullMode::Invalid);
-    // Vulkan は BitFlag だが gfx_low の仕様は enum なので複数ビット返すことはない
+    // Vulkan は BitFlag だが gfx_low の仕様は enum
+    // なので複数ビット返すことはない
     const ::vk::CullModeFlags table[] = {
         ::vk::CullModeFlags(-1), // Invalid,
         ::vk::CullModeFlagBits::eNone,
@@ -206,6 +224,20 @@ namespace gfx_low {
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(RasterizeCullMode::TERM));
     const auto result = table[int(mode)];
     return table[int(mode)];
+}
+
+//------------------------------------------------------------------------------
+::vk::Filter InternalEnumUtil::ToFilter(const SamplerMinMagFilter filter) {
+    AE_BASE_ASSERT_ENUM(filter, SamplerMinMagFilter);
+    AE_BASE_ASSERT(filter != SamplerMinMagFilter::Invalid);
+    const ::vk::Filter table[] = {
+        ::vk::Filter(-1), // Invalid,
+        ::vk::Filter::eNearest,
+        ::vk::Filter::eLinear,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerMinMagFilter::TERM));
+    const auto result = table[int(filter)];
+    return table[int(filter)];
 }
 
 //------------------------------------------------------------------------------
@@ -534,6 +566,38 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::SamplerAddressMode InternalEnumUtil::ToSamplerAddressMode(
+    const SamplerAddressMode mode) {
+    AE_BASE_ASSERT_ENUM(mode, SamplerAddressMode);
+    AE_BASE_ASSERT(mode != SamplerAddressMode::Invalid);
+    const ::vk::SamplerAddressMode table[] = {
+        ::vk::SamplerAddressMode(-1), // Invalid,
+        ::vk::SamplerAddressMode::eRepeat,
+        ::vk::SamplerAddressMode::eMirroredRepeat,
+        ::vk::SamplerAddressMode::eClampToEdge,
+        ::vk::SamplerAddressMode::eClampToBorder,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerAddressMode::TERM));
+    const auto result = table[int(mode)];
+    return table[int(mode)];
+}
+
+//------------------------------------------------------------------------------
+::vk::SamplerMipmapMode InternalEnumUtil::ToSamplerMipmapMode(
+    const SamplerMipmapMode mode) {
+    AE_BASE_ASSERT_ENUM(mode, SamplerMipmapMode);
+    AE_BASE_ASSERT(mode != SamplerMipmapMode::Invalid);
+    const ::vk::SamplerMipmapMode table[] = {
+        ::vk::SamplerMipmapMode(-1), // Invalid,
+        ::vk::SamplerMipmapMode::eNearest,
+        ::vk::SamplerMipmapMode::eLinear,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerMipmapMode::TERM));
+    const auto result = table[int(mode)];
+    return table[int(mode)];
+}
+
+//------------------------------------------------------------------------------
 ::vk::ShaderStageFlagBits InternalEnumUtil::ToShaderStageFlagBits(
     const RenderPipelineShaderStage stage) {
     AE_BASE_ASSERT_ENUM(stage, RenderPipelineShaderStage);
@@ -592,7 +656,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::VertexInputRate InternalEnumUtil::ToVertexInputRate(const VertexStepRate stepRate) {
+::vk::VertexInputRate InternalEnumUtil::ToVertexInputRate(
+    const VertexStepRate stepRate) {
     AE_BASE_ASSERT_ENUM(stepRate, VertexStepRate);
     AE_BASE_ASSERT(stepRate != VertexStepRate::Invalid);
     const ::vk::VertexInputRate table[] = {

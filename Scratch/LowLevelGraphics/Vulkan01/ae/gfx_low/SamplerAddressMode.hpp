@@ -12,7 +12,6 @@ enum class SamplerAddressMode {
 
     /// 0 ～ 1 の範囲で繰り返す。
     Repeat,
-
     
     /// 0 ～ 1 は 0 ～ 1 で、1 ～ 2 は 1 ～ 0 に、といったように交互に反転する。
     MirroredRepeat,
