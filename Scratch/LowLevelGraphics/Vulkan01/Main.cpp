@@ -51,6 +51,8 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/SampledImageView.hpp>
+#include <ae/gfx_low/SampledImageViewCreateInfo.hpp>
 #include <ae/gfx_low/Sampler.hpp>
 #include <ae/gfx_low/SamplerCreateInfo.hpp>
 #include <ae/gfx_low/ScissorSetting.hpp>
@@ -445,6 +447,7 @@ int aemain(::ae::base::Application* app) {
     ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
     ::std::unique_ptr<::ae::gfx_low::BufferResource> copySrcTextureBuffer;
+    ::std::unique_ptr<::ae::gfx_low::SampledImageView> textureView;
     ::ae::gfx_low::CopyBufferToImageInfo copyBufferToImageInfo;
     {
         const auto extent = ::ae::base::Extent2i(256, 256);
@@ -517,7 +520,8 @@ int aemain(::ae::base::Application* app) {
                     specInfo, ::ae::gfx_low::ImageSubresourceLocation());
                 copySrcTextureMemory.Reset(gfxLowDevice.get(),
                     ::ae::gfx_low::ResourceMemoryAllocInfo()
-                        .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                        .SetKind(
+                            ::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                         .SetParams(gfxLowDevice->CalcResourceMemoryRequirements(
                             specInfo)));
                 copySrcTextureBuffer.reset(new ::ae::gfx_low::BufferResource(
@@ -547,13 +551,23 @@ int aemain(::ae::base::Application* app) {
                         ::ae::gfx_low::ImageResourceState::CopyDst);
         }
 
+        // サンプラー用イメージビューの作成
+        textureView.reset(new ::ae::gfx_low::SampledImageView(
+            ::ae::gfx_low::SampledImageViewCreateInfo()
+                .SetDevice(gfxLowDevice.get())
+                .SetResource(textureImage.get())
+                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                .SetFormat(format)));
+
         // テクスチャイメージをプログラムコードで作成
         {
             auto& targetMemory = gfxLowDevice->IsDeviceLocalMemoryShared()
-                                    ? textureMemory
-                                    : copySrcTextureMemory;
-            uint8_t* dst = gfxLowDevice->MapResourceMemory(
-                *targetMemory, ::ae::gfx_low::ResourceMemoryRegion().SetOffset(dataInfo.Offset()).SetSize(dataInfo.RowPitch() * extent.height));
+                                     ? textureMemory
+                                     : copySrcTextureMemory;
+            uint8_t* dst = gfxLowDevice->MapResourceMemory(*targetMemory,
+                ::ae::gfx_low::ResourceMemoryRegion()
+                    .SetOffset(dataInfo.Offset())
+                    .SetSize(dataInfo.RowPitch() * extent.height));
             const ::ae::base::Color4bPod rgbColors[] = {
                 ::ae::base::Color4b(0xFF, 0xFF, 0xFF, 0xFF),
                 ::ae::base::Color4b(0xFF, 0xFF, 0, 0xFF),
@@ -565,7 +579,8 @@ int aemain(::ae::base::Application* app) {
             };
             for (int y = 0; y < extent.height; ++y) {
                 for (int x = 0; x < extent.width; ++x) {
-                    const int colorIndex = x / (extent.width / AE_BASE_ARRAY_LENGTH(rgbColors));
+                    const int colorIndex =
+                        x / (extent.width / AE_BASE_ARRAY_LENGTH(rgbColors));
                     const auto& color = rgbColors[colorIndex];
                     const size_t baseOffset = y * dataInfo.RowPitch() + x * 4;
                     dst[baseOffset + 0] = color.r;
@@ -802,8 +817,8 @@ int aemain(::ae::base::Application* app) {
                             .SetResource(textureImage.get())
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::CopyDst)
-                            .SetNewState(
-                                ::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
+                            .SetNewState(::ae::gfx_low::ImageResourceState::
+                                    ShaderResourceReadOnly));
                 }
                 isFinishedSetupTexture = true;
             }
