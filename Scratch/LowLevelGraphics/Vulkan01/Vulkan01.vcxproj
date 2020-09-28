@@ -226,6 +226,14 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\SampledImageView.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\SampledImageViewCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\Sampler.hpp">
       <SubType>
       </SubType>
@@ -907,6 +915,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ResourceMemoryAllocInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SampledImageView.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\SampledImageViewCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
