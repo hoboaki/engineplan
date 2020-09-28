@@ -17,10 +17,10 @@ RenderTargetImageView::RenderTargetImageView(
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_() {
     // 今は RawFormat しか対応しない
-    auto imageFormat = createInfo.RawFormat_();
+    const auto imageFormat = createInfo.RawFormat_();
     AE_BASE_ASSERT(imageFormat != ::vk::Format::eUndefined);
 
-    auto imageViewCreateInfo =
+    const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
             .setViewType(::vk::ImageViewType::e2D)

@@ -18,7 +18,7 @@ DepthStencilImageView::DepthStencilImageView(
     const DepthStencilImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_() {
-    auto imageViewCreateInfo =
+    const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
             .setViewType(InternalEnumUtil::ToImageViewType(createInfo.Kind()))
