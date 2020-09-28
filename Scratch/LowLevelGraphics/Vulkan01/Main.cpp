@@ -51,6 +51,8 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/Sampler.hpp>
+#include <ae/gfx_low/SamplerCreateInfo.hpp>
 #include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
@@ -574,6 +576,13 @@ int aemain(::ae::base::Application* app) {
             }
             gfxLowDevice->UnmapResourceMemory(*targetMemory);
         }
+    }
+
+    // Sampler の作成
+    ::std::unique_ptr<::ae::gfx_low::Sampler> sampler;
+    {
+        sampler.reset(new ::ae::gfx_low::Sampler(
+            ::ae::gfx_low::SamplerCreateInfo().SetDevice(gfxLowDevice.get())));
     }
 
     // UniformBuffer の作成
