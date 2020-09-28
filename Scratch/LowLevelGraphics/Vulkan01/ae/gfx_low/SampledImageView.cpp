@@ -17,13 +17,15 @@ namespace gfx_low {
 SampledImageView::SampledImageView(const SampledImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_() {
-    auto imageViewCreateInfo =
+    const auto nativeFormat = InternalEnumUtil::ToFormat(createInfo.Format());
+    const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
             .setViewType(InternalEnumUtil::ToImageViewType(createInfo.Kind()))
-            .setFormat(InternalEnumUtil::ToFormat(createInfo.Format()))
+            .setFormat(nativeFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(
-                ::vk::ImageAspectFlagBits::eDepth, 0, 1, 0, 1));
+                InternalEnumUtil::ToImageAspectFlags(nativeFormat), 0, 1, 0,
+                1));
     const auto result = device_.NativeObject_().createImageView(
         &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);

@@ -52,6 +52,7 @@ struct InternalEnumUtil {
     static ::vk::Format ToFormat(ImageFormat format);
     static ::vk::Format ToFormat(VertexFormat format);
     static ::vk::FrontFace ToFrontFace(PolygonFrontFace face);
+    static ::vk::ImageAspectFlags ToImageAspectFlags(::vk::Format format);
     static ::vk::ImageLayout ToImageLayout(ImageResourceState state);
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);

@@ -158,27 +158,6 @@ void CommandBuffer::CmdImageResourceBarrier(
         return mask;
     };
 
-    // ImageAspectFlagBits の作成
-    auto toImageAspectFlags = [](::vk::Format format) {
-        switch (format) {
-        case ::vk::Format::eD16Unorm:
-        case ::vk::Format::eD32Sfloat:
-            return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eDepth);
-
-        case ::vk::Format::eD16UnormS8Uint:
-        case ::vk::Format::eD24UnormS8Uint:
-        case ::vk::Format::eD32SfloatS8Uint:
-            return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eDepth |
-                                          ::vk::ImageAspectFlagBits::eStencil);
-
-        case ::vk::Format::eS8Uint:
-            return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eStencil);
-
-        default:
-            return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eColor);
-        }
-    };
-
     // @todo ImageSubresourceLocation の適用。
     AE_BASE_ASSERT(!info.IsSubresourceSpecified());
 
@@ -192,7 +171,7 @@ void CommandBuffer::CmdImageResourceBarrier(
             .setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED)
             .setImage(base::PtrToRef(info.Resource()).NativeObject_())
             .setSubresourceRange(::vk::ImageSubresourceRange(
-                toImageAspectFlags(
+                InternalEnumUtil::ToImageAspectFlags(
                     base::PtrToRef(info.Resource()).NativeFormat_()),
                 0, // baseMipLevel
                 1, // levelCount
