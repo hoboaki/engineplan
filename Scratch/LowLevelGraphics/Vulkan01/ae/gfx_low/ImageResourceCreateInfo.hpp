@@ -70,7 +70,7 @@ public:
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
     /// NativeFormat_() の設定。 
-    ImageResourceCreateInfo& SetNativeFormat(::vk::Format format)
+    ImageResourceCreateInfo& SetNativeFormat_(::vk::Format format)
     {
         nativeFormat_ = format;
         return *this;
