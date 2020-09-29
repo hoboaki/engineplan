@@ -209,7 +209,7 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
             images[imageCount] =
                 ::vk::DescriptorImageInfo()
                     .setSampler(sampler.NativeObject_())
-                    .setImageLayout(::vk::ImageLayout::eShaderReadOnlyOptimal);
+                    .setImageLayout(::vk::ImageLayout::eUndefined);
             ++imageCount;
         }
     }
