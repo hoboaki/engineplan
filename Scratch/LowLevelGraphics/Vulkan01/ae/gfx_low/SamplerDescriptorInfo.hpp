@@ -33,7 +33,7 @@ public:
 
     /// Sampler() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    SamplerDescriptorInfo& SetViews(const Sampler** samplers) {
+    SamplerDescriptorInfo& SetSamplers(const Sampler** samplers) {
         samplers_.Reset(samplers);
         return *this;
     }
