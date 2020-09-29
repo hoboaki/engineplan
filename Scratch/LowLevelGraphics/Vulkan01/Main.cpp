@@ -51,10 +51,12 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
+#include <ae/gfx_low/SampledImageDescriptorInfo.hpp>
 #include <ae/gfx_low/SampledImageView.hpp>
 #include <ae/gfx_low/SampledImageViewCreateInfo.hpp>
 #include <ae/gfx_low/Sampler.hpp>
 #include <ae/gfx_low/SamplerCreateInfo.hpp>
+#include <ae/gfx_low/SamplerDescriptorInfo.hpp>
 #include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
@@ -184,11 +186,11 @@ const float fUvBufferData[] = {
 };
 
 const uint32_t fVertShaderCode[] = {
-#include "uv_as_color.vert.inc"
+#include "textured_cube.vert.inc"
 };
 
 const uint32_t fFragShaderCode[] = {
-#include "uv_as_color.frag.inc"
+#include "textured_cube.frag.inc"
 };
 // clang-format on
 
@@ -650,11 +652,27 @@ int aemain(::ae::base::Application* app) {
                     .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
                     .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
             .SetBindingIndex(0)};
+    const ::ae::gfx_low::ShaderBindingInfo sampledImageBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(
+                ::ae::gfx_low::ShaderBindingStageBitSet()
+                    .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
+            .SetBindingIndex(0)};
+    const ::ae::gfx_low::ShaderBindingInfo samplerBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Fragment, true))
+            .SetBindingIndex(0)};
     const auto descriptorSetSpecInfo =
-        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
-            ::ae::gfx_low::DescriptorKind::UniformBuffer,
-            AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
-            uniformBufferBindingInfos);
+        ::ae::gfx_low::DescriptorSetSpecInfo()
+            .SetBindingInfos(::ae::gfx_low::DescriptorKind::UniformBuffer,
+                AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
+                uniformBufferBindingInfos)
+            .SetBindingInfos(::ae::gfx_low::DescriptorKind::SampledImage,
+                AE_BASE_ARRAY_LENGTH(sampledImageBindingInfos),
+                sampledImageBindingInfos)
+            .SetBindingInfos(::ae::gfx_low::DescriptorKind::Sampler,
+                AE_BASE_ARRAY_LENGTH(samplerBindingInfos), samplerBindingInfos);
 
     // DescriptorSet の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
@@ -664,6 +682,7 @@ int aemain(::ae::base::Application* app) {
                                .SetDevice(gfxLowDevice.get())
                                .SetSpecInfo(descriptorSetSpecInfo));
 
+        // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* uniformBufferViews[] = {
             uniformBufferView.get()};
         const ::ae::gfx_low::UniformBufferDescriptorInfo uniformBufferDescs[] =
@@ -675,9 +694,41 @@ int aemain(::ae::base::Application* app) {
                                        uniformBufferViews)))
                     .SetViews(uniformBufferViews),
             };
+
+        // SampledImage
+        const ::ae::gfx_low::SampledImageView* sampledImageViews[] = {
+            textureView.get()};
+        const ::ae::gfx_low::SampledImageDescriptorInfo sampledImageDescs[] =
+            {
+                ::ae::gfx_low::SampledImageDescriptorInfo()
+                    .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                   .SetBindingIndex(0)
+                                   .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                       sampledImageViews)))
+                    .SetViews(sampledImageViews),
+            };
+
+        // Sampler
+        const ::ae::gfx_low::Sampler* samplers[] = {
+            sampler.get()};
+        const ::ae::gfx_low::SamplerDescriptorInfo samplerDescs[] = {
+            ::ae::gfx_low::SamplerDescriptorInfo()
+                .SetRegion(
+                    ::ae::gfx_low::ShaderBindingRegion()
+                        .SetBindingIndex(0)
+                        .SetElemCount(AE_BASE_ARRAY_LENGTH(samplers)))
+                .SetSamplers(samplers),
+        };
+
+        // 更新
         descriptorSets[i].Update(
-            ::ae::gfx_low::DescriptorSetUpdateInfo().SetUniformBufferInfos(
-                AE_BASE_ARRAY_LENGTH(uniformBufferDescs), uniformBufferDescs));
+            ::ae::gfx_low::DescriptorSetUpdateInfo()
+                .SetUniformBufferInfos(AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                    uniformBufferDescs)
+                .SetSampledImageInfos(
+                    AE_BASE_ARRAY_LENGTH(sampledImageDescs), sampledImageDescs)
+                .SetSamplerInfos(
+                    AE_BASE_ARRAY_LENGTH(samplerDescs), samplerDescs));
     }
 
     // GraphicsPipeline 生成
