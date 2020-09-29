@@ -66,7 +66,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         // UniformBuffer
         if (0 < info.BindingInfoCount(DescriptorKind::UniformBuffer)) {
             descriptorSetLayoutIndexes_[DescriptorKind::UniformBuffer] =
-                bindingsCount;
+                descriptorSetLayoutCount_;
             for (int i = 0;
                  i < info.BindingInfoCount(DescriptorKind::UniformBuffer);
                  ++i) {
@@ -79,7 +79,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         // StorageBuffer
         if (0 < info.BindingInfoCount(DescriptorKind::StorageBuffer)) {
             descriptorSetLayoutIndexes_[DescriptorKind::StorageBuffer] =
-                bindingsCount;
+                descriptorSetLayoutCount_;
             for (int i = 0;
                  i < info.BindingInfoCount(DescriptorKind::StorageBuffer);
                  ++i) {
@@ -100,10 +100,9 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         // SampledImage
         if (0 < info.BindingInfoCount(DescriptorKind::SampledImage)) {
             descriptorSetLayoutIndexes_[DescriptorKind::SampledImage] =
-                bindingsCount;
+                descriptorSetLayoutCount_;
             for (int i = 0;
-                 i < info.BindingInfoCount(DescriptorKind::SampledImage);
-                 ++i) {
+                 i < info.BindingInfoCount(DescriptorKind::SampledImage); ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::SampledImage),
                     ::vk::DescriptorType::eSampledImage);
@@ -113,10 +112,9 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         // StorageImage
         if (0 < info.BindingInfoCount(DescriptorKind::StorageImage)) {
             descriptorSetLayoutIndexes_[DescriptorKind::StorageImage] =
-                bindingsCount;
+                descriptorSetLayoutCount_;
             for (int i = 0;
-                 i < info.BindingInfoCount(DescriptorKind::StorageImage);
-                 ++i) {
+                 i < info.BindingInfoCount(DescriptorKind::StorageImage); ++i) {
                 addBinding(bindingsCount, &bindings[0], i,
                     info.BindingInfos(DescriptorKind::StorageImage),
                     ::vk::DescriptorType::eStorageImage);
@@ -130,7 +128,8 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
 
     // Sampler
     if (0 < info.BindingInfoCount(DescriptorKind::Sampler)) {
-        descriptorSetLayoutIndexes_[DescriptorKind::Sampler] = bindingsCount;
+        descriptorSetLayoutIndexes_[DescriptorKind::Sampler] =
+            descriptorSetLayoutCount_;
         for (int i = 0; i < info.BindingInfoCount(DescriptorKind::Sampler);
              ++i) {
             addBinding(bindingsCount, &bindings[0], i,
