@@ -226,6 +226,10 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\SampledImageDescriptorInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\SampledImageView.hpp">
       <SubType>
       </SubType>
@@ -693,6 +697,10 @@
     </ClInclude>
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ae\gfx_low\SamplerDescriptorInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Vulkan01.h" />
   </ItemGroup>

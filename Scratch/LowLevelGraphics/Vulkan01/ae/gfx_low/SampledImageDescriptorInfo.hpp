@@ -6,7 +6,7 @@
 
 namespace ae {
 namespace gfx_low {
-class UniformBufferView;
+class SampledImageView;
 }
 } // namespace ae
 
@@ -14,8 +14,8 @@ class UniformBufferView;
 namespace ae {
 namespace gfx_low {
 
-/// UniformBuffer 用デスクリプタの情報。
-class UniformBufferDescriptorInfo {
+/// SampledImage 用デスクリプタの情報。
+class SampledImageDescriptorInfo {
 public:
     /// @name プロパティ
     //@{
@@ -23,17 +23,17 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    UniformBufferDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
         region_ = region;
         return *this;
     }
 
     /// ユニフォームバッファビューの配列ポインタ。（初期値：nullptr）
-    const UniformBufferView** Views() const { return views_.Get(); }
+    const SampledImageView** Views() const { return views_.Get(); }
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    UniformBufferDescriptorInfo& SetViews(const UniformBufferView** views) {
+    SampledImageDescriptorInfo& SetViews(const SampledImageView** views) {
         views_.Reset(views);
         return *this;
         ;
@@ -42,7 +42,7 @@ public:
 
 private:
     ShaderBindingRegion region_;
-    base::Pointer<const UniformBufferView*> views_;
+    base::Pointer<const SampledImageView*> views_;
 };
 
 } // namespace gfx_low

@@ -32,6 +32,7 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::ImageView& NativeObject_() { return nativeObject_; }
+    const ::vk::ImageView& NativeObject_() const { return nativeObject_; }
     //@}
 
 private:

@@ -17,6 +17,30 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
     return *this;
 }
 
+//------------------------------------------------------------------------------
+DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
+    const int count, const SampledImageDescriptorInfo* infos) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    if (0 < count) {
+        AE_BASE_ASSERT_POINTER(infos);
+    }
+    sampledImageInfoCount_ = count;
+    sampledImageInfos_.Reset(infos);
+    return *this;
+}
+
+//------------------------------------------------------------------------------
+DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSamplerInfos(
+    const int count, const SamplerDescriptorInfo* infos) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    if (0 < count) {
+        AE_BASE_ASSERT_POINTER(infos);
+    }
+    samplerInfoCount_ = count;
+    samplerInfos_.Reset(infos);
+    return *this;
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF
