@@ -16,7 +16,7 @@ namespace ae {
 namespace gfx_low {
 
 /// DescriptorSet の更新時に使われる情報。
-/// @todo StorageBuffer, SampledImage, StorageImage, Sampler の対応。
+/// @todo StorageBuffer, StorageImage の対応。
 class DescriptorSetUpdateInfo {
 public:
     /// @name プロパティ
