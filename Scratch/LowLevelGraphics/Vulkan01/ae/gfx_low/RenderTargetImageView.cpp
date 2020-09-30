@@ -5,6 +5,7 @@
 #include <ae/base/PtrToRef.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
+#include <ae/gfx_low/InternalUtility.hpp>
 #include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
@@ -25,8 +26,10 @@ RenderTargetImageView::RenderTargetImageView(
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
             .setViewType(::vk::ImageViewType::e2D)
             .setFormat(imageFormat)
-            .setSubresourceRange(::vk::ImageSubresourceRange(
-                ::vk::ImageAspectFlagBits::eColor, 0, 1, 0, 1));
+            .setSubresourceRange(InternalUtility::ToImageSubresourceRange(
+                base::PtrToRef(createInfo.Resource()),
+                createInfo.SubresouceLocation(),
+                ::vk::ImageAspectFlagBits::eColor));
     const auto result = device_.NativeObject_().createImageView(
         &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);

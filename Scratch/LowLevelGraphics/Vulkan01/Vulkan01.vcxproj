@@ -226,6 +226,10 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\InternalUtility.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\SampledImageDescriptorInfo.hpp">
       <SubType>
       </SubType>
@@ -839,6 +843,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\InternalDescriptorSetLayouts.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalUtility.cpp">
       <SubType>
       </SubType>
     </ClCompile>

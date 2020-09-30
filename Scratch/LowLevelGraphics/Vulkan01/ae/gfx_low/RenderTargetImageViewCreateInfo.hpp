@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
@@ -38,7 +39,16 @@ public:
         return *this;
     }
 
-    // @todo サブリソースレンジ指定。
+    /// 対象となる ImageSubresource。（初期値：デフォルトコンストラクタの値）
+    ImageSubresourceLocation SubresouceLocation() const {
+        return subresourceLocation_;
+    }
+
+    /// SubresourceLocation() の設定。
+    RenderTargetImageViewCreateInfo& SetSubresourceLocation(const ImageSubresourceLocation& location) {
+        subresourceLocation_ = location;        
+        return *this;
+    }
     //@}
 
     /// @name 内部処理用関数群
@@ -55,6 +65,7 @@ public:
 private:
     base::Pointer<gfx_low::Device> device_;
     base::Pointer<ImageResource> resource_;
+    ImageSubresourceLocation subresourceLocation_;
     ::vk::Format rawFormat_ = ::vk::Format::eUndefined;
 };
 
