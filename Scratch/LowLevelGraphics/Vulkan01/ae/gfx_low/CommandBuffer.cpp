@@ -19,6 +19,7 @@
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
+#include <ae/gfx_low/InternalUtility.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
@@ -158,9 +159,7 @@ void CommandBuffer::CmdImageResourceBarrier(
         return mask;
     };
 
-    // @todo ImageSubresourceLocation の適用。
-    AE_BASE_ASSERT(!info.IsSubresourceSpecified());
-
+    const auto& imageResource = base::PtrToRef(info.Resource());
     const auto barrier =
         ::vk::ImageMemoryBarrier()
             .setSrcAccessMask(toAccessMaskFunc(info.OldState()))
@@ -169,15 +168,20 @@ void CommandBuffer::CmdImageResourceBarrier(
             .setNewLayout(InternalEnumUtil::ToImageLayout(info.NewState()))
             .setSrcQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED)
             .setDstQueueFamilyIndex(VK_QUEUE_FAMILY_IGNORED)
-            .setImage(base::PtrToRef(info.Resource()).NativeObject_())
-            .setSubresourceRange(::vk::ImageSubresourceRange(
-                InternalEnumUtil::ToImageAspectFlags(
-                    base::PtrToRef(info.Resource()).NativeFormat_()),
-                0, // baseMipLevel
-                1, // levelCount
-                0, // baseArrayLayer
-                1 // layerCount
-                ));
+            .setImage(imageResource.NativeObject_())
+            .setSubresourceRange(
+                info.IsSubresourceSpecified()
+                    ? InternalUtility::ToImageSubresourceRange(
+                          base::PtrToRef(info.Resource()),
+                          info.SubresourceLocation())
+                    : ::vk::ImageSubresourceRange(
+                          InternalEnumUtil::ToImageAspectFlags(
+                              imageResource.NativeFormat_()),
+                          0, // baseMipLevel
+                          imageResource.MipLevels_(),
+                          0, // baseArrayLayer
+                          imageResource.ArrayLength_() *
+                              (imageResource.IsCubeMapImage_() ? 6 : 1)));
     nativeObject_.pipelineBarrier(::vk::PipelineStageFlagBits::eAllGraphics |
                                       ::vk::PipelineStageFlagBits::eAllCommands,
         ::vk::PipelineStageFlagBits::eAllGraphics |
