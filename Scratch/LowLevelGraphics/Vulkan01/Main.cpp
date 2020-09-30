@@ -319,7 +319,6 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::DepthStencilImageViewCreateInfo()
                 .SetDevice(gfxLowDevice.get())
                 .SetResource(depthBufferImage.get())
-                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
                 .SetFormat(depthBufferFormat)));
     }
 

@@ -22,7 +22,7 @@ DepthStencilImageView::DepthStencilImageView(
     const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
-            .setViewType(InternalEnumUtil::ToImageViewType(createInfo.Kind()))
+            .setViewType(::vk::ImageViewType::e2D)
             .setFormat(InternalEnumUtil::ToFormat(createInfo.Format()))
             .setSubresourceRange(InternalUtility::ToImageSubresourceRange(
                 base::PtrToRef(createInfo.Resource()),

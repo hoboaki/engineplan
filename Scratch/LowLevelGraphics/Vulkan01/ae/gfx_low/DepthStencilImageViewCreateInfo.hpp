@@ -53,12 +53,6 @@ public:
         return *this;
     }
 
-    /// イメージビューの種類。（初期値：Invalid）
-    ImageViewKind Kind() const { return kind_; }
-
-    /// Kind() の設定。
-    DepthStencilImageViewCreateInfo& SetKind(ImageViewKind kind);
-
     /// イメージフォーマット。（初期値：Invalid)
     ImageFormat Format() const { return format_; }
 
@@ -73,7 +67,6 @@ private:
     base::Pointer<gfx_low::ImageResource> resource_;
     ImageSubresourceLocation subresourceLocation_;
     ImageFormat format_ = ImageFormat::Invalid;
-    ImageViewKind kind_ = ImageViewKind::Invalid;
 };
 
 } // namespace gfx_low
