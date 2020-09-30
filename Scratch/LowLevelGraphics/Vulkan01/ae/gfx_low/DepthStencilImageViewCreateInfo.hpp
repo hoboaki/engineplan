@@ -3,6 +3,7 @@
 
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
+#include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
 namespace ae {
@@ -40,6 +41,18 @@ public:
         return *this;
     }
 
+    /// 対象となる ImageSubresource。（初期値：デフォルトコンストラクタの値）
+    ImageSubresourceLocation SubresouceLocation() const {
+        return subresourceLocation_;
+    }
+
+    /// SubresourceLocation() の設定。
+    DepthStencilImageViewCreateInfo& SetSubresourceLocation(
+        const ImageSubresourceLocation& location) {
+        subresourceLocation_ = location;
+        return *this;
+    }
+
     /// イメージビューの種類。（初期値：Invalid）
     ImageViewKind Kind() const { return kind_; }
 
@@ -58,6 +71,7 @@ public:
 private:
     base::Pointer<gfx_low::Device> device_;
     base::Pointer<gfx_low::ImageResource> resource_;
+    ImageSubresourceLocation subresourceLocation_;
     ImageFormat format_ = ImageFormat::Invalid;
     ImageViewKind kind_ = ImageViewKind::Invalid;
 };

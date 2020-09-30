@@ -8,6 +8,7 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
+#include <ae/gfx_low/InternalUtility.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -23,8 +24,10 @@ DepthStencilImageView::DepthStencilImageView(
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
             .setViewType(InternalEnumUtil::ToImageViewType(createInfo.Kind()))
             .setFormat(InternalEnumUtil::ToFormat(createInfo.Format()))
-            .setSubresourceRange(::vk::ImageSubresourceRange(
-                ::vk::ImageAspectFlagBits::eDepth, 0, 1, 0, 1));
+            .setSubresourceRange(InternalUtility::ToImageSubresourceRange(
+                base::PtrToRef(createInfo.Resource()),
+                createInfo.SubresouceLocation(),
+                ::vk::ImageAspectFlagBits::eDepth));
     const auto result = device_.NativeObject_().createImageView(
         &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
