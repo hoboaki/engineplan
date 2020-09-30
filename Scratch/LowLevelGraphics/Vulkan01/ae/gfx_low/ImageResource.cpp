@@ -15,6 +15,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_()
 , nativeFormat_()
+, mipLevels_()
+, arrayLength_()
 , isCreatedByNativeObjectPtr_(false)
 , isCubeMapImage_ () {
     // NativeObjectPtr からの作成
@@ -22,6 +24,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
         nativeObject_ = base::PtrToRef(createInfo.NativeObjectPtr_());
         nativeFormat_ = createInfo.NativeFormat_();
+        mipLevels_ = createInfo.NativeObjectMipLevels_();
+        arrayLength_ = createInfo.NativeObjectArrayLength_();
         isCubeMapImage_ = createInfo.IsNativeObjectCubeImage_();
         isCreatedByNativeObjectPtr_ = true;
         return;
@@ -34,6 +38,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
             &nativeCreateInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         nativeFormat_ = nativeCreateInfo.format;
+        mipLevels_ = createInfo.NativeObjectMipLevels_();
+        arrayLength_ = createInfo.NativeObjectArrayLength_();
     }
 
     // メモリ割り当て

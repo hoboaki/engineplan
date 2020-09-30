@@ -37,7 +37,10 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::Image& NativeObject_() { return nativeObject_; }
+    const ::vk::Image& NativeObject_() const { return nativeObject_; }
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
+    int MipLevels_() const { return mipLevels_; }
+    int ArrayLength_() const { return arrayLength_; }
     bool IsCubeMapImage_() const { return isCubeMapImage_; }
     //@}
 
@@ -45,6 +48,8 @@ private:
     gfx_low::Device& device_;
     ::vk::Image nativeObject_;
     ::vk::Format nativeFormat_;
+    int mipLevels_;
+    int arrayLength_;
     /// ImagePtr を使って作ったか。
     bool isCreatedByNativeObjectPtr_;
     bool isCubeMapImage_;

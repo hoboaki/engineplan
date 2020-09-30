@@ -56,32 +56,49 @@ public:
 
     /// @name 内部処理用関数群
     //@{
-    /// VkImage オブジェクト。こちらが指定されている場合はこれをそのまま使う。（初期値：nullptr）
+    /// VkImage
+    /// オブジェクト。こちらが指定されている場合はこれをそのまま使う。（初期値：nullptr）
     ::vk::Image* NativeObjectPtr_() const { return nativeObjectPtr_.Get(); }
 
     /// NativeObjectPtr_() の設定。
-    /// @details 有効なオブジェクトを設定した場合は NativeFormat_() も設定する必要があります。
+    /// @details 有効なオブジェクトを設定した場合は NativeFormat_()
+    /// も設定する必要があります。
     ImageResourceCreateInfo& SetNativeObjectPtr_(::vk::Image* nativeObjectPtr) {
         nativeObjectPtr_.Reset(nativeObjectPtr);
         return *this;
     }
 
-    /// NativeObjectPtr_() で指定した VkImage オブジェクトのフォーマット。（初期値：eUndefined）
+    /// NativeObjectPtr_() で指定した VkImage
+    /// オブジェクトのフォーマット。（初期値：eUndefined）
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
-    /// NativeFormat_() の設定。 
-    ImageResourceCreateInfo& SetNativeFormat_(::vk::Format format)
-    {
+    /// NativeFormat_() の設定。
+    ImageResourceCreateInfo& SetNativeFormat_(::vk::Format format) {
         nativeFormat_ = format;
         return *this;
     }
-    
+
+    /// NativeObjectPtr_() で指定した VkImage
+    /// オブジェクトのミップマップレベル数。（初期値：1）
+    int NativeObjectArrayLength_() const { return nativeObjectArrayLength_; }
+
+    /// NativeObjectArrayLength_() の設定。
+    /// @param levels 1以上。
+    ImageResourceCreateInfo& SetNativeObjectArrayLength_(int arrayLength);
+
+    /// NativeObjectPtr_() で指定した VkImage
+    /// オブジェクトのミップマップレベル数。（初期値：1）
+    int NativeObjectMipLevels_() const { return nativeObjectMipLevels_; }
+
+    /// NativeObjectMipLevels_() の設定。
+    /// @param levels 1以上。
+    ImageResourceCreateInfo& SetNativeObjectMipLevels_(int levels);
+
     /// NativeObjectPtr_() で指定した VkImage オブジェクトがキューブイメージか。
     bool IsNativeObjectCubeImage_() const { return isNativeObjectCubeImage_; }
 
-    /// IsNativeObjectCubeImage_() の設定。 
-    ImageResourceCreateInfo& SetIsNativeObjectCubeImage_(bool isCubeImage)
-    {
+    /// IsNativeObjectCubeImage_() の設定。
+    ImageResourceCreateInfo& SetIsNativeObjectCubeImage_(bool isCubeImage) {
         isNativeObjectCubeImage_ = isCubeImage;
         return *this;
     }
@@ -96,6 +113,8 @@ private:
     ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> nativeObjectPtr_;
     ::vk::Format nativeFormat_ = ::vk::Format::eUndefined;
+    int nativeObjectMipLevels_ = 1;
+    int nativeObjectArrayLength_ = 1;
     bool isNativeObjectCubeImage_ = false;
 };
 

@@ -51,7 +51,7 @@ public:
         return *this;
     }
 
-    /// ミップマップレベル。（初期値：1）
+    /// ミップマップレベル数。（初期値：1）
     int MipLevels() const { return mipLevels_; }
 
     /// MipLevels() の設定。
