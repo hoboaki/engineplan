@@ -18,14 +18,38 @@ SampledImageView::SampledImageView(const SampledImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_() {
     const auto nativeFormat = InternalEnumUtil::ToFormat(createInfo.Format());
+    const auto viewType = InternalEnumUtil::ToImageViewType(createInfo.Kind());
+    const bool isCubeImageViewType =
+        viewType == ::vk::ImageViewType::eCube ||
+        viewType == ::vk::ImageViewType::eCubeArray;
+    const auto& resource = base::PtrToRef(createInfo.Resource());
+
+    // CubeImage のとき用エラーチェック
+    if (isCubeImageViewType) {
+        AE_BASE_ASSERT_EQUALS(
+            createInfo.SubresourceRange().BaseLocation().FaceIndex(), 0);
+    }
+    const uint32_t imageCountPerCubeImageLayer = 6;
+    const uint32_t perLayerImageCountOnResource =
+        resource.IsCubeMapImage_() ? imageCountPerCubeImageLayer : 1;
+    const uint32_t perLayerImageCountOnView =
+        isCubeImageViewType ? imageCountPerCubeImageLayer : 1;
+
     const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
-            .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
-            .setViewType(InternalEnumUtil::ToImageViewType(createInfo.Kind()))
+            .setImage(resource.NativeObject_())
+            .setViewType(viewType)
             .setFormat(nativeFormat)
             .setSubresourceRange(::vk::ImageSubresourceRange(
-                InternalEnumUtil::ToImageAspectFlags(nativeFormat), 0, 1, 0,
-                1));
+                InternalEnumUtil::ToImageAspectFlags(nativeFormat),
+                createInfo.SubresourceRange().BaseLocation().MipLevel(),
+                createInfo.SubresourceRange().MipLevels(),
+                perLayerImageCountOnResource * createInfo.SubresourceRange()
+                                                   .BaseLocation()
+                                                   .ArrayIndex() +
+                    createInfo.SubresourceRange().BaseLocation().FaceIndex(),
+                createInfo.SubresourceRange().ArrayLength() *
+                    perLayerImageCountOnView));
     const auto result = device_.NativeObject_().createImageView(
         &imageViewCreateInfo, nullptr, &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);

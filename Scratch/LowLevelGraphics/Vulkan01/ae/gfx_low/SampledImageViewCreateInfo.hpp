@@ -3,6 +3,7 @@
 
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
+#include <ae/gfx_low/ImageSubresourceRange.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
 namespace ae {
@@ -52,12 +53,22 @@ public:
     /// Format() の設定。
     SampledImageViewCreateInfo& SetFormat(ImageFormat format);
 
-    // @todo サブリソースレンジ指定。
+    /// 読み取り対象となる ImageSubresource
+    /// の範囲。（初期値：デフォルトコンストラクタの値）
+    ImageSubresourceRange SubresourceRange() const { return subresourceRange_; }
+
+    /// SubresourceRange() の設定。
+    SampledImageViewCreateInfo& SetSubresourceRange(
+        const ImageSubresourceRange& range) {
+        subresourceRange_ = range;
+        return *this;
+    }
     //@}
 
 private:
     base::Pointer<gfx_low::Device> device_;
     base::Pointer<gfx_low::ImageResource> resource_;
+    ImageSubresourceRange subresourceRange_;
     ImageFormat format_ = ImageFormat::Invalid;
     ImageViewKind kind_ = ImageViewKind::Invalid;
 };
