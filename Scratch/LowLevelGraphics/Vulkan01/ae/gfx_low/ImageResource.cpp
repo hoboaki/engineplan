@@ -15,12 +15,14 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_()
 , nativeFormat_()
-, isCreatedByNativeObjectPtr_(false) {
+, isCreatedByNativeObjectPtr_(false)
+, isCubeMapImage_ () {
     // NativeObjectPtr からの作成
     if (createInfo.NativeObjectPtr_() != nullptr) {
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
         nativeObject_ = base::PtrToRef(createInfo.NativeObjectPtr_());
         nativeFormat_ = createInfo.NativeFormat_();
+        isCubeMapImage_ = createInfo.IsNativeObjectCubeImage_();
         isCreatedByNativeObjectPtr_ = true;
         return;
     }

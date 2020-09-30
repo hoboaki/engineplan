@@ -75,6 +75,16 @@ public:
         nativeFormat_ = format;
         return *this;
     }
+    
+    /// NativeObjectPtr_() で指定した VkImage オブジェクトがキューブイメージか。
+    bool IsNativeObjectCubeImage_() const { return isNativeObjectCubeImage_; }
+
+    /// IsNativeObjectCubeImage_() の設定。 
+    ImageResourceCreateInfo& SetIsNativeObjectCubeImage_(bool isCubeImage)
+    {
+        isNativeObjectCubeImage_ = isCubeImage;
+        return *this;
+    }
 
     /// VkImageCreateInfo へ変換。
     ::vk::ImageCreateInfo NativeCreateInfo_() const;
@@ -86,6 +96,7 @@ private:
     ResourceMemoryAddress dataAddress_;
     base::Pointer<::vk::Image> nativeObjectPtr_;
     ::vk::Format nativeFormat_ = ::vk::Format::eUndefined;
+    bool isNativeObjectCubeImage_ = false;
 };
 
 } // namespace gfx_low

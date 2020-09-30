@@ -38,6 +38,7 @@ public:
     //@{
     ::vk::Image& NativeObject_() { return nativeObject_; }
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
+    bool IsCubeMapImage_() const { return isCubeMapImage_; }
     //@}
 
 private:
@@ -46,6 +47,7 @@ private:
     ::vk::Format nativeFormat_;
     /// ImagePtr を使って作ったか。
     bool isCreatedByNativeObjectPtr_;
+    bool isCubeMapImage_;
 };
 
 } // namespace gfx_low
