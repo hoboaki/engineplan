@@ -58,8 +58,6 @@ public:
 
     /// Format() の設定。
     DepthStencilImageViewCreateInfo& SetFormat(ImageFormat format);
-
-    // @todo サブリソースレンジ指定。
     //@}
 
 private:
