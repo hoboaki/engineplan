@@ -46,8 +46,8 @@ public:
 
 private:
     ImageSubresourceLocation baseLocation_;
-    int mipLevels_ = 0;
-    int arrayLength_ = 0;
+    int mipLevels_ = 1;
+    int arrayLength_ = 1;
 };
 
 } // namespace gfx_low
