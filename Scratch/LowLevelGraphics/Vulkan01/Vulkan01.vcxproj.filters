@@ -789,9 +789,6 @@
     <ClCompile Include="ae\base\Time.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SampleMain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ae\base\StringTraits.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

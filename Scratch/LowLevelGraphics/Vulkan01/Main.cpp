@@ -77,9 +77,6 @@
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <memory>
 
-extern int WINAPI DemoWinMain(
-    HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow);
-
 //------------------------------------------------------------------------------
 namespace {
 
@@ -198,9 +195,6 @@ const uint32_t fFragShaderCode[] = {
 
 //------------------------------------------------------------------------------
 int aemain(::ae::base::Application* app) {
-#if 0
-    return DemoWinMain((HINSTANCE)GetModuleHandle(0), nullptr, nullptr, 0);
-#else
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -976,6 +970,5 @@ int aemain(::ae::base::Application* app) {
     }
 
     return 0;
-#endif
 }
 // EOF

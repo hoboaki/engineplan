@@ -1024,7 +1024,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SampleMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vulkan01.rc" />
