@@ -52,7 +52,7 @@ struct PodStruct {
 
 private:
     AE_BASE_STATIC_ASSERT(
-        TypeTraits::IsPod<typename ValueType>::Value); // Pod型のチェック。
+        TypeTraits::IsPod<ValueType>::Value); // Pod型のチェック。
 };
 //@}
 

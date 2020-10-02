@@ -5,6 +5,7 @@
 
 #include <ae/base/IAllocator.hpp>
 #include <ae/base/NonCopyable.hpp>
+#include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------

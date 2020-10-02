@@ -85,7 +85,7 @@ public:
     }
     //@}
 
-    ValueType values_[TEnumType::TERM];
+    ValueType values_[static_cast<int>(TEnumType::TERM)];
 };
 
 } // namespace base
