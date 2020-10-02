@@ -183,11 +183,11 @@ const float fUvBufferData[] = {
 };
 
 const uint32_t fVertShaderCode[] = {
-#include "textured_cube.vert.inc"
+#include "Shader.vert.inc"
 };
 
 const uint32_t fFragShaderCode[] = {
-#include "textured_cube.frag.inc"
+#include "Shader.frag.inc"
 };
 // clang-format on
 
