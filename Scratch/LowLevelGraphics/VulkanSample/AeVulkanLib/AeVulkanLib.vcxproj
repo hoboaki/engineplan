@@ -93,6 +93,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="aesk\GfxBasicKit.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\base\Aabb2.hpp" />
     <ClInclude Include="ae\base\Aabb2i.hpp" />
     <ClInclude Include="ae\base\All.hpp" />
@@ -711,6 +715,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aesk\GfxBasicKit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\base\Aabb2.cpp" />
     <ClCompile Include="ae\base\Aabb2i.cpp" />
     <ClCompile Include="ae\base\Angle.cpp" />
