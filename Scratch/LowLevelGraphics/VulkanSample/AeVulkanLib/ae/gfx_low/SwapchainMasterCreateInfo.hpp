@@ -62,7 +62,7 @@ public:
 
 private:
     ::ae::base::Pointer<gfx_low::Device> device_;
-    void* extInfoPtr_;
+    void* extInfoPtr_ = nullptr;
     ::ae::base::Pointer<base::Screen> screen_;
     int swapchainCountMax_ = 1;
 };

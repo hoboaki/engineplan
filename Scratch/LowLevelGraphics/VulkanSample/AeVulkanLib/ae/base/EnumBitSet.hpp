@@ -3,6 +3,7 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/RuntimeAssert.hpp>
+#include <limits>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -32,9 +33,9 @@ struct EnumBitSetPod {
     /// @name 定数プロパティ
     //@{
     /// 全ビット true のオブジェクトを取得。
-    static MyType AllOn() {
+    static constexpr MyType AllOn() {
         if (int(EnumType::TERM) * 8 == BitCount) {
-            return MyType{DataType(0) - DataType(1)};
+            return MyType{::std::numeric_limits<DataType>::max()};
         }
         return MyType{(DataType(1) << int(EnumType::TERM)) - 1};
     }

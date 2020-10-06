@@ -32,7 +32,7 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     Placement()
-    : ptr_(0) {}
+    : ptr_(0), bytes_() {}
     ~Placement() { Reset(); }
     //@}
 
