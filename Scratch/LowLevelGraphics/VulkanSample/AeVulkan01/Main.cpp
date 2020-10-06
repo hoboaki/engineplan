@@ -589,9 +589,12 @@ int aemain(::ae::base::Application* app) {
     }
 
     // UniformBuffer の作成
-    ::ae::gfx_low::UniqueResourceMemory uniformBufferMemory;
-    ::std::unique_ptr<::ae::gfx_low::BufferResource> uniformBufferResource;
-    ::std::unique_ptr<::ae::gfx_low::UniformBufferView> uniformBufferView;
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
+        uniformBufferMemories(swapchainImageCount);
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::BufferResource>
+        uniformBufferResources(swapchainImageCount);
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniformBufferView>
+        uniformBufferViews(swapchainImageCount);
     {
         const auto specInfo =
             ::ae::gfx_low::BufferResourceSpecInfo()
@@ -600,20 +603,22 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::BufferResourceUsage::UniformBuffer, true));
         const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
             sizeof(fUniformDataType));
-        uniformBufferMemory.Reset(device.get(),
-            ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
-        uniformBufferResource.reset(new ::ae::gfx_low::BufferResource(
-            ::ae::gfx_low::BufferResourceCreateInfo()
-                .SetDevice(device.get())
-                .SetSpecInfo(specInfo)
-                .SetDataAddress(*uniformBufferMemory)));
-        uniformBufferView.reset(new ::ae::gfx_low::UniformBufferView(
-            ::ae::gfx_low::UniformBufferViewCreateInfo()
-                .SetDevice(device.get())
-                .SetResource(uniformBufferResource.get())
-                .SetRegion(region)));
+        for (int i = 0; i < uniformBufferMemories.CountMax(); ++i) {
+            uniformBufferMemories.Add(device.get(),
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                    .SetParams(
+                        device->CalcResourceMemoryRequirements(specInfo)));
+            uniformBufferResources.Add(
+                ::ae::gfx_low::BufferResourceCreateInfo()
+                    .SetDevice(device.get())
+                    .SetSpecInfo(specInfo)
+                    .SetDataAddress(*uniformBufferMemories[i]));
+            uniformBufferViews.Add(::ae::gfx_low::UniformBufferViewCreateInfo()
+                                       .SetDevice(device.get())
+                                       .SetResource(&uniformBufferResources[i])
+                                       .SetRegion(region));
+        }
     }
 
     // RenderPassSpecInfo の作成
@@ -667,16 +672,16 @@ int aemain(::ae::base::Application* app) {
                                .SetSpecInfo(descriptorSetSpecInfo));
 
         // UniformBuffer
-        const ::ae::gfx_low::UniformBufferView* uniformBufferViews[] = {
-            uniformBufferView.get()};
+        const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
+            &uniformBufferViews[i]};
         const ::ae::gfx_low::UniformBufferDescriptorInfo uniformBufferDescs[] =
             {
                 ::ae::gfx_low::UniformBufferDescriptorInfo()
                     .SetRegion(::ae::gfx_low::ShaderBindingRegion()
                                    .SetBindingIndex(0)
                                    .SetElemCount(AE_BASE_ARRAY_LENGTH(
-                                       uniformBufferViews)))
-                    .SetViews(uniformBufferViews),
+                                       localUniformBufferViews)))
+                    .SetViews(localUniformBufferViews),
             };
 
         // SampledImage
@@ -812,10 +817,13 @@ int aemain(::ae::base::Application* app) {
 
             const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(fUniformDataType));
+            auto& targetUniformBufferMemory =
+                uniformBufferMemories[bufferIndex];
             void* mappedMemory = device->MapResourceMemory(
-                uniformBufferMemory->NativeObject_(), region);
+                targetUniformBufferMemory->NativeObject_(), region);
             std::memcpy(mappedMemory, &data, sizeof(data));
-            device->UnmapResourceMemory(uniformBufferMemory->NativeObject_());
+            device->UnmapResourceMemory(
+                targetUniformBufferMemory->NativeObject_());
         }
 
         // コマンドバッファ作成
