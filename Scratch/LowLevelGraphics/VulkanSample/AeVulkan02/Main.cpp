@@ -76,6 +76,7 @@
 #include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GfxBasicKit.hpp>
+#include <aesk/Shader.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -210,48 +211,10 @@ int aemain(::ae::base::Application* app) {
     ::aesk::GfxBasicKit gfxKit(&display);
 
     // Shader の作成
-    ::ae::gfx_low::UniqueResourceMemory vertShaderMemory;
-    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> vertShader;
-    ::ae::gfx_low::UniqueResourceMemory fragShaderMemory;
-    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> fragShader;
-    {
-        const auto size = sizeof(fVertShaderCode);
-        const auto specInfo =
-            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
-        vertShaderMemory.Reset(&gfxKit.Device(),
-            ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                .SetParams(
-                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
-        std::memcpy(gfxKit.Device().MapResourceMemory(*vertShaderMemory,
-                        ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
-            fVertShaderCode, size);
-        gfxKit.Device().UnmapResourceMemory(*vertShaderMemory);
-        vertShader.reset(new ::ae::gfx_low::ShaderModuleResource(
-            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetSpecInfo(specInfo)
-                .SetDataAddress(*vertShaderMemory)));
-    }
-    {
-        const auto size = sizeof(fFragShaderCode);
-        const auto specInfo =
-            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
-        fragShaderMemory.Reset(&gfxKit.Device(),
-            ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                .SetParams(
-                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
-        std::memcpy(gfxKit.Device().MapResourceMemory(*fragShaderMemory,
-                        ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
-            fFragShaderCode, size);
-        gfxKit.Device().UnmapResourceMemory(*fragShaderMemory);
-        fragShader.reset(new ::ae::gfx_low::ShaderModuleResource(
-            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetSpecInfo(specInfo)
-                .SetDataAddress(*fragShaderMemory)));
-    }
+    ::aesk::Shader vertShader(
+        &gfxKit, fVertShaderCode, sizeof(fVertShaderCode));
+    ::aesk::Shader fragShader(
+        &gfxKit, fFragShaderCode, sizeof(fFragShaderCode));
 
     // VertexBuffer の作成
     ::ae::gfx_low::UniqueResourceMemory vertexBufferMemory;
@@ -618,12 +581,12 @@ int aemain(::ae::base::Application* app) {
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
                 .SetShaderInfo(::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(vertShader.get())
+                        .SetResource(&vertShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(fragShader.get())
+                        .SetResource(&fragShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
                 .SetVertexInputInfo(
