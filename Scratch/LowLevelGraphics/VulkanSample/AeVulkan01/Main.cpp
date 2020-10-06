@@ -200,7 +200,8 @@ int aemain(::ae::base::Application* app) {
 
     // ディスプレイの作成
     ::ae::base::Display display =
-        ::ae::base::Display(::ae::base::DisplayContext());
+        ::ae::base::Display(::ae::base::DisplayContext().SetWindowTitle(
+            "AeVulkan01 - Simple"));
 
     // ディスプレイの表示
     display.Show();
