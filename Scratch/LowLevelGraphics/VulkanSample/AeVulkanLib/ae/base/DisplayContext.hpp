@@ -5,6 +5,7 @@
 
 #include <ae/base/Bool.hpp>
 #include <ae/base/BuiltInTypes.hpp>
+#include <ae/base/FixedString.hpp>
 #include <ae/base/OsType.hpp>
 
 //------------------------------------------------------------------------------
@@ -16,11 +17,27 @@ namespace base {
 /// Display クラスのコンテキスト。
 class DisplayContext {
 public:
+    /// @name コンストラクタ
+    //@{
     /// デフォルトの設定で作成する。
     DisplayContext();
+    //@}
+
+    /// @name プロパティ
+    //@{
+    /// ウィンドウタイトル。（初期値："AdelEngine Application"）
+    /// @details Windows プラットフォームでのみ使われます。
+    const char* WindowTitle() const { return windowTitle_.ReadPtr(); }
+
+    /// WindowTitle() の設定。 
+    DisplayContext& SetWindowTitle(const char* aText) {
+        windowTitle_ = aText;
+        return *this;
+    }
+    //@}
 
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
-    /// @name WindowSystem環境でのカスタマイズ
+    /// @name WindowSystem環境でのカスタマイズ（TODO: #if を切って関数自体はどのプラットフォームでも呼べるようにする）
     //@{
     void
     SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
@@ -33,6 +50,7 @@ public:
 #endif
 
 private:
+    FixedString<char, 64> windowTitle_ = "AdelEngine Application";
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
     int locationX_;
     int locationY_;

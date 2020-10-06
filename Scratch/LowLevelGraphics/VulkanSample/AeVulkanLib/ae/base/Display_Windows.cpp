@@ -200,7 +200,7 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     // ウィンドウの作成
     tCurrentDisplay.Set(*this);
     hwindow = CreateWindow(className,
-        "Adel Engine Application", // Window Title
+        context.WindowTitle(),
         style, context.LocationX(), context.LocationY(), rect.right - rect.left,
         rect.bottom - rect.top,
         0, // hWndParent
