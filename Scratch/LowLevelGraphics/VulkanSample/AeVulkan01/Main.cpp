@@ -570,7 +570,7 @@ int aemain(::ae::base::Application* app) {
                     const int colorIndex =
                         x / (extent.width / AE_BASE_ARRAY_LENGTH(rgbColors));
                     const auto& color = rgbColors[colorIndex];
-                    const size_t baseOffset = y * dataInfo.RowPitch() + x * 4;
+                    const size_t baseOffset = size_t(y) * dataInfo.RowPitch() + size_t(x) * 4;
                     dst[baseOffset + 0] = color.r;
                     dst[baseOffset + 1] = color.g;
                     dst[baseOffset + 2] = color.b;
