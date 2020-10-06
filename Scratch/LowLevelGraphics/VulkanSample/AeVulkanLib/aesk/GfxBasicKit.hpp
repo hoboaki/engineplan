@@ -23,13 +23,6 @@ namespace aesk {
 /// グラフィックスサンプルで使うオブジェクト郡をまとめた基本キット。
 class GfxBasicKit {
 public:
-    /// @name 公開定数
-    //@{
-    static const ::ae::gfx_low::ImageFormat DepthBufferFormat =
-        ::ae::gfx_low::ImageFormat::D32Sfloat;
-    static const int SwapchainImageCount = 3;
-    //@}
-
     /// @name コンストラクタとデストラクタ
     //@{
     GfxBasicKit(::ae::base::Display* display);
@@ -38,31 +31,49 @@ public:
 
     /// @name 基本プロパティ
     //@{
-    ::ae::gfx_low::System& System() { return *system_; }
-    ::ae::gfx_low::Device& Device() { return *device_; }
-    ::ae::gfx_low::Queue& Queue() { return device_->Queue(0); }
-    ::ae::gfx_low::DepthStencilImageView& DepthBufferView() {
+    ::ae::gfx_low::System& System() const { return *system_; }
+    ::ae::gfx_low::Device& Device() const { return *device_; }
+    ::ae::gfx_low::Queue& Queue() const { return device_->Queue(0); }
+    ::ae::gfx_low::SwapchainHandle Swapchain() const { return swapchain_; }
+    ::ae::gfx_low::DepthStencilImageView& DepthBufferView() const {
         return *depthBufferView_;
     }
+    ::ae::gfx_low::ImageFormat DepthBufferFormat() const {
+        return DefaultDepthBufferFormat;
+    }
+    int SwapchainImageCount() const { return DefaultSwapchainImageCount; }
     //@}
 
     /// @name 毎フレーム処理関連
     //@{
     /// 前回実行した処理の完了を保証するために待つ。
-    void WaitToResourceUsable(bool useSwapchain = true);
+    /// @details Swapchain::AcquireNextImage() を呼ぶ前にこの関数で待つ必要がある。
+    void WaitToResourceUsable();
+
     /// 現在記録可能な汎用コマンドバッファの取得。
     ::ae::gfx_low::CommandBuffer& CurrentCommandBuffer() {
         return commandBuffers_[bufferIndex_];
     }
-    /// Swapchain バッファ確保同期。
-    void QueuePushSwapchainWait();
-    /// Swapchain 提出。
-    void QueuePushSwapchainPresent();
-    /// GPU送信。
+
+    /// GPU送信＆ CurrentBufferIndex() を１つ進める。
     void QueueSubmit();
+
+    /// 現在対象となっている SwapchainImage の index 値。
+    /// @return [0, SwapchainImageCount()) の範囲の値。
+    int CurrentBufferIndex() const { return bufferIndex_; }
+    //@}
+
+    /// @name その他
+    //@{
+    /// Queue に送信した全ての処理が完了するのを待つ。
+    void WaitAllDone();
     //@}
 
 private:
+    const ::ae::gfx_low::ImageFormat DefaultDepthBufferFormat =
+        ::ae::gfx_low::ImageFormat::D32Sfloat;
+    const int DefaultSwapchainImageCount = 3;
+    //------------------------------------------------------------------------------
     ::std::unique_ptr<::ae::gfx_low::System> system_;
     ::std::unique_ptr<::ae::gfx_low::Device> device_;
     ::std::unique_ptr<::ae::gfx_low::SwapchainMaster> swapchainMaster_;

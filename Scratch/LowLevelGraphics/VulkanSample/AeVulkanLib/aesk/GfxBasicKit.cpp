@@ -22,8 +22,8 @@ namespace aesk {
 
 //------------------------------------------------------------------------------
 GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
-: commandBuffers_(SwapchainImageCount)
-, fences_(SwapchainImageCount) {
+: commandBuffers_(DefaultSwapchainImageCount)
+, fences_(DefaultSwapchainImageCount) {
     // メモ
     auto& disp = ::ae::base::PtrToRef(display);
 
@@ -59,14 +59,14 @@ GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
         swapchainMaster_.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
     }
     swapchain_ = swapchainMaster_->CreateSwapchain(
-        ae::gfx_low::SwapchainCreateInfo().SetImageCount(SwapchainImageCount));
+        ae::gfx_low::SwapchainCreateInfo().SetImageCount(DefaultSwapchainImageCount));
 
     // DepthBuffer 作成
     {
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
-                .SetFormat(DepthBufferFormat)
+                .SetFormat(DefaultDepthBufferFormat)
                 .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
                 .SetExtent(::ae::base::Extent2i(
                     disp.MainScreen().Width(), disp.MainScreen().Height()))
@@ -86,7 +86,7 @@ GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
             ::ae::gfx_low::DepthStencilImageViewCreateInfo()
                 .SetDevice(device_.get())
                 .SetResource(depthBufferImage_.get())
-                .SetFormat(DepthBufferFormat)));
+                .SetFormat(DefaultDepthBufferFormat)));
     }
 
     // CommandBuffer の作成
@@ -107,24 +107,9 @@ GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
 GfxBasicKit::~GfxBasicKit() {}
 
 //------------------------------------------------------------------------------
-void GfxBasicKit::WaitToResourceUsable(const bool useSwapchain) {
+void GfxBasicKit::WaitToResourceUsable() {
     // 処理完了待ち
     fences_[bufferIndex_].Wait();
-    
-    /// 次フレーム用バッファ確保要求。
-    if (useSwapchain) {
-        swapchain_->AcquireNextImage();
-    }
-}
-
-//------------------------------------------------------------------------------
-void GfxBasicKit::QueuePushSwapchainWait() {
-    Queue().PushSwapchainWait(&swapchain_.Ref());
-}
-
-//------------------------------------------------------------------------------
-void GfxBasicKit::QueuePushSwapchainPresent() {
-    Queue().PushSwapchainPresent(&swapchain_.Ref());
 }
 
 //------------------------------------------------------------------------------
@@ -133,7 +118,14 @@ void GfxBasicKit::QueueSubmit() {
     Queue().Submit(&fences_[bufferIndex_]);
 
     // バッファを進める
-    bufferIndex_ = (bufferIndex_ + 1) % SwapchainImageCount;
+    bufferIndex_ = (bufferIndex_ + 1) % SwapchainImageCount();
+}
+
+//------------------------------------------------------------------------------
+void GfxBasicKit::WaitAllDone() {
+    for (auto& fence : fences_) {
+        fence.Wait();
+    }
 }
 
 } // namespace aesk
