@@ -425,9 +425,9 @@ int aemain(::ae::base::Application* app) {
             const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(fVertexBufferType));
             void* mappedMemory = device->MapResourceMemory(
-                vertexBufferMemory->NativeObject_(), region);
+                *vertexBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
-            device->UnmapResourceMemory(vertexBufferMemory->NativeObject_());
+            device->UnmapResourceMemory(*vertexBufferMemory);
         }
     }
 
@@ -821,10 +821,10 @@ int aemain(::ae::base::Application* app) {
             auto& targetUniformBufferMemory =
                 uniformBufferMemories[bufferIndex];
             void* mappedMemory = device->MapResourceMemory(
-                targetUniformBufferMemory->NativeObject_(), region);
+                *targetUniformBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
             device->UnmapResourceMemory(
-                targetUniformBufferMemory->NativeObject_());
+                *targetUniformBufferMemory);
         }
 
         // コマンドバッファ作成

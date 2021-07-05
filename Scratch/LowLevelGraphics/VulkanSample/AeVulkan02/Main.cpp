@@ -269,10 +269,10 @@ int aemain(::ae::base::Application* app) {
             const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(fVertexBufferType));
             void* mappedMemory = gfxKit.Device().MapResourceMemory(
-                vertexBufferMemory->NativeObject_(), region);
+                *vertexBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
             gfxKit.Device().UnmapResourceMemory(
-                vertexBufferMemory->NativeObject_());
+                *vertexBufferMemory);
         }
     }
 
@@ -669,10 +669,10 @@ int aemain(::ae::base::Application* app) {
             auto& targetUniformBufferMemory =
                 uniformBufferMemories[bufferIndex];
             void* mappedMemory = gfxKit.Device().MapResourceMemory(
-                targetUniformBufferMemory->NativeObject_(), region);
+                *targetUniformBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
             gfxKit.Device().UnmapResourceMemory(
-                targetUniformBufferMemory->NativeObject_());
+                *targetUniformBufferMemory);
         }
 
         // コマンドバッファ作成

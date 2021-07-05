@@ -44,10 +44,10 @@ public:
 
     /// @name 内部処理用機能
     //@{
-    ResourceMemory(const ::vk::DeviceMemory& instance)
+    explicit ResourceMemory(const ::vk::DeviceMemory& instance)
     : nativeObject_(instance) {}
 
-    ResourceMemory(void* head)
+    explicit ResourceMemory(void* head)
     : head_(static_cast<uint8_t*>(head)) {}
 
     ::vk::DeviceMemory NativeObject_() const { return nativeObject_; }
