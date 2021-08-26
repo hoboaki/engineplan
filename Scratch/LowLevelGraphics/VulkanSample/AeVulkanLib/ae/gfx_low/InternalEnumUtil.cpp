@@ -645,6 +645,7 @@ namespace gfx_low {
         ::vk::ShaderStageFlagBits::eVertex,
         ::vk::ShaderStageFlagBits::eGeometry,
         ::vk::ShaderStageFlagBits::eFragment,
+        ::vk::ShaderStageFlagBits::eCompute,
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ShaderBindingStage::TERM));
     auto result = ::vk::ShaderStageFlags();
