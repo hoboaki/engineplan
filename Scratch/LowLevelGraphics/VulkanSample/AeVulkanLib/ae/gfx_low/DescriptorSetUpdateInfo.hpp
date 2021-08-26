@@ -7,6 +7,7 @@ namespace ae {
 namespace gfx_low {
 class SamplerDescriptorInfo;
 class SampledImageDescriptorInfo;
+class StorageBufferDescriptorInfo;
 class UniformBufferDescriptorInfo;
 } // namespace gfx_low
 } // namespace ae
@@ -16,7 +17,7 @@ namespace ae {
 namespace gfx_low {
 
 /// DescriptorSet の更新時に使われる情報。
-/// @todo StorageBuffer, StorageImage の対応。
+/// @todo StorageImage の対応。
 class DescriptorSetUpdateInfo {
 public:
     /// @name プロパティ
@@ -33,6 +34,19 @@ public:
     /// UniformBufferInfoCount() UniformBufferInfos() の設定。
     DescriptorSetUpdateInfo& SetUniformBufferInfos(
         int count, const UniformBufferDescriptorInfo* infos);
+
+    /// StorageBuffer 用デスクリプタ情報の数。（初期値：0）
+    int StorageBufferInfoCount() const { return storageBufferInfoCount_; }
+
+    /// StorageBuffer
+    /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
+    const StorageBufferDescriptorInfo* StorageBufferInfos() const {
+        return storageBufferInfos_.Get();
+    }
+
+    /// StorageBufferInfoCount() StorageBufferInfos() の設定。
+    DescriptorSetUpdateInfo& SetStorageBufferInfos(
+        int count, const StorageBufferDescriptorInfo* infos);
 
     /// SampledImage 用デスクリプタ情報の数。（初期値：0）
     int SampledImageInfoCount() const { return sampledImageInfoCount_; }
@@ -64,10 +78,12 @@ public:
 
 private:
     int uniformBufferInfoCount_ = 0;
-    base::Pointer<const UniformBufferDescriptorInfo> uniformBufferInfos_;
+    int storageBufferInfoCount_ = 0;
     int sampledImageInfoCount_ = 0;
-    base::Pointer<const SampledImageDescriptorInfo> sampledImageInfos_;
     int samplerInfoCount_ = 0;
+    base::Pointer<const UniformBufferDescriptorInfo> uniformBufferInfos_;
+    base::Pointer<const StorageBufferDescriptorInfo> storageBufferInfos_;
+    base::Pointer<const SampledImageDescriptorInfo> sampledImageInfos_;
     base::Pointer<const SamplerDescriptorInfo> samplerInfos_;
 };
 

@@ -18,6 +18,18 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
 }
 
 //------------------------------------------------------------------------------
+DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageBufferInfos(
+    const int count, const StorageBufferDescriptorInfo* infos) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    if (0 < count) {
+        AE_BASE_ASSERT_POINTER(infos);
+    }
+    storageBufferInfoCount_ = count;
+    storageBufferInfos_.Reset(infos);
+    return *this;
+}
+
+//------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
     const int count, const SampledImageDescriptorInfo* infos) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);

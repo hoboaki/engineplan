@@ -11,6 +11,8 @@
 #include <ae/gfx_low/SampledImageView.hpp>
 #include <ae/gfx_low/Sampler.hpp>
 #include <ae/gfx_low/SamplerDescriptorInfo.hpp>
+#include <ae/gfx_low/StorageBufferDescriptorInfo.hpp>
+#include <ae/gfx_low/StorageBufferView.hpp>
 #include <ae/gfx_low/UniformBufferDescriptorInfo.hpp>
 #include <ae/gfx_low/UniformBufferView.hpp>
 
@@ -140,6 +142,36 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
                 .setDstArrayElement(descInfo.Region().ElemOffset())
                 .setDescriptorCount(descInfo.Region().ElemCount())
                 .setDescriptorType(::vk::DescriptorType::eUniformBuffer)
+                .setPBufferInfo(&buffers[bufferCount]);
+        ++writeCount;
+
+        for (int viewIdx = 0; viewIdx < descInfo.Region().ElemCount();
+             ++viewIdx) {
+            const auto& view =
+                base::PtrToRef(base::PtrToRef(&descInfo.Views()[viewIdx]));
+            buffers[bufferCount] =
+                ::vk::DescriptorBufferInfo()
+                    .setBuffer(view.BufferResource_().NativeObject_())
+                    .setOffset(view.Region_().Offset())
+                    .setRange(view.Region_().Size());
+            ++bufferCount;
+        }
+    }
+
+    // StorageBuffer
+    for (int infoIdx = 0; infoIdx < info.StorageBufferInfoCount(); ++infoIdx) {
+        const auto& descInfo =
+            base::PtrToRef(&info.StorageBufferInfos()[infoIdx]);
+        const auto descSetIdx = descriptorSetLayouts_.DescriptorSetLayoutIndex(
+            DescriptorKind::StorageBuffer);
+        AE_BASE_ASSERT_LESS_EQUALS(0, descSetIdx);
+        writes[writeCount] =
+            ::vk::WriteDescriptorSet()
+                .setDstSet(nativeObjects_[descSetIdx])
+                .setDstBinding(descInfo.Region().BindingIndex())
+                .setDstArrayElement(descInfo.Region().ElemOffset())
+                .setDescriptorCount(descInfo.Region().ElemCount())
+                .setDescriptorType(::vk::DescriptorType::eStorageBuffer)
                 .setPBufferInfo(&buffers[bufferCount]);
         ++writeCount;
 
