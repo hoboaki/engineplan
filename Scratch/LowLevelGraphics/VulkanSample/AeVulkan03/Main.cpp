@@ -23,7 +23,7 @@
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
-#include <ae/gfx_low/DrawCallInfo.hpp>
+#include <ae/gfx_low/DispatchCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -45,8 +45,22 @@
 //------------------------------------------------------------------------------
 namespace {
 
+// スレッドグループ数
+constexpr uint32_t fThreadGroupsX = 4;
+constexpr uint32_t fThreadGroupsY = 4;
+
+// スレッドグループあたりのスレッド数
+// （シェーダーコード内とあわせる必要がある）
+constexpr uint32_t fThreadsPerThreadGroupX = 16;
+constexpr uint32_t fThreadsPerThreadGroupY = 16;
+
+// データ出力先の配列長。
+constexpr uint32_t fElemsLength = fThreadsPerThreadGroupX *
+                                  fThreadsPerThreadGroupY * fThreadGroupsX *
+                                  fThreadGroupsY;
+
 struct fStorageDataType {
-    uint32_t elems[16*16*4*4];
+    uint32_t elems[fElemsLength];
 };
 
 const uint32_t fCompShaderCode[] = {
@@ -212,6 +226,12 @@ int aemain(::ae::base::Application* app) {
             cmd.CmdBeginComputePass(::ae::gfx_low::ComputePassBeginInfo());
             cmd.CmdSetComputePipeline(pipeline);
             cmd.CmdSetDescriptorSet(descriptorSet);
+            cmd.CmdDispatch(
+                ::ae::gfx_low::DispatchCallInfo()
+                    .SetThreadsPerThreadGroup(::ae::base::Extent3i(
+                        fThreadsPerThreadGroupX, fThreadsPerThreadGroupY, 1))
+                    .SetThreadGroups(::ae::base::Extent3i(
+                        fThreadGroupsX, fThreadGroupsY, 1)));
             cmd.CmdEndComputePass();
         }
         cmd.EndRecord();
@@ -229,7 +249,29 @@ int aemain(::ae::base::Application* app) {
     }
     
     // 処理結果を出力
-    // ...
+    {
+        // 結果を取得
+        std::unique_ptr<fStorageDataType> data(new fStorageDataType);
+        std::memcpy(
+            data.get(),
+            device->MapResourceMemory(
+                *storageBufferMemory, 
+                ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizeof(fStorageDataType))
+                ),
+            sizeof(fStorageDataType)
+            );
+        device->UnmapResourceMemory(*storageBufferMemory);
+
+        // 最初と最後だけ出力
+        auto dump = [&data](int startIdx) {
+            AE_BASE_COUTFMT_LINE_WITH_TIME("[%d, %d, %d, %d] %u, %u, %u, %u",
+                startIdx, startIdx + 1, startIdx + 2, startIdx + 3,
+                data->elems[startIdx], data->elems[startIdx + 1],
+                data->elems[startIdx + 2], data->elems[startIdx + 3]);
+        };
+        dump(0);
+        dump(fElemsLength - 1 - 4);
+    }
 
     return 0;
 }
