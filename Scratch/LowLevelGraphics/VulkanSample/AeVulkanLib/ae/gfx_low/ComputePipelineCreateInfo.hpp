@@ -39,6 +39,7 @@ public:
         const PipelineShaderInfo& shaderInfo)
     {
         shaderInfo_ = shaderInfo;
+        return *this;
     }
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）

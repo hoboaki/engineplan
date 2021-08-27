@@ -15,6 +15,9 @@
 #include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/ComputePassBeginInfo.hpp>
+#include <ae/gfx_low/ComputePipeline.hpp>
+#include <ae/gfx_low/ComputePipelineCreateInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
@@ -191,12 +194,25 @@ int aemain(::ae::base::Application* app) {
                 AE_BASE_ARRAY_LENGTH(storageBufferDescs), storageBufferDescs));
     }
 
+    // ComputePipeline 生成
+    ::ae::gfx_low::ComputePipeline pipeline(
+        ::ae::gfx_low::ComputePipelineCreateInfo()
+            .SetDevice(device.get())
+            .SetShaderInfo(::ae::gfx_low::PipelineShaderInfo()
+                               .SetResource(compShader.get())
+                               .SetEntryPointNamePtr("main"))
+            .SetDescriptorSetSpecInfo(descriptorSetSpecInfo));
+
     // コマンドの実行＆完了待ち
     {
         // コマンドバッファ作成
         auto& cmd = commandBuffer;
         cmd.BeginRecord();
         {
+            cmd.CmdBeginComputePass(::ae::gfx_low::ComputePassBeginInfo());
+            cmd.CmdSetComputePipeline(pipeline);
+            cmd.CmdSetDescriptorSet(descriptorSet);
+            cmd.CmdEndComputePass();
         }
         cmd.EndRecord();
 

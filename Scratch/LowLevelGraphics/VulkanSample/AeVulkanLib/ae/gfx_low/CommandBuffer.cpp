@@ -472,8 +472,11 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
             descriptorSet.Layouts_().DescriptorSetLayoutCount(),
             descriptorSet.NativeObjects_(), 0, nullptr);
     } else if (activePass_.Get(CommandBufferFeature::Compute)) {
-        // 未実装
-        AE_BASE_ASSERT_NOT_REACHED();
+        AE_BASE_ASSERT(currentComputePipeline_.IsValid());
+        nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eCompute,
+            currentComputePipeline_->PipelineLayout_(), 0,
+            descriptorSet.Layouts_().DescriptorSetLayoutCount(),
+            descriptorSet.NativeObjects_(), 0, nullptr);
     } else {
         AE_BASE_ASSERT_NOT_REACHED();
     }
