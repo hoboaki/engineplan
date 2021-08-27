@@ -8,6 +8,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/ComputePipeline.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
@@ -441,6 +442,23 @@ void CommandBuffer::CmdEndRenderPass() {
     activePass_.Set(CommandBufferFeature::Render, false);
 }
 
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+    activePass_.Set(CommandBufferFeature::Compute, true);
+    currentComputePipeline_.Reset();
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdEndComputePass() {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+
+    activePass_.Set(CommandBufferFeature::Compute, false);
+}
+
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
@@ -527,6 +545,15 @@ void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     nativeObject_.draw(info.VertexCount(), info.InstanceCount(),
         info.VertexOffset(), info.InstanceOffset());
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+    nativeObject_.bindPipeline(
+        ::vk::PipelineBindPoint::eCompute, pipeline.NativeObject_());
+    currentComputePipeline_.Reset(&pipeline);
 }
 
 } // namespace gfx_low

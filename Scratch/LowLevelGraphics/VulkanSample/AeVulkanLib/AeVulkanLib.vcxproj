@@ -236,6 +236,12 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\ComputePassBeginInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\ComputePipeline.hpp" />
+    <ClInclude Include="ae\gfx_low\ComputePipelineCreateInfo.hpp" />
     <ClInclude Include="ae\gfx_low\ImageSubresourceRange.hpp">
       <SubType>
       </SubType>
@@ -455,6 +461,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\StorageBufferView.hpp" />
     <ClInclude Include="ae\gfx_low\UniformBufferDescriptorInfo.hpp">
       <SubType>
       </SubType>
@@ -816,6 +823,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\ComputePipeline.cpp" />
     <ClCompile Include="ae\gfx_low\CopyBufferToImageInfo.cpp">
       <SubType>
       </SubType>

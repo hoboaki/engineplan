@@ -12,6 +12,8 @@
 namespace ae {
 namespace gfx_low {
 class CommandBufferCreateInfo;
+class ComputePassBeginInfo;
+class ComputePipeline;
 class CopyBufferToImageInfo;
 class DescriptorSet;
 class Device;
@@ -127,6 +129,19 @@ public:
     void CmdEndRenderPass();
     //@}
 
+    /// @name Compute コマンド追加の開始・終了
+    //@{
+    /// Compute コマンド郡の開始コマンド。
+    /// @details
+    /// 開始・終了コマンドに詳細ついてはクラスの説明を参照してください。
+    void CmdBeginComputePass(const ComputePassBeginInfo& info);
+
+    /// Compute コマンド群の終了コマンド。
+    /// @details
+    /// 開始・終了コマンドに詳細ついてはクラスの説明を参照してください。
+    void CmdEndComputePass();
+    //@}
+
     /// @name Render & Compute 共通コマンド郡
     //@{
     /// デスクリプタセットを設定。
@@ -166,6 +181,14 @@ public:
     void CmdDraw(const DrawCallInfo& info);
     //@}
 
+    /// @name Compute コマンド群
+    //@{
+    /// コンピュートパイプラインを設定。
+    /// @details CmdBeginRenderPass を呼んでから Draw 系コマンドを積む前に
+    /// 必ず設定する必要があります。
+    void CmdSetComputePipeline(const ComputePipeline& pipeline);
+    //@}
+
     /// @name 内部処理用機能
     //@{
     ::vk::CommandBuffer& NativeObject_() { return nativeObject_; }
@@ -189,6 +212,7 @@ private:
     CommandBufferFeatureBitSet activePass_;
     base::RuntimeMarray<RenderPassProperty> renderPassProperties_;
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
+    base::Pointer<const ComputePipeline> currentComputePipeline_;
 };
 
 } // namespace gfx_low
