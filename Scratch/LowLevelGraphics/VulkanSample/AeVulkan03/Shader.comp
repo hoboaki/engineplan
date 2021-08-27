@@ -10,7 +10,7 @@ void main()
 {
    uint width = 16 * 4;
 	uint idx = gl_GlobalInvocationID.x + gl_GlobalInvocationID.y * width;
-   outputData.elems[idx] = idx;
+   outputData.elems[idx] = idx * 2;
 }
 
 // EOF

@@ -270,7 +270,7 @@ int aemain(::ae::base::Application* app) {
                 data->elems[startIdx + 2], data->elems[startIdx + 3]);
         };
         dump(0);
-        dump(fElemsLength - 1 - 4);
+        dump(fElemsLength - 4);
     }
 
     return 0;
