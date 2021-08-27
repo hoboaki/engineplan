@@ -67,15 +67,19 @@
         - [Vulkan](#vulkan-14)
         - [DirectX 12](#directx-12-13)
         - [Metal](#metal-13)
-- [最適化](#最適化)
-    - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
+    - [GPGPU実行](#gpgpu実行)
         - [Vulkan](#vulkan-15)
         - [DirectX 12](#directx-12-14)
         - [Metal](#metal-14)
-    - [インダイレクト引数描画](#インダイレクト引数描画)
+- [最適化](#最適化)
+    - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
         - [Vulkan](#vulkan-16)
         - [DirectX 12](#directx-12-15)
         - [Metal](#metal-15)
+    - [インダイレクト引数描画](#インダイレクト引数描画)
+        - [Vulkan](#vulkan-17)
+        - [DirectX 12](#directx-12-16)
+        - [Metal](#metal-16)
     - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
 - [付録](#付録)
     - [参考](#参考)
@@ -891,6 +895,35 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 - [MTLBlitCommandEncoder.copy()](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400752-copy) で BufferToImage コピーを実行。（圧縮テクスチャ用は[こちら](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400771-copy)）
 - sourceBytesPerRow、sourceBytesPerImage（depthPitch）、sourceSize（w/h/d）、destinationSlice、destinationLevel、destinationOrigin（オフセットxyz）を指定。
 
+## GPGPU実行
+
+- いわゆる Dispatch の部分の話。
+- Vulkan と DX12 は同じ仕様で１スレッドグループあたりの処理数をシェーダーコード側に書く。
+- 一方、Metal は ソースコード側で１スレッドグループ辺りの処理数を書く。
+- 総スレッドグループ数はどのライブラリもソースコード側で書く。
+- 制約的には Metal が一番厳しいのでそれにあわせておくとOK。
+
+### Vulkan
+
+- [こちらが参考ページ](https://vkguide.dev/docs/gpudriven/compute_shaders/)。
+- シェーダーコード側で１つのスレッドグループあたりにまわしたい処理数を x=16,y=16 みたいに記述。省略すると1なのかな。
+- ソースコード側でそれぞれを何回実行したいのかを X,Y,Z で指定。16x9 回実行したかったら 16,9,1 を指定。
+
+### DirectX 12
+
+- [ID3D12GraphicsCommandList::Dispatch](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-dispatch)でXYZそれぞれのスレッドグループ総数を指定。
+- １つあたりのスレッドグループで 16x16 処理してそれを 16x9 回実行したかったら 16,9,1 を指定。
+- 16x16 の部分はシェーダーコード側で書く。
+
+### Metal
+
+- [こちらのページの図](https://developer.apple.com/documentation/metal/calculating_threadgroup_and_grid_sizes)が分かりやすい。
+- disptach関数が２つある。
+- １つは dispatchThreadgroups 関数。
+- threadsPerThreadgroup で１つあたりのスレッドグループで処理する数を、 threadgroupsPerGrid で総スレッドグループ数を指定。
+- もう１つは dispatchThreads 関数。
+- threadsPerThreadgroup で１つ当たりのスレッドグループで処理する数を、threadsPerGrid でXYZそれぞれの総処理数を指定。この呼び出し方は他の２つのライブラリにはない。
+- あと どちらの呼び出し方にも共通するが、１スレッドグループあたりの処理数はシェーダーコード側には書かない。
 
 # 最適化
 

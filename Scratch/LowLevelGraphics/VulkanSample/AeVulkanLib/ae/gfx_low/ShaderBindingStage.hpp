@@ -20,6 +20,9 @@ enum class ShaderBindingStage {
     /// フラグメントシェーダーステージ。
     Fragment,
 
+    /// コンピュートシェーダーステージ。
+    Compute,
+
     TERM,
 };
 

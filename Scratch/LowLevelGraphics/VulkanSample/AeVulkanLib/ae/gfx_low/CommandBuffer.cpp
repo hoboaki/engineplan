@@ -8,12 +8,14 @@
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/ComputePipeline.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/DispatchCallInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
@@ -441,6 +443,23 @@ void CommandBuffer::CmdEndRenderPass() {
     activePass_.Set(CommandBufferFeature::Render, false);
 }
 
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+    activePass_.Set(CommandBufferFeature::Compute, true);
+    currentComputePipeline_.Reset();
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdEndComputePass() {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+
+    activePass_.Set(CommandBufferFeature::Compute, false);
+}
+
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
@@ -454,8 +473,11 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
             descriptorSet.Layouts_().DescriptorSetLayoutCount(),
             descriptorSet.NativeObjects_(), 0, nullptr);
     } else if (activePass_.Get(CommandBufferFeature::Compute)) {
-        // 未実装
-        AE_BASE_ASSERT_NOT_REACHED();
+        AE_BASE_ASSERT(currentComputePipeline_.IsValid());
+        nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eCompute,
+            currentComputePipeline_->PipelineLayout_(), 0,
+            descriptorSet.Layouts_().DescriptorSetLayoutCount(),
+            descriptorSet.NativeObjects_(), 0, nullptr);
     } else {
         AE_BASE_ASSERT_NOT_REACHED();
     }
@@ -527,6 +549,23 @@ void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     nativeObject_.draw(info.VertexCount(), info.InstanceCount(),
         info.VertexOffset(), info.InstanceOffset());
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+    nativeObject_.bindPipeline(
+        ::vk::PipelineBindPoint::eCompute, pipeline.NativeObject_());
+    currentComputePipeline_.Reset(&pipeline);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdDispatch(const DispatchCallInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+    nativeObject_.dispatch(info.ThreadGroups().width,
+        info.ThreadGroups().height, info.ThreadGroups().depth);
 }
 
 } // namespace gfx_low
