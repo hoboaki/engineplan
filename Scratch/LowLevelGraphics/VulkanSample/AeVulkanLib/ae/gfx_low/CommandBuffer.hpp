@@ -17,6 +17,7 @@ class ComputePipeline;
 class CopyBufferToImageInfo;
 class DescriptorSet;
 class Device;
+class DispatchCallInfo;
 class DrawCallInfo;
 class ImageResourceBarrierInfo;
 class RenderPassBeginInfo;
@@ -187,6 +188,9 @@ public:
     /// @details CmdBeginRenderPass を呼んでから Draw 系コマンドを積む前に
     /// 必ず設定する必要があります。
     void CmdSetComputePipeline(const ComputePipeline& pipeline);
+
+    /// 設定済のコンピュートパイプラインに基づいてディスパッチコールをする。
+    void CmdDispatch(const DispatchCallInfo& info);
     //@}
 
     /// @name 内部処理用機能

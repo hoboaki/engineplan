@@ -15,6 +15,7 @@
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/DispatchCallInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
@@ -557,6 +558,14 @@ void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
     nativeObject_.bindPipeline(
         ::vk::PipelineBindPoint::eCompute, pipeline.NativeObject_());
     currentComputePipeline_.Reset(&pipeline);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdDispatch(const DispatchCallInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
+    nativeObject_.dispatch(info.ThreadGroups().width,
+        info.ThreadGroups().height, info.ThreadGroups().depth);
 }
 
 } // namespace gfx_low

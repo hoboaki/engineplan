@@ -236,6 +236,10 @@
     <ClInclude Include="ae\base\Vector3i.hpp" />
     <ClInclude Include="ae\base\Vector4.hpp" />
     <ClInclude Include="ae\base\Vector4i.hpp" />
+    <ClInclude Include="ae\gfx_low\DispatchCallInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ComputePassBeginInfo.hpp">
       <SubType>
       </SubType>
@@ -857,6 +861,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\Device.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DispatchCallInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
