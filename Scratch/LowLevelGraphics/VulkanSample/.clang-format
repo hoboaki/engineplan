@@ -31,13 +31,13 @@ SpacesBeforeTrailingComments: 1
 ReflowComments: false
 
 # インライン関数のみ1行での記述を許可
-AllowShortFunctionsOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: InlineOnly
 
 # 継承
 BreakInheritanceList: BeforeComma
 
 # 関数引数の改行後インデント
-AlignAfterOpenBracket: DontAlign
+AlignAfterOpenBracket: AlwaysBreak
 
 # 関数の呼び出し引数を全て１行にするか全て改行する
 BinPackArguments: false
@@ -52,7 +52,7 @@ AllowAllConstructorInitializersOnNextLine: false
 ## メンバ初期化子のコロンとカンマの手前で改行
 BreakConstructorInitializers: BeforeComma
 ## コンストラクタ初期化子を１行に１つだけにする
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ## コンストラクタ初期化子のインデント幅
 ConstructorInitializerIndentWidth: 0
 ## コンストラクタ初期化子のコロンの前に空白を挿入
