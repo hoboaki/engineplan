@@ -78,4 +78,4 @@ BreakBeforeTernaryOperators: true
 SpacesInAngles: false
 
 # テンプレート宣言の後で複数行のであれば改行する
-AlwaysBreakTemplateDeclarations: MultiLine
+AlwaysBreakTemplateDeclarations: Yes
