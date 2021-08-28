@@ -73,27 +73,17 @@ struct CalendarPod {
     /// @param month 月。値の意味は CalendarPod::month と同じ。
     static int DaysInMonth(int year, int month);
 
-    u16 year; ///< 年。 CalendarPod::YearMin <= val <= CalendarPod::YearMax
-              ///< 。0は西暦1年を示す。
-    u16 month; ///< 月。 CalendarPod::MonthMin <= val <= CalendarPod::MonthMax
-               ///< 。0は1月を示す。
-    u16 dayOfYear; ///< 日。 CalendarPod::DayOfYearMin <= val <=
-                   ///< CalendarPod::DayOfYearMax 。0は1月1日を示す。
-    u16 dayOfMonth; ///< 月の中の日。 CalendarPod::DayOfMonthMin <= val <=
-                    ///< CalendarPod::DayOfMonthMax 。0は1日を示す。
-    u16 dayOfWeek; ///< 週の中の日。 CalendarPod::DayOfWeekMin <= val <=
-                   ///< CalendarPod::DayOfWeekMax 。0は日曜日を示す。
+    u16 year; ///< 年。 CalendarPod::YearMin <= val <= CalendarPod::YearMax 。0は西暦1年を示す。
+    u16 month; ///< 月。 CalendarPod::MonthMin <= val <= CalendarPod::MonthMax 。0は1月を示す。
+    u16 dayOfYear; ///< 日。 CalendarPod::DayOfYearMin <= val <= CalendarPod::DayOfYearMax 。0は1月1日を示す。
+    u16 dayOfMonth; ///< 月の中の日。 CalendarPod::DayOfMonthMin <= val <= CalendarPod::DayOfMonthMax 。0は1日を示す。
+    u16 dayOfWeek; ///< 週の中の日。 CalendarPod::DayOfWeekMin <= val <= CalendarPod::DayOfWeekMax 。0は日曜日を示す。
     u16 hour; ///< 時。 CalendarPod::HourMin <= val <= CalendarPod::HourMax 。
-    u16 min; ///< 分。 CalendarPod::MinuteMin <= val <= CalendarPod::MinuteMax
-             ///< 。
-    u16 sec; ///< 秒。 CalendarPod::SecondMin <= val <= CalendarPod::SecondMax
-             ///< 。
-    u16 msec; ///< ミリ秒。 CalendarPod::MillisecondMin <= val <=
-              ///< CalendarPod::MillisecondMax 。
-    u16 usec; ///< マイクロ秒。 CalendarPod::MicrosecondMin <= val <=
-              ///< CalendarPod::MicrosecondMax 。
-    u16 nsec; ///< ナノ秒。 CalendarPod::NanosecondsMin <= val <=
-              ///< CalendarPod::NanosecondsMax 。
+    u16 min; ///< 分。 CalendarPod::MinuteMin <= val <= CalendarPod::MinuteMax 。
+    u16 sec; ///< 秒。 CalendarPod::SecondMin <= val <= CalendarPod::SecondMax 。
+    u16 msec; ///< ミリ秒。 CalendarPod::MillisecondMin <= val <= CalendarPod::MillisecondMax 。
+    u16 usec; ///< マイクロ秒。 CalendarPod::MicrosecondMin <= val <= CalendarPod::MicrosecondMax 。
+    u16 nsec; ///< ナノ秒。 CalendarPod::NanosecondsMin <= val <= CalendarPod::NanosecondsMax 。
 };
 
 /// CalendarPod のクラス版。

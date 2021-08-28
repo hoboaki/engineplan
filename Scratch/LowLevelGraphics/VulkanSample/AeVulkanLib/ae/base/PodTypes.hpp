@@ -69,8 +69,7 @@ typedef PodStruct<size_t> SizePod; ///< アドレスサイズを表すデータ�
 /// @name struct化されたアドレス型
 //@{
 typedef PodStruct<ptr_t>
-    PtrPod; ///< ポインタ型。void** ->
-            ///< void*に変換できてしまう事故を防ぐため基本はこちらを使用。
+    PtrPod; ///< ポインタ型。void** -> void*に変換できてしまう事故を防ぐため基本はこちらを使用。
 typedef PodStruct<const_ptr_t> ConstPtrPod; ///< ptr_tのconst版。
 typedef PodStruct<anyptr_t> AnyPtrPod; ///< 何でもいけるポインタ型。
 typedef PodStruct<const_anyptr_t> ConstAnyPtrPod; ///< any_ptr_tのconst版。

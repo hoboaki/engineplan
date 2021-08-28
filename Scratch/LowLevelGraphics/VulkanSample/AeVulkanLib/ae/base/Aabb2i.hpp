@@ -77,8 +77,7 @@ public:
     /// @name 正領域
     //@{
     bool IsPositive() const; ///< Begin() が (0,0) 以上か。
-    const Aabb2i ToPositive() const; ///< Begin() が (0,0) 未満なら (0,0)
-                                     ///< 以上になるようにしたAABBを取得する。
+    const Aabb2i ToPositive() const; ///< Begin() が (0,0) 未満なら (0,0) 以上になるようにしたAABBを取得する。
     //@}
 
     //------------------------------------------------------------------------------

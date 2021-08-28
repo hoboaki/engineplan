@@ -69,8 +69,7 @@ typedef ScalerClass<size_t> Size; ///< アドレスサイズを表すデータ�
 /// @name 必ず初期化されるアドレス型
 //@{
 typedef ScalerClass<ptr_t>
-    Ptr; ///< ポインタ型。void** ->
-         ///< void*に変換できてしまう事故を防ぐため基本はこちらを使用。
+    Ptr; ///< ポインタ型。void** -> void*に変換できてしまう事故を防ぐため基本はこちらを使用。
 typedef ScalerClass<const_ptr_t> ConstPtr; ///< ptr_tのconst版。
 typedef ScalerClass<anyptr_t> AnyPtr; ///< 何でもいけるポインタ型。
 typedef ScalerClass<const_anyptr_t> ConstAnyPtr; ///< any_ptr_tのconst版。

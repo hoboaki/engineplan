@@ -68,8 +68,7 @@ typedef std::size_t pword_t; ///< アドレスサイズを表すデータ型。
 /// @name アドレス型
 //@{
 typedef u8*
-    ptr_t; ///< ポインタ型。void** ->
-           ///< void*に変換できてしまう事故を防ぐため基本はこちらを使用。
+    ptr_t; ///< ポインタ型。void** -> void* に変換できてしまう事故を防ぐため基本はこちらを使用。
 typedef const u8* const_ptr_t; ///< ptr_tのconst版。
 typedef void* anyptr_t; ///< 何でもいけるポインタ型。
 typedef const void* const_anyptr_t; ///< any_ptr_tのconst版。

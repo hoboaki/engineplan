@@ -114,14 +114,11 @@ struct Matrix34Pod {
     /// @name 乗算（引数が同じオブジェクトでも問題無し）
     //@{
     const Vector3Pod Mul(
-        const Vector3Pod&) const; ///< @brief 乗算した結果を得る。 @details
-                                  ///< 4行目は0,0,0,1として計算する。
+        const Vector3Pod&) const; ///< @brief 乗算した結果を得る。 @details 4行目は0,0,0,1として計算する。
     const Matrix34Pod Mul(const Matrix34Pod&)
-        const; ///< @brief 乗算した結果を得る。 @details this
-               ///< x rhs。4行目は0,0,0,1として計算する。
+        const; ///< @brief 乗算した結果を得る。 @details this x rhs。4行目は0,0,0,1として計算する。
     Matrix34Pod& MulAssign(
-        const Matrix34Pod&); ///< @brief 乗算し結果を代入する。@details  this =
-                             ///< this x rhs。4行目は0,0,0,1として計算する。
+        const Matrix34Pod&); ///< @brief 乗算し結果を代入する。@details  this = this x rhs。4行目は0,0,0,1として計算する。
     //@}
 
     //============================================================
