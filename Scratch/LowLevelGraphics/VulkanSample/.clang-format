@@ -4,13 +4,16 @@
 BasedOnStyle: Google
 
 # C++バージョン設定
-Standard: c++14
+Standard: c++17
 
 # アクセス修飾子はインデントしない
 AccessModifierOffset: -4
 
 # インデント幅は4
 IndentWidth: 4
+
+# 文の途中で改行した場合のインデント幅
+ContinuationIndentWidth: 4
 
 # １行制限なし
 ColumnLimit: 80
@@ -43,10 +46,20 @@ BinPackArguments: false
 BinPackParameters: false
 
 # コンストラクタ
-AllowAllConstructorInitializersOnNextLine: true
-BreakConstructorInitializersBeforeComma: true
+## ConstructorInitializerAllOnOneLineOrOnePerLine が true のとき
+## メンバ初期化リストが１行に収まらない場合に１回の改行だけで収まるならそれを許可しない
+AllowAllConstructorInitializersOnNextLine: false
+## メンバ初期化子のコロンとカンマの手前で改行
+BreakConstructorInitializers: BeforeComma
+## コンストラクタ初期化子を１行に１つだけにする
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
+## コンストラクタ初期化子のインデント幅
 ConstructorInitializerIndentWidth: 0
+## コンストラクタ初期化子のコロンの前に空白を挿入
+SpaceBeforeCtorInitializerColon: true
+
+# 一様初期化子の波括弧の前後の空白を除去
+Cpp11BracedListStyle: false
 
 # case はインデント無し
 IndentCaseLabels: false
@@ -66,6 +79,3 @@ SpacesInAngles: false
 
 # テンプレート宣言の後で複数行のであれば改行する
 AlwaysBreakTemplateDeclarations: MultiLine
-
-# 一様初期化子の波括弧の前後の空白を除去
-Cpp11BracedListStyle: false
