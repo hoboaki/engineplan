@@ -4,7 +4,7 @@
 BasedOnStyle: Google
 
 # C++バージョン設定
-Standard: c++11
+Standard: c++17
 
 # アクセス修飾子はインデントしない
 AccessModifierOffset: -4
@@ -12,12 +12,14 @@ AccessModifierOffset: -4
 # インデント幅は4
 IndentWidth: 4
 
-# 80字を最大
+# 文の途中で改行した場合のインデント幅
+ContinuationIndentWidth: 4
+
+# １行制限なし
 ColumnLimit: 80
 
 # 連続空行は1まで認める
 MaxEmptyLinesToKeep: 1
-
 
 # コメントを縦にそろえない
 AlignTrailingComments: false
@@ -25,20 +27,39 @@ AlignTrailingComments: false
 # 行末コメントの前に入れるスペース数
 SpacesBeforeTrailingComments: 1
 
+# コメントを最大の列数に応じて自動改行させない
+ReflowComments: false
+
 # インライン関数のみ1行での記述を許可
-AllowShortFunctionsOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: InlineOnly
 
 # 継承
 BreakInheritanceList: BeforeComma
 
 # 関数引数の改行後インデント
-AlignAfterOpenBracket: DontAlign
+AlignAfterOpenBracket: AlwaysBreak
+
+# 関数の呼び出し引数を全て１行にするか全て改行する
+BinPackArguments: false
+
+# 関数の宣言や定義の引数を全て１行にするか全て改行する
+BinPackParameters: false
 
 # コンストラクタ
-AllowAllConstructorInitializersOnNextLine: true
-BreakConstructorInitializersBeforeComma: true
+## ConstructorInitializerAllOnOneLineOrOnePerLine が true のとき
+## メンバ初期化リストが１行に収まらない場合に１回の改行だけで収まるならそれを許可しない
+AllowAllConstructorInitializersOnNextLine: false
+## メンバ初期化子のコロンとカンマの手前で改行
+BreakConstructorInitializers: BeforeComma
+## コンストラクタ初期化子を１行に１つだけにする
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
+## コンストラクタ初期化子のインデント幅
 ConstructorInitializerIndentWidth: 0
+## コンストラクタ初期化子のコロンの前に空白を挿入
+SpaceBeforeCtorInitializerColon: true
+
+# 一様初期化子の波括弧の前後の空白を除去
+Cpp11BracedListStyle: false
 
 # case はインデント無し
 IndentCaseLabels: false
@@ -47,8 +68,14 @@ IndentCaseLabels: false
 AllowShortCaseLabelsOnASingleLine: true
 
 # 改行許可
-AllowAllArgumentsOnNextLine: true
-AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+
+# 三項演算子の前で改行
+BreakBeforeTernaryOperators: true
 
 # テンプレート引数の括弧内スペースは無し
 SpacesInAngles: false
+
+# テンプレート宣言の後で複数行のであれば改行する
+AlwaysBreakTemplateDeclarations: Yes
