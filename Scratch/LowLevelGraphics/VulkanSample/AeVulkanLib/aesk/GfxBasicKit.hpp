@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <ae/base/Extent2i.hpp>
 #include <ae/base/RuntimeAutoArray.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
@@ -50,6 +51,9 @@ public:
     /// @details Swapchain::AcquireNextImage() を呼ぶ前にこの関数で待つ必要がある。
     void WaitToResourceUsable();
 
+    /// @brief スクリーンリサイズ処理が必要なら行う。
+    void ScreenResizeProcessIfNeeds();
+
     /// 現在記録可能な汎用コマンドバッファの取得。
     ::ae::gfx_low::CommandBuffer& CurrentCommandBuffer() {
         return commandBuffers_[bufferIndex_];
@@ -74,6 +78,10 @@ private:
         ::ae::gfx_low::ImageFormat::D32Sfloat;
     const int DefaultSwapchainImageCount = 3;
     //------------------------------------------------------------------------------
+    void SetupSwapchainAndDepthBuffer();
+    void CleanupSwapchainAndDepthBuffer();
+    //------------------------------------------------------------------------------
+    ::ae::base::Display& display_;
     ::std::unique_ptr<::ae::gfx_low::System> system_;
     ::std::unique_ptr<::ae::gfx_low::Device> device_;
     ::std::unique_ptr<::ae::gfx_low::SwapchainMaster> swapchainMaster_;
@@ -84,6 +92,7 @@ private:
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers_;
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::Fence> fences_;
     int bufferIndex_ = 0;
+    ::ae::base::Extent2i currentSwapchainExtent_ = {};
 };
 
 } // namespace aesk

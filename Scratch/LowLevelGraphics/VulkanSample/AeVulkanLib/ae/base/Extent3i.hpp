@@ -26,6 +26,20 @@ struct Extent3iPod {
     /// 奥幅。
     int depth;
     //@}
+
+    /// @name 比較
+    //@{
+    /// 等価比較。
+    bool Equals(const Extent3iPod& rhs) const {
+        return width == rhs.width && height == rhs.height && depth == rhs.depth;
+    }
+    //@}
+
+    /// @name 演算子オーバーロード
+    //@{
+    bool operator==(const Extent3iPod& rhs) const { return Equals(rhs); }
+    bool operator!=(const Extent3iPod& rhs) const { return !Equals(rhs); }
+    //@}
 };
 
 /// Extent3iPod のクラス版。

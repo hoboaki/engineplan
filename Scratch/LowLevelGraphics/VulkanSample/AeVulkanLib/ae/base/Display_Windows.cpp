@@ -7,6 +7,7 @@
 #include <ae/base/KeyKind.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/base/Ref.hpp>
+#include <ae/base/Screen.hpp>
 #include <ae/base/SdkHeader.hpp>
 #include <ae/base/Unused.hpp>
 
@@ -152,9 +153,11 @@ Screen& Display::MainScreen() {
 
 //------------------------------------------------------------------------------
 void Display::Show() {
+    tCurrentDisplay.Set(ext_);
     ext_.isClosed = false;
     ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
     UpdateWindow(ext_.hwindow);
+    tCurrentDisplay.Unset(ext_);
 }
 
 //------------------------------------------------------------------------------
@@ -191,7 +194,11 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     RegisterClassEx(&windowClass);
 
     // 変数準備
-    const int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+    int style =
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+    if (context.IsResizableWindow()) {
+        style |= WS_THICKFRAME | WS_MAXIMIZEBOX;
+    }
 
     // 矩形の計算
     RECT rect = { 0, 0, LONG(context.Width()), LONG(context.Height()) };
@@ -262,6 +269,7 @@ void Display_Ext::PollEvent(Application&) {
 //------------------------------------------------------------------------------
 LRESULT
 Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    AE_BASE_ASSERT(tCurrentDisplay.IsValid());
     return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
@@ -274,6 +282,11 @@ LRESULT Display_Ext::WindowProcessLocal(
     switch (msg) {
     case WM_GETMINMAXINFO: // set window's minimum size
         ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;
+        return 0;
+
+    case WM_SIZE:
+        tCurrentDisplay->mainScreen->SetExtent_(
+            Extent2i(LOWORD(lParam), HIWORD(lParam)));
         return 0;
 
     case WM_SYSKEYDOWN: break;

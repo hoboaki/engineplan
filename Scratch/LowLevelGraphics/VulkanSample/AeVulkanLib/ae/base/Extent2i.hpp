@@ -24,10 +24,24 @@ struct Extent2iPod {
     int height;
     //@}
 
+    /// @name 比較
+    //@{
+    /// 等価比較。
+    bool Equals(const Extent2iPod& rhs) const { 
+        return width == rhs.width && height == rhs.height;
+    }
+    //@}
+
     /// @name 変換
     //@{
     /// 浮動小数版に変換。
     Extent2Pod ToExtent2() const;
+    //@}
+
+    /// @name 演算子オーバーロード
+    //@{
+    bool operator==(const Extent2iPod& rhs) const { return Equals(rhs); }
+    bool operator!=(const Extent2iPod& rhs) const { return !Equals(rhs); }
     //@}
 };
 

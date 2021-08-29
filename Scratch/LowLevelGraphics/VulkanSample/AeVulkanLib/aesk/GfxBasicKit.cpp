@@ -22,11 +22,9 @@ namespace aesk {
 
 //------------------------------------------------------------------------------
 GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
-: commandBuffers_(DefaultSwapchainImageCount)
+: display_(::ae::base::PtrToRef(display))
+, commandBuffers_(DefaultSwapchainImageCount)
 , fences_(DefaultSwapchainImageCount) {
-    // メモ
-    auto& disp = ::ae::base::PtrToRef(display);
-
     // グラフィックスシステムインスタンス作成
     system_.reset(new ::ae::gfx_low::System(
         ::ae::gfx_low::SystemCreateInfo().SetDebugLevel(
@@ -50,45 +48,6 @@ GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
                 .SetQueueCreateInfos(queueCount, queueCreateInfos)));
     }
 
-    // Swapchain の作成
-    {
-        auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
-                               .SetDevice(device_.get())
-                               .SetScreen(&disp.MainScreen())
-                               .SetSwapchainCountMax(1);
-        swapchainMaster_.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
-    }
-    swapchain_ = swapchainMaster_->CreateSwapchain(
-        ae::gfx_low::SwapchainCreateInfo().SetImageCount(DefaultSwapchainImageCount));
-
-    // DepthBuffer 作成
-    {
-        const auto specInfo =
-            ::ae::gfx_low::ImageResourceSpecInfo()
-                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
-                .SetFormat(DefaultDepthBufferFormat)
-                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
-                .SetExtent(::ae::base::Extent2i(
-                    disp.MainScreen().Width(), disp.MainScreen().Height()))
-                .SetUsageBitSet(::ae::gfx_low::ImageResourceUsageBitSet().Set(
-                    ::ae::gfx_low::ImageResourceUsage::DepthStencilImage,
-                    true));
-        depthBufferMemory_.Reset(device_.get(),
-            ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
-                .SetParams(device_->CalcResourceMemoryRequirements(specInfo)));
-        depthBufferImage_.reset(new ::ae::gfx_low::ImageResource(
-            ::ae::gfx_low::ImageResourceCreateInfo()
-                .SetDevice(device_.get())
-                .SetSpecInfo(specInfo)
-                .SetDataAddress(*depthBufferMemory_)));
-        depthBufferView_.reset(new ::ae::gfx_low::DepthStencilImageView(
-            ::ae::gfx_low::DepthStencilImageViewCreateInfo()
-                .SetDevice(device_.get())
-                .SetResource(depthBufferImage_.get())
-                .SetFormat(DefaultDepthBufferFormat)));
-    }
-
     // CommandBuffer の作成
     for (int i = 0; i < commandBuffers_.CountMax(); ++i) {
         commandBuffers_.Add(::ae::gfx_low::CommandBufferCreateInfo()
@@ -101,6 +60,9 @@ GfxBasicKit::GfxBasicKit(::ae::base::Display* display)
     for (int i = 0; i < fences_.CountMax(); ++i) {
         fences_.Add(::ae::gfx_low::FenceCreateInfo().SetDevice(device_.get()));
     }
+
+    // Swapchain と DepthBuffer を作成
+    SetupSwapchainAndDepthBuffer();
 }
 
 //------------------------------------------------------------------------------
@@ -110,6 +72,16 @@ GfxBasicKit::~GfxBasicKit() {}
 void GfxBasicKit::WaitToResourceUsable() {
     // 処理完了待ち
     fences_[bufferIndex_].Wait();
+}
+
+//------------------------------------------------------------------------------
+void GfxBasicKit::ScreenResizeProcessIfNeeds() {
+    if (currentSwapchainExtent_ == display_.MainScreen().Extent()) {
+        return;
+    }
+    WaitAllDone();
+    CleanupSwapchainAndDepthBuffer();
+    SetupSwapchainAndDepthBuffer();
 }
 
 //------------------------------------------------------------------------------
@@ -126,6 +98,62 @@ void GfxBasicKit::WaitAllDone() {
     for (auto& fence : fences_) {
         fence.Wait();
     }
+}
+
+//------------------------------------------------------------------------------
+void GfxBasicKit::SetupSwapchainAndDepthBuffer() {
+    // Swapchain の作成
+    {
+        auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
+                               .SetDevice(device_.get())
+                               .SetScreen(&display_.MainScreen())
+                               .SetSwapchainCountMax(1);
+        swapchainMaster_.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
+    }
+    swapchain_ = swapchainMaster_->CreateSwapchain(
+        ae::gfx_low::SwapchainCreateInfo().SetImageCount(
+            DefaultSwapchainImageCount));
+    currentSwapchainExtent_ = display_.MainScreen().Extent();
+
+    // DepthBuffer 作成
+    {
+        const auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetFormat(DefaultDepthBufferFormat)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetExtent(::ae::base::Extent2i(
+                    display_.MainScreen().Width(),
+                    display_.MainScreen().Height()))
+                .SetUsageBitSet(::ae::gfx_low::ImageResourceUsageBitSet().Set(
+                    ::ae::gfx_low::ImageResourceUsage::DepthStencilImage,
+                    true));
+        depthBufferMemory_.Reset(
+            device_.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetParams(device_->CalcResourceMemoryRequirements(specInfo)));
+        depthBufferImage_.reset(new ::ae::gfx_low::ImageResource(
+            ::ae::gfx_low::ImageResourceCreateInfo()
+                .SetDevice(device_.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*depthBufferMemory_)));
+        depthBufferView_.reset(new ::ae::gfx_low::DepthStencilImageView(
+            ::ae::gfx_low::DepthStencilImageViewCreateInfo()
+                .SetDevice(device_.get())
+                .SetResource(depthBufferImage_.get())
+                .SetFormat(DefaultDepthBufferFormat)));
+    }
+}
+
+//------------------------------------------------------------------------------
+void GfxBasicKit::CleanupSwapchainAndDepthBuffer() {
+    depthBufferView_.reset();
+    depthBufferImage_.reset();
+    depthBufferMemory_.Reset();
+    swapchainMaster_->DestroySwapchain(swapchain_);
+    swapchain_ = ::ae::gfx_low::SwapchainHandle();
+    currentSwapchainExtent_ = ::ae::base::Extent2i();
 }
 
 } // namespace aesk
