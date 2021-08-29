@@ -39,20 +39,20 @@ public:
     /// @details 
     /// ウィンドウのサイズが変更なOSでのみ参照されるプロパティです。
     /// true の場合はグラフィックスライブラリのスワップチェインの再構築も必要になります。
+    /// @todo macOS 環境の対応。
     bool IsResizableWindow() const { return isResizableWindow_; }
 
     /// IsResizableWindow() の設定。
-    DisplayContext& SetIsResizableWindow(bool isResizable)
-    {
+    DisplayContext& SetIsResizableWindow(bool isResizable) {
         isResizableWindow_ = isResizable;
+        return *this;
     }
     //@}
 
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
     /// @name WindowSystem環境でのカスタマイズ（TODO: #if を切って関数自体はどのプラットフォームでも呼べるようにする）
     //@{
-    void
-    SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
+    void SetLocationToCenter(); ///< 現在のwidthとheightの値を見て画面の中央にウィンドウがくるようにlocationX,Yを設定する。
     int LocationX() const;
     int LocationY() const;
     int Width() const;

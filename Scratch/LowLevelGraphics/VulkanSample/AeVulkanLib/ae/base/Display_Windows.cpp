@@ -153,9 +153,11 @@ Screen& Display::MainScreen() {
 
 //------------------------------------------------------------------------------
 void Display::Show() {
+    tCurrentDisplay.Set(ext_);
     ext_.isClosed = false;
     ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
     UpdateWindow(ext_.hwindow);
+    tCurrentDisplay.Unset(ext_);
 }
 
 //------------------------------------------------------------------------------
@@ -195,7 +197,7 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     int style =
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
     if (context.IsResizableWindow()) {
-        style |= WS_THICKFRAME;
+        style |= WS_THICKFRAME | WS_MAXIMIZEBOX;
     }
 
     // 矩形の計算
@@ -267,6 +269,7 @@ void Display_Ext::PollEvent(Application&) {
 //------------------------------------------------------------------------------
 LRESULT
 Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    AE_BASE_ASSERT(tCurrentDisplay.IsValid());
     return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
