@@ -59,6 +59,7 @@ public:
     // 内部実装用関数群。
     Display_Ext& display_();
     Screen_Ext& Ext_();
+    void SetExtent_(const Extent2iPod& extent);
 
 private:
     Display_Ext& owner_;

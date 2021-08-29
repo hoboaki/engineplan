@@ -7,6 +7,7 @@
 #include <ae/base/KeyKind.hpp>
 #include <ae/base/Pointer.hpp>
 #include <ae/base/Ref.hpp>
+#include <ae/base/Screen.hpp>
 #include <ae/base/SdkHeader.hpp>
 #include <ae/base/Unused.hpp>
 
@@ -281,8 +282,8 @@ LRESULT Display_Ext::WindowProcessLocal(
         return 0;
 
     case WM_SIZE:
-        //width = LOWORD(lp);
-        //height = HIWORD(lp);
+        tCurrentDisplay->mainScreen->SetExtent_(
+            Extent2i(LOWORD(lParam), HIWORD(lParam)));
         return 0;
 
     case WM_SYSKEYDOWN: break;

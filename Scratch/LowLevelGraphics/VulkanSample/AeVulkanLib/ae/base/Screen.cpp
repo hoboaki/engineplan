@@ -42,6 +42,12 @@ Screen_Ext& Screen::Ext_() {
     return ext_;
 }
 
+//------------------------------------------------------------------------------
+void Screen::SetExtent_(const Extent2iPod& extent) {
+    width_ = extent.width;
+    height_ = extent.height;
+}
+
 } // namespace base
 } // namespace ae
 // EOF
