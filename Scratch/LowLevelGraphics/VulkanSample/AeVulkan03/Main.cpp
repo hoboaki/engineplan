@@ -34,11 +34,11 @@
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 #include <ae/gfx_low/ShaderModuleResource.hpp>
 #include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
-#include <ae/gfx_low/System.hpp>
-#include <ae/gfx_low/SystemCreateInfo.hpp>
 #include <ae/gfx_low/StorageBufferDescriptorInfo.hpp>
 #include <ae/gfx_low/StorageBufferView.hpp>
 #include <ae/gfx_low/StorageBufferViewCreateinfo.hpp>
+#include <ae/gfx_low/System.hpp>
+#include <ae/gfx_low/SystemCreateInfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <memory>
 
@@ -76,7 +76,6 @@ int aemain(::ae::base::Application* app) {
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
-
     // グラフィックスシステムインスタンス作成
     ::std::unique_ptr<::ae::gfx_low::System> system(new ::ae::gfx_low::System(
         ::ae::gfx_low::SystemCreateInfo().SetDebugLevel(
@@ -104,21 +103,21 @@ int aemain(::ae::base::Application* app) {
                 .SetQueueCreateInfos(queueCount, queueCreateInfos)));
 
         // 更にデバッグダンプ
-        AE_BASE_COUTFMT_LINE("IsDeviceLocalMemoryShared: %d",
+        AE_BASE_COUTFMT_LINE(
+            "IsDeviceLocalMemoryShared: %d",
             device->IsDeviceLocalMemoryShared() ? 1 : 0);
     }
     auto& queue = device->Queue(0);
 
-
     // CommandBuffer の作成
     ::ae::gfx_low::CommandBuffer commandBuffer(
         ::ae::gfx_low::CommandBufferCreateInfo()
-        .SetDevice(device.get())
-        .SetQueue(&queue));
-    
+            .SetDevice(device.get())
+            .SetQueue(&queue));
 
     // Fence の作成
-    ::ae::gfx_low::Fence fence(::ae::gfx_low::FenceCreateInfo().SetDevice(device.get()));
+    ::ae::gfx_low::Fence fence(
+        ::ae::gfx_low::FenceCreateInfo().SetDevice(device.get()));
 
     // Shader の作成
     ::ae::gfx_low::UniqueResourceMemory compShaderMemory;
@@ -127,13 +126,17 @@ int aemain(::ae::base::Application* app) {
         const auto size = sizeof(fCompShaderCode);
         const auto specInfo =
             ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
-        compShaderMemory.Reset(device.get(),
+        compShaderMemory.Reset(
+            device.get(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
                 .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                 .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
-        std::memcpy(device->MapResourceMemory(*compShaderMemory,
-                        ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
-            fCompShaderCode, size);
+        std::memcpy(
+            device->MapResourceMemory(
+                *compShaderMemory,
+                ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
+            fCompShaderCode,
+            size);
         device->UnmapResourceMemory(*compShaderMemory);
         compShader.reset(new ::ae::gfx_low::ShaderModuleResource(
             ::ae::gfx_low::ShaderModuleResourceCreateInfo()
@@ -151,10 +154,12 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::BufferResourceSpecInfo()
                 .SetSize(sizeof(fStorageDataType))
                 .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
-                    ::ae::gfx_low::BufferResourceUsage::StorageBuffer, true));
+                    ::ae::gfx_low::BufferResourceUsage::StorageBuffer,
+                    true));
         const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
             sizeof(fStorageDataType));
-        storageBufferMemory.Reset(device.get(),
+        storageBufferMemory.Reset(
+            device.get(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
                 .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                 .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
@@ -173,15 +178,16 @@ int aemain(::ae::base::Application* app) {
     // DescriptorSetSpecInfo の作成
     const ::ae::gfx_low::ShaderBindingInfo storageBufferBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
-            .SetStages(
-                ::ae::gfx_low::ShaderBindingStageBitSet()
-                    .Set(::ae::gfx_low::ShaderBindingStage::Compute, true))
-            .SetBindingIndex(0)};
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Compute,
+                true))
+            .SetBindingIndex(0)
+    };
     const auto descriptorSetSpecInfo =
-        ::ae::gfx_low::DescriptorSetSpecInfo()
-            .SetBindingInfos(::ae::gfx_low::DescriptorKind::StorageBuffer,
-                AE_BASE_ARRAY_LENGTH(storageBufferBindingInfos),
-                storageBufferBindingInfos);
+        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
+            ::ae::gfx_low::DescriptorKind::StorageBuffer,
+            AE_BASE_ARRAY_LENGTH(storageBufferBindingInfos),
+            storageBufferBindingInfos);
 
     // DescriptorSet の作成
     ::ae::gfx_low::DescriptorSet descriptorSet(
@@ -191,9 +197,10 @@ int aemain(::ae::base::Application* app) {
     {
         // StorageBuffer
         const ::ae::gfx_low::StorageBufferView* localStorageBufferViews[] = {
-            storageBufferView.get()};
-        const ::ae::gfx_low::StorageBufferDescriptorInfo storageBufferDescs[] =
-            {
+            storageBufferView.get()
+        };
+        const ::ae::gfx_low::StorageBufferDescriptorInfo
+            storageBufferDescs[] = {
                 ::ae::gfx_low::StorageBufferDescriptorInfo()
                     .SetRegion(::ae::gfx_low::ShaderBindingRegion()
                                    .SetBindingIndex(0)
@@ -205,7 +212,8 @@ int aemain(::ae::base::Application* app) {
         // 更新
         descriptorSet.Update(
             ::ae::gfx_low::DescriptorSetUpdateInfo().SetStorageBufferInfos(
-                AE_BASE_ARRAY_LENGTH(storageBufferDescs), storageBufferDescs));
+                AE_BASE_ARRAY_LENGTH(storageBufferDescs),
+                storageBufferDescs));
     }
 
     // ComputePipeline 生成
@@ -226,20 +234,21 @@ int aemain(::ae::base::Application* app) {
             cmd.CmdBeginComputePass(::ae::gfx_low::ComputePassBeginInfo());
             cmd.CmdSetComputePipeline(pipeline);
             cmd.CmdSetDescriptorSet(descriptorSet);
-            cmd.CmdDispatch(
-                ::ae::gfx_low::DispatchCallInfo()
-                    .SetThreadsPerThreadGroup(::ae::base::Extent3i(
-                        fThreadsPerThreadGroupX, fThreadsPerThreadGroupY, 1))
-                    .SetThreadGroups(::ae::base::Extent3i(
-                        fThreadGroupsX, fThreadGroupsY, 1)));
+            cmd.CmdDispatch(::ae::gfx_low::DispatchCallInfo()
+                                .SetThreadsPerThreadGroup(::ae::base::Extent3i(
+                                    fThreadsPerThreadGroupX,
+                                    fThreadsPerThreadGroupY,
+                                    1))
+                                .SetThreadGroups(::ae::base::Extent3i(
+                                    fThreadGroupsX,
+                                    fThreadGroupsY,
+                                    1)));
             cmd.CmdEndComputePass();
         }
         cmd.EndRecord();
 
-
         // コマンド実行
         queue.PushCommandExecute(&cmd);
-
 
         // GPU送信
         queue.Submit(&fence);
@@ -247,7 +256,7 @@ int aemain(::ae::base::Application* app) {
         // 完了待ち
         fence.Wait();
     }
-    
+
     // 処理結果を出力
     {
         // 結果を取得
@@ -255,19 +264,24 @@ int aemain(::ae::base::Application* app) {
         std::memcpy(
             data.get(),
             device->MapResourceMemory(
-                *storageBufferMemory, 
-                ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizeof(fStorageDataType))
-                ),
-            sizeof(fStorageDataType)
-            );
+                *storageBufferMemory,
+                ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                    sizeof(fStorageDataType))),
+            sizeof(fStorageDataType));
         device->UnmapResourceMemory(*storageBufferMemory);
 
         // 最初と最後だけ出力
         auto dump = [&data](int startIdx) {
-            AE_BASE_COUTFMT_LINE_WITH_TIME("[%d, %d, %d, %d] %u, %u, %u, %u",
-                startIdx, startIdx + 1, startIdx + 2, startIdx + 3,
-                data->elems[startIdx], data->elems[startIdx + 1],
-                data->elems[startIdx + 2], data->elems[startIdx + 3]);
+            AE_BASE_COUTFMT_LINE_WITH_TIME(
+                "[%d, %d, %d, %d] %u, %u, %u, %u",
+                startIdx,
+                startIdx + 1,
+                startIdx + 2,
+                startIdx + 3,
+                data->elems[startIdx],
+                data->elems[startIdx + 1],
+                data->elems[startIdx + 2],
+                data->elems[startIdx + 3]);
         };
         dump(0);
         dump(fElemsLength - 4);
