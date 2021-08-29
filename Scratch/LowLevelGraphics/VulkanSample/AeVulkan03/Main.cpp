@@ -201,9 +201,10 @@ int aemain(::ae::base::Application* app) {
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
     // ディスプレイの作成
-    ::ae::base::Display display =
-        ::ae::base::Display(::ae::base::DisplayContext().SetWindowTitle(
-            "AeVulkan03 - Window Resize With Aesk"));
+    ::ae::base::Display display = ::ae::base::Display(
+        ::ae::base::DisplayContext()
+            .SetWindowTitle("AeVulkan03 - Window Resize With Aesk")
+            .SetIsResizableWindow(true));
 
     // ディスプレイの表示
     display.Show();
@@ -655,6 +656,9 @@ int aemain(::ae::base::Application* app) {
 
         // 前回実行したコマンドの終了保証
         gfxKit.WaitToResourceUsable();
+
+        // スクリーンリサイズ処理
+        gfxKit.ScreenResizeProcessIfNeeds();
 
         // Swapchain バッファ確保要求
         gfxKit.Swapchain()->AcquireNextImage();
