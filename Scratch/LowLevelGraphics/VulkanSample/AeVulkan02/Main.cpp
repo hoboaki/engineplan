@@ -277,7 +277,7 @@ int aemain(::ae::base::Application* app) {
     ::ae::gfx_low::SwapchainHandle swapchain;
     ::ae::base::Extent2i currentSwapchainExtent;
     constexpr int swapchainImageCount = 3;
-    const auto createSwapchainFunc = [&display,
+    const auto setupSwapchain = [&display,
                                 &device,
                                 &swapchainMaster,
                                 &swapchain,
@@ -293,14 +293,25 @@ int aemain(::ae::base::Application* app) {
                 swapchainImageCount));
         currentSwapchainExtent = display.MainScreen().Extent();
     };
-    createSwapchainFunc();
+    const auto cleanupSwapchain =
+        [&swapchainMaster, &swapchain, &currentSwapchainExtent] {
+            swapchainMaster->DestroySwapchain(swapchain);
+            swapchain = ::ae::gfx_low::SwapchainHandle();
+            currentSwapchainExtent = ::ae::base::Extent2i();
+        };
+    setupSwapchain();
 
     // DepthBuffer 作成
-    const auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
     ::ae::gfx_low::UniqueResourceMemory depthBufferMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> depthBufferImage;
     ::std::unique_ptr<::ae::gfx_low::DepthStencilImageView> depthBufferView;
-    {
+    constexpr auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
+    const auto setupDepthBuffer = [&display,
+                                   &device,
+                                   &depthBufferMemory,
+                                   &depthBufferImage,
+                                   &depthBufferView,
+                                   &depthBufferFormat] {
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
@@ -327,7 +338,14 @@ int aemain(::ae::base::Application* app) {
                 .SetDevice(device.get())
                 .SetResource(depthBufferImage.get())
                 .SetFormat(depthBufferFormat)));
-    }
+    };
+    const auto cleanupDepthBuffer =
+        [&depthBufferMemory, &depthBufferImage, &depthBufferView] {
+            depthBufferView.reset();
+            depthBufferImage.reset();
+            depthBufferMemory.Reset();
+        };
+    setupDepthBuffer();
 
     // CommandBuffer の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers(
@@ -836,10 +854,11 @@ int aemain(::ae::base::Application* app) {
                 fence.Wait();
             }
 
-            // Swapchain を再生成
-            swapchainMaster->DestroySwapchain(swapchain);
-            swapchainMaster.reset();
-            createSwapchainFunc();
+            // Swapchain に依存するものを再構築
+            cleanupDepthBuffer();
+            cleanupSwapchain();
+            setupSwapchain();
+            setupDepthBuffer();
         }
 
         // Swapchain バッファ確保要求
