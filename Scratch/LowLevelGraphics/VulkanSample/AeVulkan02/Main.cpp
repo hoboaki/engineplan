@@ -75,8 +75,6 @@
 #include <ae/gfx_low/VertexBufferView.hpp>
 #include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
-#include <aesk/GfxBasicKit.hpp>
-#include <aesk/Shader.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -201,25 +199,190 @@ int aemain(::ae::base::Application* app) {
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
     // ディスプレイの作成
-    ::ae::base::Display display =
-        ::ae::base::Display(::ae::base::DisplayContext().SetWindowTitle(
-            "AeVulkan02 - Simple with Sample Kit"));
+    ::ae::base::Display display = ::ae::base::Display(
+        ::ae::base::DisplayContext().SetWindowTitle("AeVulkan02 - Window resize"));
 
     // ディスプレイの表示
     display.Show();
 
-    // 基本キット
-    ::aesk::GfxBasicKit gfxKit(&display);
+    // グラフィックスシステムインスタンス作成
+    ::std::unique_ptr<::ae::gfx_low::System> system(new ::ae::gfx_low::System(
+        ::ae::gfx_low::SystemCreateInfo().SetDebugLevel(
+            ::ae::gfx_low::SystemDebugLevel::Normal)));
+
+    // Device & Queue 作成
+    ::std::unique_ptr<::ae::gfx_low::Device> device;
+    {
+        // デバッグダンプ
+        system->DumpAllPhysicalDeviceInfo();
+
+        // Queue の作成情報を用意
+        const int queueCount = 1;
+        ::ae::gfx_low::QueueCreateInfo queueCreateInfos[queueCount];
+        queueCreateInfos[0] =
+            ::ae::gfx_low::QueueCreateInfo()
+                .SetKind(::ae::gfx_low::QueueKind::Normal)
+                .SetPriority(::ae::gfx_low::QueuePriority::Normal)
+                .SetOperationCountMax(32);
+
+        // Device の作成
+        device.reset(new ::ae::gfx_low::Device(
+            ::ae::gfx_low::DeviceCreateInfo()
+                .SetSystem(system.get())
+                .SetQueueCreateInfos(queueCount, queueCreateInfos)));
+
+        // 更にデバッグダンプ
+        AE_BASE_COUTFMT_LINE(
+            "IsDeviceLocalMemoryShared: %d",
+            device->IsDeviceLocalMemoryShared() ? 1 : 0);
+
+        // メモリ確保テスト
+        {
+            ::ae::gfx_low::ResourceMemory memory;
+
+            // 確保できる前提のコード
+            memory = device->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                    .SetSize(4096));
+            device->FreeResourceMemory(memory);
+            memory = device->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                    .SetSize(4096));
+            device->FreeResourceMemory(memory);
+            memory = device->AllocResourceMemory(
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedCached)
+                    .SetSize(4096));
+            device->FreeResourceMemory(memory);
+
+            // 確保に失敗する前提のコード
+            if (false) {
+                memory = device->TryToAllocResourceMemory(
+                    ::ae::gfx_low::ResourceMemoryAllocInfo()
+                        .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                        .SetSize(
+                            1024ull * 1024ull * 1024ull * 1024ull * 1024ull));
+                AE_BASE_ASSERT(!memory.IsValid());
+            }
+        }
+    }
+    auto& queue = device->Queue(0);
+
+    // Swapchain の作成
+    ::std::unique_ptr<::ae::gfx_low::SwapchainMaster> swapchainMaster;
+    {
+        auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
+                               .SetDevice(device.get())
+                               .SetScreen(&display.MainScreen())
+                               .SetSwapchainCountMax(1);
+        swapchainMaster.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
+    }
+    const int swapchainImageCount = 3;
+    auto swapchain = swapchainMaster->CreateSwapchain(
+        ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
+
+    // DepthBuffer 作成
+    const auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
+    ::ae::gfx_low::UniqueResourceMemory depthBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> depthBufferImage;
+    ::std::unique_ptr<::ae::gfx_low::DepthStencilImageView> depthBufferView;
+    {
+        const auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetFormat(depthBufferFormat)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetExtent(::ae::base::Extent2i(
+                    display.MainScreen().Width(),
+                    display.MainScreen().Height()))
+                .SetUsageBitSet(::ae::gfx_low::ImageResourceUsageBitSet().Set(
+                    ::ae::gfx_low::ImageResourceUsage::DepthStencilImage,
+                    true));
+        depthBufferMemory.Reset(
+            device.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
+        depthBufferImage.reset(new ::ae::gfx_low::ImageResource(
+            ::ae::gfx_low::ImageResourceCreateInfo()
+                .SetDevice(device.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*depthBufferMemory)));
+        depthBufferView.reset(new ::ae::gfx_low::DepthStencilImageView(
+            ::ae::gfx_low::DepthStencilImageViewCreateInfo()
+                .SetDevice(device.get())
+                .SetResource(depthBufferImage.get())
+                .SetFormat(depthBufferFormat)));
+    }
+
+    // CommandBuffer の作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer> commandBuffers(
+        swapchainImageCount);
+    for (int i = 0; i < commandBuffers.CountMax(); ++i) {
+        commandBuffers.Add(::ae::gfx_low::CommandBufferCreateInfo()
+                               .SetDevice(device.get())
+                               .SetQueue(&queue)
+                               .SetRenderPassCountMax(16));
+    }
+
+    // Fence の作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::Fence> fences(
+        swapchainImageCount);
+    for (int i = 0; i < fences.CountMax(); ++i) {
+        fences.Add(::ae::gfx_low::FenceCreateInfo().SetDevice(device.get()));
+    }
 
     // Shader の作成
-    ::aesk::Shader vertShader(
-        &gfxKit,
-        fVertShaderCode,
-        sizeof(fVertShaderCode));
-    ::aesk::Shader fragShader(
-        &gfxKit,
-        fFragShaderCode,
-        sizeof(fFragShaderCode));
+    ::ae::gfx_low::UniqueResourceMemory vertShaderMemory;
+    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> vertShader;
+    ::ae::gfx_low::UniqueResourceMemory fragShaderMemory;
+    std::unique_ptr<::ae::gfx_low::ShaderModuleResource> fragShader;
+    {
+        const auto size = sizeof(fVertShaderCode);
+        const auto specInfo =
+            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
+        vertShaderMemory.Reset(
+            device.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
+        std::memcpy(
+            device->MapResourceMemory(
+                *vertShaderMemory,
+                ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
+            fVertShaderCode,
+            size);
+        device->UnmapResourceMemory(*vertShaderMemory);
+        vertShader.reset(new ::ae::gfx_low::ShaderModuleResource(
+            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
+                .SetDevice(device.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*vertShaderMemory)));
+    }
+    {
+        const auto size = sizeof(fFragShaderCode);
+        const auto specInfo =
+            ::ae::gfx_low::ShaderModuleResourceSpecInfo().SetSize(size);
+        fragShaderMemory.Reset(
+            device.get(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
+        std::memcpy(
+            device->MapResourceMemory(
+                *fragShaderMemory,
+                ::ae::gfx_low::ResourceMemoryRegion().SetSize(size)),
+            fFragShaderCode,
+            size);
+        device->UnmapResourceMemory(*fragShaderMemory);
+        fragShader.reset(new ::ae::gfx_low::ShaderModuleResource(
+            ::ae::gfx_low::ShaderModuleResourceCreateInfo()
+                .SetDevice(device.get())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*fragShaderMemory)));
+    }
 
     // VertexBuffer の作成
     ::ae::gfx_low::UniqueResourceMemory vertexBufferMemory;
@@ -244,19 +407,18 @@ int aemain(::ae::base::Application* app) {
         const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
             sizeof(fVertexBufferType));
         vertexBufferMemory.Reset(
-            &gfxKit.Device(),
+            device.get(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
                 .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                .SetParams(
-                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
+                .SetParams(device->CalcResourceMemoryRequirements(specInfo)));
         vertexBufferResource.reset(new ::ae::gfx_low::BufferResource(
             ::ae::gfx_low::BufferResourceCreateInfo()
-                .SetDevice(&gfxKit.Device())
+                .SetDevice(device.get())
                 .SetSpecInfo(specInfo)
                 .SetDataAddress(*vertexBufferMemory)));
         vertexBufferView.reset(new ::ae::gfx_low::VertexBufferView(
             ::ae::gfx_low::VertexBufferViewCreateInfo()
-                .SetDevice(&gfxKit.Device())
+                .SetDevice(device.get())
                 .SetResource(vertexBufferResource.get())
                 .SetRegion(region)
                 .SetLayoutInfo(vertexBufferLayoutInfo)));
@@ -275,9 +437,9 @@ int aemain(::ae::base::Application* app) {
             const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(fVertexBufferType));
             void* mappedMemory =
-                gfxKit.Device().MapResourceMemory(*vertexBufferMemory, region);
+                device->MapResourceMemory(*vertexBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxKit.Device().UnmapResourceMemory(*vertexBufferMemory);
+            device->UnmapResourceMemory(*vertexBufferMemory);
         }
     }
 
@@ -298,7 +460,7 @@ int aemain(::ae::base::Application* app) {
                 .SetExtent(extent);
         ::ae::gfx_low::ImageSubresourceDataInfo dataInfo;
 
-        if (gfxKit.Device().IsDeviceLocalMemoryShared()) {
+        if (device->IsDeviceLocalMemoryShared()) {
             // デバイスメモリが共有メモリの場合
             // コピーは不要のため共有メモリ上にテクスチャメモリを配置し
             // GPU からもそのデータを参照するようにする
@@ -310,17 +472,17 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::ImageResourceUsage::SampledImage,
                             true));
             textureMemory.Reset(
-                &gfxKit.Device(),
+                device.get(),
                 ::ae::gfx_low::ResourceMemoryAllocInfo()
                     .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
-                    .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
-                        specInfo)));
+                    .SetParams(
+                        device->CalcResourceMemoryRequirements(specInfo)));
             textureImage.reset(new ::ae::gfx_low::ImageResource(
                 ::ae::gfx_low::ImageResourceCreateInfo()
-                    .SetDevice(&gfxKit.Device())
+                    .SetDevice(device.get())
                     .SetSpecInfo(specInfo)
                     .SetDataAddress(textureMemory->Address())));
-            dataInfo = gfxKit.Device().CalcImageSubresourceDataInfo(
+            dataInfo = device->CalcImageSubresourceDataInfo(
                 specInfo,
                 ::ae::gfx_low::ImageSubresourceLocation());
         } else {
@@ -341,15 +503,14 @@ int aemain(::ae::base::Application* app) {
                                     ::ae::gfx_low::ImageResourceUsage::CopyDst,
                                     true));
                 textureMemory.Reset(
-                    &gfxKit.Device(),
+                    device.get(),
                     ::ae::gfx_low::ResourceMemoryAllocInfo()
                         .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
                         .SetParams(
-                            gfxKit.Device().CalcResourceMemoryRequirements(
-                                specInfo)));
+                            device->CalcResourceMemoryRequirements(specInfo)));
                 textureImage.reset(new ::ae::gfx_low::ImageResource(
                     ::ae::gfx_low::ImageResourceCreateInfo()
-                        .SetDevice(&gfxKit.Device())
+                        .SetDevice(device.get())
                         .SetSpecInfo(specInfo)
                         .SetDataAddress(textureMemory->Address())));
             }
@@ -361,20 +522,19 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::ImageResourceUsageBitSet().Set(
                                 ::ae::gfx_low::ImageResourceUsage::CopySrc,
                                 true));
-                dataInfo = gfxKit.Device().CalcImageSubresourceDataInfo(
+                dataInfo = device->CalcImageSubresourceDataInfo(
                     specInfo,
                     ::ae::gfx_low::ImageSubresourceLocation());
                 copySrcTextureMemory.Reset(
-                    &gfxKit.Device(),
+                    device.get(),
                     ::ae::gfx_low::ResourceMemoryAllocInfo()
                         .SetKind(
                             ::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                         .SetParams(
-                            gfxKit.Device().CalcResourceMemoryRequirements(
-                                specInfo)));
+                            device->CalcResourceMemoryRequirements(specInfo)));
                 copySrcTextureBuffer.reset(new ::ae::gfx_low::BufferResource(
                     ::ae::gfx_low::BufferResourceCreateInfo()
-                        .SetDevice(&gfxKit.Device())
+                        .SetDevice(device.get())
                         .SetSpecInfo(
                             ::ae::gfx_low::BufferResourceSpecInfo()
                                 .SetSize(dataInfo.RowPitch() * extent.height)
@@ -403,17 +563,17 @@ int aemain(::ae::base::Application* app) {
         // サンプラー用イメージビューの作成
         textureView.reset(new ::ae::gfx_low::SampledImageView(
             ::ae::gfx_low::SampledImageViewCreateInfo()
-                .SetDevice(&gfxKit.Device())
+                .SetDevice(device.get())
                 .SetResource(textureImage.get())
                 .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
                 .SetFormat(format)));
 
         // テクスチャイメージをプログラムコードで作成
         {
-            auto& targetMemory = gfxKit.Device().IsDeviceLocalMemoryShared()
+            auto& targetMemory = device->IsDeviceLocalMemoryShared()
                                      ? textureMemory
                                      : copySrcTextureMemory;
-            uint8_t* dst = gfxKit.Device().MapResourceMemory(
+            uint8_t* dst = device->MapResourceMemory(
                 *targetMemory,
                 ::ae::gfx_low::ResourceMemoryRegion()
                     .SetOffset(dataInfo.Offset())
@@ -440,7 +600,7 @@ int aemain(::ae::base::Application* app) {
                     dst[baseOffset + 3] = color.a;
                 }
             }
-            gfxKit.Device().UnmapResourceMemory(*targetMemory);
+            device->UnmapResourceMemory(*targetMemory);
         }
     }
 
@@ -448,16 +608,16 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::Sampler> sampler;
     {
         sampler.reset(new ::ae::gfx_low::Sampler(
-            ::ae::gfx_low::SamplerCreateInfo().SetDevice(&gfxKit.Device())));
+            ::ae::gfx_low::SamplerCreateInfo().SetDevice(device.get())));
     }
 
     // UniformBuffer の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
-        uniformBufferMemories(gfxKit.SwapchainImageCount());
+        uniformBufferMemories(swapchainImageCount);
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::BufferResource>
-        uniformBufferResources(gfxKit.SwapchainImageCount());
+        uniformBufferResources(swapchainImageCount);
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniformBufferView>
-        uniformBufferViews(gfxKit.SwapchainImageCount());
+        uniformBufferViews(swapchainImageCount);
     {
         const auto specInfo =
             ::ae::gfx_low::BufferResourceSpecInfo()
@@ -469,18 +629,18 @@ int aemain(::ae::base::Application* app) {
             sizeof(fUniformDataType));
         for (int i = 0; i < uniformBufferMemories.CountMax(); ++i) {
             uniformBufferMemories.Add(
-                &gfxKit.Device(),
+                device.get(),
                 ::ae::gfx_low::ResourceMemoryAllocInfo()
                     .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                    .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
-                        specInfo)));
+                    .SetParams(
+                        device->CalcResourceMemoryRequirements(specInfo)));
             uniformBufferResources.Add(
                 ::ae::gfx_low::BufferResourceCreateInfo()
-                    .SetDevice(&gfxKit.Device())
+                    .SetDevice(device.get())
                     .SetSpecInfo(specInfo)
                     .SetDataAddress(*uniformBufferMemories[i]));
             uniformBufferViews.Add(::ae::gfx_low::UniformBufferViewCreateInfo()
-                                       .SetDevice(&gfxKit.Device())
+                                       .SetDevice(device.get())
                                        .SetResource(&uniformBufferResources[i])
                                        .SetRegion(region));
         }
@@ -488,12 +648,11 @@ int aemain(::ae::base::Application* app) {
 
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
-        gfxKit.Swapchain()->RenderTargetSpecInfo(),
+        swapchain->RenderTargetSpecInfo(),
     };
     const int renderTargetCount = AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos);
     const auto depthStencilSpecInfo =
-        ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(
-            gfxKit.DepthBufferFormat());
+        ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(depthBufferFormat);
     const auto renderPassSpecInfo =
         ::ae::gfx_low::RenderPassSpecInfo()
             .SetRenderTargetCount(renderTargetCount)
@@ -540,10 +699,10 @@ int aemain(::ae::base::Application* app) {
 
     // DescriptorSet の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
-        gfxKit.SwapchainImageCount());
-    for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
+        swapchainImageCount);
+    for (int i = 0; i < swapchainImageCount; ++i) {
         descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
-                               .SetDevice(&gfxKit.Device())
+                               .SetDevice(device.get())
                                .SetSpecInfo(descriptorSetSpecInfo));
 
         // UniformBuffer
@@ -609,17 +768,17 @@ int aemain(::ae::base::Application* app) {
 
         pipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
-                .SetDevice(&gfxKit.Device())
+                .SetDevice(device.get())
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&vertShader.Resource())
+                        .SetResource(vertShader.get())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&fragShader.Resource())
+                        .SetResource(fragShader.get())
                         .SetEntryPointNamePtr("main"))
                 .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
                 .SetVertexInputInfo(
@@ -644,8 +803,9 @@ int aemain(::ae::base::Application* app) {
     }
 
     // メインループ
-    bool isFinishedSetupTexture = false;
+    int bufferIndex = 0;
     int frameCount = 0;
+    bool isFinishedSetupTexture = false;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.IsClosed()) {
@@ -654,11 +814,11 @@ int aemain(::ae::base::Application* app) {
         }
 
         // 前回実行したコマンドの終了保証
-        gfxKit.WaitToResourceUsable();
+        auto& fence = fences[bufferIndex];
+        fence.Wait();
 
         // Swapchain バッファ確保要求
-        gfxKit.Swapchain()->AcquireNextImage();
-        const auto bufferIndex = gfxKit.CurrentBufferIndex();
+        swapchain->AcquireNextImage();
 
         // ユニフォームバッファ更新
         // （画面更新を確認するために毎フレーム更新）
@@ -701,15 +861,14 @@ int aemain(::ae::base::Application* app) {
                 sizeof(fUniformDataType));
             auto& targetUniformBufferMemory =
                 uniformBufferMemories[bufferIndex];
-            void* mappedMemory = gfxKit.Device().MapResourceMemory(
-                *targetUniformBufferMemory,
-                region);
+            void* mappedMemory =
+                device->MapResourceMemory(*targetUniformBufferMemory, region);
             std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxKit.Device().UnmapResourceMemory(*targetUniformBufferMemory);
+            device->UnmapResourceMemory(*targetUniformBufferMemory);
         }
 
         // コマンドバッファ作成
-        auto& cmd = gfxKit.CurrentCommandBuffer();
+        auto& cmd = commandBuffers[bufferIndex];
         cmd.BeginRecord();
         {
             // テクスチャのセットアップ
@@ -751,8 +910,7 @@ int aemain(::ae::base::Application* app) {
                     renderTargetSettings[] = {
                         ::ae::gfx_low::RenderTargetSetting()
                             .SetRenderTargetImageView(
-                                &gfxKit.Swapchain()
-                                     ->CurrentRenderTargetImageView())
+                                &swapchain->CurrentRenderTargetImageView())
                             .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
                             .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
                             .SetInitialImageResourceState(
@@ -765,7 +923,7 @@ int aemain(::ae::base::Application* app) {
                     };
                 const auto depthStencilSetting =
                     ::ae::gfx_low::DepthStencilSetting()
-                        .SetDepthStencilImageView(&gfxKit.DepthBufferView())
+                        .SetDepthStencilImageView(depthBufferView.get())
                         .SetInitialImageResourceState(
                             ::ae::gfx_low::ImageResourceState::Unknown)
                         .SetFinalImageResourceState(
@@ -828,23 +986,26 @@ int aemain(::ae::base::Application* app) {
         cmd.EndRecord();
 
         // Swapchain バッファ確保同期
-        gfxKit.Queue().PushSwapchainWait(&gfxKit.Swapchain().Ref());
+        queue.PushSwapchainWait(&swapchain.Ref());
 
         // コマンド実行
-        gfxKit.Queue().PushCommandExecute(&cmd);
+        queue.PushCommandExecute(&cmd);
 
         // Swapchain 提出
-        gfxKit.Queue().PushSwapchainPresent(&gfxKit.Swapchain().Ref());
+        queue.PushSwapchainPresent(&swapchain.Ref());
 
         // GPU送信
-        gfxKit.QueueSubmit();
+        queue.Submit(&fence);
 
-        // フレームを進める
+        // バッファを進める
+        bufferIndex = (bufferIndex + 1) % swapchainImageCount;
         ++frameCount;
     }
 
     // GPU 完了同期
-    gfxKit.WaitAllDone();
+    for (auto& fence : fences) {
+        fence.Wait();
+    }
 
     return 0;
 }
