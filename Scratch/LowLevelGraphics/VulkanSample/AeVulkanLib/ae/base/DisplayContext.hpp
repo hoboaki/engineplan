@@ -34,6 +34,18 @@ public:
         windowTitle_ = aText;
         return *this;
     }
+
+    /// ウィンドウがユーザー操作によってリサイズ可能か。（初期値：false）
+    /// @details 
+    /// ウィンドウのサイズが変更なOSでのみ参照されるプロパティです。
+    /// true の場合はグラフィックスライブラリのスワップチェインの再構築も必要になります。
+    bool IsResizableWindow() const { return isResizableWindow_; }
+
+    /// IsResizableWindow() の設定。
+    DisplayContext& SetIsResizableWindow(bool isResizable)
+    {
+        isResizableWindow_ = isResizable;
+    }
     //@}
 
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
@@ -52,11 +64,12 @@ public:
 private:
     FixedString<char, 64> windowTitle_ = "AdelEngine Application";
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
-    int locationX_;
-    int locationY_;
-    int width_;
-    int height_;
-    Bool32 isScreenDoubleBuffer_;
+    int locationX_ = {};
+    int locationY_ = {};
+    int width_ = {};
+    int height_ = {};
+    Bool32 isScreenDoubleBuffer_ = {};
+    Bool32 isResizableWindow_ = false;
 #endif
 };
 //@}

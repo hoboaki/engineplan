@@ -191,7 +191,11 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     RegisterClassEx(&windowClass);
 
     // 変数準備
-    const int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+    int style =
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+    if (context.IsResizableWindow()) {
+        style |= WS_THICKFRAME;
+    }
 
     // 矩形の計算
     RECT rect = { 0, 0, LONG(context.Width()), LONG(context.Height()) };
@@ -274,6 +278,11 @@ LRESULT Display_Ext::WindowProcessLocal(
     switch (msg) {
     case WM_GETMINMAXINFO: // set window's minimum size
         ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;
+        return 0;
+
+    case WM_SIZE:
+        //width = LOWORD(lp);
+        //height = HIWORD(lp);
         return 0;
 
     case WM_SYSKEYDOWN: break;
