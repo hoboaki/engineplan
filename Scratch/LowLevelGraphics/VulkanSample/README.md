@@ -31,12 +31,13 @@ FBX 形式のデータを読み込み表示する機能などは提供しませ�
 AdelEngine GfxLowApi を使ってテクスチャを貼り付けたキューブを表示するデモです。
 ラッパークラスは使わずにあえて GfxLowApi を直接使っているためコード量が多めです。
 
-## AeVulkan02 - Window Resize
+## AeVulkan02 - Screen Resize
 
-AeVulkan01 のサンプルにウィンドウリサイズの処理を追加したデモです。
-ウィンドウをリサイズする際は Swapchain を再生成する必要があり、そのコードが追加されています。
+AeVulkan01 のサンプルにスクリーンリサイズのための処理を追加したデモです。
+スクリーンリサイズはウィンドウのサイズが変更されたときに発生します。
+スクリーンをリサイズする際は Swapchain を再生成する必要があり、そのコードが追加されています。
 
-## AeVulkan03 - Window Resize With Aesk
+## AeVulkan03 - Screen Resize With Aesk
 
 AeVulkan02 のサンプルを aesk モジュールを使って書き直したデモです。
 aesk モジュールは定型処理をまとめた便利クラスや処理を提供するモジュールで、

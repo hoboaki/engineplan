@@ -203,7 +203,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display = ::ae::base::Display(
         ::ae::base::DisplayContext()
-            .SetWindowTitle("AeVulkan03 - Window Resize With Aesk")
+            .SetWindowTitle("AeVulkan03 - Screen Resize With Aesk")
             .SetIsResizableWindow(true));
 
     // ディスプレイの表示
