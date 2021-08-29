@@ -27,7 +27,8 @@ SampledImageView::SampledImageView(const SampledImageViewCreateInfo& createInfo)
     // CubeImage のとき用エラーチェック
     if (isCubeImageViewType) {
         AE_BASE_ASSERT_EQUALS(
-            createInfo.SubresourceRange().BaseLocation().FaceIndex(), 0);
+            createInfo.SubresourceRange().BaseLocation().FaceIndex(),
+            0);
     }
     const uint32_t imageCountPerCubeImageLayer = 6;
     const uint32_t perLayerImageCountOnResource =
@@ -51,7 +52,9 @@ SampledImageView::SampledImageView(const SampledImageViewCreateInfo& createInfo)
                 createInfo.SubresourceRange().ArrayLength() *
                     perLayerImageCountOnView));
     const auto result = device_.NativeObject_().createImageView(
-        &imageViewCreateInfo, nullptr, &nativeObject_);
+        &imageViewCreateInfo,
+        nullptr,
+        &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 

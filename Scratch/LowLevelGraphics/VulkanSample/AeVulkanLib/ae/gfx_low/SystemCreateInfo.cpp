@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-SystemCreateInfo::SystemCreateInfo() {}
+SystemCreateInfo::SystemCreateInfo() {
+}
 
 //------------------------------------------------------------------------------
 SystemCreateInfo& SystemCreateInfo::SetDebugLevel(

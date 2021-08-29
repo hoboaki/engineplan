@@ -23,7 +23,9 @@ ShaderModuleResource::ShaderModuleResource(
                      .Memory()
                      .Head_()[createInfo.DataAddress().Offset()]));
     const auto result = device_.NativeObject_().createShaderModule(
-        &nativeCreateInfo, nullptr, &nativeObject_);
+        &nativeCreateInfo,
+        nullptr,
+        &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 

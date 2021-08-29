@@ -7,7 +7,7 @@ namespace gfx_low {
 
 /// リソースメモリの範囲を示すクラス。
 class ResourceMemoryRegion {
-public:    
+public:
     /// 参照するデータアドレスのリソースメモリ先頭からのオフセット値。（初期値：0）
     size_t Offset() const { return offset_; }
 

@@ -32,7 +32,8 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     Placement()
-    : ptr_(0), bytes_() {}
+    : ptr_(0)
+    , bytes_() {}
     ~Placement() { Reset(); }
     //@}
 
@@ -99,34 +100,69 @@ public:
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4);
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
         typename A5>
     void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5);
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6>
     void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6);
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7>
     void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7);
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8>
     void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8, typename A9>
-    void Init(
-        A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8,
+        typename A9>
+    void
+    Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }

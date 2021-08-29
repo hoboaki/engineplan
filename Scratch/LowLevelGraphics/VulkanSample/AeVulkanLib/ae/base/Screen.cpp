@@ -13,7 +13,8 @@ Screen::Screen(Display_Ext& owner, const int width, const int height)
 : owner_(owner)
 , ext_()
 , width_(width)
-, height_(height) {}
+, height_(height) {
+}
 
 //------------------------------------------------------------------------------
 int Screen::Width() const {

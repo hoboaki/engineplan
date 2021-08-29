@@ -27,7 +27,9 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
     {
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
         const auto result = device_.NativeObject_().createBuffer(
-            &nativeCreateInfo, nullptr, &nativeObject_);
+            &nativeCreateInfo,
+            nullptr,
+            &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
@@ -35,7 +37,8 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
         const auto result = device_.NativeObject_().bindBufferMemory(
-            nativeObject_, createInfo.DataAddress().Memory().NativeObject_(),
+            nativeObject_,
+            createInfo.DataAddress().Memory().NativeObject_(),
             createInfo.DataAddress().Offset());
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }

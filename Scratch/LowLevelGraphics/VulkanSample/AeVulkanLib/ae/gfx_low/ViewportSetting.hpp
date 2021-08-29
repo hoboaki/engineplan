@@ -21,11 +21,8 @@ public:
         return *this;
     }
 
-    /// 深度範囲の最小値。 
-    float MinDepth() const
-    { 
-        return minDepth_;
-    }
+    /// 深度範囲の最小値。
+    float MinDepth() const { return minDepth_; }
 
     /// 深度範囲の最大値。
     float MaxDepth() const { return maxDepth_; }

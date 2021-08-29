@@ -96,9 +96,15 @@ const TimePod tCurrentTime(tTimeConverter converter) {
         }
 
         // 日時から作成
-        obj = TimePod::FromDate(calendar.year, calendar.month,
-            calendar.dayOfMonth, calendar.hour, calendar.min, calendar.sec,
-            calendar.msec, calendar.usec);
+        obj = TimePod::FromDate(
+            calendar.year,
+            calendar.month,
+            calendar.dayOfMonth,
+            calendar.hour,
+            calendar.min,
+            calendar.sec,
+            calendar.msec,
+            calendar.usec);
         obj.ticks_ += calendar.nsec / 100;
     }
 
@@ -136,9 +142,15 @@ const TimePod TimePod::UniversalTime() {
 }
 
 //------------------------------------------------------------------------------
-const TimePod TimePod::FromDate(const int year, const int month,
-    const int dayOfMonth, const int hour, const int min, const int sec,
-    const int msec, const int usec) {
+const TimePod TimePod::FromDate(
+    const int year,
+    const int month,
+    const int dayOfMonth,
+    const int hour,
+    const int min,
+    const int sec,
+    const int msec,
+    const int usec) {
     const u64 days = Calendar::DaysToDate(year, month, dayOfMonth);
     Time obj;
     obj.ticks_ = days * u64(u64(24) * 60 * 60 * 1000 * 1000 * 10) +

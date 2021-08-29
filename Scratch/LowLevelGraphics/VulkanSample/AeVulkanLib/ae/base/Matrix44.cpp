@@ -17,13 +17,13 @@ namespace base {
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Identity() {
     // よく使うことになるのでstaticデータとして使い初期化は１回だけにする。
-    static Matrix44Pod obj = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+    static Matrix44Pod obj = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::Translate(
-    const f32 x, const f32 y, const f32 z) {
+const Matrix44Pod
+Matrix44Pod::Translate(const f32 x, const f32 y, const f32 z) {
     return Matrix44(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z, 0, 0, 0, 1);
 }
 
@@ -44,7 +44,10 @@ const Matrix44Pod Matrix44Pod::Scale(const Vector3Pod& vec) {
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Rotate(
-    const Angle& angle, const f32 axisX, const f32 axisY, const f32 axisZ) {
+    const Angle& angle,
+    const f32 axisX,
+    const f32 axisY,
+    const f32 axisZ) {
     const f32 c = Math::CosF32(angle);
     const f32 s = Math::SinF32(angle);
     const f32 inv_c = 1.0f - c;
@@ -58,20 +61,40 @@ const Matrix44Pod Matrix44Pod::Rotate(
     const f32 ys = y * s;
     const f32 zs = z * s;
 
-    return Matrix44(x * x * inv_c + c, xy * inv_c - zs, xz * inv_c + ys, 0,
-        xy * inv_c + zs, y * y * inv_c + c, yz * inv_c - xs, 0, xz * inv_c - ys,
-        yz * inv_c + xs, z * z * inv_c + c, 0, 0, 0, 0, 1);
+    return Matrix44(
+        x * x * inv_c + c,
+        xy * inv_c - zs,
+        xz * inv_c + ys,
+        0,
+        xy * inv_c + zs,
+        y * y * inv_c + c,
+        yz * inv_c - xs,
+        0,
+        xz * inv_c - ys,
+        yz * inv_c + xs,
+        z * z * inv_c + c,
+        0,
+        0,
+        0,
+        0,
+        1);
 }
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Rotate(
-    const Angle& angle, const Vector3Pod& axisVec) {
+    const Angle& angle,
+    const Vector3Pod& axisVec) {
     return Rotate(angle, axisVec.x, axisVec.y, axisVec.z);
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::Ortho(const f32 left, const f32 top,
-    const f32 right, const f32 bottom, const f32 near, const f32 far) {
+const Matrix44Pod Matrix44Pod::Ortho(
+    const f32 left,
+    const f32 top,
+    const f32 right,
+    const f32 bottom,
+    const f32 near,
+    const f32 far) {
     AE_BASE_ASSERT_NOT_EQUALS(left, right);
     AE_BASE_ASSERT_NOT_EQUALS(top, bottom);
     AE_BASE_ASSERT_NOT_EQUALS(near, far);
@@ -82,13 +105,33 @@ const Matrix44Pod Matrix44Pod::Ortho(const f32 left, const f32 top,
     const f32 t_add_b = top + bottom;
     const f32 f_sub_n = far - near;
     const f32 f_add_n = far + near;
-    return Matrix44(2 / r_sub_l, 0, 0, -r_add_l / r_sub_l, 0, 2 / t_sub_b, 0,
-        -t_add_b / t_sub_b, 0, 0, -2 / f_sub_n, -f_add_n / f_sub_n, 0, 0, 0, 1);
+    return Matrix44(
+        2 / r_sub_l,
+        0,
+        0,
+        -r_add_l / r_sub_l,
+        0,
+        2 / t_sub_b,
+        0,
+        -t_add_b / t_sub_b,
+        0,
+        0,
+        -2 / f_sub_n,
+        -f_add_n / f_sub_n,
+        0,
+        0,
+        0,
+        1);
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::Frustum(const f32 left, const f32 right,
-    const f32 bottom, const f32 top, const f32 near, const f32 far) {
+const Matrix44Pod Matrix44Pod::Frustum(
+    const f32 left,
+    const f32 right,
+    const f32 bottom,
+    const f32 top,
+    const f32 near,
+    const f32 far) {
     AE_BASE_ASSERT_NOT_EQUALS(left, right);
     AE_BASE_ASSERT_NOT_EQUALS(bottom, top);
     AE_BASE_ASSERT_NOT_EQUALS(near, far);
@@ -100,26 +143,60 @@ const Matrix44Pod Matrix44Pod::Frustum(const f32 left, const f32 right,
     const f32 n = near;
     const f32 f = far;
     const f32 n2 = 2 * near;
-    return Matrix44(n2 / (r - l), 0, 0, (r + l) / (r - l), 0, n2 / (t - b), 0,
-        (-t + b) / (t - b), 0, 0, -2 / (f - n), (f + n) / f - n, 0, 0, 0, 1);
+    return Matrix44(
+        n2 / (r - l),
+        0,
+        0,
+        (r + l) / (r - l),
+        0,
+        n2 / (t - b),
+        0,
+        (-t + b) / (t - b),
+        0,
+        0,
+        -2 / (f - n),
+        (f + n) / f - n,
+        0,
+        0,
+        0,
+        1);
 }
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Perspective(
-    const Angle& fOVY, const f32 aspect, const f32 near, const f32 far) {
+    const Angle& fOVY,
+    const f32 aspect,
+    const f32 near,
+    const f32 far) {
     AE_BASE_ASSERT_LESS(0, fOVY.Rad());
     AE_BASE_ASSERT_LESS(0, aspect);
     AE_BASE_ASSERT_NOT_EQUALS(near, far);
 
     const f32 c = Math::CotF32(fOVY);
-    return Matrix44(c / aspect, 0, 0, 0, 0, c, 0, 0, 0, 0,
-        (near + far) / (near - far), (2 * near * far) / (near - far), 0, 0, -1,
+    return Matrix44(
+        c / aspect,
+        0,
+        0,
+        0,
+        0,
+        c,
+        0,
+        0,
+        0,
+        0,
+        (near + far) / (near - far),
+        (2 * near * far) / (near - far),
+        0,
+        0,
+        -1,
         0);
 }
 
 //------------------------------------------------------------------------------
-const Matrix44Pod Matrix44Pod::LookAt(const Vector3Pod& eyePos,
-    const Vector3Pod& targetPos, const Vector3Pod& upVec) {
+const Matrix44Pod Matrix44Pod::LookAt(
+    const Vector3Pod& eyePos,
+    const Vector3Pod& targetPos,
+    const Vector3Pod& upVec) {
     return Matrix34::LookAt(eyePos, targetPos, upVec).ToMatrix44();
 }
 
@@ -407,37 +484,81 @@ const Matrix44Pod Matrix44Pod::Invert() const {
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Transpose() const {
-    return Matrix44(v[Index00], v[Index10], v[Index20], v[Index30], v[Index01],
-        v[Index11], v[Index21], v[Index31], v[Index02], v[Index12], v[Index22],
-        v[Index32], v[Index03], v[Index13], v[Index23], v[Index33]);
+    return Matrix44(
+        v[Index00],
+        v[Index10],
+        v[Index20],
+        v[Index30],
+        v[Index01],
+        v[Index11],
+        v[Index21],
+        v[Index31],
+        v[Index02],
+        v[Index12],
+        v[Index22],
+        v[Index32],
+        v[Index03],
+        v[Index13],
+        v[Index23],
+        v[Index33]);
 }
 
 //------------------------------------------------------------------------------
 void Matrix44Pod::Dump() const {
     AE_BASE_COUTFMT("Matrix44Pod::dump %p\n", this);
-    AE_BASE_COUTFMT("( %f , %f , %f , %f )\n", v[Index00], v[Index01],
-        v[Index02], v[Index03]);
-    AE_BASE_COUTFMT("( %f , %f , %f , %f )\n", v[Index10], v[Index11],
-        v[Index12], v[Index13]);
-    AE_BASE_COUTFMT("( %f , %f , %f , %f )\n", v[Index20], v[Index21],
-        v[Index22], v[Index23]);
-    AE_BASE_COUTFMT("( %f , %f , %f , %f )\n", v[Index30], v[Index31],
-        v[Index32], v[Index33]);
+    AE_BASE_COUTFMT(
+        "( %f , %f , %f , %f )\n",
+        v[Index00],
+        v[Index01],
+        v[Index02],
+        v[Index03]);
+    AE_BASE_COUTFMT(
+        "( %f , %f , %f , %f )\n",
+        v[Index10],
+        v[Index11],
+        v[Index12],
+        v[Index13]);
+    AE_BASE_COUTFMT(
+        "( %f , %f , %f , %f )\n",
+        v[Index20],
+        v[Index21],
+        v[Index22],
+        v[Index23]);
+    AE_BASE_COUTFMT(
+        "( %f , %f , %f , %f )\n",
+        v[Index30],
+        v[Index31],
+        v[Index32],
+        v[Index33]);
 }
 
 //------------------------------------------------------------------------------
 Matrix44::Matrix44()
-: Matrix44Pod(Identity()) {}
+: Matrix44Pod(Identity()) {
+}
 
 //------------------------------------------------------------------------------
 Matrix44::Matrix44(const Matrix44Pod& obj)
-: Matrix44Pod(obj) {}
+: Matrix44Pod(obj) {
+}
 
 //------------------------------------------------------------------------------
-Matrix44::Matrix44(const f32 r0C0, const f32 r0C1, const f32 r0C2,
-    const f32 r0C3, const f32 r1C0, const f32 r1C1, const f32 r1C2,
-    const f32 r1C3, const f32 r2C0, const f32 r2C1, const f32 r2C2,
-    const f32 r2C3, const f32 r3C0, const f32 r3C1, const f32 r3C2,
+Matrix44::Matrix44(
+    const f32 r0C0,
+    const f32 r0C1,
+    const f32 r0C2,
+    const f32 r0C3,
+    const f32 r1C0,
+    const f32 r1C1,
+    const f32 r1C2,
+    const f32 r1C3,
+    const f32 r2C0,
+    const f32 r2C1,
+    const f32 r2C2,
+    const f32 r2C3,
+    const f32 r3C0,
+    const f32 r3C1,
+    const f32 r3C2,
     const f32 r3C3) {
     v[Index00] = r0C0;
     v[Index10] = r1C0;
@@ -458,8 +579,11 @@ Matrix44::Matrix44(const f32 r0C0, const f32 r0C1, const f32 r0C2,
 }
 
 //------------------------------------------------------------------------------
-Matrix44::Matrix44(const Vector4Pod& x, const Vector4Pod& y,
-    const Vector4Pod& z, const Vector4Pod& w) {
+Matrix44::Matrix44(
+    const Vector4Pod& x,
+    const Vector4Pod& y,
+    const Vector4Pod& z,
+    const Vector4Pod& w) {
     SetX(x);
     SetY(y);
     SetZ(z);

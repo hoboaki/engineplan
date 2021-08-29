@@ -61,7 +61,6 @@ enum class BlendFactor {
     /// Src1 の (1 - SrcAlpha) で乗算。
     OneMinusSrc1Alpha,
 
-
     TERM,
 };
 

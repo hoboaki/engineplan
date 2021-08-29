@@ -57,7 +57,8 @@ public:
     /// @details
     /// 確保済配列領域を一度破棄＆再確保＆全要素デフォルトコンストラクタを呼ぶ。
     void Resize(
-        const int count, IAllocator* allocator = &IAllocator::Default()) {
+        const int count,
+        IAllocator* allocator = &IAllocator::Default()) {
         // まず破棄処理
         if (ptr_ != nullptr) {
             // 逆順でデストラクタを呼び出す

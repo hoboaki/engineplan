@@ -15,18 +15,24 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-Queue::Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind kind,
-    int operationCountMax, const ::vk::CommandPool& commandPool)
+Queue::Queue(
+    gfx_low::Device* device,
+    const ::vk::Queue& queue,
+    QueueKind kind,
+    int operationCountMax,
+    const ::vk::CommandPool& commandPool)
 : device_(base::PtrToRef(device))
 , nativeObject_(queue)
 , kind_(kind)
 , operations_(operationCountMax, device_.System().ObjectAllocator_())
 , waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
 , signalEvents_(operationCountMax, device_.System().ObjectAllocator_())
-, commandPool_(commandPool) {}
+, commandPool_(commandPool) {
+}
 
 //------------------------------------------------------------------------------
-Queue::~Queue() {}
+Queue::~Queue() {
+}
 
 //------------------------------------------------------------------------------
 Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
@@ -40,13 +46,13 @@ Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
     }
     AE_BASE_ASSERT(!pushedSwapchainPresent);
 
-    operations_.Add(Operation{OperationKind::CommandExecute, commands});
+    operations_.Add(Operation{ OperationKind::CommandExecute, commands });
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Queue& Queue::PushSwapchainWait(Swapchain* swapchain) {
-    operations_.Add(Operation{OperationKind::SwapchainWait, swapchain});
+    operations_.Add(Operation{ OperationKind::SwapchainWait, swapchain });
     PushEventWait(&base::PtrToRef(swapchain).CurrentAcquireEvent_());
     return *this;
 }
@@ -75,13 +81,13 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
         }
     }
 
-    operations_.Add(Operation{OperationKind::SwapchainPresent, swapchain});
+    operations_.Add(Operation{ OperationKind::SwapchainPresent, swapchain });
     return *this;
 }
 
 //------------------------------------------------------------------------------
 Queue& Queue::PushEventWait(Event* event) {
-    operations_.Add(Operation{OperationKind::EventWait, event});
+    operations_.Add(Operation{ OperationKind::EventWait, event });
     return *this;
 }
 
@@ -97,7 +103,7 @@ Queue& Queue::PushEventSignal(Event* event) {
     }
     AE_BASE_ASSERT(pushedCommandExecute);
 
-    operations_.Add(Operation{OperationKind::EventSignal, event});
+    operations_.Add(Operation{ OperationKind::EventSignal, event });
     return *this;
 }
 
@@ -127,8 +133,8 @@ void Queue::Submit(Fence* fencePtr) {
 
             // Present 実行
             auto& swapchain = base::PtrToRef(static_cast<Swapchain*>(op.ptr));
-            const uint32_t imageIndicies[] = {
-                uint32_t(swapchain.CurrentBufferIndex_())};
+            const uint32_t imageIndicies[] = { uint32_t(
+                swapchain.CurrentBufferIndex_()) };
             const auto presentInfo =
                 vk::PresentInfoKHR()
                     .setWaitSemaphoreCount(waitEvents_.Count())
@@ -173,7 +179,7 @@ void Queue::Submit(Fence* fencePtr) {
                         static_cast<Event*>(nextOp.ptr)->NativeObject_());
                     nextOp.kind =
                         OperationKind::NoOperation; // 処理したので NoOperation
-                                                    // に変更
+                        // に変更
                 }
             }
 
@@ -198,9 +204,9 @@ void Queue::Submit(Fence* fencePtr) {
                     .setPCommandBuffers(
                         &static_cast<CommandBuffer*>(op.ptr)->NativeObject_())
                     .setSignalSemaphoreCount(signalEvents_.Count())
-                    .setPSignalSemaphores(signalEvents_.IsEmpty()
-                                              ? nullptr
-                                              : &signalEvents_.First());
+                    .setPSignalSemaphores(
+                        signalEvents_.IsEmpty() ? nullptr
+                                                : &signalEvents_.First());
             {
                 const auto result =
                     nativeObject_.submit(1, &submitInfo, nativeFence);
@@ -215,7 +221,8 @@ void Queue::Submit(Fence* fencePtr) {
 
         default:
             AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
-                "Non supported operation kind (%d).", op.kind);
+                "Non supported operation kind (%d).",
+                op.kind);
         }
     }
 

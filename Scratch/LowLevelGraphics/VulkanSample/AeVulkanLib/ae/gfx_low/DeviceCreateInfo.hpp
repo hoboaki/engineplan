@@ -43,7 +43,8 @@ public:
         return queueCreateInfos_.Get();
     }
     DeviceCreateInfo& SetQueueCreateInfos(
-        int count, const QueueCreateInfo* infos) {
+        int count,
+        const QueueCreateInfo* infos) {
         queueCreateInfosCount_ = count;
         queueCreateInfos_.Reset(infos);
         return *this;

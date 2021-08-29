@@ -44,8 +44,11 @@ IRuntimeErrorCallback& RuntimeError::DefaultCallback() {
 
             // メッセージボックスで止めてみる。
 #if (defined(AE_BASE_OS_WIN32) && defined(AE_BASE_COMPILER_MSVC))
-            MessageBox(0, L"エラーが発生しました。ログを確認してください。",
-                L"Runtime Error", MB_OK);
+            MessageBox(
+                0,
+                L"エラーが発生しました。ログを確認してください。",
+                L"Runtime Error",
+                MB_OK);
 #endif
 #endif
         }

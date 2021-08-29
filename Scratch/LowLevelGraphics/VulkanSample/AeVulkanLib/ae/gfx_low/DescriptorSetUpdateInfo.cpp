@@ -7,7 +7,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
-    const int count, const UniformBufferDescriptorInfo* infos) {
+    const int count,
+    const UniformBufferDescriptorInfo* infos) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -19,7 +20,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
 
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageBufferInfos(
-    const int count, const StorageBufferDescriptorInfo* infos) {
+    const int count,
+    const StorageBufferDescriptorInfo* infos) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -31,7 +33,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageBufferInfos(
 
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
-    const int count, const SampledImageDescriptorInfo* infos) {
+    const int count,
+    const SampledImageDescriptorInfo* infos) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -43,7 +46,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
 
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSamplerInfos(
-    const int count, const SamplerDescriptorInfo* infos) {
+    const int count,
+    const SamplerDescriptorInfo* infos) {
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);

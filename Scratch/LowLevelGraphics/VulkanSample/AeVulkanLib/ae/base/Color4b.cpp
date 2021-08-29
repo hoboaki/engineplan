@@ -70,18 +70,23 @@ const Color4Pod Color4bPod::ToRGBAf() const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Color4bPod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
-        U8(r).ToShortString().ReadPtr(), U8(g).ToShortString().ReadPtr(),
-        U8(b).ToShortString().ReadPtr(), U8(a).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s,%s",
+        U8(r).ToShortString().ReadPtr(),
+        U8(g).ToShortString().ReadPtr(),
+        U8(b).ToShortString().ReadPtr(),
+        U8(a).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Color4b::Color4b()
-: Color4bPod(Zero()) {}
+: Color4bPod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Color4b::Color4b(const Color4bPod& col)
-: Color4bPod(col) {}
+: Color4bPod(col) {
+}
 
 //------------------------------------------------------------------------------
 Color4b::Color4b(const u8 r, const u8 g, const u8 b, const u8 a) {

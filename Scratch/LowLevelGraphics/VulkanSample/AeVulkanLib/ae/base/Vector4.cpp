@@ -22,69 +22,73 @@ const Vector4Pod Vector4Pod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::One() {
-    Vector4Pod obj = {1, 1, 1, 1};
+    Vector4Pod obj = { 1, 1, 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Min() {
-    Vector4Pod obj = {-AE_BASE_INFINITY, -AE_BASE_INFINITY, -AE_BASE_INFINITY,
-        -AE_BASE_INFINITY};
+    Vector4Pod obj = { -AE_BASE_INFINITY,
+                       -AE_BASE_INFINITY,
+                       -AE_BASE_INFINITY,
+                       -AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Max() {
-    Vector4Pod obj = {
-        AE_BASE_INFINITY, AE_BASE_INFINITY, AE_BASE_INFINITY, AE_BASE_INFINITY};
+    Vector4Pod obj = { AE_BASE_INFINITY,
+                       AE_BASE_INFINITY,
+                       AE_BASE_INFINITY,
+                       AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::UnitX() {
-    Vector4Pod obj = {1, 0, 0, 0};
+    Vector4Pod obj = { 1, 0, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::UnitY() {
-    Vector4Pod obj = {0, 1, 0, 0};
+    Vector4Pod obj = { 0, 1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::UnitZ() {
-    Vector4Pod obj = {0, 0, 1, 0};
+    Vector4Pod obj = { 0, 0, 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::UnitW() {
-    Vector4Pod obj = {0, 0, 0, 1};
+    Vector4Pod obj = { 0, 0, 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::NegUnitX() {
-    Vector4Pod obj = {-1, 0, 0, 0};
+    Vector4Pod obj = { -1, 0, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::NegUnitY() {
-    Vector4Pod obj = {0, -1, 0, 0};
+    Vector4Pod obj = { 0, -1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::NegUnitZ() {
-    Vector4Pod obj = {0, 0, -1, 0};
+    Vector4Pod obj = { 0, 0, -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::NegUnitW() {
-    Vector4Pod obj = {0, 0, 0, -1};
+    Vector4Pod obj = { 0, 0, 0, -1 };
     return obj;
 }
 
@@ -450,19 +454,25 @@ const Vector4Pod Vector4Pod::operator-() const {
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Min(const Vector4Pod& val) const {
-    return Vector4(Math::Min(x, val.x), Math::Min(y, val.y),
-        Math::Min(z, val.z), Math::Min(w, val.w));
+    return Vector4(
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z),
+        Math::Min(w, val.w));
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Max(const Vector4Pod& val) const {
-    return Vector4(Math::Max(x, val.x), Math::Max(y, val.y),
-        Math::Max(z, val.z), Math::Max(w, val.w));
+    return Vector4(
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z),
+        Math::Max(w, val.w));
 }
 
 //------------------------------------------------------------------------------
-const Vector4Pod Vector4Pod::Clamp(
-    const Vector4Pod& min, const Vector4Pod& max) const {
+const Vector4Pod Vector4Pod::Clamp(const Vector4Pod& min, const Vector4Pod& max)
+    const {
     return Max(min).Min(max);
 }
 
@@ -479,7 +489,10 @@ const Vector4Pod Vector4Pod::ClampNegative() const {
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Abs() const {
     return Vector4(
-        Math::AbsF32(x), Math::AbsF32(y), Math::AbsF32(z), Math::AbsF32(w));
+        Math::AbsF32(x),
+        Math::AbsF32(y),
+        Math::AbsF32(z),
+        Math::AbsF32(w));
 }
 
 //------------------------------------------------------------------------------
@@ -542,18 +555,23 @@ f32 Vector4Pod::Dot(const Vector4Pod& vec) const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector4Pod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
-        F32(x).ToShortString().ReadPtr(), F32(y).ToShortString().ReadPtr(),
-        F32(z).ToShortString().ReadPtr(), F32(w).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s,%s",
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr(),
+        F32(z).ToShortString().ReadPtr(),
+        F32(w).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector4::Vector4()
-: Vector4Pod(Zero()) {}
+: Vector4Pod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector4::Vector4(const Vector4Pod& vec)
-: Vector4Pod(vec) {}
+: Vector4Pod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector4::Vector4(const float v) {

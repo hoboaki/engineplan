@@ -37,10 +37,12 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
             specInfo.RenderTargetCount() + (hasDepthStencil ? 1 : 0);
         const int depthStencilIdx = hasDepthStencil ? attachmentsCount - 1 : -1;
 
-        std::array<::vk::AttachmentDescription,
+        std::array<
+            ::vk::AttachmentDescription,
             Device::SupportedAttachmentCountMax_>
             attachments;
-        std::array<::vk::AttachmentReference,
+        std::array<
+            ::vk::AttachmentReference,
             Device::SupportedAttachmentCountMax_>
             attachmentRefs;
         for (int i = 0; i < specInfo.RenderTargetCount(); ++i) {
@@ -123,8 +125,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setDstStageMask(
                     vk::PipelineStageFlagBits::eColorAttachmentOutput)
                 .setSrcAccessMask(vk::AccessFlagBits())
-                .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite |
-                                  vk::AccessFlagBits::eColorAttachmentRead)
+                .setDstAccessMask(
+                    vk::AccessFlagBits::eColorAttachmentWrite |
+                    vk::AccessFlagBits::eColorAttachmentRead)
                 .setDependencyFlags(vk::DependencyFlags());
 
         const auto renderPassCreateInfo =
@@ -137,7 +140,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPDependencies(&dependencies[0]);
         {
             const auto result = device_.NativeObject_().createRenderPass(
-                &renderPassCreateInfo, nullptr, &renderPass_);
+                &renderPassCreateInfo,
+                nullptr,
+                &renderPass_);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
@@ -145,7 +150,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
     // PipelineLayout
     {
         AE_BASE_ASSERT_LESS(
-            0, descriptorSetLayouts_.DescriptorSetLayoutCount());
+            0,
+            descriptorSetLayouts_.DescriptorSetLayoutCount());
         const auto pipelineLayoutCreateInfo =
             ::vk::PipelineLayoutCreateInfo()
                 .setSetLayoutCount(
@@ -153,18 +159,22 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
 
         const auto result = device_.NativeObject_().createPipelineLayout(
-            &pipelineLayoutCreateInfo, nullptr, &pipelineLayout_);
+            &pipelineLayoutCreateInfo,
+            nullptr,
+            &pipelineLayout_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 
     // Pipeline
     {
-        std::array<::vk::PipelineShaderStageCreateInfo,
+        std::array<
+            ::vk::PipelineShaderStageCreateInfo,
             int(RenderPipelineShaderStage::TERM)>
             shaderStageInfos;
         int shaderStageInfosCount = 0;
         for (int i = int(RenderPipelineShaderStage::Invalid) + 1;
-             i < int(RenderPipelineShaderStage::TERM); ++i) {
+             i < int(RenderPipelineShaderStage::TERM);
+             ++i) {
             const auto stage = RenderPipelineShaderStage(i);
             const auto shaderInfo = createInfo.ShaderInfo(stage);
             const auto* resourcePtr = shaderInfo.Resource();
@@ -181,15 +191,22 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
         constexpr int vertexBufferCountMax = 16;
         constexpr int vertexAttributeCountMax = 16;
-        std::array<::vk::VertexInputBindingDescription, vertexBufferCountMax> vertexBindingDescs;
-        std::array<::vk::VertexInputAttributeDescription, vertexAttributeCountMax>
+        std::array<::vk::VertexInputBindingDescription, vertexBufferCountMax>
+            vertexBindingDescs;
+        std::array<
+            ::vk::VertexInputAttributeDescription,
+            vertexAttributeCountMax>
             vertexAttrDescs;
         {
             const auto vertexInputInfo = createInfo.VertexInputInfo();
             AE_BASE_ASSERT_MIN_MAX(
-                vertexInputInfo.BufferCount(), 0, vertexBufferCountMax);
+                vertexInputInfo.BufferCount(),
+                0,
+                vertexBufferCountMax);
             AE_BASE_ASSERT_MIN_MAX(
-                vertexInputInfo.AttributeCount(), 0, vertexAttributeCountMax);
+                vertexInputInfo.AttributeCount(),
+                0,
+                vertexAttributeCountMax);
             if (0 < vertexInputInfo.BufferCount()) {
                 const auto* infos =
                     &base::PtrToRef(vertexInputInfo.BufferLayoutInfos());
@@ -210,8 +227,12 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 for (int i = 0; i < vertexInputInfo.AttributeCount(); ++i) {
                     const auto& info = infos[i];
                     AE_BASE_ASSERT_MIN_TERM(
-                        info.Slot(), 0, vertexInputInfo.BufferCount());
-                    AE_BASE_ASSERT_MIN_TERM(info.Offset(), 0,
+                        info.Slot(),
+                        0,
+                        vertexInputInfo.BufferCount());
+                    AE_BASE_ASSERT_MIN_TERM(
+                        info.Offset(),
+                        0,
                         int(vertexBindingDescs[info.Slot()].stride));
                     vertexAttrDescs[i] =
                         ::vk::VertexInputAttributeDescription()
@@ -258,7 +279,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
         auto toStencilOpState =
             [](const PipelineDepthStencilInfo& depthStencilInfo,
-                const StencilOpInfo& stencilOpInfo) {
+               const StencilOpInfo& stencilOpInfo) {
                 return ::vk::StencilOpState()
                     .setFailOp(
                         InternalEnumUtil::ToStencilOp(stencilOpInfo.FailOp()))
@@ -288,12 +309,15 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                     createInfo.DepthStencilInfo().StencilTestEnable()
                         ? VK_TRUE
                         : VK_FALSE)
-                .setFront(toStencilOpState(createInfo.DepthStencilInfo(),
+                .setFront(toStencilOpState(
+                    createInfo.DepthStencilInfo(),
                     createInfo.DepthStencilInfo().FrontFaceStencilOpInfo()))
-                .setBack((toStencilOpState(createInfo.DepthStencilInfo(),
+                .setBack((toStencilOpState(
+                    createInfo.DepthStencilInfo(),
                     createInfo.DepthStencilInfo().BackFaceStencilOpInfo())));
 
-        std::array<::vk::PipelineColorBlendAttachmentState,
+        std::array<
+            ::vk::PipelineColorBlendAttachmentState,
             Device::SupportedAttachmentCountMax_>
             colorBlendAttachments;
         for (int i = 0; i < createInfo.RenderPassSpecInfo().RenderTargetCount();
@@ -330,7 +354,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPAttachments(&colorBlendAttachments[0]);
 
         const ::vk::DynamicState dynamicStates[] = {
-            ::vk::DynamicState::eViewport, ::vk::DynamicState::eScissor};
+            ::vk::DynamicState::eViewport,
+            ::vk::DynamicState::eScissor
+        };
 
         const auto dynamicStateInfo =
             ::vk::PipelineDynamicStateCreateInfo()
@@ -354,7 +380,11 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
         {
             const auto result = device_.NativeObject_().createGraphicsPipelines(
-                nullptr, 1, &nativeCreateInfo, nullptr, &nativeObject_);
+                nullptr,
+                1,
+                &nativeCreateInfo,
+                nullptr,
+                &nativeObject_);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }

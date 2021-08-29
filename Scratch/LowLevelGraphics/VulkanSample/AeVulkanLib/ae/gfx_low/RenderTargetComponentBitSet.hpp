@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 /// ColorComponent を扱う BitSet。
-using RenderTargetComponentBitSet = ::ae::base::EnumBitSet32<RenderTargetComponent>;
+using RenderTargetComponentBitSet =
+    ::ae::base::EnumBitSet32<RenderTargetComponent>;
 
 } // namespace gfx_low
 } // namespace ae

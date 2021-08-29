@@ -106,9 +106,16 @@ void Console::WriteLineVF(const char* format, va_list arg) {
 //------------------------------------------------------------------------------
 void Console::WriteTime() {
     Calendar calendar = Time::LocalTime().ToCalendar();
-    WriteF(tTimeFormat(), uint(calendar.year + 1), uint(calendar.month + 1),
-        uint(calendar.dayOfMonth + 1), uint(calendar.hour), uint(calendar.min),
-        uint(calendar.sec), uint(calendar.msec), uint(calendar.usec));
+    WriteF(
+        tTimeFormat(),
+        uint(calendar.year + 1),
+        uint(calendar.month + 1),
+        uint(calendar.dayOfMonth + 1),
+        uint(calendar.hour),
+        uint(calendar.min),
+        uint(calendar.sec),
+        uint(calendar.msec),
+        uint(calendar.usec));
 }
 
 //------------------------------------------------------------------------------

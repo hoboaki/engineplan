@@ -44,7 +44,7 @@ public:
     /// 特定のサブリソースのみバリアフェンスを設定するか。（初期値：false）
     /// @details false の場合は全サブリソースに対してバリアフェンスを設定する。
     bool IsSubresourceSpecified() const { return isSubresourceSpecified_; }
-        
+
     /// IsSubresourceSpecified() の設定。
     ImageResourceBarrierInfo& SetIsSubresourceSpecified(bool isSpecified) {
         isSubresourceSpecified_ = isSpecified;

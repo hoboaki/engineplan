@@ -27,7 +27,8 @@ tDefaultAllocatorObj tDefaultAllocator;
 } // namespace
 
 //------------------------------------------------------------------------------
-IAllocator::~IAllocator() {}
+IAllocator::~IAllocator() {
+}
 
 //------------------------------------------------------------------------------
 IAllocator& IAllocator::Default() {
@@ -67,7 +68,8 @@ void* operator new(const std::size_t size, ::ae::base::IAllocator& allocator) {
 
 //------------------------------------------------------------------------------
 void* operator new[](
-    const std::size_t size, ::ae::base::IAllocator& allocator) {
+    const std::size_t size,
+    ::ae::base::IAllocator& allocator) {
     return allocator.Alloc(size);
 }
 

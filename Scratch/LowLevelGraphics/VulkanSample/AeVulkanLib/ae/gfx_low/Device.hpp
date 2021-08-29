@@ -92,10 +92,12 @@ public:
 
     /// 指定のリソースメモリの指定範囲に対して CPU による読み書きを開始する。
     /// @return region で指定した範囲の先頭アドレス。
-    /// @details 
+    /// @details
     /// 戻り値のアドレスに対して CPU 側で読み書きを行ってください。
     /// Map 中の ResourceMemory オブジェクトに対して Map することはできません。
-    uint8_t* MapResourceMemory(const ResourceMemory& resourceMemory, const ResourceMemoryRegion& region);
+    uint8_t* MapResourceMemory(
+        const ResourceMemory& resourceMemory,
+        const ResourceMemoryRegion& region);
 
     /// 指定のリソースメモリに対する CPU による読み書きを終了する。
     void UnmapResourceMemory(const ResourceMemory& resourceMemory);

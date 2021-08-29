@@ -45,8 +45,9 @@ public:
     }
 
     /// SubresourceLocation() の設定。
-    RenderTargetImageViewCreateInfo& SetSubresourceLocation(const ImageSubresourceLocation& location) {
-        subresourceLocation_ = location;        
+    RenderTargetImageViewCreateInfo& SetSubresourceLocation(
+        const ImageSubresourceLocation& location) {
+        subresourceLocation_ = location;
         return *this;
     }
     //@}

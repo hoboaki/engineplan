@@ -18,17 +18,20 @@ const Aabb2i Aabb2i::Largest() {
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i()
 : min_(Vector2i::Zero())
-, term_(min_) {}
+, term_(min_) {
+}
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i(const Vector2iPod& begin)
 : min_(begin)
-, term_(min_) {}
+, term_(min_) {
+}
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i(const Vector2iPod& begin, const int width, const int height)
 : min_(begin)
-, term_(begin.x + reinterpret_cast<const int&>(width),
+, term_(
+      begin.x + reinterpret_cast<const int&>(width),
       begin.y + reinterpret_cast<const int&>(height)) {
     AE_BASE_ASSERT_LESS_EQUALS(min_.x, term_.x);
     AE_BASE_ASSERT_LESS_EQUALS(min_.y, term_.y);
@@ -36,7 +39,8 @@ Aabb2i::Aabb2i(const Vector2iPod& begin, const int width, const int height)
 
 //------------------------------------------------------------------------------
 Aabb2i::Aabb2i(const Vector2iPod& begin, const Extent2iPod& extent)
-: Aabb2i(begin, extent.width, extent.height) {}
+: Aabb2i(begin, extent.width, extent.height) {
+}
 
 //------------------------------------------------------------------------------
 const Vector2iPod Aabb2i::Begin() const {

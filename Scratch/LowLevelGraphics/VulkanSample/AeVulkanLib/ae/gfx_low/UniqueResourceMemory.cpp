@@ -21,7 +21,8 @@ void UniqueResourceMemory::Reset() {
 
 //------------------------------------------------------------------------------
 void UniqueResourceMemory::Reset(
-    Device* device, const ResourceMemoryAllocInfo& allocInfo) {
+    Device* device,
+    const ResourceMemoryAllocInfo& allocInfo) {
     Reset();
     device_.Reset(&base::PtrToRef(device));
     memory_ = device_->AllocResourceMemory(allocInfo);

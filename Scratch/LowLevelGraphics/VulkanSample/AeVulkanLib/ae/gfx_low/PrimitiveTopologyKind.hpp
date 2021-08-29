@@ -6,16 +6,15 @@ namespace ae {
 namespace gfx_low {
 
 /// プリミティブトポロジの種類を示す列挙値。
-enum class PrimitiveTopologyKind
-{
+enum class PrimitiveTopologyKind {
     Invalid,
 
     /// 点リスト。
     PointList,
-    
+
     /// 線分リスト。
     LineList,
-    
+
     /// 連続した線分リスト。
     LineStrip,
 
@@ -28,6 +27,6 @@ enum class PrimitiveTopologyKind
     TERM,
 };
 
-}
-}
+} // namespace gfx_low
+} // namespace ae
 // EOF

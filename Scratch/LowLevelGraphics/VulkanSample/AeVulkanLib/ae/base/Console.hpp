@@ -193,7 +193,9 @@ struct Console {
 /// @details ログ文字列が無効な時は何もしません。
 #define AE_BASE_DUMP(val)           \
     AE_BASE_COUTFMT_LINE_WITH_TIME( \
-        "%s : %s\n", #val, AE_BASE_TO_SHORT_STRING(val).ReadPtr())
+        "%s : %s\n",                \
+        #val,                       \
+        AE_BASE_TO_SHORT_STRING(val).ReadPtr())
 
 //@}
 //@}

@@ -66,7 +66,8 @@ AppEvent::EnumType Application::ReceiveEventCore() {
 //------------------------------------------------------------------------------
 Application_Ext::Application_Ext()
 : prevUSec(tCurrentUSec())
-, doQuit(false) {}
+, doQuit(false) {
+}
 
 } // namespace base
 } // namespace ae

@@ -24,7 +24,8 @@ ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
     // PipelineLayout
     {
         AE_BASE_ASSERT_LESS(
-            0, descriptorSetLayouts_.DescriptorSetLayoutCount());
+            0,
+            descriptorSetLayouts_.DescriptorSetLayoutCount());
         const auto pipelineLayoutCreateInfo =
             ::vk::PipelineLayoutCreateInfo()
                 .setSetLayoutCount(
@@ -32,7 +33,9 @@ ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
                 .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
 
         const auto result = device_.NativeObject_().createPipelineLayout(
-            &pipelineLayoutCreateInfo, nullptr, &pipelineLayout_);
+            &pipelineLayoutCreateInfo,
+            nullptr,
+            &pipelineLayout_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 
@@ -57,7 +60,11 @@ ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
 
         {
             const auto result = device_.NativeObject_().createComputePipelines(
-                nullptr, 1, &nativeCreateInfo, nullptr, &nativeObject_);
+                nullptr,
+                1,
+                &nativeCreateInfo,
+                nullptr,
+                &nativeObject_);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }

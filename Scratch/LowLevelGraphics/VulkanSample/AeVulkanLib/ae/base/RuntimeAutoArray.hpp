@@ -32,7 +32,8 @@ public:
     /// @details
     /// 配列長が0の場合、アロケートは走りません。
     RuntimeAutoArray(
-        int countMax, IAllocator* allocator = &IAllocator::Default())
+        int countMax,
+        IAllocator* allocator = &IAllocator::Default())
     : allocator_(PtrToRef(allocator))
     , countMax_(countMax)
     , count_(0)
@@ -171,7 +172,12 @@ public:
         new (&ptr_[count_]) ValueType(a0, a1, a2, a3, a4);
         ++count_;
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
         typename A5>
     void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
         if (IsFull()) {
@@ -181,8 +187,14 @@ public:
         new (&ptr_[count_]) ValueType(a0, a1, a2, a3, a4, a5);
         ++count_;
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6>
     void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
@@ -191,8 +203,15 @@ public:
         new (&ptr_[count_]) ValueType(a0, a1, a2, a3, a4, a5, a6);
         ++count_;
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7>
     void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
@@ -201,8 +220,16 @@ public:
         new (&ptr_[count_]) ValueType(a0, a1, a2, a3, a4, a5, a6, a7);
         ++count_;
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8>
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8>
     void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
@@ -211,10 +238,19 @@ public:
         new (&ptr_[count_]) ValueType(a0, a1, a2, a3, a4, a5, a6, a7, a8);
         ++count_;
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8, typename A9>
-    void Add(
-        A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8,
+        typename A9>
+    void
+    Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;

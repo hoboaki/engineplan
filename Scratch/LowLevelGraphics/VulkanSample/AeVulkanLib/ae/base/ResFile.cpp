@@ -15,7 +15,8 @@ const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator) {
     ResFileStream stream;
     if (!stream.Open(path)) {
         AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
-            "ResFile named '%s' is failed to open.", path);
+            "ResFile named '%s' is failed to open.",
+            path);
         return AutoMemBlock();
     }
 

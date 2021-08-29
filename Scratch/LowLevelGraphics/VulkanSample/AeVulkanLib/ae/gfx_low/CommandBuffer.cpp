@@ -47,7 +47,8 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , nativeObject_()
 , completeEvent_(EventCreateInfo().SetDevice(&device_))
 , renderPassProperties_(
-      createInfo.RenderPassCountMax(), device_.System().ObjectAllocator_()) {
+      createInfo.RenderPassCountMax(),
+      device_.System().ObjectAllocator_()) {
     // 今は Primary のみサポート
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
 
@@ -57,7 +58,8 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
                                   .setCommandBufferCount(1);
 
     auto result = device_.NativeObject_().allocateCommandBuffers(
-        &allocateInfo, &nativeObject_);
+        &allocateInfo,
+        &nativeObject_);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 }
 
@@ -65,7 +67,8 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 CommandBuffer::~CommandBuffer() {
     Reset();
     device_.NativeObject_().freeCommandBuffers(
-        queuePtr_->CommandPool_(), nativeObject_);
+        queuePtr_->CommandPool_(),
+        nativeObject_);
 }
 
 //------------------------------------------------------------------------------
@@ -100,7 +103,8 @@ void CommandBuffer::Reset() {
     }
     default:
         AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
-            "[CommandBuffer::Reset] Invalid State(%d).", state_);
+            "[CommandBuffer::Reset] Invalid State(%d).",
+            state_);
         return;
     }
 
@@ -184,8 +188,9 @@ void CommandBuffer::CmdImageResourceBarrier(
                           0, // baseArrayLayer
                           imageResource.ArrayLength_() *
                               (imageResource.IsCubeMapImage_() ? 6 : 1)));
-    nativeObject_.pipelineBarrier(::vk::PipelineStageFlagBits::eAllGraphics |
-                                      ::vk::PipelineStageFlagBits::eAllCommands,
+    nativeObject_.pipelineBarrier(
+        ::vk::PipelineStageFlagBits::eAllGraphics |
+            ::vk::PipelineStageFlagBits::eAllCommands,
         ::vk::PipelineStageFlagBits::eAllGraphics |
             ::vk::PipelineStageFlagBits::eAllCommands,
         ::vk::DependencyFlagBits(),
@@ -208,8 +213,10 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
             .setBufferOffset(info.SrcBufferOffset())
             .setBufferRowLength(info.SrcImageExtent().width)
             .setBufferImageHeight(info.SrcImageExtent().height)
-            .setImageOffset(::vk::Offset3D(info.DstImageOffset().x,
-                info.DstImageOffset().y, info.DstImageOffset().z))
+            .setImageOffset(::vk::Offset3D(
+                info.DstImageOffset().x,
+                info.DstImageOffset().y,
+                info.DstImageOffset().z))
             .setImageSubresource(
                 ::vk::ImageSubresourceLayers()
                     .setAspectMask(::vk::ImageAspectFlagBits::eColor)
@@ -217,10 +224,10 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
                     .setBaseArrayLayer(
                         info.DstSubresourceLocation().ArrayIndex())
                     .setLayerCount(1))
-            .setImageExtent(
-                ::vk::Extent3D(uint32_t(info.SrcImageExtent().width),
-                    uint32_t(info.SrcImageExtent().height),
-                    uint32_t(info.SrcImageExtent().depth)));
+            .setImageExtent(::vk::Extent3D(
+                uint32_t(info.SrcImageExtent().width),
+                uint32_t(info.SrcImageExtent().height),
+                uint32_t(info.SrcImageExtent().depth)));
 
     nativeObject_.copyBufferToImage(
         base::PtrToRef(info.SrcBufferResource()).NativeObject_(),
@@ -234,7 +241,8 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
 void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
-    AE_BASE_ASSERT_LESS_EQUALS(info.RenderPassSpecInfo().RenderTargetCount(),
+    AE_BASE_ASSERT_LESS_EQUALS(
+        info.RenderPassSpecInfo().RenderTargetCount(),
         Device::SupportedRenderTargetCountMax_);
 
     activePass_.Set(CommandBufferFeature::Render, true);
@@ -247,10 +255,12 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     const int depthStencilIdx = hasDepthStencil ? attachmentsCount - 1 : -1;
     {
         // RenderPass 作成
-        std::array<::vk::AttachmentDescription,
+        std::array<
+            ::vk::AttachmentDescription,
             Device::SupportedAttachmentCountMax_>
             attachments;
-        std::array<::vk::AttachmentReference,
+        std::array<
+            ::vk::AttachmentReference,
             Device::SupportedAttachmentCountMax_>
             attachmentRefs;
         for (int i = 0; i < info.RenderPassSpecInfo().RenderTargetCount();
@@ -305,7 +315,8 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                         spec.ImageFormat()))
                 .setFinalLayout(
                     InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
-                        setting.FinalImageResourceState(), spec.ImageFormat()));
+                        setting.FinalImageResourceState(),
+                        spec.ImageFormat()));
             attachmentRef.setAttachment(depthStencilIdx)
                 .setLayout(::vk::ImageLayout::eDepthStencilAttachmentOptimal);
         }
@@ -352,8 +363,9 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setDstStageMask(
                     vk::PipelineStageFlagBits::eColorAttachmentOutput)
                 .setSrcAccessMask(vk::AccessFlagBits())
-                .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite |
-                                  vk::AccessFlagBits::eColorAttachmentRead)
+                .setDstAccessMask(
+                    vk::AccessFlagBits::eColorAttachmentWrite |
+                    vk::AccessFlagBits::eColorAttachmentRead)
                 .setDependencyFlags(vk::DependencyFlags());
 
         auto const renderPassCreateInfo =
@@ -366,7 +378,9 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setPDependencies(&dependencies[0]);
         {
             const auto result = device_.NativeObject_().createRenderPass(
-                &renderPassCreateInfo, nullptr, &prop.renderPass);
+                &renderPassCreateInfo,
+                nullptr,
+                &prop.renderPass);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
@@ -397,7 +411,9 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                 .setLayers(1);
         {
             const auto result = device_.NativeObject_().createFramebuffer(
-                &createInfo, nullptr, &prop.framebuffer);
+                &createInfo,
+                nullptr,
+                &prop.framebuffer);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
     }
@@ -409,27 +425,29 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
         const auto color = info.RenderTargetSettings()[i].ClearColor();
         ::vk::ClearColorValue val;
         val.float32 =
-            std::array<float, 4>({color.r, color.g, color.b, color.a});
+            std::array<float, 4>({ color.r, color.g, color.b, color.a });
         clearValues[i].setColor(val);
     }
     if (hasDepthStencil) {
         const auto& setting = base::PtrToRef(info.DepthStencilSettingPtr());
         clearValues[depthStencilIdx].setDepthStencil(
-            ::vk::ClearDepthStencilValue(setting.DepthClearValue(),
+            ::vk::ClearDepthStencilValue(
+                setting.DepthClearValue(),
                 uint32_t(setting.StencilClearValue())));
     }
 
-    auto const passInfo =
-        ::vk::RenderPassBeginInfo()
-            .setRenderPass(prop.renderPass)
-            .setFramebuffer(prop.framebuffer)
-            .setRenderArea(
-                ::vk::Rect2D(::vk::Offset2D(info.RenderArea().Begin().x,
-                                 info.RenderArea().Begin().y),
-                    ::vk::Extent2D(uint32_t(info.RenderArea().Width()),
-                        uint32_t(info.RenderArea().Height()))))
-            .setClearValueCount(attachmentsCount)
-            .setPClearValues(&clearValues[0]);
+    auto const passInfo = ::vk::RenderPassBeginInfo()
+                              .setRenderPass(prop.renderPass)
+                              .setFramebuffer(prop.framebuffer)
+                              .setRenderArea(::vk::Rect2D(
+                                  ::vk::Offset2D(
+                                      info.RenderArea().Begin().x,
+                                      info.RenderArea().Begin().y),
+                                  ::vk::Extent2D(
+                                      uint32_t(info.RenderArea().Width()),
+                                      uint32_t(info.RenderArea().Height()))))
+                              .setClearValueCount(attachmentsCount)
+                              .setPClearValues(&clearValues[0]);
 
     nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eInline);
 }
@@ -442,7 +460,6 @@ void CommandBuffer::CmdEndRenderPass() {
     nativeObject_.endRenderPass();
     activePass_.Set(CommandBufferFeature::Render, false);
 }
-
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
@@ -463,21 +480,30 @@ void CommandBuffer::CmdEndComputePass() {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
-    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render) ||
-                   activePass_.Get(CommandBufferFeature::Compute));
+    AE_BASE_ASSERT(
+        activePass_.Get(CommandBufferFeature::Render) ||
+        activePass_.Get(CommandBufferFeature::Compute));
 
     if (activePass_.Get(CommandBufferFeature::Render)) {
         AE_BASE_ASSERT(currentRenderPipeline_.IsValid());
-        nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eGraphics,
-            currentRenderPipeline_->PipelineLayout_(), 0,
+        nativeObject_.bindDescriptorSets(
+            ::vk::PipelineBindPoint::eGraphics,
+            currentRenderPipeline_->PipelineLayout_(),
+            0,
             descriptorSet.Layouts_().DescriptorSetLayoutCount(),
-            descriptorSet.NativeObjects_(), 0, nullptr);
+            descriptorSet.NativeObjects_(),
+            0,
+            nullptr);
     } else if (activePass_.Get(CommandBufferFeature::Compute)) {
         AE_BASE_ASSERT(currentComputePipeline_.IsValid());
-        nativeObject_.bindDescriptorSets(::vk::PipelineBindPoint::eCompute,
-            currentComputePipeline_->PipelineLayout_(), 0,
+        nativeObject_.bindDescriptorSets(
+            ::vk::PipelineBindPoint::eCompute,
+            currentComputePipeline_->PipelineLayout_(),
+            0,
             descriptorSet.Layouts_().DescriptorSetLayoutCount(),
-            descriptorSet.NativeObjects_(), 0, nullptr);
+            descriptorSet.NativeObjects_(),
+            0,
+            nullptr);
     } else {
         AE_BASE_ASSERT_NOT_REACHED();
     }
@@ -488,13 +514,15 @@ void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     nativeObject_.bindPipeline(
-        ::vk::PipelineBindPoint::eGraphics, pipeline.NativeObject_());
+        ::vk::PipelineBindPoint::eGraphics,
+        pipeline.NativeObject_());
     currentRenderPipeline_.Reset(&pipeline);
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetViewports(
-    const int count, const ViewportSetting* settings) {
+    const int count,
+    const ViewportSetting* settings) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -516,7 +544,8 @@ void CommandBuffer::CmdSetViewports(
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetScissors(
-    const int count, const ScissorSetting* settings) {
+    const int count,
+    const ScissorSetting* settings) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -524,31 +553,38 @@ void CommandBuffer::CmdSetScissors(
     std::array<::vk::Rect2D, Device::SupportedRenderTargetCountMax_> rects;
     for (int i = 0; i < count; ++i) {
         const auto& setting = settings[i];
-        rects[i] =
-            ::vk::Rect2D({setting.Rect().Begin().x, setting.Rect().Begin().y},
-                {uint32_t(setting.Rect().Width()),
-                    uint32_t(setting.Rect().Height())});
+        rects[i] = ::vk::Rect2D(
+            { setting.Rect().Begin().x, setting.Rect().Begin().y },
+            { uint32_t(setting.Rect().Width()),
+              uint32_t(setting.Rect().Height()) });
     }
     nativeObject_.setScissor(0, count, &rects[0]);
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetVertexBuffer(
-    const int slotIndex, const VertexBufferView& view) {
+    const int slotIndex,
+    const VertexBufferView& view) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, slotIndex);
     const auto offset = ::vk::DeviceSize(view.Region_().Offset());
-    nativeObject_.bindVertexBuffers(uint32_t(slotIndex), 1,
-        &view.BufferResource_().NativeObject_(), &offset);
+    nativeObject_.bindVertexBuffers(
+        uint32_t(slotIndex),
+        1,
+        &view.BufferResource_().NativeObject_(),
+        &offset);
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
-    nativeObject_.draw(info.VertexCount(), info.InstanceCount(),
-        info.VertexOffset(), info.InstanceOffset());
+    nativeObject_.draw(
+        info.VertexCount(),
+        info.InstanceCount(),
+        info.VertexOffset(),
+        info.InstanceOffset());
 }
 
 //------------------------------------------------------------------------------
@@ -556,7 +592,8 @@ void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
     nativeObject_.bindPipeline(
-        ::vk::PipelineBindPoint::eCompute, pipeline.NativeObject_());
+        ::vk::PipelineBindPoint::eCompute,
+        pipeline.NativeObject_());
     currentComputePipeline_.Reset(&pipeline);
 }
 
@@ -564,8 +601,10 @@ void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
 void CommandBuffer::CmdDispatch(const DispatchCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
-    nativeObject_.dispatch(info.ThreadGroups().width,
-        info.ThreadGroups().height, info.ThreadGroups().depth);
+    nativeObject_.dispatch(
+        info.ThreadGroups().width,
+        info.ThreadGroups().height,
+        info.ThreadGroups().depth);
 }
 
 } // namespace gfx_low

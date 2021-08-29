@@ -35,8 +35,9 @@ private:
     typedef ::ae::base::PodStruct<T> SuperStruct; // 親クラスのエイリアス。
     AE_BASE_STATIC_ASSERT(
         TypeTraits::IsPod<SuperStruct>::Value); // Pod型のチェック。
-    AE_BASE_STATIC_ASSERT(sizeof(SuperStruct) ==
-                          sizeof(SuperStruct::ValueType)); // サイズが同じであることを保証。
+    AE_BASE_STATIC_ASSERT(
+        sizeof(SuperStruct) ==
+        sizeof(SuperStruct::ValueType)); // サイズが同じであることを保証。
 };
 //@}
 

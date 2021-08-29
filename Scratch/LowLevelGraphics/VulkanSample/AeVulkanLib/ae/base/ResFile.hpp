@@ -29,7 +29,8 @@ public:
     /// ファイルが見つからない場合、読み込めなかった場合はエラーになります。 @n
     /// 戻り値のMemBlockのサイズは読み込んだファイルのサイズと同じです。 @n
     static const AutoMemBlock Read(
-        const char* path, IAllocator& allocator = IAllocator::Default());
+        const char* path,
+        IAllocator& allocator = IAllocator::Default());
 };
 //@}
 

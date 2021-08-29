@@ -40,8 +40,7 @@ bool CalendarPod::IsLeapYear(const int year) {
     const int localYear = 1 + tYearCheck(year);
 
     if ((localYear % 4) != 0 // 4で割り切れないので平年
-        ||
-        ((localYear % 100) == 0 &&
+        || ((localYear % 100) == 0 &&
             (localYear % 400) != 0) // 100 で割り切れ 400 で割り切れない年は平年
     ) {
         return false;
@@ -53,7 +52,9 @@ bool CalendarPod::IsLeapYear(const int year) {
 
 //------------------------------------------------------------------------------
 int CalendarPod::DaysToDate(
-    const int year, const int month, const int dayOfMonth) {
+    const int year,
+    const int month,
+    const int dayOfMonth) {
     int days = 0;
 
     // 年

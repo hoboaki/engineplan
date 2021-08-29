@@ -16,7 +16,9 @@ Event::Event(const EventCreateInfo& createInfo)
 , nativeObject_() {
     const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
     const auto result = device_.NativeObject_().createSemaphore(
-        &semaphoreCreateInfo, nullptr, &nativeObject_);
+        &semaphoreCreateInfo,
+        nullptr,
+        &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 

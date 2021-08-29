@@ -51,47 +51,127 @@ public:
     /// 5引数 Init() で作成。
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
     AutoSpPtr(
-        ::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4) {
         Init(allocator, a0, a1, a2, a3, a4);
     }
 
     /// 6引数 Init() で作成。
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
         typename A5>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5) {
+    AutoSpPtr(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5) {
         Init(allocator, a0, a1, a2, a3, a4, a5);
     }
 
     /// 7引数 Init() で作成。
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6>
+    AutoSpPtr(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6) {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6);
     }
 
     /// 8引数 Init() で作成。
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7>
+    AutoSpPtr(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7) {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7);
     }
 
     /// 9引数 Init() で作成。
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8>
+    AutoSpPtr(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7,
+        A8 a8) {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
 
     /// 10引数 Init() で作成。
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8, typename A9>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8,
+        typename A9>
+    AutoSpPtr(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7,
+        A8 a8,
+        A9 a9) {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }
 
@@ -171,43 +251,118 @@ public:
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3));
     }
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
-    void Init(
-        ::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void
+    Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4));
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
         typename A5>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5) {
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5));
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6>
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6));
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7>
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7));
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8>
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7,
+        A8 a8) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8));
     }
-    template <typename A0, typename A1, typename A2, typename A3, typename A4,
-        typename A5, typename A6, typename A7, typename A8, typename A9>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3,
-        A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    template <
+        typename A0,
+        typename A1,
+        typename A2,
+        typename A3,
+        typename A4,
+        typename A5,
+        typename A6,
+        typename A7,
+        typename A8,
+        typename A9>
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7,
+        A8 a8,
+        A9 a9) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9));
     }

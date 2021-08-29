@@ -53,7 +53,6 @@ private:
     base::Pointer<gfx_low::Device> device_;
     base::Pointer<gfx_low::BufferResource> resource_;
     ResourceMemoryRegion region_;
-    
 };
 
 } // namespace gfx_low

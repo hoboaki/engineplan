@@ -19,14 +19,16 @@ Quaternion::Quaternion()
 : x(0)
 , y(0)
 , z(0)
-, w(1.0f) {}
+, w(1.0f) {
+}
 
 //------------------------------------------------------------------------------
 Quaternion::Quaternion(const f32 x, const f32 y, const f32 z, const f32 w)
 : x(x)
 , y(y)
 , z(z)
-, w(w) {}
+, w(w) {
+}
 
 //------------------------------------------------------------------------------
 Quaternion::Quaternion(const Vector3Pod& axis, const Angle& angle)
@@ -108,9 +110,12 @@ Quaternion& Quaternion::operator*=(const Quaternion& rhs) {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Quaternion::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
-        F32(x).ToShortString().ReadPtr(), F32(y).ToShortString().ReadPtr(),
-        F32(z).ToShortString().ReadPtr(), F32(w).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s,%s",
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr(),
+        F32(z).ToShortString().ReadPtr(),
+        F32(w).ToShortString().ReadPtr());
 }
 
 } // namespace base

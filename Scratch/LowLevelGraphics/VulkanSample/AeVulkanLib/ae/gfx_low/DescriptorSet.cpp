@@ -86,7 +86,9 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
                 .setPoolSizeCount(sizeCount)
                 .setPPoolSizes(&sizes_[0]);
         const auto result = device_.NativeObject_().createDescriptorPool(
-            &nativeCreateInfo, nullptr, &descriptorPool_);
+            &nativeCreateInfo,
+            nullptr,
+            &descriptorPool_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 
@@ -99,7 +101,8 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
                     descriptorSetLayouts_.DescriptorSetLayoutCount())
                 .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
         const auto result = device_.NativeObject_().allocateDescriptorSets(
-            &allocInfo, &nativeObjects_[0]);
+            &allocInfo,
+            &nativeObjects_[0]);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 }
@@ -219,8 +222,7 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
 
     // Sampler
     for (int infoIdx = 0; infoIdx < info.SamplerInfoCount(); ++infoIdx) {
-        const auto& descInfo =
-            base::PtrToRef(&info.SamplerInfos()[infoIdx]);
+        const auto& descInfo = base::PtrToRef(&info.SamplerInfos()[infoIdx]);
         const auto descSetIdx = descriptorSetLayouts_.DescriptorSetLayoutIndex(
             DescriptorKind::Sampler);
         AE_BASE_ASSERT_LESS_EQUALS(0, descSetIdx);
@@ -236,8 +238,8 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
 
         for (int samplerIdx = 0; samplerIdx < descInfo.Region().ElemCount();
              ++samplerIdx) {
-            const auto& sampler =
-                base::PtrToRef(base::PtrToRef(&descInfo.Samplers()[samplerIdx]));
+            const auto& sampler = base::PtrToRef(
+                base::PtrToRef(&descInfo.Samplers()[samplerIdx]));
             images[imageCount] =
                 ::vk::DescriptorImageInfo()
                     .setSampler(sampler.NativeObject_())
@@ -249,8 +251,8 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
     AE_BASE_ASSERT_LESS_EQUALS(writeCount, writesCountMax);
     AE_BASE_ASSERT_LESS_EQUALS(bufferCount, int(buffers.size()));
     AE_BASE_ASSERT_LESS_EQUALS(imageCount, int(images.size()));
-    device_.NativeObject_().updateDescriptorSets(
-        writeCount, &writes[0], 0, nullptr);
+    device_.NativeObject_()
+        .updateDescriptorSets(writeCount, &writes[0], 0, nullptr);
 }
 
 } // namespace gfx_low

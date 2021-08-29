@@ -22,55 +22,57 @@ const Vector3Pod Vector3Pod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::One() {
-    Vector3Pod obj = {1, 1, 1};
+    Vector3Pod obj = { 1, 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Min() {
-    Vector3Pod obj = {-AE_BASE_INFINITY, -AE_BASE_INFINITY, -AE_BASE_INFINITY};
+    Vector3Pod obj = { -AE_BASE_INFINITY,
+                       -AE_BASE_INFINITY,
+                       -AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Max() {
-    Vector3Pod obj = {AE_BASE_INFINITY, AE_BASE_INFINITY, AE_BASE_INFINITY};
+    Vector3Pod obj = { AE_BASE_INFINITY, AE_BASE_INFINITY, AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::UnitX() {
-    Vector3Pod obj = {1, 0, 0};
+    Vector3Pod obj = { 1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::UnitY() {
-    Vector3Pod obj = {0, 1, 0};
+    Vector3Pod obj = { 0, 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::UnitZ() {
-    Vector3Pod obj = {0, 0, 1};
+    Vector3Pod obj = { 0, 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::NegUnitX() {
-    Vector3Pod obj = {-1, 0, 0};
+    Vector3Pod obj = { -1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::NegUnitY() {
-    Vector3Pod obj = {0, -1, 0};
+    Vector3Pod obj = { 0, -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::NegUnitZ() {
-    Vector3Pod obj = {0, 0, -1};
+    Vector3Pod obj = { 0, 0, -1 };
     return obj;
 }
 
@@ -375,18 +377,22 @@ const Vector3Pod Vector3Pod::operator-() const {
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Min(const Vector3Pod& val) const {
     return Vector3(
-        Math::Min(x, val.x), Math::Min(y, val.y), Math::Min(z, val.z));
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z));
 }
 
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Max(const Vector3Pod& val) const {
     return Vector3(
-        Math::Max(x, val.x), Math::Max(y, val.y), Math::Max(z, val.z));
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z));
 }
 
 //------------------------------------------------------------------------------
-const Vector3Pod Vector3Pod::Clamp(
-    const Vector3Pod& min, const Vector3Pod& max) const {
+const Vector3Pod Vector3Pod::Clamp(const Vector3Pod& min, const Vector3Pod& max)
+    const {
     return Max(min).Min(max);
 }
 
@@ -466,23 +472,29 @@ f32 Vector3Pod::Dot(const Vector3Pod& vec) const {
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Cross(const Vector3Pod& vec) const {
     return Vector3(
-        y * vec.z - z * vec.y, z * vec.x - x * vec.z, x * vec.y - y * vec.x);
+        y * vec.z - z * vec.y,
+        z * vec.x - x * vec.z,
+        x * vec.y - y * vec.x);
 }
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector3Pod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s",
-        F32(x).ToShortString().ReadPtr(), F32(y).ToShortString().ReadPtr(),
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s",
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr(),
         F32(z).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector3::Vector3()
-: Vector3Pod(Zero()) {}
+: Vector3Pod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector3::Vector3(const Vector3Pod& vec)
-: Vector3Pod(vec) {}
+: Vector3Pod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector3::Vector3(const float v) {

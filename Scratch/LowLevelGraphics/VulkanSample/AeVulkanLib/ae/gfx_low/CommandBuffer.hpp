@@ -110,7 +110,6 @@ public:
     void CmdImageResourceBarrier(const ImageResourceBarrierInfo& info);
     //@}
 
-
     /// @name コピーコマンド
     //@{
     /// BufferResource から ImageResource へのコピー処理をする。

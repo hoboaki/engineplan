@@ -41,7 +41,10 @@ struct FixedStringPod {
         va_list arg;
         va_start(arg, format);
         StringTraits<CharType>::VSNPrintf(
-            str.buffer_, BufferLength, format, arg);
+            str.buffer_,
+            BufferLength,
+            format,
+            arg);
         va_end(arg);
         return str;
     }

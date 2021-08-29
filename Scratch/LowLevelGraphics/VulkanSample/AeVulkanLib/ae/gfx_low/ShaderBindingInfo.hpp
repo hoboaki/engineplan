@@ -31,7 +31,7 @@ public:
 
     ///  バインディングする要素数。（初期値：1）
     /// @details 配列の場合はこの値を配列長として扱います。
-    int ElemCount() const { return elemCount_;}
+    int ElemCount() const { return elemCount_; }
 
     /// ElemCount() の設定。
     /// @param count 1以上。

@@ -63,13 +63,17 @@ void tSetupExeInfo() {
 
     // ディレクトリパス
     ::ae::base::StringTraits<char>::NCopy(
-        tExeDirPath, tExeDirPathLength, tExeFilePath);
+        tExeDirPath,
+        tExeDirPathLength,
+        tExeFilePath);
     tExeDirPath[dirPathLength] = '\0';
     tReplaceChar('\\', '/', tExeDirPath);
 
     // ファイル名
     ::ae::base::StringTraits<char>::NCopy(
-        tExeFileName, tExeFileNameLength, &tExeFilePath[dirPathLength + 1]);
+        tExeFileName,
+        tExeFileNameLength,
+        &tExeFilePath[dirPathLength + 1]);
 }
 
 // 空白文字か
@@ -142,7 +146,10 @@ void tSetupArg() {
 int tWinMainIN(HINSTANCE instance, int cmdShow) {
     // 引数の作成
     const ::ae::base::Argument arg(
-        tArgCount, tArgPtrs, tExeFileName, tExeDirPath);
+        tArgCount,
+        tArgPtrs,
+        tExeFileName,
+        tExeDirPath);
     AE_BASE_UNUSED(instance);
     AE_BASE_UNUSED(cmdShow);
 
@@ -157,7 +164,10 @@ int tWinMainIN(HINSTANCE instance, int cmdShow) {
 
 //------------------------------------------------------------------------------
 int WINAPI WinMain(
-    HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int cmdShow) {
+    HINSTANCE instance,
+    HINSTANCE prevInstance,
+    LPSTR cmdLine,
+    int cmdShow) {
     // 実行ファイルのパス
     GetModuleFileNameA(instance, tExeFilePath, tExeFilePathLength);
     tSetupExeInfo();
@@ -166,7 +176,9 @@ int WINAPI WinMain(
     {
         // まずコピー
         ::ae::base::StringTraits<char>::NCopy(
-            tArgChars, tArgCharsLength, cmdLine);
+            tArgChars,
+            tArgCharsLength,
+            cmdLine);
 
         // 解析開始
         tSetupArg();
@@ -198,7 +210,9 @@ int Main(const int argCount, const char* argValues[]) {
 
         // フルパスを設定
         ::ae::base::StringTraits<char>::NCopy(
-            tExeFilePath, tExeFilePathLength, fullPath);
+            tExeFilePath,
+            tExeFilePathLength,
+            fullPath);
 
         // セットアップ
         tSetupExeInfo();
@@ -209,7 +223,9 @@ int Main(const int argCount, const char* argValues[]) {
         for (int i = 1; i < argCount && i < tArgPtrsLength; ++i) {
             const ::ae::base::StringTraits<char>::WriteResult result =
                 ::ae::base::StringTraits<char>::NCopy(
-                    tArgChars, tArgCharsLength - index, argValues[i]);
+                    tArgChars,
+                    tArgCharsLength - index,
+                    argValues[i]);
             tArgPtrs[i] = &tArgChars[index];
             index += ::ae::base::uint(result.length + 1);
         }

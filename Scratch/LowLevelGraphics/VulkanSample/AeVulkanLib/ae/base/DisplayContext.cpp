@@ -91,7 +91,8 @@ bool DisplayContext::IsScreenDoubleBuffer() const {
 //------------------------------------------------------------------------------
 #else // end of WindowSystem
 //------------------------------------------------------------------------------
-DisplayContext::DisplayContext() {}
+DisplayContext::DisplayContext() {
+}
 
 //------------------------------------------------------------------------------
 #endif // end of other OS

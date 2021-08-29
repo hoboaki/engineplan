@@ -51,7 +51,8 @@ public:
 
     /// @name アクセス
     //@{
-    static inline T& Instance(); ///< 作成済みのインスタンスにアクセス。 @details もし作成していない状態でこの関数を呼ぶとエラーになります。
+    static inline T&
+    Instance(); ///< 作成済みのインスタンスにアクセス。 @details もし作成していない状態でこの関数を呼ぶとエラーになります。
     static inline bool IsCreated(); ///< 作成済みならtrueを返す。
     //@}
 

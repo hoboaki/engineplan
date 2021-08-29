@@ -70,9 +70,12 @@ public:
     static const int InvalidUniqueId_ = 0;
 
     /// 初期化。
-    void Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
-        const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId,
-        int minImageCount, ::vk::Format imageFormat);
+    void Initialize_(
+        gfx_low::SwapchainMaster* swapchainMaster,
+        const ::vk::SwapchainKHR& swapchain,
+        uint32_t uniqueId,
+        int minImageCount,
+        ::vk::Format imageFormat);
 
     /// 後始末。
     void Finalize_();

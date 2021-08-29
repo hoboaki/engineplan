@@ -11,7 +11,8 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Extent3i::Extent3i(const Extent2iPod& extent, int depth)
-: Extent3i(extent.width, extent.height, depth) {}
+: Extent3i(extent.width, extent.height, depth) {
+}
 
 //------------------------------------------------------------------------------
 Extent3i::Extent3i(int width, int height, int depth) {

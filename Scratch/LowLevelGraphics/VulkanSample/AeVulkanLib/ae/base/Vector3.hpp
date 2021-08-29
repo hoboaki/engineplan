@@ -161,7 +161,8 @@ struct Vector3Pod {
     bool IsUnit() const; ///< 正規化済みか。許容誤差を許す。
     const Vector3Pod Unit()
         const; ///< @brief 正規化したベクトルを取得する。 @details 長さ0のベクトルで正規化するとエラーになります。
-    void UnitAssign(); ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
+    void
+    UnitAssign(); ///< @brief 正規化する。 @details 長さ0のベクトルで正規化するとエラーになります。
     //@}
 
     //============================================================

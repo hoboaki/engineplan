@@ -18,7 +18,7 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 , mipLevels_()
 , arrayLength_()
 , isCreatedByNativeObjectPtr_(false)
-, isCubeMapImage_ () {
+, isCubeMapImage_() {
     // NativeObjectPtr からの作成
     if (createInfo.NativeObjectPtr_() != nullptr) {
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
@@ -35,7 +35,9 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     {
         const auto nativeCreateInfo = createInfo.NativeCreateInfo_();
         const auto result = device_.NativeObject_().createImage(
-            &nativeCreateInfo, nullptr, &nativeObject_);
+            &nativeCreateInfo,
+            nullptr,
+            &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         nativeFormat_ = nativeCreateInfo.format;
         mipLevels_ = createInfo.NativeObjectMipLevels_();
@@ -46,7 +48,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
     {
         AE_BASE_ASSERT(createInfo.DataAddress().Memory().IsValid());
         const auto result = device_.NativeObject_().bindImageMemory(
-            nativeObject_, createInfo.DataAddress().Memory().NativeObject_(),
+            nativeObject_,
+            createInfo.DataAddress().Memory().NativeObject_(),
             createInfo.DataAddress().Offset());
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }

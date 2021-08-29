@@ -67,26 +67,29 @@ struct Matrix34Pod {
     /// @name 行列の作成
     //@{
     static const Matrix34Pod Identity(); ///< 単位行列の作成。
-    static const Matrix34Pod Translate(
-        f32 x, f32 y, f32 z); ///< 平行移動行列の作成。
+    static const Matrix34Pod
+    Translate(f32 x, f32 y, f32 z); ///< 平行移動行列の作成。
     static const Matrix34Pod Translate(
         const Vector3Pod& vec); ///< 平行移動行列の作成。
-    static const Matrix34Pod Scale(
-        f32 x, f32 y, f32 z); ///< 拡大縮小行列の作成。
+    static const Matrix34Pod
+    Scale(f32 x, f32 y, f32 z); ///< 拡大縮小行列の作成。
     static const Matrix34Pod Scale(
         const Vector3Pod& vec); ///< 拡大縮小行列の作成。
+    static const Matrix34Pod
+    Rotate(const Angle&, f32 axisX, f32 axisY, f32 axisZ); ///< 回転行列の作成。
     static const Matrix34Pod Rotate(
-        const Angle&, f32 axisX, f32 axisY, f32 axisZ); ///< 回転行列の作成。
-    static const Matrix34Pod Rotate(
-        const Angle&, const Vector3Pod& axis); ///< 回転行列の作成。
+        const Angle&,
+        const Vector3Pod& axis); ///< 回転行列の作成。
 
     /// @brief 視野変換行列の作成。
     /// @param eyePos 目の位置。
     /// @param targetPos 注視点。
     /// @param upVec 上方向のベクトル。isZeroなベクトルを渡してはいけない。
     /// @details eyePos != targetPosである必要があります。
-    static const Matrix34Pod LookAt(const Vector3Pod& eyePos,
-        const Vector3Pod& targetPos, const Vector3Pod& upVec);
+    static const Matrix34Pod LookAt(
+        const Vector3Pod& eyePos,
+        const Vector3Pod& targetPos,
+        const Vector3Pod& upVec);
     //@}
 
     //============================================================
@@ -113,8 +116,8 @@ struct Matrix34Pod {
     //============================================================
     /// @name 乗算（引数が同じオブジェクトでも問題無し）
     //@{
-    const Vector3Pod Mul(
-        const Vector3Pod&) const; ///< @brief 乗算した結果を得る。 @details 4行目は0,0,0,1として計算する。
+    const Vector3Pod Mul(const Vector3Pod&)
+        const; ///< @brief 乗算した結果を得る。 @details 4行目は0,0,0,1として計算する。
     const Matrix34Pod Mul(const Matrix34Pod&)
         const; ///< @brief 乗算した結果を得る。 @details this x rhs。4行目は0,0,0,1として計算する。
     Matrix34Pod& MulAssign(
@@ -159,9 +162,23 @@ public:
     //@{
     Matrix34(); ///< 単位行列で初期化。
     /// 全要素を指定して作成。
-    Matrix34(f32 r0c0, f32 r0c1, f32 r0c2, f32 r0c3, f32 r1c0, f32 r1c1,
-        f32 r1c2, f32 r1c3, f32 r2c0, f32 r2c1, f32 r2c2, f32 r2c3);
-    Matrix34(const Vector3Pod& x, const Vector3Pod& y, const Vector3Pod& z,
+    Matrix34(
+        f32 r0c0,
+        f32 r0c1,
+        f32 r0c2,
+        f32 r0c3,
+        f32 r1c0,
+        f32 r1c1,
+        f32 r1c2,
+        f32 r1c3,
+        f32 r2c0,
+        f32 r2c1,
+        f32 r2c2,
+        f32 r2c3);
+    Matrix34(
+        const Vector3Pod& x,
+        const Vector3Pod& y,
+        const Vector3Pod& z,
         const Vector3Pod& w); ///< X,Y,Z,Wを指定して作成。
     Matrix34(const Matrix34Pod&); ///< コピーして作成。
     //@}

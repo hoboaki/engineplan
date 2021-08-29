@@ -16,7 +16,8 @@ public:
     //@{
     /// 指定の ResourceMemory とオフセットを表すオブジェクトを作成。
     ResourceMemoryAddress(
-        const ResourceMemory& memory = ResourceMemory(), size_t offset = 0)
+        const ResourceMemory& memory = ResourceMemory(),
+        size_t offset = 0)
     : memory_(memory)
     , offset_(offset) {}
     //@}

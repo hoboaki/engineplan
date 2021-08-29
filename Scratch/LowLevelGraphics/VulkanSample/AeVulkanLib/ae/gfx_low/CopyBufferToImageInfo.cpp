@@ -30,8 +30,7 @@ CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
 
 //------------------------------------------------------------------------------
 CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageOffset(
-    const base::Vector3iPod& offset)
-{
+    const base::Vector3iPod& offset) {
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.x);
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.y);
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.z);

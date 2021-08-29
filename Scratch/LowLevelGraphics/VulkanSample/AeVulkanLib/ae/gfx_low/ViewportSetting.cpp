@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ViewportSetting& ViewportSetting::SetDepthRange(
-    const float depthMin, const float depthMax) {
+    const float depthMin,
+    const float depthMax) {
     AE_BASE_ASSERT_MIN_MAX(depthMin, 0.0f, 1.0f);
     AE_BASE_ASSERT_MIN_MAX(depthMax, 0.0f, 1.0f);
     AE_BASE_ASSERT_LESS_EQUALS(depthMin, depthMax);

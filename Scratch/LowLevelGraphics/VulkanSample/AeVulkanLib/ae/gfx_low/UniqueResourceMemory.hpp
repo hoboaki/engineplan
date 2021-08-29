@@ -24,7 +24,8 @@ public:
     //@{
     UniqueResourceMemory() { Reset(); }
     UniqueResourceMemory(
-        Device* device, const ResourceMemoryAllocInfo& allocInfo)
+        Device* device,
+        const ResourceMemoryAllocInfo& allocInfo)
     : UniqueResourceMemory() {
         Reset(device, allocInfo);
     }

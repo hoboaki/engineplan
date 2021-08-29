@@ -11,7 +11,8 @@ Keyboard::Keyboard()
 , trigger_()
 , repeat_()
 , pulse_()
-, release_() {}
+, release_() {
+}
 
 //------------------------------------------------------------------------------
 void Keyboard::Update(const KeyboardUpdateData& data) {

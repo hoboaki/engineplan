@@ -10,12 +10,16 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-Argument::Argument(const int argCount, const char* const* argValues,
-    const char* exeFileName, const char* exeDirPath)
+Argument::Argument(
+    const int argCount,
+    const char* const* argValues,
+    const char* exeFileName,
+    const char* exeDirPath)
 : argCount_(argCount)
 , argValues_(argValues)
 , exeFileName_(exeFileName)
-, exeDirPath_(exeDirPath) {}
+, exeDirPath_(exeDirPath) {
+}
 
 //------------------------------------------------------------------------------
 int Argument::ArgCount() const {

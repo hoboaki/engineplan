@@ -38,7 +38,8 @@ Radian::Radian(const float radian)
 
 //------------------------------------------------------------------------------
 Radian::Radian(const RadianPod& val)
-: RadianPod(val) {}
+: RadianPod(val) {
+}
 
 } // namespace base
 } // namespace ae

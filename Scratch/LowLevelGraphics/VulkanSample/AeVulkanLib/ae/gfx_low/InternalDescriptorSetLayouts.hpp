@@ -30,7 +30,8 @@ public:
     /// @name コンストラクタとデストラクタ
     //@{
     InternalDescriptorSetLayouts(
-        Device* device, const DescriptorSetSpecInfo& info);
+        Device* device,
+        const DescriptorSetSpecInfo& info);
     ~InternalDescriptorSetLayouts();
     //@}
 

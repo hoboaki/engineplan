@@ -46,7 +46,9 @@ Sampler::Sampler(const SamplerCreateInfo& createInfo)
                 .setUnnormalizedCoordinates(
                     createInfo.UnnormalizedCoordinates() ? VK_TRUE : VK_FALSE);
         const auto result = device_.NativeObject_().createSampler(
-            &nativeCreateInfo, nullptr, &nativeObject_);
+            &nativeCreateInfo,
+            nullptr,
+            &nativeObject_);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 }

@@ -12,12 +12,14 @@ namespace base {
 //------------------------------------------------------------------------------
 FrameCounter::FrameCounter()
 : frame_(0)
-, totalFrame_(0) {}
+, totalFrame_(0) {
+}
 
 //------------------------------------------------------------------------------
 FrameCounter::FrameCounter(const int totalFrame)
 : frame_(0)
-, totalFrame_(totalFrame) {}
+, totalFrame_(totalFrame) {
+}
 
 //------------------------------------------------------------------------------
 void FrameCounter::Reset() {

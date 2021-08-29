@@ -7,7 +7,7 @@ namespace base {
 
 //------------------------------------------------------------------------------
 const TimeSpanPod TimeSpanPod::FromTicks(const s64 ticks) {
-    TimeSpanPod obj = {ticks};
+    TimeSpanPod obj = { ticks };
     return obj;
 }
 

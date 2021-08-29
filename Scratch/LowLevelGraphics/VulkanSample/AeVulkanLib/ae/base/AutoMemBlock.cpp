@@ -11,11 +11,14 @@ namespace base {
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock()
 : block_()
-, allocatorPtr_() {}
+, allocatorPtr_() {
+}
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(
-    const pword_t size, IAllocator& allocator, const pword_t alignment)
+    const pword_t size,
+    IAllocator& allocator,
+    const pword_t alignment)
 : block_()
 , allocatorPtr_() {
     // 確保
@@ -33,7 +36,8 @@ AutoMemBlock::AutoMemBlock(
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const MemBlock& block, IAllocator& allocator)
 : block_(block)
-, allocatorPtr_(allocator) {}
+, allocatorPtr_(allocator) {
+}
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock(const AutoMemBlock& other)

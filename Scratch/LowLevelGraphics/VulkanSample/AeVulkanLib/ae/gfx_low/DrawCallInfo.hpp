@@ -1,14 +1,12 @@
 // 文字コード：UTF-8
 #pragma once
 
-
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
 
 /// ドローコールに必要な情報。
-class DrawCallInfo
-{
+class DrawCallInfo {
 public:
     /// @name プロパティ
     //@{
@@ -48,7 +46,6 @@ private:
     int instanceCount_ = 1;
 };
 
-
-}
-}
+} // namespace gfx_low
+} // namespace ae
 // EOF

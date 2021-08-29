@@ -168,7 +168,7 @@ Display_Ext::Display_Ext(const DisplayContext& context)
 , hwindow()
 , windowClass()
 , message()
-, minSize({0, 0})
+, minSize({ 0, 0 })
 , mainScreen()
 , hidPtr()
 , isClosed(true)
@@ -194,14 +194,18 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     const int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
 
     // 矩形の計算
-    RECT rect = {0, 0, LONG(context.Width()), LONG(context.Height())};
+    RECT rect = { 0, 0, LONG(context.Width()), LONG(context.Height()) };
     AdjustWindowRect(&rect, style, FALSE);
 
     // ウィンドウの作成
     tCurrentDisplay.Set(*this);
-    hwindow = CreateWindow(className,
+    hwindow = CreateWindow(
+        className,
         context.WindowTitle(),
-        style, context.LocationX(), context.LocationY(), rect.right - rect.left,
+        style,
+        context.LocationX(),
+        context.LocationY(),
+        rect.right - rect.left,
         rect.bottom - rect.top,
         0, // hWndParent
         0, // hMenu
@@ -256,14 +260,17 @@ void Display_Ext::PollEvent(Application&) {
 }
 
 //------------------------------------------------------------------------------
-LRESULT Display_Ext::WindowProcess(
-    HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT
+Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
     return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
 //------------------------------------------------------------------------------
 LRESULT Display_Ext::WindowProcessLocal(
-    HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    HWND hWND,
+    UINT msg,
+    WPARAM wParam,
+    LPARAM lParam) {
     switch (msg) {
     case WM_GETMINMAXINFO: // set window's minimum size
         ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;

@@ -14,7 +14,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
-    Device* device, const DescriptorSetSpecInfo& info)
+    Device* device,
+    const DescriptorSetSpecInfo& info)
 : device_(base::PtrToRef(device)) {
     // 初期化
     descriptorSetLayoutIndexes_.Fill(-1);
@@ -26,7 +27,8 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     std::array<::vk::DescriptorSetLayoutBinding, bindingsCountMax> bindings;
 
     // 汎用的な確保関数
-    auto addBinding = [bindingsCountMax](int& bindingsCount,
+    auto addBinding = [bindingsCountMax](
+                          int& bindingsCount,
                           ::vk::DescriptorSetLayoutBinding* bindingsPtr,
                           const int bindingInfosIdx,
                           const ShaderBindingInfo* bindingInfosPtr,
@@ -44,9 +46,11 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
         ++bindingsCount;
     };
     auto addSetLayout =
-        [](gfx_low::Device& device, int& layoutsCount,
-            ::vk::DescriptorSetLayout* layoutsPtr, int& bindingsCount,
-            const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
+        [](gfx_low::Device& device,
+           int& layoutsCount,
+           ::vk::DescriptorSetLayout* layoutsPtr,
+           int& bindingsCount,
+           const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
             AE_BASE_ASSERT_LESS(layoutsCount, DescriptorSetLayoutsCountMax);
 
             const auto info = ::vk::DescriptorSetLayoutCreateInfo()
@@ -54,7 +58,9 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                                   .setPBindings(bindingsPtr);
             const auto result =
                 device.NativeObject_().createDescriptorSetLayout(
-                    &info, nullptr, &layoutsPtr[layoutsCount]);
+                    &info,
+                    nullptr,
+                    &layoutsPtr[layoutsCount]);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             ++layoutsCount;
             bindingsCount = 0;
@@ -70,7 +76,10 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             for (int i = 0;
                  i < info.BindingInfoCount(DescriptorKind::UniformBuffer);
                  ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
+                addBinding(
+                    bindingsCount,
+                    &bindings[0],
+                    i,
                     info.BindingInfos(DescriptorKind::UniformBuffer),
                     ::vk::DescriptorType::eUniformBuffer);
             }
@@ -83,15 +92,22 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             for (int i = 0;
                  i < info.BindingInfoCount(DescriptorKind::StorageBuffer);
                  ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
+                addBinding(
+                    bindingsCount,
+                    &bindings[0],
+                    i,
                     info.BindingInfos(DescriptorKind::StorageBuffer),
                     ::vk::DescriptorType::eStorageBuffer);
             }
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutCount_,
-            &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
+        addSetLayout(
+            device_,
+            descriptorSetLayoutCount_,
+            &descriptorSetLayouts_[0],
+            bindingsCount,
+            &bindings[0]);
     }
 
     // Image
@@ -102,8 +118,12 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             descriptorSetLayoutIndexes_[DescriptorKind::SampledImage] =
                 descriptorSetLayoutCount_;
             for (int i = 0;
-                 i < info.BindingInfoCount(DescriptorKind::SampledImage); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
+                 i < info.BindingInfoCount(DescriptorKind::SampledImage);
+                 ++i) {
+                addBinding(
+                    bindingsCount,
+                    &bindings[0],
+                    i,
                     info.BindingInfos(DescriptorKind::SampledImage),
                     ::vk::DescriptorType::eSampledImage);
             }
@@ -114,16 +134,24 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             descriptorSetLayoutIndexes_[DescriptorKind::StorageImage] =
                 descriptorSetLayoutCount_;
             for (int i = 0;
-                 i < info.BindingInfoCount(DescriptorKind::StorageImage); ++i) {
-                addBinding(bindingsCount, &bindings[0], i,
+                 i < info.BindingInfoCount(DescriptorKind::StorageImage);
+                 ++i) {
+                addBinding(
+                    bindingsCount,
+                    &bindings[0],
+                    i,
                     info.BindingInfos(DescriptorKind::StorageImage),
                     ::vk::DescriptorType::eStorageImage);
             }
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutCount_,
-            &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
+        addSetLayout(
+            device_,
+            descriptorSetLayoutCount_,
+            &descriptorSetLayouts_[0],
+            bindingsCount,
+            &bindings[0]);
     }
 
     // Sampler
@@ -132,14 +160,21 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
             descriptorSetLayoutCount_;
         for (int i = 0; i < info.BindingInfoCount(DescriptorKind::Sampler);
              ++i) {
-            addBinding(bindingsCount, &bindings[0], i,
+            addBinding(
+                bindingsCount,
+                &bindings[0],
+                i,
                 info.BindingInfos(DescriptorKind::Sampler),
                 ::vk::DescriptorType::eSampler);
         }
 
         // 作成
-        addSetLayout(device_, descriptorSetLayoutCount_,
-            &descriptorSetLayouts_[0], bindingsCount, &bindings[0]);
+        addSetLayout(
+            device_,
+            descriptorSetLayoutCount_,
+            &descriptorSetLayouts_[0],
+            bindingsCount,
+            &bindings[0]);
     }
 }
 
@@ -147,7 +182,8 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
 InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
     for (int i = descriptorSetLayoutCount_ - 1; 0 <= i; --i) {
         device_.NativeObject_().destroyDescriptorSetLayout(
-            descriptorSetLayouts_[i], nullptr);
+            descriptorSetLayouts_[i],
+            nullptr);
         descriptorSetLayouts_[i] = ::vk::DescriptorSetLayout();
     }
 }

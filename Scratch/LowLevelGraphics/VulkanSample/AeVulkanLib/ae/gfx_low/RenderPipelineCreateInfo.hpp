@@ -55,7 +55,8 @@ public:
 
     /// ShaderInfo() の設定。（設定必須）
     RenderPipelineCreateInfo& SetShaderInfo(
-        RenderPipelineShaderStage stage, const PipelineShaderInfo& shaderInfo);
+        RenderPipelineShaderStage stage,
+        const PipelineShaderInfo& shaderInfo);
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
     gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const {

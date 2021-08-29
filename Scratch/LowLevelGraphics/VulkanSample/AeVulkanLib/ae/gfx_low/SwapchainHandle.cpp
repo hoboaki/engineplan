@@ -14,7 +14,8 @@ namespace gfx_low {
 SwapchainHandle::SwapchainHandle(Swapchain* entity)
 : entity_(&base::PtrToRef(entity))
 , entityMaster_(&entity_->SwapchainMaster())
-, entityUniqueId_(entity_->UniqueId_()) {}
+, entityUniqueId_(entity_->UniqueId_()) {
+}
 
 //------------------------------------------------------------------------------
 bool SwapchainHandle::IsValid() const {

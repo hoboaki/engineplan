@@ -36,8 +36,7 @@ public:
 
     /// ShaderInfo() の設定。（設定必須）
     ComputePipelineCreateInfo& SetShaderInfo(
-        const PipelineShaderInfo& shaderInfo)
-    {
+        const PipelineShaderInfo& shaderInfo) {
         shaderInfo_ = shaderInfo;
         return *this;
     }

@@ -33,8 +33,6 @@ RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetPrimitiveTopologyKind(
     return *this;
 }
 
-
-
 } // namespace gfx_low
 } // namespace ae
 // EOF

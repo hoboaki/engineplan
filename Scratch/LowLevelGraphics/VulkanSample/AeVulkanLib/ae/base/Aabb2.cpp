@@ -13,22 +13,26 @@ namespace base {
 //------------------------------------------------------------------------------
 Aabb2::Aabb2()
 : min_()
-, max_() {}
+, max_() {
+}
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2(const Vector2Pod& pos)
 : min_(pos)
-, max_(pos) {}
+, max_(pos) {
+}
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2(const Vector2Pod& pos1, const Vector2Pod& pos2)
 : min_(pos1.Min(pos2))
-, max_(pos1.Max(pos2)) {}
+, max_(pos1.Max(pos2)) {
+}
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2(const Vector2Pod& pos, const Extent2Pod& extent)
 : min_(pos)
-, max_(pos.x + extent.width, pos.y + extent.height) {}
+, max_(pos.x + extent.width, pos.y + extent.height) {
+}
 
 //------------------------------------------------------------------------------
 const Vector2Pod Aabb2::Min() const {
@@ -276,11 +280,15 @@ Aabb2& Aabb2::operator*=(const float scale) {
 //------------------------------------------------------------------------------
 const Aabb2i Aabb2::ToAabb2i() const {
     const Vector2i newMin(
-        int(Math::FloorF32(min_.x)), int(Math::FloorF32(min_.y)));
+        int(Math::FloorF32(min_.x)),
+        int(Math::FloorF32(min_.y)));
     const Vector2i newTerm(
-        int(Math::CeilF32(max_.x)), int(Math::CeilF32(max_.y)));
+        int(Math::CeilF32(max_.x)),
+        int(Math::CeilF32(max_.y)));
     return Aabb2i(
-        newMin, uint(newTerm.x - newMin.x), uint(newTerm.y - newMin.y));
+        newMin,
+        uint(newTerm.x - newMin.x),
+        uint(newTerm.y - newMin.y));
 }
 
 } // namespace base

@@ -82,8 +82,12 @@ public:
     /// @name 内部処理用機能
     //@{
     /// 内部処理用コンストラクタ。アプリケーション側からの呼び出しは禁止。
-    Queue(gfx_low::Device* device, const ::vk::Queue& queue, QueueKind kind,
-        int operationCountMax, const ::vk::CommandPool& commandPool);
+    Queue(
+        gfx_low::Device* device,
+        const ::vk::Queue& queue,
+        QueueKind kind,
+        int operationCountMax,
+        const ::vk::CommandPool& commandPool);
 
     ~Queue();
 

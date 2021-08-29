@@ -11,7 +11,9 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
-    const DescriptorKind kind, const int count, const ShaderBindingInfo* infosPtr) {
+    const DescriptorKind kind,
+    const int count,
+    const ShaderBindingInfo* infosPtr) {
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -25,8 +27,7 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
 }
 
 //------------------------------------------------------------------------------
-int DescriptorSetSpecInfo::TotalBindingCount(
-    const DescriptorKind kind) const {
+int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const {
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     const auto& info = infos_[kind];

@@ -19,7 +19,8 @@ class ShaderResourceImageView {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    ShaderResourceImageView(const ShaderResourceImageViewCreateInfo& createInfo);
+    ShaderResourceImageView(
+        const ShaderResourceImageViewCreateInfo& createInfo);
     ~ShaderResourceImageView();
     //@}
 

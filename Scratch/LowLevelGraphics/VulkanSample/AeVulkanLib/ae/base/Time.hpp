@@ -51,8 +51,15 @@ struct TimePod {
     /// @param usec マイクロ秒。値の意味は Calendar::usec と同じ。
     /// @details
     /// ナノ秒以下は0として作成します。
-    static const TimePod FromDate(int year, int month, int dayOfMonth, int hour,
-        int min, int sec, int msec, int usec);
+    static const TimePod FromDate(
+        int year,
+        int month,
+        int dayOfMonth,
+        int hour,
+        int min,
+        int sec,
+        int msec,
+        int usec);
 
     /// カレンダー情報を作成する。
     const CalendarPod ToCalendar() const;

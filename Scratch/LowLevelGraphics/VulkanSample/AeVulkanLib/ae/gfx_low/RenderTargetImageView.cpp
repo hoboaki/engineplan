@@ -31,7 +31,9 @@ RenderTargetImageView::RenderTargetImageView(
                 createInfo.SubresouceLocation(),
                 ::vk::ImageAspectFlagBits::eColor));
     const auto result = device_.NativeObject_().createImageView(
-        &imageViewCreateInfo, nullptr, &nativeObject_);
+        &imageViewCreateInfo,
+        nullptr,
+        &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 

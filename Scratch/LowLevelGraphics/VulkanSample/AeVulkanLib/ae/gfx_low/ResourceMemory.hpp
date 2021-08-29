@@ -33,8 +33,8 @@ public:
     /// @name プロパティ
     //@{
     /// 有効なメモリを指し示しているか。
-    bool IsValid() const { 
-        return nativeObject_ != ::vk::DeviceMemory() || head_ != nullptr; 
+    bool IsValid() const {
+        return nativeObject_ != ::vk::DeviceMemory() || head_ != nullptr;
     }
 
     /// ResourceMemoryAddress オブジェクトを取得。

@@ -34,7 +34,9 @@ public:
     /// @brief
     /// 指定のサイズのブロックを指定のアロケータから確保したメモリブロックを作成。
     /// @details メモリの確保に失敗したら IsEmpty() はtrueを返します。
-    AutoMemBlock(pword_t size, IAllocator& allocator = IAllocator::Default(),
+    AutoMemBlock(
+        pword_t size,
+        IAllocator& allocator = IAllocator::Default(),
         pword_t alignment = IAllocator::DefaultAlignment);
 
     /// @brief 指定のブロックを抱えたメモリブロックを作成。

@@ -13,14 +13,15 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-VertexBufferView::VertexBufferView(
-    const VertexBufferViewCreateInfo& createInfo)
+VertexBufferView::VertexBufferView(const VertexBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {}
+, region_(createInfo.Region()) {
+}
 
 //------------------------------------------------------------------------------
-VertexBufferView::~VertexBufferView() {}
+VertexBufferView::~VertexBufferView() {
+}
 
 } // namespace gfx_low
 } // namespace ae

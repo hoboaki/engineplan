@@ -16,8 +16,11 @@ namespace gfx_low {
 
 namespace {
 
-bool fCheckLayers(uint32_t checkCount, char const* const* const checkNames,
-    uint32_t layerCount, ::vk::LayerProperties* layers) {
+bool fCheckLayers(
+    uint32_t checkCount,
+    char const* const* const checkNames,
+    uint32_t layerCount,
+    ::vk::LayerProperties* layers) {
     for (uint32_t i = 0; i < checkCount; i++) {
         bool found = false;
         for (uint32_t j = 0; j < layerCount; j++) {
@@ -38,9 +41,10 @@ bool fCheckLayers(uint32_t checkCount, char const* const* const checkNames,
 
 //------------------------------------------------------------------------------
 System::System(const SystemCreateInfo& createInfo)
-: objectAllocator_(createInfo.ObjectAllocator() == nullptr
-                       ? ::ae::base::IAllocator::Default()
-                       : ::ae::base::PtrToRef(createInfo.ObjectAllocator()))
+: objectAllocator_(
+      createInfo.ObjectAllocator() == nullptr
+          ? ::ae::base::IAllocator::Default()
+          : ::ae::base::PtrToRef(createInfo.ObjectAllocator()))
 , tempWorkAllocator_(
       createInfo.TempWorkAllocator() == nullptr
           ? ::ae::base::IAllocator::Default()
@@ -51,25 +55,30 @@ System::System(const SystemCreateInfo& createInfo)
 
     // ValidationLayer 検索
     char const* const instanceValidationLayers[] = {
-        "VK_LAYER_KHRONOS_validation"};
+        "VK_LAYER_KHRONOS_validation"
+    };
     uint32_t instanceLayerCount = 0;
     vk::Bool32 validationFound = VK_FALSE;
     if (createInfo.DebugLevel() != SystemDebugLevel::NoDebug) {
         auto result = vk::enumerateInstanceLayerProperties(
-            &instanceLayerCount, static_cast<vk::LayerProperties*>(nullptr));
+            &instanceLayerCount,
+            static_cast<vk::LayerProperties*>(nullptr));
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
         if (0 < instanceLayerCount) {
             base::RuntimeArray<::vk::LayerProperties> instanceLayers(
-                instanceLayerCount, &tempWorkAllocator_);
+                instanceLayerCount,
+                &tempWorkAllocator_);
             result = vk::enumerateInstanceLayerProperties(
-                &instanceLayerCount, instanceLayers.Head());
+                &instanceLayerCount,
+                instanceLayers.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
-            validationFound =
-                fCheckLayers(AE_BASE_ARRAY_LENGTH(instanceValidationLayers),
-                    instanceValidationLayers, instanceLayerCount,
-                    instanceLayers.Head());
+            validationFound = fCheckLayers(
+                AE_BASE_ARRAY_LENGTH(instanceValidationLayers),
+                instanceValidationLayers,
+                instanceLayerCount,
+                instanceLayers.Head());
             if (validationFound) {
                 enabledLayerCount_ =
                     AE_BASE_ARRAY_LENGTH(instanceValidationLayers);
@@ -92,34 +101,41 @@ System::System(const SystemCreateInfo& createInfo)
     vk::Bool32 platformSurfaceExtFound = VK_FALSE;
     memset(extensionNames_, 0, sizeof(extensionNames_));
 
-    auto result = vk::enumerateInstanceExtensionProperties(nullptr,
+    auto result = vk::enumerateInstanceExtensionProperties(
+        nullptr,
         &instanceExtensionCount,
         static_cast<vk::ExtensionProperties*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     if (0 < instanceExtensionCount) {
         base::RuntimeArray<::vk::ExtensionProperties> instanceExtensions(
-            instanceExtensionCount, &tempWorkAllocator_);
+            instanceExtensionCount,
+            &tempWorkAllocator_);
         result = vk::enumerateInstanceExtensionProperties(
-            nullptr, &instanceExtensionCount, instanceExtensions.Head());
+            nullptr,
+            &instanceExtensionCount,
+            instanceExtensions.Head());
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
         for (uint32_t i = 0; i < instanceExtensionCount; i++) {
-            if (!std::strcmp(VK_KHR_SURFACE_EXTENSION_NAME,
+            if (!std::strcmp(
+                    VK_KHR_SURFACE_EXTENSION_NAME,
                     instanceExtensions[i].extensionName)) {
                 surfaceExtFound = 1;
                 extensionNames_[enabledExtensionCount_++] =
                     VK_KHR_SURFACE_EXTENSION_NAME;
             }
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
-            if (!std::strcmp(VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
+            if (!std::strcmp(
+                    VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
                     instanceExtensions[i].extensionName)) {
                 platformSurfaceExtFound = 1;
                 extensionNames_[enabledExtensionCount_++] =
                     VK_KHR_WIN32_SURFACE_EXTENSION_NAME;
             }
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
-            if (!std::strcmp(VK_EXT_METAL_SURFACE_EXTENSION_NAME,
+            if (!std::strcmp(
+                    VK_EXT_METAL_SURFACE_EXTENSION_NAME,
                     instanceExtensions[i].extensionName)) {
                 platformSurfaceExtFound = 1;
                 extensionNames_[enabledExtensionCount_++] =
@@ -203,12 +219,16 @@ System::System(const SystemCreateInfo& createInfo)
     {
         uint32_t physicalDeviceCount;
         result = nativeObject_.enumeratePhysicalDevices(
-            &physicalDeviceCount, static_cast<vk::PhysicalDevice*>(nullptr));
+            &physicalDeviceCount,
+            static_cast<vk::PhysicalDevice*>(nullptr));
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_MIN_TERM(
-            int(physicalDeviceCount), 1, PhysicalDeviceCountMax);
+            int(physicalDeviceCount),
+            1,
+            PhysicalDeviceCountMax);
         result = nativeObject_.enumeratePhysicalDevices(
-            &physicalDeviceCount, &physicalDevices_[0]);
+            &physicalDeviceCount,
+            &physicalDevices_[0]);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         physicalDeviceCount_ = int(physicalDeviceCount);
     }
@@ -235,14 +255,16 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
 
     // Queue 特性
     {
-        ::vk::QueueFamilyProperties queueFamilyProperties[QueueFamilyCountMax] =
-            {};
+        ::vk::QueueFamilyProperties
+            queueFamilyProperties[QueueFamilyCountMax] = {};
         uint32_t queueFamilyCount = 0;
-        device.getQueueFamilyProperties(&queueFamilyCount,
+        device.getQueueFamilyProperties(
+            &queueFamilyCount,
             static_cast<::vk::QueueFamilyProperties*>(nullptr));
         AE_BASE_ASSERT_LESS(queueFamilyCount, QueueFamilyCountMax);
         device.getQueueFamilyProperties(
-            &queueFamilyCount, queueFamilyProperties);
+            &queueFamilyCount,
+            queueFamilyProperties);
 
         QueueFamilyIndexTableType_ queueFamilyIndexTable;
         QueueFamilyIndexTable_(&queueFamilyIndexTable, physicalDeviceIndex);
@@ -287,25 +309,30 @@ void System::DumpAllPhysicalDeviceInfo() const {
     for (int i = 0; i < physicalDeviceCount_; ++i) {
         const auto info = PhysicalDeviceInfo(i);
         AE_BASE_COUTFMT_LINE("    PhysicalDevice #%d:", i);
-        AE_BASE_COUTFMT_LINE("        CreatableQueueCount[Normal]: %d",
+        AE_BASE_COUTFMT_LINE(
+            "        CreatableQueueCount[Normal]: %d",
             info.CreatableQueueCount(QueueKind::Normal));
-        AE_BASE_COUTFMT_LINE("        CreatableQueueCount[ComputeOnly]: %d",
+        AE_BASE_COUTFMT_LINE(
+            "        CreatableQueueCount[ComputeOnly]: %d",
             info.CreatableQueueCount(QueueKind::ComputeOnly));
-        AE_BASE_COUTFMT_LINE("        CreatableQueueCount[CopyOnly]: %d",
+        AE_BASE_COUTFMT_LINE(
+            "        CreatableQueueCount[CopyOnly]: %d",
             info.CreatableQueueCount(QueueKind::CopyOnly));
     }
 }
 
 //------------------------------------------------------------------------------
 void System::QueueFamilyIndexTable_(
-    QueueFamilyIndexTableType_* result, const int physicalDeviceIndex) const {
+    QueueFamilyIndexTableType_* result,
+    const int physicalDeviceIndex) const {
     auto& resultRef = ::ae::base::PtrToRef(result);
     AE_BASE_ASSERT_LESS(physicalDeviceIndex, physicalDeviceCount_);
     const auto device = physicalDevices_[physicalDeviceIndex];
     ::vk::QueueFamilyProperties queueFamilyProperties[QueueFamilyCountMax] = {};
     uint32_t queueFamilyCount = 0;
     device.getQueueFamilyProperties(
-        &queueFamilyCount, static_cast<::vk::QueueFamilyProperties*>(nullptr));
+        &queueFamilyCount,
+        static_cast<::vk::QueueFamilyProperties*>(nullptr));
     AE_BASE_ASSERT_LESS(queueFamilyCount, QueueFamilyCountMax);
     device.getQueueFamilyProperties(&queueFamilyCount, queueFamilyProperties);
 
@@ -318,24 +345,25 @@ void System::QueueFamilyIndexTable_(
         const auto& queueProps = queueFamilyProperties[i];
         if (resultRef[QueueKind::Normal] < 0 &&
             (uint32_t(queueProps.queueFlags) &
-                uint32_t(::vk::QueueFlagBits::eGraphics)) != 0) {
+             uint32_t(::vk::QueueFlagBits::eGraphics)) != 0) {
             resultRef[QueueKind::Normal] = int(i);
         }
 
         // ComputeOnly
         if (resultRef[QueueKind::ComputeOnly] < 0 &&
             (uint32_t(queueProps.queueFlags) &
-                uint32_t(::vk::QueueFlagBits::eGraphics)) == 0 &&
+             uint32_t(::vk::QueueFlagBits::eGraphics)) == 0 &&
             (uint32_t(queueProps.queueFlags) &
-                uint32_t(::vk::QueueFlagBits::eCompute)) != 0) {
+             uint32_t(::vk::QueueFlagBits::eCompute)) != 0) {
             resultRef[QueueKind::ComputeOnly] = int(i);
         }
 
         // CopyOnly
         if (resultRef[QueueKind::CopyOnly] < 0 &&
             (uint32_t(queueProps.queueFlags) &
-                uint32_t(::vk::QueueFlagBits::eGraphics |
-                         ::vk::QueueFlagBits::eCompute)) == 0 &&
+             uint32_t(
+                 ::vk::QueueFlagBits::eGraphics |
+                 ::vk::QueueFlagBits::eCompute)) == 0 &&
             (queueProps.queueFlags | ::vk::QueueFlagBits::eTransfer)) {
             resultRef[QueueKind::CopyOnly] = int(i);
         }

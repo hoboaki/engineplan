@@ -19,6 +19,6 @@ enum class PolygonFrontFace {
     TERM,
 };
 
-}
-}
+} // namespace gfx_low
+} // namespace ae
 // EOF

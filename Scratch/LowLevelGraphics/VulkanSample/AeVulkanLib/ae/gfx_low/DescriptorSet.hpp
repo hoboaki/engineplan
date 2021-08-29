@@ -43,7 +43,9 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::DescriptorSet* NativeObjects_() { return &nativeObjects_[0]; }
-    const ::vk::DescriptorSet* NativeObjects_() const { return &nativeObjects_[0]; }
+    const ::vk::DescriptorSet* NativeObjects_() const {
+        return &nativeObjects_[0];
+    }
 
     const InternalDescriptorSetLayouts& Layouts_() const {
         return descriptorSetLayouts_;
@@ -54,10 +56,10 @@ private:
     gfx_low::Device& device_;
     InternalDescriptorSetLayouts descriptorSetLayouts_;
     ::vk::DescriptorPool descriptorPool_;
-    std::array<::vk::DescriptorSet,
+    std::array<
+        ::vk::DescriptorSet,
         InternalDescriptorSetLayouts::DescriptorSetLayoutsCountMax>
         nativeObjects_;
-
 };
 
 } // namespace gfx_low

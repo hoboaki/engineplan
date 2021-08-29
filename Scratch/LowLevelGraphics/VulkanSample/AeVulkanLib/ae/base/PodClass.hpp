@@ -32,8 +32,9 @@ public:
 private:
     typedef StructType SuperClass;
     AE_BASE_STATIC_ASSERT(TypeTraits::IsPod<StructType>::Value);
-    AE_BASE_STATIC_ASSERT(sizeof(SuperClass) ==
-                          sizeof(ValueType)); // サイズが同じであることを保証。
+    AE_BASE_STATIC_ASSERT(
+        sizeof(SuperClass) ==
+        sizeof(ValueType)); // サイズが同じであることを保証。
 };
 //@}
 

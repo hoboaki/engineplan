@@ -16,7 +16,9 @@ Fence::Fence(const FenceCreateInfo& createInfo)
 , nativeObject_() {
     const auto fenceCreateInfo = ::vk::FenceCreateInfo();
     const auto result = device_.NativeObject_().createFence(
-        &fenceCreateInfo, nullptr, &nativeObject_);
+        &fenceCreateInfo,
+        nullptr,
+        &nativeObject_);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
 }
 
@@ -35,7 +37,10 @@ void Fence::Wait() {
     // 待機
     {
         const auto result = device_.NativeObject_().waitForFences(
-            1, &nativeObject_, VK_TRUE, UINT64_MAX);
+            1,
+            &nativeObject_,
+            VK_TRUE,
+            UINT64_MAX);
         AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     }
 

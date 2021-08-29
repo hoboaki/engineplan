@@ -35,11 +35,14 @@ Device::Device(const DeviceCreateInfo& createInfo)
 : system_(::ae::base::PtrToRef(createInfo.System()))
 , nativeObject_()
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
-, queues_(createInfo.QueueCreateInfoCount(),
+, queues_(
+      createInfo.QueueCreateInfoCount(),
       &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
     const auto physicalDeviceIndex = createInfo.PhysicalDeviceIndex();
     AE_BASE_ASSERT_MIN_TERM(
-        physicalDeviceIndex, 0, system_.PhysicalDeviceCount());
+        physicalDeviceIndex,
+        0,
+        system_.PhysicalDeviceCount());
     const auto physicalDeviceInfo =
         system_.PhysicalDeviceInfo(physicalDeviceIndex);
     const auto queueCreateCount = createInfo.QueueCreateInfoCount();
@@ -68,9 +71,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
     // 各 QueueKind の作成総数とIndex表を作成
     ::ae::base::EnumKeyArray<QueueKind, int>
         queueCountTable; // QueueKind ごとの作成総数
-    ::ae::base::RuntimeArray<int> indexInQueueKindTable(queueCreateCount,
+    ::ae::base::RuntimeArray<int> indexInQueueKindTable(
+        queueCreateCount,
         &system_.TempWorkAllocator_()); // 各 Queue が同じ QueueKind
-                                        // における何個目の Queue かの情報
+        // における何個目の Queue かの情報
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto& queueCreateInfo = queueCreateInfos[queueIdx];
         indexInQueueKindTable[queueIdx] =
@@ -87,10 +91,13 @@ Device::Device(const DeviceCreateInfo& createInfo)
             continue;
         }
         queuePriorityTable[queueKind].Resize(
-            queueCount, &system_.TempWorkAllocator_());
+            queueCount,
+            &system_.TempWorkAllocator_());
     }
-    const float priorityTable[int(QueuePriority::TERM)] = {
-        -1.0f, 0.0f, 0.5f, 1.0f};
+    const float priorityTable[int(QueuePriority::TERM)] = { -1.0f,
+                                                            0.0f,
+                                                            0.5f,
+                                                            1.0f };
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto indexInQueueKind = indexInQueueKindTable[queueIdx];
         const auto priorityEnum = queueCreateInfos[queueIdx].Priority();
@@ -112,20 +119,25 @@ Device::Device(const DeviceCreateInfo& createInfo)
     ::vk::Bool32 swapchainExtFound = VK_FALSE;
     {
         uint32_t deviceExtensionCount = 0;
-        auto result = physicalDevice.enumerateDeviceExtensionProperties(nullptr,
+        auto result = physicalDevice.enumerateDeviceExtensionProperties(
+            nullptr,
             &deviceExtensionCount,
             static_cast<vk::ExtensionProperties*>(nullptr));
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
         if (0 < deviceExtensionCount) {
             base::RuntimeArray<::vk::ExtensionProperties> deviceExtensions(
-                int(deviceExtensionCount), &system_.TempWorkAllocator_());
+                int(deviceExtensionCount),
+                &system_.TempWorkAllocator_());
             result = physicalDevice.enumerateDeviceExtensionProperties(
-                nullptr, &deviceExtensionCount, deviceExtensions.Head());
+                nullptr,
+                &deviceExtensionCount,
+                deviceExtensions.Head());
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
             for (uint32_t i = 0; i < deviceExtensionCount; i++) {
-                if (!std::strcmp(VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+                if (!std::strcmp(
+                        VK_KHR_SWAPCHAIN_EXTENSION_NAME,
                         deviceExtensions[i].extensionName)) {
                     swapchainExtFound = 1;
                     extensionNames[enabledExtensionCount++] =
@@ -188,13 +200,17 @@ Device::Device(const DeviceCreateInfo& createInfo)
                     .setFlags(
                         ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
             const auto result = nativeObject_.createCommandPool(
-                &createInfo, nullptr, &commandPool);
+                &createInfo,
+                nullptr,
+                &commandPool);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
         const auto& queueCreateInfo = queueCreateInfos[i];
-        queues_.Add(this,
+        queues_.Add(
+            this,
             nativeObject_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
-            queueCreateInfo.Kind(), queueCreateInfo.OperationCountMax(),
+            queueCreateInfo.Kind(),
+            queueCreateInfo.OperationCountMax(),
             commandPool);
     }
 
@@ -380,13 +396,15 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
     return ResourceMemoryRequirements()
         .SetSize(specInfo.Size())
         .SetAlignment(sizeof(size_t))
-        .SetUsageBitSet(ResourceMemoryUsageBitSet().Set(ResourceMemoryUsage::CompiledShaderModule, true));
+        .SetUsageBitSet(ResourceMemoryUsageBitSet().Set(
+            ResourceMemoryUsage::CompiledShaderModule,
+            true));
 }
-
 
 //------------------------------------------------------------------------------
 uint8_t* Device::MapResourceMemory(
-    const ResourceMemory& resourceMemory, const ResourceMemoryRegion& region) {
+    const ResourceMemory& resourceMemory,
+    const ResourceMemoryRegion& region) {
     AE_BASE_ASSERT(resourceMemory.IsValid());
     // CompiledShaderModule 用処理
     if (resourceMemory.Head_() != nullptr) {
@@ -394,7 +412,9 @@ uint8_t* Device::MapResourceMemory(
     }
 
     const auto result = nativeObject_.mapMemory(
-        resourceMemory.NativeObject_(), region.Offset(), region.Size());
+        resourceMemory.NativeObject_(),
+        region.Offset(),
+        region.Size());
     AE_BASE_ASSERT(result.result == ::vk::Result::eSuccess);
     return static_cast<uint8_t*>(result.value);
 }
@@ -408,7 +428,6 @@ void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
 
     nativeObject_.unmapMemory(resourceMemory.NativeObject_());
 }
-
 
 //------------------------------------------------------------------------------
 ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
@@ -428,23 +447,25 @@ ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
         auto result =
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
 
-        
         const int layerCountPerArrayIndex =
             specInfo.Kind() == ImageResourceKind::ImageCube ? 6 : 1;
         const auto subres =
             ::vk::ImageSubresource()
                 .setAspectMask(vk::ImageAspectFlagBits::eColor)
                 .setMipLevel(location.MipLevel())
-                .setArrayLayer(location.FaceIndex() +
-                               location.ArrayIndex() * layerCountPerArrayIndex);
+                .setArrayLayer(
+                    location.FaceIndex() +
+                    location.ArrayIndex() * layerCountPerArrayIndex);
 
         nativeObject_.getImageSubresourceLayout(tmpImage, &subres, &layout);
         nativeObject_.destroyImage(tmpImage, nullptr);
     }
 
-    return ImageSubresourceDataInfo(layout.offset, layout.rowPitch, layout.depthPitch);
+    return ImageSubresourceDataInfo(
+        layout.offset,
+        layout.rowPitch,
+        layout.depthPitch);
 }
-
 
 } // namespace gfx_low
 } // namespace ae

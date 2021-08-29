@@ -14,8 +14,7 @@ namespace ae {
 namespace gfx_low {
 
 /// パイプラインに渡すシェーダーに関する情報。
-class PipelineShaderInfo
-{
+class PipelineShaderInfo {
 public:
     /// @name プロパティ
     //@{
@@ -28,9 +27,8 @@ public:
         return *this;
     }
 
-    /// エントリーポイントとなる関数名のポインタ。（初期値：nullptr） 
-    const char* EntryPointNamePtr() const { return entryPointNamePtr_;
-    }
+    /// エントリーポイントとなる関数名のポインタ。（初期値：nullptr）
+    const char* EntryPointNamePtr() const { return entryPointNamePtr_; }
 
     /// EntryPointNamePtr() の設定。
     PipelineShaderInfo& SetEntryPointNamePtr(const char* entryPointNamePtr) {
@@ -44,6 +42,6 @@ private:
     const char* entryPointNamePtr_ = nullptr;
 };
 
-}
-}
+} // namespace gfx_low
+} // namespace ae
 // EOF

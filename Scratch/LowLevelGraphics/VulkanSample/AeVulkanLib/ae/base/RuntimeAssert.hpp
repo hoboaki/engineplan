@@ -29,22 +29,24 @@ struct RuntimeAssert {
 
 // 実行時Assertの本体。AE_BASE_CONFIG_ENABLE_RUNTIME_ERRORが定義されているときに動作。
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
-#define AE_BASE_RUNTIME_ASSERT(cond, ...)                                    \
-    do {                                                                     \
-        if (!(cond)) {                                                       \
-            AE_BASE_COUT_LINE(::ae::base::RuntimeAssert::Separator);         \
-            AE_BASE_COUT_LINE_WITH_TIME(::ae::base::RuntimeAssert::Header);  \
-            AE_BASE_COUTFMT_LINE(                                            \
-                ::ae::base::RuntimeAssert::FileLineFmt, __FILE__, __LINE__); \
-            AE_BASE_COUT(::ae::base::RuntimeAssert::LabelCondition);         \
-            AE_BASE_COUT_LINE(#cond);                                        \
-            AE_BASE_COUT(::ae::base::RuntimeAssert::LabelMessage);           \
-            AE_BASE_COUTFMT_LINE(__VA_ARGS__, #cond);                        \
-            AE_BASE_COUT_LINE(::ae::base::RuntimeAssert::Separator);         \
-            ::ae::base::RuntimeError::OnError();                             \
-            while (1) {                                                      \
-            }                                                                \
-        }                                                                    \
+#define AE_BASE_RUNTIME_ASSERT(cond, ...)                                   \
+    do {                                                                    \
+        if (!(cond)) {                                                      \
+            AE_BASE_COUT_LINE(::ae::base::RuntimeAssert::Separator);        \
+            AE_BASE_COUT_LINE_WITH_TIME(::ae::base::RuntimeAssert::Header); \
+            AE_BASE_COUTFMT_LINE(                                           \
+                ::ae::base::RuntimeAssert::FileLineFmt,                     \
+                __FILE__,                                                   \
+                __LINE__);                                                  \
+            AE_BASE_COUT(::ae::base::RuntimeAssert::LabelCondition);        \
+            AE_BASE_COUT_LINE(#cond);                                       \
+            AE_BASE_COUT(::ae::base::RuntimeAssert::LabelMessage);          \
+            AE_BASE_COUTFMT_LINE(__VA_ARGS__, #cond);                       \
+            AE_BASE_COUT_LINE(::ae::base::RuntimeAssert::Separator);        \
+            ::ae::base::RuntimeError::OnError();                            \
+            while (1) {                                                     \
+            }                                                               \
+        }                                                                   \
     } while (0)
 
 #else
@@ -97,8 +99,10 @@ struct RuntimeAssert {
 /// @details
 /// アサートに失敗したらエラーコールバックをコールします。@n
 /// エラーが無効なときは何もしません。
-#define AE_BASE_ASSERT_SHOULD_NULL(val)                        \
-    AE_BASE_ASSERT_MSG((val) == 0, "Value is not Null (%s)\n", \
+#define AE_BASE_ASSERT_SHOULD_NULL(val) \
+    AE_BASE_ASSERT_MSG(                 \
+        (val) == 0,                     \
+        "Value is not Null (%s)\n",     \
         AE_BASE_TO_SHORT_STRING(val).ReadPtr())
 
 /// @brief NULLじゃない値をさしているかチェックする。
@@ -152,8 +156,10 @@ struct RuntimeAssert {
 /// @details
 /// アサートに失敗したらエラーコールバックをコールします。@n
 /// エラーが無効なときは何もしません。
-#define AE_BASE_ERROR_INVALID_VALUE(val)                                 \
-    AE_BASE_ASSERT_NOT_REACHED_MSGFMT("%s is invalid Value(%s)\n", #val, \
+#define AE_BASE_ERROR_INVALID_VALUE(val) \
+    AE_BASE_ASSERT_NOT_REACHED_MSGFMT(   \
+        "%s is invalid Value(%s)\n",     \
+        #val,                            \
         AE_BASE_TO_SHORT_STRING(val).ReadPtr())
 
 /// @brief AE_BASE_ERROR_INVALID_VALUE のenum版。
@@ -168,9 +174,13 @@ struct RuntimeAssert {
 /// @details
 /// アサートに失敗したらエラーコールバックをコールします。@n
 /// エラーが無効なときは何もしません。
-#define AE_BASE_ASSERT_EQUALS(val1, val2)                                 \
-    AE_BASE_ASSERT_MSGFMT(val1 == val2, "%s(%s) is not equals %s(%s).\n", \
-        #val1, AE_BASE_TO_SHORT_STRING(val1).ReadPtr(), #val2,            \
+#define AE_BASE_ASSERT_EQUALS(val1, val2)        \
+    AE_BASE_ASSERT_MSGFMT(                       \
+        val1 == val2,                            \
+        "%s(%s) is not equals %s(%s).\n",        \
+        #val1,                                   \
+        AE_BASE_TO_SHORT_STRING(val1).ReadPtr(), \
+        #val2,                                   \
         AE_BASE_TO_SHORT_STRING(val2).ReadPtr())
 
 /// @brief ２つの値が等しくないことをチェックする。
@@ -181,9 +191,13 @@ struct RuntimeAssert {
 /// @details
 /// アサートに失敗したらエラーコールバックをコールします。@n
 /// エラーが無効なときは何もしません。
-#define AE_BASE_ASSERT_NOT_EQUALS(val1, val2)                               \
-    AE_BASE_ASSERT_MSGFMT(val1 != val2, "%s(%s) is quals %s(%s).\n", #val1, \
-        AE_BASE_TO_SHORT_STRING(val1).ReadPtr(), #val2,                     \
+#define AE_BASE_ASSERT_NOT_EQUALS(val1, val2)    \
+    AE_BASE_ASSERT_MSGFMT(                       \
+        val1 != val2,                            \
+        "%s(%s) is quals %s(%s).\n",             \
+        #val1,                                   \
+        AE_BASE_TO_SHORT_STRING(val1).ReadPtr(), \
+        #val2,                                   \
         AE_BASE_TO_SHORT_STRING(val2).ReadPtr())
 
 /// @def AE_BASE_TEST
@@ -228,7 +242,10 @@ struct RuntimeAssert {
 /// エラーが無効なときは何もしません。
 #define AE_BASE_ASSERT_MIN_MAX(val, minVal, maxVal) \
     AE_BASE_ASSERT_RANGE_CORE3(                     \
-        AE_BASE_VALUE_IN_RANGE_MIN_MAX, minVal, val, maxVal)
+        AE_BASE_VALUE_IN_RANGE_MIN_MAX,             \
+        minVal,                                     \
+        val,                                        \
+        maxVal)
 
 /// @brief minVal <= val < termValであることをチェックする。
 /// @see ae::base::RuntimeError
@@ -238,7 +255,10 @@ struct RuntimeAssert {
 /// エラーが無効なときは何もしません。
 #define AE_BASE_ASSERT_MIN_TERM(val, minVal, termVal) \
     AE_BASE_ASSERT_RANGE_CORE3(                       \
-        AE_BASE_VALUE_IN_RANGE_MIN_TERM, minVal, val, termVal)
+        AE_BASE_VALUE_IN_RANGE_MIN_TERM,              \
+        minVal,                                       \
+        val,                                          \
+        termVal)
 
 /// @brief enumValueが 0 <= enumValue < TERMであることをチェックする。
 /// @details
@@ -251,13 +271,15 @@ struct RuntimeAssert {
 
 // 範囲チェックアサートの実装。
 #define AE_BASE_ASSERT_RANGE_CORE2(func, val1, val2) \
-    AE_BASE_ASSERT_MSGFMT(func(val1, val2),          \
+    AE_BASE_ASSERT_MSGFMT(                           \
+        func(val1, val2),                            \
         "Value is not in range.\n"                   \
         "val1 : %s \naVal2 : %s\n",                  \
         AE_BASE_TO_SHORT_STRING(val1).ReadPtr(),     \
         AE_BASE_TO_SHORT_STRING(val2).ReadPtr())
 #define AE_BASE_ASSERT_RANGE_CORE3(func, val1, val2, val3) \
-    AE_BASE_ASSERT_MSGFMT(func(val1, val2, val3),          \
+    AE_BASE_ASSERT_MSGFMT(                                 \
+        func(val1, val2, val3),                            \
         "Value is not in range.\n"                         \
         "val1 : %s \naVal2 : %s \naVal3 : %s\n",           \
         AE_BASE_TO_SHORT_STRING(val1).ReadPtr(),           \

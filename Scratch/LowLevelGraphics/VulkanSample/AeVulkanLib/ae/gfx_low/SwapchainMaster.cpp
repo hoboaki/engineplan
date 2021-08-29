@@ -25,7 +25,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 , screen_(base::PtrToRef(createInfo.Screen()))
 , surface_()
 , swapchains_(
-      createInfo.SwapchainCountMax(), &device_.System().ObjectAllocator_()) {
+      createInfo.SwapchainCountMax(),
+      &device_.System().ObjectAllocator_()) {
     // surface 作成
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
     {
@@ -35,7 +36,9 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
                 .setHwnd(screen_.display_().hwindow);
 
         auto result = device_.System().NativeObject_().createWin32SurfaceKHR(
-            &surfaceCreateInfo, nullptr, &surface_);
+            &surfaceCreateInfo,
+            nullptr,
+            &surface_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
@@ -54,7 +57,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
         auto pd =
             device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
         uint32_t queueFamilyCount = 0;
-        pd.getQueueFamilyProperties(&queueFamilyCount,
+        pd.getQueueFamilyProperties(
+            &queueFamilyCount,
             static_cast<::vk::QueueFamilyProperties*>(nullptr));
         AE_BASE_ASSERT_LESS_EQUALS(1, queueFamilyCount);
         ::vk::Bool32 isSupported = false;
@@ -108,13 +112,18 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 
     // サーフェスの対応フォーマットを取得
     uint32_t surfFormatCount = uint32_t();
-    auto result = physicalDevice.getSurfaceFormatsKHR(surface_,
-        &surfFormatCount, static_cast<vk::SurfaceFormatKHR*>(nullptr));
+    auto result = physicalDevice.getSurfaceFormatsKHR(
+        surface_,
+        &surfFormatCount,
+        static_cast<vk::SurfaceFormatKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
     base::RuntimeArray<::vk::SurfaceFormatKHR> surfFormats(
-        int(surfFormatCount), &device_.System().TempWorkAllocator_());
+        int(surfFormatCount),
+        &device_.System().TempWorkAllocator_());
     result = physicalDevice.getSurfaceFormatsKHR(
-        surface_, &surfFormatCount, surfFormats.Head());
+        surface_,
+        &surfFormatCount,
+        surfFormats.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     // サーフェスが対応するフォーマットを選択
@@ -138,7 +147,8 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
              ++surfFmtIdx) {
             const auto& surfFormat = surfFormats[surfFmtIdx];
             for (int fmtIdx = 0;
-                 findFormats[fmtIdx] != ::vk::Format::eUndefined; ++fmtIdx) {
+                 findFormats[fmtIdx] != ::vk::Format::eUndefined;
+                 ++fmtIdx) {
                 if (surfFormat.format != findFormats[fmtIdx]) {
                     continue;
                 }
@@ -158,13 +168,18 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 
     auto presentModeCount = uint32_t();
     result = physicalDevice.getSurfacePresentModesKHR(
-        surface_, &presentModeCount, static_cast<vk::PresentModeKHR*>(nullptr));
+        surface_,
+        &presentModeCount,
+        static_cast<vk::PresentModeKHR*>(nullptr));
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     base::RuntimeArray<::vk::PresentModeKHR> presentModes(
-        int(presentModeCount), &device_.System().TempWorkAllocator_());
+        int(presentModeCount),
+        &device_.System().TempWorkAllocator_());
     result = physicalDevice.getSurfacePresentModesKHR(
-        surface_, &presentModeCount, presentModes.Head());
+        surface_,
+        &presentModeCount,
+        presentModes.Head());
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     vk::Extent2D swapchainExtent;
@@ -282,7 +297,7 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
             .setMinImageCount(desiredNumOfSwapchainImages)
             .setImageFormat(format)
             .setImageColorSpace(colorSpace)
-            .setImageExtent({swapchainExtent.width, swapchainExtent.height})
+            .setImageExtent({ swapchainExtent.width, swapchainExtent.height })
             .setImageArrayLayers(1)
             .setImageUsage(vk::ImageUsageFlagBits::eColorAttachment)
             .setImageSharingMode(vk::SharingMode::eExclusive)
@@ -296,7 +311,9 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 
     ::vk::SwapchainKHR swapchain;
     result = device_.NativeObject_().createSwapchainKHR(
-        &swapchain_ci, nullptr, &swapchain);
+        &swapchain_ci,
+        nullptr,
+        &swapchain);
     AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
     if (oldSwapchain.IsValid()) {
@@ -304,7 +321,11 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
     }
 
     entity->Initialize_(
-        this, swapchain, nextUniqueId, desiredNumOfSwapchainImages, format);
+        this,
+        swapchain,
+        nextUniqueId,
+        desiredNumOfSwapchainImages,
+        format);
 
     return SwapchainHandle(entity);
 }

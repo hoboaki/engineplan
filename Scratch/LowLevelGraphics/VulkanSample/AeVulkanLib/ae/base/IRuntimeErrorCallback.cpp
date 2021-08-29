@@ -6,7 +6,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-IRuntimeErrorCallback::~IRuntimeErrorCallback() {}
+IRuntimeErrorCallback::~IRuntimeErrorCallback() {
+}
 
 } // namespace base
 } // namespace ae

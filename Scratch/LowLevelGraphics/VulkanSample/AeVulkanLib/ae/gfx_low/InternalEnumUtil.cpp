@@ -125,7 +125,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::BorderColor InternalEnumUtil::ToBorderColor(const SamplerBorderColor color) {
+::vk::BorderColor InternalEnumUtil::ToBorderColor(
+    const SamplerBorderColor color) {
     AE_BASE_ASSERT_ENUM(color, SamplerBorderColor);
     AE_BASE_ASSERT(color != SamplerBorderColor::Invalid);
     const ::vk::BorderColor table[] = {
@@ -156,7 +157,8 @@ namespace gfx_low {
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(BufferResourceUsage::TERM));
     auto result = ::vk::BufferUsageFlags();
     for (int i = int(BufferResourceUsage::Invalid) + 1;
-         i < int(BufferResourceUsage::TERM); ++i) {
+         i < int(BufferResourceUsage::TERM);
+         ++i) {
         if (usageBitSet.Get(BufferResourceUsage(i))) {
             result |= table[i];
         }
@@ -170,15 +172,14 @@ namespace gfx_low {
     const RenderTargetComponentBitSet& componentBitSet) {
     const ::vk::ColorComponentFlagBits table[] = {
         ::vk::ColorComponentFlagBits(0), // Invalid
-        ::vk::ColorComponentFlagBits::eR,
-        ::vk::ColorComponentFlagBits::eG,
-        ::vk::ColorComponentFlagBits::eB,
-        ::vk::ColorComponentFlagBits::eA,
+        ::vk::ColorComponentFlagBits::eR, ::vk::ColorComponentFlagBits::eG,
+        ::vk::ColorComponentFlagBits::eB, ::vk::ColorComponentFlagBits::eA,
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(RenderTargetComponent::TERM));
     auto result = ::vk::ColorComponentFlags();
     for (int i = int(RenderTargetComponent::Invalid) + 1;
-         i < int(RenderTargetComponent::TERM); ++i) {
+         i < int(RenderTargetComponent::TERM);
+         ++i) {
         if (componentBitSet.Get(RenderTargetComponent(i))) {
             result |= table[i];
         }
@@ -386,8 +387,7 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageAspectFlags InternalEnumUtil::ToImageAspectFlags(
-    const ::vk::Format format)
-{
+    const ::vk::Format format) {
     switch (format) {
     case ::vk::Format::eD16Unorm:
     case ::vk::Format::eD32Sfloat:
@@ -396,14 +396,14 @@ namespace gfx_low {
     case ::vk::Format::eD16UnormS8Uint:
     case ::vk::Format::eD24UnormS8Uint:
     case ::vk::Format::eD32SfloatS8Uint:
-        return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eDepth |
-                                        ::vk::ImageAspectFlagBits::eStencil);
+        return ::vk::ImageAspectFlags(
+            ::vk::ImageAspectFlagBits::eDepth |
+            ::vk::ImageAspectFlagBits::eStencil);
 
     case ::vk::Format::eS8Uint:
         return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eStencil);
 
-    default:
-        return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eColor);
+    default: return ::vk::ImageAspectFlags(::vk::ImageAspectFlagBits::eColor);
     }
 }
 
@@ -455,7 +455,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageLayout InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
-    const ImageResourceState state, const ImageFormat format) {
+    const ImageResourceState state,
+    const ImageFormat format) {
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     const ::vk::ImageLayout table[] = {

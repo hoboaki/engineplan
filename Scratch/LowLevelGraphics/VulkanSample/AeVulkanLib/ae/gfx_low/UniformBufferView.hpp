@@ -1,8 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
-#include <ae/gfx_low/SdkHeader.hpp>
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
+#include <ae/gfx_low/SdkHeader.hpp>
 
 namespace ae {
 namespace gfx_low {

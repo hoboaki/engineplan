@@ -9,7 +9,7 @@ namespace ae {
 namespace base {
 class Aabb2i;
 struct Extent2Pod;
-}
+} // namespace base
 } // namespace ae
 
 //------------------------------------------------------------------------------
@@ -29,9 +29,12 @@ public:
     //@{
     Aabb2(); ///< Aabb2( Vector2::Zero() ) で作成。
     Aabb2(const Vector2Pod& pos); ///< 1点を含むAABBを作成。
-    Aabb2(const Vector2Pod& pos1,
+    Aabb2(
+        const Vector2Pod& pos1,
         const Vector2Pod& pos2); ///< 2点を含むAABBを作成。
-    Aabb2(const Vector2Pod& pos, const Extent2Pod& extent); ///< 基準となる点と範囲を指定してAABBを作成。
+    Aabb2(
+        const Vector2Pod& pos,
+        const Extent2Pod& extent); ///< 基準となる点と範囲を指定してAABBを作成。
     //@}
 
     //------------------------------------------------------------------------------

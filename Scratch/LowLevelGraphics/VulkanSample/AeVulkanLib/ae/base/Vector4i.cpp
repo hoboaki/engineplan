@@ -22,71 +22,73 @@ const Vector4iPod Vector4iPod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::One() {
-    Vector4iPod obj = {1, 1, 1, 1};
+    Vector4iPod obj = { 1, 1, 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Min() {
-    Vector4iPod obj = {std::numeric_limits<int>::min(),
-        std::numeric_limits<int>::min(), std::numeric_limits<int>::min(),
-        std::numeric_limits<int>::min()};
+    Vector4iPod obj = { std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Max() {
-    Vector4iPod obj = {std::numeric_limits<int>::max(),
-        std::numeric_limits<int>::max(), std::numeric_limits<int>::max(),
-        std::numeric_limits<int>::max()};
+    Vector4iPod obj = { std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::UnitX() {
-    Vector4iPod obj = {1, 0, 0, 0};
+    Vector4iPod obj = { 1, 0, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::UnitY() {
-    Vector4iPod obj = {0, 1, 0, 0};
+    Vector4iPod obj = { 0, 1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::UnitZ() {
-    Vector4iPod obj = {0, 0, 1, 0};
+    Vector4iPod obj = { 0, 0, 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::UnitW() {
-    Vector4iPod obj = {0, 0, 0, 1};
+    Vector4iPod obj = { 0, 0, 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::NegUnitX() {
-    Vector4iPod obj = {-1, 0, 0, 0};
+    Vector4iPod obj = { -1, 0, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::NegUnitY() {
-    Vector4iPod obj = {0, -1, 0, 0};
+    Vector4iPod obj = { 0, -1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::NegUnitZ() {
-    Vector4iPod obj = {0, 0, -1, 0};
+    Vector4iPod obj = { 0, 0, -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::NegUnitW() {
-    Vector4iPod obj = {0, 0, 0, -1};
+    Vector4iPod obj = { 0, 0, 0, -1 };
     return obj;
 }
 
@@ -454,19 +456,26 @@ const Vector4iPod Vector4iPod::operator-() const {
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Min(const Vector4iPod& val) const {
-    return Vector4i(Math::Min(x, val.x), Math::Min(y, val.y),
-        Math::Min(z, val.z), Math::Min(w, val.w));
+    return Vector4i(
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z),
+        Math::Min(w, val.w));
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Max(const Vector4iPod& val) const {
-    return Vector4i(Math::Max(x, val.x), Math::Max(y, val.y),
-        Math::Max(z, val.z), Math::Max(w, val.w));
+    return Vector4i(
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z),
+        Math::Max(w, val.w));
 }
 
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Clamp(
-    const Vector4iPod& min, const Vector4iPod& max) const {
+    const Vector4iPod& min,
+    const Vector4iPod& max) const {
     return Max(min).Min(max);
 }
 
@@ -483,7 +492,10 @@ const Vector4iPod Vector4iPod::ClampNegative() const {
 //------------------------------------------------------------------------------
 const Vector4iPod Vector4iPod::Abs() const {
     return Vector4i(
-        Math::AbsS32(x), Math::AbsS32(y), Math::AbsS32(z), Math::AbsS32(2));
+        Math::AbsS32(x),
+        Math::AbsS32(y),
+        Math::AbsS32(z),
+        Math::AbsS32(2));
 }
 
 //------------------------------------------------------------------------------
@@ -505,18 +517,23 @@ bool Vector4iPod::IsZero() const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector4iPod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
-        S32(x).ToShortString().ReadPtr(), S32(y).ToShortString().ReadPtr(),
-        S32(z).ToShortString().ReadPtr(), S32(w).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s,%s",
+        S32(x).ToShortString().ReadPtr(),
+        S32(y).ToShortString().ReadPtr(),
+        S32(z).ToShortString().ReadPtr(),
+        S32(w).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector4i::Vector4i()
-: Vector4iPod(Zero()) {}
+: Vector4iPod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector4i::Vector4i(const Vector4iPod& vec)
-: Vector4iPod(vec) {}
+: Vector4iPod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector4i::Vector4i(const s32 v) {

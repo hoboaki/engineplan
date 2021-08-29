@@ -12,14 +12,16 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageSubresourceRange InternalUtility::ToImageSubresourceRange(
-    const ImageResource& resource, const ImageSubresourceLocation& location,
+    const ImageResource& resource,
+    const ImageSubresourceLocation& location,
     const ::vk::ImageAspectFlags& aspectFlagsHint) {
     const ::vk::ImageAspectFlags aspectFlags =
         aspectFlagsHint
             ? aspectFlagsHint
             : InternalEnumUtil::ToImageAspectFlags(resource.NativeFormat_());
     const uint32_t perLayerImageCount = resource.IsCubeMapImage_() ? 6 : 1;
-    return ::vk::ImageSubresourceRange(aspectFlags,
+    return ::vk::ImageSubresourceRange(
+        aspectFlags,
         location.MipLevel(), // baseMipLevel
         1, // levelCount
         perLayerImageCount * location.ArrayIndex() +

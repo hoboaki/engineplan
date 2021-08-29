@@ -67,20 +67,16 @@ public:
     }
 
     /// コピー元イメージデータの大きさ。（初期値：すべて0）
-    base::Extent3i SrcImageExtent() const {
-        return srcImageExtent_;
-    }
+    base::Extent3i SrcImageExtent() const { return srcImageExtent_; }
 
     /// SrcImageExtent() の設定。（設定必須）
-    CopyBufferToImageInfo& SetSrcImageExtent(
-        const base::Extent3iPod& extent) {
+    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent3iPod& extent) {
         srcImageExtent_ = extent;
         return *this;
     }
 
     /// 2次元用 SrcImageExtent() の設定。
-    CopyBufferToImageInfo& SetSrcImageExtent(
-        const base::Extent2iPod& extent) {
+    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent2iPod& extent) {
         return SetSrcImageExtent(base::Extent3i(extent, 1));
     }
 
@@ -101,20 +97,19 @@ public:
         return *this;
     }
 
-    /// コピー先場所。（初期値：デフォルトコンストラクタの値） 
+    /// コピー先場所。（初期値：デフォルトコンストラクタの値）
     ImageSubresourceLocation DstSubresourceLocation() const {
         return dstSubresourceLocation_;
     }
 
     /// DstSubresourceLocation() の設定。
     CopyBufferToImageInfo& SetDstSubresourceLocation(
-        const ImageSubresourceLocation& location)
-    {
+        const ImageSubresourceLocation& location) {
         dstSubresourceLocation_ = location;
         return *this;
     }
 
-    /// コピー先の始点となる座標。（初期値：0,0,0） 
+    /// コピー先の始点となる座標。（初期値：0,0,0）
     base::Vector3i DstImageOffset() const { return dstImageOffset_; }
 
     /// DstImageOffset() の設定。
@@ -122,8 +117,7 @@ public:
     CopyBufferToImageInfo& SetDstImageOffset(const base::Vector3iPod& offset);
 
     /// 2次元用 DstImageOffset() の設定。
-    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector2iPod& offset)
-    {
+    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector2iPod& offset) {
         return SetDstImageOffset(base::Vector3i(offset, 0));
     }
 

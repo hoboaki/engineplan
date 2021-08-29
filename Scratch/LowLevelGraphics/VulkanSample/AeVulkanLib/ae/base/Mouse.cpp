@@ -10,7 +10,8 @@ Mouse::Mouse()
 : data_()
 , pos_()
 , trigger_()
-, release_() {}
+, release_() {
+}
 
 //------------------------------------------------------------------------------
 void Mouse::Update(const MouseUpdateData& data) {

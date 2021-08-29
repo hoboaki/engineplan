@@ -65,7 +65,8 @@ public:
 
     /// QueueFamilyIndex を返す。見つからない場合は負の値を返す。
     void QueueFamilyIndexTable_(
-        QueueFamilyIndexTableType_* result, int physicalDeviceIndex) const;
+        QueueFamilyIndexTableType_* result,
+        int physicalDeviceIndex) const;
 
     const ::vk::PhysicalDevice& PhysicalDevice_(int physicalDeviceIndex) const {
         return physicalDevices_[physicalDeviceIndex];

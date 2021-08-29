@@ -28,7 +28,7 @@ public:
     /// FillMode() の設定。
     PipelineRasterizerInfo& SetFillMode(RasterizeFillMode mode);
 
-    /// 表面解釈の方法。（初期値：Invalid） 
+    /// 表面解釈の方法。（初期値：Invalid）
     PolygonFrontFace FrontFace() const { return frontFace_; }
 
     /// FrontFace() の設定。（設定必須）

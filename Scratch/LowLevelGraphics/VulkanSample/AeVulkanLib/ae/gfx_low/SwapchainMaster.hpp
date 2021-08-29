@@ -55,7 +55,8 @@ public:
     /// @details
     /// oldSwapchain はこの関数呼び出し後 IsValid() == false
     /// となり使えなくなります。
-    SwapchainHandle CreateSwapchain(const SwapchainCreateInfo& createInfo,
+    SwapchainHandle CreateSwapchain(
+        const SwapchainCreateInfo& createInfo,
         const SwapchainHandle& oldSwapchain = SwapchainHandle());
 
     /// 指定の Swapchain を破棄。

@@ -22,57 +22,59 @@ const Vector3iPod Vector3iPod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::One() {
-    Vector3iPod obj = {1, 1, 1};
+    Vector3iPod obj = { 1, 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Min() {
-    Vector3iPod obj = {std::numeric_limits<int>::min(),
-        std::numeric_limits<int>::min(), std::numeric_limits<int>::min()};
+    Vector3iPod obj = { std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Max() {
-    Vector3iPod obj = {std::numeric_limits<int>::max(),
-        std::numeric_limits<int>::max(), std::numeric_limits<int>::max()};
+    Vector3iPod obj = { std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::UnitX() {
-    Vector3iPod obj = {1, 0, 0};
+    Vector3iPod obj = { 1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::UnitY() {
-    Vector3iPod obj = {0, 1, 0};
+    Vector3iPod obj = { 0, 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::UnitZ() {
-    Vector3iPod obj = {0, 0, 1};
+    Vector3iPod obj = { 0, 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::NegUnitX() {
-    Vector3iPod obj = {-1, 0, 0};
+    Vector3iPod obj = { -1, 0, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::NegUnitY() {
-    Vector3iPod obj = {0, -1, 0};
+    Vector3iPod obj = { 0, -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::NegUnitZ() {
-    Vector3iPod obj = {0, 0, -1};
+    Vector3iPod obj = { 0, 0, -1 };
     return obj;
 }
 
@@ -378,18 +380,23 @@ const Vector3iPod Vector3iPod::operator-() const {
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Min(const Vector3iPod& val) const {
     return Vector3i(
-        Math::Min(x, val.x), Math::Min(y, val.y), Math::Min(z, val.z));
+        Math::Min(x, val.x),
+        Math::Min(y, val.y),
+        Math::Min(z, val.z));
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Max(const Vector3iPod& val) const {
     return Vector3i(
-        Math::Max(x, val.x), Math::Max(y, val.y), Math::Max(z, val.z));
+        Math::Max(x, val.x),
+        Math::Max(y, val.y),
+        Math::Max(z, val.z));
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Clamp(
-    const Vector3iPod& min, const Vector3iPod& max) const {
+    const Vector3iPod& min,
+    const Vector3iPod& max) const {
     return Max(min).Min(max);
 }
 
@@ -427,18 +434,22 @@ bool Vector3iPod::IsZero() const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector3iPod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s",
-        S32(x).ToShortString().ReadPtr(), S32(y).ToShortString().ReadPtr(),
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s",
+        S32(x).ToShortString().ReadPtr(),
+        S32(y).ToShortString().ReadPtr(),
         S32(z).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector3i::Vector3i()
-: Vector3iPod(Zero()) {}
+: Vector3iPod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector3i::Vector3i(const Vector3iPod& vec)
-: Vector3iPod(vec) {}
+: Vector3iPod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector3i::Vector3i(const s32 v) {

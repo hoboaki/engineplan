@@ -28,20 +28,27 @@ void Swapchain::AcquireNextImage() {
         currentFrameIndex_ =
             (currentFrameIndex_ + 1) % frameProperties_.Count();
         currentFrameIndex_ = base::Math::Clamp(
-            currentFrameIndex_, 0, frameProperties_.Count() - 1);
+            currentFrameIndex_,
+            0,
+            frameProperties_.Count() - 1);
         auto currentBufferIdxUint = uint32_t();
-        auto result = device.NativeObject_().acquireNextImageKHR(swapchain_,
+        auto result = device.NativeObject_().acquireNextImageKHR(
+            swapchain_,
             UINT64_MAX,
             frameProperties_[currentFrameIndex_].AcquireEvent->NativeObject_(),
-            ::vk::Fence(), &currentBufferIdxUint);
+            ::vk::Fence(),
+            &currentBufferIdxUint);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
         AE_BASE_ASSERT_EQUALS(currentFrameIndex_, int(currentBufferIdxUint));
     }
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
-    const ::vk::SwapchainKHR& swapchain, uint32_t uniqueId, int minImageCount,
+void Swapchain::Initialize_(
+    gfx_low::SwapchainMaster* swapchainMaster,
+    const ::vk::SwapchainKHR& swapchain,
+    uint32_t uniqueId,
+    int minImageCount,
     ::vk::Format imageFormat) {
     AE_BASE_ASSERT(!IsInitialized_());
     swapchainMaster_.Reset(swapchainMaster);
@@ -53,21 +60,26 @@ void Swapchain::Initialize_(gfx_low::SwapchainMaster* swapchainMaster,
 
         auto swapchainImageCount = uint32_t();
         {
-            const auto result =
-                device.NativeObject_().getSwapchainImagesKHR(swapchain_,
-                    &swapchainImageCount, static_cast<::vk::Image*>(nullptr));
+            const auto result = device.NativeObject_().getSwapchainImagesKHR(
+                swapchain_,
+                &swapchainImageCount,
+                static_cast<::vk::Image*>(nullptr));
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
             AE_BASE_ASSERT_LESS(0, minImageCount);
         }
 
-        frameProperties_.Resize(int(swapchainImageCount),
+        frameProperties_.Resize(
+            int(swapchainImageCount),
             &swapchainMaster_->Device().System().ObjectAllocator_());
 
         base::RuntimeArray<::vk::Image> swapchainImages(
-            frameProperties_.Count(), &device.System().TempWorkAllocator_());
+            frameProperties_.Count(),
+            &device.System().TempWorkAllocator_());
         {
             const auto result = device.NativeObject_().getSwapchainImagesKHR(
-                swapchain_, &swapchainImageCount, swapchainImages.Head());
+                swapchain_,
+                &swapchainImageCount,
+                swapchainImages.Head());
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
 

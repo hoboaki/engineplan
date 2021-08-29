@@ -11,7 +11,8 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Extent3::Extent3(const Extent2Pod& extent, float depth)
-: Extent3(extent.width, extent.height, depth) {}
+: Extent3(extent.width, extent.height, depth) {
+}
 
 //------------------------------------------------------------------------------
 Extent3::Extent3(float width, float height, float depth) {

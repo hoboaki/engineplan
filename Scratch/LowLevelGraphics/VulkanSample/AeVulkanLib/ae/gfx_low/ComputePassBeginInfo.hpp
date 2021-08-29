@@ -5,8 +5,7 @@
 #include <ae/base/Pointer.hpp>
 
 namespace ae {
-namespace gfx_low {
-} // namespace gfx_low
+namespace gfx_low {} // namespace gfx_low
 } // namespace ae
 
 //------------------------------------------------------------------------------

@@ -20,8 +20,11 @@ public:
     // コンストラクタをユーザーが直接呼ぶことは想定していない。
     // 引数のポインタはポインタをコピーするだけでポインタ先はコピーしない。
     // つまりポインタ先のデータを破棄しないように注意すること。
-    Argument(int argCount, const char* const* argValues,
-        const char* appFileName, const char* appDirPath);
+    Argument(
+        int argCount,
+        const char* const* argValues,
+        const char* appFileName,
+        const char* appDirPath);
 
     /// @name 引数（実行ファイルの情報は含まれない）
     //@{

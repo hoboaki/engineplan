@@ -21,7 +21,6 @@ public:
     /// @param index 0以上。
     ShaderBindingRegion& SetBindingIndex(int index);
 
-    
     /// 起点となる要素番号。（初期値：0）
     int ElemOffset() const { return elemOffset_; }
 

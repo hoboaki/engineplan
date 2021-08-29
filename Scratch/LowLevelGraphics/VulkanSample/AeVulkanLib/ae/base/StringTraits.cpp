@@ -40,14 +40,17 @@ struct tImpl<char> {
     }
 
     // NCopyの実装。
-    static int NCopy(
-        char* buffer, const pword_t bufferLength, const char* str) {
+    static int
+    NCopy(char* buffer, const pword_t bufferLength, const char* str) {
         return SNPrintf(buffer, bufferLength, "%s", str);
     }
 
     // SNPrintfの実装。
     static int SNPrintf(
-        char* buffer, const pword_t bufferLength, const char* format, ...) {
+        char* buffer,
+        const pword_t bufferLength,
+        const char* format,
+        ...) {
         va_list arg;
         va_start(arg, format);
         int result = VSNPrintf(buffer, bufferLength, format, arg);
@@ -56,8 +59,11 @@ struct tImpl<char> {
     }
 
     // VSNPrintfの実装。
-    static int VSNPrintf(char* buffer, const pword_t bufferLength,
-        const char* format, va_list arg) {
+    static int VSNPrintf(
+        char* buffer,
+        const pword_t bufferLength,
+        const char* format,
+        va_list arg) {
         return vsnprintf(buffer, bufferLength, format, arg);
     }
 };
@@ -77,14 +83,17 @@ struct tImpl<wchar_t> {
     }
 
     // NCopyの実装。
-    static int NCopy(
-        wchar_t* buffer, const pword_t bufferLength, const wchar_t* str) {
+    static int
+    NCopy(wchar_t* buffer, const pword_t bufferLength, const wchar_t* str) {
         return SNPrintf(buffer, bufferLength, L"%s", str);
     }
 
     // SNPrintfの実装。
-    static int SNPrintf(wchar_t* buffer, const pword_t bufferLength,
-        const wchar_t* format, ...) {
+    static int SNPrintf(
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* format,
+        ...) {
         va_list arg;
         va_start(arg, format);
         int result = VSNPrintf(buffer, bufferLength, format, arg);
@@ -93,8 +102,11 @@ struct tImpl<wchar_t> {
     }
 
     // VSNPrintfの実装。
-    static int VSNPrintf(wchar_t* buffer, const pword_t bufferLength,
-        const wchar_t* format, va_list arg) {
+    static int VSNPrintf(
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* format,
+        va_list arg) {
         return vswprintf(buffer, bufferLength, format, arg);
     }
 };
@@ -160,7 +172,9 @@ namespace {
 // NCopyStrictの実装。
 template <typename CharType>
 const typename StringTraits<CharType>::WriteResult tNCopyStrict(
-    CharType* buffer, const pword_t bufferLength, const CharType* str) {
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* str) {
     // 結果用変数
     typename StringTraits<CharType>::WriteResult result = {};
 
@@ -187,14 +201,18 @@ const typename StringTraits<CharType>::WriteResult tNCopyStrict(
 // NCopyStrictの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::NCopyStrict(
-    char* buffer, const pword_t bufferLength, const char* str) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* str) {
     return tNCopyStrict<char>(buffer, bufferLength, str);
 }
 
 // NCopyStrictの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::NCopyStrict(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* str) {
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* str) {
     return tNCopyStrict<wchar_t>(buffer, bufferLength, str);
 }
 
@@ -202,8 +220,8 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::NCopyStrict(
 namespace {
 // NCopyの実装。
 template <typename CharType>
-const typename StringTraits<CharType>::WriteResult tNCopy(
-    CharType* buffer, const pword_t bufferLength, const CharType* str) {
+const typename StringTraits<CharType>::WriteResult
+tNCopy(CharType* buffer, const pword_t bufferLength, const CharType* str) {
     // 結果用変数
     typedef typename StringTraits<CharType>::WriteResult WriteResult;
     WriteResult result = {};
@@ -241,14 +259,18 @@ const typename StringTraits<CharType>::WriteResult tNCopy(
 // NCopyの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::NCopy(
-    char* buffer, const pword_t bufferLength, const char* str) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* str) {
     return tNCopy<char>(buffer, bufferLength, str);
 }
 
 // NCopyの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::NCopy(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* str) {
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* str) {
     return tNCopy<wchar_t>(buffer, bufferLength, str);
 }
 
@@ -257,7 +279,9 @@ namespace {
 // VSNPrintfStrictの実装。
 template <typename CharType>
 const typename StringTraits<CharType>::WriteResult tVSNPrintfStrict(
-    CharType* buffer, const pword_t bufferLength, const CharType* format,
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* format,
     va_list arg) {
     // 結果用変数
     typename StringTraits<CharType>::WriteResult result = {};
@@ -285,14 +309,19 @@ const typename StringTraits<CharType>::WriteResult tVSNPrintfStrict(
 // VSNPrintfStrictの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::VSNPrintfStrict(
-    char* buffer, const pword_t bufferLength, const char* format, va_list arg) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    va_list arg) {
     return tVSNPrintfStrict<char>(buffer, bufferLength, format, arg);
 }
 
 // VSNPrintfStrictの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::VSNPrintfStrict(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* format,
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
     va_list arg) {
     return tVSNPrintfStrict<wchar_t>(buffer, bufferLength, format, arg);
 }
@@ -303,8 +332,11 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::VSNPrintfStrict(
 namespace {
 // VSNPrintfの実装。
 template <typename CharType>
-const typename StringTraits<CharType>::WriteResult tVSNPrintf(CharType* buffer,
-    const pword_t bufferLength, const CharType* format, va_list arg) {
+const typename StringTraits<CharType>::WriteResult tVSNPrintf(
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* format,
+    va_list arg) {
     // 結果用変数
     typedef typename StringTraits<CharType>::WriteResult WriteResult;
     WriteResult result = {};
@@ -318,7 +350,10 @@ const typename StringTraits<CharType>::WriteResult tVSNPrintf(CharType* buffer,
 
     // 実行
     result = StringTraits<CharType>::VSNPrintfStrict(
-        buffer, bufferLength, format, arg);
+        buffer,
+        bufferLength,
+        format,
+        arg);
 
     // 終端文字設定
     if (!result.isSuccess ||
@@ -342,14 +377,19 @@ const typename StringTraits<CharType>::WriteResult tVSNPrintf(CharType* buffer,
 // VSNPrintfの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::VSNPrintf(
-    char* buffer, const pword_t bufferLength, const char* format, va_list arg) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    va_list arg) {
     return tVSNPrintf<char>(buffer, bufferLength, format, arg);
 }
 
 // VSNPrintfの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::VSNPrintf(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* format,
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
     va_list arg) {
     return tVSNPrintf<wchar_t>(buffer, bufferLength, format, arg);
 }
@@ -358,7 +398,10 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::VSNPrintf(
 // SNPrintfStrictの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::SNPrintfStrict(
-    char* buffer, const pword_t bufferLength, const char* format, ...) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    ...) {
     va_list arg;
     va_start(arg, format);
     const WriteResult result =
@@ -370,7 +413,10 @@ const StringTraits<char>::WriteResult StringTraits<char>::SNPrintfStrict(
 // SNPrintfStrictの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::SNPrintfStrict(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* format, ...) {
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
+    ...) {
     va_list arg;
     va_start(arg, format);
     const WriteResult result =
@@ -383,7 +429,10 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::SNPrintfStrict(
 // SNPrintfの実装(char版)。
 template <>
 const StringTraits<char>::WriteResult StringTraits<char>::SNPrintf(
-    char* buffer, const pword_t bufferLength, const char* format, ...) {
+    char* buffer,
+    const pword_t bufferLength,
+    const char* format,
+    ...) {
     va_list arg;
     va_start(arg, format);
     const WriteResult result = VSNPrintf(buffer, bufferLength, format, arg);
@@ -394,7 +443,10 @@ const StringTraits<char>::WriteResult StringTraits<char>::SNPrintf(
 // SNPrintfの実装(wchar_t版)。
 template <>
 const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::SNPrintf(
-    wchar_t* buffer, const pword_t bufferLength, const wchar_t* format, ...) {
+    wchar_t* buffer,
+    const pword_t bufferLength,
+    const wchar_t* format,
+    ...) {
     va_list arg;
     va_start(arg, format);
     const WriteResult result = VSNPrintf(buffer, bufferLength, format, arg);

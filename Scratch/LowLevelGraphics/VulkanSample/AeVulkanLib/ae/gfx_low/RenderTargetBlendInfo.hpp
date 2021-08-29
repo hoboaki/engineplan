@@ -28,7 +28,7 @@ public:
         blendOpEnable_ = enable;
         return *this;
     }
-    
+
     /// SrcColor に対するブレンド係数。（初期値：Zero）
     BlendFactor SrcColorBlendFactor() const { return srcColorBlendFactor_; }
 
@@ -65,19 +65,20 @@ public:
     /// AlphaBlendOp() の設定。
     RenderTargetBlendInfo& SetAlphaBlendOp(BlendOp op);
 
-    /// 書き込む要素のマスク。（初期値：AllOn） 
+    /// 書き込む要素のマスク。（初期値：AllOn）
     RenderTargetComponentBitSet WriteMask() const { return writeMask_; }
 
     /// WriteMask() の設定。
-    RenderTargetBlendInfo& SetWriteMask(const RenderTargetComponentBitSet& mask)
-    {
+    RenderTargetBlendInfo& SetWriteMask(
+        const RenderTargetComponentBitSet& mask) {
         writeMask_ = mask;
         return *this;
     }
     //@}
 
 private:
-    RenderTargetComponentBitSet writeMask_ = RenderTargetComponentBitSet::AllOn();
+    RenderTargetComponentBitSet writeMask_ =
+        RenderTargetComponentBitSet::AllOn();
     BlendFactor srcColorBlendFactor_ = BlendFactor::Zero;
     BlendFactor dstColorBlendFactor_ = BlendFactor::Zero;
     BlendOp colorBlendOp_ = BlendOp::Add;

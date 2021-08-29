@@ -33,7 +33,8 @@ public:
 
     /// UniformBufferInfoCount() UniformBufferInfos() の設定。
     DescriptorSetUpdateInfo& SetUniformBufferInfos(
-        int count, const UniformBufferDescriptorInfo* infos);
+        int count,
+        const UniformBufferDescriptorInfo* infos);
 
     /// StorageBuffer 用デスクリプタ情報の数。（初期値：0）
     int StorageBufferInfoCount() const { return storageBufferInfoCount_; }
@@ -46,7 +47,8 @@ public:
 
     /// StorageBufferInfoCount() StorageBufferInfos() の設定。
     DescriptorSetUpdateInfo& SetStorageBufferInfos(
-        int count, const StorageBufferDescriptorInfo* infos);
+        int count,
+        const StorageBufferDescriptorInfo* infos);
 
     /// SampledImage 用デスクリプタ情報の数。（初期値：0）
     int SampledImageInfoCount() const { return sampledImageInfoCount_; }
@@ -59,7 +61,8 @@ public:
 
     /// SampledImageInfoCount() SampledImageInfos() の設定。
     DescriptorSetUpdateInfo& SetSampledImageInfos(
-        int count, const SampledImageDescriptorInfo* infos);
+        int count,
+        const SampledImageDescriptorInfo* infos);
 
     /// Sampler 用デスクリプタ情報の数。（初期値：0）
     int SamplerInfoCount() const { return samplerInfoCount_; }
@@ -72,7 +75,8 @@ public:
 
     /// SamplerInfoCount() SamplerInfos() の設定。
     DescriptorSetUpdateInfo& SetSamplerInfos(
-        int count, const SamplerDescriptorInfo* infos);
+        int count,
+        const SamplerDescriptorInfo* infos);
 
     //@}
 

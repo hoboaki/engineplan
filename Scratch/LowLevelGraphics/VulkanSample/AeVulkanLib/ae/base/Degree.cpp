@@ -41,7 +41,8 @@ Degree::Degree(const float degree)
 
 //------------------------------------------------------------------------------
 Degree::Degree(const DegreePod& val)
-: DegreePod(val) {}
+: DegreePod(val) {
+}
 
 } // namespace base
 } // namespace ae

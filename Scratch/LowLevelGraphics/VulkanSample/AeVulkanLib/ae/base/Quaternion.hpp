@@ -37,7 +37,8 @@ public:
     //@{
     Quaternion(); ///< 単位クォータニオンの作成。
     Quaternion(f32 x, f32 y, f32 z, f32 w); ///< 各要素の値を指定して作成。
-    Quaternion(const Vector3Pod& axis,
+    Quaternion(
+        const Vector3Pod& axis,
         const Angle& angle); ///< 任意軸回転用クォータニオンの作成。
     //@}
 

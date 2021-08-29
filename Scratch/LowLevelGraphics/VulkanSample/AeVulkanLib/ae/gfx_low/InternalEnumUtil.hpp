@@ -23,8 +23,8 @@
 #include <ae/gfx_low/SamplerBorderColor.hpp>
 #include <ae/gfx_low/SamplerMinMagFilter.hpp>
 #include <ae/gfx_low/SamplerMipmapMode.hpp>
-#include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
+#include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 #include <ae/gfx_low/StencilOp.hpp>
 #include <ae/gfx_low/VertexFormat.hpp>
 #include <ae/gfx_low/VertexStepRate.hpp>
@@ -57,7 +57,8 @@ struct InternalEnumUtil {
     static ::vk::ImageLayout ToImageLayoutForColorAttachment(
         ImageResourceState state);
     static ::vk::ImageLayout ToImageLayoutForDepthStencilAttachment(
-        ImageResourceState state, ImageFormat format);
+        ImageResourceState state,
+        ImageFormat format);
     static ::vk::ImageTiling ToImageTiling(ImageResourceTiling tiling);
     static ::vk::ImageType ToImageType(ImageResourceKind kind);
     static ::vk::ImageUsageFlags ToImageUsageFlags(
@@ -66,7 +67,8 @@ struct InternalEnumUtil {
     static ::vk::PolygonMode ToPolygonMode(RasterizeFillMode mode);
     static ::vk::PrimitiveTopology ToPrimitiveTopology(
         PrimitiveTopologyKind kind);
-    static ::vk::SamplerAddressMode ToSamplerAddressMode(SamplerAddressMode mode);
+    static ::vk::SamplerAddressMode ToSamplerAddressMode(
+        SamplerAddressMode mode);
     static ::vk::SamplerMipmapMode ToSamplerMipmapMode(SamplerMipmapMode mode);
     static ::vk::ShaderStageFlagBits ToShaderStageFlagBits(
         RenderPipelineShaderStage stage);

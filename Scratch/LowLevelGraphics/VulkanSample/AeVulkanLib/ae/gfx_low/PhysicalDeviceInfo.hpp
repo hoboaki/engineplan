@@ -21,8 +21,8 @@ public:
     }
 
     // internal
-    ::std::array<int, static_cast<int>(QueueKind::TERM)> CreatableQueueCounts_ =
-        {};
+    ::std::array<int, static_cast<int>(QueueKind::TERM)>
+        CreatableQueueCounts_ = {};
 };
 
 } // namespace gfx_low

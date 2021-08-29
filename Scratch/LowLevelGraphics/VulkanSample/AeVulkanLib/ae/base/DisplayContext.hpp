@@ -29,7 +29,7 @@ public:
     /// @details Windows プラットフォームでのみ使われます。
     const char* WindowTitle() const { return windowTitle_.ReadPtr(); }
 
-    /// WindowTitle() の設定。 
+    /// WindowTitle() の設定。
     DisplayContext& SetWindowTitle(const char* aText) {
         windowTitle_ = aText;
         return *this;

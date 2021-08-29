@@ -22,43 +22,43 @@ const Vector2Pod Vector2Pod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::One() {
-    Vector2Pod obj = {1, 1};
+    Vector2Pod obj = { 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::Min() {
-    Vector2Pod obj = {-AE_BASE_INFINITY, -AE_BASE_INFINITY};
+    Vector2Pod obj = { -AE_BASE_INFINITY, -AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::Max() {
-    Vector2Pod obj = {AE_BASE_INFINITY, AE_BASE_INFINITY};
+    Vector2Pod obj = { AE_BASE_INFINITY, AE_BASE_INFINITY };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::UnitX() {
-    Vector2Pod obj = {1, 0};
+    Vector2Pod obj = { 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::UnitY() {
-    Vector2Pod obj = {0, 1};
+    Vector2Pod obj = { 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::NegUnitX() {
-    Vector2Pod obj = {-1, 0};
+    Vector2Pod obj = { -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::NegUnitY() {
-    Vector2Pod obj = {0, -1};
+    Vector2Pod obj = { 0, -1 };
     return obj;
 }
 
@@ -333,8 +333,8 @@ const Vector2Pod Vector2Pod::Max(const Vector2Pod& val) const {
 }
 
 //------------------------------------------------------------------------------
-const Vector2Pod Vector2Pod::Clamp(
-    const Vector2Pod& min, const Vector2Pod& max) const {
+const Vector2Pod Vector2Pod::Clamp(const Vector2Pod& min, const Vector2Pod& max)
+    const {
     return Max(min).Min(max);
 }
 
@@ -418,17 +418,21 @@ f32 Vector2Pod::Cross(const Vector2Pod& vec) const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector2Pod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s",
-        F32(x).ToShortString().ReadPtr(), F32(y).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s",
+        F32(x).ToShortString().ReadPtr(),
+        F32(y).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector2::Vector2()
-: Vector2Pod(Zero()) {}
+: Vector2Pod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector2::Vector2(const Vector2Pod& vec)
-: Vector2Pod(vec) {}
+: Vector2Pod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector2::Vector2(const float v) {

@@ -67,8 +67,11 @@ const Color4Pod Color4Pod::ToAAAA() const {
 const Color4bPod Color4Pod::ToRGBAb() const {
     const Color4 tmp =
         ToVector4().Clamp(Vector4::Zero(), Vector4::One()) * 255.0f;
-    return Color4b(static_cast<u8>(tmp.r), static_cast<u8>(tmp.g),
-        static_cast<u8>(tmp.b), static_cast<u8>(tmp.a));
+    return Color4b(
+        static_cast<u8>(tmp.r),
+        static_cast<u8>(tmp.g),
+        static_cast<u8>(tmp.b),
+        static_cast<u8>(tmp.a));
 }
 
 //------------------------------------------------------------------------------
@@ -305,18 +308,23 @@ const Color4Pod Color4Pod::operator/(const Color4Pod& val) const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Color4Pod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s,%s,%s",
-        F32(r).ToShortString().ReadPtr(), F32(g).ToShortString().ReadPtr(),
-        F32(b).ToShortString().ReadPtr(), F32(a).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s,%s,%s",
+        F32(r).ToShortString().ReadPtr(),
+        F32(g).ToShortString().ReadPtr(),
+        F32(b).ToShortString().ReadPtr(),
+        F32(a).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Color4::Color4()
-: Color4Pod(Zero()) {}
+: Color4Pod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Color4::Color4(const Color4Pod& col)
-: Color4Pod(col) {}
+: Color4Pod(col) {
+}
 
 //------------------------------------------------------------------------------
 Color4::Color4(const float r, const float g, const float b, const float a) {

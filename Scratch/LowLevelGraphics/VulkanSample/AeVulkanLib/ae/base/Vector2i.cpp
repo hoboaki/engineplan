@@ -22,45 +22,45 @@ const Vector2iPod Vector2iPod::Zero() {
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::One() {
-    Vector2iPod obj = {1, 1};
+    Vector2iPod obj = { 1, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Min() {
-    Vector2iPod obj = {
-        std::numeric_limits<int>::min(), std::numeric_limits<int>::min()};
+    Vector2iPod obj = { std::numeric_limits<int>::min(),
+                        std::numeric_limits<int>::min() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Max() {
-    Vector2iPod obj = {
-        std::numeric_limits<int>::max(), std::numeric_limits<int>::max()};
+    Vector2iPod obj = { std::numeric_limits<int>::max(),
+                        std::numeric_limits<int>::max() };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::UnitX() {
-    Vector2iPod obj = {1, 0};
+    Vector2iPod obj = { 1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::UnitY() {
-    Vector2iPod obj = {0, 1};
+    Vector2iPod obj = { 0, 1 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::NegUnitX() {
-    Vector2iPod obj = {-1, 0};
+    Vector2iPod obj = { -1, 0 };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::NegUnitY() {
-    Vector2iPod obj = {0, -1};
+    Vector2iPod obj = { 0, -1 };
     return obj;
 }
 
@@ -337,7 +337,8 @@ const Vector2iPod Vector2iPod::Max(const Vector2iPod& val) const {
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Clamp(
-    const Vector2iPod& min, const Vector2iPod& max) const {
+    const Vector2iPod& min,
+    const Vector2iPod& max) const {
     return Max(min).Min(max);
 }
 
@@ -375,17 +376,21 @@ bool Vector2iPod::IsZero() const {
 
 //------------------------------------------------------------------------------
 const ::ae::base::ShortString Vector2iPod::ToShortString() const {
-    return ::ae::base::ShortString::FromFormat("%s,%s",
-        S32(x).ToShortString().ReadPtr(), S32(y).ToShortString().ReadPtr());
+    return ::ae::base::ShortString::FromFormat(
+        "%s,%s",
+        S32(x).ToShortString().ReadPtr(),
+        S32(y).ToShortString().ReadPtr());
 }
 
 //------------------------------------------------------------------------------
 Vector2i::Vector2i()
-: Vector2iPod(Zero()) {}
+: Vector2iPod(Zero()) {
+}
 
 //------------------------------------------------------------------------------
 Vector2i::Vector2i(const Vector2iPod& vec)
-: Vector2iPod(vec) {}
+: Vector2iPod(vec) {
+}
 
 //------------------------------------------------------------------------------
 Vector2i::Vector2i(const s32 v) {

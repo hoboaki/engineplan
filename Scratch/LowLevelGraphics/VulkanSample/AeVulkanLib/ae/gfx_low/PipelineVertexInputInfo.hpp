@@ -34,10 +34,9 @@ public:
         return bufferLayoutInfos_.Get();
     }
 
-    /// BufferLayoutInfos() の設定。 
+    /// BufferLayoutInfos() の設定。
     PipelineVertexInputInfo& SetBufferLayoutInfos(
-        const VertexBufferLayoutInfo* infos)
-    {
+        const VertexBufferLayoutInfo* infos) {
         bufferLayoutInfos_.Reset(infos);
         return *this;
     }
@@ -58,8 +57,8 @@ public:
     }
 
     /// AttributeInfos() の設定。
-    PipelineVertexInputInfo& SetAttributeInfos(const VertexAttributeInfo* infos)
-    {
+    PipelineVertexInputInfo& SetAttributeInfos(
+        const VertexAttributeInfo* infos) {
         attributeInfos_.Reset(infos);
         return *this;
     }

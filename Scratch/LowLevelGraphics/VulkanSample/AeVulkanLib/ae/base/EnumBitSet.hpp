@@ -35,9 +35,9 @@ struct EnumBitSetPod {
     /// 全ビット true のオブジェクトを取得。
     static constexpr MyType AllOn() {
         if (int(EnumType::TERM) * 8 == BitCount) {
-            return MyType{::std::numeric_limits<DataType>::max()};
+            return MyType{ ::std::numeric_limits<DataType>::max() };
         }
-        return MyType{(DataType(1) << int(EnumType::TERM)) - 1};
+        return MyType{ (DataType(1) << int(EnumType::TERM)) - 1 };
     }
     //@}
 
@@ -96,21 +96,21 @@ struct EnumBitSetPod {
     /// @name 演算
     //@{
     /// ビットを反転した値を取得。
-    const MyType operator~() const { return MyType{~bits_}; }
+    const MyType operator~() const { return MyType{ ~bits_ }; }
 
     /// 論理積を取得。
     const MyType operator&(const MyType& rhs) const {
-        return MyType{bits_ & rhs.bits_};
+        return MyType{ bits_ & rhs.bits_ };
     }
 
     /// 論理和を取得。
     const MyType operator|(const MyType& rhs) const {
-        return MyType{bits_ | rhs.bits_};
+        return MyType{ bits_ | rhs.bits_ };
     }
 
     /// 排他的論理和を取得。
     const MyType operator^(const MyType& rhs) const {
-        return MyType{bits_ ^ rhs.bits_};
+        return MyType{ bits_ ^ rhs.bits_ };
     }
     //@}
 };
