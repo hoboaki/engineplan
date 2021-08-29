@@ -199,8 +199,10 @@ int aemain(::ae::base::Application* app) {
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
     // ディスプレイの作成
-    ::ae::base::Display display = ::ae::base::Display(
-        ::ae::base::DisplayContext().SetWindowTitle("AeVulkan02 - Window resize"));
+    ::ae::base::Display display =
+        ::ae::base::Display(::ae::base::DisplayContext()
+                                .SetWindowTitle("AeVulkan02 - Window resize")
+                                .SetIsResizableWindow(true));
 
     // ディスプレイの表示
     display.Show();
@@ -272,16 +274,26 @@ int aemain(::ae::base::Application* app) {
 
     // Swapchain の作成
     ::std::unique_ptr<::ae::gfx_low::SwapchainMaster> swapchainMaster;
-    {
+    ::ae::gfx_low::SwapchainHandle swapchain;
+    ::ae::base::Extent2i currentSwapchainExtent;
+    constexpr int swapchainImageCount = 3;
+    const auto createSwapchainFunc = [&display,
+                                &device,
+                                &swapchainMaster,
+                                &swapchain,
+                                &currentSwapchainExtent,
+                                &swapchainImageCount] {
         auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
                                .SetDevice(device.get())
                                .SetScreen(&display.MainScreen())
                                .SetSwapchainCountMax(1);
         swapchainMaster.reset(new ::ae::gfx_low::SwapchainMaster(createInfo));
-    }
-    const int swapchainImageCount = 3;
-    auto swapchain = swapchainMaster->CreateSwapchain(
-        ae::gfx_low::SwapchainCreateInfo().SetImageCount(swapchainImageCount));
+        swapchain = swapchainMaster->CreateSwapchain(
+            ae::gfx_low::SwapchainCreateInfo().SetImageCount(
+                swapchainImageCount));
+        currentSwapchainExtent = display.MainScreen().Extent();
+    };
+    createSwapchainFunc();
 
     // DepthBuffer 作成
     const auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
@@ -816,6 +828,19 @@ int aemain(::ae::base::Application* app) {
         // 前回実行したコマンドの終了保証
         auto& fence = fences[bufferIndex];
         fence.Wait();
+
+        // Swapchain サイズ変更確認
+        if (display.MainScreen().Extent() != currentSwapchainExtent) {
+            // 全 GPU 実行の完了を待つ
+            for (auto& fence : fences) {
+                fence.Wait();
+            }
+
+            // Swapchain を再生成
+            swapchainMaster->DestroySwapchain(swapchain);
+            swapchainMaster.reset();
+            createSwapchainFunc();
+        }
 
         // Swapchain バッファ確保要求
         swapchain->AcquireNextImage();
