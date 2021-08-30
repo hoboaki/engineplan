@@ -59,6 +59,11 @@ public:
         return sampledImageInfos_.Get();
     }
 
+    /// SampledImageInfoCount() SampledImageInfos() の設定。
+    DescriptorSetUpdateInfo& SetSampledImageInfos(
+        int count,
+        const SampledImageDescriptorInfo* infos);
+
     /// StorageImage 用デスクリプタ情報の数。（初期値：0）
     int StorageImageInfoCount() const { return storageImageInfoCount_; }
 
@@ -68,10 +73,10 @@ public:
         return storageImageInfos_.Get();
     }
 
-    /// SampledImageInfoCount() SampledImageInfos() の設定。
-    DescriptorSetUpdateInfo& SetSampledImageInfos(
+    /// StorageImageInfoCount() StorageImageInfos() の設定。
+    DescriptorSetUpdateInfo& SetStorageImageInfos(
         int count,
-        const SampledImageDescriptorInfo* infos);
+        const StorageImageDescriptorInfo* infos);
 
     /// Sampler 用デスクリプタ情報の数。（初期値：0）
     int SamplerInfoCount() const { return samplerInfoCount_; }
