@@ -8,9 +8,9 @@ layout (binding = 0, rgba8) uniform writeonly image2D outputImage;
 
 void main()
 {
-   int width = 512;
-   int height = 512;
-   ivec2 halfSize = ivec2(width, height) / 2;
+   // 同心円テクスチャを作成
+   ivec2 imageSize = ivec2(512, 512); // C++ 上の画像サイズと合わせる必要あり
+   ivec2 halfSize = imageSize / 2;
    ivec2 imagePos = ivec2(gl_GlobalInvocationID.xy);
    ivec2 pos = imagePos - halfSize;
    float length = sqrt(dot(vec2(pos), vec2(pos)));
