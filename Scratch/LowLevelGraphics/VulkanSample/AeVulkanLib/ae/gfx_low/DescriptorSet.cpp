@@ -13,6 +13,8 @@
 #include <ae/gfx_low/SamplerDescriptorInfo.hpp>
 #include <ae/gfx_low/StorageBufferDescriptorInfo.hpp>
 #include <ae/gfx_low/StorageBufferView.hpp>
+#include <ae/gfx_low/StorageImageDescriptorInfo.hpp>
+#include <ae/gfx_low/StorageImageView.hpp>
 #include <ae/gfx_low/UniformBufferDescriptorInfo.hpp>
 #include <ae/gfx_low/UniformBufferView.hpp>
 
@@ -216,6 +218,35 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
                 ::vk::DescriptorImageInfo()
                     .setImageView(view.NativeObject_())
                     .setImageLayout(::vk::ImageLayout::eShaderReadOnlyOptimal);
+            ++imageCount;
+        }
+    }
+
+    // StorageImage
+    for (int infoIdx = 0; infoIdx < info.StorageImageInfoCount(); ++infoIdx) {
+        const auto& descInfo =
+            base::PtrToRef(&info.StorageImageInfos()[infoIdx]);
+        const auto descSetIdx = descriptorSetLayouts_.DescriptorSetLayoutIndex(
+            DescriptorKind::StorageImage);
+        AE_BASE_ASSERT_LESS_EQUALS(0, descSetIdx);
+        writes[writeCount] =
+            ::vk::WriteDescriptorSet()
+                .setDstSet(nativeObjects_[descSetIdx])
+                .setDstBinding(descInfo.Region().BindingIndex())
+                .setDstArrayElement(descInfo.Region().ElemOffset())
+                .setDescriptorCount(descInfo.Region().ElemCount())
+                .setDescriptorType(::vk::DescriptorType::eStorageImage)
+                .setPImageInfo(&images[imageCount]);
+        ++writeCount;
+
+        for (int viewIdx = 0; viewIdx < descInfo.Region().ElemCount();
+             ++viewIdx) {
+            const auto& view =
+                base::PtrToRef(base::PtrToRef(&descInfo.Views()[viewIdx]));
+            images[imageCount] =
+                ::vk::DescriptorImageInfo()
+                    .setImageView(view.NativeObject_())
+                    .setImageLayout(::vk::ImageLayout::eGeneral);
             ++imageCount;
         }
     }

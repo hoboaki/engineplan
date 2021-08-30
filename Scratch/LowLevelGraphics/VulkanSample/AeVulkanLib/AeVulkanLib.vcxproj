@@ -466,6 +466,9 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ae\gfx_low\StorageBufferView.hpp" />
+    <ClInclude Include="ae\gfx_low\StorageImageDescriptorInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\StorageImageView.hpp" />
+    <ClInclude Include="ae\gfx_low\StorageImageViewCreateInfo.hpp" />
     <ClInclude Include="ae\gfx_low\UniformBufferDescriptorInfo.hpp">
       <SubType>
       </SubType>
@@ -1013,6 +1016,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\StorageImageView.cpp" />
+    <ClCompile Include="ae\gfx_low\StorageImageViewCreateInfo.cpp" />
     <ClCompile Include="ae\gfx_low\Swapchain.cpp">
       <SubType>
       </SubType>
