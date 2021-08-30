@@ -429,7 +429,7 @@ int aemain(::ae::base::Application* app) {
                 true))
             .SetBindingIndex(0)
     };
-    const auto descriptorSetSpecInfo =
+    const auto graphicsDescriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::UniformBuffer,
@@ -443,14 +443,27 @@ int aemain(::ae::base::Application* app) {
                 ::ae::gfx_low::DescriptorKind::Sampler,
                 AE_BASE_ARRAY_LENGTH(samplerBindingInfos),
                 samplerBindingInfos);
+    const ::ae::gfx_low::ShaderBindingInfo storageImageBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Compute,
+                true))
+            .SetBindingIndex(0)
+    };
+    const auto computeDescriptorSetSpecInfo =
+        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
+            ::ae::gfx_low::DescriptorKind::StorageImage,
+            AE_BASE_ARRAY_LENGTH(storageImageBindingInfos),
+            storageImageBindingInfos);
 
-    // DescriptorSet の作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
-        gfxKit.SwapchainImageCount());
+    // GraphicsPipeline 用 DescriptorSet の作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
+        graphicsDescriptorSets(gfxKit.SwapchainImageCount());
     for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
-                               .SetDevice(&gfxKit.Device())
-                               .SetSpecInfo(descriptorSetSpecInfo));
+        graphicsDescriptorSets.Add(
+            ::ae::gfx_low::DescriptorSetCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(graphicsDescriptorSetSpecInfo));
 
         // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
@@ -490,7 +503,7 @@ int aemain(::ae::base::Application* app) {
         };
 
         // 更新
-        descriptorSets[i].Update(
+        graphicsDescriptorSets[i].Update(
             ::ae::gfx_low::DescriptorSetUpdateInfo()
                 .SetUniformBufferInfos(
                     AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
@@ -503,8 +516,35 @@ int aemain(::ae::base::Application* app) {
                     samplerDescs));
     }
 
+    // ComputePipeline 用 DescriptorSet の作成
+    ::ae::gfx_low::DescriptorSet computeDescriptorSet(
+        ::ae::gfx_low::DescriptorSetCreateInfo()
+            .SetDevice(&gfxKit.Device())
+            .SetSpecInfo(computeDescriptorSetSpecInfo));
+    {
+        // StorageImage
+        const ::ae::gfx_low::StorageImageView* storageImageViews[] = {
+            storageTextureView.get()
+        };
+        const ::ae::gfx_low::StorageImageDescriptorInfo storageImageDescs[] = {
+            ::ae::gfx_low::StorageImageDescriptorInfo()
+                .SetRegion(
+                    ::ae::gfx_low::ShaderBindingRegion()
+                        .SetBindingIndex(0)
+                        .SetElemCount(AE_BASE_ARRAY_LENGTH(storageImageViews)))
+                .SetViews(storageImageViews),
+        };
+
+        // 更新
+        computeDescriptorSet.Update(
+            ::ae::gfx_low::DescriptorSetUpdateInfo()
+                .SetStorageImageInfos(
+                    AE_BASE_ARRAY_LENGTH(storageImageDescs),
+                    storageImageDescs));
+    }
+
     // GraphicsPipeline 生成
-    std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> graphicsPipeline;
     {
         const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
             ::ae::gfx_low::RenderTargetBlendInfo(),
@@ -513,7 +553,7 @@ int aemain(::ae::base::Application* app) {
             blendInfos,
             AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
 
-        pipeline.reset(new ::ae::gfx_low::RenderPipeline(
+        graphicsPipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(&gfxKit.Device())
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
@@ -527,7 +567,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(&fragShader.Resource())
                         .SetEntryPointNamePtr("main"))
-                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
+                .SetDescriptorSetSpecInfo(graphicsDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
                     ::ae::gfx_low::PipelineVertexInputInfo()
                         .SetBufferCount(1)
@@ -679,8 +719,8 @@ int aemain(::ae::base::Application* app) {
                             display.MainScreen().Extent())));
 
                 // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*pipeline);
-                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
+                cmd.CmdSetRenderPipeline(*graphicsPipeline);
+                cmd.CmdSetDescriptorSet(graphicsDescriptorSets[bufferIndex]);
 
                 // Viewport
                 {
