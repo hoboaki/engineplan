@@ -22,6 +22,9 @@
 #include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/ComputePassBeginInfo.hpp>
+#include <ae/gfx_low/ComputePipeline.hpp>
+#include <ae/gfx_low/ComputePipelineCreateInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
@@ -223,8 +226,8 @@ int aemain(::ae::base::Application* app) {
     // Shader の作成
     ::aesk::Shader compShader(
         &gfxKit,
-        fVertShaderCode,
-        sizeof(fVertShaderCode));
+        fCompShaderCode,
+        sizeof(fCompShaderCode));
     ::aesk::Shader vertShader(
         &gfxKit,
         fVertShaderCode,
@@ -590,6 +593,15 @@ int aemain(::ae::base::Application* app) {
                 .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
                                   .SetRenderTargetBlendInfos(blendInfos))));
     }
+
+    // ComputePipeline 生成
+    ::ae::gfx_low::ComputePipeline computePipeline(
+        ::ae::gfx_low::ComputePipelineCreateInfo()
+            .SetDevice(&gfxKit.Device())
+            .SetShaderInfo(::ae::gfx_low::PipelineShaderInfo()
+                               .SetResource(&compShader.Resource())
+                               .SetEntryPointNamePtr("main"))
+            .SetDescriptorSetSpecInfo(computeDescriptorSetSpecInfo));
 
     // メインループ
     bool isFinishedSetupTexture = false;
