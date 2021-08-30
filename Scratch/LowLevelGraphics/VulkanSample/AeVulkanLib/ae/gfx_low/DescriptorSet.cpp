@@ -133,6 +133,10 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
     std::array<::vk::DescriptorBufferInfo, writesCountMax> buffers;
     std::array<::vk::DescriptorImageInfo, writesCountMax> images;
 
+    // メモ：
+    // バインド番号の仕様については
+    // DescriptorSetSpecInfo のクラスコメントを参照してください
+
     // UniformBuffer
     for (int infoIdx = 0; infoIdx < info.UniformBufferInfoCount(); ++infoIdx) {
         const auto& descInfo =
