@@ -28,7 +28,7 @@ public:
         return *this;
     }
 
-    /// ユニフォームバッファビューの配列ポインタ。（初期値：nullptr）
+    /// SampledImageView の配列ポインタ。（初期値：nullptr）
     const SampledImageView** Views() const { return views_.Get(); }
 
     /// Views() の設定。
