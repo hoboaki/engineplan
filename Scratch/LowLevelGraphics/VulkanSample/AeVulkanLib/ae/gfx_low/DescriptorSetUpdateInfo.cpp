@@ -45,6 +45,19 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
 }
 
 //------------------------------------------------------------------------------
+DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageImageInfos(
+    const int count,
+    const StorageImageDescriptorInfo* infos) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    if (0 < count) {
+        AE_BASE_ASSERT_POINTER(infos);
+    }
+    storageImageInfoCount_ = count;
+    storageImageInfos_.Reset(infos);
+    return *this;
+}
+
+//------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSamplerInfos(
     const int count,
     const SamplerDescriptorInfo* infos) {

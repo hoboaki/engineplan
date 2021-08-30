@@ -6,7 +6,7 @@
 
 namespace ae {
 namespace gfx_low {
-class SampledImageView;
+class StorageImageView;
 }
 } // namespace ae
 
@@ -14,8 +14,8 @@ class SampledImageView;
 namespace ae {
 namespace gfx_low {
 
-/// SampledImage 用デスクリプタの情報。
-class SampledImageDescriptorInfo {
+/// StorageImage 用デスクリプタの情報。
+class StorageImageDescriptorInfo {
 public:
     /// @name プロパティ
     //@{
@@ -23,17 +23,17 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    StorageImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
         region_ = region;
         return *this;
     }
 
-    /// SampledImageView の配列ポインタ。（初期値：nullptr）
-    const SampledImageView** Views() const { return views_.Get(); }
+    /// StorageImageView の配列ポインタ。（初期値：nullptr）
+    const StorageImageView** Views() const { return views_.Get(); }
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    SampledImageDescriptorInfo& SetViews(const SampledImageView** views) {
+    StorageImageDescriptorInfo& SetViews(const StorageImageView** views) {
         views_.Reset(views);
         return *this;
         ;
@@ -42,7 +42,7 @@ public:
 
 private:
     ShaderBindingRegion region_;
-    base::Pointer<const SampledImageView*> views_;
+    base::Pointer<const StorageImageView*> views_;
 };
 
 } // namespace gfx_low

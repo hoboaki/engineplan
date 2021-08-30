@@ -17,8 +17,8 @@ class ImageResource;
 namespace ae {
 namespace gfx_low {
 
-/// SampledImageView オブジェクト作成に必要な情報。
-class SampledImageViewCreateInfo {
+/// StorageImageView オブジェクト作成に必要な情報。
+class StorageImageViewCreateInfo {
 public:
     /// @name プロパティ
     //@{
@@ -26,7 +26,7 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    SampledImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    StorageImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
         device_.Reset(device);
         return *this;
     }
@@ -35,7 +35,7 @@ public:
     ImageResource* Resource() const { return resource_.Get(); }
 
     /// ImageResource の設定。（設定必須）
-    SampledImageViewCreateInfo& SetResource(
+    StorageImageViewCreateInfo& SetResource(
         gfx_low::ImageResource* imageResource) {
         resource_.Reset(imageResource);
         return *this;
@@ -45,19 +45,19 @@ public:
     ImageViewKind Kind() const { return kind_; }
 
     /// Kind() の設定。
-    SampledImageViewCreateInfo& SetKind(ImageViewKind kind);
+    StorageImageViewCreateInfo& SetKind(ImageViewKind kind);
 
     /// イメージフォーマット。（初期値：Invalid)
     ImageFormat Format() const { return format_; }
 
     /// Format() の設定。
-    SampledImageViewCreateInfo& SetFormat(ImageFormat format);
+    StorageImageViewCreateInfo& SetFormat(ImageFormat format);
 
-    /// 読み取り対象となる ImageSubresource の範囲。（初期値：デフォルトコンストラクタの値）
+    /// 読み取り対象となる ImageSubresourceの範囲。（初期値：デフォルトコンストラクタの値）
     ImageSubresourceRange SubresourceRange() const { return subresourceRange_; }
 
     /// SubresourceRange() の設定。
-    SampledImageViewCreateInfo& SetSubresourceRange(
+    StorageImageViewCreateInfo& SetSubresourceRange(
         const ImageSubresourceRange& range) {
         subresourceRange_ = range;
         return *this;

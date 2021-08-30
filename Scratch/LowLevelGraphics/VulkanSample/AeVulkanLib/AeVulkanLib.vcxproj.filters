@@ -765,6 +765,15 @@
     <ClInclude Include="ae\gfx_low\DispatchCallInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\StorageImageDescriptorInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\StorageImageView.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\StorageImageViewCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ae\gfx_low\System.cpp">
@@ -1134,6 +1143,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\DispatchCallInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\StorageImageView.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\StorageImageViewCreateInfo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
