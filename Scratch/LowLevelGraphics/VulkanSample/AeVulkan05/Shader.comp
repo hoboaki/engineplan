@@ -14,8 +14,8 @@ void main()
    ivec2 imagePos = ivec2(gl_GlobalInvocationID.xy);
    ivec2 pos = imagePos - halfSize;
    float length = sqrt(dot(vec2(pos), vec2(pos)));
-   float circleRadius = 32;
-   float brightness = clamp(length / circleRadius, 0, 1);
+   float circleRadius = 64;
+   float brightness = mod(length / circleRadius, 1);
    vec4 color = vec4(brightness, brightness, brightness, 1);
 	imageStore(outputImage, ivec2(gl_GlobalInvocationID.xy), color);
 }
