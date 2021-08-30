@@ -301,7 +301,7 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::StorageImageView> storageTextureView;
     const auto textureImageExtent = ::ae::base::Extent2i(256, 256);
     {
-        const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
+        const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8Unorm;
         const auto baseSpecInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
@@ -320,7 +320,9 @@ int aemain(::ae::base::Application* app) {
                         .Set(
                             ::ae::gfx_low::ImageResourceUsage::SampledImage,
                             true)
-                        .Set(::ae::gfx_low::ImageResourceUsage::CopyDst, true));
+                        .Set(
+                            ::ae::gfx_low::ImageResourceUsage::StorageImage,
+                            true));
         textureMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
