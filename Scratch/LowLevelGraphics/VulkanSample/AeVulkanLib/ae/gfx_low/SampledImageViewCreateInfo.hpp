@@ -53,8 +53,7 @@ public:
     /// Format() の設定。
     SampledImageViewCreateInfo& SetFormat(ImageFormat format);
 
-    /// 読み取り対象となる ImageSubresource
-    /// の範囲。（初期値：デフォルトコンストラクタの値）
+    /// 読み取り対象となる ImageSubresource の範囲。（初期値：デフォルトコンストラクタの値）
     ImageSubresourceRange SubresourceRange() const { return subresourceRange_; }
 
     /// SubresourceRange() の設定。
