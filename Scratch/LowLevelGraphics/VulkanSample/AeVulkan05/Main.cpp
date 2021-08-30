@@ -35,6 +35,7 @@
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DeviceCreateInfo.hpp>
+#include <ae/gfx_low/DispatchCallInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
@@ -190,6 +191,9 @@ const float fUvBufferData[] = {
     1.0f, 0.0f,
 };
 
+const int fThreadsPerThreadGroupX = 16;
+const int fThreadsPerThreadGroupY = 16;
+
 const uint32_t fCompShaderCode[] = {
 #include "Shader.comp.inc"
 };
@@ -302,7 +306,7 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> textureView;
     ::std::unique_ptr<::ae::gfx_low::StorageImageView> storageTextureView;
-    const auto textureImageExtent = ::ae::base::Extent2i(256, 256);
+    const auto textureImageExtent = ::ae::base::Extent2i(512, 512);
     {
         const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8Unorm;
         const auto baseSpecInfo =
@@ -677,11 +681,35 @@ int aemain(::ae::base::Application* app) {
         {
             // テクスチャのセットアップ
             if (!isFinishedSetupTexture) {
-                // デバイスメモリが共有メモリの場合はメモリバリアのみ設定して終了
+                // 書き込み可能状態に移行
                 cmd.CmdImageResourceBarrier(
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(textureImage.get())
                         .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
+                        .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResource));
+
+                // コンピュートシェーダーを実行してテクスチャを作成
+                cmd.CmdBeginComputePass(::ae::gfx_low::ComputePassBeginInfo());
+                cmd.CmdSetComputePipeline(computePipeline);
+                cmd.CmdSetDescriptorSet(computeDescriptorSet);
+                cmd.CmdDispatch(
+                    ::ae::gfx_low::DispatchCallInfo()
+                        .SetThreadsPerThreadGroup(::ae::base::Extent3i(
+                            fThreadsPerThreadGroupX,
+                            fThreadsPerThreadGroupY,
+                            1))
+                        .SetThreadGroups(::ae::base::Extent3i(
+                            textureImageExtent.width / fThreadsPerThreadGroupX,
+                            textureImageExtent.height / fThreadsPerThreadGroupY,
+                            1)));
+                cmd.CmdEndComputePass();
+
+                // 読み込み専用状態に移行
+                cmd.CmdImageResourceBarrier(
+                    ::ae::gfx_low::ImageResourceBarrierInfo()
+                        .SetResource(textureImage.get())
+                        .SetOldState(
+                            ::ae::gfx_low::ImageResourceState::ShaderResource)
                         .SetNewState(::ae::gfx_low::ImageResourceState::
                                          ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
