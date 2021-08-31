@@ -36,13 +36,17 @@ AllowShortFunctionsOnASingleLine: InlineOnly
 # 継承
 BreakInheritanceList: BeforeComma
 
+# 関数宣言や定義の戻り値の後ろでは改行しない
+AlwaysBreakAfterReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 1000000
+
 # 関数引数の改行後インデント
 AlignAfterOpenBracket: AlwaysBreak
 
 # 関数の呼び出し引数を全て１行にするか全て改行する
 BinPackArguments: false
 
-# 関数の宣言や定義の引数を全て１行にするか全て改行する
+# 関数宣言や定義の引数を全て１行にするか全て改行する
 BinPackParameters: false
 
 # コンストラクタ
