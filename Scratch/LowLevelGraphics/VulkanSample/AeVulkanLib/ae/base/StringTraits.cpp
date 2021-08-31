@@ -40,8 +40,10 @@ struct tImpl<char> {
     }
 
     // NCopyの実装。
-    static int
-    NCopy(char* buffer, const pword_t bufferLength, const char* str) {
+    static int NCopy(
+        char* buffer,
+        const pword_t bufferLength,
+        const char* str) {
         return SNPrintf(buffer, bufferLength, "%s", str);
     }
 
@@ -83,8 +85,10 @@ struct tImpl<wchar_t> {
     }
 
     // NCopyの実装。
-    static int
-    NCopy(wchar_t* buffer, const pword_t bufferLength, const wchar_t* str) {
+    static int NCopy(
+        wchar_t* buffer,
+        const pword_t bufferLength,
+        const wchar_t* str) {
         return SNPrintf(buffer, bufferLength, L"%s", str);
     }
 
@@ -220,8 +224,10 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::NCopyStrict(
 namespace {
 // NCopyの実装。
 template <typename CharType>
-const typename StringTraits<CharType>::WriteResult
-tNCopy(CharType* buffer, const pword_t bufferLength, const CharType* str) {
+const typename StringTraits<CharType>::WriteResult tNCopy(
+    CharType* buffer,
+    const pword_t bufferLength,
+    const CharType* str) {
     // 結果用変数
     typedef typename StringTraits<CharType>::WriteResult WriteResult;
     WriteResult result = {};

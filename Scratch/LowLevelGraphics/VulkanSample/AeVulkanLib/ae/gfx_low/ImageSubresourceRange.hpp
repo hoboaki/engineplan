@@ -39,7 +39,7 @@ public:
 
     /// ArrayLength() の設定。
     /// @param length 1以上。
-    /// @details 
+    /// @details
     /// 対象の ImageResource がキューブイメージの場合、指定に制限があります。
     /// 詳しくは本クラスの注釈を参照してください。
     ImageSubresourceRange& SetArrayLength(int length);

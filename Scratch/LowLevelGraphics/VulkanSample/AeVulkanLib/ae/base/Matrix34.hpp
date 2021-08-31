@@ -67,16 +67,23 @@ struct Matrix34Pod {
     /// @name 行列の作成
     //@{
     static const Matrix34Pod Identity(); ///< 単位行列の作成。
-    static const Matrix34Pod
-    Translate(f32 x, f32 y, f32 z); ///< 平行移動行列の作成。
+    static const Matrix34Pod Translate(
+        f32 x,
+        f32 y,
+        f32 z); ///< 平行移動行列の作成。
     static const Matrix34Pod Translate(
         const Vector3Pod& vec); ///< 平行移動行列の作成。
-    static const Matrix34Pod
-    Scale(f32 x, f32 y, f32 z); ///< 拡大縮小行列の作成。
+    static const Matrix34Pod Scale(
+        f32 x,
+        f32 y,
+        f32 z); ///< 拡大縮小行列の作成。
     static const Matrix34Pod Scale(
         const Vector3Pod& vec); ///< 拡大縮小行列の作成。
-    static const Matrix34Pod
-    Rotate(const Angle&, f32 axisX, f32 axisY, f32 axisZ); ///< 回転行列の作成。
+    static const Matrix34Pod Rotate(
+        const Angle&,
+        f32 axisX,
+        f32 axisY,
+        f32 axisZ); ///< 回転行列の作成。
     static const Matrix34Pod Rotate(
         const Angle&,
         const Vector3Pod& axis); ///< 回転行列の作成。

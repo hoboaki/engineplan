@@ -22,8 +22,10 @@ const Matrix34Pod Matrix34Pod::Identity() {
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod
-Matrix34Pod::Translate(const f32 x, const f32 y, const f32 z) {
+const Matrix34Pod Matrix34Pod::Translate(
+    const f32 x,
+    const f32 y,
+    const f32 z) {
     return Matrix34(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z);
 }
 

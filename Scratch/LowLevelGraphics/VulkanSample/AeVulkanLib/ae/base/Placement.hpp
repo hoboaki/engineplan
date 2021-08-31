@@ -161,8 +161,17 @@ public:
         typename A7,
         typename A8,
         typename A9>
-    void
-    Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+    void Init(
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4,
+        A5 a5,
+        A6 a6,
+        A7 a7,
+        A8 a8,
+        A9 a9) {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }

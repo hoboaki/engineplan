@@ -44,8 +44,10 @@ struct StringTraits {
     /// @param str          コピーする文字列。
     /// @see NCopy
     /// @details NCopyを使って良いケースならそちらを使うことを薦めます。
-    static const WriteResult
-    NCopyStrict(CharType* buffer, pword_t bufferLength, const CharType* str);
+    static const WriteResult NCopyStrict(
+        CharType* buffer,
+        pword_t bufferLength,
+        const CharType* str);
 
     /// @brief NCopyと同様の処理を行い追加でエラーチェックをする。
     /// @param buffer       格納先バッファ。
@@ -56,8 +58,10 @@ struct StringTraits {
     /// @details
     /// バッファ長が不足した場合はAssertで落とします。@n
     /// Assertが無効な場合は終端文字を0バイト目に設定します。
-    static const WriteResult
-    NCopy(CharType* buffer, pword_t bufferLength, const CharType* str);
+    static const WriteResult NCopy(
+        CharType* buffer,
+        pword_t bufferLength,
+        const CharType* str);
 
     /// @brief 指定のバッファにPrintfフォーマットで作成された文字列を格納する。
     /// @param buffer       格納先バッファ。

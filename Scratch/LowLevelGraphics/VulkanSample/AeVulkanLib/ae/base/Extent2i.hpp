@@ -27,7 +27,7 @@ struct Extent2iPod {
     /// @name 比較
     //@{
     /// 等価比較。
-    bool Equals(const Extent2iPod& rhs) const { 
+    bool Equals(const Extent2iPod& rhs) const {
         return width == rhs.width && height == rhs.height;
     }
     //@}

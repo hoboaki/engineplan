@@ -77,35 +77,55 @@ struct Matrix44Pod {
     /// @name 行列の作成
     //@{
     static const Matrix44Pod Identity(); ///< 単位行列の作成。
-    static const Matrix44Pod
-    Translate(f32 x, f32 y, f32 z); ///< 平行移動行列の作成。
+    static const Matrix44Pod Translate(
+        f32 x,
+        f32 y,
+        f32 z); ///< 平行移動行列の作成。
     static const Matrix44Pod Translate(
         const Vector3Pod& vec); ///< 平行移動行列の作成。
-    static const Matrix44Pod
-    Scale(f32 x, f32 y, f32 z); ///< 拡大縮小行列の作成。
+    static const Matrix44Pod Scale(
+        f32 x,
+        f32 y,
+        f32 z); ///< 拡大縮小行列の作成。
     static const Matrix44Pod Scale(
         const Vector3Pod& vec); ///< 拡大縮小行列の作成。
-    static const Matrix44Pod
-    Rotate(const Angle&, f32 axisX, f32 axisY, f32 axisZ); ///< 回転行列の作成。
+    static const Matrix44Pod Rotate(
+        const Angle&,
+        f32 axisX,
+        f32 axisY,
+        f32 axisZ); ///< 回転行列の作成。
     static const Matrix44Pod Rotate(
         const Angle&,
         const Vector3Pod& axis); ///< 回転行列の作成。
 
     /// 正射影行列の作成。
-    static const Matrix44Pod
-    Ortho(f32 left, f32 top, f32 right, f32 bottom, f32 near, f32 far);
+    static const Matrix44Pod Ortho(
+        f32 left,
+        f32 top,
+        f32 right,
+        f32 bottom,
+        f32 near,
+        f32 far);
 
     /// 透視射影行列(Frustum)の作成。
-    static const Matrix44Pod
-    Frustum(f32 left, f32 right, f32 bottom, f32 top, f32 near, f32 far);
+    static const Matrix44Pod Frustum(
+        f32 left,
+        f32 right,
+        f32 bottom,
+        f32 top,
+        f32 near,
+        f32 far);
 
     /// @brief 透視射影行列(Perspective)の作成。
     /// @param fOVY   Y方向の画角。0 < fOVY。
     /// @param aspect 横/縦のアスペクト比。4:3なら1.333。0 < aspect。
     /// @param near   Near値。
     /// @param far    Far値。
-    static const Matrix44Pod
-    Perspective(const Angle& fOVY, f32 aspect, f32 near, f32 far);
+    static const Matrix44Pod Perspective(
+        const Angle& fOVY,
+        f32 aspect,
+        f32 near,
+        f32 far);
 
     /// @brief 視野変換行列の作成。
     /// @param eyePos 目の位置。

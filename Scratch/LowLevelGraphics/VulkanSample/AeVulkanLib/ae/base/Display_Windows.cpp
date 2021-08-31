@@ -209,8 +209,7 @@ Display_Ext::Display_Ext(const DisplayContext& context)
     RegisterClassEx(&windowClass);
 
     // 変数準備
-    int style =
-        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+    int style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
     if (context.IsResizableWindow()) {
         style |= WS_THICKFRAME | WS_MAXIMIZEBOX;
     }

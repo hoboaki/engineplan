@@ -21,11 +21,11 @@ namespace gfx_low {
 /// @details
 /// BindingInfos() のインデックスをバインド番号として扱います。
 /// 各プラットフォーム毎のバインド番号の仕様・制約は以下の通りです。
-/// 
+///
 /// - VK-GLSL と MSL において buffer(storage) のシェーダーコード上バインド番号は buffer(uniform) の最大番号 + 1 からスタート。
 /// - VK-GLSL と MSL において image(write) のシェーダーコード上バインド番号は image(read)の最大番号 + 1 からスタート。
-/// - HLSL において image(write) のシェーダーコード上バインド番号は buffer(storage)の最大番号 + 1 からスタート。 
-/// 
+/// - HLSL において image(write) のシェーダーコード上バインド番号は buffer(storage)の最大番号 + 1 からスタート。
+///
 /// 例えば VK-GLSL 環境において UniformBuffer が3つ、StorageBuffer を2つ使う場合、
 /// シェーダーコード上では buffer(uniform) の番号を 0,1,2 に割り当て、
 /// buffer(storage) を buffer(uniform) の最大番号のプラス1スタートで 3,4 を割り当ててください。

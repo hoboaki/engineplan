@@ -251,8 +251,13 @@ public:
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3));
     }
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
-    void
-    Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void Init(
+        ::ae::base::IAllocator& allocator,
+        A0 a0,
+        A1 a1,
+        A2 a2,
+        A3 a3,
+        A4 a4) {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4));
     }
