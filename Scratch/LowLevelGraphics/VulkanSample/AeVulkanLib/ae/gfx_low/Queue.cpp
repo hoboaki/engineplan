@@ -140,7 +140,7 @@ void Queue::Submit(Fence* fencePtr) {
                     .setWaitSemaphoreCount(waitEvents_.Count())
                     .setPWaitSemaphores(&waitEvents_.First())
                     .setSwapchainCount(1)
-                    .setPSwapchains(&swapchain.Instance_())
+                    .setPSwapchains(swapchain.InstancePtr_())
                     .setPImageIndices(imageIndicies);
             const auto result = nativeObject_.presentKHR(&presentInfo);
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);

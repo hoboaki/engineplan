@@ -64,7 +64,9 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
         ::vk::Bool32 isSupported = false;
         for (uint32_t i = 0; i < queueFamilyCount && isSupported == VK_FALSE;
              ++i) {
-            pd.getSurfaceSupportKHR(i, surface_, &isSupported);
+            [[maybe_unused]] auto result =
+                pd.getSurfaceSupportKHR(i, surface_, &isSupported);
+            AE_BASE_ASSERT(result == vk::Result::eSuccess);
         }
         AE_BASE_ASSERT(isSupported == VK_TRUE);
     }

@@ -84,6 +84,7 @@ public:
     bool IsInitialized_() const { return swapchainMaster_.IsValid(); }
 
     ::vk::SwapchainKHR Instance_() const { return swapchain_; }
+    const ::vk::SwapchainKHR* InstancePtr_() const { return &swapchain_; }
 
     Event& CurrentAcquireEvent_() {
         return *frameProperties_[currentFrameIndex_].AcquireEvent;
