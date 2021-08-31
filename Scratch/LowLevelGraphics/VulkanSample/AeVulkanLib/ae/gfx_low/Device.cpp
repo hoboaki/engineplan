@@ -73,8 +73,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
         queueCountTable; // QueueKind ごとの作成総数
     ::ae::base::RuntimeArray<int> indexInQueueKindTable(
         queueCreateCount,
-        &system_.TempWorkAllocator_()); // 各 Queue が同じ QueueKind
-        // における何個目の Queue かの情報
+        &system_
+             .TempWorkAllocator_()); // 各 Queue が同じ QueueKind における何個目の Queue かの情報
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto& queueCreateInfo = queueCreateInfos[queueIdx];
         indexInQueueKindTable[queueIdx] =

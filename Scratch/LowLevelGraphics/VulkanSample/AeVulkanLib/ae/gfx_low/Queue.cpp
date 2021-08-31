@@ -177,9 +177,8 @@ void Queue::Submit(Fence* fencePtr) {
                 if (nextOp.kind == OperationKind::EventSignal) {
                     signalEvents_.Add(
                         static_cast<Event*>(nextOp.ptr)->NativeObject_());
-                    nextOp.kind =
-                        OperationKind::NoOperation; // 処理したので NoOperation
-                        // に変更
+                    nextOp.kind = OperationKind::
+                        NoOperation; // 処理したので NoOperation に変更
                 }
             }
 
