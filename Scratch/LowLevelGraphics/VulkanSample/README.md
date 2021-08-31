@@ -26,6 +26,12 @@ AdelEngine GfxLowApi は高機能なAPIは提供しません。
 FBX 形式のデータを読み込み表示する機能などは提供しません。
 それは別レイヤーの機能として提供されることを想定しています。
 
+## 開発環境
+
+- Visual Studio 2019 : 16.11.2
+- Vulkan SDK : 1.2.182.0
+- clang-format : 12.0.1
+
 ## AeVulkan01 - Simple
 
 AdelEngine GfxLowApi を使ってテクスチャを貼り付けたキューブを表示するデモです。
