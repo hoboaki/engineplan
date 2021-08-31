@@ -671,14 +671,14 @@ int aemain(::ae::base::Application* app) {
             // vec3 origin = {0, 0, 0};
             // vec3 up = {0.0f, 1.0f, 0.0};
             // mat4x4_perspective(projection_matrix,
-            //    (float)degreesToRadians(45.0f), 1.0f, 0.1f, 100.0f);
+            //    (float)degreesToRadians(25.0f), 1.0f, 0.1f, 100.0f);
             // mat4x4_look_at(view_matrix, eye, origin, up);
             // mat4x4_identity(model_matrix);
             // projection_matrix[1][1] *= -1;  // Flip projection matrix
             // from GL to Vulkan orientation.
 
             auto proj = ::ae::base::Matrix44::Perspective(
-                ::ae::base::Angle(::ae::base::Degree(45.0f)),
+                ::ae::base::Angle(::ae::base::Degree(25.0f)),
                 float(display.MainScreen().Width()) /
                     display.MainScreen().Height(), // aspect
                 0.1f, // near
