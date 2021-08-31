@@ -33,7 +33,7 @@ bool Screen::IsContains(const ScreenPosPod& pos) const {
 }
 
 //------------------------------------------------------------------------------
-Display_Ext& Screen::display_() {
+Display_Ext& Screen::Display_() {
     return owner_;
 }
 

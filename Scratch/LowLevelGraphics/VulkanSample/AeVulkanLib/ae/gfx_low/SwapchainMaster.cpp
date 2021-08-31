@@ -32,8 +32,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
     {
         auto const surfaceCreateInfo =
             ::vk::Win32SurfaceCreateInfoKHR()
-                .setHinstance(screen_.display_().hinstance)
-                .setHwnd(screen_.display_().hwindow);
+                .setHinstance(screen_.Display_().hinstance)
+                .setHwnd(screen_.Display_().hwindow);
 
         auto result = device_.System().NativeObject_().createWin32SurfaceKHR(
             &surfaceCreateInfo,
