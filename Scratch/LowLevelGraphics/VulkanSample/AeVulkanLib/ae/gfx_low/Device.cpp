@@ -217,7 +217,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
     // GPUメモリが共有メモリか調べる
     {
         const auto mask = ::vk::MemoryPropertyFlagBits::eDeviceLocal |
-                          ::vk::MemoryPropertyFlagBits::eHostVisible;
+                          ::vk::MemoryPropertyFlagBits::eHostVisible |
+                          ::vk::MemoryPropertyFlagBits::eHostCached;
         physicalDevice.getMemoryProperties(&memoryProps_);
         isDeviceLocalMemoryShared_ = false;
         for (uint32_t i = 0; i < memoryProps_.memoryTypeCount; ++i) {
