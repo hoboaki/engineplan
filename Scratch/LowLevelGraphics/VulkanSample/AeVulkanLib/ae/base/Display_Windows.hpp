@@ -26,6 +26,7 @@ namespace base {
 /// @addtogroup AeBase-System
 //@{
 // Windows環境でのDisplayの拡張。
+// @todo 複数インスタンス対応。（今は１つしかインスタンスが作れない）
 class Display_Ext {
 public:
     //============================================================
@@ -48,6 +49,7 @@ public:
 
     //============================================================
     Display_Ext(const DisplayContext&);
+    ~Display_Ext();
 
     //============================================================
     void PollEvent(Application&);

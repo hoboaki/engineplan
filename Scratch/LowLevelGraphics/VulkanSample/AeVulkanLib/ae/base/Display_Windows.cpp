@@ -153,16 +153,31 @@ Screen& Display::MainScreen() {
 
 //------------------------------------------------------------------------------
 void Display::Show() {
-    tCurrentDisplay.Set(ext_);
     ext_.isClosed = false;
     ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
     UpdateWindow(ext_.hwindow);
-    tCurrentDisplay.Unset(ext_);
 }
 
 //------------------------------------------------------------------------------
 bool Display::IsClosed() const {
     return ext_.isClosed;
+}
+
+//------------------------------------------------------------------------------
+LRESULT
+Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+    // 設定済エラーチェック
+    // 一部環境で無限呼び出しが確認されたためチェックは一度切りにする
+    static bool isErrorOccurred = false;
+    if (!tCurrentDisplay.IsValid()) {
+        if (!isErrorOccurred) {
+            isErrorOccurred = true;
+            AE_BASE_ASSERT_NOT_REACHED();
+        }
+        return DefWindowProc(hWND, msg, wParam, lParam);
+    }
+
+    return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
 //------------------------------------------------------------------------------
@@ -219,13 +234,17 @@ Display_Ext::Display_Ext(const DisplayContext& context)
         hinstance,
         0 // lpParam
     );
-    tCurrentDisplay.Unset(*this);
 
     minSize.x = GetSystemMetrics(SM_CXMINTRACK);
     minSize.y = GetSystemMetrics(SM_CYMINTRACK) + 1;
 
     // メインスクリーンの作成
     mainScreen.Init(Ref(*this), context.Width(), context.Height());
+}
+
+//------------------------------------------------------------------------------
+Display_Ext::~Display_Ext() {
+    tCurrentDisplay.Unset(*this);
 }
 
 //------------------------------------------------------------------------------
@@ -236,17 +255,11 @@ void Display_Ext::PollEvent(Application&) {
     // マウスのposUpdatedをクリア
     mouseUpdateData.posUpdated = false;
 
-    // 今のディスプレイを設定
-    tCurrentDisplay.Set(*this);
-
     // メッセージ解析
     while (PeekMessage(&message, hwindow, 0, 0, PM_REMOVE) != 0) {
         TranslateMessage(&message);
         DispatchMessage(&message);
     }
-
-    // 今のディスプレイを設定解除
-    tCurrentDisplay.Unset(*this);
 
     // マウスの座標変換
     if (mouseUpdateData.posUpdated) {
@@ -264,13 +277,6 @@ void Display_Ext::PollEvent(Application&) {
         hidPtr->Ext_().keyboard.Update(keyboardUpdateData);
         hidPtr->Ext_().mouse.Update(mouseUpdateData);
     }
-}
-
-//------------------------------------------------------------------------------
-LRESULT
-Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
-    AE_BASE_ASSERT(tCurrentDisplay.IsValid());
-    return tCurrentDisplay->WindowProcessLocal(hWND, msg, wParam, lParam);
 }
 
 //------------------------------------------------------------------------------
