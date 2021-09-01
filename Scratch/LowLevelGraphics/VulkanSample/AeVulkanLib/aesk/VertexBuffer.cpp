@@ -14,12 +14,10 @@ namespace aesk {
 //------------------------------------------------------------------------------
 VertexBuffer::VertexBuffer(
     ::ae::gfx_low::Device* device,
-    const int stride,
-    const size_t bufferSize)
+    const size_t bufferSize,
+    const ::ae::gfx_low::VertexBufferLayoutInfo& layoutInfo)
 : device_(::ae::base::PtrToRef(device))
 , bufferSize_(bufferSize) {
-    const auto vertexBufferLayoutInfo =
-        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(stride);
     const auto specInfo =
         ::ae::gfx_low::BufferResourceSpecInfo()
             .SetSize(bufferSize)
@@ -43,7 +41,7 @@ VertexBuffer::VertexBuffer(
             .SetDevice(&device_)
             .SetResource(bufferResource_.get())
             .SetRegion(region)
-            .SetLayoutInfo(vertexBufferLayoutInfo)));
+            .SetLayoutInfo(layoutInfo)));
 }
 
 //------------------------------------------------------------------------------

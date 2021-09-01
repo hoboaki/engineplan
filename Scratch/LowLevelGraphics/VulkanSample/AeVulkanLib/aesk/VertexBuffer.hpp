@@ -6,6 +6,7 @@
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/VertexBufferView.hpp>
+#include <ae/gfx_low/VertexBufferLayoutINfo.hpp>
 
 //------------------------------------------------------------------------------
 namespace aesk {
@@ -16,12 +17,11 @@ class VertexBuffer
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    /// @param stride ::ae::gfx_low::VertesxBufferLayoutInfo::Stride() に対応する値。
     /// @param bufferSize バッファ全体のデータサイズ。（1以上）
     VertexBuffer(
         ::ae::gfx_low::Device* device,
-        int stride,
-        size_t bufferSize
+        size_t bufferSize,
+        const ::ae::gfx_low::VertexBufferLayoutInfo& layoutInfo
         );
     ~VertexBuffer();
     //@}
