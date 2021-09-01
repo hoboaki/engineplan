@@ -23,15 +23,12 @@
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
-#include <ae/gfx_low/DepthStencilImageView.hpp>
-#include <ae/gfx_low/DepthStencilImageViewCreateInfo.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
 #include <ae/gfx_low/DescriptorSet.hpp>
 #include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
-#include <ae/gfx_low/DeviceCreateInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
@@ -41,7 +38,6 @@
 #include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/Queue.hpp>
-#include <ae/gfx_low/QueueCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipeline.hpp>
@@ -59,25 +55,18 @@
 #include <ae/gfx_low/SamplerDescriptorInfo.hpp>
 #include <ae/gfx_low/ScissorSetting.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
-#include <ae/gfx_low/ShaderModuleResource.hpp>
-#include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
 #include <ae/gfx_low/Swapchain.hpp>
-#include <ae/gfx_low/SwapchainCreateInfo.hpp>
-#include <ae/gfx_low/SwapchainMaster.hpp>
-#include <ae/gfx_low/SwapchainMasterCreateInfo.hpp>
+#include <ae/gfx_low/SwapchainHandle.hpp>
 #include <ae/gfx_low/System.hpp>
 #include <ae/gfx_low/SystemCreateInfo.hpp>
 #include <ae/gfx_low/UniformBufferDescriptorInfo.hpp>
-#include <ae/gfx_low/UniformBufferView.hpp>
-#include <ae/gfx_low/UniformBufferViewCreateinfo.hpp>
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
-#include <ae/gfx_low/VertexBufferView.hpp>
-#include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GfxBasicKit.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
+#include <aesk/VertexBuffer.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -224,9 +213,6 @@ int aemain(::ae::base::Application* app) {
         sizeof(fFragShaderCode));
 
     // VertexBuffer の作成
-    ::ae::gfx_low::UniqueResourceMemory vertexBufferMemory;
-    ::std::unique_ptr<::ae::gfx_low::BufferResource> vertexBufferResource;
-    ::std::unique_ptr<::ae::gfx_low::VertexBufferView> vertexBufferView;
     const auto vertexBufferLayoutInfo =
         ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(sizeof(fVertexType));
     const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
@@ -236,51 +222,22 @@ int aemain(::ae::base::Application* app) {
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
             .SetOffset(offsetof(fVertexType, uv0)),
     };
+    ::aesk::VertexBuffer vertexBuffer(
+        &gfxKit.Device(),
+        sizeof(fVertexBufferType),
+        vertexBufferLayoutInfo);
     {
-        const auto specInfo =
-            ::ae::gfx_low::BufferResourceSpecInfo()
-                .SetSize(sizeof(fVertexBufferType))
-                .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
-                    ::ae::gfx_low::BufferResourceUsage::VertexBuffer,
-                    true));
-        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-            sizeof(fVertexBufferType));
-        vertexBufferMemory.Reset(
-            &gfxKit.Device(),
-            ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                .SetParams(
-                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
-        vertexBufferResource.reset(new ::ae::gfx_low::BufferResource(
-            ::ae::gfx_low::BufferResourceCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetSpecInfo(specInfo)
-                .SetDataAddress(*vertexBufferMemory)));
-        vertexBufferView.reset(new ::ae::gfx_low::VertexBufferView(
-            ::ae::gfx_low::VertexBufferViewCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetResource(vertexBufferResource.get())
-                .SetRegion(region)
-                .SetLayoutInfo(vertexBufferLayoutInfo)));
-
         // バッファ更新
-        {
-            fVertexBufferType data;
-            for (int i = 0; i < 12 * 3; ++i) {
-                data.v[i].position[0] = fPositionData[i * 3];
-                data.v[i].position[1] = fPositionData[i * 3 + 1];
-                data.v[i].position[2] = fPositionData[i * 3 + 2];
-                data.v[i].uv0[0] = fUvBufferData[2 * i];
-                data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
-            }
-
-            const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-                sizeof(fVertexBufferType));
-            void* mappedMemory =
-                gfxKit.Device().MapResourceMemory(*vertexBufferMemory, region);
-            std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxKit.Device().UnmapResourceMemory(*vertexBufferMemory);
+        fVertexBufferType data;
+        for (int i = 0; i < 12 * 3; ++i) {
+            data.v[i].position[0] = fPositionData[i * 3];
+            data.v[i].position[1] = fPositionData[i * 3 + 1];
+            data.v[i].position[2] = fPositionData[i * 3 + 2];
+            data.v[i].uv0[0] = fUvBufferData[2 * i];
+            data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
         }
+        vertexBuffer.StoreToResourceMemory(
+            ::ae::base::MemBlock(&data, sizeof(data)));
     }
 
     // ポリゴンに貼り付けるテクスチャの作成
@@ -785,7 +742,7 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // Draw
-                cmd.CmdSetVertexBuffer(0, *vertexBufferView);
+                cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
                 cmd.CmdDraw(
                     ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
 
