@@ -24,7 +24,27 @@ public:
     ~UniformBuffer();
     //@}
 
-    /// @name API
+    /// @name 基本API
+    //@{
+    /// 指定のデータインデックス値のビュー。
+    const ::ae::gfx_low::UniformBufferView& View(int index) const {
+        return views_[index];
+    }
+
+    /// 指定番目のデータにソースメモリにストア。
+    void StoreToResourceMemory(int index, const ::ae::base::MemBlock& block)
+        const;
+
+    /// 指定番目のデータにソースメモリにストア。
+    template <typename T>
+    void StoreToResourceMemory(int index, const T& data) const {
+        StoreToResourceMemory(
+            index,
+            ::ae::base::MemBlock(::ae::base::ptr_t(&data), sizeof(T)));
+    }
+    //@}
+
+    /// @name データインデックス管理系API
     //@{
     /// データインデックス値を１つ進める。
     void incrementCurrentDataIndex() {
@@ -32,14 +52,12 @@ public:
     }
     /// 現在のデータインデックス値。
     int CurrentDataIndex() const { return currentDataIndex_; }
-    /// 現在のデータインデックス値に対応するリソースメモリ。
-    const ::ae::gfx_low::ResourceMemory& CurrentResourceMemory() const {
-        return *memories_[CurrentDataIndex()];
-    }
-    /// 現在のデータインデックス値に対応するビュー。
+
+    /// 現在のデータインデックス値のビュー。
     const ::ae::gfx_low::UniformBufferView& CurrentView() const {
         return views_[CurrentDataIndex()];
     }
+
     /// 現在のデータインデックス値に対応するリソースメモリにストア。
     template <typename T>
     void StoreToCurrentResourceMemory(const T& data) const {
@@ -47,7 +65,9 @@ public:
     }
 
     /// 現在のデータインデックス値に対応するリソースメモリにストア。
-    void StoreToCurrentResourceMemory(const ::ae::base::MemBlock& block) const;
+    void StoreToCurrentResourceMemory(const ::ae::base::MemBlock& block) const {
+        StoreToResourceMemory(CurrentDataIndex(), block);
+    }
     //@}
 
 private:

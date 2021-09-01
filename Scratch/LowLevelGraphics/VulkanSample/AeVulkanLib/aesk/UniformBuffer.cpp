@@ -52,16 +52,17 @@ UniformBuffer::~UniformBuffer() {
 }
 
 //------------------------------------------------------------------------------
-void UniformBuffer::StoreToCurrentResourceMemory(
+void UniformBuffer::StoreToResourceMemory(
+    const int index,
     const ::ae::base::MemBlock& block) const {
     AE_BASE_ASSERT_EQUALS(sizePerData_, block.Size());
+    AE_BASE_ASSERT_MIN_TERM(index, 0, dataCount_);
 
     const auto region =
         ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizePerData_);
-    void* mappedMemory =
-        device_.MapResourceMemory(CurrentResourceMemory(), region);
+    void* mappedMemory = device_.MapResourceMemory(*memories_[index], region);
     std::memcpy(mappedMemory, block.Head(), block.Size());
-    device_.UnmapResourceMemory(CurrentResourceMemory());
+    device_.UnmapResourceMemory(*memories_[index]);
 }
 
 } // namespace aesk
