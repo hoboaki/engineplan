@@ -77,6 +77,7 @@
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GfxBasicKit.hpp>
 #include <aesk/Shader.hpp>
+#include <aesk/UniformBuffer.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -453,39 +454,10 @@ int aemain(::ae::base::Application* app) {
     }
 
     // UniformBuffer の作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
-        uniformBufferMemories(gfxKit.SwapchainImageCount());
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::BufferResource>
-        uniformBufferResources(gfxKit.SwapchainImageCount());
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniformBufferView>
-        uniformBufferViews(gfxKit.SwapchainImageCount());
-    {
-        const auto specInfo =
-            ::ae::gfx_low::BufferResourceSpecInfo()
-                .SetSize(sizeof(fUniformDataType))
-                .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
-                    ::ae::gfx_low::BufferResourceUsage::UniformBuffer,
-                    true));
-        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-            sizeof(fUniformDataType));
-        for (int i = 0; i < uniformBufferMemories.CountMax(); ++i) {
-            uniformBufferMemories.Add(
-                &gfxKit.Device(),
-                ::ae::gfx_low::ResourceMemoryAllocInfo()
-                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                    .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
-                        specInfo)));
-            uniformBufferResources.Add(
-                ::ae::gfx_low::BufferResourceCreateInfo()
-                    .SetDevice(&gfxKit.Device())
-                    .SetSpecInfo(specInfo)
-                    .SetDataAddress(*uniformBufferMemories[i]));
-            uniformBufferViews.Add(::ae::gfx_low::UniformBufferViewCreateInfo()
-                                       .SetDevice(&gfxKit.Device())
-                                       .SetResource(&uniformBufferResources[i])
-                                       .SetRegion(region));
-        }
-    }
+    ::aesk::UniformBuffer uniformBuffer(
+        &gfxKit.Device(),
+        sizeof(fUniformDataType),
+        gfxKit.SwapchainImageCount());
 
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
@@ -549,7 +521,7 @@ int aemain(::ae::base::Application* app) {
 
         // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
-            &uniformBufferViews[i]
+            &uniformBuffer.View(i)
         };
         const ::ae::gfx_low::UniformBufferDescriptorInfo
             uniformBufferDescs[] = {
@@ -700,16 +672,7 @@ int aemain(::ae::base::Application* app) {
 
             fUniformDataType data;
             memcpy(data.mvp, &mvp, sizeof(mvp));
-
-            const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-                sizeof(fUniformDataType));
-            auto& targetUniformBufferMemory =
-                uniformBufferMemories[bufferIndex];
-            void* mappedMemory = gfxKit.Device().MapResourceMemory(
-                *targetUniformBufferMemory,
-                region);
-            std::memcpy(mappedMemory, &data, sizeof(data));
-            gfxKit.Device().UnmapResourceMemory(*targetUniformBufferMemory);
+            uniformBuffer.StoreToResourceMemory(bufferIndex, data);
         }
 
         // コマンドバッファ作成
