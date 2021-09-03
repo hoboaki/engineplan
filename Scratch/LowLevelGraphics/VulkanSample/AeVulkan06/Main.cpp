@@ -88,8 +88,7 @@ struct fModelUniformDataType {
     ::ae::base::Matrix44Pod modelMtx;
 };
 
-struct fComputeUniformDataType
-{
+struct fComputeUniformDataType {
     ::ae::base::Vector4Pod color;
 };
 
@@ -357,12 +356,11 @@ int aemain(::ae::base::Application* app) {
     ::aesk::UniformBuffer computeUniformBuffer(
         &gfxKit.Device(),
         sizeof(fComputeUniformDataType),
-        cubeFaceCount
-        );
+        cubeFaceCount);
 
     // 色の初期化
     {
-        const ::ae::base::Color4Pod colors[] = { 
+        const ::ae::base::Color4Pod colors[] = {
             ::ae::base::Color4(1.0f, 0.0f, 0.0f, 1.0f), // +X
             ::ae::base::Color4(0.0f, 1.0f, 0.0f, 1.0f), // -X
             ::ae::base::Color4b(30, 144, 255, 255).ToRGBAf(), // +Y
@@ -393,20 +391,21 @@ int aemain(::ae::base::Application* app) {
             .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
 
     // GraphicsPipeline 用 DescriptorSetSpecInfo の作成
-    const ::ae::gfx_low::ShaderBindingInfo graphicsUniformBufferBindingInfos[] = {
-        ::ae::gfx_low::ShaderBindingInfo()
-            .SetStages(
-                ::ae::gfx_low::ShaderBindingStageBitSet()
-                    .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
-                    .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
-            .SetBindingIndex(0),
-        ::ae::gfx_low::ShaderBindingInfo()
-            .SetStages(
-                ::ae::gfx_low::ShaderBindingStageBitSet()
-                    .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
-                    .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
-            .SetBindingIndex(1)
-    };
+    const ::ae::gfx_low::ShaderBindingInfo
+        graphicsUniformBufferBindingInfos[] = {
+            ::ae::gfx_low::ShaderBindingInfo()
+                .SetStages(
+                    ::ae::gfx_low::ShaderBindingStageBitSet()
+                        .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
+                        .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
+                .SetBindingIndex(0),
+            ::ae::gfx_low::ShaderBindingInfo()
+                .SetStages(
+                    ::ae::gfx_low::ShaderBindingStageBitSet()
+                        .Set(::ae::gfx_low::ShaderBindingStage::Vertex, true)
+                        .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
+                .SetBindingIndex(1)
+        };
     const ::ae::gfx_low::ShaderBindingInfo sampledImageBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
@@ -662,8 +661,7 @@ int aemain(::ae::base::Application* app) {
                     0.1f, // near
                     100.0f // far
                 );
-                data.projMtx.m[1][1] *=
-                    -1.0f; // from GL to Vulkan orientation.
+                data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
                 data.viewMtx = ::ae::base::Matrix44::LookAt(
                     ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
                     ::ae::base::Vector3::Zero(), // targetPos
@@ -676,12 +674,12 @@ int aemain(::ae::base::Application* app) {
             {
                 fModelUniformDataType data = {};
                 data.modelMtx = ::ae::base::Quaternion(
-                                 ::ae::base::Vector3::UnitY(),
-                                 ::ae::base::Degree(3.0f * frameCount))
-                                 .ToRotateMatrix()
-                                 .ToMatrix44();
+                                    ::ae::base::Vector3::UnitY(),
+                                    ::ae::base::Degree(3.0f * frameCount))
+                                    .ToRotateMatrix()
+                                    .ToMatrix44();
                 modelUniformBuffer.StoreToResourceMemory(bufferIndex, data);
-            }            
+            }
         }
 
         // コマンドバッファ作成
@@ -715,7 +713,6 @@ int aemain(::ae::base::Application* app) {
                                 textureImageExtent.height /
                                     fThreadsPerThreadGroupY,
                                 1)));
-                
                 }
                 cmd.CmdEndComputePass();
 
