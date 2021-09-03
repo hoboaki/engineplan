@@ -42,6 +42,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
         nativeFormat_ = nativeCreateInfo.format;
         mipLevels_ = createInfo.NativeObjectMipLevels_();
         arrayLength_ = createInfo.NativeObjectArrayLength_();
+        isCubeMapImage_ =
+            createInfo.SpecInfo().Kind() == ImageResourceKind::ImageCube;
     }
 
     // メモリ割り当て
