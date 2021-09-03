@@ -3,20 +3,20 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
+#define LAYOUT_SET_BUFFER 0
+#define LAYOUT_SET_IMAGE 1
+#define LAYOUT_SET_SAMPLER 2
+
 layout (local_size_x = 16, local_size_y = 16) in;
-layout (binding = 0, rgba8) uniform writeonly image2D outputImage;
+
+layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufComputeType {
+    vec4 color;
+} UbufCompute;
+
+layout (set = LAYOUT_SET_IMAGE, binding = 0, rgba8) uniform writeonly image2D outputImage;
 
 void main()
 {
-   // 同心円テクスチャを作成
-   ivec2 imageSize = ivec2(512, 512); // C++ 上の画像サイズと合わせる必要あり
-   ivec2 halfSize = imageSize / 2;
-   ivec2 imagePos = ivec2(gl_GlobalInvocationID.xy);
-   ivec2 pos = imagePos - halfSize;
-   float length = sqrt(dot(vec2(pos), vec2(pos)));
-   float circleRadius = 64;
-   float brightness = mod(length / circleRadius, 1);
-   vec4 color = vec4(brightness, brightness, brightness, 1);
-	imageStore(outputImage, ivec2(gl_GlobalInvocationID.xy), color);
+	imageStore(outputImage, ivec2(gl_GlobalInvocationID.xy), UbufCompute.color);
 }
 // EOF

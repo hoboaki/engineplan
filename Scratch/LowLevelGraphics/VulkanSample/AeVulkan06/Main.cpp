@@ -88,6 +88,11 @@ struct fModelUniformDataType {
     ::ae::base::Matrix44Pod modelMtx;
 };
 
+struct fComputeUniformDataType
+{
+    ::ae::base::Vector4Pod color;
+};
+
 struct fVertexType {
     float position[3];
     float uv0[2];
@@ -264,17 +269,19 @@ int aemain(::ae::base::Application* app) {
             ::ae::base::MemBlock(&data, sizeof(data)));
     }
 
-    // ポリゴンに貼り付けるテクスチャの作成（画像の内容はコンピュートシェーダーで作成）
+    // ポリゴンに貼り付けるキューブテクスチャの作成（画像の内容はコンピュートシェーダーで作成）
+    constexpr int cubeFaceCount = 6;
     ::ae::gfx_low::UniqueResourceMemory textureMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> textureView;
-    ::std::unique_ptr<::ae::gfx_low::StorageImageView> storageTextureView;
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::StorageImageView>
+        storageTextureViews(cubeFaceCount);
     const auto textureImageExtent = ::ae::base::Extent2i(512, 512);
     {
         const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8Unorm;
         const auto baseSpecInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
-                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetKind(::ae::gfx_low::ImageResourceKind::ImageCube)
                 .SetFormat(format)
                 .SetExtent(textureImageExtent);
         ::ae::gfx_low::ImageSubresourceDataInfo dataInfo;
@@ -310,23 +317,32 @@ int aemain(::ae::base::Application* app) {
             ::ae::gfx_low::SampledImageViewCreateInfo()
                 .SetDevice(&gfxKit.Device())
                 .SetResource(textureImage.get())
-                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                .SetKind(::ae::gfx_low::ImageViewKind::ImageCube)
                 .SetFormat(format)));
 
         // ストレージ用イメージビューの作成
-        storageTextureView.reset(new ::ae::gfx_low::StorageImageView(
-            ::ae::gfx_low::StorageImageViewCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetResource(textureImage.get())
-                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
-                .SetFormat(format)));
+        for (int faceIdx = 0; faceIdx < cubeFaceCount; ++faceIdx) {
+            storageTextureViews.Add(
+                ::ae::gfx_low::StorageImageViewCreateInfo()
+                    .SetDevice(&gfxKit.Device())
+                    .SetResource(textureImage.get())
+                    .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                    .SetFormat(format)
+                    .SetSubresourceRange(
+                        ::ae::gfx_low::ImageSubresourceRange().SetBaseLocation(
+                            ::ae::gfx_low::ImageSubresourceLocation()
+                                .SetFaceIndex(faceIdx))));
+        }
     }
 
     // Sampler の作成
     ::std::unique_ptr<::ae::gfx_low::Sampler> sampler;
     {
         sampler.reset(new ::ae::gfx_low::Sampler(
-            ::ae::gfx_low::SamplerCreateInfo().SetDevice(&gfxKit.Device())));
+            ::ae::gfx_low::SamplerCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetMinFilter(::ae::gfx_low::SamplerMinMagFilter::Linear)
+                .SetMagFilter(::ae::gfx_low::SamplerMinMagFilter::Linear)));
     }
 
     // UniformBuffer の作成
@@ -338,6 +354,29 @@ int aemain(::ae::base::Application* app) {
         &gfxKit.Device(),
         sizeof(fModelUniformDataType),
         gfxKit.SwapchainImageCount());
+    ::aesk::UniformBuffer computeUniformBuffer(
+        &gfxKit.Device(),
+        sizeof(fComputeUniformDataType),
+        cubeFaceCount
+        );
+
+    // 色の初期化
+    {
+        const ::ae::base::Color4Pod colors[] = { 
+            ::ae::base::Color4(1.0f, 0.0f, 0.0f, 1.0f), // +X
+            ::ae::base::Color4(0.0f, 1.0f, 0.0f, 1.0f), // -X
+            ::ae::base::Color4b(30, 144, 255, 255).ToRGBAf(), // +Y
+            ::ae::base::Color4b(222, 184, 135, 255).ToRGBAf(), // -Y
+            ::ae::base::Color4b(192, 192, 192, 255).ToRGBAf(), // +Z
+            ::ae::base::Color4b(192, 192, 192, 255).ToRGBAf(), // -Z
+        };
+        AE_BASE_ARRAY_LENGTH_CHECK(colors, cubeFaceCount);
+        for (int faceIdx = 0; faceIdx < cubeFaceCount; ++faceIdx) {
+            fComputeUniformDataType data = {};
+            data.color = colors[faceIdx].ToVector4();
+            computeUniformBuffer.StoreToResourceMemory(faceIdx, data);
+        }
+    }
 
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
@@ -353,8 +392,8 @@ int aemain(::ae::base::Application* app) {
             .SetRenderTargetSpecInfos(renderTargetSpecInfos)
             .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
 
-    // DescriptorSetSpecInfo の作成
-    const ::ae::gfx_low::ShaderBindingInfo uniformBufferBindingInfos[] = {
+    // GraphicsPipeline 用 DescriptorSetSpecInfo の作成
+    const ::ae::gfx_low::ShaderBindingInfo graphicsUniformBufferBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(
                 ::ae::gfx_low::ShaderBindingStageBitSet()
@@ -386,8 +425,8 @@ int aemain(::ae::base::Application* app) {
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::UniformBuffer,
-                AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
-                uniformBufferBindingInfos)
+                AE_BASE_ARRAY_LENGTH(graphicsUniformBufferBindingInfos),
+                graphicsUniformBufferBindingInfos)
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::SampledImage,
                 AE_BASE_ARRAY_LENGTH(sampledImageBindingInfos),
@@ -396,6 +435,16 @@ int aemain(::ae::base::Application* app) {
                 ::ae::gfx_low::DescriptorKind::Sampler,
                 AE_BASE_ARRAY_LENGTH(samplerBindingInfos),
                 samplerBindingInfos);
+
+    // ComputePipeline 用 DescriptorSetSpecInfo の作成
+    const ::ae::gfx_low::ShaderBindingInfo
+        computeUniformBufferBindingInfos[] = {
+            ::ae::gfx_low::ShaderBindingInfo()
+                .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                    ::ae::gfx_low::ShaderBindingStage::Compute,
+                    true))
+                .SetBindingIndex(0)
+        };
     const ::ae::gfx_low::ShaderBindingInfo storageImageBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
@@ -404,10 +453,15 @@ int aemain(::ae::base::Application* app) {
             .SetBindingIndex(0)
     };
     const auto computeDescriptorSetSpecInfo =
-        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
-            ::ae::gfx_low::DescriptorKind::StorageImage,
-            AE_BASE_ARRAY_LENGTH(storageImageBindingInfos),
-            storageImageBindingInfos);
+        ::ae::gfx_low::DescriptorSetSpecInfo()
+            .SetBindingInfos(
+                ::ae::gfx_low::DescriptorKind::UniformBuffer,
+                AE_BASE_ARRAY_LENGTH(computeUniformBufferBindingInfos),
+                computeUniformBufferBindingInfos)
+            .SetBindingInfos(
+                ::ae::gfx_low::DescriptorKind::StorageImage,
+                AE_BASE_ARRAY_LENGTH(storageImageBindingInfos),
+                storageImageBindingInfos);
 
     // GraphicsPipeline 用 DescriptorSet の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
@@ -471,29 +525,53 @@ int aemain(::ae::base::Application* app) {
     }
 
     // ComputePipeline 用 DescriptorSet の作成
-    ::ae::gfx_low::DescriptorSet computeDescriptorSet(
-        ::ae::gfx_low::DescriptorSetCreateInfo()
-            .SetDevice(&gfxKit.Device())
-            .SetSpecInfo(computeDescriptorSetSpecInfo));
-    {
-        // StorageImage
-        const ::ae::gfx_low::StorageImageView* storageImageViews[] = {
-            storageTextureView.get()
-        };
-        const ::ae::gfx_low::StorageImageDescriptorInfo storageImageDescs[] = {
-            ::ae::gfx_low::StorageImageDescriptorInfo()
-                .SetRegion(
-                    ::ae::gfx_low::ShaderBindingRegion()
-                        .SetBindingIndex(0)
-                        .SetElemCount(AE_BASE_ARRAY_LENGTH(storageImageViews)))
-                .SetViews(storageImageViews),
-        };
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
+        computeDescriptorSets(cubeFaceCount);
+    for (int faceIdx = 0; faceIdx < cubeFaceCount; ++faceIdx) {
+        computeDescriptorSets.Add(
+            ::ae::gfx_low::DescriptorSetCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(computeDescriptorSetSpecInfo));
+        {
+            // UniformBuffer
+            const ::ae::gfx_low::UniformBufferView*
+                localUniformBufferViews[] = {
+                    &computeUniformBuffer.View(faceIdx),
+                };
+            const ::ae::gfx_low::UniformBufferDescriptorInfo
+                uniformBufferDescs[] = {
+                    ::ae::gfx_low::UniformBufferDescriptorInfo()
+                        .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                       .SetBindingIndex(0)
+                                       .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                           localUniformBufferViews)))
+                        .SetViews(localUniformBufferViews),
+                };
 
-        // 更新
-        computeDescriptorSet.Update(
-            ::ae::gfx_low::DescriptorSetUpdateInfo().SetStorageImageInfos(
-                AE_BASE_ARRAY_LENGTH(storageImageDescs),
-                storageImageDescs));
+            // StorageImage
+            const ::ae::gfx_low::StorageImageView* localStorageImageViews[] = {
+                &storageTextureViews[faceIdx]
+            };
+            const ::ae::gfx_low::StorageImageDescriptorInfo
+                storageImageDescs[] = {
+                    ::ae::gfx_low::StorageImageDescriptorInfo()
+                        .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                       .SetBindingIndex(0)
+                                       .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                           localStorageImageViews)))
+                        .SetViews(localStorageImageViews),
+                };
+
+            // 更新
+            computeDescriptorSets[faceIdx].Update(
+                ::ae::gfx_low::DescriptorSetUpdateInfo()
+                    .SetUniformBufferInfos(
+                        AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                        uniformBufferDescs)
+                    .SetStorageImageInfos(
+                        AE_BASE_ARRAY_LENGTH(storageImageDescs),
+                        storageImageDescs));
+        }
     }
 
     // GraphicsPipeline 生成
@@ -623,17 +701,22 @@ int aemain(::ae::base::Application* app) {
                 // コンピュートシェーダーを実行してテクスチャを作成
                 cmd.CmdBeginComputePass(::ae::gfx_low::ComputePassBeginInfo());
                 cmd.CmdSetComputePipeline(computePipeline);
-                cmd.CmdSetDescriptorSet(computeDescriptorSet);
-                cmd.CmdDispatch(
-                    ::ae::gfx_low::DispatchCallInfo()
-                        .SetThreadsPerThreadGroup(::ae::base::Extent3i(
-                            fThreadsPerThreadGroupX,
-                            fThreadsPerThreadGroupY,
-                            1))
-                        .SetThreadGroups(::ae::base::Extent3i(
-                            textureImageExtent.width / fThreadsPerThreadGroupX,
-                            textureImageExtent.height / fThreadsPerThreadGroupY,
-                            1)));
+                for (int faceIdx = 0; faceIdx < cubeFaceCount; ++faceIdx) {
+                    cmd.CmdSetDescriptorSet(computeDescriptorSets[faceIdx]);
+                    cmd.CmdDispatch(
+                        ::ae::gfx_low::DispatchCallInfo()
+                            .SetThreadsPerThreadGroup(::ae::base::Extent3i(
+                                fThreadsPerThreadGroupX,
+                                fThreadsPerThreadGroupY,
+                                1))
+                            .SetThreadGroups(::ae::base::Extent3i(
+                                textureImageExtent.width /
+                                    fThreadsPerThreadGroupX,
+                                textureImageExtent.height /
+                                    fThreadsPerThreadGroupY,
+                                1)));
+                
+                }
                 cmd.CmdEndComputePass();
 
                 // 読み込み専用状態に移行
