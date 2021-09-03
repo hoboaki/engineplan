@@ -224,7 +224,8 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(RasterizeCullMode::TERM));
     const auto result = table[int(mode)];
-    return table[int(mode)];
+    AE_BASE_ASSERT(result != ::vk::CullModeFlags(-1));
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -238,7 +239,8 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerMinMagFilter::TERM));
     const auto result = table[int(filter)];
-    return table[int(filter)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -603,7 +605,8 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerAddressMode::TERM));
     const auto result = table[int(mode)];
-    return table[int(mode)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
@@ -618,7 +621,8 @@ namespace gfx_low {
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(SamplerMipmapMode::TERM));
     const auto result = table[int(mode)];
-    return table[int(mode)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
 }
 
 //------------------------------------------------------------------------------
