@@ -19,9 +19,7 @@ void main() {
    vec3 eyeToPos = normalize(FragViewPos);
    vec3 normal = normalize(FragViewNormal);
    vec3 reflectVec = reflect(eyeToPos, normal);
-   vec3 color = reflectVec;
-   FragColor = vec4(color, 1.0);
-   // FragColor = texture(samplerCube(Image0, Sampler0), reflectVec);
+   FragColor = texture(samplerCube(Image0, Sampler0), reflectVec);
 }
 
 // EOF

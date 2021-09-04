@@ -452,7 +452,7 @@ int aemain(::ae::base::Application* app) {
                 for (int x = 0; x < textureImageExtent.width; ++x) {
                     const size_t baseOffset =
                         size_t(y) * dataInfo.RowPitch() + size_t(x) * 4;
-                    const int pixelsOffset = y * textureImageExtent.width + x;
+                    const int pixelsOffset = (y * textureImageExtent.width + x) * 3;
                     dst[baseOffset + 0] = pixels[pixelsOffset + 0];
                     dst[baseOffset + 1] = pixels[pixelsOffset + 1];
                     dst[baseOffset + 2] = pixels[pixelsOffset + 2];
