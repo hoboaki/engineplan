@@ -685,7 +685,7 @@ int aemain(::ae::base::Application* app) {
                 );
                 data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
                 data.viewMtx = ::ae::base::Matrix44::LookAt(
-                    ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
+                    ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
@@ -697,7 +697,7 @@ int aemain(::ae::base::Application* app) {
                 fModelUniformDataType data = {};
                 data.modelMtx = ::ae::base::Quaternion(
                                     ::ae::base::Vector3::UnitY(),
-                                    ::ae::base::Degree(3.0f * frameCount))
+                                    ::ae::base::Degree(0.1f * frameCount))
                                     .ToRotateMatrix()
                                     .ToMatrix44();
                 modelUniformBuffer.StoreToResourceMemory(bufferIndex, data);
