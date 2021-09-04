@@ -363,9 +363,7 @@ int aemain(::ae::base::Application* app) {
                         .Set(
                             ::ae::gfx_low::ImageResourceUsage::SampledImage,
                             true)
-                        .Set(
-                            ::ae::gfx_low::ImageResourceUsage::CopyDst,
-                            true));
+                        .Set(::ae::gfx_low::ImageResourceUsage::CopyDst, true));
         textureMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
@@ -425,8 +423,7 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::gfx_low::BufferResourceUsageBitSet().Set(
                                     ::ae::gfx_low::BufferResourceUsage::CopySrc,
                                     true)))
-                    .SetDataAddress(
-                        faceImageSrcMemories[faceIdx]->Address()));
+                    .SetDataAddress(faceImageSrcMemories[faceIdx]->Address()));
             copyBufferToImageInfos.Add(
                 ::ae::gfx_low::CopyBufferToImageInfo()
                     .SetSrcBufferResource(&faceImageSrcBuffers[faceIdx])
@@ -452,7 +449,8 @@ int aemain(::ae::base::Application* app) {
                 for (int x = 0; x < textureImageExtent.width; ++x) {
                     const size_t baseOffset =
                         size_t(y) * dataInfo.RowPitch() + size_t(x) * 4;
-                    const int pixelsOffset = (y * textureImageExtent.width + x) * 3;
+                    const int pixelsOffset =
+                        (y * textureImageExtent.width + x) * 3;
                     dst[baseOffset + 0] = pixels[pixelsOffset + 0];
                     dst[baseOffset + 1] = pixels[pixelsOffset + 1];
                     dst[baseOffset + 2] = pixels[pixelsOffset + 2];
@@ -482,7 +480,6 @@ int aemain(::ae::base::Application* app) {
         &gfxKit.Device(),
         sizeof(fModelUniformDataType),
         gfxKit.SwapchainImageCount());
-
 
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
@@ -727,8 +724,7 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdImageResourceBarrier(
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(textureImage.get())
-                        .SetOldState(
-                            ::ae::gfx_low::ImageResourceState::CopyDst)
+                        .SetOldState(::ae::gfx_low::ImageResourceState::CopyDst)
                         .SetNewState(::ae::gfx_low::ImageResourceState::
                                          ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
