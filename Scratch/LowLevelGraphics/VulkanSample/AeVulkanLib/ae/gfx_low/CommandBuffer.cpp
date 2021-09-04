@@ -222,7 +222,9 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
                     .setAspectMask(::vk::ImageAspectFlagBits::eColor)
                     .setMipLevel(info.DstSubresourceLocation().MipLevel())
                     .setBaseArrayLayer(
-                        info.DstSubresourceLocation().ArrayIndex())
+                        info.DstSubresourceLocation().FaceIndex() + 
+                        info.DstSubresourceLocation().ArrayIndex() *
+                        (info.DstImageResource()->IsCubeMapImage_() ? 6 : 1))
                     .setLayerCount(1))
             .setImageExtent(::vk::Extent3D(
                 uint32_t(info.SrcImageExtent().width),
