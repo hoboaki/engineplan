@@ -18,16 +18,16 @@ layout(location = 0) in vec3 Position;
 layout(location = 1) in vec3 Normal;
 layout(location = 2) in vec2 Uv0;
 
-layout(location = 0) out vec3 FragPos;
-layout(location = 1) out vec3 FragNormal;
-layout(location = 2) out vec2 FragUv0;
+layout(location = 0) out vec3 FragViewPos; // ビュー空間の位置
+layout(location = 1) out vec3 FragViewNormal; // ビュー空間の法線
 
 void main() 
 {
-   gl_Position = UbufScene.projMtx * UbufScene.viewMtx * UbufModel.modelMtx * vec4(Position, 1.0);
-   FragPos = gl_Position.xyz;
-   FragNormal = (UbufScene.viewMtx * UbufModel.modelMtx * vec4(Normal, 1.0)).xyz;
-   FragUv0 = Uv0;
+    mat4 viewModelMtx = UbufScene.viewMtx * UbufModel.modelMtx;
+    vec4 viewPos = viewModelMtx * vec4(Position, 1.0);
+    gl_Position = UbufScene.projMtx * viewPos;
+    FragViewPos = viewPos.xyz;
+    FragViewNormal = mat3(UbufScene.viewMtx) * (UbufModel.modelMtx * vec4(Normal, 1.0)).xyz;
 }
 
 // EOF
