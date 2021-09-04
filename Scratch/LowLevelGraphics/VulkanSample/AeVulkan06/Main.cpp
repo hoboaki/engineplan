@@ -364,7 +364,7 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::ImageResourceUsage::SampledImage,
                             true)
                         .Set(
-                            ::ae::gfx_low::ImageResourceUsage::StorageImage,
+                            ::ae::gfx_low::ImageResourceUsage::CopyDst,
                             true));
         textureMemory.Reset(
             &gfxKit.Device(),
