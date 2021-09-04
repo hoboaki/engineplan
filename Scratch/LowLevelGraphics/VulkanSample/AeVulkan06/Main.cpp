@@ -94,6 +94,7 @@ struct fComputeUniformDataType {
 
 struct fVertexType {
     float position[3];
+    float normal[3];
     float uv0[2];
 };
 
@@ -144,6 +145,50 @@ const float fPositionData[] = {
     -1.0f,-1.0f, 1.0f,
      1.0f,-1.0f, 1.0f,
      1.0f, 1.0f, 1.0f,
+};
+
+const float fNormalData[] = {
+    -1.0f, 0.0f, 0.0f,  // -X side
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+    -1.0f, 0.0f, 0.0f,
+
+     0.0f, 0.0f,-1.0f,  // -Z side
+     0.0f, 0.0f,-1.0f,
+     0.0f, 0.0f,-1.0f,
+     0.0f, 0.0f,-1.0f,
+     0.0f, 0.0f,-1.0f,
+     0.0f, 0.0f,-1.0f,
+
+     0.0f,-1.0f, 0.0f,  // -Y side
+     0.0f,-1.0f, 0.0f,
+     0.0f,-1.0f, 0.0f,
+     0.0f,-1.0f, 0.0f,
+     0.0f,-1.0f, 0.0f,
+     0.0f,-1.0f, 0.0f,
+     
+     0.0f, 1.0f, 0.0f,  // +Y side
+     0.0f, 1.0f, 0.0f,
+     0.0f, 1.0f, 0.0f,
+     0.0f, 1.0f, 0.0f,
+     0.0f, 1.0f, 0.0f,
+     0.0f, 1.0f, 0.0f,
+
+     1.0f, 0.0f, 0.0f,  // +X side
+     1.0f, 0.0f, 0.0f,
+     1.0f, 0.0f, 0.0f,
+     1.0f, 0.0f, 0.0f,
+     1.0f, 0.0f, 0.0f,
+     1.0f, 0.0f, 0.0f,
+     
+     0.0f, 0.0f, 1.0f,  // +Z side
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
 };
 
 const float fUvBufferData[] = {
@@ -247,6 +292,9 @@ int aemain(::ae::base::Application* app) {
         ::ae::gfx_low::VertexAttributeInfo().SetFormat(
             ::ae::gfx_low::VertexFormat::Sfloat32x3),
         ::ae::gfx_low::VertexAttributeInfo()
+            .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
+            .SetOffset(offsetof(fVertexType, normal)),
+        ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
             .SetOffset(offsetof(fVertexType, uv0)),
     };
@@ -261,6 +309,9 @@ int aemain(::ae::base::Application* app) {
             data.v[i].position[0] = fPositionData[i * 3];
             data.v[i].position[1] = fPositionData[i * 3 + 1];
             data.v[i].position[2] = fPositionData[i * 3 + 2];
+            data.v[i].normal[0] = fNormalData[i * 3];
+            data.v[i].normal[1] = fNormalData[i * 3 + 1];
+            data.v[i].normal[2] = fNormalData[i * 3 + 2];
             data.v[i].uv0[0] = fUvBufferData[2 * i];
             data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
         }
