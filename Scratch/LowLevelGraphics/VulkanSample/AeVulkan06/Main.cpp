@@ -262,7 +262,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display =
         ::ae::base::Display(::ae::base::DisplayContext()
-                                .SetWindowTitle("AeVulkan05 - Storage Image")
+                                .SetWindowTitle("AeVulkan06 - Cube Map")
                                 .SetIsResizableWindow(true));
 
     // ディスプレイの表示
