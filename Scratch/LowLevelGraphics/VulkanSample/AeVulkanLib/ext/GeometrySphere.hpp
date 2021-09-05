@@ -14,12 +14,16 @@
 
 #include <vector>
 
-class Sphere
+class GeometrySphere
 {
 public:
     // ctor/dtor
-    Sphere(float radius=1.0f, int sectorCount=36, int stackCount=18, bool smooth=true);
-    ~Sphere() {}
+    GeometrySphere(
+        float radius = 1.0f,
+        int sectorCount = 36,
+        int stackCount = 18,
+        bool smooth = true);
+    ~GeometrySphere() {}
 
     // getters/setters
     float getRadius() const                 { return radius; }

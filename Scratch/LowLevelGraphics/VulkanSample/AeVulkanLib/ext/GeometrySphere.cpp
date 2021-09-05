@@ -22,7 +22,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-#include "Sphere.hpp"
+#include "GeometrySphere.hpp"
 
 
 
@@ -35,7 +35,7 @@ const int MIN_STACK_COUNT  = 2;
 ///////////////////////////////////////////////////////////////////////////////
 // ctor
 ///////////////////////////////////////////////////////////////////////////////
-Sphere::Sphere(float radius, int sectors, int stacks, bool smooth) : interleavedStride(32)
+GeometrySphere::GeometrySphere(float radius, int sectors, int stacks, bool smooth) : interleavedStride(32)
 {
     set(radius, sectors, stacks, smooth);
 }
@@ -45,7 +45,7 @@ Sphere::Sphere(float radius, int sectors, int stacks, bool smooth) : interleaved
 ///////////////////////////////////////////////////////////////////////////////
 // setters
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::set(float radius, int sectors, int stacks, bool smooth)
+void GeometrySphere::set(float radius, int sectors, int stacks, bool smooth)
 {
     this->radius = radius;
     this->sectorCount = sectors;
@@ -62,25 +62,25 @@ void Sphere::set(float radius, int sectors, int stacks, bool smooth)
         buildVerticesFlat();
 }
 
-void Sphere::setRadius(float radius)
+void GeometrySphere::setRadius(float radius)
 {
     if(radius != this->radius)
         set(radius, sectorCount, stackCount, smooth);
 }
 
-void Sphere::setSectorCount(int sectors)
+void GeometrySphere::setSectorCount(int sectors)
 {
     if(sectors != this->sectorCount)
         set(radius, sectors, stackCount, smooth);
 }
 
-void Sphere::setStackCount(int stacks)
+void GeometrySphere::setStackCount(int stacks)
 {
     if(stacks != this->stackCount)
         set(radius, sectorCount, stacks, smooth);
 }
 
-void Sphere::setSmooth(bool smooth)
+void GeometrySphere::setSmooth(bool smooth)
 {
     if(this->smooth == smooth)
         return;
@@ -97,7 +97,7 @@ void Sphere::setSmooth(bool smooth)
 ///////////////////////////////////////////////////////////////////////////////
 // print itself
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::printSelf() const
+void GeometrySphere::printSelf() const
 {
     std::cout << "===== Sphere =====\n"
               << "        Radius: " << radius << "\n"
@@ -117,7 +117,7 @@ void Sphere::printSelf() const
 // draw a sphere in VertexArray mode
 // OpenGL RC must be set before calling it
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::draw() const
+void GeometrySphere::draw() const
 {
     // interleaved array
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -140,7 +140,7 @@ void Sphere::draw() const
 // draw lines only
 // the caller must set the line width before call this
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::drawLines(const float lineColor[4]) const
+void GeometrySphere::drawLines(const float lineColor[4]) const
 {
     // set line colour
     glColor4fv(lineColor);
@@ -165,7 +165,7 @@ void Sphere::drawLines(const float lineColor[4]) const
 // draw a sphere surfaces and lines on top of it
 // the caller must set the line width before call this
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::drawWithLines(const float lineColor[4]) const
+void GeometrySphere::drawWithLines(const float lineColor[4]) const
 {
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonOffset(1.0, 1.0f); // move polygon backward
@@ -182,7 +182,7 @@ void Sphere::drawWithLines(const float lineColor[4]) const
 ///////////////////////////////////////////////////////////////////////////////
 // update vertex positions only
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::updateRadius()
+void GeometrySphere::updateRadius()
 {
     float scale = sqrtf(radius * radius / (vertices[0] * vertices[0] + vertices[1] * vertices[1] + vertices[2] * vertices[2]));
 
@@ -207,7 +207,7 @@ void Sphere::updateRadius()
 ///////////////////////////////////////////////////////////////////////////////
 // dealloc vectors
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::clearArrays()
+void GeometrySphere::clearArrays()
 {
     std::vector<float>().swap(vertices);
     std::vector<float>().swap(normals);
@@ -226,7 +226,7 @@ void Sphere::clearArrays()
 // where u: stack(latitude) angle (-90 <= u <= 90)
 //       v: sector(longitude) angle (0 <= v <= 360)
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::buildVerticesSmooth()
+void GeometrySphere::buildVerticesSmooth()
 {
     const float PI = float(acos(-1));
 
@@ -316,7 +316,7 @@ void Sphere::buildVerticesSmooth()
 // generate vertices with flat shading
 // each triangle is independent (no shared vertices)
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::buildVerticesFlat()
+void GeometrySphere::buildVerticesFlat()
 {
     const float PI = float(acos(-1));
 
@@ -484,7 +484,7 @@ void Sphere::buildVerticesFlat()
 // generate interleaved vertices: V/N/T
 // stride must be 32 bytes
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::buildInterleavedVertices()
+void GeometrySphere::buildInterleavedVertices()
 {
     std::vector<float>().swap(interleavedVertices);
 
@@ -510,7 +510,7 @@ void Sphere::buildInterleavedVertices()
 ///////////////////////////////////////////////////////////////////////////////
 // add single vertex to array
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::addVertex(float x, float y, float z)
+void GeometrySphere::addVertex(float x, float y, float z)
 {
     vertices.push_back(x);
     vertices.push_back(y);
@@ -522,7 +522,7 @@ void Sphere::addVertex(float x, float y, float z)
 ///////////////////////////////////////////////////////////////////////////////
 // add single normal to array
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::addNormal(float nx, float ny, float nz)
+void GeometrySphere::addNormal(float nx, float ny, float nz)
 {
     normals.push_back(nx);
     normals.push_back(ny);
@@ -534,7 +534,7 @@ void Sphere::addNormal(float nx, float ny, float nz)
 ///////////////////////////////////////////////////////////////////////////////
 // add single texture coord to array
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::addTexCoord(float s, float t)
+void GeometrySphere::addTexCoord(float s, float t)
 {
     texCoords.push_back(s);
     texCoords.push_back(t);
@@ -545,7 +545,7 @@ void Sphere::addTexCoord(float s, float t)
 ///////////////////////////////////////////////////////////////////////////////
 // add 3 indices to array
 ///////////////////////////////////////////////////////////////////////////////
-void Sphere::addIndices(unsigned int i1, unsigned int i2, unsigned int i3)
+void GeometrySphere::addIndices(unsigned int i1, unsigned int i2, unsigned int i3)
 {
     indices.push_back(i1);
     indices.push_back(i2);
@@ -558,7 +558,7 @@ void Sphere::addIndices(unsigned int i1, unsigned int i2, unsigned int i3)
 // return face normal of a triangle v1-v2-v3
 // if a triangle has no surface (normal length = 0), then return a zero vector
 ///////////////////////////////////////////////////////////////////////////////
-std::vector<float> Sphere::computeFaceNormal(float x1, float y1, float z1,  // v1
+std::vector<float> GeometrySphere::computeFaceNormal(float x1, float y1, float z1,  // v1
                                              float x2, float y2, float z2,  // v2
                                              float x3, float y3, float z3)  // v3
 {

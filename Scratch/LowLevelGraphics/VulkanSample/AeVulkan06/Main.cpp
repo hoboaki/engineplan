@@ -74,6 +74,7 @@
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
 #include <aesk/VertexBuffer.hpp>
+#include <ext/Sphere.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
