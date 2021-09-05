@@ -20,14 +20,20 @@ layout(location = 2) in vec2 Uv0;
 
 layout(location = 0) out vec3 FragViewPos; // ビュー空間の位置
 layout(location = 1) out vec3 FragViewNormal; // ビュー空間の法線
+layout(location = 2) out vec3 FragWorldPos; // ワールド空間の位置
+layout(location = 3) out vec3 FragWorldNormal; // ワールド空間の法線
 
 void main() 
 {
-    mat4 viewModelMtx = UbufScene.viewMtx * UbufModel.modelMtx;
-    vec4 viewPos = viewModelMtx * vec4(Position, 1.0);
+    vec4 worldPos = UbufModel.modelMtx * vec4(Position, 1.0);
+    vec4 viewPos = UbufScene.viewMtx * worldPos;
+    vec3 worldNormal = mat3(UbufModel.modelMtx) * Normal; 
+    vec3 viewNormal = mat3(UbufScene.viewMtx) * worldNormal;
     gl_Position = UbufScene.projMtx * viewPos;
     FragViewPos = viewPos.xyz;
-    FragViewNormal = mat3(UbufScene.viewMtx) * (UbufModel.modelMtx * vec4(Normal, 1.0)).xyz;
+    FragViewNormal = viewNormal;
+    FragWorldPos = worldPos.xyz;
+    FragWorldNormal =worldNormal;
 }
 
 // EOF

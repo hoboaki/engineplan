@@ -689,8 +689,13 @@ int aemain(::ae::base::Application* app) {
                     100.0f // far
                 );
                 data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
+                auto eyePos = ::ae::base::Quaternion(
+                                  ::ae::base::Vector3::UnitY(),
+                                  ::ae::base::Degree(0.6f * frameCount))
+                                  .ToRotateMatrix() *
+                              ::ae::base::Vector3(0.0f, 0.0f, 5.0f);
                 data.viewMtx = ::ae::base::Matrix44::LookAt(
-                    ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
+                    eyePos,
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
@@ -700,11 +705,7 @@ int aemain(::ae::base::Application* app) {
             // モデルユニフォーム
             {
                 fModelUniformDataType data = {};
-                data.modelMtx = ::ae::base::Quaternion(
-                                    ::ae::base::Vector3::UnitY(),
-                                    ::ae::base::Degree(0.1f * frameCount))
-                                    .ToRotateMatrix()
-                                    .ToMatrix44();
+                data.modelMtx = ::ae::base::Matrix44::Identity();
                 modelUniformBuffer.StoreToResourceMemory(bufferIndex, data);
             }
         }
