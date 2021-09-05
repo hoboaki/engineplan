@@ -13,6 +13,7 @@
 #include <ae/gfx_low/ImageResourceTiling.hpp>
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
+#include <ae/gfx_low/IndexFormat.hpp>
 #include <ae/gfx_low/PolygonFrontFace.hpp>
 #include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 #include <ae/gfx_low/RasterizeCullMode.hpp>
@@ -64,6 +65,7 @@ struct InternalEnumUtil {
     static ::vk::ImageUsageFlags ToImageUsageFlags(
         const ImageResourceUsageBitSet& usageBitSet);
     static ::vk::ImageViewType ToImageViewType(ImageViewKind kind);
+    static ::vk::IndexType ToIndexType(IndexFormat format);
     static ::vk::PolygonMode ToPolygonMode(RasterizeFillMode mode);
     static ::vk::PrimitiveTopology ToPrimitiveTopology(
         PrimitiveTopologyKind kind);

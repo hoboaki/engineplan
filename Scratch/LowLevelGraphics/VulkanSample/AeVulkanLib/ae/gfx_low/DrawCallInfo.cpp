@@ -23,6 +23,13 @@ DrawCallInfo& DrawCallInfo::SetVertexCount(const int count) {
 }
 
 //------------------------------------------------------------------------------
+DrawCallInfo& DrawCallInfo::SetIndexOffset(const int offset) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, offset);
+    indexOffset_ = offset;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
 DrawCallInfo& DrawCallInfo::SetInstanceOffset(const int offset) {
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     instanceOffset_ = offset;
