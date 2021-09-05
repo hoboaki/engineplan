@@ -747,6 +747,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ext\Sphere.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aesk\GfxBasicKit.cpp">
@@ -1086,6 +1087,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ext\Sphere.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
