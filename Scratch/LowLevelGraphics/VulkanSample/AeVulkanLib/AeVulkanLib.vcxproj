@@ -258,6 +258,12 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\IndexBufferView.hpp" />
+    <ClInclude Include="ae\gfx_low\IndexBufferViewCreateInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\IndexFormat.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\InternalUtility.hpp">
       <SubType>
       </SubType>
@@ -905,6 +911,11 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\ImageSubresourceRange.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\IndexBufferView.cpp" />
+    <ClCompile Include="ae\gfx_low\IndexBufferViewCreateInfo.cpp">
       <SubType>
       </SubType>
     </ClCompile>
