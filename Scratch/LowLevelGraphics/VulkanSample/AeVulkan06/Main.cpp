@@ -71,6 +71,7 @@
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GfxBasicKit.hpp>
+#include <aesk/IndexBuffer.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
 #include <aesk/VertexBuffer.hpp>
@@ -329,6 +330,12 @@ int aemain(::ae::base::Application* app) {
             const_cast<float*>(geometrySphere.getInterleavedVertices()),
             geometrySphere.getInterleavedVertexSize()));
     }
+
+    // IndexBuffer の作成
+    ::aesk::IndexBuffer indexBuffer(
+        &gfxKit.Device(),
+        geometrySphere.getIndexSize(),
+        ::ae::gfx_low::IndexFormat::Uint32);
 
     // ポリゴンに貼り付けるキューブテクスチャの作成
     // 画像の内容はコピー処理で転送される
@@ -800,8 +807,11 @@ int aemain(::ae::base::Application* app) {
 
                 // Draw
                 cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+                cmd.CmdSetIndexBuffer(indexBuffer.View());
                 cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                    ::ae::gfx_low::DrawCallInfo()
+                        .SetUseIndexBuffer(true)
+                        .SetVertexCount(geometrySphere.getIndexCount()));
 
                 cmd.CmdEndRenderPass();
             }
