@@ -119,6 +119,7 @@ void GeometrySphere::printSelf() const
 ///////////////////////////////////////////////////////////////////////////////
 void GeometrySphere::draw() const
 {
+#if 0
     // interleaved array
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
@@ -132,6 +133,7 @@ void GeometrySphere::draw() const
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+#endif
 }
 
 
@@ -142,6 +144,7 @@ void GeometrySphere::draw() const
 ///////////////////////////////////////////////////////////////////////////////
 void GeometrySphere::drawLines(const float lineColor[4]) const
 {
+#if 0
     // set line colour
     glColor4fv(lineColor);
     glMaterialfv(GL_FRONT, GL_DIFFUSE,   lineColor);
@@ -157,6 +160,7 @@ void GeometrySphere::drawLines(const float lineColor[4]) const
     glDisableClientState(GL_VERTEX_ARRAY);
     glEnable(GL_LIGHTING);
     glEnable(GL_TEXTURE_2D);
+#endif
 }
 
 
@@ -167,6 +171,7 @@ void GeometrySphere::drawLines(const float lineColor[4]) const
 ///////////////////////////////////////////////////////////////////////////////
 void GeometrySphere::drawWithLines(const float lineColor[4]) const
 {
+#if 0
     glEnable(GL_POLYGON_OFFSET_FILL);
     glPolygonOffset(1.0, 1.0f); // move polygon backward
     this->draw();
@@ -174,6 +179,7 @@ void GeometrySphere::drawWithLines(const float lineColor[4]) const
 
     // draw lines with VA
     drawLines(lineColor);
+#endif
 }
 
 

@@ -74,7 +74,7 @@
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
 #include <aesk/VertexBuffer.hpp>
-#include <ext/Sphere.hpp>
+#include <ext/GeometrySphere.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -302,38 +302,32 @@ int aemain(::ae::base::Application* app) {
         fFragShaderCode,
         sizeof(fFragShaderCode));
 
+    // Sphere の用意
+    GeometrySphere geometrySphere;
+
     // VertexBuffer の作成
     const auto vertexBufferLayoutInfo =
-        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(sizeof(fVertexType));
+        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(
+            geometrySphere.getInterleavedStride());
     const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
         ::ae::gfx_low::VertexAttributeInfo().SetFormat(
             ::ae::gfx_low::VertexFormat::Sfloat32x3),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
-            .SetOffset(offsetof(fVertexType, normal)),
+            .SetOffset(geometrySphere.getInterleavedOffsetNormal()),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
-            .SetOffset(offsetof(fVertexType, uv0)),
+            .SetOffset(geometrySphere.getInterleavedOffsetTexCoord()),
     };
     ::aesk::VertexBuffer vertexBuffer(
         &gfxKit.Device(),
-        sizeof(fVertexBufferType),
+        geometrySphere.getInterleavedVertexSize(),
         vertexBufferLayoutInfo);
     {
         // バッファ更新
-        fVertexBufferType data;
-        for (int i = 0; i < 12 * 3; ++i) {
-            data.v[i].position[0] = fPositionData[i * 3];
-            data.v[i].position[1] = fPositionData[i * 3 + 1];
-            data.v[i].position[2] = fPositionData[i * 3 + 2];
-            data.v[i].normal[0] = fNormalData[i * 3];
-            data.v[i].normal[1] = fNormalData[i * 3 + 1];
-            data.v[i].normal[2] = fNormalData[i * 3 + 2];
-            data.v[i].uv0[0] = fUvBufferData[2 * i];
-            data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
-        }
-        vertexBuffer.StoreToResourceMemory(
-            ::ae::base::MemBlock(&data, sizeof(data)));
+        vertexBuffer.StoreToResourceMemory(::ae::base::MemBlock(
+            const_cast<float*>(geometrySphere.getInterleavedVertices()),
+            geometrySphere.getInterleavedVertexSize()));
     }
 
     // ポリゴンに貼り付けるキューブテクスチャの作成

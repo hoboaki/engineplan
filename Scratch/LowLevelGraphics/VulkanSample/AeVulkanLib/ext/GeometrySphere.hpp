@@ -58,6 +58,8 @@ public:
     unsigned int getInterleavedVertexSize() const   { return (unsigned int)interleavedVertices.size() * sizeof(float); }    // # of bytes
     int getInterleavedStride() const                { return interleavedStride; }   // should be 32 bytes
     const float* getInterleavedVertices() const     { return interleavedVertices.data(); }
+    unsigned int getInterleavedOffsetNormal() const { return 3 * sizeof(float); }
+    unsigned int getInterleavedOffsetTexCoord() const { return 5 * sizeof(float); }
 
     // draw in VertexArray mode
     void draw() const;                                  // draw surface
