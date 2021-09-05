@@ -336,6 +336,12 @@ int aemain(::ae::base::Application* app) {
         &gfxKit.Device(),
         geometrySphere.getIndexSize(),
         ::ae::gfx_low::IndexFormat::Uint32);
+    {
+        // バッファ更新
+        indexBuffer.StoreToResourceMemory(::ae::base::MemBlock(
+            const_cast<uint32_t*>(geometrySphere.getIndices()),
+            geometrySphere.getIndexSize()));
+    }
 
     // ポリゴンに貼り付けるキューブテクスチャの作成
     // 画像の内容はコピー処理で転送される
