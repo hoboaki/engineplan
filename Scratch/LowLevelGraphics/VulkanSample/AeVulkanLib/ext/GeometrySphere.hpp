@@ -8,6 +8,7 @@
 // CREATED: 2017-11-01
 // UPDATED: 2020-05-20
 ///////////////////////////////////////////////////////////////////////////////
+// http://www.songho.ca/opengl/gl_sphere.html
 
 #ifndef GEOMETRY_SPHERE_H
 #define GEOMETRY_SPHERE_H
@@ -59,7 +60,7 @@ public:
     int getInterleavedStride() const                { return interleavedStride; }   // should be 32 bytes
     const float* getInterleavedVertices() const     { return interleavedVertices.data(); }
     unsigned int getInterleavedOffsetNormal() const { return 3 * sizeof(float); }
-    unsigned int getInterleavedOffsetTexCoord() const { return 5 * sizeof(float); }
+    unsigned int getInterleavedOffsetTexCoord() const { return 6 * sizeof(float); }
 
     // draw in VertexArray mode
     void draw() const;                                  // draw surface
