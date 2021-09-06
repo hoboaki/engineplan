@@ -3,9 +3,9 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_shading_language_420pack : enable
 
-#define LAYOUT_SET_UNIFORM_BUFFER 0
+#define LAYOUT_SET_BUFFER 0
 
-layout(std140, set = LAYOUT_SET_UNIFORM_BUFFER, binding = 0) uniform UbufType {
+layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufType {
     mat4 mvp;
 } Ubuf;
 
