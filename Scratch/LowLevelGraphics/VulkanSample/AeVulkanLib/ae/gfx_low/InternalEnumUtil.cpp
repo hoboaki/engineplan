@@ -557,6 +557,22 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::IndexType InternalEnumUtil::ToIndexType(
+    const IndexFormat format) {
+    AE_BASE_ASSERT_ENUM(format, IndexFormat);
+    AE_BASE_ASSERT(format != IndexFormat::Invalid);
+    const ::vk::IndexType table[] = {
+        ::vk::IndexType(-1), // Invalid
+        ::vk::IndexType::eUint16, // Uint16
+        ::vk::IndexType::eUint32, // Uint32
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(IndexFormat::TERM));
+    const auto result = table[int(format)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::PolygonMode InternalEnumUtil::ToPolygonMode(
     const RasterizeFillMode kind) {
     AE_BASE_ASSERT_ENUM(kind, RasterizeFillMode);

@@ -1,6 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <ae/base/Pointer.hpp>
+
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {
@@ -24,6 +26,22 @@ public:
     /// @param count 1以上。
     DrawCallInfo& SetVertexCount(int count);
 
+    /// インデックスバッファを使用するか。 （初期値：false）
+    bool UseIndexBuffer() const { return useIndexBuffer_; }
+
+    /// UseIndexBuffer() の設定。
+    DrawCallInfo& SetUseIndexBuffer(bool useIndexBuffer) {
+        useIndexBuffer_ = useIndexBuffer;
+        return *this;
+    }
+
+    /// インデックスバッファの起点となる番号。 （初期値：0）
+    int IndexOffset() const { return indexOffset_; }
+
+    /// IndexOffset() の設定。
+    /// @param offset 0以上。
+    DrawCallInfo& SetIndexOffset(int offset);
+
     /// インスタンス番号の起点となる番号。 （初期値：0）
     int InstanceOffset() const { return instanceOffset_; }
 
@@ -42,8 +60,10 @@ public:
 private:
     int vertexOffset_ = 0;
     int vertexCount_ = 0;
+    int indexOffset_ = 0;
     int instanceOffset_ = 0;
     int instanceCount_ = 1;
+    bool useIndexBuffer_ = false;
 };
 
 } // namespace gfx_low

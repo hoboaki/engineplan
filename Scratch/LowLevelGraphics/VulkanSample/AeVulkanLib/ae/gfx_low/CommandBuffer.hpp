@@ -19,6 +19,7 @@ class DescriptorSet;
 class Device;
 class DispatchCallInfo;
 class DrawCallInfo;
+class IndexBufferView;
 class ImageResourceBarrierInfo;
 class RenderPassBeginInfo;
 class RenderPipeline;
@@ -176,6 +177,9 @@ public:
     /// 頂点バッファの設定。
     /// @param slotIndex [0, PipelineVertexInputInfo::BufferCount())
     void CmdSetVertexBuffer(int slotIndex, const VertexBufferView& view);
+
+    /// インデックスバッファの設定。
+    void CmdSetIndexBuffer(const IndexBufferView& view);
 
     /// 設定済のレンダーパイプラインに基づいてドローコールをする。
     void CmdDraw(const DrawCallInfo& info);

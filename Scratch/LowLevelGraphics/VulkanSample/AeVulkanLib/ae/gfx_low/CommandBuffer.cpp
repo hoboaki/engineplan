@@ -20,6 +20,7 @@
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
+#include <ae/gfx_low/IndexBufferView.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/InternalUtility.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -222,9 +223,10 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
                     .setAspectMask(::vk::ImageAspectFlagBits::eColor)
                     .setMipLevel(info.DstSubresourceLocation().MipLevel())
                     .setBaseArrayLayer(
-                        info.DstSubresourceLocation().FaceIndex() + 
+                        info.DstSubresourceLocation().FaceIndex() +
                         info.DstSubresourceLocation().ArrayIndex() *
-                        (info.DstImageResource()->IsCubeMapImage_() ? 6 : 1))
+                            (info.DstImageResource()->IsCubeMapImage_() ? 6
+                                                                        : 1))
                     .setLayerCount(1))
             .setImageExtent(::vk::Extent3D(
                 uint32_t(info.SrcImageExtent().width),
@@ -579,14 +581,36 @@ void CommandBuffer::CmdSetVertexBuffer(
 }
 
 //------------------------------------------------------------------------------
+void CommandBuffer::CmdSetIndexBuffer(
+    const IndexBufferView& view) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    const auto offset = ::vk::DeviceSize(view.Region_().Offset());
+    nativeObject_.bindIndexBuffer(
+        view.BufferResource_().NativeObject_(),
+        offset,
+        InternalEnumUtil::ToIndexType(view.Format_())
+        );
+}
+
+//------------------------------------------------------------------------------
 void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
-    nativeObject_.draw(
-        info.VertexCount(),
-        info.InstanceCount(),
-        info.VertexOffset(),
-        info.InstanceOffset());
+    if (info.UseIndexBuffer()) {
+        nativeObject_.drawIndexed(
+            info.VertexCount(),
+            info.InstanceCount(),
+            info.IndexOffset(),
+            info.VertexOffset(),
+            info.InstanceOffset());
+    } else {
+        nativeObject_.draw(
+            info.VertexCount(),
+            info.InstanceCount(),
+            info.VertexOffset(),
+            info.InstanceOffset());
+    }
 }
 
 //------------------------------------------------------------------------------

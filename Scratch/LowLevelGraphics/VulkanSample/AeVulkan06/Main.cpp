@@ -71,9 +71,11 @@
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GfxBasicKit.hpp>
+#include <aesk/IndexBuffer.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
 #include <aesk/VertexBuffer.hpp>
+#include <ext/GeometrySphere.hpp>
 #include <memory>
 
 //------------------------------------------------------------------------------
@@ -82,6 +84,7 @@ namespace {
 struct fSceneUniformDataType {
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
+    ::ae::base::Matrix44Pod invViewMtx;
 };
 
 struct fModelUniformDataType {
@@ -238,16 +241,20 @@ const float fUvBufferData[] = {
 const int fThreadsPerThreadGroupX = 16;
 const int fThreadsPerThreadGroupY = 16;
 
-const uint32_t fCompShaderCode[] = {
-#include "Shader.comp.inc"
+const uint32_t fShapeVertShaderCode[] = {
+#include "ShaderShape.vert.inc"
 };
 
-const uint32_t fVertShaderCode[] = {
-#include "Shader.vert.inc"
+const uint32_t fShapeFragShaderCode[] = {
+#include "ShaderShape.frag.inc"
 };
 
-const uint32_t fFragShaderCode[] = {
-#include "Shader.frag.inc"
+const uint32_t fSkySphereVertShaderCode[] = {
+#include "ShaderSkySphere.vert.inc"
+};
+
+const uint32_t fSkySphereFragShaderCode[] = {
+#include "ShaderSkySphere.frag.inc"
 };
 
 #include <../Resource/cubemap_yokohama256/NegX.hpp>
@@ -288,51 +295,61 @@ int aemain(::ae::base::Application* app) {
     ::aesk::GfxBasicKit gfxKit(&display);
 
     // Shader の作成
-    ::aesk::Shader compShader(
+    ::aesk::Shader shapelVertShader(
         &gfxKit,
-        fCompShaderCode,
-        sizeof(fCompShaderCode));
-    ::aesk::Shader vertShader(
+        fShapeVertShaderCode,
+        sizeof(fShapeVertShaderCode));
+    ::aesk::Shader shapeFragShader(
         &gfxKit,
-        fVertShaderCode,
-        sizeof(fVertShaderCode));
-    ::aesk::Shader fragShader(
+        fShapeFragShaderCode,
+        sizeof(fShapeFragShaderCode));
+    ::aesk::Shader skySphereVertShader(
         &gfxKit,
-        fFragShaderCode,
-        sizeof(fFragShaderCode));
+        fSkySphereVertShaderCode,
+        sizeof(fSkySphereVertShaderCode));
+    ::aesk::Shader skySphereFragShader(
+        &gfxKit,
+        fSkySphereFragShaderCode,
+        sizeof(fSkySphereFragShaderCode));
+
+    // Sphere の用意
+    GeometrySphere geometrySphere;
 
     // VertexBuffer の作成
     const auto vertexBufferLayoutInfo =
-        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(sizeof(fVertexType));
+        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(
+            geometrySphere.getInterleavedStride());
     const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
         ::ae::gfx_low::VertexAttributeInfo().SetFormat(
             ::ae::gfx_low::VertexFormat::Sfloat32x3),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
-            .SetOffset(offsetof(fVertexType, normal)),
+            .SetOffset(geometrySphere.getInterleavedOffsetNormal()),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
-            .SetOffset(offsetof(fVertexType, uv0)),
+            .SetOffset(geometrySphere.getInterleavedOffsetTexCoord()),
     };
     ::aesk::VertexBuffer vertexBuffer(
         &gfxKit.Device(),
-        sizeof(fVertexBufferType),
+        geometrySphere.getInterleavedVertexSize(),
         vertexBufferLayoutInfo);
     {
         // バッファ更新
-        fVertexBufferType data;
-        for (int i = 0; i < 12 * 3; ++i) {
-            data.v[i].position[0] = fPositionData[i * 3];
-            data.v[i].position[1] = fPositionData[i * 3 + 1];
-            data.v[i].position[2] = fPositionData[i * 3 + 2];
-            data.v[i].normal[0] = fNormalData[i * 3];
-            data.v[i].normal[1] = fNormalData[i * 3 + 1];
-            data.v[i].normal[2] = fNormalData[i * 3 + 2];
-            data.v[i].uv0[0] = fUvBufferData[2 * i];
-            data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
-        }
-        vertexBuffer.StoreToResourceMemory(
-            ::ae::base::MemBlock(&data, sizeof(data)));
+        vertexBuffer.StoreToResourceMemory(::ae::base::MemBlock(
+            const_cast<float*>(geometrySphere.getInterleavedVertices()),
+            geometrySphere.getInterleavedVertexSize()));
+    }
+
+    // IndexBuffer の作成
+    ::aesk::IndexBuffer indexBuffer(
+        &gfxKit.Device(),
+        geometrySphere.getIndexSize(),
+        ::ae::gfx_low::IndexFormat::Uint32);
+    {
+        // バッファ更新
+        indexBuffer.StoreToResourceMemory(::ae::base::MemBlock(
+            const_cast<uint32_t*>(geometrySphere.getIndices()),
+            geometrySphere.getIndexSize()));
     }
 
     // ポリゴンに貼り付けるキューブテクスチャの作成
@@ -476,7 +493,11 @@ int aemain(::ae::base::Application* app) {
         &gfxKit.Device(),
         sizeof(fSceneUniformDataType),
         gfxKit.SwapchainImageCount());
-    ::aesk::UniformBuffer modelUniformBuffer(
+    ::aesk::UniformBuffer shapeModelUniformBuffer(
+        &gfxKit.Device(),
+        sizeof(fModelUniformDataType),
+        gfxKit.SwapchainImageCount());
+    ::aesk::UniformBuffer skyBoxModelUniformBuffer(
         &gfxKit.Device(),
         sizeof(fModelUniformDataType),
         gfxKit.SwapchainImageCount());
@@ -542,28 +563,20 @@ int aemain(::ae::base::Application* app) {
 
     // GraphicsPipeline 用 DescriptorSet の作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
-        graphicsDescriptorSets(gfxKit.SwapchainImageCount());
+        shapeDescriptorSets(gfxKit.SwapchainImageCount());
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
+        skySphereDescriptorSets(gfxKit.SwapchainImageCount());
     for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        graphicsDescriptorSets.Add(
+        shapeDescriptorSets.Add(
             ::ae::gfx_low::DescriptorSetCreateInfo()
                 .SetDevice(&gfxKit.Device())
                 .SetSpecInfo(graphicsDescriptorSetSpecInfo));
-
-        // UniformBuffer
-        const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
-            &sceneUniformBuffer.View(i),
-            &modelUniformBuffer.View(i)
-        };
-        const ::ae::gfx_low::UniformBufferDescriptorInfo
-            uniformBufferDescs[] = {
-                ::ae::gfx_low::UniformBufferDescriptorInfo()
-                    .SetRegion(::ae::gfx_low::ShaderBindingRegion()
-                                   .SetBindingIndex(0)
-                                   .SetElemCount(AE_BASE_ARRAY_LENGTH(
-                                       localUniformBufferViews)))
-                    .SetViews(localUniformBufferViews),
-            };
-
+        skySphereDescriptorSets.Add(
+            ::ae::gfx_low::DescriptorSetCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(graphicsDescriptorSetSpecInfo));
+    }
+    {
         // SampledImage
         const ::ae::gfx_low::SampledImageView* sampledImageViews[] = {
             textureView.get()
@@ -588,21 +601,66 @@ int aemain(::ae::base::Application* app) {
         };
 
         // 更新
-        graphicsDescriptorSets[i].Update(
-            ::ae::gfx_low::DescriptorSetUpdateInfo()
-                .SetUniformBufferInfos(
-                    AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
-                    uniformBufferDescs)
-                .SetSampledImageInfos(
-                    AE_BASE_ARRAY_LENGTH(sampledImageDescs),
-                    sampledImageDescs)
-                .SetSamplerInfos(
-                    AE_BASE_ARRAY_LENGTH(samplerDescs),
-                    samplerDescs));
+        for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
+            {
+                // UniformBuffer
+                const ::ae::gfx_low::UniformBufferView* views[] = {
+                    &sceneUniformBuffer.View(i),
+                    &shapeModelUniformBuffer.View(i)
+                };
+                const ::ae::gfx_low::UniformBufferDescriptorInfo
+                    uniformBufferDescs[] = {
+                        ::ae::gfx_low::UniformBufferDescriptorInfo()
+                            .SetRegion(
+                                ::ae::gfx_low::ShaderBindingRegion()
+                                    .SetBindingIndex(0)
+                                    .SetElemCount(AE_BASE_ARRAY_LENGTH(views)))
+                            .SetViews(views),
+                    };
+                shapeDescriptorSets[i].Update(
+                    ::ae::gfx_low::DescriptorSetUpdateInfo()
+                        .SetUniformBufferInfos(
+                            AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                            uniformBufferDescs)
+                        .SetSampledImageInfos(
+                            AE_BASE_ARRAY_LENGTH(sampledImageDescs),
+                            sampledImageDescs)
+                        .SetSamplerInfos(
+                            AE_BASE_ARRAY_LENGTH(samplerDescs),
+                            samplerDescs));
+            }
+            {
+                // UniformBuffer
+                const ::ae::gfx_low::UniformBufferView* views[] = {
+                    &sceneUniformBuffer.View(i),
+                    &skyBoxModelUniformBuffer.View(i)
+                };
+                const ::ae::gfx_low::UniformBufferDescriptorInfo
+                    uniformBufferDescs[] = {
+                        ::ae::gfx_low::UniformBufferDescriptorInfo()
+                            .SetRegion(
+                                ::ae::gfx_low::ShaderBindingRegion()
+                                    .SetBindingIndex(0)
+                                    .SetElemCount(AE_BASE_ARRAY_LENGTH(views)))
+                            .SetViews(views),
+                    };
+                skySphereDescriptorSets[i].Update(
+                    ::ae::gfx_low::DescriptorSetUpdateInfo()
+                        .SetUniformBufferInfos(
+                            AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                            uniformBufferDescs)
+                        .SetSampledImageInfos(
+                            AE_BASE_ARRAY_LENGTH(sampledImageDescs),
+                            sampledImageDescs)
+                        .SetSamplerInfos(
+                            AE_BASE_ARRAY_LENGTH(samplerDescs),
+                            samplerDescs));
+            }
+        }
     }
 
     // GraphicsPipeline 生成
-    std::unique_ptr<::ae::gfx_low::RenderPipeline> graphicsPipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> shapeGraphicsPipeline;
     {
         const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
             ::ae::gfx_low::RenderTargetBlendInfo(),
@@ -611,19 +669,19 @@ int aemain(::ae::base::Application* app) {
             blendInfos,
             AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
 
-        graphicsPipeline.reset(new ::ae::gfx_low::RenderPipeline(
+        shapeGraphicsPipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(&gfxKit.Device())
                 .SetRenderPassSpecInfo(renderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&vertShader.Resource())
+                        .SetResource(&shapelVertShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&fragShader.Resource())
+                        .SetResource(&shapeFragShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetDescriptorSetSpecInfo(graphicsDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
@@ -636,8 +694,57 @@ int aemain(::ae::base::Application* app) {
                 .SetPrimitiveTopologyKind(
                     ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
-                    ::ae::gfx_low::PipelineRasterizerInfo().SetFrontFace(
-                        ::ae::gfx_low::PolygonFrontFace::CounterClockwise))
+                    ::ae::gfx_low::PipelineRasterizerInfo()
+                        .SetFrontFace(
+                            ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
+                .SetDepthStencilInfo(
+                    ::ae::gfx_low::PipelineDepthStencilInfo()
+                        .SetDepthTestEnable(true)
+                        .SetDepthWriteEnable(true)
+                        .SetDepthCompareOp(::ae::gfx_low::CompareOp::LessEqual))
+                .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
+                                  .SetRenderTargetBlendInfos(blendInfos))));
+    }
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> skySphereGraphicsPipeline;
+    {
+        const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
+            ::ae::gfx_low::RenderTargetBlendInfo(),
+        };
+        AE_BASE_ARRAY_LENGTH_CHECK(
+            blendInfos,
+            AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
+
+        skySphereGraphicsPipeline.reset(new ::ae::gfx_low::RenderPipeline(
+            ::ae::gfx_low::RenderPipelineCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetRenderPassSpecInfo(renderPassSpecInfo)
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&skySphereVertShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&skySphereFragShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetDescriptorSetSpecInfo(graphicsDescriptorSetSpecInfo)
+                .SetVertexInputInfo(
+                    ::ae::gfx_low::PipelineVertexInputInfo()
+                        .SetBufferCount(1)
+                        .SetBufferLayoutInfos(&vertexBufferLayoutInfo)
+                        .SetAttributeCount(
+                            AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
+                        .SetAttributeInfos(vertexAttrInfos))
+                .SetPrimitiveTopologyKind(
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
+                .SetRasterizerInfo(
+                    ::ae::gfx_low::PipelineRasterizerInfo()
+                        .SetFrontFace(
+                            ::ae::gfx_low::PolygonFrontFace::
+                                Clockwise) // 裏面を表として扱うので時計周りを表面に
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
                 .SetDepthStencilInfo(
                     ::ae::gfx_low::PipelineDepthStencilInfo()
                         .SetDepthTestEnable(true)
@@ -678,26 +785,41 @@ int aemain(::ae::base::Application* app) {
                     float(display.MainScreen().Width()) /
                         display.MainScreen().Height(), // aspect
                     0.1f, // near
-                    100.0f // far
+                    1000.0f // far
                 );
                 data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
+                auto eyePos = ::ae::base::Quaternion(
+                                  ::ae::base::Vector3::UnitY(),
+                                  ::ae::base::Degree(0.6f * frameCount))
+                                  .ToRotateMatrix() *
+                              ::ae::base::Vector3(0.0f, 0.0f, 5.0f);
                 data.viewMtx = ::ae::base::Matrix44::LookAt(
-                    ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
+                    eyePos,
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
+                data.invViewMtx = data.viewMtx.Invert();
                 sceneUniformBuffer.StoreToResourceMemory(bufferIndex, data);
             }
 
-            // モデルユニフォーム
+            // シェイプモデルユニフォーム
             {
                 fModelUniformDataType data = {};
-                data.modelMtx = ::ae::base::Quaternion(
-                                    ::ae::base::Vector3::UnitY(),
-                                    ::ae::base::Degree(0.1f * frameCount))
-                                    .ToRotateMatrix()
+                data.modelMtx = ::ae::base::Matrix44::Identity();
+                shapeModelUniformBuffer.StoreToResourceMemory(
+                    bufferIndex,
+                    data);
+            }
+
+            // 天球モデルユニフォーム
+            {
+                fModelUniformDataType data = {};
+                data.modelMtx = ::ae::base::Matrix34::Scale(
+                                    ::ae::base::Vector3::One() * 100.0f)
                                     .ToMatrix44();
-                modelUniformBuffer.StoreToResourceMemory(bufferIndex, data);
+                skyBoxModelUniformBuffer.StoreToResourceMemory(
+                    bufferIndex,
+                    data);
             }
         }
 
@@ -775,10 +897,6 @@ int aemain(::ae::base::Application* app) {
                             ::ae::base::Vector2i::Zero(),
                             display.MainScreen().Extent())));
 
-                // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*graphicsPipeline);
-                cmd.CmdSetDescriptorSet(graphicsDescriptorSets[bufferIndex]);
-
                 // Viewport
                 {
                     const ::ae::gfx_low::ViewportSetting settings[] = {
@@ -803,10 +921,36 @@ int aemain(::ae::base::Application* app) {
                     cmd.CmdSetScissors(renderTargetCount, settings);
                 }
 
-                // Draw
-                cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
-                cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                // Draw-Shape
+                {
+                    // Pipeline & DescriptorSet
+                    cmd.CmdSetRenderPipeline(*shapeGraphicsPipeline);
+                    cmd.CmdSetDescriptorSet(shapeDescriptorSets[bufferIndex]);
+
+                    // Draw
+                    cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+                    cmd.CmdSetIndexBuffer(indexBuffer.View());
+                    cmd.CmdDraw(
+                        ::ae::gfx_low::DrawCallInfo()
+                            .SetUseIndexBuffer(true)
+                            .SetVertexCount(geometrySphere.getIndexCount()));
+                }
+
+                // Draw-SkySphere
+                {
+                    // Pipeline & DescriptorSet
+                    cmd.CmdSetRenderPipeline(*skySphereGraphicsPipeline);
+                    cmd.CmdSetDescriptorSet(
+                        skySphereDescriptorSets[bufferIndex]);
+
+                    // Draw
+                    cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+                    cmd.CmdSetIndexBuffer(indexBuffer.View());
+                    cmd.CmdDraw(
+                        ::ae::gfx_low::DrawCallInfo()
+                            .SetUseIndexBuffer(true)
+                            .SetVertexCount(geometrySphere.getIndexCount()));
+                }
 
                 cmd.CmdEndRenderPass();
             }
