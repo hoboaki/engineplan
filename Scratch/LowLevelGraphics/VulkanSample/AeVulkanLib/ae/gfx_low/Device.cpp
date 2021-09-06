@@ -43,6 +43,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         physicalDeviceIndex,
         0,
         system_.PhysicalDeviceCount());
+    const auto& physicalDevice = system_.PhysicalDevice_(physicalDeviceIndex);
     const auto physicalDeviceInfo =
         system_.PhysicalDeviceInfo(physicalDeviceIndex);
     const auto queueCreateCount = createInfo.QueueCreateInfoCount();
@@ -67,6 +68,9 @@ Device::Device(const DeviceCreateInfo& createInfo)
         }
     }
 #endif
+
+    // 使用できる機能は全て有効化
+    const ::vk::PhysicalDeviceFeatures features = physicalDevice.getFeatures();
 
     // 各 QueueKind の作成総数とIndex表を作成
     ::ae::base::EnumKeyArray<QueueKind, int>
@@ -112,7 +116,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
     system_.QueueFamilyIndexTable_(&queueFamilyIndexTable, physicalDeviceIndex);
 
     // SwapchainExtension対応
-    const auto& physicalDevice = system_.PhysicalDevice_(physicalDeviceIndex);
     uint32_t enabledExtensionCount = 0;
     const int extensionCountMax = 64;
     const char* extensionNames[extensionCountMax] = {};
@@ -181,7 +184,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
                           .setPpEnabledLayerNames(nullptr)
                           .setEnabledExtensionCount(enabledExtensionCount)
                           .setPpEnabledExtensionNames(extensionNames)
-                          .setPEnabledFeatures(nullptr);
+                          .setPEnabledFeatures(&features);
     {
         auto result =
             physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);
