@@ -785,7 +785,7 @@ int aemain(::ae::base::Application* app) {
                     float(display.MainScreen().Width()) /
                         display.MainScreen().Height(), // aspect
                     0.1f, // near
-                    100.0f // far
+                    1000.0f // far
                 );
                 data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
                 auto eyePos = ::ae::base::Quaternion(
@@ -815,7 +815,7 @@ int aemain(::ae::base::Application* app) {
             {
                 fModelUniformDataType data = {};
                 data.modelMtx = ::ae::base::Matrix34::Scale(
-                                    ::ae::base::Vector3::One() * 5.0f)
+                                    ::ae::base::Vector3::One() * 100.0f)
                                     .ToMatrix44();
                 skyBoxModelUniformBuffer.StoreToResourceMemory(
                     bufferIndex,
