@@ -34,7 +34,7 @@ void main()
     FragViewPos = viewPos.xyz;
     FragViewNormal = viewNormal;
     FragWorldPos = worldPos.xyz;
-    FragWorldNormal =worldNormal;
+    FragWorldNormal = worldNormal;
 }
 
 // EOF
