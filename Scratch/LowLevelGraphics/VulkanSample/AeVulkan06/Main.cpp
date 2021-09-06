@@ -84,6 +84,7 @@ namespace {
 struct fSceneUniformDataType {
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
+    ::ae::base::Matrix44Pod invViewMtx;
 };
 
 struct fModelUniformDataType {
@@ -699,6 +700,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
+                data.invViewMtx = data.viewMtx.Invert();
                 sceneUniformBuffer.StoreToResourceMemory(bufferIndex, data);
             }
 

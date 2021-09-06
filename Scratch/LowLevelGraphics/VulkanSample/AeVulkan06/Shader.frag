@@ -10,6 +10,7 @@
 layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufSceneType {
     mat4 projMtx;
     mat4 viewMtx;
+    mat4 invViewMtx;
 } UbufScene;
 
 layout(location = 0) in vec3 FragViewPos; // ビュー空間の位置
@@ -23,11 +24,12 @@ layout(set = LAYOUT_SET_IMAGE, binding = 0) uniform textureCube Image0;
 layout(set = LAYOUT_SET_SAMPLER, binding = 0) uniform sampler Sampler0;
 
 void main() {
-   vec3 eyePos = UbufScene.viewMtx[3].xyz;
+   vec3 eyePos = UbufScene.invViewMtx[3].xyz;
    vec3 eyeToPos = normalize(FragWorldPos - eyePos);
    vec3 normal = normalize(FragWorldNormal);
    vec3 reflectVec = reflect(eyeToPos, normal);
-   FragColor = texture(samplerCube(Image0, Sampler0), reflectVec);
+   vec3 color = texture(samplerCube(Image0, Sampler0), reflectVec).xyz;
+   FragColor = vec4(color, 1.0f);
 }
 
 // EOF

@@ -8,6 +8,7 @@
 layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufSceneType {
     mat4 projMtx;
     mat4 viewMtx;
+    mat4 invViewMtx;
 } UbufScene;
 
 layout(std140, set = LAYOUT_SET_BUFFER, binding = 1) uniform UbufModelType {
