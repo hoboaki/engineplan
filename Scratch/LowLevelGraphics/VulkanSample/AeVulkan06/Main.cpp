@@ -697,8 +697,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PipelineRasterizerInfo()
                         .SetFrontFace(
                             ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
-                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back)
-                )
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
                 .SetDepthStencilInfo(
                     ::ae::gfx_low::PipelineDepthStencilInfo()
                         .SetDepthTestEnable(true)
@@ -743,7 +742,8 @@ int aemain(::ae::base::Application* app) {
                 .SetRasterizerInfo(
                     ::ae::gfx_low::PipelineRasterizerInfo()
                         .SetFrontFace(
-                            ::ae::gfx_low::PolygonFrontFace::Clockwise) // 裏面を表として扱うので時計周りを表面に
+                            ::ae::gfx_low::PolygonFrontFace::
+                                Clockwise) // 裏面を表として扱うので時計周りを表面に
                         .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
                 .SetDepthStencilInfo(
                     ::ae::gfx_low::PipelineDepthStencilInfo()
@@ -806,13 +806,17 @@ int aemain(::ae::base::Application* app) {
             {
                 fModelUniformDataType data = {};
                 data.modelMtx = ::ae::base::Matrix44::Identity();
-                shapeModelUniformBuffer.StoreToResourceMemory(bufferIndex, data);
+                shapeModelUniformBuffer.StoreToResourceMemory(
+                    bufferIndex,
+                    data);
             }
 
             // 天球モデルユニフォーム
             {
                 fModelUniformDataType data = {};
-                data.modelMtx = ::ae::base::Matrix34::Scale(::ae::base::Vector3::One() * 5.0f).ToMatrix44();
+                data.modelMtx = ::ae::base::Matrix34::Scale(
+                                    ::ae::base::Vector3::One() * 5.0f)
+                                    .ToMatrix44();
                 skyBoxModelUniformBuffer.StoreToResourceMemory(
                     bufferIndex,
                     data);
@@ -936,7 +940,8 @@ int aemain(::ae::base::Application* app) {
                 {
                     // Pipeline & DescriptorSet
                     cmd.CmdSetRenderPipeline(*skySphereGraphicsPipeline);
-                    cmd.CmdSetDescriptorSet(skySphereDescriptorSets[bufferIndex]);
+                    cmd.CmdSetDescriptorSet(
+                        skySphereDescriptorSets[bufferIndex]);
 
                     // Draw
                     cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
@@ -945,7 +950,6 @@ int aemain(::ae::base::Application* app) {
                         ::ae::gfx_low::DrawCallInfo()
                             .SetUseIndexBuffer(true)
                             .SetVertexCount(geometrySphere.getIndexCount()));
-
                 }
 
                 cmd.CmdEndRenderPass();
