@@ -791,8 +791,10 @@ int aemain(::ae::base::Application* app) {
                 .SetPrimitiveTopologyKind(
                     ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
-                    ::ae::gfx_low::PipelineRasterizerInfo().SetFrontFace(
-                        ::ae::gfx_low::PolygonFrontFace::CounterClockwise))
+                    ::ae::gfx_low::PipelineRasterizerInfo()
+                        .SetFrontFace(
+                            ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
                 .SetDepthStencilInfo(
                     ::ae::gfx_low::PipelineDepthStencilInfo()
                         .SetDepthTestEnable(true)
