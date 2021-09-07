@@ -235,7 +235,7 @@ int aemain(::ae::base::Application* app) {
     ::aesk::UniformBuffer mixUniformBuffer(
         &gfxKit.Device(),
         sizeof(fMixUniformDataType),
-        1);
+        gfxKit.SwapchainImageCount());
 
     // RenderPassSpecInfo の作成
     const ::ae::gfx_low::RenderTargetSpecInfo multiRenderTargetSpecInfos[] = {
@@ -415,7 +415,7 @@ int aemain(::ae::base::Application* app) {
         multiPipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(&gfxKit.Device())
-                .SetRenderPassSpecInfo(mixRenderPassSpecInfo)
+                .SetRenderPassSpecInfo(multiRenderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
@@ -426,7 +426,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::PipelineShaderInfo()
                         .SetResource(&multiFragShader.Resource())
                         .SetEntryPointNamePtr("main"))
-                .SetDescriptorSetSpecInfo(mixDescriptorSetSpecInfo)
+                .SetDescriptorSetSpecInfo(multiDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
                     ::ae::gfx_low::PipelineVertexInputInfo()
                         .SetBufferCount(1)
