@@ -7,6 +7,8 @@
 namespace aesk {
 
 /// 正方形（XZ平面）の頂点データ。
+/// @details
+/// (0,0,0) を中心にコンストラクタで指定したサイズの正方形の頂点データを生成します。
 class GeometrySquare {
 public:
     /// @name コンストラクタとデストラクタ

@@ -7,6 +7,8 @@
 namespace aesk {
 
 /// 立方体の頂点データ。
+/// @details
+/// (0, 0, 0)を中心にコンストラクタで指定したサイズの立方体の頂点データを生成します。
 class GeometryCube {
 public:
     /// @name コンストラクタとデストラクタ
