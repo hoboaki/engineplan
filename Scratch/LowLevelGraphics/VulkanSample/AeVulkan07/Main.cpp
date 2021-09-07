@@ -43,6 +43,8 @@
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetBlendInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageView.hpp>
+#include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
@@ -63,7 +65,7 @@
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
-#include <aesk/GeometryCube.hpp>
+#include <aesk/GeometrySquare.hpp>
 #include <aesk/GfxBasicKit.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
@@ -73,17 +75,33 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
-    float mvp[4][4];
+struct fMultiUniformDataType {
+    ::ae::base::Matrix44Pod mvp;
+    ::ae::base::Vector4fPod uvTrans;
 };
 
-const uint32_t fVertShaderCode[] = {
-#include "Shader.vert.inc"
+struct fMixUniformDataType {
+    ::ae::base::Matrix44Pod mvp;
 };
 
-const uint32_t fFragShaderCode[] = {
-#include "Shader.frag.inc"
+// clang-format off
+
+const uint32_t fMultiVertShaderCode[] = {
+#include "ShaderMulti.vert.inc"
 };
+
+const uint32_t fMultiFragShaderCode[] = {
+#include "ShaderMulti.frag.inc"
+};
+
+const uint32_t fMixVertShaderCode[] = {
+#include "ShaderMix.vert.inc"
+};
+
+const uint32_t fMixFragShaderCode[] = {
+#include "ShaderMix.frag.inc"
+};
+
 // clang-format on
 
 } // namespace
@@ -106,194 +124,99 @@ int aemain(::ae::base::Application* app) {
     ::aesk::GfxBasicKit gfxKit(&display);
 
     // Shader の作成
-    ::aesk::Shader vertShader(
+    ::aesk::Shader multiVertShader(
         &gfxKit,
-        fVertShaderCode,
-        sizeof(fVertShaderCode));
-    ::aesk::Shader fragShader(
+        fMultiVertShaderCode,
+        sizeof(fMultiVertShaderCode));
+    ::aesk::Shader multiFragShader(
         &gfxKit,
-        fFragShaderCode,
-        sizeof(fFragShaderCode));
+        fMultiFragShaderCode,
+        sizeof(fMultiFragShaderCode));
+    ::aesk::Shader mixVertShader(
+        &gfxKit,
+        fMixVertShaderCode,
+        sizeof(fMixVertShaderCode));
+    ::aesk::Shader mixFragShader(
+        &gfxKit,
+        fMixFragShaderCode,
+        sizeof(fMixFragShaderCode));
 
     // VertexBuffer の作成
-    ::aesk::GeometryCube geometryCube;
+    ::aesk::GeometrySquare geometrySquare;
     const auto vertexBufferLayoutInfo =
         ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(
-            geometryCube.Stride());
+            geometrySquare.Stride());
     const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
-            .SetOffset(geometryCube.OffsetPosition()),
+            .SetOffset(geometrySquare.OffsetPosition()),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
-            .SetOffset(geometryCube.OffsetUv0()),
+            .SetOffset(geometrySquare.OffsetUv0()),
     };
     ::aesk::VertexBuffer vertexBuffer(
         &gfxKit.Device(),
-        geometryCube.Data().Size(),
+        geometrySquare.Data().Size(),
         vertexBufferLayoutInfo);
-    vertexBuffer.StoreToResourceMemory(geometryCube.Data());
+    vertexBuffer.StoreToResourceMemory(geometrySquare.Data());
 
-    // ポリゴンに貼り付けるテクスチャの作成
-    ::ae::gfx_low::UniqueResourceMemory textureMemory;
-    ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
-    ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
-    ::std::unique_ptr<::ae::gfx_low::BufferResource> copySrcTextureBuffer;
-    ::std::unique_ptr<::ae::gfx_low::SampledImageView> textureView;
-    ::ae::gfx_low::CopyBufferToImageInfo copyBufferToImageInfo;
+    // マルチレンダーターゲット用テクスチャの作成
+    constexpr int multiRenderTargetCount = 2;
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
+        textureMemories(multiRenderTargetCount);
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::ImageResource> textureImages(
+        multiRenderTargetCount);
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::SampledImageView> textureViews(
+        multiRenderTargetCount);
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::RenderTargetImageView>
+        renderTargetImageViews(multiRenderTargetCount);
+    const auto textureFormat = ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
+    const auto textureExtent = ::ae::base::Extent2i(256, 256);
     {
-        const auto extent = ::ae::base::Extent2i(256, 256);
-        const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
         const auto baseSpecInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
-                .SetFormat(format)
-                .SetExtent(extent);
+                .SetFormat(textureFormat)
+                .SetExtent(textureExtent);
         ::ae::gfx_low::ImageSubresourceDataInfo dataInfo;
 
-        if (gfxKit.Device().IsDeviceLocalMemoryShared()) {
-            // デバイスメモリが共有メモリの場合
-            // コピーは不要のため共有メモリ上にテクスチャメモリを配置し
-            // GPU からもそのデータを参照するようにする
-            const auto specInfo =
-                ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
-                    .SetTiling(::ae::gfx_low::ImageResourceTiling::Linear)
-                    .SetUsageBitSet(
-                        ::ae::gfx_low::ImageResourceUsageBitSet().Set(
+        // メモ：
+        // イメージは別メモリからコピーされるため
+        // デバイスメモリが共有か否かは関係ない
+        const auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetUsageBitSet(
+                    ::ae::gfx_low::ImageResourceUsageBitSet()
+                        .Set(
                             ::ae::gfx_low::ImageResourceUsage::SampledImage,
+                            true)
+                        .Set(
+                            ::ae::gfx_low::ImageResourceUsage::
+                                RenderTargetImage,
                             true));
-            textureMemory.Reset(
+
+        for (int i = 0; i < multiRenderTargetCount; ++i) {
+            textureMemories.Add(
                 &gfxKit.Device(),
                 ::ae::gfx_low::ResourceMemoryAllocInfo()
                     .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
                     .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
                         specInfo)));
-            textureImage.reset(new ::ae::gfx_low::ImageResource(
+            textureImages.Add(
                 ::ae::gfx_low::ImageResourceCreateInfo()
                     .SetDevice(&gfxKit.Device())
                     .SetSpecInfo(specInfo)
-                    .SetDataAddress(textureMemory->Address())));
-            dataInfo = gfxKit.Device().CalcImageSubresourceDataInfo(
-                specInfo,
-                ::ae::gfx_low::ImageSubresourceLocation());
-        } else {
-            // デバイスメモリが専用メモリの場合
-            // 共有メモリから専用メモリへのコピーが必要のため
-            // ２つずつオブジェクトを作る
-            {
-                const auto specInfo =
-                    ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
-                        .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
-                        .SetUsageBitSet(
-                            ::ae::gfx_low::ImageResourceUsageBitSet()
-                                .Set(
-                                    ::ae::gfx_low::ImageResourceUsage::
-                                        SampledImage,
-                                    true)
-                                .Set(
-                                    ::ae::gfx_low::ImageResourceUsage::CopyDst,
-                                    true));
-                textureMemory.Reset(
-                    &gfxKit.Device(),
-                    ::ae::gfx_low::ResourceMemoryAllocInfo()
-                        .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
-                        .SetParams(
-                            gfxKit.Device().CalcResourceMemoryRequirements(
-                                specInfo)));
-                textureImage.reset(new ::ae::gfx_low::ImageResource(
-                    ::ae::gfx_low::ImageResourceCreateInfo()
-                        .SetDevice(&gfxKit.Device())
-                        .SetSpecInfo(specInfo)
-                        .SetDataAddress(textureMemory->Address())));
-            }
-            {
-                const auto specInfo =
-                    ::ae::gfx_low::ImageResourceSpecInfo(baseSpecInfo)
-                        .SetTiling(::ae::gfx_low::ImageResourceTiling::Linear)
-                        .SetUsageBitSet(
-                            ::ae::gfx_low::ImageResourceUsageBitSet().Set(
-                                ::ae::gfx_low::ImageResourceUsage::CopySrc,
-                                true));
-                dataInfo = gfxKit.Device().CalcImageSubresourceDataInfo(
-                    specInfo,
-                    ::ae::gfx_low::ImageSubresourceLocation());
-                copySrcTextureMemory.Reset(
-                    &gfxKit.Device(),
-                    ::ae::gfx_low::ResourceMemoryAllocInfo()
-                        .SetKind(
-                            ::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
-                        .SetParams(
-                            gfxKit.Device().CalcResourceMemoryRequirements(
-                                specInfo)));
-                copySrcTextureBuffer.reset(new ::ae::gfx_low::BufferResource(
-                    ::ae::gfx_low::BufferResourceCreateInfo()
-                        .SetDevice(&gfxKit.Device())
-                        .SetSpecInfo(
-                            ::ae::gfx_low::BufferResourceSpecInfo()
-                                .SetSize(dataInfo.RowPitch() * extent.height)
-                                .SetUsageBitSet(
-                                    ::ae::gfx_low::BufferResourceUsageBitSet()
-                                        .Set(
-                                            ::ae::gfx_low::BufferResourceUsage::
-                                                CopySrc,
-                                            true)))
-                        .SetDataAddress(copySrcTextureMemory->Address())));
-            }
-
-            // コピー用情報を先行して作成しておく
-            copyBufferToImageInfo =
-                ::ae::gfx_low::CopyBufferToImageInfo()
-                    .SetSrcBufferResource(copySrcTextureBuffer.get())
-                    .SetSrcBufferRowPitch(dataInfo.RowPitch())
-                    .SetSrcBufferDepthPitch(dataInfo.DepthPitch())
-                    .SetSrcImageFormat(format)
-                    .SetSrcImageExtent(extent)
-                    .SetDstImageResource(textureImage.get())
-                    .SetDstImageResourceState(
-                        ::ae::gfx_low::ImageResourceState::CopyDst);
-        }
-
-        // サンプラー用イメージビューの作成
-        textureView.reset(new ::ae::gfx_low::SampledImageView(
-            ::ae::gfx_low::SampledImageViewCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetResource(textureImage.get())
-                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
-                .SetFormat(format)));
-
-        // テクスチャイメージをプログラムコードで作成
-        {
-            auto& targetMemory = gfxKit.Device().IsDeviceLocalMemoryShared()
-                                     ? textureMemory
-                                     : copySrcTextureMemory;
-            uint8_t* dst = gfxKit.Device().MapResourceMemory(
-                *targetMemory,
-                ::ae::gfx_low::ResourceMemoryRegion()
-                    .SetOffset(dataInfo.Offset())
-                    .SetSize(dataInfo.RowPitch() * extent.height));
-            const ::ae::base::Color4bPod rgbColors[] = {
-                ::ae::base::Color4b(0xFF, 0xFF, 0xFF, 0xFF),
-                ::ae::base::Color4b(0xFF, 0xFF, 0, 0xFF),
-                ::ae::base::Color4b(0, 0xFF, 0xFF, 0xFF),
-                ::ae::base::Color4b(0, 0xFF, 0, 0xFF),
-                ::ae::base::Color4b(0xFF, 0, 0xFF, 0xFF),
-                ::ae::base::Color4b(0xFF, 0, 0, 0xFF),
-                ::ae::base::Color4b(0, 0, 0xFF, 0xFF),
-            };
-            for (int y = 0; y < extent.height; ++y) {
-                for (int x = 0; x < extent.width; ++x) {
-                    const int colorIndex =
-                        x / (extent.width / AE_BASE_ARRAY_LENGTH(rgbColors));
-                    const auto& color = rgbColors[colorIndex];
-                    const size_t baseOffset =
-                        size_t(y) * dataInfo.RowPitch() + size_t(x) * 4;
-                    dst[baseOffset + 0] = color.r;
-                    dst[baseOffset + 1] = color.g;
-                    dst[baseOffset + 2] = color.b;
-                    dst[baseOffset + 3] = color.a;
-                }
-            }
-            gfxKit.Device().UnmapResourceMemory(*targetMemory);
+                    .SetDataAddress(textureMemories[i]->Address()));
+            textureViews.Add(::ae::gfx_low::SampledImageViewCreateInfo()
+                                 .SetDevice(&gfxKit.Device())
+                                 .SetResource(&textureImages[i])
+                                 .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                                 .SetFormat(textureFormat));
+            renderTargetImageViews.Add(
+                ::ae::gfx_low::RenderTargetImageViewCreateInfo()
+                    .SetDevice(&gfxKit.Device())
+                    .SetResource(&textureImages[i]));
         }
     }
 
@@ -305,23 +228,37 @@ int aemain(::ae::base::Application* app) {
     }
 
     // UniformBuffer の作成
-    ::aesk::UniformBuffer uniformBuffer(
+    ::aesk::UniformBuffer multiUniformBuffer(
         &gfxKit.Device(),
-        sizeof(fUniformDataType),
+        sizeof(fMultiUniformDataType),
         gfxKit.SwapchainImageCount());
+    ::aesk::UniformBuffer mixUniformBuffer(
+        &gfxKit.Device(),
+        sizeof(fMixUniformDataType),
+        1);
 
     // RenderPassSpecInfo の作成
-    const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
+    const ::ae::gfx_low::RenderTargetSpecInfo multiRenderTargetSpecInfos[] = {
+        ::ae::gfx_low::RenderTargetSpecInfo().SetImageFormat(textureFormat),
+        ::ae::gfx_low::RenderTargetSpecInfo().SetImageFormat(textureFormat),
+    };
+    const auto multiRenderPassSpecInfo =
+        ::ae::gfx_low::RenderPassSpecInfo()
+            .SetRenderTargetCount(multiRenderTargetCount)
+            .SetRenderTargetSpecInfos(multiRenderTargetSpecInfos);
+
+    const ::ae::gfx_low::RenderTargetSpecInfo mixRenderTargetSpecInfos[] = {
         gfxKit.Swapchain()->RenderTargetSpecInfo(),
     };
-    const int renderTargetCount = AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos);
+    const int mixRenderTargetCount =
+        AE_BASE_ARRAY_LENGTH(mixRenderTargetSpecInfos);
     const auto depthStencilSpecInfo =
         ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(
             gfxKit.DepthBufferFormat());
-    const auto renderPassSpecInfo =
+    const auto mixRenderPassSpecInfo =
         ::ae::gfx_low::RenderPassSpecInfo()
-            .SetRenderTargetCount(renderTargetCount)
-            .SetRenderTargetSpecInfos(renderTargetSpecInfos)
+            .SetRenderTargetCount(mixRenderTargetCount)
+            .SetRenderTargetSpecInfos(mixRenderTargetSpecInfos)
             .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
 
     // DescriptorSetSpecInfo の作成
@@ -338,7 +275,12 @@ int aemain(::ae::base::Application* app) {
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
                 ::ae::gfx_low::ShaderBindingStage::Fragment,
                 true))
-            .SetBindingIndex(0)
+            .SetBindingIndex(0),
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Fragment,
+                true))
+            .SetBindingIndex(1)
     };
     const ::ae::gfx_low::ShaderBindingInfo samplerBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
@@ -347,7 +289,12 @@ int aemain(::ae::base::Application* app) {
                 true))
             .SetBindingIndex(0)
     };
-    const auto descriptorSetSpecInfo =
+    const auto multiDescriptorSetSpecInfo =
+        ::ae::gfx_low::DescriptorSetSpecInfo().SetBindingInfos(
+            ::ae::gfx_low::DescriptorKind::UniformBuffer,
+            AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
+            uniformBufferBindingInfos);
+    const auto mixDescriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::UniformBuffer,
@@ -363,89 +310,123 @@ int aemain(::ae::base::Application* app) {
                 samplerBindingInfos);
 
     // DescriptorSet の作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
-        gfxKit.SwapchainImageCount());
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
+        multiDescriptorSets(gfxKit.SwapchainImageCount());
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet>
+        mixDescriptorSets(gfxKit.SwapchainImageCount());
     for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
-                               .SetDevice(&gfxKit.Device())
-                               .SetSpecInfo(descriptorSetSpecInfo));
+        multiDescriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
+                                    .SetDevice(&gfxKit.Device())
+                                    .SetSpecInfo(multiDescriptorSetSpecInfo));
+        mixDescriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
+                                  .SetDevice(&gfxKit.Device())
+                                  .SetSpecInfo(mixDescriptorSetSpecInfo));
 
-        // UniformBuffer
-        const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
-            &uniformBuffer.View(i)
-        };
-        const ::ae::gfx_low::UniformBufferDescriptorInfo
-            uniformBufferDescs[] = {
-                ::ae::gfx_low::UniformBufferDescriptorInfo()
-                    .SetRegion(::ae::gfx_low::ShaderBindingRegion()
-                                   .SetBindingIndex(0)
-                                   .SetElemCount(AE_BASE_ARRAY_LENGTH(
-                                       localUniformBufferViews)))
-                    .SetViews(localUniformBufferViews),
+        // multi
+        {
+            // UniformBuffer
+            const ::ae::gfx_low::UniformBufferView*
+                localUniformBufferViews[] = { &multiUniformBuffer.View(i) };
+            const ::ae::gfx_low::UniformBufferDescriptorInfo
+                uniformBufferDescs[] = {
+                    ::ae::gfx_low::UniformBufferDescriptorInfo()
+                        .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                       .SetBindingIndex(0)
+                                       .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                           localUniformBufferViews)))
+                        .SetViews(localUniformBufferViews),
+                };
+
+            // 更新
+            multiDescriptorSets[i].Update(
+                ::ae::gfx_low::DescriptorSetUpdateInfo().SetUniformBufferInfos(
+                    AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                    uniformBufferDescs));
+        }
+
+        // mix
+        {
+            // UniformBuffer
+            const ::ae::gfx_low::UniformBufferView*
+                localUniformBufferViews[] = { &mixUniformBuffer.View(i) };
+            const ::ae::gfx_low::UniformBufferDescriptorInfo
+                uniformBufferDescs[] = {
+                    ::ae::gfx_low::UniformBufferDescriptorInfo()
+                        .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                       .SetBindingIndex(0)
+                                       .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                           localUniformBufferViews)))
+                        .SetViews(localUniformBufferViews),
+                };
+
+            // SampledImage
+            const ::ae::gfx_low::SampledImageView* sampledImageViews[] = {
+                &textureViews[0],
+                &textureViews[1],
+            };
+            const ::ae::gfx_low::SampledImageDescriptorInfo
+                sampledImageDescs[] = {
+                    ::ae::gfx_low::SampledImageDescriptorInfo()
+                        .SetRegion(::ae::gfx_low::ShaderBindingRegion()
+                                       .SetBindingIndex(0)
+                                       .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                           sampledImageViews)))
+                        .SetViews(sampledImageViews),
+                };
+
+            // Sampler
+            const ::ae::gfx_low::Sampler* samplers[] = { sampler.get() };
+            const ::ae::gfx_low::SamplerDescriptorInfo samplerDescs[] = {
+                ::ae::gfx_low::SamplerDescriptorInfo()
+                    .SetRegion(
+                        ::ae::gfx_low::ShaderBindingRegion()
+                            .SetBindingIndex(0)
+                            .SetElemCount(AE_BASE_ARRAY_LENGTH(samplers)))
+                    .SetSamplers(samplers),
             };
 
-        // SampledImage
-        const ::ae::gfx_low::SampledImageView* sampledImageViews[] = {
-            textureView.get()
-        };
-        const ::ae::gfx_low::SampledImageDescriptorInfo sampledImageDescs[] = {
-            ::ae::gfx_low::SampledImageDescriptorInfo()
-                .SetRegion(
-                    ::ae::gfx_low::ShaderBindingRegion()
-                        .SetBindingIndex(0)
-                        .SetElemCount(AE_BASE_ARRAY_LENGTH(sampledImageViews)))
-                .SetViews(sampledImageViews),
-        };
-
-        // Sampler
-        const ::ae::gfx_low::Sampler* samplers[] = { sampler.get() };
-        const ::ae::gfx_low::SamplerDescriptorInfo samplerDescs[] = {
-            ::ae::gfx_low::SamplerDescriptorInfo()
-                .SetRegion(::ae::gfx_low::ShaderBindingRegion()
-                               .SetBindingIndex(0)
-                               .SetElemCount(AE_BASE_ARRAY_LENGTH(samplers)))
-                .SetSamplers(samplers),
-        };
-
-        // 更新
-        descriptorSets[i].Update(
-            ::ae::gfx_low::DescriptorSetUpdateInfo()
-                .SetUniformBufferInfos(
-                    AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
-                    uniformBufferDescs)
-                .SetSampledImageInfos(
-                    AE_BASE_ARRAY_LENGTH(sampledImageDescs),
-                    sampledImageDescs)
-                .SetSamplerInfos(
-                    AE_BASE_ARRAY_LENGTH(samplerDescs),
-                    samplerDescs));
+            // 更新
+            mixDescriptorSets[i].Update(
+                ::ae::gfx_low::DescriptorSetUpdateInfo()
+                    .SetUniformBufferInfos(
+                        AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
+                        uniformBufferDescs)
+                    .SetSampledImageInfos(
+                        AE_BASE_ARRAY_LENGTH(sampledImageDescs),
+                        sampledImageDescs)
+                    .SetSamplerInfos(
+                        AE_BASE_ARRAY_LENGTH(samplerDescs),
+                        samplerDescs));
+        }
     }
 
     // GraphicsPipeline 生成
-    std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> multiPipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> mixPipeline;
     {
         const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
+            ::ae::gfx_low::RenderTargetBlendInfo(),
             ::ae::gfx_low::RenderTargetBlendInfo(),
         };
         AE_BASE_ARRAY_LENGTH_CHECK(
             blendInfos,
-            AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
+            AE_BASE_ARRAY_LENGTH(multiRenderTargetSpecInfos));
 
-        pipeline.reset(new ::ae::gfx_low::RenderPipeline(
+        multiPipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(&gfxKit.Device())
-                .SetRenderPassSpecInfo(renderPassSpecInfo)
+                .SetRenderPassSpecInfo(mixRenderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&vertShader.Resource())
+                        .SetResource(&multiVertShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&fragShader.Resource())
+                        .SetResource(&multiFragShader.Resource())
                         .SetEntryPointNamePtr("main"))
-                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
+                .SetDescriptorSetSpecInfo(mixDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
                     ::ae::gfx_low::PipelineVertexInputInfo()
                         .SetBufferCount(1)
@@ -460,11 +441,48 @@ int aemain(::ae::base::Application* app) {
                         .SetFrontFace(
                             ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
                         .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
-                .SetDepthStencilInfo(
-                    ::ae::gfx_low::PipelineDepthStencilInfo()
-                        .SetDepthTestEnable(true)
-                        .SetDepthWriteEnable(true)
-                        .SetDepthCompareOp(::ae::gfx_low::CompareOp::LessEqual))
+                .SetDepthStencilInfo(::ae::gfx_low::PipelineDepthStencilInfo())
+                .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
+                                  .SetRenderTargetBlendInfos(blendInfos))));
+    }
+    {
+        const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
+            ::ae::gfx_low::RenderTargetBlendInfo(),
+        };
+        AE_BASE_ARRAY_LENGTH_CHECK(
+            blendInfos,
+            AE_BASE_ARRAY_LENGTH(mixRenderTargetSpecInfos));
+
+        mixPipeline.reset(new ::ae::gfx_low::RenderPipeline(
+            ::ae::gfx_low::RenderPipelineCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetRenderPassSpecInfo(mixRenderPassSpecInfo)
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&mixVertShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&mixFragShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetDescriptorSetSpecInfo(mixDescriptorSetSpecInfo)
+                .SetVertexInputInfo(
+                    ::ae::gfx_low::PipelineVertexInputInfo()
+                        .SetBufferCount(1)
+                        .SetBufferLayoutInfos(&vertexBufferLayoutInfo)
+                        .SetAttributeCount(
+                            AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
+                        .SetAttributeInfos(vertexAttrInfos))
+                .SetPrimitiveTopologyKind(
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
+                .SetRasterizerInfo(
+                    ::ae::gfx_low::PipelineRasterizerInfo()
+                        .SetFrontFace(
+                            ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
+                .SetDepthStencilInfo(::ae::gfx_low::PipelineDepthStencilInfo())
                 .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
                                   .SetRenderTargetBlendInfos(blendInfos))));
     }
@@ -490,42 +508,67 @@ int aemain(::ae::base::Application* app) {
         const auto bufferIndex = gfxKit.CurrentBufferIndex();
 
         // ユニフォームバッファ更新
-        // （画面更新を確認するために毎フレーム更新）
         {
-            // vec3 eye = {0.0f, 3.0f, 5.0f};
-            // vec3 origin = {0, 0, 0};
-            // vec3 up = {0.0f, 1.0f, 0.0};
-            // mat4x4_perspective(projection_matrix,
-            //    (float)degreesToRadians(25.0f), 1.0f, 0.1f, 100.0f);
-            // mat4x4_look_at(view_matrix, eye, origin, up);
-            // mat4x4_identity(model_matrix);
-            // projection_matrix[1][1] *= -1;  // Flip projection matrix
-            // from GL to Vulkan orientation.
+            // multi
+            {
+                auto proj = ::ae::base::Matrix44::Ortho(
+                    -1.0f, // left
+                    1.0f, // top
+                    1.0f, // right
+                    -1.0f, // bottom
+                    0.1f, // near
+                    100.0f // far
+                );
+                proj.m[1][1] *=
+                    -1.0f; // Flip projection matrix from GL to Vulkan orientation.
+                auto view = ::ae::base::Matrix44::LookAt(
+                    ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
+                    ::ae::base::Vector3::Zero(), // targetPos
+                    ::ae::base::Vector3::UnitY() // upVec
+                );
+                auto model = ::ae::base::Quaternion(
+                                 ::ae::base::Vector3::UnitX(),
+                                 ::ae::base::Degree(90.0f))
+                                 .ToRotateMatrix()
+                                 .ToMatrix44();
+                auto vp = proj * view;
+                auto mvp = vp * model;
 
-            auto proj = ::ae::base::Matrix44::Perspective(
-                ::ae::base::Angle(::ae::base::Degree(25.0f)),
-                float(display.MainScreen().Width()) /
-                    display.MainScreen().Height(), // aspect
-                0.1f, // near
-                100.0f // far
-            );
-            proj.m[1][1] *= -1.0f;
-            auto view = ::ae::base::Matrix44::LookAt(
-                ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
-                ::ae::base::Vector3::Zero(), // targetPos
-                ::ae::base::Vector3::UnitY() // upVec
-            );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
-            auto vp = proj * view;
-            auto mvp = vp * model;
+                fMultiUniformDataType data = {};
+                data.mvp = mvp;
+                data.uvTrans = ::ae::base::Vector4(1.0f, 1.0f, 0.0f, 0.0f) *
+                               float(frameCount) * 0.01f;
+                multiUniformBuffer.StoreToResourceMemory(bufferIndex, data);
+            }
 
-            fUniformDataType data;
-            memcpy(data.mvp, &mvp, sizeof(mvp));
-            uniformBuffer.StoreToResourceMemory(bufferIndex, data);
+            // mix
+            {
+                auto proj = ::ae::base::Matrix44::Perspective(
+                    ::ae::base::Angle(::ae::base::Degree(25.0f)),
+                    float(display.MainScreen().Width()) /
+                        display.MainScreen().Height(), // aspect
+                    0.1f, // near
+                    1000.0f // far
+                );
+                proj.m[1][1] *=
+                    -1.0f; // Flip projection matrix from GL to Vulkan orientation.
+                auto view = ::ae::base::Matrix44::LookAt(
+                    ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
+                    ::ae::base::Vector3::Zero(), // targetPos
+                    ::ae::base::Vector3::UnitY() // upVec
+                );
+                auto model = ::ae::base::Quaternion(
+                                 ::ae::base::Vector3::UnitX(),
+                                 ::ae::base::Degree(90.0f))
+                                 .ToRotateMatrix()
+                                 .ToMatrix44();
+                auto vp = proj * view;
+                auto mvp = vp * model;
+
+                fMixUniformDataType data = {};
+                data.mvp = mvp;
+                mixUniformBuffer.StoreToResourceMemory(bufferIndex, data);
+            }
         }
 
         // コマンドバッファ作成
@@ -534,38 +577,114 @@ int aemain(::ae::base::Application* app) {
         {
             // テクスチャのセットアップ
             if (!isFinishedSetupTexture) {
-                if (copySrcTextureBuffer.get() == nullptr) {
-                    // デバイスメモリが共有メモリの場合はメモリバリアのみ設定して終了
+                // 初期状態をサンプリング用モードにしておくことで
+                // 以降のコードを２ループ目以降と同じ処理にできるようにする
+                for (int i = 0; i < multiRenderTargetCount; ++i) {
                     cmd.CmdImageResourceBarrier(
                         ::ae::gfx_low::ImageResourceBarrierInfo()
-                            .SetResource(textureImage.get())
+                            .SetResource(&textureImages[i])
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
-                            .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
-                } else {
-                    // デバイスメモリが専用メモリの場合はアップロードとメモリバリアを設定
-                    cmd.CmdImageResourceBarrier(
-                        ::ae::gfx_low::ImageResourceBarrierInfo()
-                            .SetResource(textureImage.get())
-                            .SetOldState(
-                                ::ae::gfx_low::ImageResourceState::Unknown)
-                            .SetNewState(
-                                ::ae::gfx_low::ImageResourceState::CopyDst));
-                    cmd.CmdCopyBufferToImage(copyBufferToImageInfo);
-                    cmd.CmdImageResourceBarrier(
-                        ::ae::gfx_low::ImageResourceBarrierInfo()
-                            .SetResource(textureImage.get())
-                            .SetOldState(
-                                ::ae::gfx_low::ImageResourceState::CopyDst)
                             .SetNewState(::ae::gfx_low::ImageResourceState::
                                              ShaderResourceReadOnly));
                 }
                 isFinishedSetupTexture = true;
             }
 
-            // クリアカラー参考
-            // https://www.colordic.org/colorscheme/7005
+            // レンダーターゲット用にテクスチャセットアップ
+            for (int i = 0; i < multiRenderTargetCount; ++i) {
+                cmd.CmdImageResourceBarrier(
+                    ::ae::gfx_low::ImageResourceBarrierInfo()
+                        .SetResource(&textureImages[i])
+                        .SetOldState(::ae::gfx_low::ImageResourceState::
+                                         ShaderResourceReadOnly)
+                        .SetNewState(
+                            ::ae::gfx_low::ImageResourceState::RenderTarget));
+            }
+
+            // マルチレンダーターゲットで描画
+            {
+                const auto baseRenderTargetSetting =
+                    ::ae::gfx_low::RenderTargetSetting()
+                        .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
+                        .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
+                        .SetInitialImageResourceState(
+                            ::ae::gfx_low::ImageResourceState::RenderTarget)
+                        .SetFinalImageResourceState(
+                            ::ae::gfx_low::ImageResourceState::
+                                ShaderResourceReadOnly)
+                        .SetClearColor(
+                            ::ae::base::Color4b(0x80, 0x80, 0x80, 0xff)
+                                .ToRGBAf());
+                const ::ae::gfx_low::RenderTargetSetting
+                    renderTargetSettings[] = {
+                        ::ae::gfx_low::RenderTargetSetting(
+                            baseRenderTargetSetting)
+                            .SetRenderTargetImageView(
+                                &renderTargetImageViews[0]),
+                        ::ae::gfx_low::RenderTargetSetting(
+                            baseRenderTargetSetting)
+                            .SetRenderTargetImageView(
+                                &renderTargetImageViews[1]),
+                    };
+
+                cmd.CmdBeginRenderPass(
+                    ::ae::gfx_low::RenderPassBeginInfo()
+                        .SetRenderPassSpecInfo(multiRenderPassSpecInfo)
+                        .SetRenderTargetSettings(renderTargetSettings)
+                        .SetRenderArea(::ae::base::Aabb2i(
+                            ::ae::base::Vector2i::Zero(),
+                            textureExtent)));
+
+                // Viewport
+                {
+                    const ::ae::gfx_low::ViewportSetting settings[] = {
+                        ::ae::gfx_low::ViewportSetting().SetRect(
+                            ::ae::base::Aabb2(
+                                ::ae::base::Vector2::Zero(),
+                                textureExtent.ToExtent2())),
+                        ::ae::gfx_low::ViewportSetting().SetRect(
+                            ::ae::base::Aabb2(
+                                ::ae::base::Vector2::Zero(),
+                                textureExtent.ToExtent2())),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(
+                        settings,
+                        multiRenderTargetCount);
+                    cmd.CmdSetViewports(multiRenderTargetCount, settings);
+                }
+
+                // Scissor
+                {
+                    const ::ae::gfx_low::ScissorSetting settings[] = {
+                        ::ae::gfx_low::ScissorSetting().SetRect(
+                            ::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                textureExtent)),
+                        ::ae::gfx_low::ScissorSetting().SetRect(
+                            ::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                textureExtent)),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(
+                        settings,
+                        multiRenderTargetCount);
+                    cmd.CmdSetScissors(multiRenderTargetCount, settings);
+                }
+
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*multiPipeline);
+                cmd.CmdSetDescriptorSet(multiDescriptorSets[bufferIndex]);
+
+                // Draw
+                cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(
+                    geometrySquare.VertexCount()));
+
+                cmd.CmdEndRenderPass();
+            }
+
+            // 最終レンダーターゲットに描画
             {
                 const ::ae::gfx_low::RenderTargetSetting
                     renderTargetSettings[] = {
@@ -602,16 +721,12 @@ int aemain(::ae::base::Application* app) {
 
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo()
-                        .SetRenderPassSpecInfo(renderPassSpecInfo)
+                        .SetRenderPassSpecInfo(mixRenderPassSpecInfo)
                         .SetRenderTargetSettings(renderTargetSettings)
                         .SetDepthStencilSettingPtr(&depthStencilSetting)
                         .SetRenderArea(::ae::base::Aabb2i(
                             ::ae::base::Vector2i::Zero(),
                             display.MainScreen().Extent())));
-
-                // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*pipeline);
-                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
 
                 // Viewport
                 {
@@ -621,8 +736,8 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::base::Vector2::Zero(),
                                 display.MainScreen().Extent().ToExtent2())),
                     };
-                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
-                    cmd.CmdSetViewports(renderTargetCount, settings);
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, mixRenderTargetCount);
+                    cmd.CmdSetViewports(mixRenderTargetCount, settings);
                 }
 
                 // Scissor
@@ -633,14 +748,18 @@ int aemain(::ae::base::Application* app) {
                                 ::ae::base::Vector2i::Zero(),
                                 display.MainScreen().Extent())),
                     };
-                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
-                    cmd.CmdSetScissors(renderTargetCount, settings);
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, mixRenderTargetCount);
+                    cmd.CmdSetScissors(mixRenderTargetCount, settings);
                 }
+
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*mixPipeline);
+                cmd.CmdSetDescriptorSet(mixDescriptorSets[bufferIndex]);
 
                 // Draw
                 cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
-                cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(
+                    geometrySquare.VertexCount()));
 
                 cmd.CmdEndRenderPass();
             }
