@@ -70,6 +70,7 @@
 #include <ae/gfx_low/UniqueResourceMemory.hpp>
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
+#include <aesk/GeometryCube.hpp>
 #include <aesk/GfxBasicKit.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
@@ -81,104 +82,6 @@ namespace {
 
 struct fUniformDataType {
     float mvp[4][4];
-};
-
-struct fVertexType {
-    float position[3];
-    float uv0[2];
-};
-
-struct fVertexBufferType {
-    fVertexType v[12 * 3];
-};
-
-// clang-format off
-const float fPositionData[] = {
-    -1.0f,-1.0f,-1.0f,  // -X side
-    -1.0f,-1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-    -1.0f,-1.0f,-1.0f,
-
-    -1.0f,-1.0f,-1.0f,  // -Z side
-     1.0f, 1.0f,-1.0f,
-     1.0f,-1.0f,-1.0f,
-    -1.0f,-1.0f,-1.0f,
-    -1.0f, 1.0f,-1.0f,
-     1.0f, 1.0f,-1.0f,
-
-    -1.0f,-1.0f,-1.0f,  // -Y side
-     1.0f,-1.0f,-1.0f,
-     1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f,-1.0f,
-     1.0f,-1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-
-    -1.0f, 1.0f,-1.0f,  // +Y side
-    -1.0f, 1.0f, 1.0f,
-     1.0f, 1.0f, 1.0f,
-    -1.0f, 1.0f,-1.0f,
-     1.0f, 1.0f, 1.0f,
-     1.0f, 1.0f,-1.0f,
-
-     1.0f, 1.0f,-1.0f,  // +X side
-     1.0f, 1.0f, 1.0f,
-     1.0f,-1.0f, 1.0f,
-     1.0f,-1.0f, 1.0f,
-     1.0f,-1.0f,-1.0f,
-     1.0f, 1.0f,-1.0f,
-
-    -1.0f, 1.0f, 1.0f,  // +Z side
-    -1.0f,-1.0f, 1.0f,
-     1.0f, 1.0f, 1.0f,
-    -1.0f,-1.0f, 1.0f,
-     1.0f,-1.0f, 1.0f,
-     1.0f, 1.0f, 1.0f,
-};
-
-const float fUvBufferData[] = {
-    0.0f, 1.0f,  // -X side
-    1.0f, 1.0f,
-    1.0f, 0.0f,
-    1.0f, 0.0f,
-    0.0f, 0.0f,
-    0.0f, 1.0f,
-
-    1.0f, 1.0f,  // -Z side
-    0.0f, 0.0f,
-    0.0f, 1.0f,
-    1.0f, 1.0f,
-    1.0f, 0.0f,
-    0.0f, 0.0f,
-
-    1.0f, 0.0f,  // -Y side
-    1.0f, 1.0f,
-    0.0f, 1.0f,
-    1.0f, 0.0f,
-    0.0f, 1.0f,
-    0.0f, 0.0f,
-
-    1.0f, 0.0f,  // +Y side
-    0.0f, 0.0f,
-    0.0f, 1.0f,
-    1.0f, 0.0f,
-    0.0f, 1.0f,
-    1.0f, 1.0f,
-
-    1.0f, 0.0f,  // +X side
-    0.0f, 0.0f,
-    0.0f, 1.0f,
-    0.0f, 1.0f,
-    1.0f, 1.0f,
-    1.0f, 0.0f,
-
-    0.0f, 0.0f,  // +Z side
-    0.0f, 1.0f,
-    1.0f, 0.0f,
-    0.0f, 1.0f,
-    1.0f, 1.0f,
-    1.0f, 0.0f,
 };
 
 const int fThreadsPerThreadGroupX = 16;
@@ -232,32 +135,22 @@ int aemain(::ae::base::Application* app) {
         sizeof(fFragShaderCode));
 
     // VertexBuffer の作成
+    ::aesk::GeometryCube geometryCube;
     const auto vertexBufferLayoutInfo =
-        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(sizeof(fVertexType));
+        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(geometryCube.Stride());
     const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
-        ::ae::gfx_low::VertexAttributeInfo().SetFormat(
-            ::ae::gfx_low::VertexFormat::Sfloat32x3),
+        ::ae::gfx_low::VertexAttributeInfo()
+            .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
+            .SetOffset(geometryCube.OffsetPosition()),
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
-            .SetOffset(offsetof(fVertexType, uv0)),
+            .SetOffset(geometryCube.OffsetUv0()),
     };
     ::aesk::VertexBuffer vertexBuffer(
         &gfxKit.Device(),
-        sizeof(fVertexBufferType),
+        geometryCube.Data().Size(),
         vertexBufferLayoutInfo);
-    {
-        // バッファ更新
-        fVertexBufferType data;
-        for (int i = 0; i < 12 * 3; ++i) {
-            data.v[i].position[0] = fPositionData[i * 3];
-            data.v[i].position[1] = fPositionData[i * 3 + 1];
-            data.v[i].position[2] = fPositionData[i * 3 + 2];
-            data.v[i].uv0[0] = fUvBufferData[2 * i];
-            data.v[i].uv0[1] = fUvBufferData[2 * i + 1];
-        }
-        vertexBuffer.StoreToResourceMemory(
-            ::ae::base::MemBlock(&data, sizeof(data)));
-    }
+    vertexBuffer.StoreToResourceMemory(geometryCube.Data());
 
     // ポリゴンに貼り付けるテクスチャの作成（画像の内容はコンピュートシェーダーで作成）
     ::ae::gfx_low::UniqueResourceMemory textureMemory;
