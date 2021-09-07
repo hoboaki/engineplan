@@ -1,6 +1,9 @@
 // 文字コード：UTF-8
 #include <aesk/GeometryCube.hpp>
 
+// includes
+#include <ae/base/RuntimeAssert.hpp>
+
 //------------------------------------------------------------------------------
 namespace aesk {
 
@@ -144,11 +147,12 @@ const float fUv0Data[] = {
 //------------------------------------------------------------------------------
 GeometryCube::GeometryCube(const float radius)
 : buffer_() {
+    AE_BASE_ASSERT_LESS(0.0f, radius);
     for (int i = 0; i < VertexCountValue; ++i) {
         auto& vtx = buffer_.v[i];
-        vtx.position[0] = fPositionData[i * 3 + 0];
-        vtx.position[1] = fPositionData[i * 3 + 1];
-        vtx.position[2] = fPositionData[i * 3 + 2];
+        vtx.position[0] = fPositionData[i * 3 + 0] * radius;
+        vtx.position[1] = fPositionData[i * 3 + 1] * radius;
+        vtx.position[2] = fPositionData[i * 3 + 2] * radius;
         vtx.normal[0] = fNormalData[i * 3 + 0];
         vtx.normal[1] = fNormalData[i * 3 + 1];
         vtx.normal[2] = fNormalData[i * 3 + 2];
