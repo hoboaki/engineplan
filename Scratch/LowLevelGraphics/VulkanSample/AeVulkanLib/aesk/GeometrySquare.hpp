@@ -11,8 +11,8 @@ class GeometrySquare {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    /// @param size １辺の頂点距離。（0より大きい値）
-    GeometrySquare(float size = 1.0f);
+    /// @param size １辺の長さ。（0より大きい値）
+    GeometrySquare(float size = 2.0f);
     //@}
 
     /// @name 取得

@@ -11,8 +11,8 @@ class GeometryCube {
 public:
     /// @name コンストラクタとデストラクタ
     //@{
-    /// @param radius 立方体の半径。（0より大きい値）
-    GeometryCube(float radius = 1.0f);
+    /// @param size 立方体の１辺の長さ。（0より大きい値）
+    GeometryCube(float size = 2.0f);
     //@}
 
     /// @name 取得

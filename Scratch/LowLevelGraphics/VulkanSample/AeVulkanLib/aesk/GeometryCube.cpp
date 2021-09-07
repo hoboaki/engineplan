@@ -145,14 +145,15 @@ const float fUv0Data[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-GeometryCube::GeometryCube(const float radius)
+GeometryCube::GeometryCube(const float size)
 : buffer_() {
-    AE_BASE_ASSERT_LESS(0.0f, radius);
+    AE_BASE_ASSERT_LESS(0.0f, size);
+    const float halfSize = size * 0.5f;
     for (int i = 0; i < VertexCountValue; ++i) {
         auto& vtx = buffer_.v[i];
-        vtx.position[0] = fPositionData[i * 3 + 0] * radius;
-        vtx.position[1] = fPositionData[i * 3 + 1] * radius;
-        vtx.position[2] = fPositionData[i * 3 + 2] * radius;
+        vtx.position[0] = fPositionData[i * 3 + 0] * halfSize;
+        vtx.position[1] = fPositionData[i * 3 + 1] * halfSize;
+        vtx.position[2] = fPositionData[i * 3 + 2] * halfSize;
         vtx.normal[0] = fNormalData[i * 3 + 0];
         vtx.normal[1] = fNormalData[i * 3 + 1];
         vtx.normal[2] = fNormalData[i * 3 + 2];

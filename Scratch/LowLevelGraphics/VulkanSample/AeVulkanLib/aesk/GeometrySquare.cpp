@@ -1,6 +1,7 @@
 // 文字コード：UTF-8
 #include <aesk/GeometrySquare.hpp>
 
+// includes
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
