@@ -17,12 +17,11 @@ layout(location = 0) out vec3 FragPos;
 layout(location = 1) out vec2 FragUv0;
 layout(location = 2) out vec2 FragUv1;
 
-void main() 
-{
-   gl_Position = Ubuf.mvp * vec4(Position, 1.0);
-   FragPos = gl_Position.xyz;
-   FragUv0 = Uv0;
-   FragUv1 = Uv0 + Ubuf.uvTrans.xy;
+void main() {
+    gl_Position = Ubuf.mvp * vec4(Position, 1.0);
+    FragPos = gl_Position.xyz;
+    FragUv0 = Uv0;
+    FragUv1 = Uv0 + Ubuf.uvTrans.xy;
 }
 
 // EOF

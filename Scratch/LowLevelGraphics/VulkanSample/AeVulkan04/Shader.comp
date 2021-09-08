@@ -11,11 +11,10 @@ layout(std430, set = LAYOUT_SET_BUFFER, binding = 0) buffer OutputDataType{
     uint elems[];
 } outputData;
 
-void main()
-{
-   uint width = 16 * 4;
-	uint idx = gl_GlobalInvocationID.x + gl_GlobalInvocationID.y * width;
-   outputData.elems[idx] = idx * 2;
+void main() {
+    uint width = 16 * 4;
+	 uint idx = gl_GlobalInvocationID.x + gl_GlobalInvocationID.y * width;
+    outputData.elems[idx] = idx * 2;
 }
 
 // EOF

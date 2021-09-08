@@ -15,11 +15,10 @@ layout(location = 1) in vec2 Uv0;
 layout(location = 0) out vec2 Texcoord;
 layout(location = 1) out vec3 FragPos;
 
-void main() 
-{
-   Texcoord = Uv0;
-   gl_Position = Ubuf.mvp * vec4(Position, 1.0);
-   FragPos = gl_Position.xyz;
+void main() {
+    Texcoord = Uv0;
+    gl_Position = Ubuf.mvp * vec4(Position, 1.0);
+    FragPos = gl_Position.xyz;
 }
 
 // EOF

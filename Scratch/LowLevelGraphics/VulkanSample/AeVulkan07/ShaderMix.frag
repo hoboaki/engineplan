@@ -16,10 +16,10 @@ layout(set = LAYOUT_SET_IMAGE, binding = 1) uniform texture2D ImageMask;
 layout(set = LAYOUT_SET_SAMPLER, binding = 0) uniform sampler Sampler0;
 
 void main() {
-   // ２枚のテクスチャを乗算して出力
-   vec4 color = texture(sampler2D(ImageColor, Sampler0), FragUv0.xy);
-   vec4 mask = texture(sampler2D(ImageMask, Sampler0), FragUv0.xy);
-   FragColor = vec4(color.xyz * mask.xyz, 1.0);
+    // ２枚のテクスチャを乗算して出力
+    vec4 color = texture(sampler2D(ImageColor, Sampler0), FragUv0.xy);
+    vec4 mask = texture(sampler2D(ImageMask, Sampler0), FragUv0.xy);
+    FragColor = vec4(color.xyz * mask.xyz, 1.0);
 }
 
 // EOF

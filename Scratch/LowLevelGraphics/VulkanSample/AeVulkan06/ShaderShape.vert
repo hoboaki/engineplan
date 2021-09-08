@@ -24,8 +24,7 @@ layout(location = 1) out vec3 FragViewNormal; // ビュー空間の法線
 layout(location = 2) out vec3 FragWorldPos; // ワールド空間の位置
 layout(location = 3) out vec3 FragWorldNormal; // ワールド空間の法線
 
-void main() 
-{
+void main() {
     vec4 worldPos = UbufModel.modelMtx * vec4(Position, 1.0);
     vec4 viewPos = UbufScene.viewMtx * worldPos;
     vec3 worldNormal = mat3(UbufModel.modelMtx) * Normal; 

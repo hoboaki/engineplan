@@ -17,11 +17,11 @@ layout(set = LAYOUT_SET_SAMPLER, binding = 0) uniform sampler Sampler0;
 const vec3 LightDir = vec3(0.424, 0.566, 0.707);
 
 void main() {
-   vec3 dX = dFdx(FragPos);
-   vec3 dY = dFdy(FragPos);
-   vec3 normal = normalize(cross(dX,dY));
-   float light = max(0.0, dot(LightDir, normal));
-   FragColor = light * texture(sampler2D(Image0, Sampler0), Texcoord.xy);
+    vec3 dX = dFdx(FragPos);
+    vec3 dY = dFdy(FragPos);
+    vec3 normal = normalize(cross(dX,dY));
+    float light = max(0.0, dot(LightDir, normal));
+    FragColor = light * texture(sampler2D(Image0, Sampler0), Texcoord.xy);
 }
 
 // EOF
