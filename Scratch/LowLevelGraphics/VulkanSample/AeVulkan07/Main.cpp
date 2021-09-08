@@ -114,7 +114,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display = ::ae::base::Display(
         ::ae::base::DisplayContext()
-            .SetWindowTitle("AeVulkan03 - Screen Resize With Aesk")
+            .SetWindowTitle("AeVulkan07 - Multi Render Target")
             .SetIsResizableWindow(true));
 
     // ディスプレイの表示
