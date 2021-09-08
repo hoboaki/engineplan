@@ -504,7 +504,7 @@ int aemain(::ae::base::Application* app) {
             textureMemory.Reset(
                 device.get(),
                 ::ae::gfx_low::ResourceMemoryAllocInfo()
-                    .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                     .SetParams(
                         device->CalcResourceMemoryRequirements(specInfo)));
             textureImage.reset(new ::ae::gfx_low::ImageResource(
