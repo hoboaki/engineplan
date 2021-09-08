@@ -29,7 +29,7 @@ UniformBuffer::UniformBuffer(
                 ::ae::gfx_low::BufferResourceUsage::UniformBuffer,
                 true));
     const auto region =
-        ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizeof(sizePerData_));
+        ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizePerData_);
     for (int i = 0; i < dataCount_; ++i) {
         memories_.Add(
             device,

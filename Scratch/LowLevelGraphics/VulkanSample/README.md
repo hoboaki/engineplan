@@ -66,3 +66,8 @@ StorageImage を使ってコンピュートシェーダーからテクスチャ�
 
 <参考> キューブマップの解説ページ
 https://scalibq.wordpress.com/2013/06/23/cubemaps/
+
+## AeVulkan07 - Multi Render Target
+
+マルチレンダーターゲットのデモです。
+１パス目で２枚のレンダーターゲットに描画し、２パス目で１パス目の描画結果を合成して描画しています。
