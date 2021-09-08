@@ -98,7 +98,7 @@ struct Matrix44Pod {
         const Angle&,
         const Vector3Pod& axis); ///< 回転行列の作成。
 
-    /// 正射影行列の作成。
+    /// 正射影行列の作成。（Depthは[0, 1]の範囲）
     static const Matrix44Pod Ortho(
         f32 left,
         f32 top,
@@ -107,7 +107,7 @@ struct Matrix44Pod {
         f32 near,
         f32 far);
 
-    /// 透視射影行列(Frustum)の作成。
+    /// 透視射影行列(Frustum)の作成。（Depthは[-1, 1]の範囲、[0, 1]に要修正で動作確認もほぼできていない）
     static const Matrix44Pod Frustum(
         f32 left,
         f32 right,
@@ -116,7 +116,7 @@ struct Matrix44Pod {
         f32 near,
         f32 far);
 
-    /// @brief 透視射影行列(Perspective)の作成。
+    /// @brief 透視射影行列(Perspective)の作成。（Depthは[0, 1]の範囲）
     /// @param fOVY   Y方向の画角。0 < fOVY。
     /// @param aspect 横/縦のアスペクト比。4:3なら1.333。0 < aspect。
     /// @param near   Near値。
