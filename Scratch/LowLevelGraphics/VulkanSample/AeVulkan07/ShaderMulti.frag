@@ -17,7 +17,8 @@ void main() {
    // 0番にUV値をカラーに変換した色を、1番に円形マスクを出力。
    vec2 offset = (FragUv0 - vec2(0.5, 0.5));
    float circleMask = (sqrt(dot(offset, offset)) < 0.45) ? 1 : 0;
-   FragColor0 = vec4(mod(FragUv1, vec2(1, 1)), 0, 1);
+   vec2 tmpXy = abs(mod(FragUv1, vec2(2, 2)) - vec2(1, 1));
+   FragColor0 = vec4(tmpXy, 0, 1);
    FragColor1 = vec4(vec3(1, 1, 1) * circleMask, 1);
 }
 
