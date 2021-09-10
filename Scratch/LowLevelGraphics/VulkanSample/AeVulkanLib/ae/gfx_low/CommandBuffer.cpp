@@ -88,7 +88,12 @@ void CommandBuffer::BeginRecord() {
     Reset();
     AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
     const auto beginInfo =
-        ::vk::CommandBufferBeginInfo().setPInheritanceInfo(nullptr);
+        ::vk::CommandBufferBeginInfo()
+            .setFlags(
+                level_ == CommandBufferLevel::Secondary
+                    ? ::vk::CommandBufferUsageFlagBits::eRenderPassContinue
+                    : ::vk::CommandBufferUsageFlagBits(0))
+            .setPInheritanceInfo(nullptr);
     const auto result = nativeObject_.begin(&beginInfo);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recording;
@@ -132,6 +137,24 @@ void CommandBuffer::Reset() {
         device_.NativeObject_().destroyRenderPass(prop.renderPass, nullptr);
     }
     renderPassProperties_.Clear();
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(
+        secondaryCommands.Level() ==
+        ::ae::gfx_low::CommandBufferLevel::Secondary);
+    AE_BASE_ASSERT(
+        (secondaryCommands.Features().Get(
+             ::ae::gfx_low::CommandBufferFeature::Render) &&
+         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Render)) ||
+        (secondaryCommands.Features().Get(
+             ::ae::gfx_low::CommandBufferFeature::Compute) &&
+         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Compute)));
+
+    // コール
+    nativeObject_.executeCommands(1, &secondaryCommands.nativeObject_);
 }
 
 //------------------------------------------------------------------------------
@@ -466,7 +489,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                               .setClearValueCount(attachmentsCount)
                               .setPClearValues(&clearValues[0]);
 
-    nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eInline);
+    nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eSecondaryCommandBuffers);
 }
 
 //------------------------------------------------------------------------------

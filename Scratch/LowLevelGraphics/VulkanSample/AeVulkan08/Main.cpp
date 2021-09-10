@@ -469,6 +469,20 @@ int aemain(::ae::base::Application* app) {
                                   .SetRenderTargetBlendInfos(blendInfos))));
     }
 
+    // セカンダリコマンドバッファ作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer>
+        secondaryCommandBuffers(renderTargetCount);
+    for (int i = 0; i < renderTargetCount; ++i) {
+        secondaryCommandBuffers.Add(
+            ::ae::gfx_low::CommandBufferCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetQueue(&gfxKit.Queue())
+                .SetLevel(::ae::gfx_low::CommandBufferLevel::Secondary)
+                .SetFeatures(::ae::gfx_low::CommandBufferFeatureBitSet().Set(
+                    ::ae::gfx_low::CommandBufferFeature::Render,
+                    true)));
+    }
+
     // メインループ
     bool isFinishedSetupTexture = false;
     int frameCount = 0;
@@ -528,6 +542,26 @@ int aemain(::ae::base::Application* app) {
             uniformBuffer.StoreToResourceMemory(bufferIndex, data);
         }
 
+        
+        // 初回ならコマンドを保存
+        if (frameCount < secondaryCommandBuffers.Count()) {
+            // 保存開始
+            auto& subCmd = secondaryCommandBuffers[bufferIndex];
+            subCmd.BeginRecord();
+
+            // Pipeline & DescriptorSet
+            subCmd.CmdSetRenderPipeline(*pipeline);
+            subCmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
+
+            // Draw
+            subCmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+            subCmd.CmdDraw(
+                ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+
+            // 保存終了
+            subCmd.EndRecord();
+        }
+
         // コマンドバッファ作成
         auto& cmd = gfxKit.CurrentCommandBuffer();
         cmd.BeginRecord();
@@ -567,47 +601,53 @@ int aemain(::ae::base::Application* app) {
             // クリアカラー参考
             // https://www.colordic.org/colorscheme/7005
             {
-                const ::ae::gfx_low::RenderTargetSetting
-                    renderTargetSettings[] = {
-                        ::ae::gfx_low::RenderTargetSetting()
-                            .SetRenderTargetImageView(
-                                &gfxKit.Swapchain()
-                                     ->CurrentRenderTargetImageView())
-                            .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
-                            .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
+                // 描画パス開始
+                {
+                    const ::ae::gfx_low::RenderTargetSetting
+                        renderTargetSettings[] = {
+                            ::ae::gfx_low::RenderTargetSetting()
+                                .SetRenderTargetImageView(
+                                    &gfxKit.Swapchain()
+                                         ->CurrentRenderTargetImageView())
+                                .SetLoadOp(
+                                    ::ae::gfx_low::AttachmentLoadOp::Clear)
+                                .SetStoreOp(
+                                    ::ae::gfx_low::AttachmentStoreOp::Store)
+                                .SetInitialImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::Unknown)
+                                .SetFinalImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::
+                                        PresentSrc)
+                                .SetClearColor(
+                                    ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
+                                        .ToRGBAf()),
+                        };
+                    const auto depthStencilSetting =
+                        ::ae::gfx_low::DepthStencilSetting()
+                            .SetDepthStencilImageView(&gfxKit.DepthBufferView())
                             .SetInitialImageResourceState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
                             .SetFinalImageResourceState(
-                                ::ae::gfx_low::ImageResourceState::PresentSrc)
-                            .SetClearColor(
-                                ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
-                                    .ToRGBAf()),
-                    };
-                const auto depthStencilSetting =
-                    ::ae::gfx_low::DepthStencilSetting()
-                        .SetDepthStencilImageView(&gfxKit.DepthBufferView())
-                        .SetInitialImageResourceState(
-                            ::ae::gfx_low::ImageResourceState::Unknown)
-                        .SetFinalImageResourceState(
-                            ::ae::gfx_low::ImageResourceState::DepthStencil)
-                        .SetDepthLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
-                        .SetDepthStoreOp(
-                            ::ae::gfx_low::AttachmentStoreOp::Store)
-                        .SetDepthClearValue(1.0f)
-                        .SetStencilLoadOp(
-                            ::ae::gfx_low::AttachmentLoadOp::Clear)
-                        .SetStencilStoreOp(
-                            ::ae::gfx_low::AttachmentStoreOp::Store)
-                        .SetStencilClearValue(0);
-
-                cmd.CmdBeginRenderPass(
-                    ::ae::gfx_low::RenderPassBeginInfo()
-                        .SetRenderPassSpecInfo(renderPassSpecInfo)
-                        .SetRenderTargetSettings(renderTargetSettings)
-                        .SetDepthStencilSettingPtr(&depthStencilSetting)
-                        .SetRenderArea(::ae::base::Aabb2i(
-                            ::ae::base::Vector2i::Zero(),
-                            display.MainScreen().Extent())));
+                                ::ae::gfx_low::ImageResourceState::DepthStencil)
+                            .SetDepthLoadOp(
+                                ::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetDepthStoreOp(
+                                ::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetDepthClearValue(1.0f)
+                            .SetStencilLoadOp(
+                                ::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetStencilStoreOp(
+                                ::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetStencilClearValue(0);
+                    cmd.CmdBeginRenderPass(
+                        ::ae::gfx_low::RenderPassBeginInfo()
+                            .SetRenderPassSpecInfo(renderPassSpecInfo)
+                            .SetRenderTargetSettings(renderTargetSettings)
+                            .SetDepthStencilSettingPtr(&depthStencilSetting)
+                            .SetRenderArea(::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                display.MainScreen().Extent())));
+                }
 
                 // Viewport
                 {
@@ -633,15 +673,10 @@ int aemain(::ae::base::Application* app) {
                     cmd.CmdSetScissors(renderTargetCount, settings);
                 }
 
-                // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*pipeline);
-                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
+                // 保存済コマンドを実行
+                cmd.CmdCall(secondaryCommandBuffers[bufferIndex]);
 
-                // Draw
-                cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
-                cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
-
+                // 描画パス終了
                 cmd.CmdEndRenderPass();
             }
         }

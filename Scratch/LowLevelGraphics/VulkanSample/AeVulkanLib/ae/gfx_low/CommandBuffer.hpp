@@ -70,6 +70,7 @@ namespace gfx_low {
 /// Secondary は createInfo の SetFeatureFlags() で Render か Compute
 /// のどちらか１つを設定する必要があります。Copy は指定できません。
 /// Secondary は以下のコマンドを呼ぶことはできません。
+/// - CmdCall
 /// - CmdBeginRenderPass
 /// - CmdEndRenderPass
 /// - CmdBeginComputePass
@@ -110,6 +111,13 @@ public:
     /// 記録済みの情報があればリセットする。
     /// @details BeginRecord() / EndRecord() の間では呼べません。
     void Reset();
+    //@}
+
+    /// @name セカンダリ呼び出し
+    //@{
+    /// 保存済のコマンドを実行する。
+    /// @param secondaryCommandBuffer CommandBufferLevel::Secondary なコマンドバッファ。
+    void CmdCall(const CommandBuffer& secondaryCommands);
     //@}
 
     /// @name 同期コマンド
