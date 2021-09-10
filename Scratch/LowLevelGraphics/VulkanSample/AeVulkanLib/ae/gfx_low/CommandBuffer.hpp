@@ -68,7 +68,14 @@ namespace gfx_low {
 /// CommandBufferLevel::Secondary はできません。
 /// その代わり、Primary のコマンドバッファの Call() の引数に渡せます。
 /// Secondary は createInfo の SetFeatureFlags() で Render か Compute
-/// のどちらか１つを設定する必要があります。
+/// のどちらか１つを設定する必要があります。Copy は指定できません。
+/// Secondary は以下のコマンドを呼ぶことはできません。
+/// - CmdBeginRenderPass
+/// - CmdEndRenderPass
+/// - CmdBeginComputePass
+/// - CmdEndComputePass
+/// - CmdSetViewports
+/// - CmdSetScissors
 class CommandBuffer {
 public:
     /// @name コンストラクタとデストラクタ

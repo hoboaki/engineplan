@@ -189,6 +189,21 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
+::vk::CommandBufferLevel InternalEnumUtil::ToCommandBufferLevel(const CommandBufferLevel level) {
+    AE_BASE_ASSERT_ENUM(level, CommandBufferLevel);
+    AE_BASE_ASSERT(level != CommandBufferLevel::Invalid);
+    const ::vk::CommandBufferLevel table[] = {
+        ::vk::CommandBufferLevel(-1), // Invalid,
+        ::vk::CommandBufferLevel::ePrimary,
+        ::vk::CommandBufferLevel::eSecondary,
+    };
+    AE_BASE_ARRAY_LENGTH_CHECK(table, int(CommandBufferLevel::TERM));
+    const auto result = table[int(level)];
+    AE_BASE_ASSERT_NOT_EQUALS(int(result), -1);
+    return result;
+}
+
+//------------------------------------------------------------------------------
 ::vk::CompareOp InternalEnumUtil::ToCompareOp(const CompareOp op) {
     AE_BASE_ASSERT_ENUM(op, CompareOp);
     AE_BASE_ASSERT(op != CompareOp::Invalid);

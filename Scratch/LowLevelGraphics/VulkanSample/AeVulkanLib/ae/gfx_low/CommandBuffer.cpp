@@ -50,13 +50,24 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , renderPassProperties_(
       createInfo.RenderPassCountMax(),
       device_.System().ObjectAllocator_()) {
-    // 今は Primary のみサポート
-    AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
+    // セカンダリの場合は BitSet チェック
+    if (level_ == CommandBufferLevel::Secondary) {
+        // Render か Compute のどちらかだけ立っている
+        AE_BASE_ASSERT(!createInfo.Features().Get(CommandBufferFeature::Copy));
+        AE_BASE_ASSERT(
+            !(createInfo.Features().Get(CommandBufferFeature::Render) &&
+              createInfo.Features().Get(CommandBufferFeature::Compute)));
+        AE_BASE_ASSERT(
+            createInfo.Features().Get(CommandBufferFeature::Render) ||
+            createInfo.Features().Get(CommandBufferFeature::Compute));
+    }
 
-    const auto allocateInfo = ::vk::CommandBufferAllocateInfo()
-                                  .setCommandPool(queuePtr_->CommandPool_())
-                                  .setLevel(::vk::CommandBufferLevel::ePrimary)
-                                  .setCommandBufferCount(1);
+    const auto allocateInfo =
+        ::vk::CommandBufferAllocateInfo()
+            .setCommandPool(queuePtr_->CommandPool_())
+            .setLevel(
+                InternalEnumUtil::ToCommandBufferLevel(createInfo.Level()))
+            .setCommandBufferCount(1);
 
     auto result = device_.NativeObject_().allocateCommandBuffers(
         &allocateInfo,
@@ -208,6 +219,7 @@ void CommandBuffer::CmdImageResourceBarrier(
 void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
 
     const auto copyInfo =
         ::vk::BufferImageCopy()
@@ -245,6 +257,7 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
 void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(
         info.RenderPassSpecInfo().RenderTargetCount(),
         Device::SupportedRenderTargetCountMax_);
@@ -469,6 +482,7 @@ void CommandBuffer::CmdEndRenderPass() {
 void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
     activePass_.Set(CommandBufferFeature::Compute, true);
     currentComputePipeline_.Reset();
 }
@@ -529,6 +543,7 @@ void CommandBuffer::CmdSetViewports(
     const ViewportSetting* settings) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     AE_BASE_ASSERT_POINTER(settings);
     std::array<::vk::Viewport, Device::SupportedRenderTargetCountMax_>
@@ -552,6 +567,7 @@ void CommandBuffer::CmdSetScissors(
     const ScissorSetting* settings) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     AE_BASE_ASSERT_POINTER(settings);
     std::array<::vk::Rect2D, Device::SupportedRenderTargetCountMax_> rects;
