@@ -75,7 +75,7 @@ void GfxBasicKit::WaitToResourceUsable() {
 }
 
 //------------------------------------------------------------------------------
-void GfxBasicKit::ScreenResizeProcessIfNeeds() {
+bool GfxBasicKit::ScreenResizeProcessIfNeeds() {
     if (currentSwapchainExtent_ == display_.MainScreen().Extent()) {
         return;
     }

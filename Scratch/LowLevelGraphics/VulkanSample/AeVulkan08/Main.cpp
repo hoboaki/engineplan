@@ -43,6 +43,7 @@
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetBlendInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
@@ -311,8 +312,10 @@ int aemain(::ae::base::Application* app) {
         gfxKit.SwapchainImageCount());
 
     // RenderPassSpecInfo の作成
+    const auto colorBufferFormat =
+        ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
     const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
-        gfxKit.Swapchain()->RenderTargetSpecInfo(),
+        ::ae::gfx_low::RenderTargetSpecInfo().SetImageFormat(colorBufferFormat),
     };
     const int renderTargetCount = AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos);
     const auto depthStencilSpecInfo =
@@ -483,8 +486,61 @@ int aemain(::ae::base::Application* app) {
                     true)));
     }
 
+    // レンダーターゲット用カラーバッファの作成
+    // 直接 Swapchain に書き込まなくすることで
+    // セカンダリコマンドバッファの再レコードを最低限にする
+    ::ae::gfx_low::UniqueResourceMemory colorBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> colorBufferImage;
+    ::std::unique_ptr<::ae::gfx_low::RenderTargetImageView> colorBufferRenderTargetView;
+    auto setupColorBuffer = [&gfxKit,
+                             &display,
+                             &colorBufferMemory,
+                             &colorBufferImage,
+                             &colorBufferRenderTargetView,
+                             &colorBufferFormat]() {
+        const auto extent = display.MainScreen().Extent();
+
+        const auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetFormat(colorBufferFormat)
+                .SetExtent(extent)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetUsageBitSet(
+                    ::ae::gfx_low::ImageResourceUsageBitSet()
+                        .On(::ae::gfx_low::ImageResourceUsage::
+                                RenderTargetImage)
+                        .On(::ae::gfx_low::ImageResourceUsage::SampledImage));
+        colorBufferMemory.Reset(
+            &gfxKit.Device(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
+        colorBufferImage.reset(new ::ae::gfx_low::ImageResource(
+            ::ae::gfx_low::ImageResourceCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(colorBufferMemory->Address())));
+        colorBufferRenderTargetView.reset(
+            new ::ae::gfx_low::RenderTargetImageView(
+                ::ae::gfx_low::RenderTargetImageViewCreateInfo()
+                    .SetDevice(&gfxKit.Device())
+                    .SetResource(colorBufferImage.get())
+                    ));
+    };
+    auto cleanupColorBuffer = [&colorBufferMemory,
+                               &colorBufferImage,
+                               &colorBufferRenderTargetView]() {
+        colorBufferRenderTargetView.reset();
+        colorBufferImage.reset();
+        colorBufferMemory.Reset();
+    };
+    setupColorBuffer(); // 初回セットアップ
+
     // メインループ
     bool isFinishedSetupTexture = false;
+    bool isFinishedSetupColorBufferState = false;
     int frameCount = 0;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
@@ -497,7 +553,11 @@ int aemain(::ae::base::Application* app) {
         gfxKit.WaitToResourceUsable();
 
         // スクリーンリサイズ処理
-        gfxKit.ScreenResizeProcessIfNeeds();
+        if (gfxKit.ScreenResizeProcessIfNeeds()) {
+            cleanupColorBuffer();
+            setupColorBuffer();
+            isFinishedSetupColorBufferState = false;
+        }
 
         // Swapchain バッファ確保要求
         gfxKit.Swapchain()->AcquireNextImage();
@@ -598,6 +658,17 @@ int aemain(::ae::base::Application* app) {
                 isFinishedSetupTexture = true;
             }
 
+            // カラーバッファの状態セットアップ
+            if (!isFinishedSetupColorBufferState) {
+                // ２ループ目以降と状況一致させるために初期状態を変更k
+                cmd.CmdImageResourceBarrier(
+                    ::ae::gfx_low::ImageResourceBarrierInfo()
+                        .SetResource(colorBufferImage.get())
+                        .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
+                        .SetNewState(::ae::gfx_low::ImageResourceState::
+                                         ShaderResourceReadOnly));
+            }
+
             // クリアカラー参考
             // https://www.colordic.org/colorscheme/7005
             {
@@ -607,17 +678,16 @@ int aemain(::ae::base::Application* app) {
                         renderTargetSettings[] = {
                             ::ae::gfx_low::RenderTargetSetting()
                                 .SetRenderTargetImageView(
-                                    &gfxKit.Swapchain()
-                                         ->CurrentRenderTargetImageView())
+                                    colorBufferRenderTargetView.get())
                                 .SetLoadOp(
                                     ::ae::gfx_low::AttachmentLoadOp::Clear)
                                 .SetStoreOp(
                                     ::ae::gfx_low::AttachmentStoreOp::Store)
                                 .SetInitialImageResourceState(
-                                    ::ae::gfx_low::ImageResourceState::Unknown)
-                                .SetFinalImageResourceState(
                                     ::ae::gfx_low::ImageResourceState::
-                                        PresentSrc)
+                                        ShaderResource)
+                                .SetFinalImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::ShaderResource)
                                 .SetClearColor(
                                     ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
                                         .ToRGBAf()),
@@ -679,6 +749,12 @@ int aemain(::ae::base::Application* app) {
                 // 描画パス終了
                 cmd.CmdEndRenderPass();
             }
+
+            // Swapchain にコピー描画
+            {
+                //...
+            }
+
         }
         cmd.EndRecord();
 

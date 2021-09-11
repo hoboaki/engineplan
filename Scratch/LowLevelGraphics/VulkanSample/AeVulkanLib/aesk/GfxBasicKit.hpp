@@ -51,8 +51,12 @@ public:
     /// @details Swapchain::AcquireNextImage() を呼ぶ前にこの関数で待つ必要がある。
     void WaitToResourceUsable();
 
-    /// @brief スクリーンリサイズ処理が必要なら行う。
-    void ScreenResizeProcessIfNeeds();
+    /// スクリーンリサイズ処理が必要なら行う。
+    /// @return リサイズ処理が行われたら true を返す。
+    /// @details
+    /// リサイズ処理が行われたときは Queue に提出された全てのコマンドが
+    /// 実行を完了した状態になっています。
+    bool ScreenResizeProcessIfNeeds();
 
     /// 現在記録可能な汎用コマンドバッファの取得。
     ::ae::gfx_low::CommandBuffer& CurrentCommandBuffer() {
