@@ -77,11 +77,12 @@ void GfxBasicKit::WaitToResourceUsable() {
 //------------------------------------------------------------------------------
 bool GfxBasicKit::ScreenResizeProcessIfNeeds() {
     if (currentSwapchainExtent_ == display_.MainScreen().Extent()) {
-        return;
+        return false;
     }
     WaitAllDone();
     CleanupSwapchainAndDepthBuffer();
     SetupSwapchainAndDepthBuffer();
+    return true;
 }
 
 //------------------------------------------------------------------------------
