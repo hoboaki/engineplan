@@ -6,83 +6,85 @@
 
 - [3D グラフィックス低レベル API に関するメモ](#3d-グラフィックス低レベル-api-に関するメモ)
 - [オブジェクト](#オブジェクト)
-    - [キュー・コマンドバッファ生成](#キュー・コマンドバッファ生成)
-        - [Vulkan](#vulkan)
-        - [DirectX 12](#directx-12)
-        - [Metal](#metal)
-    - [スワップチェイン生成](#スワップチェイン生成)
-        - [Vulkan](#vulkan-1)
-        - [DirectX 12](#directx-12-1)
-        - [Metal](#metal-1)
-    - [バッファ生成・リソースオブジェクト](#バッファ生成・リソースオブジェクト)
-        - [Vulkan](#vulkan-2)
-        - [DirectX 12](#directx-12-2)
-        - [Metal](#metal-2)
-    - [シェーダーオブジェクト生成](#シェーダーオブジェクト生成)
-        - [Vulkan](#vulkan-3)
-        - [DirectX 12](#directx-12-3)
-        - [Metal](#metal-3)
-    - [サンプラ生成](#サンプラ生成)
-        - [Vulkan](#vulkan-4)
-        - [DirectX 12](#directx-12-4)
-        - [Metal](#metal-4)
-    - [デスクリプタ・デスクリプタプール](#デスクリプタ・デスクリプタプール)
-        - [Vulkan](#vulkan-5)
-        - [DirectX 12](#directx-12-5)
-        - [Metal](#metal-5)
-- [コマンド・フロー](#コマンド・フロー)
-    - [レンダターゲット](#レンダターゲット)
-        - [Vulkan](#vulkan-6)
-        - [DirectX 12](#directx-12-6)
-        - [Metal](#metal-6)
-    - [スワップチェイン提出（present）＆同期](#スワップチェイン提出present＆同期)
-        - [Vulkan](#vulkan-7)
-        - [DirectX 12](#directx-12-7)
-        - [Metal](#metal-7)
-    - [コマンドバッファで設定する単位](#コマンドバッファで設定する単位)
-        - [Vulkan](#vulkan-8)
-        - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
-        - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
-    - [頂点属性指定](#頂点属性指定)
-        - [Vulkan](#vulkan-9)
-        - [DirectX 12](#directx-12-8)
-        - [Metal](#metal-8)
-    - [キューの並列実行](#キューの並列実行)
-        - [Vulkan](#vulkan-10)
-        - [DirectX 12](#directx-12-9)
-        - [Metal](#metal-9)
-    - [キュー間同期](#キュー間同期)
-        - [Vulkan](#vulkan-11)
-        - [DirectX 12](#directx-12-10)
-        - [Metal](#metal-10)
-    - [メモリバリア](#メモリバリア)
-        - [Vulkan](#vulkan-12)
-        - [DirectX 12](#directx-12-11)
-        - [Metal](#metal-11)
-    - [CPUGPU 間同期](#cpugpu-間同期)
-        - [Vulkan](#vulkan-13)
-        - [DirectX 12](#directx-12-12)
-        - [Metal](#metal-12)
-    - [イメージのアップロード](#イメージのアップロード)
-        - [Vulkan](#vulkan-14)
-        - [DirectX 12](#directx-12-13)
-        - [Metal](#metal-13)
-    - [GPGPU実行](#gpgpu実行)
-        - [Vulkan](#vulkan-15)
-        - [DirectX 12](#directx-12-14)
-        - [Metal](#metal-14)
+  - [キュー・コマンドバッファ生成](#キュー・コマンドバッファ生成)
+    - [Vulkan](#vulkan)
+    - [DirectX 12](#directx-12)
+    - [Metal](#metal)
+  - [スワップチェイン生成](#スワップチェイン生成)
+    - [Vulkan](#vulkan-1)
+    - [DirectX 12](#directx-12-1)
+    - [Metal](#metal-1)
+  - [バッファ生成・リソースオブジェクト](#バッファ生成・リソースオブジェクト)
+    - [Vulkan](#vulkan-2)
+    - [DirectX 12](#directx-12-2)
+    - [Metal](#metal-2)
+  - [シェーダーオブジェクト生成](#シェーダーオブジェクト生成)
+    - [Vulkan](#vulkan-3)
+    - [DirectX 12](#directx-12-3)
+    - [Metal](#metal-3)
+  - [サンプラ生成](#サンプラ生成)
+    - [Vulkan](#vulkan-4)
+    - [DirectX 12](#directx-12-4)
+    - [Metal](#metal-4)
+  - [デスクリプタ・デスクリプタプール](#デスクリプタ・デスクリプタプール)
+    - [Vulkan](#vulkan-5)
+    - [DirectX 12](#directx-12-5)
+    - [Metal](#metal-5)
+- [コマンド・フロー・システム](#コマンド・フロー・システム)
+  - [レンダターゲット](#レンダターゲット)
+    - [Vulkan](#vulkan-6)
+    - [DirectX 12](#directx-12-6)
+    - [Metal](#metal-6)
+  - [スワップチェイン提出（present）＆同期](#スワップチェイン提出present＆同期)
+    - [Vulkan](#vulkan-7)
+    - [DirectX 12](#directx-12-7)
+    - [Metal](#metal-7)
+  - [コマンドバッファで設定する単位](#コマンドバッファで設定する単位)
+    - [Vulkan](#vulkan-8)
+    - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
+    - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
+  - [頂点属性指定](#頂点属性指定)
+    - [Vulkan](#vulkan-9)
+    - [DirectX 12](#directx-12-8)
+    - [Metal](#metal-8)
+  - [キューの並列実行](#キューの並列実行)
+    - [Vulkan](#vulkan-10)
+    - [DirectX 12](#directx-12-9)
+    - [Metal](#metal-9)
+  - [キュー間同期](#キュー間同期)
+    - [Vulkan](#vulkan-11)
+    - [DirectX 12](#directx-12-10)
+    - [Metal](#metal-10)
+  - [メモリバリア](#メモリバリア)
+    - [Vulkan](#vulkan-12)
+    - [DirectX 12](#directx-12-11)
+    - [Metal](#metal-11)
+  - [CPUGPU 間同期](#cpugpu-間同期)
+    - [Vulkan](#vulkan-13)
+    - [DirectX 12](#directx-12-12)
+    - [Metal](#metal-12)
+  - [イメージのアップロード](#イメージのアップロード)
+    - [Vulkan](#vulkan-14)
+    - [DirectX 12](#directx-12-13)
+    - [Metal](#metal-13)
+  - [GPGPU 実行](#gpgpu-実行)
+    - [Vulkan](#vulkan-15)
+    - [DirectX 12](#directx-12-14)
+    - [Metal](#metal-14)
 - [最適化](#最適化)
-    - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
-        - [Vulkan](#vulkan-16)
-        - [DirectX 12](#directx-12-15)
-        - [Metal](#metal-15)
-    - [インダイレクト引数描画](#インダイレクト引数描画)
-        - [Vulkan](#vulkan-17)
-        - [DirectX 12](#directx-12-16)
-        - [Metal](#metal-16)
-    - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
+  - [セカンダリコマンドバッファ](#セカンダリコマンドバッファ)
+    - [Vulkan](#vulkan-16)
+    - [DirectX 12](#directx-12-15)
+    - [Metal](#metal-15)
+  - [インダイレクト引数描画](#インダイレクト引数描画)
+    - [Vulkan](#vulkan-17)
+    - [DirectX 12](#directx-12-16)
+    - [Metal](#metal-16)
+  - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
+- [その他](#その他)
+  - [ビューポート＆テクスチャ座標系](#ビューポート＆テクスチャ座標系)
 - [付録](#付録)
-    - [参考](#参考)
+  - [参考](#参考)
 
 <!-- /TOC -->
 
@@ -225,7 +227,7 @@
 - キューブマップ
   - 参考サイトは[こちら](https://satellitnorden.wordpress.com/2018/01/23/vulkan-adventures-cube-map-tutorial/)。
   - VkImageCreateInfo::flags で VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT を指定、VkImageCreateInfo::arrayLayers に 6 を指定する。
-  - VkImageViewCreate では viewType に VK_IMAGE_VIEW_TYPE_CUBEを指定、subresourceRange.layerCount に 6 を指定。
+  - VkImageViewCreate では viewType に VK_IMAGE_VIEW_TYPE_CUBE を指定、subresourceRange.layerCount に 6 を指定。
 
 ### DirectX 12
 
@@ -244,14 +246,14 @@
   - 必要なメモリサイズ＆アライメントの情報は [GetResourceAllocationInfo()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getresourceallocationinfo) で取得できる。
   - これは引数に ResourceDesc を要求されるため、リソース作成前に取得可能。
 - コピー元バッファ
-  - GPUメモリへの転送元用のバッファは　Buffer タイプのリソースで作る。
+  - GPU メモリへの転送元用のバッファは　 Buffer タイプのリソースで作る。
   - 必要なメモリサイズは [GetCopyableFootprints method()](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-getcopyablefootprints) で取得できる。
   - コピー先の RESOUCE_DESC があれば取得できるようだ。
-  - ちなみに、DX12はテクスチャのコピー元バッファに対して[１行あたりのバイトサイズや１サブリソースあたりにサイズやアライメントに制約](https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/upload-and-readback-of-texture-data)がある。
+  - ちなみに、DX12 はテクスチャのコピー元バッファに対して[１行あたりのバイトサイズや１サブリソースあたりにサイズやアライメントに制約](https://docs.microsoft.com/ja-jp/windows/win32/direct3d12/upload-and-readback-of-texture-data)がある。
   - [こちらのサイト](https://glhub.blogspot.com/2016/07/dx12-getcopyablefootprints.html)にこの辺りの解説がある。分かりやすい。
 - キューブマップ
   - RESOURCE_DESC の DepthOrArraySize に 6 を代入してリソースを作成。
-  - [SHADER_RESOURCE_VIEW_DESC](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_resource_view_desc) の ViewDimension で D3D12_SRV_DIMENSION_TEXTURECUBE を指定。 
+  - [SHADER_RESOURCE_VIEW_DESC](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_shader_resource_view_desc) の ViewDimension で D3D12_SRV_DIMENSION_TEXTURECUBE を指定。
   - 参考サイトは[こちら](https://blog.techlab-xe.net/directx12-cubemap-1/)。
 
 ### Metal
@@ -267,9 +269,9 @@
   - 必要なメモリサイズ＆アライメントの情報は [Device.heapBufferSizeAndAlign](https://developer.apple.com/documentation/metal/mtldevice/1649922-heapbuffersizeandalign) や [Device.heapTextureSizeAndAlign](https://developer.apple.com/documentation/metal/mtldevice/1649927-heaptexturesizeandalign) で取得可能。
   - MTLBuffer や MTLTexture を作成する前に取得可能。
 - コピー元バッファ
-  - GPUメモリへの転送元用のバッファは MTLBuffer でも MTLTexture でも良いように見える。
-  - Buffer に転送するなら Bufferで、Texture に転送するなら Texture で作成するのがシンプル。
-  - Buffer to Buffer の場合は[オフセット値やサイズ値が 4 の倍数にするといった制約がOSによってある](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copyfrombuffer?language=objc)。
+  - GPU メモリへの転送元用のバッファは MTLBuffer でも MTLTexture でも良いように見える。
+  - Buffer に転送するなら Buffer で、Texture に転送するなら Texture で作成するのがシンプル。
+  - Buffer to Buffer の場合は[オフセット値やサイズ値が 4 の倍数にするといった制約が OS によってある](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copyfrombuffer?language=objc)。
 - キューブマップ
   - [MTLTextureDescriptor.textureType](https://developer.apple.com/documentation/metal/mtltexturedescriptor/1516228-texturetype) で指定して作成。
 
@@ -396,7 +398,7 @@ SetStorageImageView(index, view))
   - [参考コード](https://github.com/shu223/MetalBook/blob/master/03_MetalShaderImageRender/MetalShaderImageRender/Shaders.metal)
   - buffer、texture, sampler でそれぞれ通し番号がある。
 
-# コマンド・フロー
+# コマンド・フロー・システム
 
 ## レンダターゲット
 
@@ -426,7 +428,7 @@ RenderPassBeginInfo
   - FinalImageResourceState
   - ClearSetting
 - RenderArea
-``` 
+```
 
 ### Vulkan
 
@@ -660,8 +662,8 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 ## 頂点属性指定
 
 - データフォーマットは[Metal 形式](https://developer.apple.com/documentation/metal/mtlvertexformat)
-が良さそう。Vulkan や DX12 は画像フォーマットと共有で使用可能か否かが分かりづらいので。
-- location 番号や attribute は連番縛りでよさそう。なので Metal と同じようにインデックス値＝IDという指定方法に。
+  が良さそう。Vulkan や DX12 は画像フォーマットと共有で使用可能か否かが分かりづらいので。
+- location 番号や attribute は連番縛りでよさそう。なので Metal と同じようにインデックス値＝ ID という指定方法に。
 - DX12 のみ文字列指定なのでこれは HLSL 用に追加情報で設定する形式をとる。
 - コマンドバッファに渡すのは DX12 に合わせて VertexBufferView オブジェクト＋スロット番号にしておけば抽象化が簡単。
 
@@ -679,17 +681,17 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - HLSL コード上での頂点属性バインドは[こちら](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics)のページに書かれているラベルを付けて指定。
 - ランタイム側では [D3D12_INPUT_ELEMENT_DESC](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_input_element_desc) で上記のラベル（文字列）やデータフォーマット、オフセット値、スロット番号を指定し、パイプラインオブジェクト作成時の情報として渡す。
 - コマンドリストに渡すのは VertexBufferView とスロット番号。
-- VertexBufferView 作成時にはバッファ領域を示すGPUメモリアドレス、１頂点データあたりの大きさ、バッファのサイズを指定。
+- VertexBufferView 作成時にはバッファ領域を示す GPU メモリアドレス、１頂点データあたりの大きさ、バッファのサイズを指定。
 
 ### Metal
 
-- MSL コード上での頂点属性バインドは[こちら](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf)の5.2.4 を参照。VertexInput のattribute(n) で指定しているのがそれ。
+- MSL コード上での頂点属性バインドは[こちら](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf)の 5.2.4 を参照。VertexInput の attribute(n) で指定しているのがそれ。
 - ランタイム側ではパイプラインオブジェクト生成時に渡す[MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor)で指定。
   - [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) では１頂点データあたりの大きさを指定。
   - MTLVertexBufferLayoutDescriptor の index がスロット番号に対応する。
   - [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) ではデータフォーマット、オフセット値、スロット番号（bufferIndex）を指定。
   - MTLVertexAttributeDescriptor のインデックスが MSL コード上の attribute(n) の n に対応する。
-- コマンドエンコーダの setVertexBuffer() でMTLBuffer オブジェクト、バッファ内オフセット、スロット番号を指定。
+- コマンドエンコーダの setVertexBuffer() で MTLBuffer オブジェクト、バッファ内オフセット、スロット番号を指定。
 
 ## キューの並列実行
 
@@ -741,7 +743,7 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 // *3
 // PushPresent の Vulkan の実装メモ。
 // swapchain の抱える内部処理用 Semaphore を 直前の Execute の終わりで Signal するようにする。
-// 
+//
 // コードのイメージ
 // queue.PushSignal(swapchain.waitSemaphore);
 // queue.PushWait()
@@ -873,9 +875,9 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
   - [VkImageLayout](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageLayout.html) はその時点でのイメージの状態を渡す。
   - [VkImageCopy](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageCopy.html) ではピクセルの領域指定とサブリソース位置の指定をする。
   - サブリソースの位置指定では、COLOR/DEPTH/STENCIL のビット指定、mipLevel、配列インデックスと配列要素数の指定をする。
-  - ちなみに、Vulkan はキューブマップの各面を配列インデックス0～5で扱う。
+  - ちなみに、Vulkan はキューブマップの各面を配列インデックス 0 ～ 5 で扱う。
   - 他のライブラリとの互換を考えると配列要素数は指定できないようにして１画像ずつのコピーしかサポートしないようにするのもありかもしれない。
-- ここまで ImageToImage の説明をしてきたが、イメージのアップロード目的では BufferToImage を使うものらしい。（裏は取れていないけど、VulkanもDX12もサンプルコードではそうなっていたのでそういうものなのかなぁという印象）
+- ここまで ImageToImage の説明をしてきたが、イメージのアップロード目的では BufferToImage を使うものらしい。（裏は取れていないけど、Vulkan も DX12 もサンプルコードではそうなっていたのでそういうものなのかなぁという印象）
 - BufferToImage コピーは [vkCmdCopyBufferToImage](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage.html) で実行。
   - 引数に指定する [VkBufferImageCopy](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferImageCopy.html) で細かい指定をする。
   - bufferRowLength、bufferImageHeight で src の横幅縦幅を指定。
@@ -893,36 +895,36 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 ### Metal
 
 - [MTLBlitCommandEncoder.copy()](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400752-copy) で BufferToImage コピーを実行。（圧縮テクスチャ用は[こちら](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400771-copy)）
-- sourceBytesPerRow、sourceBytesPerImage（depthPitch）、sourceSize（w/h/d）、destinationSlice、destinationLevel、destinationOrigin（オフセットxyz）を指定。
+- sourceBytesPerRow、sourceBytesPerImage（depthPitch）、sourceSize（w/h/d）、destinationSlice、destinationLevel、destinationOrigin（オフセット xyz）を指定。
 
-## GPGPU実行
+## GPGPU 実行
 
 - いわゆる Dispatch の部分の話。
 - Vulkan と DX12 は同じ仕様で１スレッドグループあたりの処理数をシェーダーコード側に書く。
 - 一方、Metal は ソースコード側で１スレッドグループ辺りの処理数を書く。
 - 総スレッドグループ数はどのライブラリもソースコード側で書く。
-- 制約的には Metal が一番厳しいのでそれにあわせておくとOK。
+- 制約的には Metal が一番厳しいのでそれにあわせておくと OK。
 
 ### Vulkan
 
 - [こちらが参考ページ](https://vkguide.dev/docs/gpudriven/compute_shaders/)。
-- シェーダーコード側で１つのスレッドグループあたりにまわしたい処理数を x=16,y=16 みたいに記述。省略すると1なのかな。
+- シェーダーコード側で１つのスレッドグループあたりにまわしたい処理数を x=16,y=16 みたいに記述。省略すると 1 なのかな。
 - ソースコード側でそれぞれを何回実行したいのかを X,Y,Z で指定。16x9 回実行したかったら 16,9,1 を指定。
 
 ### DirectX 12
 
-- [ID3D12GraphicsCommandList::Dispatch](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-dispatch)でXYZそれぞれのスレッドグループ総数を指定。
+- [ID3D12GraphicsCommandList::Dispatch](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-dispatch)で XYZ それぞれのスレッドグループ総数を指定。
 - １つあたりのスレッドグループで 16x16 処理してそれを 16x9 回実行したかったら 16,9,1 を指定。
 - 16x16 の部分はシェーダーコード側で書く。
 
 ### Metal
 
 - [こちらのページの図](https://developer.apple.com/documentation/metal/calculating_threadgroup_and_grid_sizes)が分かりやすい。
-- disptach関数が２つある。
+- disptach 関数が２つある。
 - １つは dispatchThreadgroups 関数。
 - threadsPerThreadgroup で１つあたりのスレッドグループで処理する数を、 threadgroupsPerGrid で総スレッドグループ数を指定。
 - もう１つは dispatchThreads 関数。
-- threadsPerThreadgroup で１つ当たりのスレッドグループで処理する数を、threadsPerGrid でXYZそれぞれの総処理数を指定。この呼び出し方は他の２つのライブラリにはない。
+- threadsPerThreadgroup で１つ当たりのスレッドグループで処理する数を、threadsPerGrid で XYZ それぞれの総処理数を指定。この呼び出し方は他の２つのライブラリにはない。
 - あと どちらの呼び出し方にも共通するが、１スレッドグループあたりの処理数はシェーダーコード側には書かない。
 
 # 最適化
@@ -970,6 +972,15 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 
 DirectX 12 のみ CreateReservedResource() や CreateCommittedResource() でイメージバッファ・デプスステンシルバッファに対してクリアカラーが指定できる。
 ここで指定した毎フレームクリアするカラーと一致する場合はパフォーマンスが良くなるのだとか。
+
+#　その他
+
+## ビューポート＆テクスチャ座標系
+
+- ビューポートは[こちらのページ]((https://docs.unity3d.com/ja/2019.4/Manual/SL-PlatformDifferences.html)によると３ライブラリ共に左上原点らしい。対応しないけどOpenGL系だけ左下。
+- Depth 値の仕様も異なる。DX12 は N-F が [1,0]、Vulkan は [0,1]。ちなみに OpenGL は [-1,1]。
+- さっきのページによると Metal は Direct3D-Like らしいので Metal と DX12 はおなじ。
+- テクスチャもビューポートにならって左上原点で統一で問題なさそう。UV(0,0) は左上。
 
 # 付録
 
