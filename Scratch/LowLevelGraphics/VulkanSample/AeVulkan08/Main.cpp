@@ -577,11 +577,6 @@ int aemain(::ae::base::Application* app) {
                         .SetFrontFace(
                             ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
                         .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
-                .SetDepthStencilInfo(
-                    ::ae::gfx_low::PipelineDepthStencilInfo()
-                        .SetDepthTestEnable(true)
-                        .SetDepthWriteEnable(true)
-                        .SetDepthCompareOp(::ae::gfx_low::CompareOp::LessEqual))
                 .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
                                   .SetRenderTargetBlendInfos(blendInfos))));
     }
