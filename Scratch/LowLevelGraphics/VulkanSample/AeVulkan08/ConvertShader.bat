@@ -1,4 +1,4 @@
 :: 文字コード：SJIS
-%VULKAN_SDK%\Bin\glslangValidator.exe -V -x -o ./Shader.vert.inc ./Shader.vert
-%VULKAN_SDK%\Bin\glslangValidator.exe -V -x -o ./Shader.frag.inc ./Shader.frag
+%VULKAN_SDK%\Bin\glslangValidator.exe -V -x -o ./ShaderCube.vert.inc ./ShaderCube.vert
+%VULKAN_SDK%\Bin\glslangValidator.exe -V -x -o ./ShaderCube.frag.inc ./ShaderCube.frag
 :: EOF
