@@ -526,11 +526,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
-                auto model = ::ae::base::Quaternion(
-                                 ::ae::base::Vector3::UnitX(),
-                                 ::ae::base::Degree(90.0f))
-                                 .ToRotateMatrix()
-                                 .ToMatrix44();
+                auto model = ::ae::base::Matrix44::Identity();                
                 auto vp = proj * view;
                 auto mvp = vp * model;
 
@@ -557,11 +553,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
-                auto model = ::ae::base::Quaternion(
-                                 ::ae::base::Vector3::UnitX(),
-                                 ::ae::base::Degree(90.0f))
-                                 .ToRotateMatrix()
-                                 .ToMatrix44();
+                auto model = ::ae::base::Matrix44::Identity();                
                 auto vp = proj * view;
                 auto mvp = vp * model;
 
