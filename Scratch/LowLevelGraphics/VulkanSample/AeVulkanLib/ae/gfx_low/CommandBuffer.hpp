@@ -225,9 +225,10 @@ private:
     };
 
     gfx_low::Device& device_;
-    const base::Pointer<Queue> queuePtr_;
+    const Queue& queue_;
     const CommandBufferLevel level_;
     const CommandBufferFeatureBitSet features_;
+    ::vk::CommandPool commandPool_;
     ::vk::CommandBuffer nativeObject_;
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;

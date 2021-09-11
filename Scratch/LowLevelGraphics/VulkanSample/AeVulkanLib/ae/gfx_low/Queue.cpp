@@ -19,15 +19,15 @@ Queue::Queue(
     gfx_low::Device* device,
     const ::vk::Queue& queue,
     QueueKind kind,
-    int operationCountMax,
-    const ::vk::CommandPool& commandPool)
+    int queueFamilyIndex,
+    int operationCountMax)
 : device_(base::PtrToRef(device))
 , nativeObject_(queue)
 , kind_(kind)
+, queueFamilyIndex_(queueFamilyIndex)
 , operations_(operationCountMax, device_.System().ObjectAllocator_())
 , waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
-, signalEvents_(operationCountMax, device_.System().ObjectAllocator_())
-, commandPool_(commandPool) {
+, signalEvents_(operationCountMax, device_.System().ObjectAllocator_()) {
 }
 
 //------------------------------------------------------------------------------

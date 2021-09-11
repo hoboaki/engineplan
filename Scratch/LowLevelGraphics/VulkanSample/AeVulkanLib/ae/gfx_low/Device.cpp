@@ -195,26 +195,13 @@ Device::Device(const DeviceCreateInfo& createInfo)
     for (int i = 0; i < queueCreateCount; ++i) {
         const auto queueFamilyIndex =
             deviceQueueCreateInfos[i].queueFamilyIndex;
-        ::vk::CommandPool commandPool;
-        {
-            const auto createInfo =
-                ::vk::CommandPoolCreateInfo()
-                    .setQueueFamilyIndex(queueFamilyIndex)
-                    .setFlags(
-                        ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
-            const auto result = nativeObject_.createCommandPool(
-                &createInfo,
-                nullptr,
-                &commandPool);
-            AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
-        }
         const auto& queueCreateInfo = queueCreateInfos[i];
         queues_.Add(
             this,
             nativeObject_.getQueue(queueFamilyIndex, indexInQueueKindTable[i]),
             queueCreateInfo.Kind(),
-            queueCreateInfo.OperationCountMax(),
-            commandPool);
+            queueFamilyIndex,
+            queueCreateInfo.OperationCountMax());
     }
 
     // GPUメモリが共有メモリか調べる
@@ -235,9 +222,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
 //------------------------------------------------------------------------------
 Device::~Device() {
-    for (int i = queues_.Count() - 1; 0 <= i; --i) {
-        nativeObject_.destroyCommandPool(queues_[i].CommandPool_(), nullptr);
-    }
     queues_.Clear();
     nativeObject_.destroy(nullptr);
     nativeObject_ = ::vk::Device();

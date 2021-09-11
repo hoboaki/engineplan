@@ -42,9 +42,10 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, queuePtr_(createInfo.Queue())
+, queue_(base::PtrToRef(createInfo.Queue()))
 , level_(createInfo.Level())
 , features_(createInfo.Features())
+, commandPool_()
 , nativeObject_()
 , completeEvent_(EventCreateInfo().SetDevice(&device_))
 , renderPassProperties_(
@@ -62,9 +63,23 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
             createInfo.Features().Get(CommandBufferFeature::Compute));
     }
 
+    // コマンドプール作成
+    {
+        const auto poolCreateInfo =
+            ::vk::CommandPoolCreateInfo()
+                .setQueueFamilyIndex(queue_.QueueFamilyIndex_())
+                .setFlags(
+                    ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+        const auto result = device_.NativeObject_().createCommandPool(
+            &poolCreateInfo,
+            nullptr,
+            &commandPool_);
+        AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
+    }
+
     const auto allocateInfo =
         ::vk::CommandBufferAllocateInfo()
-            .setCommandPool(queuePtr_->CommandPool_())
+            .setCommandPool(commandPool_)
             .setLevel(
                 InternalEnumUtil::ToCommandBufferLevel(createInfo.Level()))
             .setCommandBufferCount(1);
@@ -79,21 +94,25 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 CommandBuffer::~CommandBuffer() {
     Reset();
     device_.NativeObject_().freeCommandBuffers(
-        queuePtr_->CommandPool_(),
+        commandPool_,
         nativeObject_);
+    device_.NativeObject_().destroyCommandPool(commandPool_, nullptr);
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::BeginRecord() {
     Reset();
     AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
+    const auto inheritanceInfo = ::vk::CommandBufferInheritanceInfo();
     const auto beginInfo =
         ::vk::CommandBufferBeginInfo()
             .setFlags(
                 level_ == CommandBufferLevel::Secondary
                     ? ::vk::CommandBufferUsageFlagBits::eRenderPassContinue
                     : ::vk::CommandBufferUsageFlagBits(0))
-            .setPInheritanceInfo(nullptr);
+            .setPInheritanceInfo(
+                level_ == CommandBufferLevel::Secondary ? &inheritanceInfo
+                                                        : nullptr);
     const auto result = nativeObject_.begin(&beginInfo);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recording;
@@ -489,7 +508,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
                               .setClearValueCount(attachmentsCount)
                               .setPClearValues(&clearValues[0]);
 
-    nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eSecondaryCommandBuffers);
+    nativeObject_.beginRenderPass(passInfo, vk::SubpassContents::eInline);
 }
 
 //------------------------------------------------------------------------------
