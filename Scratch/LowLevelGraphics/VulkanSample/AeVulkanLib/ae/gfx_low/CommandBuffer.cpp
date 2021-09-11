@@ -68,8 +68,7 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
         const auto poolCreateInfo =
             ::vk::CommandPoolCreateInfo()
                 .setQueueFamilyIndex(queue_.QueueFamilyIndex_())
-                .setFlags(
-                    ::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+                .setFlags(::vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
         const auto result = device_.NativeObject_().createCommandPool(
             &poolCreateInfo,
             nullptr,
@@ -93,9 +92,7 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 //------------------------------------------------------------------------------
 CommandBuffer::~CommandBuffer() {
     Reset();
-    device_.NativeObject_().freeCommandBuffers(
-        commandPool_,
-        nativeObject_);
+    device_.NativeObject_().freeCommandBuffers(commandPool_, nativeObject_);
     device_.NativeObject_().destroyCommandPool(commandPool_, nullptr);
 }
 
@@ -116,11 +113,15 @@ void CommandBuffer::BeginRecord() {
     const auto result = nativeObject_.begin(&beginInfo);
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recording;
+    if (level_ == CommandBufferLevel::Secondary) {
+        activePass_ = features_;
+    }
 }
 
 //------------------------------------------------------------------------------
 void CommandBuffer::EndRecord() {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    activePass_.Clear();
     const ::vk::Result result = nativeObject_.end();
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Recorded;

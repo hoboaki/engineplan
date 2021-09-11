@@ -11,6 +11,7 @@
 
 namespace ae {
 namespace gfx_low {
+class CommandBufferBeginRecordInfo;
 class CommandBufferCreateInfo;
 class ComputePassBeginInfo;
 class ComputePipeline;
@@ -103,7 +104,7 @@ public:
     /// @name 記録開始・終了処理
     //@{
     /// 記録済みの情報をリセットして記録を開始する。
-    void BeginRecord();
+    void BeginRecord(/*const CommandBufferBeginRecordInfo& info*/);
 
     /// 記録を終了する。
     void EndRecord();
