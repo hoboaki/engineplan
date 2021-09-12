@@ -106,7 +106,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display = ::ae::base::Display(
         ::ae::base::DisplayContext()
-            .SetWindowTitle("AeVulkan08 - Nested Command Buffer")
+            .SetWindowTitle("AeVulkan08 - Secondary Command Buffer")
             .SetIsResizableWindow(true));
 
     // ディスプレイの表示
