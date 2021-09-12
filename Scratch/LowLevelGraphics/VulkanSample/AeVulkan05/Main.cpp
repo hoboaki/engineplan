@@ -42,7 +42,9 @@
 #include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/Queue.hpp>
+#include <ae/gfx_low/RenderPass.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
+#include <ae/gfx_low/RenderPassCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
@@ -431,6 +433,11 @@ int aemain(::ae::base::Application* app) {
                                .SetEntryPointNamePtr("main"))
             .SetDescriptorSetSpecInfo(computeDescriptorSetSpecInfo));
 
+    // RenderPass 領域を事前確保
+    ::ae::base::RuntimeArray<::std::unique_ptr<::ae::gfx_low::RenderPass>>
+        renderPassArray;
+    renderPassArray.Resize(gfxKit.SwapchainImageCount());
+
     // メインループ
     bool isFinishedSetupTexture = false;
     int frameCount = 0;
@@ -520,9 +527,12 @@ int aemain(::ae::base::Application* app) {
                 isFinishedSetupTexture = true;
             }
 
-            // クリアカラー参考
-            // https://www.colordic.org/colorscheme/7005
+            // レンダーパス準備
+            // クリアカラー参考：https://www.colordic.org/colorscheme/7005
+            auto& renderPassUniquePtr = renderPassArray[bufferIndex];
             {
+                renderPassUniquePtr.reset();
+
                 const ::ae::gfx_low::RenderTargetSetting
                     renderTargetSettings[] = {
                         ::ae::gfx_low::RenderTargetSetting()
@@ -555,15 +565,24 @@ int aemain(::ae::base::Application* app) {
                         .SetStencilStoreOp(
                             ::ae::gfx_low::AttachmentStoreOp::Store)
                         .SetStencilClearValue(0);
-
-                cmd.CmdBeginRenderPass(
-                    ::ae::gfx_low::RenderPassBeginInfo()
+                renderPassUniquePtr.reset(new ::ae::gfx_low::RenderPass(
+                    ::ae::gfx_low::RenderPassCreateInfo()
+                        .SetDevice(&gfxKit.Device())
                         .SetRenderPassSpecInfo(renderPassSpecInfo)
                         .SetRenderTargetSettings(renderTargetSettings)
                         .SetDepthStencilSettingPtr(&depthStencilSetting)
                         .SetRenderArea(::ae::base::Aabb2i(
                             ::ae::base::Vector2i::Zero(),
-                            display.MainScreen().Extent())));
+                            display.MainScreen().Extent()))));
+            }
+
+            // レンダーパス処理
+            {
+                // 開始
+                cmd.CmdBeginRenderPass(
+                    ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
+                        renderPassUniquePtr.get()));
+
 
                 // Viewport
                 {
@@ -598,6 +617,7 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdDraw(
                     ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
 
+                // 終了
                 cmd.CmdEndRenderPass();
             }
         }
