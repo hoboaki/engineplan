@@ -38,7 +38,9 @@
 #include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/Queue.hpp>
+#include <ae/gfx_low/RenderPass.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
+#include <ae/gfx_low/RenderPassCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
@@ -656,6 +658,12 @@ int aemain(::ae::base::Application* app) {
     };
     setupColorBuffer(); // 初回セットアップ
 
+    // RenderPass 領域を事前確保
+    ::std::unique_ptr<::ae::gfx_low::RenderPass> mainRenderPass;
+    ::ae::base::RuntimeArray<::std::unique_ptr<::ae::gfx_low::RenderPass>>
+        copyRenderPassArray;
+    copyRenderPassArray.Resize(gfxKit.SwapchainImageCount());
+
     // メインループ
     bool isFinishedSetupTexture = false;
     bool isFinishedSetupColorBufferState = false;
@@ -812,19 +820,8 @@ int aemain(::ae::base::Application* app) {
                                 samplerDescs));
                 }
 
-                // ２ループ目以降と状況一致させるために初期状態を変更
-                //cmd.CmdImageResourceBarrier(
-                //    ::ae::gfx_low::ImageResourceBarrierInfo()
-                //        .SetResource(colorBufferImage.get())
-                //        .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
-                //        .SetNewState(::ae::gfx_low::ImageResourceState::
-                //                         ShaderResourceReadOnly));
-            }
-
-            // クリアカラー参考
-            // https://www.colordic.org/colorscheme/7005
-            {
-                // 描画パス開始
+                // レンダーパス再生成
+                mainRenderPass.reset();
                 {
                     const ::ae::gfx_low::RenderTargetSetting
                         renderTargetSettings[] = {
@@ -861,15 +858,67 @@ int aemain(::ae::base::Application* app) {
                             .SetStencilStoreOp(
                                 ::ae::gfx_low::AttachmentStoreOp::Store)
                             .SetStencilClearValue(0);
-                    cmd.CmdBeginRenderPass(
-                        ::ae::gfx_low::RenderPassBeginInfo()
-                            .SetRenderPassSpecInfo(mainRenderPassSpecInfo)
-                            .SetRenderTargetSettings(renderTargetSettings)
-                            .SetDepthStencilSettingPtr(&depthStencilSetting)
-                            .SetRenderArea(::ae::base::Aabb2i(
-                                ::ae::base::Vector2i::Zero(),
-                                display.MainScreen().Extent())));
+                    mainRenderPass.reset(new ::ae::gfx_low::RenderPass(
+                        ::ae::gfx_low::RenderPassCreateInfo(
+                            ::ae::gfx_low::RenderPassCreateInfo()
+                                .SetDevice(&gfxKit.Device())
+                                .SetRenderPassSpecInfo(mainRenderPassSpecInfo)
+                                .SetRenderTargetSettings(renderTargetSettings)
+                                .SetDepthStencilSettingPtr(&depthStencilSetting)
+                                .SetRenderArea(::ae::base::Aabb2i(
+                                    ::ae::base::Vector2i::Zero(),
+                                    display.MainScreen().Extent())))));
+
                 }
+
+                // ２ループ目以降と状況一致させるために初期状態を変更
+                //cmd.CmdImageResourceBarrier(
+                //    ::ae::gfx_low::ImageResourceBarrierInfo()
+                //        .SetResource(colorBufferImage.get())
+                //        .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
+                //        .SetNewState(::ae::gfx_low::ImageResourceState::
+                //                         ShaderResourceReadOnly));
+            }
+
+            
+            // コピー用レンダーパス準備
+            auto& copyRenderPassUniquePtr = copyRenderPassArray[bufferIndex];
+            {
+                copyRenderPassUniquePtr.reset();
+
+                const ::ae::gfx_low::RenderTargetSetting
+                    renderTargetSettings[] = {
+                        ::ae::gfx_low::RenderTargetSetting()
+                            .SetRenderTargetImageView(
+                                &gfxKit.Swapchain()
+                                     ->CurrentRenderTargetImageView())
+                            .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetInitialImageResourceState(
+                                ::ae::gfx_low::ImageResourceState::Unknown)
+                            .SetFinalImageResourceState(
+                                ::ae::gfx_low::ImageResourceState::PresentSrc)
+                            .SetClearColor(
+                                ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
+                                    .ToRGBAf()),
+                    };
+                copyRenderPassUniquePtr.reset(new ::ae::gfx_low::RenderPass(
+                    ::ae::gfx_low::RenderPassCreateInfo()
+                        .SetDevice(&gfxKit.Device())
+                        .SetRenderPassSpecInfo(copyRenderPassSpecInfo)
+                        .SetRenderTargetSettings(renderTargetSettings)
+                        .SetRenderArea(::ae::base::Aabb2i(
+                            ::ae::base::Vector2i::Zero(),
+                            display.MainScreen().Extent()))));
+            }
+
+
+            // メイン描画
+            {
+                // 開始
+                cmd.CmdBeginRenderPass(
+                    ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
+                        mainRenderPass.get()));
 
                 // Viewport
                 {
@@ -910,36 +959,10 @@ int aemain(::ae::base::Application* app) {
 
             // Swapchain にコピー描画
             {
-                // 描画パス開始
-                {
-                    const ::ae::gfx_low::RenderTargetSetting
-                        renderTargetSettings[] = {
-                            ::ae::gfx_low::RenderTargetSetting()
-                                .SetRenderTargetImageView(
-                                    &gfxKit.Swapchain()
-                                         ->CurrentRenderTargetImageView())
-                                .SetLoadOp(
-                                    ::ae::gfx_low::AttachmentLoadOp::Clear)
-                                .SetStoreOp(
-                                    ::ae::gfx_low::AttachmentStoreOp::Store)
-                                .SetInitialImageResourceState(
-                                    ::ae::gfx_low::ImageResourceState::
-                                        Unknown)
-                                .SetFinalImageResourceState(
-                                    ::ae::gfx_low::ImageResourceState::
-                                        PresentSrc)
-                                .SetClearColor(
-                                    ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
-                                        .ToRGBAf()),
-                        };
-                    cmd.CmdBeginRenderPass(
-                        ::ae::gfx_low::RenderPassBeginInfo()
-                            .SetRenderPassSpecInfo(copyRenderPassSpecInfo)
-                            .SetRenderTargetSettings(renderTargetSettings)
-                            .SetRenderArea(::ae::base::Aabb2i(
-                                ::ae::base::Vector2i::Zero(),
-                                display.MainScreen().Extent())));
-                }
+                // 開始
+                cmd.CmdBeginRenderPass(
+                    ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
+                        copyRenderPassUniquePtr.get()));
 
                 // Viewport
                 {
@@ -974,7 +997,7 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(
                     geometrySquare.VertexCount()));
 
-                // 描画パス終了
+                // 終了
                 cmd.CmdEndRenderPass();
             }
 

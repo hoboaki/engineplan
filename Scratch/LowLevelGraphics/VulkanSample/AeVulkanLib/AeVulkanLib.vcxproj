@@ -284,6 +284,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPass.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\RenderPassCreateInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\SampledImageDescriptorInfo.hpp">
       <SubType>
       </SubType>
@@ -956,6 +964,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\PipelineVertexInputInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\RenderPass.cpp">
       <SubType>
       </SubType>
     </ClCompile>
