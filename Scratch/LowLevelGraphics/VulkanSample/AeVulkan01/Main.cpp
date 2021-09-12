@@ -811,7 +811,6 @@ int aemain(::ae::base::Application* app) {
         renderPassArray;
     renderPassArray.Resize(swapchainImageCount);
 
-
     // メインループ
     int bufferIndex = 0;
     int frameCount = 0;
