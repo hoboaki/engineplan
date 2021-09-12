@@ -949,7 +949,6 @@ int aemain(::ae::base::Application* app) {
                             display.MainScreen().Extent()))));
             }
 
-            
             // レンダーパス処理
             {
                 // 開始
