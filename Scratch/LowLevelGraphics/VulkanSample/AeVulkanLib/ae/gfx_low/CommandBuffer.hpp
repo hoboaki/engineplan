@@ -220,21 +220,17 @@ public:
     //@}
 
 private:
-    struct RenderPassProperty {
-        ::vk::RenderPass renderPass;
-        ::vk::Framebuffer framebuffer;
-    };
-
     gfx_low::Device& device_;
     const Queue& queue_;
     const CommandBufferLevel level_;
     const CommandBufferFeatureBitSet features_;
+    const int renderPassCountMax_ = {};
     ::vk::CommandPool commandPool_;
     ::vk::CommandBuffer nativeObject_;
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;
+    int renderPassCount_ = {};
     CommandBufferFeatureBitSet activePass_;
-    base::RuntimeMarray<RenderPassProperty> renderPassProperties_;
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };
