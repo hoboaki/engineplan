@@ -492,16 +492,6 @@ int aemain(::ae::base::Application* app) {
         // ユニフォームバッファ更新
         // （画面更新を確認するために毎フレーム更新）
         {
-            // vec3 eye = {0.0f, 3.0f, 5.0f};
-            // vec3 origin = {0, 0, 0};
-            // vec3 up = {0.0f, 1.0f, 0.0};
-            // mat4x4_perspective(projection_matrix,
-            //    (float)degreesToRadians(25.0f), 1.0f, 0.1f, 100.0f);
-            // mat4x4_look_at(view_matrix, eye, origin, up);
-            // mat4x4_identity(model_matrix);
-            // projection_matrix[1][1] *= -1;  // Flip projection matrix
-            // from GL to Vulkan orientation.
-
             auto proj = ::ae::base::Matrix44::Perspective(
                 ::ae::base::Angle(::ae::base::Degree(25.0f)),
                 float(display.MainScreen().Width()) /
@@ -509,7 +499,6 @@ int aemain(::ae::base::Application* app) {
                 0.1f, // near
                 100.0f // far
             );
-            proj.m[1][1] *= -1.0f;
             auto view = ::ae::base::Matrix44::LookAt(
                 ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
                 ::ae::base::Vector3::Zero(), // targetPos

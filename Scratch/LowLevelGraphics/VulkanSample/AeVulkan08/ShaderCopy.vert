@@ -8,9 +8,9 @@ layout(location = 1) in vec2 Uv0;
 layout(location = 0) out vec2 FragUv0;
 
 void main() {
-    // プロジェクション変換をかまさないのでシェーダー側でYを反転
-    gl_Position = vec4(Position.x, -Position.y, 0.0, 1.0);
+    gl_Position = vec4(Position.x, Position.y, 0.0, 1.0);
     FragUv0 = Uv0;
+    gl_Position.y = -gl_Position.y; // フレームバッファ空間の-Y方向をY-Upに変換
 }
 
 // EOF

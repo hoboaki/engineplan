@@ -34,6 +34,7 @@ void main() {
     FragViewNormal = viewNormal;
     FragWorldPos = worldPos.xyz;
     FragWorldNormal = worldNormal;
+    gl_Position.y = -gl_Position.y; // フレームバッファ空間の-Y方向をY-Upに変換
 }
 
 // EOF

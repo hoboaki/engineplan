@@ -18,7 +18,8 @@ layout(location = 1) out vec3 FragPos;
 void main() {
     Texcoord = Uv0;
     gl_Position = Ubuf.mvp * vec4(Position, 1.0);
-    FragPos = gl_Position.xyz;
+    FragPos = gl_Position.xyz * vec3(1, -1, 1); // FlipY
+    gl_Position.y = -gl_Position.y; // フレームバッファ空間の-Y方向をY-Upに変換
 }
 
 // EOF

@@ -637,7 +637,6 @@ int aemain(::ae::base::Application* app) {
                     0.1f, // near
                     1000.0f // far
                 );
-                data.projMtx.m[1][1] *= -1.0f; // from GL to Vulkan orientation.
                 auto eyePos = ::ae::base::Quaternion(
                                   ::ae::base::Vector3::UnitY(),
                                   ::ae::base::Degree(0.6f * frameCount))

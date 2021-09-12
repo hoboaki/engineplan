@@ -519,8 +519,6 @@ int aemain(::ae::base::Application* app) {
                     0.1f, // near
                     100.0f // far
                 );
-                proj.m[1][1] *=
-                    -1.0f; // Flip projection matrix from GL to Vulkan orientation.
                 auto view = ::ae::base::Matrix44::LookAt(
                     ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
                     ::ae::base::Vector3::Zero(), // targetPos
@@ -546,8 +544,6 @@ int aemain(::ae::base::Application* app) {
                     0.1f, // near
                     1000.0f // far
                 );
-                proj.m[1][1] *=
-                    -1.0f; // Flip projection matrix from GL to Vulkan orientation.
                 auto view = ::ae::base::Matrix44::LookAt(
                     ::ae::base::Vector3(0.0f, 0.0f, 5.0f), // eyePos
                     ::ae::base::Vector3::Zero(), // targetPos

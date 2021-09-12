@@ -19,6 +19,7 @@ void main() {
     gl_Position = Ubuf.mvp * vec4(Position, 1.0);
     FragPos = gl_Position.xyz;
     FragUv0 = Uv0;
+    gl_Position.y = -gl_Position.y; // フレームバッファ空間の-Y方向をY-Upに変換
 }
 
 // EOF
