@@ -949,10 +949,6 @@ int aemain(::ae::base::Application* app) {
                             ::ae::base::Vector2i::Zero(),
                             display.MainScreen().Extent())));
 
-                // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*pipeline);
-                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
-
                 // Viewport
                 {
                     const ::ae::gfx_low::ViewportSetting settings[] = {
@@ -976,6 +972,10 @@ int aemain(::ae::base::Application* app) {
                     AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
                     cmd.CmdSetScissors(renderTargetCount, settings);
                 }
+
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*pipeline);
+                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
 
                 // Draw
                 cmd.CmdSetVertexBuffer(0, *vertexBufferView);

@@ -11,6 +11,7 @@
 
 namespace ae {
 namespace gfx_low {
+class CommandBufferBeginRecordInfo;
 class CommandBufferCreateInfo;
 class ComputePassBeginInfo;
 class ComputePipeline;
@@ -68,7 +69,15 @@ namespace gfx_low {
 /// CommandBufferLevel::Secondary はできません。
 /// その代わり、Primary のコマンドバッファの Call() の引数に渡せます。
 /// Secondary は createInfo の SetFeatureFlags() で Render か Compute
-/// のどちらか１つを設定する必要があります。
+/// のどちらか１つを設定する必要があります。Copy は指定できません。
+/// Secondary は以下のコマンドを呼ぶことはできません。
+/// - CmdCall
+/// - CmdBeginRenderPass
+/// - CmdEndRenderPass
+/// - CmdBeginComputePass
+/// - CmdEndComputePass
+/// - CmdSetViewports
+/// - CmdSetScissors
 class CommandBuffer {
 public:
     /// @name コンストラクタとデストラクタ
@@ -95,7 +104,7 @@ public:
     /// @name 記録開始・終了処理
     //@{
     /// 記録済みの情報をリセットして記録を開始する。
-    void BeginRecord();
+    void BeginRecord(/*const CommandBufferBeginRecordInfo& info*/);
 
     /// 記録を終了する。
     void EndRecord();
@@ -103,6 +112,13 @@ public:
     /// 記録済みの情報があればリセットする。
     /// @details BeginRecord() / EndRecord() の間では呼べません。
     void Reset();
+    //@}
+
+    /// @name セカンダリ呼び出し
+    //@{
+    /// 保存済のコマンドを実行する。
+    /// @param secondaryCommandBuffer CommandBufferLevel::Secondary なコマンドバッファ。
+    void CmdCall(const CommandBuffer& secondaryCommands);
     //@}
 
     /// @name 同期コマンド
@@ -210,9 +226,10 @@ private:
     };
 
     gfx_low::Device& device_;
-    const base::Pointer<Queue> queuePtr_;
+    const Queue& queue_;
     const CommandBufferLevel level_;
     const CommandBufferFeatureBitSet features_;
+    ::vk::CommandPool commandPool_;
     ::vk::CommandBuffer nativeObject_;
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;

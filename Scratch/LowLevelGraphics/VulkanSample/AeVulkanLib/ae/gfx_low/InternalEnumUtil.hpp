@@ -6,6 +6,7 @@
 #include <ae/gfx_low/BlendFactor.hpp>
 #include <ae/gfx_low/BlendOp.hpp>
 #include <ae/gfx_low/BufferResourceUsageBitSet.hpp>
+#include <ae/gfx_low/CommandBufferLevel.hpp>
 #include <ae/gfx_low/CompareOp.hpp>
 #include <ae/gfx_low/ImageFormat.hpp>
 #include <ae/gfx_low/ImageResourceKind.hpp>
@@ -47,6 +48,8 @@ struct InternalEnumUtil {
         const BufferResourceUsageBitSet& usageBitSet);
     static ::vk::ColorComponentFlags ToColorComponentFlags(
         const RenderTargetComponentBitSet& componentBitSet);
+    static ::vk::CommandBufferLevel ToCommandBufferLevel(
+        CommandBufferLevel level);
     static ::vk::CompareOp ToCompareOp(CompareOp op);
     static ::vk::CullModeFlags ToCullModeFlags(RasterizeCullMode mode);
     static ::vk::Filter ToFilter(SamplerMinMagFilter filter);

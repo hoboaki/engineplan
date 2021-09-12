@@ -11,30 +11,30 @@ namespace {
 
 // clang-format off
 const float fPositionData[] = {
-    -1.0f, 0.0f,-1.0f,
-    -1.0f, 0.0f, 1.0f,
-     1.0f, 0.0f, 1.0f,
-    -1.0f, 0.0f,-1.0f,
-     1.0f, 0.0f, 1.0f,
-     1.0f, 0.0f,-1.0f,
+    -1.0f, 1.0f, 0.0f,
+    -1.0f,-1.0f, 0.0f,
+     1.0f, 1.0f, 0.0f,
+    -1.0f,-1.0f, 0.0f,
+     1.0f,-1.0f, 0.0f,
+     1.0f, 1.0f, 0.0f,
 };
 
 const float fNormalData[] = {
-     0.0f, 1.0f, 0.0f,
-     0.0f, 1.0f, 0.0f,
-     0.0f, 1.0f, 0.0f,
-     0.0f, 1.0f, 0.0f,
-     0.0f, 1.0f, 0.0f,
-     0.0f, 1.0f, 0.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
+     0.0f, 0.0f, 1.0f,
 };
 
 const float fUv0Data[] = {
-    1.0f, 0.0f,
     0.0f, 0.0f,
     0.0f, 1.0f,
     1.0f, 0.0f,
     0.0f, 1.0f,
     1.0f, 1.0f,
+    1.0f, 0.0f,
 };
 // clang-format on
 } // namespace

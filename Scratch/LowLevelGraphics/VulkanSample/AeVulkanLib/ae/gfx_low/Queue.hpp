@@ -86,14 +86,13 @@ public:
         gfx_low::Device* device,
         const ::vk::Queue& queue,
         QueueKind kind,
-        int operationCountMax,
-        const ::vk::CommandPool& commandPool);
+        int queueFamilyIndex,
+        int operationCountMax);
 
     ~Queue();
 
     ::vk::Queue NativeObject_() { return nativeObject_; }
-
-    ::vk::CommandPool& CommandPool_() { return commandPool_; }
+    int QueueFamilyIndex_() const { return queueFamilyIndex_; }
     //@}
 
 private:
@@ -119,10 +118,10 @@ private:
     gfx_low::Device& device_;
     ::vk::Queue nativeObject_;
     const QueueKind kind_;
+    const int queueFamilyIndex_;
     base::RuntimeMarray<Operation> operations_;
     base::RuntimeMarray<::vk::Semaphore> waitEvents_;
     base::RuntimeMarray<::vk::Semaphore> signalEvents_;
-    ::vk::CommandPool commandPool_;
 };
 
 } // namespace gfx_low

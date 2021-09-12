@@ -43,6 +43,7 @@
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetBlendInfo.hpp>
+#include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 #include <ae/gfx_low/RenderTargetSetting.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 #include <ae/gfx_low/ResourceMemoryAllocInfo.hpp>
@@ -64,6 +65,7 @@
 #include <ae/gfx_low/VertexAttributeInfo.hpp>
 #include <ae/gfx_low/ViewportSetting.hpp>
 #include <aesk/GeometryCube.hpp>
+#include <aesk/GeometrySquare.hpp>
 #include <aesk/GfxBasicKit.hpp>
 #include <aesk/Shader.hpp>
 #include <aesk/UniformBuffer.hpp>
@@ -77,12 +79,20 @@ struct fUniformDataType {
     float mvp[4][4];
 };
 
-const uint32_t fVertShaderCode[] = {
-#include "Shader.vert.inc"
+const uint32_t fCopyVertShaderCode[] = {
+#include "ShaderCopy.vert.inc"
 };
 
-const uint32_t fFragShaderCode[] = {
-#include "Shader.frag.inc"
+const uint32_t fCopyFragShaderCode[] = {
+#include "ShaderCopy.frag.inc"
+};
+
+const uint32_t fCubeVertShaderCode[] = {
+#include "ShaderCube.vert.inc"
+};
+
+const uint32_t fCubeFragShaderCode[] = {
+#include "ShaderCube.frag.inc"
 };
 // clang-format on
 
@@ -96,7 +106,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display = ::ae::base::Display(
         ::ae::base::DisplayContext()
-            .SetWindowTitle("AeVulkan03 - Screen Resize With Aesk")
+            .SetWindowTitle("AeVulkan08 - Secondary Command Buffer")
             .SetIsResizableWindow(true));
 
     // ディスプレイの表示
@@ -106,21 +116,29 @@ int aemain(::ae::base::Application* app) {
     ::aesk::GfxBasicKit gfxKit(&display);
 
     // Shader の作成
-    ::aesk::Shader vertShader(
+    ::aesk::Shader copyVertShader(
         &gfxKit,
-        fVertShaderCode,
-        sizeof(fVertShaderCode));
-    ::aesk::Shader fragShader(
+        fCopyVertShaderCode,
+        sizeof(fCopyVertShaderCode));
+    ::aesk::Shader copyFragShader(
         &gfxKit,
-        fFragShaderCode,
-        sizeof(fFragShaderCode));
+        fCopyFragShaderCode,
+        sizeof(fCopyFragShaderCode));
+    ::aesk::Shader cubeVertShader(
+        &gfxKit,
+        fCubeVertShaderCode,
+        sizeof(fCubeVertShaderCode));
+    ::aesk::Shader cubeFragShader(
+        &gfxKit,
+        fCubeFragShaderCode,
+        sizeof(fCubeFragShaderCode));
 
-    // VertexBuffer の作成
+    // VertexBuffer の作成（キューブ）
     ::aesk::GeometryCube geometryCube;
-    const auto vertexBufferLayoutInfo =
+    const auto cubeVertexBufferLayoutInfo =
         ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(
             geometryCube.Stride());
-    const ::ae::gfx_low::VertexAttributeInfo vertexAttrInfos[] = {
+    const ::ae::gfx_low::VertexAttributeInfo cubeVrtexAttrInfos[] = {
         ::ae::gfx_low::VertexAttributeInfo()
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
             .SetOffset(geometryCube.OffsetPosition()),
@@ -128,13 +146,33 @@ int aemain(::ae::base::Application* app) {
             .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
             .SetOffset(geometryCube.OffsetUv0()),
     };
-    ::aesk::VertexBuffer vertexBuffer(
+    ::aesk::VertexBuffer cubeVertexBuffer(
         &gfxKit.Device(),
         geometryCube.Data().Size(),
-        vertexBufferLayoutInfo);
-    vertexBuffer.StoreToResourceMemory(geometryCube.Data());
+        cubeVertexBufferLayoutInfo);
+    cubeVertexBuffer.StoreToResourceMemory(geometryCube.Data());
 
-    // ポリゴンに貼り付けるテクスチャの作成
+    
+    // VertexBuffer の作成（正方形）
+    ::aesk::GeometrySquare geometrySquare;
+    const auto squareVertexBufferLayoutInfo =
+        ::ae::gfx_low::VertexBufferLayoutInfo().SetStride(
+            geometrySquare.Stride());
+    const ::ae::gfx_low::VertexAttributeInfo squareVrtexAttrInfos[] = {
+        ::ae::gfx_low::VertexAttributeInfo()
+            .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x3)
+            .SetOffset(geometrySquare.OffsetPosition()),
+        ::ae::gfx_low::VertexAttributeInfo()
+            .SetFormat(::ae::gfx_low::VertexFormat::Sfloat32x2)
+            .SetOffset(geometryCube.OffsetUv0()),
+    };
+    ::aesk::VertexBuffer squareVertexBuffer(
+        &gfxKit.Device(),
+        geometrySquare.Data().Size(),
+        squareVertexBufferLayoutInfo);
+    squareVertexBuffer.StoreToResourceMemory(geometrySquare.Data());
+
+    // キューブに貼り付けるテクスチャの作成
     ::ae::gfx_low::UniqueResourceMemory textureMemory;
     ::ae::gfx_low::UniqueResourceMemory copySrcTextureMemory;
     ::std::unique_ptr<::ae::gfx_low::ImageResource> textureImage;
@@ -311,21 +349,34 @@ int aemain(::ae::base::Application* app) {
         gfxKit.SwapchainImageCount());
 
     // RenderPassSpecInfo の作成
-    const ::ae::gfx_low::RenderTargetSpecInfo renderTargetSpecInfos[] = {
+    const auto colorBufferFormat =
+        ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
+    const int renderTargetCount = 1;
+    const ::ae::gfx_low::RenderTargetSpecInfo mainRenderTargetSpecInfos[] = {
+        ::ae::gfx_low::RenderTargetSpecInfo().SetImageFormat(colorBufferFormat),
+    };
+    AE_BASE_ASSERT_EQUALS(renderTargetCount, AE_BASE_ARRAY_LENGTH(mainRenderTargetSpecInfos));
+    const ::ae::gfx_low::RenderTargetSpecInfo copyRenderTargetSpecInfos[] = {
         gfxKit.Swapchain()->RenderTargetSpecInfo(),
     };
-    const int renderTargetCount = AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos);
+    AE_BASE_ASSERT_EQUALS(
+        renderTargetCount,
+        AE_BASE_ARRAY_LENGTH(copyRenderTargetSpecInfos));
     const auto depthStencilSpecInfo =
         ::ae::gfx_low::DepthStencilSpecInfo().SetImageFormat(
             gfxKit.DepthBufferFormat());
-    const auto renderPassSpecInfo =
+    const auto mainRenderPassSpecInfo =
         ::ae::gfx_low::RenderPassSpecInfo()
             .SetRenderTargetCount(renderTargetCount)
-            .SetRenderTargetSpecInfos(renderTargetSpecInfos)
+            .SetRenderTargetSpecInfos(mainRenderTargetSpecInfos)
             .SetDepthStencilSpecInfoPtr(&depthStencilSpecInfo);
+    const auto copyRenderPassSpecInfo =
+        ::ae::gfx_low::RenderPassSpecInfo()
+            .SetRenderTargetCount(renderTargetCount)
+            .SetRenderTargetSpecInfos(copyRenderTargetSpecInfos);
 
     // DescriptorSetSpecInfo の作成
-    const ::ae::gfx_low::ShaderBindingInfo uniformBufferBindingInfos[] = {
+    const ::ae::gfx_low::ShaderBindingInfo mainUniformBufferBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(
                 ::ae::gfx_low::ShaderBindingStageBitSet()
@@ -333,42 +384,70 @@ int aemain(::ae::base::Application* app) {
                     .Set(::ae::gfx_low::ShaderBindingStage::Fragment, true))
             .SetBindingIndex(0)
     };
-    const ::ae::gfx_low::ShaderBindingInfo sampledImageBindingInfos[] = {
+    const ::ae::gfx_low::ShaderBindingInfo mainSampledImageBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
                 ::ae::gfx_low::ShaderBindingStage::Fragment,
                 true))
             .SetBindingIndex(0)
     };
-    const ::ae::gfx_low::ShaderBindingInfo samplerBindingInfos[] = {
+    const ::ae::gfx_low::ShaderBindingInfo mainSamplerBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
                 ::ae::gfx_low::ShaderBindingStage::Fragment,
                 true))
             .SetBindingIndex(0)
     };
-    const auto descriptorSetSpecInfo =
+    const ::ae::gfx_low::ShaderBindingInfo copySampledImageBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Fragment,
+                true))
+            .SetBindingIndex(0)
+    };
+    const ::ae::gfx_low::ShaderBindingInfo copySamplerBindingInfos[] = {
+        ::ae::gfx_low::ShaderBindingInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
+                ::ae::gfx_low::ShaderBindingStage::Fragment,
+                true))
+            .SetBindingIndex(0)
+    };
+    const auto mainDescriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::UniformBuffer,
-                AE_BASE_ARRAY_LENGTH(uniformBufferBindingInfos),
-                uniformBufferBindingInfos)
+                AE_BASE_ARRAY_LENGTH(mainUniformBufferBindingInfos),
+                mainUniformBufferBindingInfos)
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::SampledImage,
-                AE_BASE_ARRAY_LENGTH(sampledImageBindingInfos),
-                sampledImageBindingInfos)
+                AE_BASE_ARRAY_LENGTH(mainSampledImageBindingInfos),
+                mainSampledImageBindingInfos)
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::Sampler,
-                AE_BASE_ARRAY_LENGTH(samplerBindingInfos),
-                samplerBindingInfos);
+                AE_BASE_ARRAY_LENGTH(mainSamplerBindingInfos),
+                mainSamplerBindingInfos);
+    const auto copyDescriptorSetSpecInfo =
+        ::ae::gfx_low::DescriptorSetSpecInfo()
+            .SetBindingInfos(
+                ::ae::gfx_low::DescriptorKind::SampledImage,
+                AE_BASE_ARRAY_LENGTH(copySampledImageBindingInfos),
+                copySampledImageBindingInfos)
+            .SetBindingInfos(
+                ::ae::gfx_low::DescriptorKind::Sampler,
+                AE_BASE_ARRAY_LENGTH(copySamplerBindingInfos),
+                copySamplerBindingInfos);
 
     // DescriptorSet の作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> descriptorSets(
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> mainDescriptorSets(
         gfxKit.SwapchainImageCount());
+    ::ae::gfx_low::DescriptorSet copyDescriptorSet(
+        ::ae::gfx_low::DescriptorSetCreateInfo()
+            .SetDevice(&gfxKit.Device())
+            .SetSpecInfo(copyDescriptorSetSpecInfo));
     for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        descriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
+        mainDescriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
                                .SetDevice(&gfxKit.Device())
-                               .SetSpecInfo(descriptorSetSpecInfo));
+                                   .SetSpecInfo(mainDescriptorSetSpecInfo));
 
         // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
@@ -408,7 +487,7 @@ int aemain(::ae::base::Application* app) {
         };
 
         // 更新
-        descriptorSets[i].Update(
+        mainDescriptorSets[i].Update(
             ::ae::gfx_low::DescriptorSetUpdateInfo()
                 .SetUniformBufferInfos(
                     AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
@@ -422,37 +501,38 @@ int aemain(::ae::base::Application* app) {
     }
 
     // GraphicsPipeline 生成
-    std::unique_ptr<::ae::gfx_low::RenderPipeline> pipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> mainPipeline;
+    std::unique_ptr<::ae::gfx_low::RenderPipeline> copyPipeline;
     {
         const ::ae::gfx_low::RenderTargetBlendInfo blendInfos[] = {
             ::ae::gfx_low::RenderTargetBlendInfo(),
         };
         AE_BASE_ARRAY_LENGTH_CHECK(
             blendInfos,
-            AE_BASE_ARRAY_LENGTH(renderTargetSpecInfos));
+            AE_BASE_ARRAY_LENGTH(mainRenderTargetSpecInfos));
 
-        pipeline.reset(new ::ae::gfx_low::RenderPipeline(
+        mainPipeline.reset(new ::ae::gfx_low::RenderPipeline(
             ::ae::gfx_low::RenderPipelineCreateInfo()
                 .SetDevice(&gfxKit.Device())
-                .SetRenderPassSpecInfo(renderPassSpecInfo)
+                .SetRenderPassSpecInfo(mainRenderPassSpecInfo)
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&vertShader.Resource())
+                        .SetResource(&cubeVertShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&fragShader.Resource())
+                        .SetResource(&cubeFragShader.Resource())
                         .SetEntryPointNamePtr("main"))
-                .SetDescriptorSetSpecInfo(descriptorSetSpecInfo)
+                .SetDescriptorSetSpecInfo(mainDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
                     ::ae::gfx_low::PipelineVertexInputInfo()
                         .SetBufferCount(1)
-                        .SetBufferLayoutInfos(&vertexBufferLayoutInfo)
+                        .SetBufferLayoutInfos(&cubeVertexBufferLayoutInfo)
                         .SetAttributeCount(
-                            AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
-                        .SetAttributeInfos(vertexAttrInfos))
+                            AE_BASE_ARRAY_LENGTH(cubeVrtexAttrInfos))
+                        .SetAttributeInfos(cubeVrtexAttrInfos))
                 .SetPrimitiveTopologyKind(
                     ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
@@ -467,10 +547,118 @@ int aemain(::ae::base::Application* app) {
                         .SetDepthCompareOp(::ae::gfx_low::CompareOp::LessEqual))
                 .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
                                   .SetRenderTargetBlendInfos(blendInfos))));
+
+        copyPipeline.reset(new ::ae::gfx_low::RenderPipeline(
+            ::ae::gfx_low::RenderPipelineCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetRenderPassSpecInfo(copyRenderPassSpecInfo)
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&copyVertShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetShaderInfo(
+                    ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
+                    ::ae::gfx_low::PipelineShaderInfo()
+                        .SetResource(&copyFragShader.Resource())
+                        .SetEntryPointNamePtr("main"))
+                .SetDescriptorSetSpecInfo(copyDescriptorSetSpecInfo)
+                .SetVertexInputInfo(
+                    ::ae::gfx_low::PipelineVertexInputInfo()
+                        .SetBufferCount(1)
+                        .SetBufferLayoutInfos(&squareVertexBufferLayoutInfo)
+                        .SetAttributeCount(
+                            AE_BASE_ARRAY_LENGTH(squareVrtexAttrInfos))
+                        .SetAttributeInfos(squareVrtexAttrInfos))
+                .SetPrimitiveTopologyKind(
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
+                .SetRasterizerInfo(
+                    ::ae::gfx_low::PipelineRasterizerInfo()
+                        .SetFrontFace(
+                            ::ae::gfx_low::PolygonFrontFace::CounterClockwise)
+                        .SetCullMode(::ae::gfx_low::RasterizeCullMode::Back))
+                .SetBlendInfo(::ae::gfx_low::PipelineBlendInfo()
+                                  .SetRenderTargetBlendInfos(blendInfos))));
     }
+
+    // セカンダリコマンドバッファ作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer>
+        secondaryCommandBuffers(renderTargetCount);
+    for (int i = 0; i < renderTargetCount; ++i) {
+        secondaryCommandBuffers.Add(
+            ::ae::gfx_low::CommandBufferCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetQueue(&gfxKit.Queue())
+                .SetLevel(::ae::gfx_low::CommandBufferLevel::Secondary)
+                .SetFeatures(::ae::gfx_low::CommandBufferFeatureBitSet().Set(
+                    ::ae::gfx_low::CommandBufferFeature::Render,
+                    true)));
+    }
+
+    // レンダーターゲット用カラーバッファの作成
+    // 直接 Swapchain に書き込まなくすることで
+    // セカンダリコマンドバッファの再レコードを最低限にする
+    ::ae::gfx_low::UniqueResourceMemory colorBufferMemory;
+    ::std::unique_ptr<::ae::gfx_low::ImageResource> colorBufferImage;
+    ::std::unique_ptr<::ae::gfx_low::RenderTargetImageView> colorBufferRenderTargetView;
+    ::std::unique_ptr<::ae::gfx_low::SampledImageView> colorBufferTextureView;
+    auto setupColorBuffer = [&gfxKit,
+                             &display,
+                             &colorBufferMemory,
+                             &colorBufferImage,
+                             &colorBufferRenderTargetView,
+                             &colorBufferTextureView,
+                             &colorBufferFormat]() {
+        const auto extent = display.MainScreen().Extent();
+        const auto specInfo =
+            ::ae::gfx_low::ImageResourceSpecInfo()
+                .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
+                .SetFormat(colorBufferFormat)
+                .SetExtent(extent)
+                .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
+                .SetUsageBitSet(
+                    ::ae::gfx_low::ImageResourceUsageBitSet()
+                        .On(::ae::gfx_low::ImageResourceUsage::
+                                RenderTargetImage)
+                        .On(::ae::gfx_low::ImageResourceUsage::SampledImage));
+        colorBufferMemory.Reset(
+            &gfxKit.Device(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
+        colorBufferImage.reset(new ::ae::gfx_low::ImageResource(
+            ::ae::gfx_low::ImageResourceCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(colorBufferMemory->Address())));
+        colorBufferRenderTargetView.reset(
+            new ::ae::gfx_low::RenderTargetImageView(
+                ::ae::gfx_low::RenderTargetImageViewCreateInfo()
+                    .SetDevice(&gfxKit.Device())
+                    .SetResource(colorBufferImage.get())
+                    ));
+        colorBufferTextureView.reset(new ::ae::gfx_low::SampledImageView(
+            ::ae::gfx_low::SampledImageViewCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetResource(colorBufferImage.get())
+                .SetKind(::ae::gfx_low::ImageViewKind::Image2d)
+                .SetFormat(colorBufferFormat)));
+    };
+    auto cleanupColorBuffer = [&colorBufferMemory,
+                               &colorBufferImage,
+                               &colorBufferRenderTargetView,
+                               &colorBufferTextureView]() {
+        colorBufferTextureView.reset();
+        colorBufferRenderTargetView.reset();
+        colorBufferImage.reset();
+        colorBufferMemory.Reset();
+    };
+    setupColorBuffer(); // 初回セットアップ
 
     // メインループ
     bool isFinishedSetupTexture = false;
+    bool isFinishedSetupColorBufferState = false;
     int frameCount = 0;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
@@ -483,7 +671,11 @@ int aemain(::ae::base::Application* app) {
         gfxKit.WaitToResourceUsable();
 
         // スクリーンリサイズ処理
-        gfxKit.ScreenResizeProcessIfNeeds();
+        if (gfxKit.ScreenResizeProcessIfNeeds()) {
+            cleanupColorBuffer();
+            setupColorBuffer();
+            isFinishedSetupColorBufferState = false;
+        }
 
         // Swapchain バッファ確保要求
         gfxKit.Swapchain()->AcquireNextImage();
@@ -528,12 +720,34 @@ int aemain(::ae::base::Application* app) {
             uniformBuffer.StoreToResourceMemory(bufferIndex, data);
         }
 
+        
+        // 初回ならコマンドを保存
+        //if (frameCount < secondaryCommandBuffers.Count()) {
+        //    // 保存開始
+        //    auto& subCmd = secondaryCommandBuffers[bufferIndex];
+        //    subCmd.BeginRecord();
+
+        //    // Pipeline & DescriptorSet
+        //    subCmd.CmdSetRenderPipeline(*mainPipeline);
+        //    subCmd.CmdSetDescriptorSet(mainDescriptorSets[bufferIndex]);
+
+        //    // Draw
+        //    subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
+        //    subCmd.CmdDraw(
+        //        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+
+        //    // 保存終了
+        //    subCmd.EndRecord();
+        //}
+
         // コマンドバッファ作成
         auto& cmd = gfxKit.CurrentCommandBuffer();
         cmd.BeginRecord();
         {
             // テクスチャのセットアップ
             if (!isFinishedSetupTexture) {
+                isFinishedSetupTexture = true;
+
                 if (copySrcTextureBuffer.get() == nullptr) {
                     // デバイスメモリが共有メモリの場合はメモリバリアのみ設定して終了
                     cmd.CmdImageResourceBarrier(
@@ -561,53 +775,112 @@ int aemain(::ae::base::Application* app) {
                             .SetNewState(::ae::gfx_low::ImageResourceState::
                                              ShaderResourceReadOnly));
                 }
-                isFinishedSetupTexture = true;
+            }
+
+            // カラーバッファの状態セットアップ
+            if (!isFinishedSetupColorBufferState) {
+                isFinishedSetupColorBufferState = true;
+
+                // デスクリプタセット更新
+                {
+                    // SampledImage
+                    const ::ae::gfx_low::SampledImageView*
+                        sampledImageViews[] = { colorBufferTextureView.get() };
+                    const ::ae::gfx_low::SampledImageDescriptorInfo
+                        sampledImageDescs[] = {
+                            ::ae::gfx_low::SampledImageDescriptorInfo()
+                                .SetRegion(
+                                    ::ae::gfx_low::ShaderBindingRegion()
+                                        .SetBindingIndex(0)
+                                        .SetElemCount(AE_BASE_ARRAY_LENGTH(
+                                            sampledImageViews)))
+                                .SetViews(sampledImageViews),
+                        };
+
+                    // Sampler
+                    const ::ae::gfx_low::Sampler* samplers[] = {
+                        sampler.get()
+                    };
+                    const ::ae::gfx_low::SamplerDescriptorInfo
+                        samplerDescs[] = {
+                            ::ae::gfx_low::SamplerDescriptorInfo()
+                                .SetRegion(
+                                    ::ae::gfx_low::ShaderBindingRegion()
+                                        .SetBindingIndex(0)
+                                        .SetElemCount(
+                                            AE_BASE_ARRAY_LENGTH(samplers)))
+                                .SetSamplers(samplers),
+                        };
+
+                    // 更新
+                    copyDescriptorSet.Update(
+                        ::ae::gfx_low::DescriptorSetUpdateInfo()
+                            .SetSampledImageInfos(
+                                AE_BASE_ARRAY_LENGTH(sampledImageDescs),
+                                sampledImageDescs)
+                            .SetSamplerInfos(
+                                AE_BASE_ARRAY_LENGTH(samplerDescs),
+                                samplerDescs));
+                }
+
+                // ２ループ目以降と状況一致させるために初期状態を変更
+                //cmd.CmdImageResourceBarrier(
+                //    ::ae::gfx_low::ImageResourceBarrierInfo()
+                //        .SetResource(colorBufferImage.get())
+                //        .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
+                //        .SetNewState(::ae::gfx_low::ImageResourceState::
+                //                         ShaderResourceReadOnly));
             }
 
             // クリアカラー参考
             // https://www.colordic.org/colorscheme/7005
             {
-                const ::ae::gfx_low::RenderTargetSetting
-                    renderTargetSettings[] = {
-                        ::ae::gfx_low::RenderTargetSetting()
-                            .SetRenderTargetImageView(
-                                &gfxKit.Swapchain()
-                                     ->CurrentRenderTargetImageView())
-                            .SetLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
-                            .SetStoreOp(::ae::gfx_low::AttachmentStoreOp::Store)
+                // 描画パス開始
+                {
+                    const ::ae::gfx_low::RenderTargetSetting
+                        renderTargetSettings[] = {
+                            ::ae::gfx_low::RenderTargetSetting()
+                                .SetRenderTargetImageView(
+                                    colorBufferRenderTargetView.get())
+                                .SetLoadOp(
+                                    ::ae::gfx_low::AttachmentLoadOp::Clear)
+                                .SetStoreOp(
+                                    ::ae::gfx_low::AttachmentStoreOp::Store)
+                                .SetInitialImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::Unknown)
+                                .SetFinalImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::
+                                        ShaderResourceReadOnly)
+                                .SetClearColor(
+                                    ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
+                                        .ToRGBAf()),
+                        };
+                    const auto depthStencilSetting =
+                        ::ae::gfx_low::DepthStencilSetting()
+                            .SetDepthStencilImageView(&gfxKit.DepthBufferView())
                             .SetInitialImageResourceState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
                             .SetFinalImageResourceState(
-                                ::ae::gfx_low::ImageResourceState::PresentSrc)
-                            .SetClearColor(
-                                ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
-                                    .ToRGBAf()),
-                    };
-                const auto depthStencilSetting =
-                    ::ae::gfx_low::DepthStencilSetting()
-                        .SetDepthStencilImageView(&gfxKit.DepthBufferView())
-                        .SetInitialImageResourceState(
-                            ::ae::gfx_low::ImageResourceState::Unknown)
-                        .SetFinalImageResourceState(
-                            ::ae::gfx_low::ImageResourceState::DepthStencil)
-                        .SetDepthLoadOp(::ae::gfx_low::AttachmentLoadOp::Clear)
-                        .SetDepthStoreOp(
-                            ::ae::gfx_low::AttachmentStoreOp::Store)
-                        .SetDepthClearValue(1.0f)
-                        .SetStencilLoadOp(
-                            ::ae::gfx_low::AttachmentLoadOp::Clear)
-                        .SetStencilStoreOp(
-                            ::ae::gfx_low::AttachmentStoreOp::Store)
-                        .SetStencilClearValue(0);
-
-                cmd.CmdBeginRenderPass(
-                    ::ae::gfx_low::RenderPassBeginInfo()
-                        .SetRenderPassSpecInfo(renderPassSpecInfo)
-                        .SetRenderTargetSettings(renderTargetSettings)
-                        .SetDepthStencilSettingPtr(&depthStencilSetting)
-                        .SetRenderArea(::ae::base::Aabb2i(
-                            ::ae::base::Vector2i::Zero(),
-                            display.MainScreen().Extent())));
+                                ::ae::gfx_low::ImageResourceState::DepthStencil)
+                            .SetDepthLoadOp(
+                                ::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetDepthStoreOp(
+                                ::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetDepthClearValue(1.0f)
+                            .SetStencilLoadOp(
+                                ::ae::gfx_low::AttachmentLoadOp::Clear)
+                            .SetStencilStoreOp(
+                                ::ae::gfx_low::AttachmentStoreOp::Store)
+                            .SetStencilClearValue(0);
+                    cmd.CmdBeginRenderPass(
+                        ::ae::gfx_low::RenderPassBeginInfo()
+                            .SetRenderPassSpecInfo(mainRenderPassSpecInfo)
+                            .SetRenderTargetSettings(renderTargetSettings)
+                            .SetDepthStencilSettingPtr(&depthStencilSetting)
+                            .SetRenderArea(::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                display.MainScreen().Extent())));
+                }
 
                 // Viewport
                 {
@@ -634,16 +907,88 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*pipeline);
-                cmd.CmdSetDescriptorSet(descriptorSets[bufferIndex]);
+                cmd.CmdSetRenderPipeline(*mainPipeline);
+                cmd.CmdSetDescriptorSet(mainDescriptorSets[bufferIndex]);
 
                 // Draw
-                cmd.CmdSetVertexBuffer(0, vertexBuffer.View());
+                cmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
                 cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(geometryCube.VertexCount()));
 
+                // 描画パス終了
                 cmd.CmdEndRenderPass();
             }
+
+            // Swapchain にコピー描画
+            {
+                // 描画パス開始
+                {
+                    const ::ae::gfx_low::RenderTargetSetting
+                        renderTargetSettings[] = {
+                            ::ae::gfx_low::RenderTargetSetting()
+                                .SetRenderTargetImageView(
+                                    &gfxKit.Swapchain()
+                                         ->CurrentRenderTargetImageView())
+                                .SetLoadOp(
+                                    ::ae::gfx_low::AttachmentLoadOp::Clear)
+                                .SetStoreOp(
+                                    ::ae::gfx_low::AttachmentStoreOp::Store)
+                                .SetInitialImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::
+                                        Unknown)
+                                .SetFinalImageResourceState(
+                                    ::ae::gfx_low::ImageResourceState::
+                                        PresentSrc)
+                                .SetClearColor(
+                                    ::ae::base::Color4b(0x7f, 0xbf, 0xff, 0xff)
+                                        .ToRGBAf()),
+                        };
+                    cmd.CmdBeginRenderPass(
+                        ::ae::gfx_low::RenderPassBeginInfo()
+                            .SetRenderPassSpecInfo(copyRenderPassSpecInfo)
+                            .SetRenderTargetSettings(renderTargetSettings)
+                            .SetRenderArea(::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                display.MainScreen().Extent())));
+                }
+
+                // Viewport
+                {
+                    const ::ae::gfx_low::ViewportSetting settings[] = {
+                        ::ae::gfx_low::ViewportSetting().SetRect(
+                            ::ae::base::Aabb2(
+                                ::ae::base::Vector2::Zero(),
+                                display.MainScreen().Extent().ToExtent2())),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
+                    cmd.CmdSetViewports(renderTargetCount, settings);
+                }
+
+                // Scissor
+                {
+                    const ::ae::gfx_low::ScissorSetting settings[] = {
+                        ::ae::gfx_low::ScissorSetting().SetRect(
+                            ::ae::base::Aabb2i(
+                                ::ae::base::Vector2i::Zero(),
+                                display.MainScreen().Extent())),
+                    };
+                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
+                    cmd.CmdSetScissors(renderTargetCount, settings);
+                }
+
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*copyPipeline);
+                cmd.CmdSetDescriptorSet(copyDescriptorSet);
+
+                // Draw
+                cmd.CmdSetVertexBuffer(0, squareVertexBuffer.View());
+                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(
+                    geometrySquare.VertexCount()));
+
+                // 描画パス終了
+                cmd.CmdEndRenderPass();
+            }
+
         }
         cmd.EndRecord();
 
