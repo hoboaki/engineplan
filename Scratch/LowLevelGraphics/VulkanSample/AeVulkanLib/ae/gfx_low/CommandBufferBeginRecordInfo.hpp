@@ -6,7 +6,7 @@
 
 namespace ae {
 namespace gfx_low {
-class RenderPassBeginInfo;
+class RenderPass;
 }
 } // namespace ae
 
@@ -19,21 +19,21 @@ class CommandBufferBeginRecordInfo {
 public:
     /// @name プロパティ
     //@{
-    /// 描画用セカンダリコマンドバッファに引き継がれる描画パス情報。（初期値：nullptr）
+    /// 描画用セカンダリコマンドバッファに引き継がれる描画パス。（初期値：nullptr）
     /// @details 
     /// CommandBufferFeature::Render を指定したセカンダリコマンドバッファにおいて設定必須。
-    const RenderPassBeginInfo* InheritRenderPassBeginInfoPtr() const { return inheritRenderPassBeginInfoPtr_.Get(); }
+    const RenderPass* InheritRenderPassPtr() const { return inheritRenderPassPtr_.Get(); }
 
-    /// InheritRenderPassBeginInfoPtr() の設定。
-    CommandBufferBeginRecordInfo& SetInheritRenderPassBeginInfoPtr(
-        const RenderPassBeginInfo* infoPtr) {
-        inheritRenderPassBeginInfoPtr_.Reset(infoPtr);
+    /// InheritRenderPassPtr() の設定。
+    CommandBufferBeginRecordInfo& SetInheritRenderPassPtr(
+        const RenderPass* infoPtr) {
+        inheritRenderPassPtr_.Reset(infoPtr);
         return *this;
     }
     //@}
 
 private:
-    base::Pointer<const RenderPassBeginInfo> inheritRenderPassBeginInfoPtr_;
+    base::Pointer<const RenderPass> inheritRenderPassPtr_;
 };
 
 } // namespace gfx_low

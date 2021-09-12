@@ -34,11 +34,8 @@ public:
     ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const {
         return renderPassBeginInfo_;
     }
-    //::vk::RenderPass* RenderPass_() { return &renderPass_; }
-    //const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }
-    //::vk::Framebuffer* Framebuffer_() { return &framebuffer_; }
-    //const ::vk::Framebuffer* Framebuffer_() const { return &framebuffer_; }
-    //const ::vk::ClearValue* ClearValues_() const { return &clearValues_[0]; }
+    const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }
+    const ::vk::Framebuffer* Framebuffer_() const { return &framebuffer_; }
     //@}
 
 private:
