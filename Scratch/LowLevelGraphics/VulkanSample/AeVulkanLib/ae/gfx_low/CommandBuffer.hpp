@@ -104,7 +104,12 @@ public:
     /// @name 記録開始・終了処理
     //@{
     /// 記録済みの情報をリセットして記録を開始する。
-    void BeginRecord(/*const CommandBufferBeginRecordInfo& info*/);
+    /// @details
+    /// CommandBufferBeginRecordInfo はデフォルトコンストラクト状態で処理します。
+    void BeginRecord();
+
+    /// 記録済みの情報をリセットして記録を開始する。
+    void BeginRecord(const CommandBufferBeginRecordInfo& info);
 
     /// 記録を終了する。
     void EndRecord();
@@ -220,6 +225,9 @@ public:
     //@}
 
 private:
+    void CmdSetViewportsDetails(int count, const ViewportSetting* settings);
+    void CmdSetScissorsDetails(int count, const ScissorSetting* settings);
+    //------------------------------------------------------------------------------
     gfx_low::Device& device_;
     const Queue& queue_;
     const CommandBufferLevel level_;

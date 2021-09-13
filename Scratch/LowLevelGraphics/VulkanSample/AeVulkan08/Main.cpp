@@ -21,6 +21,7 @@
 #include <ae/gfx_low/BufferResource.hpp>
 #include <ae/gfx_low/BufferResourceCreateInfo.hpp>
 #include <ae/gfx_low/CommandBuffer.hpp>
+#include <ae/gfx_low/CommandBufferBeginRecordInfo.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
@@ -585,8 +586,8 @@ int aemain(::ae::base::Application* app) {
 
     // セカンダリコマンドバッファ作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer>
-        secondaryCommandBuffers(renderTargetCount);
-    for (int i = 0; i < renderTargetCount; ++i) {
+        secondaryCommandBuffers(gfxKit.SwapchainImageCount());
+    for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
         secondaryCommandBuffers.Add(
             ::ae::gfx_low::CommandBufferCreateInfo()
                 .SetDevice(&gfxKit.Device())
@@ -717,30 +718,26 @@ int aemain(::ae::base::Application* app) {
             uniformBuffer.StoreToResourceMemory(bufferIndex, data);
         }
 
-        
-        // 初回ならコマンドを保存
-        //if (frameCount < secondaryCommandBuffers.Count()) {
-        //    // 保存開始
-        //    auto& subCmd = secondaryCommandBuffers[bufferIndex];
-        //    subCmd.BeginRecord();
-
-        //    // Pipeline & DescriptorSet
-        //    subCmd.CmdSetRenderPipeline(*mainPipeline);
-        //    subCmd.CmdSetDescriptorSet(mainDescriptorSets[bufferIndex]);
-
-        //    // Draw
-        //    subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
-        //    subCmd.CmdDraw(
-        //        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
-
-        //    // 保存終了
-        //    subCmd.EndRecord();
-        //}
-
         // コマンドバッファ作成
         auto& cmd = gfxKit.CurrentCommandBuffer();
         cmd.BeginRecord();
         {
+            // Viewport
+            const ::ae::gfx_low::ViewportSetting mainViewportSettings[] = {
+                ::ae::gfx_low::ViewportSetting().SetRect(::ae::base::Aabb2(
+                    ::ae::base::Vector2::Zero(),
+                    display.MainScreen().Extent().ToExtent2())),
+            };
+            AE_BASE_ARRAY_LENGTH_CHECK(mainViewportSettings, renderTargetCount);
+
+            // Scissor
+            const ::ae::gfx_low::ScissorSetting mainScissorSettings[] = {
+                ::ae::gfx_low::ScissorSetting().SetRect(::ae::base::Aabb2i(
+                    ::ae::base::Vector2i::Zero(),
+                    display.MainScreen().Extent())),
+            };
+            AE_BASE_ARRAY_LENGTH_CHECK(mainScissorSettings, renderTargetCount);
+
             // テクスチャのセットアップ
             if (!isFinishedSetupTexture) {
                 isFinishedSetupTexture = true;
@@ -871,13 +868,28 @@ int aemain(::ae::base::Application* app) {
 
                 }
 
-                // ２ループ目以降と状況一致させるために初期状態を変更
-                //cmd.CmdImageResourceBarrier(
-                //    ::ae::gfx_low::ImageResourceBarrierInfo()
-                //        .SetResource(colorBufferImage.get())
-                //        .SetOldState(::ae::gfx_low::ImageResourceState::Unknown)
-                //        .SetNewState(::ae::gfx_low::ImageResourceState::
-                //                         ShaderResourceReadOnly));
+                // コマンドを保存
+                for (int i = 0; i < secondaryCommandBuffers.Count(); ++i) {
+                    // 保存開始
+                    auto& subCmd = secondaryCommandBuffers[i];
+                    subCmd.BeginRecord(
+                        ::ae::gfx_low::CommandBufferBeginRecordInfo()
+                            .SetInheritRenderPassPtr(mainRenderPass.get())
+                            .SetInheritViewportSettingsPtr(mainViewportSettings)
+                            .SetInheritScissorSettingsPtr(mainScissorSettings));
+
+                    // Pipeline & DescriptorSet
+                    subCmd.CmdSetRenderPipeline(*mainPipeline);
+                    subCmd.CmdSetDescriptorSet(mainDescriptorSets[i]);
+
+                    // Draw
+                    subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
+                    subCmd.CmdDraw(
+                        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+
+                    // 保存終了
+                    subCmd.EndRecord();
+                }
             }
 
             
@@ -921,37 +933,13 @@ int aemain(::ae::base::Application* app) {
                         mainRenderPass.get()));
 
                 // Viewport
-                {
-                    const ::ae::gfx_low::ViewportSetting settings[] = {
-                        ::ae::gfx_low::ViewportSetting().SetRect(
-                            ::ae::base::Aabb2(
-                                ::ae::base::Vector2::Zero(),
-                                display.MainScreen().Extent().ToExtent2())),
-                    };
-                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
-                    cmd.CmdSetViewports(renderTargetCount, settings);
-                }
+                cmd.CmdSetViewports(renderTargetCount, mainViewportSettings);
 
                 // Scissor
-                {
-                    const ::ae::gfx_low::ScissorSetting settings[] = {
-                        ::ae::gfx_low::ScissorSetting().SetRect(
-                            ::ae::base::Aabb2i(
-                                ::ae::base::Vector2i::Zero(),
-                                display.MainScreen().Extent())),
-                    };
-                    AE_BASE_ARRAY_LENGTH_CHECK(settings, renderTargetCount);
-                    cmd.CmdSetScissors(renderTargetCount, settings);
-                }
+                cmd.CmdSetScissors(renderTargetCount, mainScissorSettings);
 
-                // Pipeline & DescriptorSet
-                cmd.CmdSetRenderPipeline(*mainPipeline);
-                cmd.CmdSetDescriptorSet(mainDescriptorSets[bufferIndex]);
-
-                // Draw
-                cmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
-                cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(geometryCube.VertexCount()));
+                // コマンド実行
+                cmd.CmdCall(secondaryCommandBuffers[bufferIndex]);
 
                 // 描画パス終了
                 cmd.CmdEndRenderPass();

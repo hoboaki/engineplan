@@ -31,6 +31,7 @@ public:
 
     /// @name 内部処理用機能
     //@{
+    int RenderTargetCount_() const { return renderTargetCount_; }
     ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const {
         return renderPassBeginInfo_;
     }
@@ -40,6 +41,7 @@ public:
 
 private:
     gfx_low::Device& device_;
+    const int renderTargetCount_ = {};
     ::vk::RenderPass renderPass_ = {};
     ::vk::Framebuffer framebuffer_ = {};
     std::array<::vk::ClearValue, Device::SupportedAttachmentCountMax_>
