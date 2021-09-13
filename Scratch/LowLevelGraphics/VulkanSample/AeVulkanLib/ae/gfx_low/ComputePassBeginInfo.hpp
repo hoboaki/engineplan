@@ -18,10 +18,23 @@ class ComputePassBeginInfo {
 public:
     /// @name プロパティ
     //@{
+    /// セカンダリコマンドバッファを使用するか。（初期値：false）
+    /// @details
+    /// true の場合、このコンピュートパス内において全てのコマンドは
+    /// セカンダリコマンドバッファによって実行する必要があります。
+    bool UseSecondaryCommandBuffers() const {
+        return useSecondaryCommandBuffers_;
+    }
+
+    /// UseSecondaryCommandBuffers() の設定。
+    ComputePassBeginInfo& SetUseSecondaryCommandBuffers(bool use) {
+        useSecondaryCommandBuffers_ = use;
+        return *this;
+    }
     //@}
 
 private:
-    int dummmy_ = {};
+    bool useSecondaryCommandBuffers_ = false;
 };
 
 } // namespace gfx_low

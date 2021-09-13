@@ -941,6 +941,10 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 - セカンダリまでネステッド使用可能環境と制限なくネステッド使用可能モードは DX12 制限準拠にする。
 - 動作テストできるのがセカンダリまでネステッド使用可能モードまでなので、今のところはそこまでのみサポートする。
 - 余談だが、今まで１つの大きなプライマリにたくさんのセカンダリを挿入する設計しか考えてこなかったが，オーバーヘッドがそこまで大きくないのならプライマリももっと細かくすれば更に最適化できそうな気がしてきた。
+- DX12 はビューポート・シザー類がセカンダリでは設定できない。
+- Vulkan も DX12 形式にする場合は [VK_NV_inherited_viewport_scissor](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/html/vkspec.html#VK_NV_inherited_viewport_scissor) を使えばいけるが対応環境がかなり限定されるので微妙なところ。
+- 更に調べていったところ、Vulkan はセカンダリコマンドバッファを BeginRenderPass/EndRenderPass 間で呼び出す場合は Call 以外の処理を詰めない仕様らしい。
+- ビューポート・シザー設定とあわせてかなり制限きつめに仕様を切らざるえない。
 
 ### Vulkan
 

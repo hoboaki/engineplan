@@ -119,7 +119,10 @@ Device::Device(const DeviceCreateInfo& createInfo)
     uint32_t enabledExtensionCount = 0;
     const int extensionCountMax = 64;
     const char* extensionNames[extensionCountMax] = {};
-    ::vk::Bool32 swapchainExtFound = VK_FALSE;
+    const char* const findExtensionNames[] = {
+        VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+    };
+    bool foundExtensions[AE_BASE_ARRAY_LENGTH(findExtensionNames)] = {};
     {
         uint32_t deviceExtensionCount = 0;
         auto result = physicalDevice.enumerateDeviceExtensionProperties(
@@ -139,27 +142,37 @@ Device::Device(const DeviceCreateInfo& createInfo)
             AE_BASE_ASSERT(result == vk::Result::eSuccess);
 
             for (uint32_t i = 0; i < deviceExtensionCount; i++) {
-                if (!std::strcmp(
-                        VK_KHR_SWAPCHAIN_EXTENSION_NAME,
-                        deviceExtensions[i].extensionName)) {
-                    swapchainExtFound = 1;
-                    extensionNames[enabledExtensionCount++] =
-                        VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+                for (int findExtIdx = 0;
+                     findExtIdx < AE_BASE_ARRAY_LENGTH(findExtensionNames);
+                     ++findExtIdx) {
+                    if (!std::strcmp(
+                            findExtensionNames[findExtIdx],
+                            deviceExtensions[i].extensionName)) {
+                        foundExtensions[findExtIdx] = true;
+                        extensionNames[enabledExtensionCount++] =
+                            findExtensionNames[findExtIdx];
+                    }
+                
                 }
-                AE_BASE_ASSERT(enabledExtensionCount < extensionCountMax);
             }
         }
 
-        if (!swapchainExtFound) {
-            AE_BASE_ASSERT_NOT_REACHED_MSG(
-                "vkEnumerateDeviceExtensionProperties failed to find "
-                "the " VK_KHR_SWAPCHAIN_EXTENSION_NAME
-                " extension.\n\n"
-                "Do you have a compatible Vulkan installable client driver "
-                "(ICD) "
-                "installed?\n"
-                "Please look at the Getting Started guide for additional "
-                "information.\n");
+        for (int findExtIdx = 0;
+             findExtIdx < AE_BASE_ARRAY_LENGTH(findExtensionNames);
+             ++findExtIdx) {
+            if (!foundExtensions[findExtIdx]) {
+                AE_BASE_ASSERT_NOT_REACHED_MSGFMT(
+                    "vkEnumerateDeviceExtensionProperties failed to find "
+                    "the %s"
+                    " extension.\n\n"
+                    "Do you have a compatible Vulkan installable client driver "
+                    "(ICD) "
+                    "installed?\n"
+                    "Please look at the Getting Started guide for additional "
+                    "information.\n",
+                    findExtensionNames[findExtIdx]);
+            
+            }
         }
     }
 

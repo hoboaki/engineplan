@@ -78,6 +78,15 @@ namespace gfx_low {
 /// - CmdEndComputePass
 /// - CmdSetViewports
 /// - CmdSetScissors
+/// Secondary コマンドバッファを使う場合、 Primary コマンドバッファは
+/// BeginRenderPass() に渡す RenderPassBeginInfo にて
+/// UseSecondaryCommandBuffers() を true に指定する必要があります。
+/// その場合、EndRenderPass() までの間に実行できるのは、次の関数のみとなります。
+/// - CmdSetViewports
+/// - CmdSetScissors
+/// - CmdCall
+/// １つの RenderPass の中で Secondary コマンドバッファを使うものと
+/// 使わないものを共存させることはできません。どちらか一方に統一してください。
 class CommandBuffer {
 public:
     /// @name コンストラクタとデストラクタ
@@ -104,7 +113,12 @@ public:
     /// @name 記録開始・終了処理
     //@{
     /// 記録済みの情報をリセットして記録を開始する。
-    void BeginRecord(/*const CommandBufferBeginRecordInfo& info*/);
+    /// @details
+    /// CommandBufferBeginRecordInfo はデフォルトコンストラクト状態で処理します。
+    void BeginRecord();
+
+    /// 記録済みの情報をリセットして記録を開始する。
+    void BeginRecord(const CommandBufferBeginRecordInfo& info);
 
     /// 記録を終了する。
     void EndRecord();
@@ -114,10 +128,13 @@ public:
     void Reset();
     //@}
 
-    /// @name セカンダリ呼び出し
+    /// @name セカンダリコマンドバッファ呼び出し
     //@{
     /// 保存済のコマンドを実行する。
     /// @param secondaryCommandBuffer CommandBufferLevel::Secondary なコマンドバッファ。
+    /// @details 
+    /// セカンダリコマンドバッファの呼び出しには様々な制約が存在します。
+    /// 詳細についてはクラスの説明を参照してください。
     void CmdCall(const CommandBuffer& secondaryCommands);
     //@}
 
@@ -220,6 +237,9 @@ public:
     //@}
 
 private:
+    void CmdSetViewportsDetails(int count, const ViewportSetting* settings);
+    void CmdSetScissorsDetails(int count, const ScissorSetting* settings);
+    //------------------------------------------------------------------------------
     gfx_low::Device& device_;
     const Queue& queue_;
     const CommandBufferLevel level_;
@@ -231,6 +251,7 @@ private:
     CommandBufferState state_ = CommandBufferState::Initial;
     int renderPassCount_ = {};
     CommandBufferFeatureBitSet activePass_;
+    bool useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };

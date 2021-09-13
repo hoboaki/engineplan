@@ -31,18 +31,17 @@ public:
 
     /// @name 内部処理用機能
     //@{
+    int RenderTargetCount_() const { return renderTargetCount_; }
     ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const {
         return renderPassBeginInfo_;
     }
-    //::vk::RenderPass* RenderPass_() { return &renderPass_; }
-    //const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }
-    //::vk::Framebuffer* Framebuffer_() { return &framebuffer_; }
-    //const ::vk::Framebuffer* Framebuffer_() const { return &framebuffer_; }
-    //const ::vk::ClearValue* ClearValues_() const { return &clearValues_[0]; }
+    const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }
+    const ::vk::Framebuffer* Framebuffer_() const { return &framebuffer_; }
     //@}
 
 private:
     gfx_low::Device& device_;
+    const int renderTargetCount_ = {};
     ::vk::RenderPass renderPass_ = {};
     ::vk::Framebuffer framebuffer_ = {};
     std::array<::vk::ClearValue, Device::SupportedAttachmentCountMax_>
