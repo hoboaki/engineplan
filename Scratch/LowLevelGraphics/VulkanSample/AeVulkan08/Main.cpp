@@ -929,8 +929,9 @@ int aemain(::ae::base::Application* app) {
             {
                 // 開始
                 cmd.CmdBeginRenderPass(
-                    ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
-                        mainRenderPass.get()));
+                    ::ae::gfx_low::RenderPassBeginInfo()
+                        .SetRenderPass(mainRenderPass.get())
+                        .SetUseSecondaryCommandBuffers(true));
 
                 // Viewport
                 cmd.CmdSetViewports(renderTargetCount, mainViewportSettings);

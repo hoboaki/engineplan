@@ -78,6 +78,15 @@ namespace gfx_low {
 /// - CmdEndComputePass
 /// - CmdSetViewports
 /// - CmdSetScissors
+/// Secondary コマンドバッファを使う場合、 Primary コマンドバッファは
+/// BeginRenderPass() に渡す RenderPassBeginInfo にて
+/// UseSecondaryCommandBuffers() を true に指定する必要があります。
+/// その場合、EndRenderPass() までの間に実行できるのは、次の関数のみとなります。
+/// - CmdSetViewports
+/// - CmdSetScissors
+/// - CmdCall
+/// １つの RenderPass の中で Secondary コマンドバッファを使うものと
+/// 使わないものを共存させることはできません。どちらか一方に統一してください。
 class CommandBuffer {
 public:
     /// @name コンストラクタとデストラクタ
@@ -119,10 +128,13 @@ public:
     void Reset();
     //@}
 
-    /// @name セカンダリ呼び出し
+    /// @name セカンダリコマンドバッファ呼び出し
     //@{
     /// 保存済のコマンドを実行する。
     /// @param secondaryCommandBuffer CommandBufferLevel::Secondary なコマンドバッファ。
+    /// @details 
+    /// セカンダリコマンドバッファの呼び出しには様々な制約が存在します。
+    /// 詳細についてはクラスの説明を参照してください。
     void CmdCall(const CommandBuffer& secondaryCommands);
     //@}
 
@@ -239,6 +251,7 @@ private:
     CommandBufferState state_ = CommandBufferState::Initial;
     int renderPassCount_ = {};
     CommandBufferFeatureBitSet activePass_;
+    bool useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };
