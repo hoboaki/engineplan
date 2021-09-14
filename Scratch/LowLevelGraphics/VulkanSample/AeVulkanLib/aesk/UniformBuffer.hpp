@@ -17,10 +17,12 @@ public:
     //@{
     /// @param sizePerData データサイズ。
     /// @param dataCount 確保するデータ数。（1以上）
+    /// @param isDeviceLocal VRAM上に配置するなら true を指定。
     UniformBuffer(
         ::ae::gfx_low::Device* device,
         size_t sizePerData,
-        int dataCount);
+        int dataCount,
+        bool isDeviceLocal = false);
     ~UniformBuffer();
     //@}
 
