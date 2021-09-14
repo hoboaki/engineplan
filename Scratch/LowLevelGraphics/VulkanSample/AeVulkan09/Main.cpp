@@ -23,6 +23,7 @@
 #include <ae/gfx_low/CommandBuffer.hpp>
 #include <ae/gfx_low/CommandBufferBeginRecordInfo.hpp>
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
+#include <ae/gfx_low/CopyBufferInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
@@ -349,7 +350,34 @@ int aemain(::ae::base::Application* app) {
     ::aesk::UniformBuffer uniformBuffer(
         &gfxKit.Device(),
         sizeof(fUniformDataType),
-        gfxKit.SwapchainImageCount());
+        1);
+
+    // コピー元となるバッファの作成
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
+        copySrcMemories(gfxKit.SwapchainImageCount());
+    ::ae::base::RuntimeAutoArray<::ae::gfx_low::BufferResource>
+        copySrcBuffers(gfxKit.SwapchainImageCount());
+    {
+        const auto specInfo =
+            ::ae::gfx_low::BufferResourceSpecInfo()
+                .SetSize(sizeof(fUniformDataType))
+                .SetUsageBitSet(
+                    ::ae::gfx_low::BufferResourceUsageBitSet()
+                        .On(::ae::gfx_low::BufferResourceUsage::UniformBuffer)
+                        .On(::ae::gfx_low::BufferResourceUsage::CopySrc));
+        for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
+            copySrcMemories.Add(
+                &gfxKit.Device(),
+                ::ae::gfx_low::ResourceMemoryAllocInfo()
+                    .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                    .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
+                        specInfo)));
+            copySrcBuffers.Add(::ae::gfx_low::BufferResourceCreateInfo()
+                                   .SetDevice(&gfxKit.Device())
+                                   .SetSpecInfo(specInfo)
+                                   .SetDataAddress(*copySrcMemories[i]));
+        }
+    }
 
     // RenderPassSpecInfo の作成
     const auto colorBufferFormat =
@@ -441,20 +469,18 @@ int aemain(::ae::base::Application* app) {
                 copySamplerBindingInfos);
 
     // DescriptorSet の作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::DescriptorSet> mainDescriptorSets(
-        gfxKit.SwapchainImageCount());
+    ::ae::gfx_low::DescriptorSet mainDescriptorSet(
+        ::ae::gfx_low::DescriptorSetCreateInfo()
+            .SetDevice(&gfxKit.Device())
+            .SetSpecInfo(mainDescriptorSetSpecInfo));
     ::ae::gfx_low::DescriptorSet copyDescriptorSet(
         ::ae::gfx_low::DescriptorSetCreateInfo()
             .SetDevice(&gfxKit.Device())
             .SetSpecInfo(copyDescriptorSetSpecInfo));
-    for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        mainDescriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
-                               .SetDevice(&gfxKit.Device())
-                                   .SetSpecInfo(mainDescriptorSetSpecInfo));
-
+    {
         // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
-            &uniformBuffer.View(i)
+            &uniformBuffer.View(0)
         };
         const ::ae::gfx_low::UniformBufferDescriptorInfo
             uniformBufferDescs[] = {
@@ -490,7 +516,7 @@ int aemain(::ae::base::Application* app) {
         };
 
         // 更新
-        mainDescriptorSets[i].Update(
+        mainDescriptorSet.Update(
             ::ae::gfx_low::DescriptorSetUpdateInfo()
                 .SetUniformBufferInfos(
                     AE_BASE_ARRAY_LENGTH(uniformBufferDescs),
@@ -585,18 +611,14 @@ int aemain(::ae::base::Application* app) {
     }
 
     // セカンダリコマンドバッファ作成
-    ::ae::base::RuntimeAutoArray<::ae::gfx_low::CommandBuffer>
-        secondaryCommandBuffers(gfxKit.SwapchainImageCount());
-    for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        secondaryCommandBuffers.Add(
-            ::ae::gfx_low::CommandBufferCreateInfo()
-                .SetDevice(&gfxKit.Device())
-                .SetQueue(&gfxKit.Queue())
-                .SetLevel(::ae::gfx_low::CommandBufferLevel::Secondary)
-                .SetFeatures(::ae::gfx_low::CommandBufferFeatureBitSet().Set(
-                    ::ae::gfx_low::CommandBufferFeature::Render,
-                    true)));
-    }
+    ::ae::gfx_low::CommandBuffer secondaryCommandBuffer(
+        ::ae::gfx_low::CommandBufferCreateInfo()
+            .SetDevice(&gfxKit.Device())
+            .SetQueue(&gfxKit.Queue())
+            .SetLevel(::ae::gfx_low::CommandBufferLevel::Secondary)
+            .SetFeatures(::ae::gfx_low::CommandBufferFeatureBitSet().Set(
+                ::ae::gfx_low::CommandBufferFeature::Render,
+                true)));
 
     // レンダーターゲット用カラーバッファの作成
     // 直接 Swapchain に書き込まなくすることで
@@ -715,7 +737,16 @@ int aemain(::ae::base::Application* app) {
 
             fUniformDataType data;
             memcpy(data.mvp, &mvp, sizeof(mvp));
-            uniformBuffer.StoreToResourceMemory(bufferIndex, data);
+            {
+                const auto region =
+                    ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizeof(fUniformDataType));
+                auto& targetCopySrcMemory = copySrcMemories[bufferIndex];
+                void* mappedMemory = gfxKit.Device().MapResourceMemory(
+                    *targetCopySrcMemory,
+                    region);
+                std::memcpy(mappedMemory, &data, region.Size());
+                gfxKit.Device().UnmapResourceMemory(*targetCopySrcMemory);
+            }
         }
 
         // コマンドバッファ作成
@@ -869,9 +900,9 @@ int aemain(::ae::base::Application* app) {
                 }
 
                 // コマンドを保存
-                for (int i = 0; i < secondaryCommandBuffers.Count(); ++i) {
+                {
                     // 保存開始
-                    auto& subCmd = secondaryCommandBuffers[i];
+                    auto& subCmd = secondaryCommandBuffer;
                     subCmd.BeginRecord(
                         ::ae::gfx_low::CommandBufferBeginRecordInfo()
                             .SetInheritRenderPassPtr(mainRenderPass.get())
@@ -880,7 +911,7 @@ int aemain(::ae::base::Application* app) {
 
                     // Pipeline & DescriptorSet
                     subCmd.CmdSetRenderPipeline(*mainPipeline);
-                    subCmd.CmdSetDescriptorSet(mainDescriptorSets[i]);
+                    subCmd.CmdSetDescriptorSet(mainDescriptorSet);
 
                     // Draw
                     subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
@@ -924,6 +955,12 @@ int aemain(::ae::base::Application* app) {
                             display.MainScreen().Extent()))));
             }
 
+            // ユニフォームバッファをバッファコピーで更新
+            cmd.CmdCopyBuffer(
+                ::ae::gfx_low::CopyBufferInfo()
+                    .SetSrcBufferResource(&copySrcBuffers[bufferIndex])
+                    .SetDstBufferResource(&uniformBuffer.BufferResource(0))
+                    .SetSize(sizeof(fUniformDataType)));
 
             // メイン描画
             {
@@ -940,7 +977,7 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdSetScissors(renderTargetCount, mainScissorSettings);
 
                 // コマンド実行
-                cmd.CmdCall(secondaryCommandBuffers[bufferIndex]);
+                cmd.CmdCall(secondaryCommandBuffer);
 
                 // 描画パス終了
                 cmd.CmdEndRenderPass();
