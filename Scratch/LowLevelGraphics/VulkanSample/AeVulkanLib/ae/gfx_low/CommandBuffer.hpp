@@ -15,6 +15,7 @@ class CommandBufferBeginRecordInfo;
 class CommandBufferCreateInfo;
 class ComputePassBeginInfo;
 class ComputePipeline;
+class CopyBufferInfo;
 class CopyBufferToImageInfo;
 class DescriptorSet;
 class Device;
@@ -146,6 +147,9 @@ public:
 
     /// @name コピーコマンド
     //@{
+    /// BufferResource から BufferResource へのコピー処理をする。
+    void CmdCopyBuffer(const CopyBufferInfo& info);
+
     /// BufferResource から ImageResource へのコピー処理をする。
     void CmdCopyBufferToImage(const CopyBufferToImageInfo& info);
     //@}

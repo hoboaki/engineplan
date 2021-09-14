@@ -15,7 +15,8 @@ namespace aesk {
 UniformBuffer::UniformBuffer(
     ::ae::gfx_low::Device* device,
     const size_t sizePerData,
-    const int dataCount)
+    const int dataCount,
+    const bool isDeviceLocal)
 : device_(::ae::base::PtrToRef(device))
 , sizePerData_(sizePerData)
 , dataCount_(dataCount)
@@ -25,16 +26,22 @@ UniformBuffer::UniformBuffer(
     const auto specInfo =
         ::ae::gfx_low::BufferResourceSpecInfo()
             .SetSize(sizePerData_)
-            .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().Set(
-                ::ae::gfx_low::BufferResourceUsage::UniformBuffer,
-                true));
+            .SetUsageBitSet(
+                ::ae::gfx_low::BufferResourceUsageBitSet()
+                    .On(::ae::gfx_low::BufferResourceUsage::UniformBuffer)
+                    .Set(
+                        ::ae::gfx_low::BufferResourceUsage::CopyDst,
+                        isDeviceLocal));
     const auto region =
         ::ae::gfx_low::ResourceMemoryRegion().SetSize(sizePerData_);
     for (int i = 0; i < dataCount_; ++i) {
         memories_.Add(
             device,
             ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetKind(
+                    isDeviceLocal
+                        ? ::ae::gfx_low::ResourceMemoryKind::DeviceLocal
+                        : ::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                 .SetParams(device_.CalcResourceMemoryRequirements(specInfo)));
         bufferResources_.Add(::ae::gfx_low::BufferResourceCreateInfo()
                                  .SetDevice(device)

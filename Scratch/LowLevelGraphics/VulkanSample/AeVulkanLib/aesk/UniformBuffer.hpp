@@ -17,16 +17,23 @@ public:
     //@{
     /// @param sizePerData データサイズ。
     /// @param dataCount 確保するデータ数。（1以上）
+    /// @param isDeviceLocal VRAM上に配置するなら true を指定。
     UniformBuffer(
         ::ae::gfx_low::Device* device,
         size_t sizePerData,
-        int dataCount);
+        int dataCount,
+        bool isDeviceLocal = false);
     ~UniformBuffer();
     //@}
 
     /// @name 基本API
     //@{
-    /// 指定のデータインデックス値のビュー。
+    /// 指定番目のバッファリソース。
+    ::ae::gfx_low::BufferResource& BufferResource(int index) const {
+        return bufferResources_[index];
+    }
+
+    /// 指定番目のデータインデックス値のビュー。
     const ::ae::gfx_low::UniformBufferView& View(int index) const {
         return views_[index];
     }

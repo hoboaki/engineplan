@@ -11,6 +11,7 @@
 #include <ae/gfx_low/CommandBufferCreateInfo.hpp>
 #include <ae/gfx_low/ComputePassBeginInfo.hpp>
 #include <ae/gfx_low/ComputePipeline.hpp>
+#include <ae/gfx_low/CopyBufferInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
@@ -278,6 +279,23 @@ void CommandBuffer::CmdImageResourceBarrier(
         1, // imageMemoryBarrierCount,
         &barrier // imageMemoryBarriers
     );
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdCopyBuffer(const CopyBufferInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
+
+    const auto copyInfo = ::vk::BufferCopy()
+                              .setSrcOffset(info.SrcBufferOffset())
+                              .setDstOffset(info.DstBufferOffset())
+                              .setSize(info.Size());
+    nativeObject_.copyBuffer(
+        base::PtrToRef(info.SrcBufferResource()).NativeObject_(),
+        base::PtrToRef(info.DstBufferResource()).NativeObject_(),
+        1, // regionCount
+        &copyInfo);
 }
 
 //------------------------------------------------------------------------------

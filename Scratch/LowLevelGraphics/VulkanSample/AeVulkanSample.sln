@@ -24,6 +24,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AeVulkan07", "AeVulkan07\Ae
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AeVulkan08", "AeVulkan08\AeVulkan08.vcxproj", "{21913E8E-137B-4D25-80E6-4310B931E72B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AeVulkan09", "AeVulkan09\AeVulkan09.vcxproj", "{D7312C1D-3208-4A50-AA5D-E1A9B9E299F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -66,6 +68,10 @@ Global
 		{21913E8E-137B-4D25-80E6-4310B931E72B}.Debug|x64.Build.0 = Debug|x64
 		{21913E8E-137B-4D25-80E6-4310B931E72B}.Release|x64.ActiveCfg = Release|x64
 		{21913E8E-137B-4D25-80E6-4310B931E72B}.Release|x64.Build.0 = Release|x64
+		{D7312C1D-3208-4A50-AA5D-E1A9B9E299F0}.Debug|x64.ActiveCfg = Debug|x64
+		{D7312C1D-3208-4A50-AA5D-E1A9B9E299F0}.Debug|x64.Build.0 = Debug|x64
+		{D7312C1D-3208-4A50-AA5D-E1A9B9E299F0}.Release|x64.ActiveCfg = Release|x64
+		{D7312C1D-3208-4A50-AA5D-E1A9B9E299F0}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

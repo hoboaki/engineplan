@@ -810,6 +810,9 @@
     <ClInclude Include="ae\gfx_low\RenderPass.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\CopyBufferInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ae\gfx_low\System.cpp">
