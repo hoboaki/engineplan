@@ -26,7 +26,12 @@ public:
 
     /// @name 基本API
     //@{
-    /// 指定のデータインデックス値のビュー。
+    /// 指定番目のバッファリソース。
+    ::ae::gfx_low::BufferResource& BufferResource(int index) const {
+        return bufferResources_[index];
+    }
+
+    /// 指定番目のデータインデックス値のビュー。
     const ::ae::gfx_low::UniformBufferView& View(int index) const {
         return views_[index];
     }
