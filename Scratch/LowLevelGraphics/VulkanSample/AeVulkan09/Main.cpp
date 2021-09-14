@@ -350,7 +350,9 @@ int aemain(::ae::base::Application* app) {
     ::aesk::UniformBuffer uniformBuffer(
         &gfxKit.Device(),
         sizeof(fUniformDataType),
-        1);
+        1, // dataCount: バッファリング不要なので１つでOK
+        true // isDeviceLocal: CPU上からアクセスしないので true
+        );
 
     // コピー元となるバッファの作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
