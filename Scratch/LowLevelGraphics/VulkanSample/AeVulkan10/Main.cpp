@@ -32,8 +32,11 @@
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
+#include <ae/gfx_low/DrawIndirectCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
+#include <ae/gfx_low/IndirectBufferView.hpp>
+#include <ae/gfx_low/IndirectBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
@@ -201,12 +204,15 @@ int aemain(::ae::base::Application* app) {
     const int cubeInstanceCount = 3;
     ::ae::gfx_low::UniqueResourceMemory cubeIndirectMemory;
     ::std::unique_ptr<::ae::gfx_low::BufferResource> cubeIndirectBuffer;
+    ::std::unique_ptr<::ae::gfx_low::IndirectBufferView> cubeIndirectView;
     {
         const auto specInfo =
             ::ae::gfx_low::BufferResourceSpecInfo()
                 .SetSize(sizeof(fUniformDataType))
                 .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().On(
                     ::ae::gfx_low::BufferResourceUsage::IndirectBuffer));
+        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+            sizeof(::vk::DrawIndirectCommand));
         cubeIndirectMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
@@ -218,6 +224,11 @@ int aemain(::ae::base::Application* app) {
                 .SetDevice(&gfxKit.Device())
                 .SetSpecInfo(specInfo)
                 .SetDataAddress(*cubeIndirectMemory)));
+        cubeIndirectView.reset(new ::ae::gfx_low::IndirectBufferView(
+            ::ae::gfx_low::IndirectBufferViewCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetResource(cubeIndirectBuffer.get())
+                .SetRegion(region)));
 
         ::vk::DrawIndirectCommand* commands = reinterpret_cast<::vk::DrawIndirectCommand*>(gfxKit.Device().MapResourceMemory(
             *cubeIndirectMemory,
@@ -830,8 +841,10 @@ int aemain(::ae::base::Application* app) {
 
                 // Draw
                 cmd.CmdSetVertexBuffer(0, squareVertexBuffer.View());
-                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo().SetVertexCount(
-                    geometrySquare.VertexCount()));
+                cmd.CmdDrawIndirect(
+                    ::ae::gfx_low::DrawIndirectCallInfo()
+                        .SetIndirectBufferView(cubeIndirectView.get())
+                        .SetCommandCount(cubeInstanceCount));
 
                 // 終了
                 cmd.CmdEndRenderPass();
