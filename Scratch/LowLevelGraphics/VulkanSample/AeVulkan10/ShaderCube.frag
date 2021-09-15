@@ -4,24 +4,26 @@
 #extension GL_ARB_shading_language_420pack : enable
 
 #define LAYOUT_SET_BUFFER 0
-#define LAYOUT_SET_IMAGE 1
-#define LAYOUT_SET_SAMPLER 2
 
-layout(location = 0) in vec2 Texcoord;
-layout(location = 1) in vec3 FragPos;
+layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufType {
+    mat4 projMtx;
+    mat4 viewMtx;
+    mat4 invViewMtx;
+    mat4 modelMtx;
+} Ubuf;
+
+layout(location = 0) in vec3 FragWorldPos;
+layout(location = 1) in vec3 FragWorldNormal;
 layout(location = 0) out vec4 FragColor;
-
-layout(set = LAYOUT_SET_IMAGE, binding = 0) uniform texture2D Image0;
-layout(set = LAYOUT_SET_SAMPLER, binding = 0) uniform sampler Sampler0;
 
 const vec3 LightDir = vec3(0.424, 0.566, 0.707);
 
 void main() {
-    vec3 dX = dFdx(FragPos);
-    vec3 dY = dFdy(FragPos);
-    vec3 normal = normalize(cross(dX,dY));
-    float light = max(0.0, dot(LightDir, normal));
-    FragColor = light * texture(sampler2D(Image0, Sampler0), Texcoord.xy);
+    vec3 eyePos = Ubuf.invViewMtx[3].xyz;
+    vec3 eyeToPos = normalize(FragWorldPos - eyePos);
+    vec3 normal = normalize(FragWorldNormal);
+    vec3 reflectVec = reflect(eyeToPos, normal);
+    FragColor = vec4(reflectVec, 1.0f);
 }
 
 // EOF
