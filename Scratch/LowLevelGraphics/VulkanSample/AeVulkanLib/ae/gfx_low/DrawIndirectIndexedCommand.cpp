@@ -27,7 +27,7 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexOffset(
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexCount(
     const int count) {
-    AE_BASE_ASSERT_LESS_EQUALS(1, count);
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.indexCount = count;
     return *this;
 }
@@ -43,7 +43,7 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceOffset(
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceCount(
     const int count) {
-    AE_BASE_ASSERT_LESS_EQUALS(1, count);
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.instanceCount = count;
     return *this;
 }

@@ -26,7 +26,7 @@ public:
     int VertexCount() const { return native_.vertexCount; }
 
     /// VertexCount() の設定。
-    /// @param count 1以上。
+    /// @param count 0以上。
     DrawIndirectNormalCommand& SetVertexCount(int count);
 
     /// インスタンス番号の起点となる番号。 （初期値：0）
@@ -40,7 +40,7 @@ public:
     int InstanceCount() const { return native_.instanceCount; }
 
     /// InstanceCount() の設定。
-    /// @param count 1以上。
+    /// @param count 0以上。
     DrawIndirectNormalCommand& SetInstanceCount(int count);
     //@}
 

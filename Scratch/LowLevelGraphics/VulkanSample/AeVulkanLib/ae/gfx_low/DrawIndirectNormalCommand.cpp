@@ -17,7 +17,7 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexOffset(const int 
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexCount(const int count) {
-    AE_BASE_ASSERT_LESS_EQUALS(1, count);
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.vertexCount = count;
     return *this;
 }
@@ -31,7 +31,7 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceOffset(const in
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceCount(const int count) {
-    AE_BASE_ASSERT_LESS_EQUALS(1, count);
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.instanceCount = count;
     return *this;
 }

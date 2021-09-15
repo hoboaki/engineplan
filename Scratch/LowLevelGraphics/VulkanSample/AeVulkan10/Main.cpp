@@ -203,18 +203,34 @@ int aemain(::ae::base::Application* app) {
 
     // IndirectBuffer の作成
     const int cubeInstanceCount = 3;
+    const auto cubeIndirectRegion =
+        ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+            cubeInstanceCount *
+            sizeof(::ae::gfx_low::DrawIndirectNormalCommand));
     ::ae::gfx_low::UniqueResourceMemory cubeIndirectMemory;
+    ::ae::gfx_low::UniqueResourceMemory copySrcIndirectMemory;
     ::std::unique_ptr<::ae::gfx_low::BufferResource> cubeIndirectBuffer;
+    ::std::unique_ptr<::ae::gfx_low::BufferResource> copySrcIndirectBuffer;
     ::std::unique_ptr<::ae::gfx_low::IndirectBufferView> cubeIndirectView;
     {
         const auto specInfo =
             ::ae::gfx_low::BufferResourceSpecInfo()
-                .SetSize(sizeof(fUniformDataType))
+                .SetSize(cubeIndirectRegion.Size())
+                .SetUsageBitSet(
+                    ::ae::gfx_low::BufferResourceUsageBitSet()
+                        .On(::ae::gfx_low::BufferResourceUsage::IndirectBuffer)
+                        .On(::ae::gfx_low::BufferResourceUsage::CopyDst));
+        const auto copySrcSpecInfo =
+            ::ae::gfx_low::BufferResourceSpecInfo(specInfo)
                 .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().On(
-                    ::ae::gfx_low::BufferResourceUsage::IndirectBuffer));
-        const auto region = ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-            sizeof(::vk::DrawIndirectCommand));
+                    ::ae::gfx_low::BufferResourceUsage::CopySrc));
         cubeIndirectMemory.Reset(
+            &gfxKit.Device(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
+                .SetParams(
+                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
+        copySrcIndirectMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
                 .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
@@ -225,29 +241,39 @@ int aemain(::ae::base::Application* app) {
                 .SetDevice(&gfxKit.Device())
                 .SetSpecInfo(specInfo)
                 .SetDataAddress(*cubeIndirectMemory)));
+        copySrcIndirectBuffer.reset(new ::ae::gfx_low::BufferResource(
+            ::ae::gfx_low::BufferResourceCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(copySrcSpecInfo)
+                .SetDataAddress(*copySrcIndirectMemory)));
         cubeIndirectView.reset(new ::ae::gfx_low::IndirectBufferView(
             ::ae::gfx_low::IndirectBufferViewCreateInfo()
                 .SetDevice(&gfxKit.Device())
                 .SetResource(cubeIndirectBuffer.get())
-                .SetRegion(region)));
-
+                .SetRegion(cubeIndirectRegion)));
+    }
+    auto initializeCopySrcIndirectBuffer = [&gfxKit,
+                                            &geometryCube,
+                                            &copySrcIndirectMemory](int mask) {
         auto* commands =
             reinterpret_cast<::ae::gfx_low::DrawIndirectNormalCommand*>(
                 gfxKit.Device().MapResourceMemory(
-            *cubeIndirectMemory,
-            ::ae::gfx_low::ResourceMemoryRegion().SetSize(
-                sizeof(::vk::DrawIndirectCommand))
-            ));
+                    *copySrcIndirectMemory,
+                    ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                        sizeof(::vk::DrawIndirectCommand))));
         const auto baseCommand = ::ae::gfx_low::DrawIndirectNormalCommand()
                                      .SetVertexCount(geometryCube.VertexCount())
                                      .SetInstanceCount(1);
         commands[0] = baseCommand;
+        commands[0].SetInstanceCount((mask & (1 << 0)) ? 1 : 0);
         commands[1] = baseCommand;
         commands[1].SetInstanceOffset(1);
+        commands[1].SetInstanceCount((mask & (1 << 1)) ? 1 : 0);
         commands[2] = baseCommand;
         commands[2].SetInstanceOffset(2);
-        gfxKit.Device().UnmapResourceMemory(*cubeIndirectMemory);
-    }
+        commands[2].SetInstanceCount((mask & (1 << 2)) ? 1 : 0);
+        gfxKit.Device().UnmapResourceMemory(*copySrcIndirectMemory);
+    };
 
     // コピー元となるバッファの作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
@@ -537,6 +563,7 @@ int aemain(::ae::base::Application* app) {
     bool isFinishedSetupTexture = false;
     bool isFinishedSetupColorBufferState = false;
     int frameCount = 0;
+    int instanceMask = 0;
     while (app->ReceiveEvent() == ::ae::base::AppEvent::Update) {
         // ディスプレイが閉じてたら終了
         if (display.IsClosed()) {
@@ -619,6 +646,17 @@ int aemain(::ae::base::Application* app) {
                     display.MainScreen().Extent())),
             };
             AE_BASE_ARRAY_LENGTH_CHECK(mainScissorSettings, renderTargetCount);
+
+            // インダイレクトバッファを一定周期で更新
+            if ((frameCount % 30) == 0) {
+                instanceMask = (instanceMask + 1) % 8;
+                initializeCopySrcIndirectBuffer(instanceMask);
+                cmd.CmdCopyBuffer(
+                    ::ae::gfx_low::CopyBufferInfo()
+                        .SetSrcBufferResource(copySrcIndirectBuffer.get())
+                        .SetDstBufferResource(cubeIndirectBuffer.get())
+                        .SetSize(cubeIndirectRegion.Size()));
+            }
 
             // カラーバッファの状態セットアップ
             if (!isFinishedSetupColorBufferState) {
