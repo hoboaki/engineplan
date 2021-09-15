@@ -33,6 +33,7 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/DrawIndirectCallInfo.hpp>
+#include <ae/gfx_low/DrawIndirectNormalCommand.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 #include <ae/gfx_low/IndirectBufferView.hpp>
@@ -230,24 +231,22 @@ int aemain(::ae::base::Application* app) {
                 .SetResource(cubeIndirectBuffer.get())
                 .SetRegion(region)));
 
-        ::vk::DrawIndirectCommand* commands = reinterpret_cast<::vk::DrawIndirectCommand*>(gfxKit.Device().MapResourceMemory(
+        auto* commands =
+            reinterpret_cast<::ae::gfx_low::DrawIndirectNormalCommand*>(
+                gfxKit.Device().MapResourceMemory(
             *cubeIndirectMemory,
             ::ae::gfx_low::ResourceMemoryRegion().SetSize(
                 sizeof(::vk::DrawIndirectCommand))
             ));
-        const auto baseCommand = ::vk::DrawIndirectCommand(
-            geometryCube.VertexCount(),
-            1, // instanceCount
-            0, // firstVertex
-            0 // firstInstance
-        );
+        const auto baseCommand = ::ae::gfx_low::DrawIndirectNormalCommand()
+                                     .SetVertexCount(geometryCube.VertexCount())
+                                     .SetInstanceCount(1);
         commands[0] = baseCommand;
         commands[1] = baseCommand;
-        commands[1].firstInstance = 1;
+        //commands[1].SetInstanceOffset(1);
         commands[2] = baseCommand;
-        commands[2].firstInstance = 2;
+        //commands[2].SetInstanceOffset(1);
         gfxKit.Device().UnmapResourceMemory(*cubeIndirectMemory);
-
     }
 
     // コピー元となるバッファの作成

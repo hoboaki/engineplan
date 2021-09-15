@@ -17,6 +17,10 @@ namespace ae {
 namespace gfx_low {
 
 /// インダイレクトバッファ用ビューデスクリプタ。
+/// @details
+/// インダイレクト用のコマンドを CPU 上で生成する場合は
+/// DrawIndirectNormalCommand か DrawIndirectIndexedCommand
+/// を使ってください。
 class IndirectBufferView {
 public:
     /// @name コンストラクタとデストラクタ
