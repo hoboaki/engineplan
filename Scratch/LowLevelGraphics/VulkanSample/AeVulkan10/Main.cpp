@@ -84,6 +84,7 @@ struct fUniformDataType {
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
     ::ae::base::Matrix44Pod modelMtx;
+    ::ae::base::Vector4Pod instanceTrans;
 };
 
 const uint32_t fCopyVertShaderCode[] = {
@@ -509,14 +510,14 @@ int aemain(::ae::base::Application* app) {
         // （画面更新を確認するために毎フレーム更新）
         {
             auto proj = ::ae::base::Matrix44::Perspective(
-                ::ae::base::Angle(::ae::base::Degree(25.0f)),
+                ::ae::base::Angle(::ae::base::Degree(10.0f)),
                 float(display.MainScreen().Width()) /
                     display.MainScreen().Height(), // aspect
                 0.1f, // near
                 100.0f // far
             );
             auto view = ::ae::base::Matrix44::LookAt(
-                ::ae::base::Vector3(0.0f, 3.0f, 5.0f), // eyePos
+                ::ae::base::Vector3(0.0f, 18.0f, 30.0f), // eyePos
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
@@ -530,7 +531,10 @@ int aemain(::ae::base::Application* app) {
             data.projMtx = proj;
             data.viewMtx = view;
             data.invViewMtx = view.Invert();
-            data.modelMtx = model;
+            data.modelMtx = ::ae::base::Matrix44::Translate(
+                                ::ae::base::Vector3(-4.0f, 0.0f, 0.0f)) *
+                            model;
+            data.instanceTrans = ::ae::base::Vector4(4.0f, 0.0f, 0.0f, 0.0f);
 
             {
                 const auto region =
@@ -678,7 +682,7 @@ int aemain(::ae::base::Application* app) {
                     // Draw
                     subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
                     subCmd.CmdDraw(
-                        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3).SetInstanceCount(3));
 
                     // 保存終了
                     subCmd.EndRecord();

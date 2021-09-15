@@ -10,6 +10,7 @@ layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufType {
     mat4 viewMtx;
     mat4 invViewMtx;
     mat4 modelMtx;
+    vec4 instanceTrans;
 } Ubuf;
 
 layout(location = 0) in vec3 Position;
@@ -20,6 +21,7 @@ layout(location = 1) out vec3 FragWorldNormal;
 
 void main() {
     vec4 worldPos = Ubuf.modelMtx * vec4(Position, 1.0);
+    worldPos += Ubuf.instanceTrans * gl_InstanceIndex;
     FragWorldPos = worldPos.xyz;
     FragWorldNormal = mat3(Ubuf.modelMtx) * Normal;
     gl_Position = Ubuf.projMtx * Ubuf.viewMtx * worldPos;
