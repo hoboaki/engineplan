@@ -99,12 +99,12 @@ const uint32_t fCopyFragShaderCode[] = {
 #include "ShaderCopy.frag.inc"
 };
 
-const uint32_t fCubeVertShaderCode[] = {
-#include "ShaderCube.vert.inc"
+const uint32_t fShapeVertShaderCode[] = {
+#include "ShaderShape.vert.inc"
 };
 
-const uint32_t fCubeFragShaderCode[] = {
-#include "ShaderCube.frag.inc"
+const uint32_t fShapeaFragShaderCode[] = {
+#include "ShaderShape.frag.inc"
 };
 // clang-format on
 
@@ -136,14 +136,14 @@ int aemain(::ae::base::Application* app) {
         &gfxKit,
         fCopyFragShaderCode,
         sizeof(fCopyFragShaderCode));
-    ::aesk::Shader cubeVertShader(
+    ::aesk::Shader shapeVertShader(
         &gfxKit,
-        fCubeVertShaderCode,
-        sizeof(fCubeVertShaderCode));
-    ::aesk::Shader cubeFragShader(
+        fShapeVertShaderCode,
+        sizeof(fShapeVertShaderCode));
+    ::aesk::Shader shapeFragShader(
         &gfxKit,
-        fCubeFragShaderCode,
-        sizeof(fCubeFragShaderCode));
+        fShapeaFragShaderCode,
+        sizeof(fShapeaFragShaderCode));
 
     // VertexBuffer の作成（キューブ）
     ::aesk::GeometryCube geometryCube;
@@ -393,12 +393,12 @@ int aemain(::ae::base::Application* app) {
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Vertex,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&cubeVertShader.Resource())
+                        .SetResource(&shapeVertShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetShaderInfo(
                     ::ae::gfx_low::RenderPipelineShaderStage::Fragment,
                     ::ae::gfx_low::PipelineShaderInfo()
-                        .SetResource(&cubeFragShader.Resource())
+                        .SetResource(&shapeFragShader.Resource())
                         .SetEntryPointNamePtr("main"))
                 .SetDescriptorSetSpecInfo(mainDescriptorSetSpecInfo)
                 .SetVertexInputInfo(
