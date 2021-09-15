@@ -682,7 +682,9 @@ int aemain(::ae::base::Application* app) {
                     // Draw
                     subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
                     subCmd.CmdDraw(
-                        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3).SetInstanceCount(3));
+                        ::ae::gfx_low::DrawCallInfo()
+                            .SetVertexCount(geometryCube.VertexCount())
+                            .SetInstanceCount(3));
 
                     // 保存終了
                     subCmd.EndRecord();
