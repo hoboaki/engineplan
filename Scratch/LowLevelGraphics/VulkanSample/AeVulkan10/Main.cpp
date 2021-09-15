@@ -197,6 +197,48 @@ int aemain(::ae::base::Application* app) {
         true // isDeviceLocal: CPU上からアクセスしないので true
         );
 
+    // IndirectBuffer の作成
+    const int cubeInstanceCount = 3;
+    ::ae::gfx_low::UniqueResourceMemory cubeIndirectMemory;
+    ::std::unique_ptr<::ae::gfx_low::BufferResource> cubeIndirectBuffer;
+    {
+        const auto specInfo =
+            ::ae::gfx_low::BufferResourceSpecInfo()
+                .SetSize(sizeof(fUniformDataType))
+                .SetUsageBitSet(::ae::gfx_low::BufferResourceUsageBitSet().On(
+                    ::ae::gfx_low::BufferResourceUsage::IndirectBuffer));
+        cubeIndirectMemory.Reset(
+            &gfxKit.Device(),
+            ::ae::gfx_low::ResourceMemoryAllocInfo()
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetParams(
+                    gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
+        cubeIndirectBuffer.reset(new ::ae::gfx_low::BufferResource(
+            ::ae::gfx_low::BufferResourceCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(specInfo)
+                .SetDataAddress(*cubeIndirectMemory)));
+
+        ::vk::DrawIndirectCommand* commands = reinterpret_cast<::vk::DrawIndirectCommand*>(gfxKit.Device().MapResourceMemory(
+            *cubeIndirectMemory,
+            ::ae::gfx_low::ResourceMemoryRegion().SetSize(
+                sizeof(::vk::DrawIndirectCommand))
+            ));
+        const auto baseCommand = ::vk::DrawIndirectCommand(
+            geometryCube.VertexCount(),
+            1, // instanceCount
+            0, // firstVertex
+            0 // firstInstance
+        );
+        commands[0] = baseCommand;
+        commands[1] = baseCommand;
+        commands[1].firstInstance = 1;
+        commands[2] = baseCommand;
+        commands[2].firstInstance = 2;
+        gfxKit.Device().UnmapResourceMemory(*cubeIndirectMemory);
+
+    }
+
     // コピー元となるバッファの作成
     ::ae::base::RuntimeAutoArray<::ae::gfx_low::UniqueResourceMemory>
         copySrcMemories(gfxKit.SwapchainImageCount());
@@ -684,7 +726,7 @@ int aemain(::ae::base::Application* app) {
                     subCmd.CmdDraw(
                         ::ae::gfx_low::DrawCallInfo()
                             .SetVertexCount(geometryCube.VertexCount())
-                            .SetInstanceCount(3));
+                            .SetInstanceCount(cubeInstanceCount));
 
                     // 保存終了
                     subCmd.EndRecord();
