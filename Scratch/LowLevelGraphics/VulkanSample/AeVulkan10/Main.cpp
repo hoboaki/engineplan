@@ -243,9 +243,9 @@ int aemain(::ae::base::Application* app) {
                                      .SetInstanceCount(1);
         commands[0] = baseCommand;
         commands[1] = baseCommand;
-        //commands[1].SetInstanceOffset(1);
+        commands[1].SetInstanceOffset(1);
         commands[2] = baseCommand;
-        //commands[2].SetInstanceOffset(1);
+        commands[2].SetInstanceOffset(2);
         gfxKit.Device().UnmapResourceMemory(*cubeIndirectMemory);
     }
 
@@ -733,10 +733,10 @@ int aemain(::ae::base::Application* app) {
 
                     // Draw
                     subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
-                    subCmd.CmdDraw(
-                        ::ae::gfx_low::DrawCallInfo()
-                            .SetVertexCount(geometryCube.VertexCount())
-                            .SetInstanceCount(cubeInstanceCount));
+                    subCmd.CmdDrawIndirect(
+                        ::ae::gfx_low::DrawIndirectCallInfo()
+                            .SetIndirectBufferView(cubeIndirectView.get())
+                            .SetCommandCount(cubeInstanceCount));
 
                     // 保存終了
                     subCmd.EndRecord();
