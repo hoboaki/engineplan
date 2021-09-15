@@ -20,10 +20,12 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DispatchCallInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
+#include <ae/gfx_low/DrawIndirectCallInfo.hpp>
 #include <ae/gfx_low/EventCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/IndexBufferView.hpp>
+#include <ae/gfx_low/IndirectBufferView.hpp>
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 #include <ae/gfx_low/InternalUtility.hpp>
 #include <ae/gfx_low/Queue.hpp>
@@ -496,6 +498,29 @@ void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
             info.InstanceCount(),
             info.VertexOffset(),
             info.InstanceOffset());
+    }
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdDrawIndirect(const DrawIndirectCallInfo& info) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
+    AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
+    const auto& view = base::PtrToRef(info.IndirectBufferView());
+    if (info.UseIndexBuffer()) {
+        nativeObject_.drawIndexedIndirect(
+            view.BufferResource_().NativeObject_(),
+            view.Region_().Offset() +
+                info.CommandOffset() * sizeof(::vk::DrawIndexedIndirectCommand),
+            info.CommandCount(),
+            sizeof(::vk::DrawIndexedIndirectCommand));
+    } else {
+        nativeObject_.drawIndirect(
+            view.BufferResource_().NativeObject_(),
+            view.Region_().Offset() +
+                info.CommandOffset() * sizeof(::vk::DrawIndirectCommand),
+            info.CommandCount(),
+            sizeof(::vk::DrawIndirectCommand));
     }
 }
 
