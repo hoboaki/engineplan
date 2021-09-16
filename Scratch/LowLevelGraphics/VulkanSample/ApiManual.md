@@ -10,11 +10,11 @@
 
 ## ae::gfx_low について
 
-ae::gfx_low は低レベルグラフィックスライブラリをラップするAPI郡で、Vulkan、DirectX12、Metal に対しての抽象化に対応する思想で作られています。
+ae::gfx_low は低レベルグラフィックスライブラリをラップするAPI郡で、Vulkan、DirectX12、Metal に対しての抽象化を実現する思想で作られています。
 
-現在は Vulkan に対してのみ実装されています。
+API自体は抽象化を想定して設計されていますが、現在は Vulkan に対してのみ実装されています。
 
-便利機能は基本的にないためユーザー側で必要に応じて用意してください。
+また、便利機能は基本的に用意していません。そのためユーザー側で必要に応じて用意してください。
 
 ## 基本的なオブジェクト
 
@@ -22,25 +22,25 @@ ae::gfx_low を使う上でまず以下のオブジェクトを作ることに�
 
 ### System
 
-何よりも先に作る必要があるオブジェクトです。
+System は何よりも先に作る必要があるオブジェクトです。
 １実行アプリケーションにつき１つ作成してください。
 
 ### Device
 
-１つのGPUデバイスに対応するオブジェクトです。
+Device は１つのGPUデバイスに対応するオブジェクトです。
 普通の使い方ですと１つだけ作ればOKです。
 本オブジェクトを通してGPUデバイスの情報を取得したりグラフィックスに関連するメモリの確保・解放を行ったりします。
 本オブジェクトを作成する際に、後述の Queue も一緒に作成されます。
 
 ### Queue
 
-コマンドを流し込むキューです。
+Queue はGPUに対する命令コマンドを流し込む際に使うオブジェクトです。
 後述の CommandBuffer を本オブジェクトに渡すことでGPUで処理されます。
 最低１つ作成し、非同期コンピュートなどをする場合は必要に応じて２つ以上作成します。
 
 ### CommandBuffer
 
-GPUに投げるコマンド（＝処理）を書き込むバッファです。
+CommandBuffer は GPUに投げるコマンド（＝処理）を書き込むバッファです。
 書き込まれたバッファは本オブジェクトを Queue に投げることで処理されます。
 Queue で実行している最中は本オブジェクトを破棄したり変更したりすることはできません。
 一度記録した内容を再利用することも可能です。
@@ -53,25 +53,80 @@ Queue で実行している最中は本オブジェクトを破棄したり変�
 
 本オブジェクトは記録したコマンドの種類に対応している Queue に対して投げる必要があります。例えば Copy コマンドを記録した CommandBuffer は Copy コマンドに対応している Queue でないと登録できません。
 
+### Event
+
+
+### Fence
+
+
 ## リソース・デスクリプタ
+
+リソースとは GPU が参照する各種データのことです。
+リソースには以下の３種類が存在します。
+
+- ImageResource：画像データを扱うリソース
+- BufferResource：非画像データ全般を扱うリソース
+- ShaderResource：シェーダーデータを扱うリソース
+
+また、各リソースをGPUのレジスタに設定するものをデスクリプタと呼びます。
+例えば１つの ImageResource につき SampledImageView というデスクリプタを用意する、といった感じです。
+デスクリプタは何種類もありますが、それについては各リソースの説明の際に紹介します。
 
 ### ResourceMemory
 
+Device から確保したリソースのメモリ領域を扱うオブジェクトです。
+メモリを確保する際はメモリサイズはもちろん、そのメモリ領域がどのような用途で使われるかも指定して確保します。
+
+また、ResourceMemory を Map/Unmap することでメモリの内容をCPU上から読み書きすることができます。
+
+### UniqueResourceMemory
+
+ae::gfx_low の中で唯一の便利クラスです。
+std::unique_ptr と同じように ResourceMemory の確保と解放を管理します。
+
 ### ImageResource
 
-- SampledImageView
-- StorageImageView
-- RenderTargetImageView
+ImageResource は画像リソースを扱うオブジェクトです。
+本オブジェクトは ResourceMemory の領域を指定することで作成できます。
+
+ImageResource に関するデスクリプタ類は以下の通りです。
+
+- SampledImageView：画像データリード用のデスクリプタ
+- StorageImageView：画像データライト用のデスクリプタ
+- RenderTargetImageView：Render 処理の描画先用デスクリプタ
+
+### Sampler
+
+Sampler は SampledImageView に対してどのように画像データをリードするかを定義したデスクリプタです。
+例えば、ミップマップを使うか、線形補間をするか、といった設定を定義します。
+SampledImageView を使う場合は Sampler が必ず必要になります。
+Sampler はデスクリプタの中で唯一 ResourceMemory が不要なデスクリプタです。
 
 ### BufferResource
 
-- UniformBufferView
-- StorageBufferView
-- IndirectBufferView
+BufferResource は画像ではないデータを扱うオブジェクトです。
+本オブジェクトは ResourceMemory の領域を指定することで作成できます。
+
+BufferResource に関するデスクリプタ類は以下の通りです。
+
+- UniformBufferView：データリード用のデスクリプタ
+- StorageBufferView：データライト用のデスクリプタ
+- IndirectBufferView：インダイレクト描画用のデスクリプタ
+- VertexBufferView：頂点バッファを指定する用のデスクリプタ
+- IndexBufferView：インデックスバッファを指定する用のデスクリプタ
 
 ### ShaderModuleResource
 
+ShaderModuleResource はシェーダーリソースを扱うモジュールです。
+本オブジェクトは ResourceMemory の領域を指定することで作成できます。
+
+シェーダーリソースとして設定するデータは使用するグラフィックスAPI毎に変わります。
+Vulkan 環境ですと SPiR-V 形式のバイナリファイルを使用します。
+
 ### DesciptorSet
+
+DescriptorSet は複数のデスクリプタを１つにまとめたオブジェクトです。
+DescriptorSet を CommandBuffer に設定することでGPUのレジスタに各デスクリプタが設定されます。
 
 ## Render 処理と関連するオブジェクト
 
