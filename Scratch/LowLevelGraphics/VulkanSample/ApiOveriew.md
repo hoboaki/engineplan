@@ -129,6 +129,8 @@ Vulkan 環境ですと SPiR-V 形式のバイナリファイルを使用しま�
 DescriptorSet は複数のデスクリプタを１つにまとめたオブジェクトです。
 DescriptorSet を CommandBuffer に設定することでGPUのレジスタに各デスクリプタが設定されます。
 
+一部デスクリプタは DescriptorSet を使わずに設定します。
+
 ## Render 処理と関連するオブジェクト
 
 ### Render 処理について
