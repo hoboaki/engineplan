@@ -22,31 +22,33 @@ public:
     SystemCreateInfo();
     //@}
 
-    /// @name システムデバッグレベル（初期値：NoDebug）
+    /// @name プロパティ
     //@{
+    /// システムデバッグレベル。（初期値：NoDebug）
     SystemDebugLevel DebugLevel() const { return debugLevel_; }
-    SystemCreateInfo& SetDebugLevel(SystemDebugLevel level);
-    //@}
 
-    /// @name
-    /// オブジェクト生成時に確保・破棄時に解放されるメモリ用のアロケータ。nullptr
-    /// 時はデフォルトアロケータを使用。（初期値：nullptr）
-    //@{
+    /// DebugLevel() の設定。
+    SystemCreateInfo& SetDebugLevel(SystemDebugLevel level);
+
+    /// オブジェクト生成時に確保・破棄時に解放されるメモリ用のアロケータ。（初期値：nullptr）
+    /// @details nullptr 時はデフォルトアロケータを使用。
     ::ae::base::IAllocator* ObjectAllocator() const {
         return objectAllocator_.Get();
     }
+
+    /// ObjectAllocator() の設定。
     SystemCreateInfo& SetObjectAllocator(::ae::base::IAllocator* allocator) {
         objectAllocator_.Reset(allocator);
         return *this;
     }
-    //@}
 
-    /// @name 関数内で確保・関数終了時に解放されるメモリ用のアロケータ。nullptr
-    /// 時はデフォルトアロケータを使用。（初期値：nullptr）
-    //@{
+    /// 関数内で確保・関数終了時に解放されるメモリ用のアロケータ。（初期値：nullptr）
+    /// @details nullptr 時はデフォルトアロケータを使用。
     ::ae::base::IAllocator* TempWorkAllocator() const {
         return tempWorkAllocator_.Get();
     }
+
+    /// TempWorkAllocator() の設定。
     SystemCreateInfo& SetTempWorkAllocator(::ae::base::IAllocator* allocator) {
         tempWorkAllocator_.Reset(allocator);
         return *this;

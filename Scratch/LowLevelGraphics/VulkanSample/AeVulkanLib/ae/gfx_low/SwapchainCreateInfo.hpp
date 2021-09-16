@@ -21,16 +21,19 @@ namespace gfx_low {
 /// Swapchain 作成時に　ImageCount は 2 に繰り上げられます。
 class SwapchainCreateInfo {
 public:
-    /// @name
-    /// スワップチェインが抱えるイメージの枚数（設定できる値:1以上、初期値：2）
+    /// @name プロパティ
     //@{
+    /// スワップチェインが抱えるイメージの枚数。（初期値：2）
     int ImageCount() const { return imageCount_; }
-    SwapchainCreateInfo& SetImageCount(int imageCount);
-    //@}
 
-    /// @name イメージを sRGB フォーマットにするか（初期値：false）
-    //@{
+    /// ImageCount() の設定。
+    /// @param imageCount 1以上。
+    SwapchainCreateInfo& SetImageCount(int imageCount);
+
+    /// イメージを sRGB フォーマットにするか。（初期値：false）
     bool IsSrgbFormat() const { return isSrgbFormat_; }
+
+    /// IsSrgbFormat() の設定。 
     SwapchainCreateInfo& SetIsSrgbFormat(bool isSrgbFormat) {
         isSrgbFormat_ = isSrgbFormat;
         return *this;

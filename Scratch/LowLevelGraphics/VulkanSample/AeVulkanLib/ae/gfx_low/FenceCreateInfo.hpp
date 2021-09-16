@@ -17,6 +17,8 @@ namespace gfx_low {
 /// Fence オブジェクト作成に必要な情報。
 class FenceCreateInfo {
 public:
+    /// @name プロパティ
+    //@{
     /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
 
@@ -25,6 +27,7 @@ public:
         device_.Reset(system);
         return *this;
     }
+    //@}
 
 private:
     base::Pointer<gfx_low::Device> device_;

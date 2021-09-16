@@ -11,6 +11,8 @@ namespace gfx_low {
 /// Queue 作成情報。
 class QueueCreateInfo {
 public:
+    /// @name プロパティ
+    //@{
     /// Queue の種類。（初期値：Normal）
     QueueKind Kind() const { return type_; }
 
@@ -29,6 +31,7 @@ public:
     /// OperationCountMax() の設定。
     /// @param operationCountMax [0, operationCountMax]
     QueueCreateInfo& SetOperationCountMax(int operationCountMax);
+    //@}
 
 private:
     QueueKind type_ = QueueKind::Normal;

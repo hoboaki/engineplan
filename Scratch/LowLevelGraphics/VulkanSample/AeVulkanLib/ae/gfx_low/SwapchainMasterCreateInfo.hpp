@@ -22,33 +22,36 @@ namespace gfx_low {
 /// SwapchainMaster オブジェクト作成に必要な情報。
 class SwapchainMasterCreateInfo {
 public:
-    /// @name 属する Device オブジェクトのポインタ（設定必須、初期値：nullptr）
+    /// @name プロパティ
     //@{
+    /// 属する Device オブジェクトのポインタ。（初期値：nullptr）
     gfx_low::Device* Device() const { return device_.Get(); }
-    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* system) {
-        device_.Reset(system);
+
+    /// Device() の設定。（設定必須）
+    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* device) {
+        device_.Reset(device);
         return *this;
     }
-    //@}
 
-    /// @name 作成可能な Swapchain
-    /// の最大作成数（設定可能な値：1以上、初期値：1）
-    //@{
+    /// 作成可能な Swapchain の最大作成数。（初期値：1）
     int SwapchainCountMax() const { return swapchainCountMax_; }
+
+    /// SwapchainCountMax() の設定。
+    /// @param count 1以上。
     SwapchainMasterCreateInfo& SetSwapchainCountMax(int count);
-    //@}
 
-    /// @name 実装ライブラリ固有の拡張情報（初期値：nullptr）
-    //@{
+    /// 実装ライブラリ固有の拡張情報。（初期値：nullptr）
     void* ExtInfoPtr() { return extInfoPtr_; }
-    SwapchainMasterCreateInfo& SetExtInfoPtr(void* ptr) { extInfoPtr_ = ptr; }
-    //@}
 
-    /// @name 対象 Surface を持つ Screen（設定必須、初期値：nullptr）
-    //@{
+    /// ExtInfoPtr() の設定。 
+    SwapchainMasterCreateInfo& SetExtInfoPtr(void* ptr) { extInfoPtr_ = ptr; }
+
+    /// 対象 Surface を持つ Screen。（初期値：nullptr）
     base::Screen* Screen() const { return screen_.Get(); }
-    SwapchainMasterCreateInfo& SetScreen(base::Screen* display) {
-        screen_.Reset(display);
+
+    /// Screen() の設定。（設定必須）
+    SwapchainMasterCreateInfo& SetScreen(base::Screen* screen) {
+        screen_.Reset(screen);
         return *this;
     }
     //@}

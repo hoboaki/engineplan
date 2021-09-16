@@ -17,31 +17,37 @@ namespace gfx_low {
 /// Device オブジェクト作成に必要な情報。
 class DeviceCreateInfo {
 public:
-    /// @name 属する System インスタンスのポインタ（設定必須、初期値：nullptr）
+    /// @name プロパティ
     //@{
+    
+    /// 属する System インスタンスのポインタ。（初期値：nullptr）
     gfx_low::System* System() const { return system_.Get(); }
+
+    /// System() の設定。（設定必須）
     DeviceCreateInfo& SetSystem(gfx_low::System* system) {
         system_.Reset(system);
         return *this;
     }
-    //@}
 
-    /// @name System が管理する physicalDeviceIndex 値。（初期値：0）
-    //@{
+    /// System が管理する physicalDeviceIndex 値。（初期値：0）
     int PhysicalDeviceIndex() const { return physicalDeviceIndex_; }
+
+    /// PhysicalDeviceIndex() の設定。
     DeviceCreateInfo& SetPhysicalDeviceIndex(int index) {
         physicalDeviceIndex_ = index;
         return *this;
     }
-    //@}
 
-    /// @name 作成する Queue
-    /// 郡の情報（最低１つ以上のQueueの指定が必須、初期値：0）
-    //@{
+    /// 作成する Queue の数。（初期値：0）
     int QueueCreateInfoCount() const { return queueCreateInfosCount_; }
+
+    /// 作成する Queue 郡の情報。（初期値：nullptr）
     const QueueCreateInfo* QueueCrateInfos() const {
         return queueCreateInfos_.Get();
     }
+
+    /// 作成する Queue の数と情報の設定。（最低１つ以上のQueueの指定が必須）
+    /// @param infos count 長の情報配列。
     DeviceCreateInfo& SetQueueCreateInfos(
         int count,
         const QueueCreateInfo* infos) {
