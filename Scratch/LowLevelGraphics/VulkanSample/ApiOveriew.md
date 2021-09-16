@@ -112,9 +112,9 @@ BufferResource に関するデスクリプタ類は以下の通りです。
 
 - UniformBufferView：データリード用のデスクリプタ
 - StorageBufferView：データライト用のデスクリプタ
-- IndirectBufferView：インダイレクト描画用のデスクリプタ
 - VertexBufferView：頂点バッファを指定する用のデスクリプタ
 - IndexBufferView：インデックスバッファを指定する用のデスクリプタ
+- IndirectBufferView：インダイレクト描画用のデスクリプタ
 
 ### ShaderModuleResource
 
