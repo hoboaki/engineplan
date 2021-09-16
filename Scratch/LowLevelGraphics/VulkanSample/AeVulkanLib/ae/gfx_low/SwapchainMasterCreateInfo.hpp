@@ -43,7 +43,7 @@ public:
     /// 実装ライブラリ固有の拡張情報。（初期値：nullptr）
     void* ExtInfoPtr() { return extInfoPtr_; }
 
-    /// ExtInfoPtr() の設定。 
+    /// ExtInfoPtr() の設定。
     SwapchainMasterCreateInfo& SetExtInfoPtr(void* ptr) { extInfoPtr_ = ptr; }
 
     /// 対象 Surface を持つ Screen。（初期値：nullptr）

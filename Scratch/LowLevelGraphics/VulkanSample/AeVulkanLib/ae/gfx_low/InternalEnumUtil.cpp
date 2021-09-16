@@ -189,7 +189,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::CommandBufferLevel InternalEnumUtil::ToCommandBufferLevel(const CommandBufferLevel level) {
+::vk::CommandBufferLevel InternalEnumUtil::ToCommandBufferLevel(
+    const CommandBufferLevel level) {
     AE_BASE_ASSERT_ENUM(level, CommandBufferLevel);
     AE_BASE_ASSERT(level != CommandBufferLevel::Invalid);
     const ::vk::CommandBufferLevel table[] = {
@@ -572,8 +573,7 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::IndexType InternalEnumUtil::ToIndexType(
-    const IndexFormat format) {
+::vk::IndexType InternalEnumUtil::ToIndexType(const IndexFormat format) {
     AE_BASE_ASSERT_ENUM(format, IndexFormat);
     AE_BASE_ASSERT(format != IndexFormat::Invalid);
     const ::vk::IndexType table[] = {

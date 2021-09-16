@@ -31,8 +31,7 @@ public:
     }
 
     /// SrcBufferResource() の設定。（設定必須）
-    CopyBufferInfo& SetSrcBufferResource(
-        gfx_low::BufferResource* resource) {
+    CopyBufferInfo& SetSrcBufferResource(gfx_low::BufferResource* resource) {
         srcBufferResource_.Reset(resource);
         return *this;
     }
@@ -53,8 +52,7 @@ public:
     }
 
     /// DstBufferResource() の設定。（設定必須）
-    CopyBufferInfo& SetDstBufferResource(
-        gfx_low::BufferResource* resource) {
+    CopyBufferInfo& SetDstBufferResource(gfx_low::BufferResource* resource) {
         dstBufferResource_.Reset(resource);
         return *this;
     }
@@ -72,8 +70,8 @@ public:
     /// コピーするバイトサイズ。（初期値：0）
     size_t Size() const { return size_; }
 
-    /// Size() の設定。（設定必須） 
-    CopyBufferInfo& SetSize(size_t size) { 
+    /// Size() の設定。（設定必須）
+    CopyBufferInfo& SetSize(size_t size) {
         size_ = size;
         return *this;
     }

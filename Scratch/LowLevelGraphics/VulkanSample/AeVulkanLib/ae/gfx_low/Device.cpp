@@ -152,7 +152,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
                         extensionNames[enabledExtensionCount++] =
                             findExtensionNames[findExtIdx];
                     }
-                
                 }
             }
         }
@@ -171,7 +170,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
                     "Please look at the Getting Started guide for additional "
                     "information.\n",
                     findExtensionNames[findExtIdx]);
-            
             }
         }
     }

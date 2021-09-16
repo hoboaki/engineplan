@@ -10,8 +10,7 @@ namespace gfx_low {
 /// 頂点インデックスを使わないタイプの DrawIndirect のコマンド構造体。
 /// @details
 /// 構造体のデータサイズは使用するグラフィックスAPIによって変わります。
-struct DrawIndirectNormalCommand
-{
+struct DrawIndirectNormalCommand {
 public:
     /// @name プロパティ
     //@{
@@ -50,5 +49,6 @@ public:
     //@}
 };
 
-}}
+} // namespace gfx_low
+} // namespace ae
 // EOF

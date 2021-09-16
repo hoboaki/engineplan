@@ -187,7 +187,7 @@ const Matrix44Pod Matrix44Pod::Perspective(
         0,
         0,
         far / (near - far),
-        - (near * far) / (far - near),
+        -(near * far) / (far - near),
         0,
         0,
         -1,

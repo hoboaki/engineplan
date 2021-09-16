@@ -13,7 +13,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-IndirectBufferView::IndirectBufferView(const IndirectBufferViewCreateInfo& createInfo)
+IndirectBufferView::IndirectBufferView(
+    const IndirectBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
 , region_(createInfo.Region()) {

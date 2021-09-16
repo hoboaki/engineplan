@@ -43,7 +43,8 @@ public:
     ResourceMemoryRegion Region() const { return region_; }
 
     /// Region() の設定。
-    IndirectBufferViewCreateInfo& SetRegion(const ResourceMemoryRegion& region) {
+    IndirectBufferViewCreateInfo& SetRegion(
+        const ResourceMemoryRegion& region) {
         region_ = region;
         return *this;
     }

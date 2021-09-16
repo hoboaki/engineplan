@@ -19,7 +19,7 @@ class DeviceCreateInfo {
 public:
     /// @name プロパティ
     //@{
-    
+
     /// 属する System インスタンスのポインタ。（初期値：nullptr）
     gfx_low::System* System() const { return system_.Get(); }
 

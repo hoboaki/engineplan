@@ -134,7 +134,7 @@ public:
     //@{
     /// 保存済のコマンドを実行する。
     /// @param secondaryCommandBuffer CommandBufferLevel::Secondary なコマンドバッファ。
-    /// @details 
+    /// @details
     /// セカンダリコマンドバッファの呼び出しには様々な制約が存在します。
     /// 詳細についてはクラスの説明を参照してください。
     void CmdCall(const CommandBuffer& secondaryCommands);
@@ -259,7 +259,8 @@ private:
     CommandBufferState state_ = CommandBufferState::Initial;
     int renderPassCount_ = {};
     CommandBufferFeatureBitSet activePass_;
-    bool useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
+    bool
+        useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };
