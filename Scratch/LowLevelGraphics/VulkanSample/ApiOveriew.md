@@ -1,8 +1,9 @@
-# Adel Engine Low Graphics Api マニュアル
+# Adel Engine Low Graphics Api Overview
 
 ## はじめに
 
-このマニュアルでは ae::gfx_low モジュールについての概要を記述します。
+このマニュアルでは ae::gfx_low モジュールについての概要を記述します。クラスや関数のリファレンスについては記述しません。
+
 このマニュアルはグラフィックスAPIを使ったプログラミングの経験者の人が理解できるレベルの内容を想定しています。
 もしそういった経験がない人はまず DirectX や Vulkan などで基本を抑えることをオススメします。
 
@@ -147,6 +148,7 @@ Render 処理はレンダリングパイプラインは頂点を流し込みフ�
 
 ### SwapchainMaster・Swapchain
 
+### インダイレクト描画
 
 ## Compute 処理と関連するオブジェクト
 
