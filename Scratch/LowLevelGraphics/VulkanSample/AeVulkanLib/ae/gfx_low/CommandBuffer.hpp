@@ -21,6 +21,7 @@ class DescriptorSet;
 class Device;
 class DispatchCallInfo;
 class DrawCallInfo;
+class DrawIndirectCallInfo;
 class IndexBufferView;
 class ImageResourceBarrierInfo;
 class RenderPassBeginInfo;
@@ -220,6 +221,9 @@ public:
 
     /// 設定済のレンダーパイプラインに基づいてドローコールをする。
     void CmdDraw(const DrawCallInfo& info);
+
+    /// 設定済のレンダーパイプラインに基づいてインダイレクト機能を使ってドローコールをする。
+    void CmdDrawIndirect(const DrawIndirectCallInfo& info);
     //@}
 
     /// @name Compute コマンド群

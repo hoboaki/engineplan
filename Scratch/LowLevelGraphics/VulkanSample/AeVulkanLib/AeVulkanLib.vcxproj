@@ -274,6 +274,18 @@
     </ClInclude>
     <ClInclude Include="ae\gfx_low\ComputePipeline.hpp" />
     <ClInclude Include="ae\gfx_low\ComputePipelineCreateInfo.hpp" />
+    <ClInclude Include="ae\gfx_low\DrawIndirectCallInfo.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DrawIndirectIndexedCommand.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DrawIndirectNormalCommand.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ae\gfx_low\ImageSubresourceRange.hpp">
       <SubType>
       </SubType>
@@ -281,6 +293,14 @@
     <ClInclude Include="ae\gfx_low\IndexBufferView.hpp" />
     <ClInclude Include="ae\gfx_low\IndexBufferViewCreateInfo.hpp" />
     <ClInclude Include="ae\gfx_low\IndexFormat.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\IndirectBufferView.hpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\IndirectBufferViewCreateInfo.hpp">
       <SubType>
       </SubType>
     </ClInclude>
@@ -938,6 +958,18 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectCallInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectIndexedCommand.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectNormalCommand.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ae\gfx_low\EnumUtil.cpp">
       <SubType>
       </SubType>
@@ -956,6 +988,10 @@
     </ClCompile>
     <ClCompile Include="ae\gfx_low\IndexBufferView.cpp" />
     <ClCompile Include="ae\gfx_low\IndexBufferViewCreateInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\IndirectBufferView.cpp">
       <SubType>
       </SubType>
     </ClCompile>

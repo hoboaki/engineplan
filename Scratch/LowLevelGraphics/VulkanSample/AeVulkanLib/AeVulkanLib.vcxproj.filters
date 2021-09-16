@@ -813,6 +813,21 @@
     <ClInclude Include="ae\gfx_low\CopyBufferInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DrawIndirectCallInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\IndirectBufferView.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\IndirectBufferViewCreateInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DrawIndirectNormalCommand.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ae\gfx_low\DrawIndirectIndexedCommand.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ae\gfx_low\System.cpp">
@@ -1215,6 +1230,18 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\RenderPass.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\IndirectBufferView.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectCallInfo.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectNormalCommand.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\DrawIndirectIndexedCommand.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
