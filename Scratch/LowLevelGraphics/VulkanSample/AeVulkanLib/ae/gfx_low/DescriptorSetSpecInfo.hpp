@@ -32,6 +32,9 @@ namespace gfx_low {
 /// そしてこの場合、 本クラス DescriptorSetSpecInfo::BindingInfos() の
 /// kind == UniformBuffer における BindingInfos のインデックス 0 番は buffer(uniform) の 0 番を指し、
 /// kind == StorageBuffer のインデックス 0 番は storage の 0 番目であるバインド番号 3 の buffer(storage) を指します。
+///
+/// また、VK-GLSL 環境では DescriptorSet 番号を Buffer, Image, Sampler の順番で DescriptorSet 番号を 0 から順番に割り当ててください。
+/// Buffer を使わず Image ＆ Sampler だけ使うといった場合は Image に set=0、Sampler に set=1 を割り当ててください。
 class DescriptorSetSpecInfo {
 public:
     /// @name プロパティ
