@@ -54,9 +54,19 @@ Queue で実行している最中は本オブジェクトを破棄したり変�
 
 本オブジェクトは記録したコマンドの種類に対応している Queue に対して投げる必要があります。例えば Copy コマンドを記録した CommandBuffer は Copy コマンドに対応している Queue でないと登録できません。
 
+## 同期
+
+同期用オブジェクトとして Event と Fence が用意されています。
+
 ### Event
 
+Event は複数の Queue 間でタイミングを同期する際に使うオブジェクトです。
+例えば非同期コンピュートの処理が終わってからレンダリング処理を開始したい、といったときに使います。
+
 ### Fence
+
+Fence は Queue が特定のコマンドまで処理できたタイミングを CPU 上で同期する際に使うオブジェクトです。
+例えば Fence を使って GPU の処理が終わったことを確認してから CPU 上でメモリをリードする、といったときに使います。
 
 ## リソース・デスクリプタ
 
@@ -93,6 +103,10 @@ ImageResource に関するデスクリプタ類は以下の通りです。
 - SampledImageView：画像データリード用のデスクリプタ
 - StorageImageView：画像データライト用のデスクリプタ
 - RenderTargetImageView：Render 処理の描画先用デスクリプタ
+
+ImageResource には ImageResourceState というメモリバリアの概念があります。
+
+例えば、RenderTargetImageView として使用していたイメージを SampledImageView として使いたい場合は ImageResourceState を RenderTarget から ShaderResourceReadOnly に状態遷移させる必要があります。
 
 ### Sampler
 
@@ -142,15 +156,34 @@ Render 処理はレンダリングパイプラインは頂点を流し込みフ�
 2. Viewport や Scissor を設定。
 3. RenderPipeline を使ってパイプラインを設定。
 4. 設定されたパイプラインに必要なリソースを設定。
-5. CmdDraw などの関数で描画をキック。
+5. 描画コール。
 
 ### RenderPass
 
+RenderPass はレンダーターゲットの定義やカラーバッファやデプスバッファのクリア処理に関する設定を行います。
+
+CmdBeginRenderPass/CmdEndRenderPass を使って RenderPass の開始と終了処理を行います。
+
+### Viewport・Scissor
+
+ビューポートとシザーは CmdSetViewports/CmdSetScissors で設定します。
+
+ビューポートとシザーは RenderPass を設定後に設定してください。
+
 ### RenderPipeline
 
-### SwapchainMaster・Swapchain
+RenderPipeline は描画パイプラインに関する情報を保持するオブジェクトです。
+描画パイプラインの設定毎に１つの Rende ｒ Pipeline オブジェクトを作る必要があります。
+
+CmdSetRenderPipeline で設定できます。
+
+### デスクリプタ設定
+
+### 描画コール
 
 ### インダイレクト描画
+
+### SwapchainMaster・Swapchain
 
 ## Compute 処理と関連するオブジェクト
 
