@@ -1,8 +1,8 @@
-# Adel Engine Low Graphics Api Overview
+# AdelEngine GfxLowApi Overview
 
 <!-- TOC -->
 
-- [Adel Engine Low Graphics Api Overview](#adel-engine-low-graphics-api-overview)
+- [AdelEngine GfxLowApi Overview](#adelengine-gfxlowapi-overview)
   - [はじめに](#はじめに)
   - [ae::gfx_low について](#aegfx_low-について)
   - [基本的なオブジェクト](#基本的なオブジェクト)
