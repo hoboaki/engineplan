@@ -790,8 +790,6 @@ int aemain(::ae::base::Application* app) {
                         .SetAttributeCount(
                             AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
                         .SetAttributeInfos(vertexAttrInfos))
-                .SetPrimitiveTopologyKind(
-                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
                     ::ae::gfx_low::PipelineRasterizerInfo()
                         .SetFrontFace(
@@ -986,8 +984,11 @@ int aemain(::ae::base::Application* app) {
 
                 // Draw
                 cmd.CmdSetVertexBuffer(0, *vertexBufferView);
-                cmd.CmdDraw(
-                    ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
+                cmd.CmdDraw(::ae::gfx_low::DrawCallInfo()
+                                .SetVertexCount(12 * 3)
+                                .SetPrimitiveTopologyKind(
+                                    ::ae::gfx_low::PrimitiveTopologyKind::
+                                        TriangleList));
 
                 // 終了
                 cmd.CmdEndRenderPass();

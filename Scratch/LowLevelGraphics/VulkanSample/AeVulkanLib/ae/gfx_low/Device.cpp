@@ -70,7 +70,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
 #endif
 
     // 使用できる機能は全て有効化
-    const ::vk::PhysicalDeviceFeatures features = physicalDevice.getFeatures();
+    ::vk::PhysicalDeviceFeatures features = physicalDevice.getFeatures();
 
     // 各 QueueKind の作成総数とIndex表を作成
     ::ae::base::EnumKeyArray<QueueKind, int>
@@ -188,6 +188,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
         target.setPQueuePriorities(&queuePriorityTable[queueKind][0]);
         ++deviceQueueCreateInfoCount;
     }
+    auto dynamicStateExt = ::vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT()
+                               .setExtendedDynamicState(true);
     auto deviceInfo = vk::DeviceCreateInfo()
                           .setQueueCreateInfoCount(deviceQueueCreateInfoCount)
                           .setPQueueCreateInfos(&deviceQueueCreateInfos[0])
@@ -195,7 +197,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
                           .setPpEnabledLayerNames(nullptr)
                           .setEnabledExtensionCount(enabledExtensionCount)
                           .setPpEnabledExtensionNames(extensionNames)
-                          .setPEnabledFeatures(&features);
+                          .setPEnabledFeatures(&features)
+                          .setPNext(&dynamicStateExt);
     {
         auto result =
             physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);

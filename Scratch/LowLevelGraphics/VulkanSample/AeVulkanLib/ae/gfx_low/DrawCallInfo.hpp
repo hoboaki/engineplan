@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/base/Pointer.hpp>
+#include <ae/gfx_low/PrimitiveTopologyKind.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -12,6 +13,14 @@ class DrawCallInfo {
 public:
     /// @name プロパティ
     //@{
+    /// プリミティブトポロジの種類。（初期値：Invalid）
+    gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
+        return primitiveTopologyKind_;
+    }
+
+    /// PrimitiveTopologyKind() の設定。（設定必須）
+    DrawCallInfo& SetPrimitiveTopologyKind(gfx_low::PrimitiveTopologyKind kind);
+
     /// 描画処理の起点となる頂点番号。（初期値：0）
     int VertexOffset() const { return vertexOffset_; }
 
@@ -58,6 +67,8 @@ public:
     //@}
 
 private:
+    gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
+        PrimitiveTopologyKind::Invalid;
     int vertexOffset_ = 0;
     int vertexCount_ = 0;
     int indexOffset_ = 0;

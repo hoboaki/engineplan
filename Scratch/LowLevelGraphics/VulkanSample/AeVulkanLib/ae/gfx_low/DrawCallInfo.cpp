@@ -9,6 +9,15 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
+DrawCallInfo& DrawCallInfo::SetPrimitiveTopologyKind(
+    const gfx_low::PrimitiveTopologyKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, gfx_low::PrimitiveTopologyKind);
+    AE_BASE_ASSERT(kind != gfx_low::PrimitiveTopologyKind::Invalid);
+    primitiveTopologyKind_ = kind;
+    return *this;
+}
+
+//------------------------------------------------------------------------------
 DrawCallInfo& DrawCallInfo::SetVertexOffset(const int offset) {
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     vertexOffset_ = offset;

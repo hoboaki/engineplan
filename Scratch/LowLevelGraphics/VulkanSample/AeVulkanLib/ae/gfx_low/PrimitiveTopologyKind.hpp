@@ -7,6 +7,7 @@ namespace gfx_low {
 
 /// プリミティブトポロジの種類を示す列挙値。
 enum class PrimitiveTopologyKind {
+    /// 無効値。
     Invalid,
 
     /// 点リスト。

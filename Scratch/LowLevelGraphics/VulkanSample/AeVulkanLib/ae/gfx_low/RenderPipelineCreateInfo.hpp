@@ -80,15 +80,6 @@ public:
         return *this;
     }
 
-    /// プリミティブトポロジの種類。（初期値：Invalid）
-    gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
-        return primitiveTopologyKind_;
-    }
-
-    /// PrimitiveTopologyKind() の設定。
-    RenderPipelineCreateInfo& SetPrimitiveTopologyKind(
-        gfx_low::PrimitiveTopologyKind kind);
-
     /// ラスタライザ情報。（初期値：デフォルトコンストラクタの値）
     PipelineRasterizerInfo RasterizerInfo() const { return rasterizerInfo_; }
 
@@ -131,8 +122,6 @@ private:
     PipelineRasterizerInfo rasterizerInfo_;
     PipelineDepthStencilInfo depthStencilInfo_;
     PipelineBlendInfo blendInfo_;
-    gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
-        PrimitiveTopologyKind::Invalid;
 };
 
 } // namespace gfx_low

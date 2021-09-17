@@ -485,6 +485,8 @@ void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
+    nativeObject_.setPrimitiveTopologyEXT(
+        InternalEnumUtil::ToPrimitiveTopology(info.PrimitiveTopologyKind()));
     if (info.UseIndexBuffer()) {
         nativeObject_.drawIndexed(
             info.VertexCount(),

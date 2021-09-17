@@ -254,9 +254,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPVertexAttributeDescriptions(&vertexAttrDescs[0]);
 
         const auto inputAssemblyInfo =
-            ::vk::PipelineInputAssemblyStateCreateInfo().setTopology(
-                InternalEnumUtil::ToPrimitiveTopology(
-                    createInfo.PrimitiveTopologyKind()));
+            ::vk::PipelineInputAssemblyStateCreateInfo();        
 
         const auto viewportInfo = vk::PipelineViewportStateCreateInfo()
                                       .setViewportCount(1)
@@ -355,7 +353,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 
         const ::vk::DynamicState dynamicStates[] = {
             ::vk::DynamicState::eViewport,
-            ::vk::DynamicState::eScissor
+            ::vk::DynamicState::eScissor,
+            ::vk::DynamicState::ePrimitiveTopologyEXT,
         };
 
         const auto dynamicStateInfo =
