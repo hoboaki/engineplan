@@ -16,9 +16,9 @@
   - [リソース・デスクリプタ](#リソース・デスクリプタ)
     - [ResourceMemory](#resourcememory)
     - [UniqueResourceMemory](#uniqueresourcememory)
+    - [BufferResource](#bufferresource)
     - [ImageResource](#imageresource)
     - [Sampler](#sampler)
-    - [BufferResource](#bufferresource)
     - [ShaderModuleResource](#shadermoduleresource)
     - [DesciptorSet](#desciptorset)
   - [Render 処理と関連するオブジェクト](#render-処理と関連するオブジェクト)
@@ -117,8 +117,8 @@ Fence は Queue が特定のコマンドまで処理できたタイミングを 
 リソースとは GPU が参照する各種データのことです。
 リソースには以下の３種類が存在します。
 
-- ImageResource：画像データを扱うリソース
 - BufferResource：非画像データ全般を扱うリソース
+- ImageResource：画像データを扱うリソース
 - ShaderResource：シェーダーデータを扱うリソース
 
 また、各リソースを GPU のレジスタに設定するものをデスクリプタと呼びます。
@@ -139,6 +139,19 @@ ResourceMemory は Device から確保したリソースのメモリ領域を扱
 ae::gfx_low の中で唯一の便利クラスです。
 std::unique_ptr と同じように ResourceMemory の自動解放を管理します。
 
+### BufferResource
+
+BufferResource は画像ではないデータを扱うオブジェクトです。
+本オブジェクトは ResourceMemory の領域を指定することで作成できます。
+
+BufferResource に関するデスクリプタ類は以下の通りです。
+
+- UniformBufferView：データリード用のデスクリプタ
+- StorageBufferView：データライト用のデスクリプタ
+- VertexBufferView：頂点バッファ指定用のデスクリプタ
+- IndexBufferView：インデックスバッファ指定用のデスクリプタ
+- IndirectBufferView：インダイレクト描画用のデスクリプタ
+
 ### ImageResource
 
 ImageResource は画像リソースを扱うオブジェクトです。
@@ -158,19 +171,6 @@ Sampler は SampledImageView に対してどのように画像データをリー
 例えば、ミップマップを使うか、線形補間をするか、といった設定を定義します。
 SampledImageView を使う場合は Sampler が必ず必要になります。
 Sampler はデスクリプタの中で唯一 ResourceMemory が不要なデスクリプタです。
-
-### BufferResource
-
-BufferResource は画像ではないデータを扱うオブジェクトです。
-本オブジェクトは ResourceMemory の領域を指定することで作成できます。
-
-BufferResource に関するデスクリプタ類は以下の通りです。
-
-- UniformBufferView：データリード用のデスクリプタ
-- StorageBufferView：データライト用のデスクリプタ
-- VertexBufferView：頂点バッファ指定用のデスクリプタ
-- IndexBufferView：インデックスバッファ指定用のデスクリプタ
-- IndirectBufferView：インダイレクト描画用のデスクリプタ
 
 ### ShaderModuleResource
 
