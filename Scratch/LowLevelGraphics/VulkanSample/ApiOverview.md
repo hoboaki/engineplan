@@ -187,7 +187,7 @@ DescriptorSet を CommandBuffer に設定することで、DescriptorSet が参�
 
 シェーダーバインディングにはルールを設けています。詳しくは DescriptorSetSpecInfo のクラスコメントを参照してください。
 
-なお、VertexBufferView や IndexBufferView などシェーダーではなくパイプラインが参照するデスクリプタは DescriptorSet を使わずに設定します。
+なお、VertexBufferView や IndexBufferView などシェーダーではなくパイプラインが参照するデスクリプタは DescriptorSet は使わずパイプライン設定後に CommandBuffer に直接設定します。詳しくは後述の Render 処理や Compute 処理の項を参照してください。
 
 ## Render 処理と関連するオブジェクト
 
@@ -270,9 +270,12 @@ Compute 処理は GPGPU の機能を使って GPU 上で実行する計算処理
 Compute 処理は以下の流れで行います。
 
 1. CmdBeginComputePass を使って Compute 処理の開始を宣言。
-2. CmdSetDescriptorSet を使ってデスクリプタを設定。
-3. CmdDispatch を使って Compute 処理を開始。
-4. 最後に CmdEndComputePasss を使って Compute 処理の終了を宣言。
+2. CmdSetComputePipeline を使ってパイプラインを設定。
+3. CmdSetDescriptorSet を使ってデスクリプタを設定。
+4. CmdDispatch を使って Compute 処理を開始。
+5. 最後に CmdEndComputePasss を使って Compute 処理の終了を宣言。
+
+Render 処理と同様に、同じ ComputePass で複数の Compute 処理をしたい場合は２〜４番の処理を必要に応じて追加してください。
 
 Compute した結果を CPU や GPU で参照する場合は同期オブジェクトや ImageResourceState などのバリアを使って同期を取ってから参照してください。
 
