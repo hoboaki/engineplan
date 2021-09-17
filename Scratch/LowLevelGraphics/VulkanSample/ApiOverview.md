@@ -182,12 +182,12 @@ ShaderModuleResource はシェーダーリソースを扱うモジュールで�
 
 ### DesciptorSet
 
-DescriptorSet は複数のデスクリプタの参照を１つにまとめたオブジェクトです。
-DescriptorSet を CommandBuffer に設定することで GPU のレジスタに各デスクリプタが設定＆シェーダーバインディングされます。そうすることでシェーダーは各デスクリプタが指すリソースを参照することができるようになります。
-
-VertexBufferView や IndexBufferView など一部デスクリプタは DescriptorSet を使わずに設定します。
+DescriptorSet はシェーダーが参照する複数のデスクリプタ参照を１つにまとめたオブジェクトです。
+DescriptorSet は CommandBuffer に設定することで GPU のレジスタに各デスクリプタが設定＆シェーダーバインディングされます。そうすることでシェーダーは各デスクリプタが指すリソースを参照することができるようになります。
 
 シェーダーバインディングにはルールを設けています。詳しくは DescriptorSetSpecInfo のクラスコメントを参照してください。
+
+なお、VertexBufferView や IndexBufferView などシェーダーではなくパイプラインが参照するデスクリプタは DescriptorSet を使わずに設定します。
 
 ## Render 処理と関連するオブジェクト
 
