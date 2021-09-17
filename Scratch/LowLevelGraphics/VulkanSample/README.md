@@ -26,7 +26,7 @@ AdelEngine GfxLowApi は高機能な API は提供しません。
 FBX 形式のデータを読み込み表示する機能などは提供しません。
 それは別レイヤーの機能として提供されることを想定しています。
 
-AdelEngine GfxLowApi のオーバービューは [ApiOverview.md] に記載されています。概要を知りたい方はそちらをご覧下さい。
+AdelEngine GfxLowApi のオーバービューは [ApiOverview.md](./ApiOverview.md) に記載されています。概要を知りたい方はそちらをご覧下さい。
 
 ## 開発環境
 
