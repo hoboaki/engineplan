@@ -2,12 +2,12 @@
 
 ## はじめに
 
-このマニュアルでは ae::gfx_low モジュールについての概要を記述します。クラスや関数のリファレンスについては記述しません。
+このマニュアルでは ae::gfx_low モジュールについての概要を記述します。
 
-このマニュアルはグラフィックス API を使ったプログラミングの経験者の人が理解できるレベルの内容を想定しています。
+このマニュアルはグラフィックス API を使ったプログラミングの経験者が本モジュールの概要を把握できることを目指して書いています。
 もしそういった経験がない人はまず DirectX や Vulkan などで基本を抑えることをオススメします。
 
-また、実際のコードの書き方は各サンプルを見てください。
+このマニュアルにはクラスや関数のリファレンスについては記述しません。API の詳細や使い方はソースコードや各サンプルで確認してください。
 
 ## ae::gfx_low について
 
@@ -29,14 +29,14 @@ System は何よりも先に作る必要があるオブジェクトです。
 ### Device
 
 Device は１つの GPU デバイスに対応するオブジェクトです。
-普通の使い方ですと１つだけ作れば OK です。
+普通の使い方ですと１実行アプリケーションにつき１つだけ作成することになります。
 Device オブジェクトを通して GPU デバイスの情報を取得したりグラフィックスに関連するメモリの確保・解放を行ったりします。
 Device を作成する際に、後述の Queue も一緒に作成されます。
 
 ### Queue
 
-Queue は GPU に対する命令コマンドを流し込む際に使うオブジェクトです。
-後述の CommandBuffer を本オブジェクトに渡すことで GPU で処理されます。
+Queue は CPU から GPU にコマンドや命令を送信する際に使うオブジェクトです。
+後述の CommandBuffer を本オブジェクトに渡すことでコマンドが GPU で処理されます。
 最低１つ作成し、非同期コンピュートなどをする場合は必要に応じて２つ以上作成します。
 
 ### CommandBuffer
@@ -44,6 +44,7 @@ Queue は GPU に対する命令コマンドを流し込む際に使うオブジ
 CommandBuffer は GPU に送信するコマンド（＝処理）を書き込むバッファです。
 書き込まれたバッファは本オブジェクトを Queue に登録することで処理されます。
 Queue で実行している最中は本オブジェクトを破棄したり変更したりすることはできません。
+
 一度記録した内容を再利用することも可能です。
 
 コマンドの種類は大きく３つあります。
@@ -86,20 +87,20 @@ Fence は Queue が特定のコマンドまで処理できたタイミングを 
 - ShaderResource：シェーダーデータを扱うリソース
 
 また、各リソースを GPU のレジスタに設定するものをデスクリプタと呼びます。
-例えば１つの ImageResource につき SampledImageView というデスクリプタを用意する、といった感じです。
+例えば１つの ImageResource につき SampledImageView というデスクリプタを用意し、DescriptorSet を使ってデスクリプタを設定をする、といった感じです。
 デスクリプタは何種類もありますが、それについては各リソースの説明の際に紹介します。
 
 ### ResourceMemory
 
-Device から確保したリソースのメモリ領域を扱うオブジェクトです。
-メモリを確保する際はメモリサイズはもちろん、そのメモリ領域がどのような用途で使われるかも指定して確保します。
+ResourceMemory は Device から確保したリソースのメモリ領域を扱うオブジェクトです。
+メモリを確保する際はメモリサイズはもちろん、そのメモリ領域がどのような用途で使われるかも指定して確保します。用途によってメモリサイズの繰り上げや必要なアライメントが異なりますが、それらの情報は Device から取得できます。
 
 また、ResourceMemory を Map/Unmap することでメモリの内容を CPU 上から読み書きすることができます。
 
 ### UniqueResourceMemory
 
 ae::gfx_low の中で唯一の便利クラスです。
-std::unique_ptr と同じように ResourceMemory の確保と解放を管理します。
+std::unique_ptr と同じように ResourceMemory の自動解放を管理します。
 
 ### ImageResource
 
@@ -110,11 +111,9 @@ ImageResource に関するデスクリプタ類は以下の通りです。
 
 - SampledImageView：画像データリード用のデスクリプタ
 - StorageImageView：画像データライト用のデスクリプタ
-- RenderTargetImageView：Render 処理の描画先用デスクリプタ
+- RenderTargetImageView：Render 処理のレンダーターゲット用デスクリプタ
 
-ImageResource には ImageResourceState というメモリバリアの概念があります。
-
-例えば、RenderTargetImageView として使用していたイメージを SampledImageView として使いたい場合は ImageResourceState を RenderTarget から ShaderResourceReadOnly に状態遷移させる必要があります。
+ImageResource には ImageResourceState というメモリバリアの概念があります。例えば、RenderTargetImageView として使用していたイメージを SampledImageView として使いたい場合は ImageResourceState を RenderTarget から ShaderResourceReadOnly に状態遷移させる必要があります。
 
 ### Sampler
 
@@ -142,11 +141,11 @@ ShaderModuleResource はシェーダーリソースを扱うモジュールで�
 本オブジェクトは ResourceMemory の領域を指定することで作成できます。
 
 シェーダーリソースとして設定するデータは使用するグラフィックス API 毎に変わります。
-Vulkan 環境ですと SPiR-V 形式のバイナリファイルを使用します。
+例えば Vulkan 環境では SPiR-V 形式のバイナリファイルを使用します。
 
 ### DesciptorSet
 
-DescriptorSet は複数のデスクリプタを１つにまとめたオブジェクトです。
+DescriptorSet は複数のデスクリプタの参照を１つにまとめたオブジェクトです。
 DescriptorSet を CommandBuffer に設定することで GPU のレジスタに各デスクリプタが設定されます。
 
 VertexBufferView や IndexBufferView など一部デスクリプタは DescriptorSet を使わずに設定します。
@@ -157,14 +156,15 @@ VertexBufferView や IndexBufferView など一部デスクリプタは Descripto
 
 ### Render 処理について
 
-Render 処理はレンダリングパイプラインは頂点を流し込みフレームバッファに描画する処理のことです。
+Render 処理はレンダリングパイプラインに頂点を流し込み、シェーダーによってレンダーターゲットに描画する処理のことです。
 基本的な処理の流れとしては以下の通りです。
 
-1. RenderPass を使って描画先を設定。
+1. CmdBeginRenderPass でレンダー処理の開始を宣言。
 2. Viewport や Scissor を設定。
 3. RenderPipeline を使ってパイプラインを設定。
 4. 設定されたパイプラインに必要なリソースを設定。
 5. 描画コール。
+6. CmdEndRenderPass でレンダー処理の終了を宣言。
 
 ### RenderPass
 
@@ -176,12 +176,12 @@ RenderPass は CmdBeginRenderPass/CmdEndRenderPass を使って開始終了処�
 
 ビューポートとシザーは CmdSetViewports/CmdSetScissors で設定します。
 
-ビューポートとシザーは RenderPass を設定後に設定してください。
+ビューポートとシザーは RenderPass 設定後に設定してください。
 
 ### RenderPipeline
 
-RenderPipeline は描画パイプラインに関する情報を保持するオブジェクトです。
-例えば、デプステスト設定、ブレンドテスト設定、面カリング設定、使用するシェーダー、頂点バッファのレイアウト、デスクリプタの構成、レンダーターゲットの構成（カラーバッファの枚数や各カラーバッファのフォーマット等）、他、こういった情報が RenderPipeline に含まれます。
+RenderPipeline は描画パイプラインに関する設定を保持するオブジェクトです。
+例えば、デプステスト設定、ブレンドテスト設定、面カリング設定、シェーダーモジュールの設定、頂点バッファのレイアウト、デスクリプタの構成、レンダーターゲットの構成（カラーバッファの枚数や各カラーバッファのフォーマット等）、他、こういった情報が RenderPipeline に含まれます。
 
 RenderPipeline は描画パイプラインの設定毎に１つのオブジェクトを作る必要があります。１つでも設定が異なる場合は別の RenderPipeline オブジェクトを作って下さい。
 
@@ -231,7 +231,7 @@ Compute 処理は GPGPU の機能を使って GPU 上で実行する計算処理
 Compute 処理は以下の流れで行います。
 
 1. CmdBeginComputePass を使って Compute 処理の開始を宣言。
-2. CmdSetDescriptorSet を使ってデスクリプタせおって居。
+2. CmdSetDescriptorSet を使ってデスクリプタを設定。
 3. CmdDispatch を使って Compute 処理を開始。
 4. 最後に CmdEndComputePasss を使って Compute 処理の終了を宣言。
 
@@ -240,8 +240,7 @@ Compute した結果を CPU や GPU で参照する場合は同期オブジェ�
 ## Copy 処理
 
 Copy 処理では Image リソースや Buffer リソースのコピーを行います。
-例えば、グラフィックボードに搭載されている VRAM は CPU から直接メモリを書き換えたり読み取ったりすることができません。
-VRAM と CPU 間でデータをやりとりするときなどにこの Copy 処理を使います。
+例えば、グラフィックボードに搭載されている VRAM は CPU から直接メモリを書き換えたり読み取ったりすることができません。そういった環境で VRAM と CPU 間でデータをやりとりするときなどにこの Copy 処理を使います。
 
 Copy 処理は CommandBuffer の以下の関数を使ってコマンドを生成します。
 
