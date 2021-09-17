@@ -109,7 +109,6 @@ const uint32_t fShapeVertShaderCode[] = {
 const uint32_t fShapeaFragShaderCode[] = {
 #include "ShaderShape.frag.inc"
 };
-// clang-format on
 
 } // namespace
 
