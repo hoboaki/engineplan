@@ -53,6 +53,11 @@ System::System(const SystemCreateInfo& createInfo)
     AE_BASE_ASSERT(!IsInstanceCreated);
     IsInstanceCreated = true;
 
+    // 関数ロード
+    VULKAN_HPP_DEFAULT_DISPATCHER.init(
+        vkLoader_.getProcAddress<PFN_vkGetInstanceProcAddr>(
+            "vkGetInstanceProcAddr"));
+
     // ValidationLayer 検索
     char const* const instanceValidationLayers[] = {
         "VK_LAYER_KHRONOS_validation"
@@ -185,7 +190,7 @@ System::System(const SystemCreateInfo& createInfo)
                                  .setApplicationVersion(0)
                                  .setPEngineName("AdelEngineSample")
                                  .setEngineVersion(0)
-                                 .setApiVersion(VK_API_VERSION_1_0);
+                                 .setApiVersion(VK_API_VERSION_1_2);
         auto const instInfo =
             ::vk::InstanceCreateInfo()
                 .setPApplicationInfo(&appInfo)
@@ -213,6 +218,8 @@ System::System(const SystemCreateInfo& createInfo)
                 "Please look at the Getting Started guide for additional "
                 "information.\n");
         }
+        VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
+
     }
 
     // GPU列挙

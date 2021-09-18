@@ -83,6 +83,7 @@ private:
 
     ::ae::base::IAllocator& objectAllocator_;
     ::ae::base::IAllocator& tempWorkAllocator_;
+    ::vk::DynamicLoader vkLoader_;
     ::vk::Instance nativeObject_;
     int enabledExtensionCount_ = 0;
     int enabledLayerCount_ = 0;
