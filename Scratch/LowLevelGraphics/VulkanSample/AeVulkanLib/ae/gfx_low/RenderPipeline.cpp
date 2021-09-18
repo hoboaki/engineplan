@@ -254,7 +254,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setPVertexAttributeDescriptions(&vertexAttrDescs[0]);
 
         const auto inputAssemblyInfo =
-            ::vk::PipelineInputAssemblyStateCreateInfo();        
+            ::vk::PipelineInputAssemblyStateCreateInfo().setTopology(
+                InternalEnumUtil::ToPrimitiveTopology(
+                    createInfo.PrimitiveTopologyKind()));     
 
         const auto viewportInfo = vk::PipelineViewportStateCreateInfo()
                                       .setViewportCount(1)

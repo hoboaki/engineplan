@@ -790,6 +790,8 @@ int aemain(::ae::base::Application* app) {
                         .SetAttributeCount(
                             AE_BASE_ARRAY_LENGTH(vertexAttrInfos))
                         .SetAttributeInfos(vertexAttrInfos))
+                .SetPrimitiveTopologyKind(
+                    ::ae::gfx_low::PrimitiveTopologyKind::TriangleList)
                 .SetRasterizerInfo(
                     ::ae::gfx_low::PipelineRasterizerInfo()
                         .SetFrontFace(

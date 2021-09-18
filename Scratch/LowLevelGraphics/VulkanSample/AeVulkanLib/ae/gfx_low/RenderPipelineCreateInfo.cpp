@@ -24,6 +24,15 @@ RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetShaderInfo(
     return *this;
 }
 
+//------------------------------------------------------------------------------
+RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetPrimitiveTopologyKind(
+    const gfx_low::PrimitiveTopologyKind kind) {
+    AE_BASE_ASSERT_ENUM(kind, gfx_low::PrimitiveTopologyKind);
+    AE_BASE_ASSERT(kind != gfx_low::PrimitiveTopologyKind::Invalid);
+    primitiveTopologyKind_ = kind;
+    return *this;
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

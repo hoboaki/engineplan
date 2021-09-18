@@ -79,6 +79,20 @@ public:
         vertexInputInfo_ = info;
         return *this;
     }
+    
+    /// 入力プリミティブトポロジの種類。（初期値：Invalid）
+    /// @details
+    /// 最終的にレンダリングする際にトポロジの指定は DrawCallInfo 等、描画コール時に指定します。
+    /// 描画コール時に指定するものはここで指定したものより大きな次元のものは指定できません。
+    /// 例えばここで PointList を指定したものを描画コール時に TriangleList と指定することはできません。
+    /// 逆にここで TriangleList を指定したものを描画コール時に PointList や LineList に指定することは可能です。
+    gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
+        return primitiveTopologyKind_;
+    }
+
+    /// PrimitiveTopologyKind() の設定。
+    RenderPipelineCreateInfo& SetPrimitiveTopologyKind(
+        gfx_low::PrimitiveTopologyKind kind);
 
     /// ラスタライザ情報。（初期値：デフォルトコンストラクタの値）
     PipelineRasterizerInfo RasterizerInfo() const { return rasterizerInfo_; }
@@ -122,6 +136,8 @@ private:
     PipelineRasterizerInfo rasterizerInfo_;
     PipelineDepthStencilInfo depthStencilInfo_;
     PipelineBlendInfo blendInfo_;
+    gfx_low::PrimitiveTopologyKind primitiveTopologyKind_ =
+        PrimitiveTopologyKind::Invalid;
 };
 
 } // namespace gfx_low
