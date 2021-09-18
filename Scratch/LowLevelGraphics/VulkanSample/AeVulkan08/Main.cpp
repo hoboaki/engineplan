@@ -478,6 +478,11 @@ int aemain(::ae::base::Application* app) {
             continue;
         }
 
+        // 最小化中はループして待つ
+        if (display.MainScreen().Extent().IsZero()) {
+            continue;
+        }
+
         // 前回実行したコマンドの終了保証
         gfxKit.WaitToResourceUsable();
 
