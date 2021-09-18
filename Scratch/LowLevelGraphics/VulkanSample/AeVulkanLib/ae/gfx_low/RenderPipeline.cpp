@@ -273,7 +273,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                 .setFrontFace(InternalEnumUtil::ToFrontFace(
                     createInfo.RasterizerInfo().FrontFace()))
                 .setDepthBiasEnable(VK_FALSE)
-                .setLineWidth(1.0f);
+                .setLineWidth(createInfo.RasterizerInfo().LineWidth());
 
         const auto multisampleInfo = ::vk::PipelineMultisampleStateCreateInfo();
 

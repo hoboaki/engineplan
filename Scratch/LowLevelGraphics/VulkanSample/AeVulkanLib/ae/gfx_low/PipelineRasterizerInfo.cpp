@@ -35,6 +35,14 @@ PipelineRasterizerInfo& PipelineRasterizerInfo::SetFrontFace(
     return *this;
 }
 
+//------------------------------------------------------------------------------
+PipelineRasterizerInfo& PipelineRasterizerInfo::SetLineWidth(
+    const float lineWidth) {
+    AE_BASE_ASSERT_LESS_EQUALS(0.0f, lineWidth_);
+    lineWidth_ = lineWidth;
+    return *this;
+}
+
 } // namespace gfx_low
 } // namespace ae
 // EOF

@@ -33,12 +33,22 @@ public:
 
     /// FrontFace() の設定。（設定必須）
     PipelineRasterizerInfo& SetFrontFace(PolygonFrontFace frontFace);
+
+    /// 線幅。（初期値：1.0f）
+    /// @details 
+    /// PrimitiveTopology が Line 系のときの描画やワイヤーフレーム描画の際に使われます。
+    float LineWidth() const { return lineWidth_; }
+
+    /// LineWidth() の設定。
+    /// @param width 0以上。
+    PipelineRasterizerInfo& SetLineWidth(float lineWidth);
     //@}
 
 private:
     RasterizeCullMode cullMode_ = RasterizeCullMode::None;
     RasterizeFillMode fillMode_ = RasterizeFillMode::Solid;
     PolygonFrontFace frontFace_ = PolygonFrontFace::Invalid;
+    float lineWidth_ = 1.0f;
 };
 
 } // namespace gfx_low
