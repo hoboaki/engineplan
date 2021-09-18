@@ -121,6 +121,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
     const char* extensionNames[extensionCountMax] = {};
     const char* const findExtensionNames[] = {
         VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+        VK_EXT_EXTENDED_DYNAMIC_STATE_EXTENSION_NAME,
     };
     bool foundExtensions[AE_BASE_ARRAY_LENGTH(findExtensionNames)] = {};
     {
@@ -203,6 +204,7 @@ Device::Device(const DeviceCreateInfo& createInfo)
         auto result =
             physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
+        VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
     }
 
     // Queue オブジェクト作成
