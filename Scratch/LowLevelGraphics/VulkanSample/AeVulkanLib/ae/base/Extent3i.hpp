@@ -27,6 +27,12 @@ struct Extent3iPod {
     int depth;
     //@}
 
+    /// @name 体積
+    //@{
+    /// 体積がゼロか。
+    bool IsZero() const { return width == 0 || height == 0 || depth == 0; }
+    //@}
+
     /// @name 比較
     //@{
     /// 等価比較。

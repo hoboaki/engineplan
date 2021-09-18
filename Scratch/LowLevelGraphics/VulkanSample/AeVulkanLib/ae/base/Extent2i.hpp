@@ -24,6 +24,12 @@ struct Extent2iPod {
     int height;
     //@}
 
+    /// @name 面積
+    //@{
+    /// 面積がゼロか。
+    bool IsZero() const { return width == 0 || height == 0; }
+    //@}
+
     /// @name 比較
     //@{
     /// 等価比較。
