@@ -190,7 +190,7 @@ System::System(const SystemCreateInfo& createInfo)
                                  .setApplicationVersion(0)
                                  .setPEngineName("AdelEngineSample")
                                  .setEngineVersion(0)
-                                 .setApiVersion(VK_API_VERSION_1_0);
+                                 .setApiVersion(VK_API_VERSION_1_2);
         auto const instInfo =
             ::vk::InstanceCreateInfo()
                 .setPApplicationInfo(&appInfo)
