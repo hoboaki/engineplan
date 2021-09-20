@@ -6,90 +6,90 @@
 
 - [3D グラフィックス低レベル API に関するメモ](#3d-グラフィックス低レベル-api-に関するメモ)
 - [オブジェクト](#オブジェクト)
-    - [キュー・コマンドバッファ生成](#キュー・コマンドバッファ生成)
-        - [Vulkan](#vulkan)
-        - [DirectX 12](#directx-12)
-        - [Metal](#metal)
-    - [スワップチェイン生成](#スワップチェイン生成)
-        - [Vulkan](#vulkan-1)
-        - [DirectX 12](#directx-12-1)
-        - [Metal](#metal-1)
-    - [バッファ生成・リソースオブジェクト](#バッファ生成・リソースオブジェクト)
-        - [Vulkan](#vulkan-2)
-        - [DirectX 12](#directx-12-2)
-        - [Metal](#metal-2)
-    - [シェーダーオブジェクト生成](#シェーダーオブジェクト生成)
-        - [Vulkan](#vulkan-3)
-        - [DirectX 12](#directx-12-3)
-        - [Metal](#metal-3)
-    - [サンプラ生成](#サンプラ生成)
-        - [Vulkan](#vulkan-4)
-        - [DirectX 12](#directx-12-4)
-        - [Metal](#metal-4)
-    - [デスクリプタ・デスクリプタプール](#デスクリプタ・デスクリプタプール)
-        - [Vulkan](#vulkan-5)
-        - [DirectX 12](#directx-12-5)
-        - [Metal](#metal-5)
+  - [キュー・コマンドバッファ生成](#キュー・コマンドバッファ生成)
+    - [Vulkan](#vulkan)
+    - [DirectX 12](#directx-12)
+    - [Metal](#metal)
+  - [スワップチェイン生成](#スワップチェイン生成)
+    - [Vulkan](#vulkan-1)
+    - [DirectX 12](#directx-12-1)
+    - [Metal](#metal-1)
+  - [バッファ生成・リソースオブジェクト](#バッファ生成・リソースオブジェクト)
+    - [Vulkan](#vulkan-2)
+    - [DirectX 12](#directx-12-2)
+    - [Metal](#metal-2)
+  - [シェーダーオブジェクト生成](#シェーダーオブジェクト生成)
+    - [Vulkan](#vulkan-3)
+    - [DirectX 12](#directx-12-3)
+    - [Metal](#metal-3)
+  - [サンプラ生成](#サンプラ生成)
+    - [Vulkan](#vulkan-4)
+    - [DirectX 12](#directx-12-4)
+    - [Metal](#metal-4)
+  - [デスクリプタ・デスクリプタプール](#デスクリプタ・デスクリプタプール)
+    - [Vulkan](#vulkan-5)
+    - [DirectX 12](#directx-12-5)
+    - [Metal](#metal-5)
 - [コマンド・フロー・システム](#コマンド・フロー・システム)
-    - [レンダターゲット](#レンダターゲット)
-        - [Vulkan](#vulkan-6)
-        - [DirectX 12](#directx-12-6)
-        - [Metal](#metal-6)
-    - [スワップチェイン提出（present）＆同期](#スワップチェイン提出present＆同期)
-        - [Vulkan](#vulkan-7)
-        - [DirectX 12](#directx-12-7)
-        - [Metal](#metal-7)
-    - [コマンドバッファで設定する単位](#コマンドバッファで設定する単位)
-        - [Vulkan](#vulkan-8)
-        - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
-        - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
-    - [インラインコンスタントデータ](#インラインコンスタントデータ)
-        - [Vulkan](#vulkan-9)
-        - [DirectX12](#directx12)
-        - [Metal](#metal-8)
-    - [頂点属性指定](#頂点属性指定)
-        - [Vulkan](#vulkan-10)
-        - [DirectX 12](#directx-12-8)
-        - [Metal](#metal-9)
-    - [キューの並列実行](#キューの並列実行)
-        - [Vulkan](#vulkan-11)
-        - [DirectX 12](#directx-12-9)
-        - [Metal](#metal-10)
-    - [キュー間同期](#キュー間同期)
-        - [Vulkan](#vulkan-12)
-        - [DirectX 12](#directx-12-10)
-        - [Metal](#metal-11)
-    - [メモリバリア](#メモリバリア)
-        - [Vulkan](#vulkan-13)
-        - [DirectX 12](#directx-12-11)
-        - [Metal](#metal-12)
-    - [CPUGPU 間同期](#cpugpu-間同期)
-        - [Vulkan](#vulkan-14)
-        - [DirectX 12](#directx-12-12)
-        - [Metal](#metal-13)
-    - [イメージのアップロード](#イメージのアップロード)
-        - [Vulkan](#vulkan-15)
-        - [DirectX 12](#directx-12-13)
-        - [Metal](#metal-14)
-    - [GPGPU 実行](#gpgpu-実行)
-        - [Vulkan](#vulkan-16)
-        - [DirectX 12](#directx-12-14)
-        - [Metal](#metal-15)
+  - [レンダターゲット](#レンダターゲット)
+    - [Vulkan](#vulkan-6)
+    - [DirectX 12](#directx-12-6)
+    - [Metal](#metal-6)
+  - [スワップチェイン提出（present）＆同期](#スワップチェイン提出present＆同期)
+    - [Vulkan](#vulkan-7)
+    - [DirectX 12](#directx-12-7)
+    - [Metal](#metal-7)
+  - [コマンドバッファで設定する単位](#コマンドバッファで設定する単位)
+    - [Vulkan](#vulkan-8)
+    - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
+    - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
+  - [ダイレクトコンスタントデータ](#ダイレクトコンスタントデータ)
+    - [Vulkan](#vulkan-9)
+    - [DirectX12](#directx12)
+    - [Metal](#metal-8)
+  - [頂点属性指定](#頂点属性指定)
+    - [Vulkan](#vulkan-10)
+    - [DirectX 12](#directx-12-8)
+    - [Metal](#metal-9)
+  - [キューの並列実行](#キューの並列実行)
+    - [Vulkan](#vulkan-11)
+    - [DirectX 12](#directx-12-9)
+    - [Metal](#metal-10)
+  - [キュー間同期](#キュー間同期)
+    - [Vulkan](#vulkan-12)
+    - [DirectX 12](#directx-12-10)
+    - [Metal](#metal-11)
+  - [メモリバリア](#メモリバリア)
+    - [Vulkan](#vulkan-13)
+    - [DirectX 12](#directx-12-11)
+    - [Metal](#metal-12)
+  - [CPUGPU 間同期](#cpugpu-間同期)
+    - [Vulkan](#vulkan-14)
+    - [DirectX 12](#directx-12-12)
+    - [Metal](#metal-13)
+  - [イメージのアップロード](#イメージのアップロード)
+    - [Vulkan](#vulkan-15)
+    - [DirectX 12](#directx-12-13)
+    - [Metal](#metal-14)
+  - [GPGPU 実行](#gpgpu-実行)
+    - [Vulkan](#vulkan-16)
+    - [DirectX 12](#directx-12-14)
+    - [Metal](#metal-15)
 - [最適化](#最適化)
-    - [セカンダリコマンドバッファ（ネステッドコマンドバッファ）](#セカンダリコマンドバッファネステッドコマンドバッファ)
-        - [Vulkan](#vulkan-17)
-        - [DirectX 12](#directx-12-15)
-        - [Metal](#metal-16)
-    - [インダイレクト引数描画](#インダイレクト引数描画)
-        - [Vulkan](#vulkan-18)
-        - [DirectX 12](#directx-12-16)
-        - [Metal](#metal-17)
-    - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
+  - [セカンダリコマンドバッファ（ネステッドコマンドバッファ）](#セカンダリコマンドバッファネステッドコマンドバッファ)
+    - [Vulkan](#vulkan-17)
+    - [DirectX 12](#directx-12-15)
+    - [Metal](#metal-16)
+  - [インダイレクト引数描画](#インダイレクト引数描画)
+    - [Vulkan](#vulkan-18)
+    - [DirectX 12](#directx-12-16)
+    - [Metal](#metal-17)
+  - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
 - [その他](#その他)
-    - [ビューポート＆テクスチャ座標系](#ビューポート＆テクスチャ座標系)
-    - [3D座標系の変換例](#3d座標系の変換例)
+  - [ビューポート＆テクスチャ座標系](#ビューポート＆テクスチャ座標系)
+  - [3D 座標系の変換例](#3d-座標系の変換例)
 - [付録](#付録)
-    - [参考](#参考)
+  - [参考](#参考)
 
 <!-- /TOC -->
 
@@ -525,7 +525,7 @@ RenderPassBeginInfo
       - コンスタントバッファビュー（ユニフォームバッファ）の宣言
       - ストレージバッファビューの宣言
       - サンプラーの宣言
-    - インラインコンスタントデータの宣言（PushConstant）（★5）
+    - ダイレクトコンスタントデータの宣言（PushConstant）（★5）
 - ディスプリプタセット配列（シェーダーバインド実体）（★4）
   - コンスタントバッファビュー（ユニフォームバッファ）
   - テクスチャビュー（イメージビュー）
@@ -539,7 +539,7 @@ RenderPassBeginInfo
   - ブレンド係数カラー値
   - プリミティブトポロジ（VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT が有効なパイプラインの場合）
   - 頂点バッファ・インデックスバッファ
-  - インラインコンスタントデータ（PushConstants）（★5）
+  - ダイレクトコンスタントデータ（PushConstants）（★5）
   - シェーダーバインドオーバーライト（vkCmdPushDescriptorSetKHR）
   - 他にも DYNAMIC_STATE で指定されたものが設定可能
 - トリガー
@@ -598,8 +598,8 @@ loadOp storeOp などは不一致でも互換とみなされるっぽいので�
   - ステンシルテスト参照値
   - プリミティブトポロジ（★3）
   - 頂点バッファ・インデックスバッファ
-  - インラインコンスタントデータ（SetGraphicsRoot32BitConstant）
-  - インラインコンスタントバッファビュー（SetGraphicsRootConstantBufferView）
+  - ダイレクトコンスタントデータ（SetGraphicsRoot32BitConstant）
+  - ダイレクトコンスタントバッファビュー（SetGraphicsRootConstantBufferView）
 - トリガー
   - レンダーターゲットのクリア
   - 描画系
@@ -645,7 +645,7 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
   - コンスタントバッファビュー・ストレージバッファビュー（MTLBuffer : MTLResource）
   - テクスチャビュー（MTLTexture : MTLResource）
   - サンプラー（MTLSamplerState）
-  - インラインコンスタントデータ（setVertexBufferBytes/setFragmentBufferBytes）
+  - ダイレクトコンスタントデータ（setVertexBytes/setFragmentBytes）
 - その他の直接設定
   - ラスタライズステート
     - FillMode
@@ -664,18 +664,30 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
   - 描画系（プリミティブトポロジは引数で指定）
   - コンピュート
 
-## インラインコンスタントデータ
+## ダイレクトコンスタントデータ
 
-DescriptorSet を介さずにコマンドバッファ経由で直接設定できるコンスタントデータをここではインラインコンスタントデータと呼ぶことにする。
+- デスクリプタを介さずにコマンドバッファで直接設定できるコンスタントデータをここではダイレクトコンスタントデータと呼ぶことにする。
+- DX12 と Metal はレジスタ番号は通常のコンスタントと共有ではあるものの何個でも作れる。
+- 一方、Vulkan は各シェーダーステージで１つの縛りがある。あと容量も最大 128 バイトが目安。mat4x4x2 で埋まる。
+- 各シェーダーステージ間で異なるダイレクトコンスタントデータを１つずつサポートすることもできそうではある。
+- DirectConstantInfo
+  - ShaderBindingStageBitSet
+  - Size
+- これを DescriptorSetSpecInfo に DirectConstantInfo の配列を持たせる。
+- ShaderBindingStageBit が立っているフラグが重複したら NG。
+- Vulkan 環境では配列の先頭から PushConstant ブロックに詰まれている想定。
+- DX12 Metal のレジスタ番号は Buffer 系の最終番号 + 1 に固定する制約を課す。suniform-buffer, storage-buffer の次の割り当て。
+- これで共通コードでいけそう。
 
 ### Vulkan
 
 - 参考：https://vkguide.dev/docs/chapter-3/push_constants/
-- PushConstants は１つのレンダーパイプラインに渡せるデータとしてはひとかたまり。
+- PushConstants は１つのレンダーパイプラインに渡せるデータブロックとしてはひとかたまり。
 - PipelineLayout で VkPushConstantRange を使うことで、どのシェーダーステージでどの範囲の PushConstants データを読むかを指定。
 - [vkCmdPushConstants](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushConstants.html) で設定。
 - このとき Range（オフセットとサイズ）を指定することで PushConstants 時にデータを分けて設定することも可能。
-- 手元の intel と GeForce は 256 バイトまでOKとなっている。
+- 手元の intel と GeForce は 256 バイトまで OK。ちょっと古いハードだと 128 のものもあるっぽい。
+  - 参考：https://dench.flatlib.jp/vulkan/vulkan_devicefeature
 - シェーダー側のコードはこんな感じ。
 
 ```glsl
@@ -690,17 +702,22 @@ layout( push_constant ) uniform constants
 
 - 次の方法を見つけた。
   - [SetGraphicsRoot32BitConstant](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstant) : 32bit 値を指定レジスタに設定する。
-  - [SetGraphicsRootConstantBufferView](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview) : CBVを指定レジスタに設定する。
+  - [SetGraphicsRootConstantBufferView](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview) : CBV を指定レジスタに設定する。
   - [SetGraphicsRoot32BitConstants](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstants) : 32bit 配列を指定レジスタに設定する。
 - SetGraphicsRoot32BitConstants は struct もいけるのを renderdoc コードで確認。
   - [mesh.hlsl](https://github.com/cgmb/renderdoc/blob/master/renderdoc/data/hlsl/mesh.hlsl)
   - [d3d12_rendermesh.cpp](https://github.com/cgmb/renderdoc/blob/master/renderdoc/driver/d3d12/d3d12_rendermesh.cpp)
+- レジスタ番号を分ければ複数のデータブロックを渡すことが可能。レジスタ番号は通常の CBV と共有。
+- オフセット指定設定は可能。
 - 参考
   - https://qiita.com/em7dfggbcadd9/items/05fbf20faf52a50b6fbc
 
 ### Metal
 
-- setVertexBufferBytes setFragmentBufferBytes
+- [setVertexBytes](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515846-setvertexbytes)/[setFragmentBytes](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516192-setfragmentbytes)/[setBytes](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443159-setbytes)で行う。
+- レジスタ番号を分ければ複数のデータブロックを渡すことが可能。レジスタ番号は通常の buffer と共有。
+- オフセット指定設定は不可。
+- サイズは 4KiB まで。
 
 ## 頂点属性指定
 
@@ -975,7 +992,7 @@ queue.Submit(completeFence); // これまでに Queue に詰まれたものを�
 ## セカンダリコマンドバッファ（ネステッドコマンドバッファ）
 
 - 基本的に各ライブラリは何かしらの形式でセカンダリまではサポートしている。
-- 一番制約が大きいのがMetal。セカンダリはRender用かCompute用かどちらか一方のコマンドしか保存できない。
+- 一番制約が大きいのが Metal。セカンダリは Render 用か Compute 用かどちらか一方のコマンドしか保存できない。
 - 抽象化するならその制約は引き継ぐ必要があるが、デプステスト設定できないとか致命的な問題がある。
 - なので Metal 環境はセカンダリコマンドバッファをサポートしない、と割り切る。
 - セカンダリの更に下のコマンドバッファ呼び出しを対応しているプラットフォームも考慮してモードは３つ用意する。
@@ -1036,13 +1053,13 @@ DirectX 12 のみ CreateReservedResource() や CreateCommittedResource() でイ�
 - Depth 値の仕様も異なる。DX12 は N-F が [1,0]、Vulkan は [0,1]。ちなみに OpenGL は [-1,1]。
 - さっきのページによると Metal は Direct3D-Like らしいので Metal と DX12 はおなじ。
 - Unity では Direct3D-Like は Depth バッファから値を引いてくる際に [0,1] 空間に変換することで抽象化しているらしい。
-- APIの仕様としては全ライブラリ左上原点なのでそれを採用で統一で問題なさそう。つまり UV(0,0) は左上。
+- API の仕様としては全ライブラリ左上原点なのでそれを採用で統一で問題なさそう。つまり UV(0,0) は左上。
 
-## 3D座標系の変換例
+## 3D 座標系の変換例
 
-- Maya は右手座標系。UVは左下原点。
-- そのデータを DX12, Vulkan, Metal に使う場合はフレームバッファの描画時にY位置をマイナス反転。UVは左上原点に変換する必要がある。
-- 低レベルAPIとしては3D座標系は定義する必要がなく使用するユーザーが決めること。あくまで参考情報。
+- Maya は右手座標系。UV は左下原点。
+- そのデータを DX12, Vulkan, Metal に使う場合はフレームバッファの描画時に Y 位置をマイナス反転。UV は左上原点に変換する必要がある。
+- 低レベル API としては 3D 座標系は定義する必要がなく使用するユーザーが決めること。あくまで参考情報。
 
 # 付録
 
