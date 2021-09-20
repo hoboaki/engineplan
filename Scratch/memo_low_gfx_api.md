@@ -43,43 +43,47 @@
         - [Vulkan](#vulkan-8)
         - [DirectX 12（コマンドリスト）](#directx-12コマンドリスト)
         - [Metal（コマンドエンコーダ）](#metalコマンドエンコーダ)
-    - [頂点属性指定](#頂点属性指定)
+    - [インラインコンスタントデータ](#インラインコンスタントデータ)
         - [Vulkan](#vulkan-9)
-        - [DirectX 12](#directx-12-8)
+        - [DirectX12](#directx12)
         - [Metal](#metal-8)
-    - [キューの並列実行](#キューの並列実行)
+    - [頂点属性指定](#頂点属性指定)
         - [Vulkan](#vulkan-10)
-        - [DirectX 12](#directx-12-9)
+        - [DirectX 12](#directx-12-8)
         - [Metal](#metal-9)
-    - [キュー間同期](#キュー間同期)
+    - [キューの並列実行](#キューの並列実行)
         - [Vulkan](#vulkan-11)
-        - [DirectX 12](#directx-12-10)
+        - [DirectX 12](#directx-12-9)
         - [Metal](#metal-10)
-    - [メモリバリア](#メモリバリア)
+    - [キュー間同期](#キュー間同期)
         - [Vulkan](#vulkan-12)
-        - [DirectX 12](#directx-12-11)
+        - [DirectX 12](#directx-12-10)
         - [Metal](#metal-11)
-    - [CPUGPU 間同期](#cpugpu-間同期)
+    - [メモリバリア](#メモリバリア)
         - [Vulkan](#vulkan-13)
-        - [DirectX 12](#directx-12-12)
+        - [DirectX 12](#directx-12-11)
         - [Metal](#metal-12)
-    - [イメージのアップロード](#イメージのアップロード)
+    - [CPUGPU 間同期](#cpugpu-間同期)
         - [Vulkan](#vulkan-14)
-        - [DirectX 12](#directx-12-13)
+        - [DirectX 12](#directx-12-12)
         - [Metal](#metal-13)
-    - [GPGPU 実行](#gpgpu-実行)
+    - [イメージのアップロード](#イメージのアップロード)
         - [Vulkan](#vulkan-15)
-        - [DirectX 12](#directx-12-14)
+        - [DirectX 12](#directx-12-13)
         - [Metal](#metal-14)
+    - [GPGPU 実行](#gpgpu-実行)
+        - [Vulkan](#vulkan-16)
+        - [DirectX 12](#directx-12-14)
+        - [Metal](#metal-15)
 - [最適化](#最適化)
     - [セカンダリコマンドバッファ（ネステッドコマンドバッファ）](#セカンダリコマンドバッファネステッドコマンドバッファ)
-        - [Vulkan](#vulkan-16)
-        - [DirectX 12](#directx-12-15)
-        - [Metal](#metal-15)
-    - [インダイレクト引数描画](#インダイレクト引数描画)
         - [Vulkan](#vulkan-17)
-        - [DirectX 12](#directx-12-16)
+        - [DirectX 12](#directx-12-15)
         - [Metal](#metal-16)
+    - [インダイレクト引数描画](#インダイレクト引数描画)
+        - [Vulkan](#vulkan-18)
+        - [DirectX 12](#directx-12-16)
+        - [Metal](#metal-17)
     - [バッファ生成時初期値指定](#バッファ生成時初期値指定)
 - [その他](#その他)
     - [ビューポート＆テクスチャ座標系](#ビューポート＆テクスチャ座標系)
@@ -659,6 +663,44 @@ Descriptor はデータやアドレスの参照ハンドルと考えればだい
 - トリガー
   - 描画系（プリミティブトポロジは引数で指定）
   - コンピュート
+
+## インラインコンスタントデータ
+
+DescriptorSet を介さずにコマンドバッファ経由で直接設定できるコンスタントデータをここではインラインコンスタントデータと呼ぶことにする。
+
+### Vulkan
+
+- 参考：https://vkguide.dev/docs/chapter-3/push_constants/
+- PushConstants は１つのレンダーパイプラインに渡せるデータとしてはひとかたまり。
+- PipelineLayout で VkPushConstantRange を使うことで、どのシェーダーステージでどの範囲の PushConstants データを読むかを指定。
+- [vkCmdPushConstants](https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushConstants.html) で設定。
+- このとき Range（オフセットとサイズ）を指定することで PushConstants 時にデータを分けて設定することも可能。
+- 手元の intel と GeForce は 256 バイトまでOKとなっている。
+- シェーダー側のコードはこんな感じ。
+
+```glsl
+layout( push_constant ) uniform constants
+{
+	vec4 data;
+	mat4 render_matrix;
+} PushConstants;
+```
+
+### DirectX12
+
+- 次の方法を見つけた。
+  - [SetGraphicsRoot32BitConstant](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstant) : 32bit 値を指定レジスタに設定する。
+  - [SetGraphicsRootConstantBufferView](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview) : CBVを指定レジスタに設定する。
+  - [SetGraphicsRoot32BitConstants](https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsroot32bitconstants) : 32bit 配列を指定レジスタに設定する。
+- SetGraphicsRoot32BitConstants は struct もいけるのを renderdoc コードで確認。
+  - [mesh.hlsl](https://github.com/cgmb/renderdoc/blob/master/renderdoc/data/hlsl/mesh.hlsl)
+  - [d3d12_rendermesh.cpp](https://github.com/cgmb/renderdoc/blob/master/renderdoc/driver/d3d12/d3d12_rendermesh.cpp)
+- 参考
+  - https://qiita.com/em7dfggbcadd9/items/05fbf20faf52a50b6fbc
+
+### Metal
+
+- setVertexBufferBytes setFragmentBufferBytes
 
 ## 頂点属性指定
 
