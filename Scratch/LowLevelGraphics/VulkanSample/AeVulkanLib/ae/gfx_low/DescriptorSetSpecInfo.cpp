@@ -52,18 +52,17 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(
     directConstantInfos_.Reset(infosPtr);
 
     // 設定時の内容チェック
-    Validate();
+    Validate_();
 
     return *this;
 }
 
 //------------------------------------------------------------------------------
-void DescriptorSetSpecInfo::Validate() const {
+void DescriptorSetSpecInfo::Validate_() const {
     ShaderBindingStageBitSet stages;
-    if (0 <= directConstantInfoCount_) {
-        AE_BASE_ASSERT_POINTER(directConstantInfos_.Get());
-
+    if (0 < directConstantInfoCount_) {
         // Stage重複確認
+        AE_BASE_ASSERT_POINTER(directConstantInfos_.Get());
         for (int i = 0; i < directConstantInfoCount_; ++i) {
             const auto& info = directConstantInfos_.Get()[i];
             AE_BASE_ASSERT_EQUALS((stages.bits_ & info.Stages().bits_), 0);

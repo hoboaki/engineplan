@@ -101,7 +101,7 @@ public:
     /// @name 内部処理用機能
     //@{
     /// 内容が問題ないか確認する。
-    void Validate() const;
+    void Validate_() const;
     //@}
 
 private:

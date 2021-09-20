@@ -831,6 +831,9 @@
     <ClInclude Include="ae\gfx_low\DirectConstantInfo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\InternalPushConstantRanges.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ae\gfx_low\System.cpp">
@@ -1248,6 +1251,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="ae\gfx_low\SdkHeader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ae\gfx_low\InternalPushConstantRanges.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

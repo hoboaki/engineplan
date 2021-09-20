@@ -23,6 +23,7 @@ namespace gfx_low {
 RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , descriptorSetLayouts_(&device_, createInfo.DescriptorSetSpecInfo())
+, pushConstantRanges_(createInfo.DescriptorSetSpecInfo())
 , pipelineLayout_()
 , nativeObject_() {
     // RenderPass(Spec)
@@ -156,7 +157,11 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
             ::vk::PipelineLayoutCreateInfo()
                 .setSetLayoutCount(
                     descriptorSetLayouts_.DescriptorSetLayoutCount())
-                .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts());
+                .setPSetLayouts(descriptorSetLayouts_.DescriptorSetLayouts())
+                .setPushConstantRangeCount(
+                    pushConstantRanges_.PushConstantRangeCount())
+                .setPPushConstantRanges(
+                    pushConstantRanges_.PushConstantRanges());
 
         const auto result = device_.NativeObject_().createPipelineLayout(
             &pipelineLayoutCreateInfo,
