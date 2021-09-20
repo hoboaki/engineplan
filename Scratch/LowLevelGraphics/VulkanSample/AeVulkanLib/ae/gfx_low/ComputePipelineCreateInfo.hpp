@@ -17,7 +17,6 @@ namespace ae {
 namespace gfx_low {
 
 /// ComputePipeline オブジェクト作成に必要な情報。
-/// @todo インラインコンスタント対応。
 class ComputePipelineCreateInfo {
 public:
     /// @name プロパティ

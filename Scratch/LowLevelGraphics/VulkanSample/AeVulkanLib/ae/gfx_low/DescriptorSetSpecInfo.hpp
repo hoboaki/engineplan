@@ -18,7 +18,6 @@ namespace ae {
 namespace gfx_low {
 
 /// DescriptorSet の仕様情報。
-/// @todo インラインコンスタント対応。
 /// @details
 /// BindingInfos() のインデックスをバインド番号として扱います。
 /// 各プラットフォーム毎のバインド番号の仕様・制約は以下の通りです。
