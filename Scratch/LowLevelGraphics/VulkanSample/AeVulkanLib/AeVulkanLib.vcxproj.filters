@@ -828,6 +828,9 @@
     <ClInclude Include="ae\gfx_low\DrawIndirectIndexedCommand.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="ae\gfx_low\DirectConstantInfo.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ae\gfx_low\System.cpp">
