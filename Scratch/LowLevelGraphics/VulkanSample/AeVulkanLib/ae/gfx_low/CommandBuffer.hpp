@@ -187,6 +187,13 @@ public:
     /// @details
     /// パイプライン設定前に呼ぶことはできません。
     void CmdSetDescriptorSet(const DescriptorSet& descriptorSet);
+
+    /// ダイレクトコンスタントを設定。
+    /// @param index ダイレクトコンスタントの番号。DescriptorSetSpecInfo で指定した DirectConstantInfo の index 値に対応。
+    /// @param dataHead 設定するデータ。データの長さは DescriptorSetSpecInfo で指定した DirectConstantInfo::Size() が使われる。
+    /// @details
+    /// パイプライン設定前に呼ぶことはできません。
+    void CmdSetDirectConstant(int index, const void* dataHead);
     //@}
 
     /// @name Render コマンド郡
