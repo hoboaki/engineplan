@@ -12,6 +12,10 @@ layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufType {
     mat4 modelMtx;
 } Ubuf;
 
+layout ( push_constant ) uniform DirectConstantDataType {
+    vec4 addColor;
+} DirectConstData;
+
 layout(location = 0) in vec3 FragWorldPos;
 layout(location = 1) in vec3 FragWorldNormal;
 layout(location = 0) out vec4 FragColor;
@@ -23,7 +27,7 @@ void main() {
     vec3 eyeToPos = normalize(FragWorldPos - eyePos);
     vec3 normal = normalize(FragWorldNormal);
     vec3 reflectVec = reflect(eyeToPos, normal);
-    FragColor = vec4(reflectVec, 1.0f);
+    FragColor = vec4(max(reflectVec, vec3(0)) + DirectConstData.addColor.xyz, 1.0f);
 }
 
 // EOF

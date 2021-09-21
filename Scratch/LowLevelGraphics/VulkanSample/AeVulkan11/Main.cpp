@@ -12,6 +12,7 @@
 #include <ae/base/Display.hpp>
 #include <ae/base/Extent2.hpp>
 #include <ae/base/Extent2i.hpp>
+#include <ae/base/Math.hpp>
 #include <ae/base/Matrix34.hpp>
 #include <ae/base/Matrix44.hpp>
 #include <ae/base/Quaternion.hpp>
@@ -31,6 +32,7 @@
 #include <ae/gfx_low/DescriptorSetCreateInfo.hpp>
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 #include <ae/gfx_low/Device.hpp>
+#include <ae/gfx_low/DirectConstantInfo.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
@@ -84,7 +86,15 @@ struct fUniformDataType {
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
     ::ae::base::Matrix44Pod modelMtx;
+};
+
+struct fDirectConstantVertDataType
+{
     ::ae::base::Vector4Pod instanceTrans;
+};
+
+struct fDirectConstantFragDataType {
+    ::ae::base::Vector4Pod addColor;
 };
 
 const uint32_t fCopyVertShaderCode[] = {
@@ -113,7 +123,7 @@ int aemain(::ae::base::Application* app) {
     // ディスプレイの作成
     ::ae::base::Display display =
         ::ae::base::Display(::ae::base::DisplayContext()
-                                .SetWindowTitle("AeVulkan09 - Copy Buffer")
+                                .SetWindowTitle("AeVulkan11 - Direct Constant")
                                 .SetIsResizableWindow(true));
 
     // ディスプレイの表示
@@ -272,6 +282,16 @@ int aemain(::ae::base::Application* app) {
                 true))
             .SetBindingIndex(0)
     };
+    const ::ae::gfx_low::DirectConstantInfo mainDirectConstantInfos[] = {
+        ::ae::gfx_low::DirectConstantInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().On(
+                ::ae::gfx_low::ShaderBindingStage::Vertex))
+            .SetSize(sizeof(fDirectConstantVertDataType)),
+        ::ae::gfx_low::DirectConstantInfo()
+            .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().On(
+                ::ae::gfx_low::ShaderBindingStage::Fragment))
+            .SetSize(sizeof(fDirectConstantFragDataType)),
+    };
     const ::ae::gfx_low::ShaderBindingInfo copySampledImageBindingInfos[] = {
         ::ae::gfx_low::ShaderBindingInfo()
             .SetStages(::ae::gfx_low::ShaderBindingStageBitSet().Set(
@@ -299,7 +319,10 @@ int aemain(::ae::base::Application* app) {
             .SetBindingInfos(
                 ::ae::gfx_low::DescriptorKind::Sampler,
                 AE_BASE_ARRAY_LENGTH(mainSamplerBindingInfos),
-                mainSamplerBindingInfos);
+                mainSamplerBindingInfos)
+            .SetDirectConstantInfos(
+                AE_BASE_ARRAY_LENGTH(mainDirectConstantInfos),
+                mainDirectConstantInfos);
     const auto copyDescriptorSetSpecInfo =
         ::ae::gfx_low::DescriptorSetSpecInfo()
             .SetBindingInfos(
@@ -683,29 +706,6 @@ int aemain(::ae::base::Application* app) {
                                     ::ae::base::Vector2i::Zero(),
                                     display.MainScreen().Extent())))));
                 }
-
-                // コマンドを保存
-                {
-                    // 保存開始
-                    auto& subCmd = secondaryCommandBuffer;
-                    subCmd.BeginRecord(
-                        ::ae::gfx_low::CommandBufferBeginRecordInfo()
-                            .SetInheritRenderPassPtr(mainRenderPass.get())
-                            .SetInheritViewportSettingsPtr(mainViewportSettings)
-                            .SetInheritScissorSettingsPtr(mainScissorSettings));
-
-                    // Pipeline & DescriptorSet
-                    subCmd.CmdSetRenderPipeline(*mainPipeline);
-                    subCmd.CmdSetDescriptorSet(mainDescriptorSet);
-
-                    // Draw
-                    subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
-                    subCmd.CmdDraw(
-                        ::ae::gfx_low::DrawCallInfo().SetVertexCount(12 * 3));
-
-                    // 保存終了
-                    subCmd.EndRecord();
-                }
             }
 
             // コピー用レンダーパス準備
@@ -750,9 +750,8 @@ int aemain(::ae::base::Application* app) {
             {
                 // 開始
                 cmd.CmdBeginRenderPass(
-                    ::ae::gfx_low::RenderPassBeginInfo()
-                        .SetRenderPass(mainRenderPass.get())
-                        .SetUseSecondaryCommandBuffers(true));
+                    ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
+                        mainRenderPass.get()));
 
                 // Viewport
                 cmd.CmdSetViewports(renderTargetCount, mainViewportSettings);
@@ -760,8 +759,53 @@ int aemain(::ae::base::Application* app) {
                 // Scissor
                 cmd.CmdSetScissors(renderTargetCount, mainScissorSettings);
 
-                // コマンド実行
-                cmd.CmdCall(secondaryCommandBuffer);
+                // Pipeline & DescriptorSet
+                cmd.CmdSetRenderPipeline(*mainPipeline);
+                cmd.CmdSetDescriptorSet(mainDescriptorSet);
+                cmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
+
+                // Draw
+                {
+                    // カラーアニメーション
+                    {
+                        const int addColorFrequency = 60;
+                        const float addColorTime =
+                            float(frameCount % addColorFrequency) /
+                            addColorFrequency;
+                        AE_BASE_ASSERT_MIN_TERM(addColorTime, 0.0f, 1.0f);
+                        const float addColorRate =
+                            ::ae::base::Math::SinF32(::ae::base ::Angle(
+                                ::ae::base::Degree(180.0f * addColorTime)));
+                        fDirectConstantFragDataType fragData = {};
+                        fragData.addColor =
+                            ::ae::base::Vector4::One() * addColorRate;
+                        cmd.CmdSetDirectConstant(1, &fragData);
+                    }
+                    
+
+                    // 左のキューブ
+                    {
+                        fDirectConstantVertDataType vertData = {};
+                        vertData.instanceTrans =
+                            ::ae::base::Vector4(-2.0f, 0.0f, 0.0f, 0.0f);
+                        cmd.CmdSetDirectConstant(0, &vertData);
+                        cmd.CmdDraw(
+                            ::ae::gfx_low::DrawCallInfo().SetVertexCount(
+                                geometryCube.VertexCount()));
+                    }
+
+                    
+                    // 右のキューブ
+                    {
+                        fDirectConstantVertDataType vertData = {};
+                        vertData.instanceTrans =
+                            ::ae::base::Vector4(2.0f, 0.0f, 0.0f, 0.0f);
+                        cmd.CmdSetDirectConstant(0, &vertData);
+                        cmd.CmdDraw(
+                            ::ae::gfx_low::DrawCallInfo().SetVertexCount(
+                                geometryCube.VertexCount()));
+                    }
+                }
 
                 // 描画パス終了
                 cmd.CmdEndRenderPass();
