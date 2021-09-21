@@ -2,6 +2,7 @@
 #pragma once
 
 #include <ae/gfx_low/InternalDescriptorSetLayouts.hpp>
+#include <ae/gfx_low/InternalPushConstantRanges.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <array>
 
@@ -37,11 +38,15 @@ public:
     const ::vk::Pipeline NativeObject_() const { return nativeObject_; }
 
     ::vk::PipelineLayout PipelineLayout_() const { return pipelineLayout_; }
+    const InternalPushConstantRanges& PushConstantRanges_() const {
+        return pushConstantRanges_;
+    }
     //@}
 
 private:
     gfx_low::Device& device_;
     InternalDescriptorSetLayouts descriptorSetLayouts_;
+    InternalPushConstantRanges pushConstantRanges_;
     ::vk::PipelineLayout pipelineLayout_;
     ::vk::Pipeline nativeObject_;
 };

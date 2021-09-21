@@ -24,7 +24,6 @@ namespace ae {
 namespace gfx_low {
 
 /// RenderPipeline オブジェクト作成に必要な情報。
-/// @todo インラインコンスタント対応。
 class RenderPipelineCreateInfo {
 public:
     /// @name プロパティ

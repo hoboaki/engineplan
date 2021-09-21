@@ -3,6 +3,7 @@
 
 // includes
 #include <ae/base/RuntimeAssert.hpp>
+#include <ae/gfx_low/DirectConstantInfo.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 
 //------------------------------------------------------------------------------
@@ -21,8 +22,8 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
         AE_BASE_ASSERT_POINTER(infosPtr);
     }
 
-    infos_[kind].infoCount = count;
-    infos_[kind].infos.Reset(infosPtr);
+    bindingInfos_[kind].infoCount = count;
+    bindingInfos_[kind].infos.Reset(infosPtr);
     return *this;
 }
 
@@ -30,12 +31,44 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
 int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const {
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
-    const auto& info = infos_[kind];
+    const auto& info = bindingInfos_[kind];
     int total = 0;
     for (int i = 0; i < info.infoCount; ++i) {
         total += info.infos.Get()[i].ElemCount();
     }
     return total;
+}
+
+//------------------------------------------------------------------------------
+DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(
+    const int count,
+    const DirectConstantInfo* infosPtr) {
+    AE_BASE_ASSERT_LESS_EQUALS(0, count);
+    if (0 < count) {
+        AE_BASE_ASSERT_POINTER(infosPtr);
+    }
+
+    directConstantInfoCount_ = count;
+    directConstantInfos_.Reset(infosPtr);
+
+    // 設定時の内容チェック
+    Validate_();
+
+    return *this;
+}
+
+//------------------------------------------------------------------------------
+void DescriptorSetSpecInfo::Validate_() const {
+    ShaderBindingStageBitSet stages;
+    if (0 < directConstantInfoCount_) {
+        // Stage重複確認
+        AE_BASE_ASSERT_POINTER(directConstantInfos_.Get());
+        for (int i = 0; i < directConstantInfoCount_; ++i) {
+            const auto& info = directConstantInfos_.Get()[i];
+            AE_BASE_ASSERT_EQUALS((stages.bits_ & info.Stages().bits_), 0);
+            stages.bits_ |= info.Stages().bits_;
+        }
+    }
 }
 
 } // namespace gfx_low

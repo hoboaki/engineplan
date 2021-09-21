@@ -418,6 +418,38 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
 }
 
 //------------------------------------------------------------------------------
+void CommandBuffer::CmdSetDirectConstant(const int index, const void* dataHead) {
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(
+        activePass_.Get(CommandBufferFeature::Render) ||
+        activePass_.Get(CommandBufferFeature::Compute));
+    AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
+
+    ::vk::PipelineLayout pipelineLayout = {};
+    const InternalPushConstantRanges* ranges = nullptr;
+    if (activePass_.Get(CommandBufferFeature::Render)) {
+        AE_BASE_ASSERT(currentRenderPipeline_.IsValid());
+        pipelineLayout = currentRenderPipeline_->PipelineLayout_();
+        ranges = &currentRenderPipeline_->PushConstantRanges_();
+    } else if (activePass_.Get(CommandBufferFeature::Compute)) {
+        AE_BASE_ASSERT(currentComputePipeline_.IsValid());
+        pipelineLayout = currentRenderPipeline_->PipelineLayout_();
+        ranges = &currentComputePipeline_->PushConstantRanges_();
+    } else {
+        AE_BASE_ASSERT_NOT_REACHED();
+    }
+    AE_BASE_ASSERT_POINTER(ranges);
+    AE_BASE_ASSERT_MIN_TERM(index, 0, ranges->PushConstantRangeCount());
+    const auto& range = ranges->PushConstantRanges()[index];
+    nativeObject_.pushConstants(
+        pipelineLayout,
+        range.stageFlags,
+        range.offset,
+        range.size,
+        dataHead);
+}
+
+//------------------------------------------------------------------------------
 void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
