@@ -766,8 +766,8 @@ int aemain(::ae::base::Application* app) {
 
                 // Draw
                 {
-                    // カラーアニメーション
-                    {
+                    // カラーアニメーション生成関数
+                    auto calcFragData = [](const int frameCount) {
                         const int addColorFrequency = 60;
                         const float addColorTime =
                             float(frameCount % addColorFrequency) /
@@ -779,28 +779,30 @@ int aemain(::ae::base::Application* app) {
                         fDirectConstantFragDataType fragData = {};
                         fragData.addColor =
                             ::ae::base::Vector4::One() * addColorRate;
-                        cmd.CmdSetDirectConstant(1, &fragData);
-                    }
-                    
+                        return fragData;
+                    };
 
                     // 左のキューブ
                     {
                         fDirectConstantVertDataType vertData = {};
                         vertData.instanceTrans =
                             ::ae::base::Vector4(-2.0f, 0.0f, 0.0f, 0.0f);
+                        auto fragData = calcFragData(frameCount + 15);
                         cmd.CmdSetDirectConstant(0, &vertData);
+                        cmd.CmdSetDirectConstant(1, &fragData);
                         cmd.CmdDraw(
                             ::ae::gfx_low::DrawCallInfo().SetVertexCount(
                                 geometryCube.VertexCount()));
                     }
-
                     
                     // 右のキューブ
                     {
                         fDirectConstantVertDataType vertData = {};
                         vertData.instanceTrans =
                             ::ae::base::Vector4(2.0f, 0.0f, 0.0f, 0.0f);
+                        auto fragData = calcFragData(frameCount);
                         cmd.CmdSetDirectConstant(0, &vertData);
+                        cmd.CmdSetDirectConstant(1, &fragData);
                         cmd.CmdDraw(
                             ::ae::gfx_low::DrawCallInfo().SetVertexCount(
                                 geometryCube.VertexCount()));
