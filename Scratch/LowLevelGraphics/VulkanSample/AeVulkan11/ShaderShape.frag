@@ -13,7 +13,7 @@ layout(std140, set = LAYOUT_SET_BUFFER, binding = 0) uniform UbufType {
 } Ubuf;
 
 layout ( push_constant ) uniform DirectConstantDataType {
-    vec4 addColor;
+    layout(offset = 16) vec4 addColor;
 } DirectConstData;
 
 layout(location = 0) in vec3 FragWorldPos;
