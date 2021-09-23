@@ -25,21 +25,21 @@
 - (id) initWithContentRect: (NSRect)rect styleMask:(NSWindowStyleMask)wndStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferFlg
 {
 	id result = [super initWithContentRect:rect styleMask:wndStyle backing:bufferingType defer:deferFlg];
-            
-	[[NSNotificationCenter defaultCenter] 
+
+	[[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(windowDidResize:)
      name:NSWindowDidResizeNotification
      object:self];
-    
+
 	[[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(windowWillClose:)
      name:NSWindowWillCloseNotification
      object:self];
-    
+
 	[self setAcceptsMouseMovedEvents:YES];
-    
+
 	return result;
 }
 
@@ -56,10 +56,10 @@
 {
     // 変数準備
 	unsigned int flags;
-    
+
     // フラグ取得
 	flags = [aEvent modifierFlags];
-    
+
     // コールバック
     mCBModKeyEvent(
         mOwnerPtr
@@ -187,37 +187,35 @@ struct AeBaseNSWindow* AeBaseNSWindow_Create(
     , const float aWidth
     , const float aHeight
     , void* aOwnerPtr
-    , int* aIsClosedPtr 
+    , int* aIsClosedPtr
     , AeBaseNSWindow_CBKeyEvent aCBKeyEvent
     , AeBaseNSWindow_CBModKeyEvent aCBModKeyEvent
     , AeBaseNSWindow_CBMouseEvent aCBMouseEvent
     )
-{    
-    NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
-    
-	NSRect contRect;
-	contRect = NSMakeRect( aPosX , aPosY , aWidth , aHeight );	
-	unsigned int winStyle=
-    NSTitledWindowMask|
-    NSClosableWindowMask|
-    NSMiniaturizableWindowMask;
-	
-	AeBaseOpenGLWindow* window =[AeBaseOpenGLWindow alloc];
-    *[window ownerPtr] = aOwnerPtr;
-    *[window isClosedPtr] = aIsClosedPtr;
-    *[window cbKeyEventPtr] = aCBKeyEvent;
-    *[window cbModKeyEventPtr] = aCBModKeyEvent;
-    *[window cbMouseEventPtr] = aCBMouseEvent;
-    
-	[window
-     initWithContentRect:contRect
-     styleMask:winStyle
-     backing:NSBackingStoreBuffered 
-		defer:NO];
-    
-    [pool release];
-    
-    return (struct AeBaseNSWindow*)window;
+{
+    @autoreleasepool {
+        NSRect contRect;
+        contRect = NSMakeRect( aPosX , aPosY , aWidth , aHeight );
+        unsigned int winStyle=
+        NSTitledWindowMask|
+        NSClosableWindowMask|
+        NSMiniaturizableWindowMask;
+
+        AeBaseOpenGLWindow* window =[AeBaseOpenGLWindow alloc];
+        *[window ownerPtr] = aOwnerPtr;
+        *[window isClosedPtr] = aIsClosedPtr;
+        *[window cbKeyEventPtr] = aCBKeyEvent;
+        *[window cbModKeyEventPtr] = aCBModKeyEvent;
+        *[window cbMouseEventPtr] = aCBMouseEvent;
+
+        [window
+        initWithContentRect:contRect
+        styleMask:winStyle
+        backing:NSBackingStoreBuffered
+            defer:NO];
+        
+        return (__bridge struct AeBaseNSWindow*)window;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -227,18 +225,16 @@ void AeBaseNSWindow_Destroy( struct AeBaseNSWindow* aWindow )
 
 //------------------------------------------------------------------------------
 void AeBaseNSWindow_Show( struct AeBaseNSWindow* aWindow )
-{   
-    NSAutoreleasePool* pool=[[NSAutoreleasePool alloc] init];
-    
-    AeBaseOpenGLWindow* window = (AeBaseOpenGLWindow*)aWindow;
-    
-    **[window isClosedPtr] = 0;
-	[window makeKeyAndOrderFront:nil];
-	[window makeMainWindow];
-    
-	[NSApp activateIgnoringOtherApps:YES];
-    
-    [pool release];
+{
+    @autoreleasepool {
+        AeBaseOpenGLWindow* window = (__bridge AeBaseOpenGLWindow*)aWindow;
+
+        **[window isClosedPtr] = 0;
+        [window makeKeyAndOrderFront:nil];
+        [window makeMainWindow];
+
+        [NSApp activateIgnoringOtherApps:YES];
+    }
 }
 
 // EOF

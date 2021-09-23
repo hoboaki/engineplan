@@ -145,6 +145,7 @@
 		C5267A5C26FCB8A9002DF7AA /* Display_Ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5267A5326FCB86C002DF7AA /* Display_Ext.cpp */; };
 		C5267A5D26FCB8A9002DF7AA /* Hid_Ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5267A5426FCB86C002DF7AA /* Hid_Ext.cpp */; };
 		C5267A5E26FCB8A9002DF7AA /* EntryPoint_ExtM.m in Sources */ = {isa = PBXBuildFile; fileRef = C5267A5526FCB86C002DF7AA /* EntryPoint_ExtM.m */; };
+		C5267AB426FCC4A5002DF7AA /* AeBaseNSWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = C5267A4D26FCB86C002DF7AA /* AeBaseNSWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1128,6 +1129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5267A5826FCB8A9002DF7AA /* EntryPoint_Ext.cpp in Sources */,
+				C5267AB426FCC4A5002DF7AA /* AeBaseNSWindow.m in Sources */,
 				C5267A5926FCB8A9002DF7AA /* AeBaseNSScreen.m in Sources */,
 				C5267A5A26FCB8A9002DF7AA /* Screen_Ext.cpp in Sources */,
 				C5267A5B26FCB8A9002DF7AA /* AeBaseNSApp.m in Sources */,
