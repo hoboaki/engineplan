@@ -7,10 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void AeBaseNSApp_Initialize();
-extern void AeBaseNSApp_Finalize();
-extern void AeBaseNSApp_PollEvent();
-extern void AeBaseNSApp_Terminate();
+extern void AeBaseNSApp_Initialize(void);
+extern void AeBaseNSApp_Finalize(void);
+extern void AeBaseNSApp_PollEvent(void);
+extern void AeBaseNSApp_Terminate(void);
 #ifdef __cplusplus
 }
 #endif
