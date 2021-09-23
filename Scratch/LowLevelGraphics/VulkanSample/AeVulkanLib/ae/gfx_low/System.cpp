@@ -54,9 +54,11 @@ System::System(const SystemCreateInfo& createInfo)
     IsInstanceCreated = true;
 
     // 関数ロード
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
     VULKAN_HPP_DEFAULT_DISPATCHER.init(
         vkLoader_.getProcAddress<PFN_vkGetInstanceProcAddr>(
             "vkGetInstanceProcAddr"));
+#endif
 
     // ValidationLayer 検索
     char const* const instanceValidationLayers[] = {
@@ -218,8 +220,9 @@ System::System(const SystemCreateInfo& createInfo)
                 "Please look at the Getting Started guide for additional "
                 "information.\n");
         }
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
         VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
-
+#endif
     }
 
     // GPU列挙

@@ -205,7 +205,9 @@ Device::Device(const DeviceCreateInfo& createInfo)
         auto result =
             physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
         VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
+#endif
     }
 
     // Queue オブジェクト作成
