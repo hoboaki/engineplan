@@ -89,7 +89,7 @@ System::System(const SystemCreateInfo& createInfo)
             if (validationFound) {
                 enabledLayerCount_ =
                     AE_BASE_ARRAY_LENGTH(instanceValidationLayers);
-                enabledLayers_[0] = "VK_LAYER_KHRONOS_validation";
+                enabledLayers_[0] = instanceValidationLayers[0];
             }
         }
 
@@ -175,7 +175,7 @@ System::System(const SystemCreateInfo& createInfo)
             "Please look at the Getting Started guide for additional "
             "information.\n");
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
-        AE_BASE_ASSERT_NOT_REACHED(
+        AE_BASE_ASSERT_NOT_REACHED_MSG(
             "vkEnumerateInstanceExtensionProperties failed to find "
             "the " VK_EXT_METAL_SURFACE_EXTENSION_NAME
             " extension.\n\nDo you have a compatible "
