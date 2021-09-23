@@ -43,7 +43,7 @@ public:
     /// @details
     /// 実行環境によっては実際のデータサイズよりも大きいバッファサイズを要求することがあるため、
     /// バッファ領域は必ずこの関数で求められたサイズを確保してください。
-    static pword_t CalcReadBufferSize(pword_t size);
+    static pword_t StaticCalcReadBufferSize(pword_t size);
     //@}
 
     /// @name コンストラクタとデストラクタ

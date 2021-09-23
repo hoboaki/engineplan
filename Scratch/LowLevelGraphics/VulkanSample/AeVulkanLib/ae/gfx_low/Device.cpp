@@ -354,7 +354,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
         nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
         nativeObject_.destroyImage(tmpImage, nullptr);

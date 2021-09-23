@@ -83,7 +83,6 @@ void Swapchain::Initialize_(
             AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
         }
 
-        const auto semaphoreCreateInfo = ::vk::SemaphoreCreateInfo();
         for (int i = 0; i < frameProperties_.Count(); ++i) {
             auto& target = frameProperties_[i];
             target.AcquireEvent.Init(EventCreateInfo().SetDevice(&device));
@@ -101,7 +100,7 @@ void Swapchain::Initialize_(
                     .SetRawFormat_(imageFormat));
         }
     }
-    uniqueId_ = uniqueId_;
+    uniqueId_ = uniqueId;
     currentFrameIndex_ = -1;
     AE_BASE_ASSERT(IsInitialized_());
 }
@@ -113,7 +112,6 @@ void Swapchain::Finalize_() {
     }
     uniqueId_ = InvalidUniqueId_;
     {
-        auto& device = swapchainMaster_->Device();
         for (int i = frameProperties_.Count() - 1; 0 <= i; --i) {
             auto& target = frameProperties_[i];
             target.RenderTargetImageView.Reset();

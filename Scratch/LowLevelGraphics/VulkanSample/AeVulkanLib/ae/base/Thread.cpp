@@ -21,7 +21,7 @@ void Thread::Sleep(const TimeSpanPod& timeSpan) {
 #if defined(AE_BASE_OS_WINDOWS)
     ::Sleep(DWORD(::ae::base::Math::Max(s64(1), timeSpan.Milliseconds())));
 #else
-    Usleep(useconds_t(::ae::base::Math::Max(s64(1), timeSpan.Microseconds())));
+    usleep(useconds_t(::ae::base::Math::Max(s64(1), timeSpan.Microseconds())));
 #endif
 }
 
