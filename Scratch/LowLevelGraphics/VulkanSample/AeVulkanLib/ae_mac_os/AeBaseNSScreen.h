@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_XBASENSSCREEN_H
 
 //------------------------------------------------------------------------------
-struct AeBaseNSRect
-{
+struct AeBaseNSRect {
     float originX;
     float originY;
     float sizeW;
@@ -16,8 +15,8 @@ struct AeBaseNSRect
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void AeBaseNSScreen_GetMainScreenFrame( struct AeBaseNSRect* );
-extern void AeBaseNSScreen_GetMainScreenVisibleFrame( struct AeBaseNSRect* );
+extern void AeBaseNSScreen_GetMainScreenFrame(struct AeBaseNSRect*);
+extern void AeBaseNSScreen_GetMainScreenVisibleFrame(struct AeBaseNSRect*);
 #ifdef __cplusplus
 }
 #endif

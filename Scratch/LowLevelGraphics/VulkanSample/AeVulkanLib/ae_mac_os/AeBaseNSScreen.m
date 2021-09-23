@@ -5,7 +5,7 @@
 
 //------------------------------------------------------------------------------
 void AeBaseNSScreen_GetMainScreenFrame( struct AeBaseNSRect* aRect )
-{ 
+{
     NSRect rect = [[NSScreen mainScreen] frame];
     aRect->originX = rect.origin.x;
     aRect->originY = rect.origin.y;
@@ -15,7 +15,7 @@ void AeBaseNSScreen_GetMainScreenFrame( struct AeBaseNSRect* aRect )
 
 //------------------------------------------------------------------------------
 void AeBaseNSScreen_GetMainScreenVisibleFrame( struct AeBaseNSRect* aRect )
-{ 
+{
     NSRect rect = [[NSScreen mainScreen] visibleFrame];
     aRect->originX = rect.origin.x;
     aRect->originY = rect.origin.y;

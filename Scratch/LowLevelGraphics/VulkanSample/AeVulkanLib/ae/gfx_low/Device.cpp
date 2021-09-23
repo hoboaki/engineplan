@@ -382,7 +382,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         const auto createInfo = BufferResourceCreateInfo()
                                     .SetSpecInfo(specInfo)
                                     .NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createBuffer(&createInfo, nullptr, &tmpBuffer);
         nativeObject_.getBufferMemoryRequirements(tmpBuffer, &reqs);
         nativeObject_.destroyBuffer(tmpBuffer, nullptr);
@@ -449,7 +449,7 @@ ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
 
         const int layerCountPerArrayIndex =
