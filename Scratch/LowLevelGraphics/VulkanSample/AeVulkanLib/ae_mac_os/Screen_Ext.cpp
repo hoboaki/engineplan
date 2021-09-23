@@ -7,9 +7,9 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Screen_Ext::Screen_Ext()
-: glView(0)
-{
+: glView(0) {
 }
 
-}} // namespace
+} // namespace base
+} // namespace ae
 // EOF

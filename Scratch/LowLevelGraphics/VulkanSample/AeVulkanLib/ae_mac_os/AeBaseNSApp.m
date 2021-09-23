@@ -53,19 +53,16 @@ void AeBaseNSApp_PollEvent()
     while(1)
     {
         @autoreleasepool {
-            NSEvent *event;
+            NSEvent* event;
             event=[NSApp
                    nextEventMatchingMask:NSAnyEventMask
                    untilDate: [NSDate distantPast]
                    inMode: NSDefaultRunLoopMode
                    dequeue:YES];
-            if(event!=nil)
-            {
+            if (event!=nil) {
                 [NSApp sendEvent:event];
                 [NSApp updateWindows];
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
