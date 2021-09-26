@@ -11,6 +11,10 @@
 #define VK_USE_PLATFORM_WIN32_KHR
 #endif
 
+#if defined(AE_BASE_OS_MACOSX)
+#define VK_USE_PLATFORM_METAL_EXT
+#endif
+
 #include <vulkan/vk_sdk_platform.h>
 
 #include <vulkan/vulkan.hpp>

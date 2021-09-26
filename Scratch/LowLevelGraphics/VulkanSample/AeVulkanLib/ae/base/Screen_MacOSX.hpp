@@ -3,7 +3,7 @@
 #else
 #define AE_BASE_INCLUDED_SCREEN_MACOSX_HPP
 
-struct AeG3dNSOpenGLView;
+struct AeBaseNSMetalView;
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -13,10 +13,11 @@ namespace base {
 class Screen_Ext {
 public:
     //============================================================
-    AeG3dNSOpenGLView* glView;
+    AeBaseNSMetalView* metalView = nullptr;
 
     //============================================================
     Screen_Ext();
+    void* MetalLayer();
 };
 //@}
 

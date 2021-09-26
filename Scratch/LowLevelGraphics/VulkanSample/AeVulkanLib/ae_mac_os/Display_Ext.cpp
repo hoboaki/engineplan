@@ -3,6 +3,7 @@
 #include <ae/base/Display.hpp>
 #include <ae/base/Ref.hpp>
 
+#include "AeBaseNSMetalView.h"
 #include "AeBaseNSWindow.h"
 
 //------------------------------------------------------------------------------
@@ -648,6 +649,7 @@ Display_Ext::Display_Ext(const DisplayContext& context)
 
     // メインスクリーンの作成
     mainScreen.Init(Ref(*this), context.Width(), context.Height());
+    mainScreen->Ext_().metalView = AeBaseNSMetalView_Setup(windowPtr);
 }
 
 //------------------------------------------------------------------------------
