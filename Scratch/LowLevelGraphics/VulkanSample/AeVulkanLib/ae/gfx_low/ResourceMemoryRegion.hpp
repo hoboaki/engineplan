@@ -1,6 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
+#include <cstddef>
+
 //------------------------------------------------------------------------------
 namespace ae {
 namespace gfx_low {

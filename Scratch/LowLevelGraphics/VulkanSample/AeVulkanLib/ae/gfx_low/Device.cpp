@@ -205,7 +205,9 @@ Device::Device(const DeviceCreateInfo& createInfo)
         auto result =
             physicalDevice.createDevice(&deviceInfo, nullptr, &nativeObject_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
         VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
+#endif
     }
 
     // Queue オブジェクト作成
@@ -354,7 +356,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
         nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
         nativeObject_.destroyImage(tmpImage, nullptr);
@@ -382,7 +384,7 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         const auto createInfo = BufferResourceCreateInfo()
                                     .SetSpecInfo(specInfo)
                                     .NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createBuffer(&createInfo, nullptr, &tmpBuffer);
         nativeObject_.getBufferMemoryRequirements(tmpBuffer, &reqs);
         nativeObject_.destroyBuffer(tmpBuffer, nullptr);
@@ -449,7 +451,7 @@ ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
         ::vk::Image tmpImage;
         const auto createInfo =
             ImageResourceCreateInfo().SetSpecInfo(specInfo).NativeCreateInfo_();
-        auto result =
+        [[maybe_unused]] auto result =
             nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
 
         const int layerCountPerArrayIndex =

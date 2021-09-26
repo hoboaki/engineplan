@@ -106,7 +106,6 @@ const Matrix44Pod Matrix44Pod::Ortho(
     const f32 t_sub_b = top - bottom;
     const f32 t_add_b = top + bottom;
     const f32 f_sub_n = far - near;
-    const f32 f_add_n = far + near;
     return Matrix44(
         2 / r_sub_l,
         0,

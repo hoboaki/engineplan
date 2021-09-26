@@ -43,11 +43,11 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
     }
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
     {
-        auto const createInfo = vk::MetalSurfaceCreateInfoEXT().SetPLayer(
-            static_cast<CAMetalLayer*>(caMetalLayer));
+        auto const createInfo = ::vk::MetalSurfaceCreateInfoEXT().setPLayer(
+            static_cast<CAMetalLayer*>(screen_.Ext_().MetalLayer()));
 
         auto result =
-            inst.CreateMetalSurfaceEXT(&createInfo, nullptr, &surface);
+            device_.System().NativeObject_().createMetalSurfaceEXT(&createInfo, nullptr, &surface_);
         AE_BASE_ASSERT(result == vk::Result::eSuccess);
     }
 #endif

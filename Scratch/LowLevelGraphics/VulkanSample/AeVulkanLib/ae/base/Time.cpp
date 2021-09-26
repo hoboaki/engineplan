@@ -63,7 +63,7 @@ const TimePod tCurrentTime(tTimeConverter converter) {
 #elif defined(AE_BASE_OS_MACOSX)
     {
         timeval tv;
-        Gettimeofday(&tv, 0);
+        gettimeofday(&tv, 0);
         secFrom1970 = tv.tv_sec;
         subTick = u64(tv.tv_usec) * 10;
     }

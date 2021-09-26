@@ -4,6 +4,7 @@
 // includes
 #include <ae/base/ArrayLength.hpp>
 #include <ae/base/IAllocator.hpp>
+#include <ae/base/Os.hpp>
 #include <ae/base/PtrToRef.hpp>
 #include <ae/base/RuntimeArray.hpp>
 #include <ae/base/RuntimeAssert.hpp>
@@ -54,13 +55,19 @@ System::System(const SystemCreateInfo& createInfo)
     IsInstanceCreated = true;
 
     // 関数ロード
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
     VULKAN_HPP_DEFAULT_DISPATCHER.init(
         vkLoader_.getProcAddress<PFN_vkGetInstanceProcAddr>(
             "vkGetInstanceProcAddr"));
+#endif
 
     // ValidationLayer 検索
     char const* const instanceValidationLayers[] = {
+#if defined(AE_BASE_OS_MACOSX)
+        "MoltenVK"
+#else
         "VK_LAYER_KHRONOS_validation"
+#endif
     };
     uint32_t instanceLayerCount = 0;
     vk::Bool32 validationFound = VK_FALSE;
@@ -87,7 +94,7 @@ System::System(const SystemCreateInfo& createInfo)
             if (validationFound) {
                 enabledLayerCount_ =
                     AE_BASE_ARRAY_LENGTH(instanceValidationLayers);
-                enabledLayers_[0] = "VK_LAYER_KHRONOS_validation";
+                enabledLayers_[0] = instanceValidationLayers[0];
             }
         }
 
@@ -173,7 +180,7 @@ System::System(const SystemCreateInfo& createInfo)
             "Please look at the Getting Started guide for additional "
             "information.\n");
 #elif defined(VK_USE_PLATFORM_METAL_EXT)
-        AE_BASE_ASSERT_NOT_REACHED(
+        AE_BASE_ASSERT_NOT_REACHED_MSG(
             "vkEnumerateInstanceExtensionProperties failed to find "
             "the " VK_EXT_METAL_SURFACE_EXTENSION_NAME
             " extension.\n\nDo you have a compatible "
@@ -218,8 +225,9 @@ System::System(const SystemCreateInfo& createInfo)
                 "Please look at the Getting Started guide for additional "
                 "information.\n");
         }
+#if VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1
         VULKAN_HPP_DEFAULT_DISPATCHER.init(nativeObject_);
-
+#endif
     }
 
     // GPU列挙

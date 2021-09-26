@@ -5,14 +5,14 @@
 
 #include <ae/base/Keyboard.hpp>
 #include <ae/base/Mouse.hpp>
-#include <ae/base/NonCopyable.hpp>
+#include <ae/base/Noncopyable.hpp>
 
 //------------------------------------------------------------------------------
 namespace ae {
 namespace base {
 
 // MacOSXのHid拡張。
-class Hid_Ext : public NonCopyable {
+class Hid_Ext : private Noncopyable<Hid_Ext> {
 public:
     Keyboard keyboard;
     Mouse mouse;

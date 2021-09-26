@@ -29,7 +29,7 @@ pword_t ResFileStream::RequireReadBufferAlignment() const {
 
 //------------------------------------------------------------------------------
 pword_t ResFileStream::CalcReadBufferSize(const pword_t size) const {
-    return CalcReadBufferSize(size);
+    return StaticCalcReadBufferSize(size);
 }
 
 } // namespace base
