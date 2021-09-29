@@ -48,8 +48,8 @@
 		C5267A9326FCC0C3002DF7AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5267A9C26FCC10F002DF7AA /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
 		C5267AA826FCC267002DF7AA /* libAeVulkanLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAeVulkanLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C58228792700C95300D951F2 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../../../../../../Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
-		C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.189.dylib; path = ../../../../../../../../../Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.2.189.dylib; sourceTree = "<group>"; };
+		C58228792700C95300D951F2 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path =/Users/Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<absolute>"; };
+		C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.189.dylib; path =/Users/Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.2.189.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
