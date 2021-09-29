@@ -63,11 +63,7 @@ System::System(const SystemCreateInfo& createInfo)
 
     // ValidationLayer 検索
     char const* const instanceValidationLayers[] = {
-#if defined(AE_BASE_OS_MACOSX)
-        "MoltenVK"
-#else
         "VK_LAYER_KHRONOS_validation"
-#endif
     };
     uint32_t instanceLayerCount = 0;
     vk::Bool32 validationFound = VK_FALSE;
