@@ -1403,13 +1403,11 @@
 					"$(inherited)",
 					AE_LIBRARY_DEBUG,
 				);
-				HEADER_SEARCH_PATHS = "";
-				"HEADER_SEARCH_PATHS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(VULKAN_SDK)/include",
 					"$(SRCROOT)",
-					/Users/Shared/VulkanSDK/1.2.189.0/MoltenVK/include,
 				);
 			};
 			name = Debug;
@@ -1420,12 +1418,11 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
-				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SYSTEM_HEADER_SEARCH_PATHS = (
+					"$(VULKAN_SDK)/include",
 					"$(SRCROOT)",
-					/Users/Shared/VulkanSDK/1.2.189.0/MoltenVK/include,
 				);
 			};
 			name = Release;

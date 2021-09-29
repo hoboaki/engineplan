@@ -12,7 +12,9 @@
 #endif
 
 #if defined(AE_BASE_OS_MACOSX)
+#define VULKAN_HPP_DISPATCH_LOADER_DYNAMIC 1
 #define VK_USE_PLATFORM_METAL_EXT
+#define VK_ENABLE_BETA_EXTENSIONS
 #endif
 
 #include <vulkan/vk_sdk_platform.h>

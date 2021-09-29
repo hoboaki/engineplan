@@ -3,16 +3,42 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C515D931270351F200376A78 /* libvulkan.1.2.189.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C515D932270351F200376A78 /* libvulkan.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = C58228792700C95300D951F2 /* libvulkan.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C5267A9426FCC0C3002DF7AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5267A8D26FCC0C3002DF7AA /* Assets.xcassets */; };
 		C5267A9526FCC0C3002DF7AA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5267A8E26FCC0C3002DF7AA /* MainMenu.xib */; };
 		C5267A9D26FCC10F002DF7AA /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5267A9C26FCC10F002DF7AA /* Main.cpp */; };
-		C5267AA126FCC161002DF7AA /* MoltenVK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5267AA026FCC161002DF7AA /* MoltenVK.xcframework */; };
 		C5267AA926FCC267002DF7AA /* libAeVulkanLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5267AA826FCC267002DF7AA /* libAeVulkanLib.a */; };
+		C582287B2700C95300D951F2 /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C58228792700C95300D951F2 /* libvulkan.1.dylib */; };
+		C582287C2700C95300D951F2 /* libvulkan.1.2.189.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C515D930270351E500376A78 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				C515D931270351F200376A78 /* libvulkan.1.2.189.dylib in CopyFiles */,
+				C515D932270351F200376A78 /* libvulkan.1.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C539410927034EB20059F26E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C5267A6C26FCBFB4002DF7AA /* AeVulkan01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AeVulkan01.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -21,8 +47,9 @@
 		C5267A9026FCC0C3002DF7AA /* AeVulkanSample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = AeVulkanSample.entitlements; sourceTree = "<group>"; };
 		C5267A9326FCC0C3002DF7AA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5267A9C26FCC10F002DF7AA /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
-		C5267AA026FCC161002DF7AA /* MoltenVK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MoltenVK.xcframework; path = ../../../../../../../../../Shared/VulkanSDK/1.2.189.0/MoltenVK/MoltenVK.xcframework; sourceTree = "<group>"; };
 		C5267AA826FCC267002DF7AA /* libAeVulkanLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAeVulkanLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C58228792700C95300D951F2 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path =/Users/Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<absolute>"; };
+		C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.2.189.dylib; path =/Users/Shared/VulkanSDK/1.2.189.0/macOS/lib/libvulkan.1.2.189.dylib; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,8 +57,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C582287C2700C95300D951F2 /* libvulkan.1.2.189.dylib in Frameworks */,
+				C582287B2700C95300D951F2 /* libvulkan.1.dylib in Frameworks */,
 				C5267AA926FCC267002DF7AA /* libAeVulkanLib.a in Frameworks */,
-				C5267AA126FCC161002DF7AA /* MoltenVK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +107,8 @@
 			isa = PBXGroup;
 			children = (
 				C5267AA826FCC267002DF7AA /* libAeVulkanLib.a */,
-				C5267AA026FCC161002DF7AA /* MoltenVK.xcframework */,
+				C582287A2700C95300D951F2 /* libvulkan.1.2.189.dylib */,
+				C58228792700C95300D951F2 /* libvulkan.1.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -94,6 +123,8 @@
 				C5267A6826FCBFB4002DF7AA /* Sources */,
 				C5267A6926FCBFB4002DF7AA /* Frameworks */,
 				C5267A6A26FCBFB4002DF7AA /* Resources */,
+				C539410927034EB20059F26E /* CopyFiles */,
+				C515D930270351E500376A78 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -300,11 +331,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "\"$(VULKAN_SDK)/lib\"";
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = noname.AeVulkan01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYSTEM_HEADER_SEARCH_PATHS = (
-					"\"/Users/Shared/VulkanSDK/1.2.189.0/MoltenVK/include\"",
+					"\"$(VULKAN_SDK)/include\"",
 					"\"$(SRCROOT)/../AeVulkanLib\"",
 				);
 			};
@@ -324,11 +356,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "\"$(VULKAN_SDK)/lib\"";
 				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_BUNDLE_IDENTIFIER = noname.AeVulkan01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYSTEM_HEADER_SEARCH_PATHS = (
-					"\"/Users/Shared/VulkanSDK/1.2.189.0/MoltenVK/include\"",
+					"\"$(VULKAN_SDK)/include\"",
 					"\"$(SRCROOT)/../AeVulkanLib\"",
 				);
 			};

@@ -125,6 +125,9 @@ Device::Device(const DeviceCreateInfo& createInfo)
     const char* extensionNames[extensionCountMax] = {};
     const char* const findExtensionNames[] = {
         VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+#if defined(VK_USE_PLATFORM_METAL_EXT)
+        VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME,
+#endif
     };
     bool foundExtensions[AE_BASE_ARRAY_LENGTH(findExtensionNames)] = {};
     {
