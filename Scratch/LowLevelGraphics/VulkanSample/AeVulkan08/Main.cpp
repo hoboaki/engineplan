@@ -424,13 +424,12 @@ int aemain(::ae::base::Application* app) {
                 .SetTiling(::ae::gfx_low::ImageResourceTiling::Optimal)
                 .SetUsageBitSet(
                     ::ae::gfx_low::ImageResourceUsageBitSet()
-                        .On(::ae::gfx_low::ImageResourceUsage::
-                                RenderTargetImage)
+                        .On(::ae::gfx_low::ImageResourceUsage::RenderTargetImage)
                         .On(::ae::gfx_low::ImageResourceUsage::SampledImage));
         colorBufferMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
                 .SetParams(
                     gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
         colorBufferImage.reset(new ::ae::gfx_low::ImageResource(

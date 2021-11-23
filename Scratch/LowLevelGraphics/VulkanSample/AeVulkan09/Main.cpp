@@ -463,7 +463,7 @@ int aemain(::ae::base::Application* app) {
         colorBufferMemory.Reset(
             &gfxKit.Device(),
             ::ae::gfx_low::ResourceMemoryAllocInfo()
-                .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
+                .SetKind(::ae::gfx_low::ResourceMemoryKind::DeviceLocal)
                 .SetParams(
                     gfxKit.Device().CalcResourceMemoryRequirements(specInfo)));
         colorBufferImage.reset(new ::ae::gfx_low::ImageResource(
