@@ -71,10 +71,6 @@ Device::Device(const DeviceCreateInfo& createInfo)
 
     // 使用できる機能は全て有効化
     auto features = physicalDevice.getFeatures2();
-    auto featuresExtendedDynamicState =
-        ::vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT()
-            .setExtendedDynamicState(true);
-    features.setPNext(&featuresExtendedDynamicState);
 
     // 各 QueueKind の作成総数とIndex表を作成
     ::ae::base::EnumKeyArray<QueueKind, int>
