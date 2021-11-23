@@ -222,12 +222,14 @@ Device::Device(const DeviceCreateInfo& createInfo)
             queueCreateInfo.OperationCountMax());
     }
 
+    // メモリプロパティを記録
+    physicalDevice.getMemoryProperties(&memoryProps_);
+
     // GPUメモリが共有メモリか調べる
     {
         const auto mask = ::vk::MemoryPropertyFlagBits::eDeviceLocal |
                           ::vk::MemoryPropertyFlagBits::eHostVisible |
                           ::vk::MemoryPropertyFlagBits::eHostCached;
-        physicalDevice.getMemoryProperties(&memoryProps_);
         isDeviceLocalMemoryShared_ = false;
         for (uint32_t i = 0; i < memoryProps_.memoryTypeCount; ++i) {
             if ((memoryProps_.memoryTypes[i].propertyFlags & mask) == mask) {
@@ -235,6 +237,39 @@ Device::Device(const DeviceCreateInfo& createInfo)
                 break;
             }
         }
+    }
+
+    // DeviceLocal で Optimal な MemoryType 番号をメモする
+    {
+        // ダミーのImageを作って　MemoryType 情報を取得
+        vk::MemoryRequirements reqs;
+        {
+            ::vk::Image tmpImage;
+            const auto createInfo = 
+                ImageResourceCreateInfo().SetSpecInfo(
+                    ImageResourceSpecInfo()
+                        .SetKind(ImageResourceKind::Image2d)
+                        .SetFormat(ImageFormat::D32Sfloat)
+                        .SetTiling(ImageResourceTiling::Optimal)
+                        .SetUsageBitSet(ImageResourceUsageBitSet()
+                            .On(ImageResourceUsage::DepthStencilImage))
+                        ).NativeCreateInfo_();
+            [[maybe_unused]] auto result =
+                nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
+            nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
+            nativeObject_.destroyImage(tmpImage, nullptr);
+        }
+
+        // 該当する番号をメモ
+        const auto mask = ::vk::MemoryPropertyFlagBits::eDeviceLocal;
+        for (uint32_t i = 0; i < memoryProps_.memoryTypeCount; ++i) {
+            if ((memoryProps_.memoryTypes[i].propertyFlags & mask) == mask &&
+                (reqs.memoryTypeBits & (1 << i)) != 0) {
+                deviceLocalOptimalImageMemoryTypeIndex_ = i;
+                break;
+            }
+        }
+        AE_BASE_ASSERT_LESS_EQUALS(0, deviceLocalOptimalImageMemoryTypeIndex_);
     }
 }
 
@@ -303,11 +338,17 @@ ResourceMemory Device::TryToAllocResourceMemory(
 
     // 適切なメモリタイプを探す
     int memoryTypeIndex = -1;
-    for (int i = 0; i < int(memoryProps_.memoryTypeCount); ++i) {
-        if ((memoryProps_.memoryTypes[i].propertyFlags & memoryMask) ==
-            memoryMask) {
-            memoryTypeIndex = i;
-            break;
+    if (allocInfo.Kind() == ResourceMemoryKind::DeviceLocal && 
+        allocInfo.UsageBitSet().Get(ResourceMemoryUsage::OptimalTilingImage)) {
+        memoryTypeIndex = deviceLocalOptimalImageMemoryTypeIndex_;
+    }
+    if (memoryTypeIndex < 0) {
+        for (int i = 0; i < int(memoryProps_.memoryTypeCount); ++i) {
+            if ((memoryProps_.memoryTypes[i].propertyFlags & memoryMask) ==
+                memoryMask) {
+                memoryTypeIndex = i;
+                break;
+            }
         }
     }
     if (memoryTypeIndex < 0) {
@@ -365,7 +406,8 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         .SetSize(reqs.size)
         .SetAlignment(reqs.alignment)
         .SetUsageBitSet(
-            EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet()));
+            EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet())
+            .Set(ResourceMemoryUsage::OptimalTilingImage, specInfo.Tiling() == ImageResourceTiling::Optimal));
 }
 
 //------------------------------------------------------------------------------

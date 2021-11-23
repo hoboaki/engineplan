@@ -28,6 +28,9 @@ enum class ResourceMemoryUsage {
     /// フレームバッファのデプスステンシルイメージ。
     DepthStencilImage,
 
+    /// ImageResourceTiling::Optimal なイメージ。
+    OptimalTilingImage,
+
     /// ユニフォームバッファ。
     UniformBuffer,
 
