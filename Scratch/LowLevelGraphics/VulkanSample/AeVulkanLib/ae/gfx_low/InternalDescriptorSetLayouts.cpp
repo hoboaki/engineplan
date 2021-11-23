@@ -31,13 +31,14 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                           int& bindingsCount,
                           ::vk::DescriptorSetLayoutBinding* bindingsPtr,
                           const int bindingInfosIdx,
+                          const int bindingIndexOffset,
                           const ShaderBindingInfo* bindingInfosPtr,
                           const ::vk::DescriptorType descriptorType) {
         AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
         const auto& info = base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
         bindingsPtr[bindingsCount] =
             ::vk::DescriptorSetLayoutBinding()
-                .setBinding(info.BindingIndex())
+                .setBinding(bindingIndexOffset + info.BindingIndex())
                 .setDescriptorType(descriptorType)
                 .setDescriptorCount(info.ElemCount())
                 .setStageFlags(
@@ -80,9 +81,12 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                     bindingsCount,
                     &bindings[0],
                     i,
+                    0, // bindingIndexOffset
                     info.BindingInfos(DescriptorKind::UniformBuffer),
                     ::vk::DescriptorType::eUniformBuffer);
             }
+            storageBufferBindingIndexOffset_ =
+                info.MaxBindingIndex(DescriptorKind::UniformBuffer) + 1;
         }
 
         // StorageBuffer
@@ -96,6 +100,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                     bindingsCount,
                     &bindings[0],
                     i,
+                    storageBufferBindingIndexOffset_,
                     info.BindingInfos(DescriptorKind::StorageBuffer),
                     ::vk::DescriptorType::eStorageBuffer);
             }
@@ -124,9 +129,12 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                     bindingsCount,
                     &bindings[0],
                     i,
+                    0, // bindingIndexOffset
                     info.BindingInfos(DescriptorKind::SampledImage),
                     ::vk::DescriptorType::eSampledImage);
             }
+            storageImageBindingIndexOffset_ =
+                info.MaxBindingIndex(DescriptorKind::SampledImage) + 1;
         }
 
         // StorageImage
@@ -140,6 +148,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                     bindingsCount,
                     &bindings[0],
                     i,
+                    storageImageBindingIndexOffset_,
                     info.BindingInfos(DescriptorKind::StorageImage),
                     ::vk::DescriptorType::eStorageImage);
             }
@@ -164,6 +173,7 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
                 bindingsCount,
                 &bindings[0],
                 i,
+                0, // bindingIndexOffset
                 info.BindingInfos(DescriptorKind::Sampler),
                 ::vk::DescriptorType::eSampler);
         }

@@ -127,6 +127,7 @@ private:
     const int physicalDeviceIndex_;
     base::RuntimeAutoArray<gfx_low::Queue> queues_;
     ::vk::PhysicalDeviceMemoryProperties memoryProps_ = {};
+    int deviceLocalOptimalImageMemoryTypeIndex_ = -1;
     bool isDeviceLocalMemoryShared_ = bool();
 };
 
