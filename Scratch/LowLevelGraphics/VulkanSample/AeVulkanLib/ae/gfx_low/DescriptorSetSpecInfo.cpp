@@ -2,6 +2,7 @@
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
 
 // includes
+#include <ae/base/Math.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 #include <ae/gfx_low/DirectConstantInfo.hpp>
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
@@ -38,6 +39,19 @@ int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const {
     }
     return total;
 }
+
+//------------------------------------------------------------------------------
+int DescriptorSetSpecInfo::MaxBindingIndex(const DescriptorKind kind) const {
+    AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
+    AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
+    const auto& info = bindingInfos_[kind];
+    int result = -1;
+    for (int i = 0; i < info.infoCount; ++i) {
+        result = ::ae::base::Math::Max(result, info.infos.Get()[i].BindingIndex());
+    }
+    return result;
+}
+
 
 //------------------------------------------------------------------------------
 DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(

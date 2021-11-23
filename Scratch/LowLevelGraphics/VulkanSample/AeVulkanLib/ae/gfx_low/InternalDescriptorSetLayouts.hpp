@@ -38,6 +38,14 @@ public:
     /// @name プロパティ
     //@{
     int DescriptorSetLayoutCount() const { return descriptorSetLayoutCount_; }
+    
+    int StorageBufferBindingImageOffset() const {
+        return storageBufferBindingIndexOffset_;
+    }
+
+    int StorageImageBindingImageOffset() const {
+        return storageImageBindingIndexOffset_;
+    }
 
     const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const {
         return &descriptorSetLayouts_[0];
@@ -53,6 +61,8 @@ private:
     std::array<::vk::DescriptorSetLayout, DescriptorSetLayoutsCountMax>
         descriptorSetLayouts_;
     int descriptorSetLayoutCount_ = 0;
+    int storageBufferBindingIndexOffset_ = 0;
+    int storageImageBindingIndexOffset_ = 0;
     base::EnumKeyArray<DescriptorKind, int> descriptorSetLayoutIndexes_;
 };
 

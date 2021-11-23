@@ -177,7 +177,9 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
         writes[writeCount] =
             ::vk::WriteDescriptorSet()
                 .setDstSet(nativeObjects_[descSetIdx])
-                .setDstBinding(descInfo.Region().BindingIndex())
+                .setDstBinding(
+                    descriptorSetLayouts_.StorageBufferBindingImageOffset() +
+                    descInfo.Region().BindingIndex())
                 .setDstArrayElement(descInfo.Region().ElemOffset())
                 .setDescriptorCount(descInfo.Region().ElemCount())
                 .setDescriptorType(::vk::DescriptorType::eStorageBuffer)
@@ -236,7 +238,9 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
         writes[writeCount] =
             ::vk::WriteDescriptorSet()
                 .setDstSet(nativeObjects_[descSetIdx])
-                .setDstBinding(descInfo.Region().BindingIndex())
+                .setDstBinding(
+                    descriptorSetLayouts_.StorageImageBindingImageOffset() +
+                    descInfo.Region().BindingIndex())
                 .setDstArrayElement(descInfo.Region().ElemOffset())
                 .setDescriptorCount(descInfo.Region().ElemCount())
                 .setDescriptorType(::vk::DescriptorType::eStorageImage)

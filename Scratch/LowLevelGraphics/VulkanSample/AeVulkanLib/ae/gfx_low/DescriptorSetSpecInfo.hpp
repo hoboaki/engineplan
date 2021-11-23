@@ -79,6 +79,10 @@ public:
     /// ここにダイレクトコンスタントデータは含まれていません。
     int TotalBindingCount(DescriptorKind kind) const;
 
+    /// 指定のデスクリプタ種類の最大バインディング番号を取得。
+    /// @details 該当するでスクリプタが１つもないときは負の値を返します。
+    int MaxBindingIndex(DescriptorKind kind) const;
+
     /// ダイレクトコンスタント情報の数。（初期値：0）
     int DirectConstantInfoCount() const { return directConstantInfoCount_; }
 
