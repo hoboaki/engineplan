@@ -306,6 +306,24 @@ namespace gfx_low {
         ::vk::Format::eD32SfloatS8Uint, // D32SfloatS8Uint
 
         ::vk::Format::eS8Uint, // S8Uint
+
+        
+        ::vk::Format::eBc1RgbUnormBlock, // Bc1RgbUnormBlock
+        ::vk::Format::eBc1RgbSrgbBlock, // Bc1RgbUnormSrgbBlock
+        ::vk::Format::eBc1RgbaUnormBlock, // Bc1RgbaUnormBlock
+        ::vk::Format::eBc1RgbaSrgbBlock, // Bc1RgbaUnormSrgbBlock
+        ::vk::Format::eBc2UnormBlock, // Bc2UnormBlock
+        ::vk::Format::eBc2UnormBlock, // Bc2UnormSrgbBlock
+        ::vk::Format::eBc3UnormBlock, // Bc3UnormBlock
+        ::vk::Format::eBc3SrgbBlock, // Bc3UnormSrgbBlock
+        ::vk::Format::eBc4SnormBlock, // Bc4SnormBlock
+        ::vk::Format::eBc4UnormBlock, // Bc4UnormBlock
+        ::vk::Format::eBc5SnormBlock, // Bc5SnormBlock
+        ::vk::Format::eBc5UnormBlock, // Bc5UnormBlock
+        ::vk::Format::eBc6HSfloatBlock, // Bc6SfloatBlock
+        ::vk::Format::eBc6HUfloatBlock, // Bc6UfloatBlock
+        ::vk::Format::eBc7UnormBlock, // Bc7SnormBlock
+        ::vk::Format::eBc7SrgbBlock, // Bc7UnormBlock
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(ImageFormat::TERM));
     return table[int(format)];

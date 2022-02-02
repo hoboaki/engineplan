@@ -59,6 +59,23 @@ enum class ImageFormat {
 
     S8Uint,
 
+    Bc1RgbUnormBlock,
+    Bc1RgbUnormSrgbBlock,
+    Bc1RgbaUnormBlock,
+    Bc1RgbaUnormSrgbBlock,
+    Bc2UnormBlock,
+    Bc2UnormSrgbBlock,
+    Bc3UnormBlock,
+    Bc3UnormSrgbBlock,
+    Bc4SnormBlock,
+    Bc4UnormBlock,
+    Bc5SnormBlock,
+    Bc5UnormBlock,
+    Bc6SfloatBlock,
+    Bc6UfloatBlock,
+    Bc7SnormBlock,
+    Bc7UnormBlock,
+
     TERM,
 };
 
