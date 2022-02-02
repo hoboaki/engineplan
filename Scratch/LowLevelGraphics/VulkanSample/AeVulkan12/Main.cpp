@@ -86,6 +86,36 @@ const uint32_t fVertShaderCode[] = {
 const uint32_t fFragShaderCode[] = {
 #include "Shader.frag.inc"
 };
+
+#include "../Resource/image_bc1_yokohama256/Image.hpp"
+namespace image = ::image_bc1_yokohama256;
+
+struct fDdsHeader {
+    std::uint32_t dwMagic; // 常に 0x20534444  ' SDD'
+    std::uint32_t dwSize; // 常に 124
+    std::uint32_t dwFlags; // ヘッダ内の有効な情報 DDSD_* の組み合わせ
+    std::uint32_t dwHeight; // 画像の高さ x size
+    std::uint32_t dwWidth; // 画像の幅   y size
+    std::uint32_t dwPitchOrLinearSize; // 横1 line の byte 数 (pitch)
+        // または 1面分の byte 数 (linearsize)
+    std::uint32_t dwDepth; // 画像の奥行き z size (Volume Texture 用)
+    std::uint32_t dwMipMapCount; // 含まれている mipmap レベル数
+    std::uint32_t dwReserved1[11];
+    std::uint32_t dwPfSize; // 常に 32
+    std::uint32_t dwPfFlags; // pixel フォーマットを表す DDPF_* の組み合わせ
+    std::uint32_t dwFourCC; // フォーマットが FourCC で表現される場合に使用する。
+        // DX10 拡張ヘッダが存在する場合は 'DX10' (0x30315844) が入る。
+    std::uint32_t dwRGBBitCount; // 1 pixel の bit 数
+    std::uint32_t dwRBitMask; // RGB format 時の mask
+    std::uint32_t dwGBitMask; // RGB format 時の mask
+    std::uint32_t dwBBitMask; // RGB format 時の mask
+    std::uint32_t dwRGBAlphaBitMask; // RGB format 時の mask
+    std::uint32_t dwCaps; // mipmap 等のフラグ指定用
+    std::uint32_t dwCaps2; // cube/volume texture 等のフラグ指定用
+    std::uint32_t dwReservedCaps[2];
+    std::uint32_t dwReserved2;
+};
+
 // clang-format on
 
 } // namespace
@@ -144,7 +174,11 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> textureView;
     ::ae::gfx_low::CopyBufferToImageInfo copyBufferToImageInfo;
     {
-        const auto extent = ::ae::base::Extent2i(256, 256);
+        // DDS から情報を読み取る
+        const auto* ddsHeader = static_cast<const fDdsHeader*>(
+            static_cast<const void*>(image::Image_Bytes));
+        AE_BASE_ASSERT(ddsHeader->dwFourCC == 0x31545844); // DXT1(BC1)
+        const auto extent = ::ae::base::Extent2i(ddsHeader->dwWidth, ddsHeader->dwHeight);
         const auto format = ::ae::gfx_low::ImageFormat::R8G8B8A8UnormSrgb;
         const auto baseSpecInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
