@@ -417,7 +417,9 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetDirectConstant(const int index, const void* dataHead) {
+void CommandBuffer::CmdSetDirectConstant(
+    const int index,
+    const void* dataHead) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(
         activePass_.Get(CommandBufferFeature::Render) ||

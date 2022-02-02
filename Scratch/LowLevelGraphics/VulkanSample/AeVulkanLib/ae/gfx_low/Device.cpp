@@ -245,16 +245,17 @@ Device::Device(const DeviceCreateInfo& createInfo)
         vk::MemoryRequirements reqs;
         {
             ::vk::Image tmpImage;
-            const auto createInfo = 
-                ImageResourceCreateInfo().SetSpecInfo(
-                    ImageResourceSpecInfo()
-                        .SetKind(ImageResourceKind::Image2d)
-                        .SetFormat(ImageFormat::D32Sfloat)
-                        .SetExtent(base::Extent2i(16, 16))
-                        .SetTiling(ImageResourceTiling::Optimal)
-                        .SetUsageBitSet(ImageResourceUsageBitSet()
-                            .On(ImageResourceUsage::DepthStencilImage))
-                        ).NativeCreateInfo_();
+            const auto createInfo =
+                ImageResourceCreateInfo()
+                    .SetSpecInfo(
+                        ImageResourceSpecInfo()
+                            .SetKind(ImageResourceKind::Image2d)
+                            .SetFormat(ImageFormat::D32Sfloat)
+                            .SetExtent(base::Extent2i(16, 16))
+                            .SetTiling(ImageResourceTiling::Optimal)
+                            .SetUsageBitSet(ImageResourceUsageBitSet().On(
+                                ImageResourceUsage::DepthStencilImage)))
+                    .NativeCreateInfo_();
             [[maybe_unused]] auto result =
                 nativeObject_.createImage(&createInfo, nullptr, &tmpImage);
             nativeObject_.getImageMemoryRequirements(tmpImage, &reqs);
@@ -339,7 +340,7 @@ ResourceMemory Device::TryToAllocResourceMemory(
 
     // 適切なメモリタイプを探す
     int memoryTypeIndex = -1;
-    if (allocInfo.Kind() == ResourceMemoryKind::DeviceLocal && 
+    if (allocInfo.Kind() == ResourceMemoryKind::DeviceLocal &&
         allocInfo.UsageBitSet().Get(ResourceMemoryUsage::OptimalTilingImage)) {
         memoryTypeIndex = deviceLocalOptimalImageMemoryTypeIndex_;
     }
@@ -408,7 +409,9 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
         .SetAlignment(reqs.alignment)
         .SetUsageBitSet(
             EnumUtil::ToResourceMemoryUsageBitSet(specInfo.UsageBitSet())
-            .Set(ResourceMemoryUsage::OptimalTilingImage, specInfo.Tiling() == ImageResourceTiling::Optimal));
+                .Set(
+                    ResourceMemoryUsage::OptimalTilingImage,
+                    specInfo.Tiling() == ImageResourceTiling::Optimal));
 }
 
 //------------------------------------------------------------------------------

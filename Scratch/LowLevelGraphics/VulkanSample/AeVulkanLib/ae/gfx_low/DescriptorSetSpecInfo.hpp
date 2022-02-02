@@ -25,14 +25,14 @@ namespace gfx_low {
 /// **VK-GLSL**
 /// - buffer(storage) のシェーダーコード上バインド番号は buffer(uniform) の最大番号 + 1 からスタート。
 /// - image(write) のシェーダーコード上バインド番号は image(read)の最大番号 + 1 からスタート。
-/// 
+///
 /// **MSL**
 /// - 通常 buffer(storage) のシェーダーコード上バインド番号は buffer(uniform) の最大番号 + 1 からスタート。
 ///   ただし、ダイレクトコンスタントを使う場合は buffer(uniform) の最大番号 + 1 が
 ///   ダイレクトコンスタントに割り当てられる。その場合は buffer(storage) の
 ///   シェーダーコード上バインド番号は buffer(uniform) の最大番号 + 2 からスタートさせること。
 /// - image(write) のシェーダーコード上バインド番号は image(read)の最大番号 + 1 からスタート。
-/// 
+///
 /// **HLSL**
 /// - ダイレクトコンスタントのバインド番号は buffer(uniform) の最大番号 + 1 を割り当てる。
 /// - image(write) のシェーダーコード上バインド番号は buffer(storage)の最大番号 + 1 からスタート。
@@ -46,8 +46,8 @@ namespace gfx_low {
 ///
 /// また、VK-GLSL 環境では DescriptorSet 番号を Buffer, Image, Sampler の順番で DescriptorSet 番号を 0 から順番に割り当ててください。
 /// Buffer を使わず Image ＆ Sampler だけ使うといった場合は Image に set=0、Sampler に set=1 を割り当ててください。
-/// 
-/// 
+///
+///
 /// ダイレクトコンスタントは１シェーダーステージにつき１つまでしか割り当てることはできません。
 /// またダイレクトコンスタントの扱えるサイズは実行環境によって異なります。
 /// 推奨としては全ダイレクトコンスタントの合計サイズが 128 以下とします。
@@ -90,11 +90,11 @@ public:
     const DirectConstantInfo* DirectConstantInfos() const {
         return directConstantInfos_.Get();
     }
-        
+
     /// DirectConstantCount() DirectConstantInfos() の設定。
     /// @param count 0 以上。
     /// @param infos count == 0 のときは nullptr を指定。それ以外のときは配列のポインタを指定。
-    /// @details 
+    /// @details
     /// ダイレクトコンスタントに関する制約についてはクラスコメントを参照してください。
     DescriptorSetSpecInfo& SetDirectConstantInfos(
         int count,

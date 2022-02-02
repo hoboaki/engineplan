@@ -35,7 +35,7 @@ public:
     PipelineRasterizerInfo& SetFrontFace(PolygonFrontFace frontFace);
 
     /// 線幅。（初期値：1.0f）
-    /// @details 
+    /// @details
     /// PrimitiveTopology が Line 系のときの描画やワイヤーフレーム描画の際に使われます。
     float LineWidth() const { return lineWidth_; }
 
