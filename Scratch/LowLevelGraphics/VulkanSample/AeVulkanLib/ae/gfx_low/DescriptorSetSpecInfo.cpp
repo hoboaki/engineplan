@@ -47,11 +47,11 @@ int DescriptorSetSpecInfo::MaxBindingIndex(const DescriptorKind kind) const {
     const auto& info = bindingInfos_[kind];
     int result = -1;
     for (int i = 0; i < info.infoCount; ++i) {
-        result = ::ae::base::Math::Max(result, info.infos.Get()[i].BindingIndex());
+        result =
+            ::ae::base::Math::Max(result, info.infos.Get()[i].BindingIndex());
     }
     return result;
 }
-
 
 //------------------------------------------------------------------------------
 DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(

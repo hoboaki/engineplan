@@ -38,7 +38,7 @@ public:
     /// @name プロパティ
     //@{
     int DescriptorSetLayoutCount() const { return descriptorSetLayoutCount_; }
-    
+
     int StorageBufferBindingImageOffset() const {
         return storageBufferBindingIndexOffset_;
     }

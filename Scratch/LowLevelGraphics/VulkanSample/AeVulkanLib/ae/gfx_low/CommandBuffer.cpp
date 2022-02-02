@@ -187,9 +187,8 @@ void CommandBuffer::Reset() {
 void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(useSecondaryCommandBufferMode_);
-    AE_BASE_ASSERT(
-        secondaryCommands.Level() ==
-        ::ae::gfx_low::CommandBufferLevel::Secondary);
+    AE_BASE_ASSERT(secondaryCommands.level_ == CommandBufferLevel::Secondary);
+    AE_BASE_ASSERT(secondaryCommands.state_ == CommandBufferState::Recorded);
     AE_BASE_ASSERT(
         (secondaryCommands.Features().Get(
              ::ae::gfx_low::CommandBufferFeature::Render) &&
@@ -418,7 +417,9 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetDirectConstant(const int index, const void* dataHead) {
+void CommandBuffer::CmdSetDirectConstant(
+    const int index,
+    const void* dataHead) {
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(
         activePass_.Get(CommandBufferFeature::Render) ||
