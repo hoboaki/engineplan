@@ -116,6 +116,7 @@ struct fDdsHeader {
     std::uint32_t dwReservedCaps[2];
     std::uint32_t dwReserved2;
 };
+static_assert(sizeof(fDdsHeader) == 128);
 
 // clang-format on
 
@@ -179,7 +180,7 @@ int aemain(::ae::base::Application* app) {
         const auto* ddsHeader = static_cast<const fDdsHeader*>(
             static_cast<const void*>(image::Image_Bytes));
         AE_BASE_ASSERT(ddsHeader->dwFourCC == 0x31545844); // DXT1(BC1)
-        const uint8_t* blockBytes = &image::Image_Bytes[sizeof(ddsHeader)];
+        const uint8_t* blockBytes = &image::Image_Bytes[sizeof(fDdsHeader)];
         const auto extent =
             ::ae::base::Extent2i(ddsHeader->dwWidth, ddsHeader->dwHeight);
         const int byteSizePerBlock = 8;
@@ -287,7 +288,7 @@ int aemain(::ae::base::Application* app) {
                     size_t(y) * blockCountH * byteSizePerBlock;
                 std::memcpy(
                     &dst[baseOffset],
-                    &blockBytes[baseOffset],
+                    &blockBytes[srcOffset],
                     rowByteSize);
             }
             gfxKit.Device().UnmapResourceMemory(*targetMemory);
