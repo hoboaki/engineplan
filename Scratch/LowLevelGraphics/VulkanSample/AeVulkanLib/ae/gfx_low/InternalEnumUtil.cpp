@@ -184,7 +184,6 @@ namespace gfx_low {
             result |= table[i];
         }
     }
-    AE_BASE_ASSERT_NOT_EQUALS(uint32_t(result), 0);
     return result;
 }
 
