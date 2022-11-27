@@ -120,6 +120,7 @@ private:
     const QueueKind kind_;
     const int queueFamilyIndex_;
     base::RuntimeMarray<Operation> operations_;
+    base::RuntimeMarray<::vk::CommandBuffer> executeCommands_;
     base::RuntimeMarray<::vk::Semaphore> waitEvents_;
     base::RuntimeMarray<::vk::Semaphore> signalEvents_;
 };

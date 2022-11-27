@@ -26,6 +26,7 @@ Queue::Queue(
 , kind_(kind)
 , queueFamilyIndex_(queueFamilyIndex)
 , operations_(operationCountMax, device_.System().ObjectAllocator_())
+, executeCommands_(operationCountMax, device_.System().ObjectAllocator_())
 , waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
 , signalEvents_(operationCountMax, device_.System().ObjectAllocator_()) {
 }
@@ -164,14 +165,25 @@ void Queue::Submit(Fence* fencePtr) {
             break;
 
         case OperationKind::CommandExecute: {
-            // @todo 複数コマンド実行対応
-            // 今は１つしか対応しない
-            AE_BASE_ASSERT_LESS(
-                FindOperationIndex(OperationKind::CommandExecute, opIdx + 1),
-                0);
+            // 連続するコマンドバッファの数を一括して処理する
+            executeCommands_.Add(
+                static_cast<CommandBuffer*>(op.ptr)->NativeObject_());
+            for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.Count();
+                 ++nextOpIdx) {
+                auto& nextOp = operations_[nextOpIdx];
+                if (nextOp.kind != OperationKind::CommandExecute) {
+                    break;
+                }
+                executeCommands_.Add(
+                    static_cast<CommandBuffer*>(nextOp.ptr)->NativeObject_());
+                nextOp.kind = OperationKind::
+                    NoOperation; // 処理したので NoOperation に変更
+            }
 
             // 以降の Signal を回収
-            for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.Count();
+            bool existAfterCommandExecuteBlock = false;
+            for (int nextOpIdx = opIdx + 1;
+                 nextOpIdx < operations_.Count();
                  ++nextOpIdx) {
                 auto& nextOp = operations_[nextOpIdx];
                 if (nextOp.kind == OperationKind::EventSignal) {
@@ -179,12 +191,17 @@ void Queue::Submit(Fence* fencePtr) {
                         static_cast<Event*>(nextOp.ptr)->NativeObject_());
                     nextOp.kind = OperationKind::
                         NoOperation; // 処理したので NoOperation に変更
+                } else if (nextOp.kind == OperationKind::CommandExecute) {
+                    // Signal を挟み次のコマンド実行ブロックに到達したので抜ける
+                    existAfterCommandExecuteBlock = true;
+                    break;
                 }
             }
 
             // Fence 選択＆事前処理
+            // 最後のコマンド実行ブロックの場合の時のみ Fence 処理をする
             ::vk::Fence nativeFence;
-            if (fencePtr != nullptr) {
+            if (!existAfterCommandExecuteBlock && fencePtr != nullptr) {
                 auto& fence = base::PtrToRef(fencePtr);
                 nativeFence = fence.NativeObject_();
                 fence.OnSubmit_();
@@ -199,9 +216,8 @@ void Queue::Submit(Fence* fencePtr) {
                     .setWaitSemaphoreCount(waitEvents_.Count())
                     .setPWaitSemaphores(
                         waitEvents_.IsEmpty() ? nullptr : &waitEvents_.First())
-                    .setCommandBufferCount(1)
-                    .setPCommandBuffers(
-                        &static_cast<CommandBuffer*>(op.ptr)->NativeObject_())
+                    .setCommandBufferCount(executeCommands_.Count())
+                    .setPCommandBuffers(&executeCommands_.First())
                     .setSignalSemaphoreCount(signalEvents_.Count())
                     .setPSignalSemaphores(
                         signalEvents_.IsEmpty() ? nullptr
@@ -213,6 +229,7 @@ void Queue::Submit(Fence* fencePtr) {
             }
 
             // 各イベントをクリア
+            executeCommands_.Clear();
             waitEvents_.Clear();
             signalEvents_.Clear();
             break;
