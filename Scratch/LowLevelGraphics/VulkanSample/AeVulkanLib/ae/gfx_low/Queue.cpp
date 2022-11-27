@@ -165,7 +165,9 @@ void Queue::Submit(Fence* fencePtr) {
             break;
 
         case OperationKind::CommandExecute: {
-            // 連続するコマンドバッファの数を一括して処理する
+            // 連続するコマンド実行を一括して処理する
+            // この連続するコマンド実行群をここではコマンド実行ブロックと呼ぶ
+            // TODO: 複数のコマンド実行ブロックでの動作テストができていないので何か不具合があるかもしれない
             executeCommands_.Add(
                 static_cast<CommandBuffer*>(op.ptr)->NativeObject_());
             for (int nextOpIdx = opIdx + 1; nextOpIdx < operations_.Count();
