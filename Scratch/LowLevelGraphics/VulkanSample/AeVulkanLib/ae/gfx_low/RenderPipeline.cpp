@@ -235,7 +235,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                         info.Slot(),
                         0,
                         vertexInputInfo.BufferCount());
-                    AE_BASE_ASSERT_MIN_TERM(
+                    AE_BASE_ASSERT_MIN_MAX(
                         info.Offset(),
                         0,
                         int(vertexBindingDescs[info.Slot()].stride));
