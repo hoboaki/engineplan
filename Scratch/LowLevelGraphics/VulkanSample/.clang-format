@@ -16,7 +16,7 @@ IndentWidth: 4
 ContinuationIndentWidth: 4
 
 # １行制限なし
-ColumnLimit: 80
+ColumnLimit: 0
 
 # 連続空行は1まで認める
 MaxEmptyLinesToKeep: 1
@@ -83,3 +83,23 @@ SpacesInAngles: false
 
 # テンプレート宣言の後で複数行のであれば改行する
 AlwaysBreakTemplateDeclarations: Yes
+
+# 中括弧の改行スタイル
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterCaseLabel: true
+    AfterControlStatement: Never
+    AfterEnum: true
+    AfterFunction: true
+    AfterNamespace: false
+    AfterStruct: true
+    AfterUnion: true
+    AfterExternBlock: true
+    BeforeCatch: true
+    BeforeElse: false
+    # BeforeLamdaBody: false
+    BeforeWhile: false
+    IndentBraces: false
+    SplitEmptyFunction: true
+    SplitEmptyRecord: true
+    SplitEmptyNamespace: true
