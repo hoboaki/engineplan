@@ -274,6 +274,9 @@ namespace gfx_low {
         ::vk::Format::eR16Snorm, // R16Snorm
         ::vk::Format::eR16Uint, // R16Uint
         ::vk::Format::eR16Unorm, // R16Unorm
+        ::vk::Format::eR32Sfloat, // R32Sfloat
+        ::vk::Format::eR32Sint, // R32Sint
+        ::vk::Format::eR32Uint, // R32Uint
 
         ::vk::Format::eR8G8Sint, // R8G8Sint
         ::vk::Format::eR8G8Snorm, // R8G8Snorm
@@ -284,6 +287,9 @@ namespace gfx_low {
         ::vk::Format::eR16G16Snorm, // R16G16Snorm
         ::vk::Format::eR16G16Uint, // R16G16Uint
         ::vk::Format::eR16G16Unorm, // R16G16Unorm
+        ::vk::Format::eR32G32Sfloat, // R32G32Sfloat
+        ::vk::Format::eR32G32Sint, // R32G32Sint
+        ::vk::Format::eR32G32Uint, // R32G32Uint
 
         ::vk::Format::eB10G11R11UfloatPack32, // R11G11B10Ufloat
 
@@ -297,6 +303,9 @@ namespace gfx_low {
         ::vk::Format::eR16G16B16A16Snorm, // R16G16B16A16Snorm
         ::vk::Format::eR16G16B16A16Uint, // R16G16B16A16Uint
         ::vk::Format::eR16G16B16A16Unorm, // R16G16B16A16Unorm
+        ::vk::Format::eR32G32B32A32Sfloat, // R32G32B32A32Sfloat
+        ::vk::Format::eR32G32B32A32Sint, // R32G32B32A32Sint
+        ::vk::Format::eR32G32B32A32Uint, // R32G32B32A32Uint
 
         ::vk::Format::eD16Unorm, // D16Unorm
         ::vk::Format::eD32Sfloat, // D32Sfloat

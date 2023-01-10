@@ -26,6 +26,9 @@ enum class ImageFormat {
     R16Snorm,
     R16Uint,
     R16Unorm,
+    R32Sfloat,
+    R32Sint,
+    R32Uint,
 
     R8G8Sint,
     R8G8Snorm,
@@ -36,6 +39,9 @@ enum class ImageFormat {
     R16G16Snorm,
     R16G16Uint,
     R16G16Unorm,
+    R32G32Sfloat,
+    R32G32Sint,
+    R32G32Uint,
 
     R11G11B10Ufloat,
 
@@ -49,6 +55,9 @@ enum class ImageFormat {
     R16G16B16A16Snorm,
     R16G16B16A16Uint,
     R16G16B16A16Unorm,
+    R32G32B32A32Sfloat,
+    R32G32B32A32Sint,
+    R32G32B32A32Uint,
 
     D16Unorm,
     D32Sfloat,
