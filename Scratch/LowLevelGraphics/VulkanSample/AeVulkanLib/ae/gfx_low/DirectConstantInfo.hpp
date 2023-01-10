@@ -16,7 +16,8 @@ public:
     ShaderBindingStageBitSet Stages() const { return stages_; }
 
     /// Stages() の設定。
-    DirectConstantInfo& SetStages(const ShaderBindingStageBitSet& stages) {
+    DirectConstantInfo& SetStages(const ShaderBindingStageBitSet& stages)
+    {
         stages_ = stages;
         return *this;
     }
@@ -25,7 +26,8 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    DirectConstantInfo& SetSize(size_t size) {
+    DirectConstantInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }

@@ -5,7 +5,8 @@
 #include <ae/base/Pointer.hpp>
 
 namespace ae {
-namespace gfx_low {} // namespace gfx_low
+namespace gfx_low {
+} // namespace gfx_low
 } // namespace ae
 
 //------------------------------------------------------------------------------
@@ -22,12 +23,14 @@ public:
     /// @details
     /// true の場合、このコンピュートパス内において全てのコマンドは
     /// セカンダリコマンドバッファによって実行する必要があります。
-    bool UseSecondaryCommandBuffers() const {
+    bool UseSecondaryCommandBuffers() const
+    {
         return useSecondaryCommandBuffers_;
     }
 
     /// UseSecondaryCommandBuffers() の設定。
-    ComputePassBeginInfo& SetUseSecondaryCommandBuffers(bool use) {
+    ComputePassBeginInfo& SetUseSecondaryCommandBuffers(bool use)
+    {
         useSecondaryCommandBuffers_ = use;
         return *this;
     }

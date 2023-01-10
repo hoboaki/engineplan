@@ -9,7 +9,8 @@ namespace base {
 
 /// ポインタが有効なアドレスを示していることをチェックしつつ参照に変換する。
 template <typename T>
-T& PtrToRef(T* ptr) {
+T& PtrToRef(T* ptr)
+{
     AE_BASE_ASSERT_POINTER(ptr);
     return *ptr;
 }

@@ -13,7 +13,8 @@ namespace base {
 //------------------------------------------------------------------------------
 namespace {
 
-u64 tCurrentUSec() {
+u64 tCurrentUSec()
+{
     LARGE_INTEGER freq;
     if (QueryPerformanceFrequency(&freq) == TRUE) {
         LARGE_INTEGER time;
@@ -27,12 +28,14 @@ u64 tCurrentUSec() {
 } // namespace
 
 //------------------------------------------------------------------------------
-void Application::Quit() {
+void Application::Quit()
+{
     ext_.doQuit = true;
 }
 
 //------------------------------------------------------------------------------
-AppEvent::EnumType Application::ReceiveEventCore() {
+AppEvent::EnumType Application::ReceiveEventCore()
+{
     // 終了要求があったらQuit
     if (ext_.doQuit) {
         return AppEvent::Quit;
@@ -66,7 +69,8 @@ AppEvent::EnumType Application::ReceiveEventCore() {
 //------------------------------------------------------------------------------
 Application_Ext::Application_Ext()
 : prevUSec(tCurrentUSec())
-, doQuit(false) {
+, doQuit(false)
+{
 }
 
 } // namespace base

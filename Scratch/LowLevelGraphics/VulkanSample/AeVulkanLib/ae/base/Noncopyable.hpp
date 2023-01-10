@@ -19,7 +19,8 @@ namespace base {
 /// Hoge b = a; // コピーできないのでコンパイルエラー。
 /// @endcode
 template <class T>
-struct Noncopyable {
+struct Noncopyable
+{
     Noncopyable() = default;
     Noncopyable(const Noncopyable&) = delete;
     Noncopyable& operator=(const Noncopyable&) = delete;

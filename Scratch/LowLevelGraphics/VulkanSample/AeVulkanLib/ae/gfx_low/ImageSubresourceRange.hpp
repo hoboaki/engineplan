@@ -22,7 +22,8 @@ public:
 
     /// BaseLocation() の設定。
     ImageSubresourceRange& SetBaseLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         baseLocation_ = location;
         return *this;
     }

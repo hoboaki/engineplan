@@ -11,11 +11,13 @@ Keyboard::Keyboard()
 , trigger_()
 , repeat_()
 , pulse_()
-, release_() {
+, release_()
+{
 }
 
 //------------------------------------------------------------------------------
-void Keyboard::Update(const KeyboardUpdateData& data) {
+void Keyboard::Update(const KeyboardUpdateData& data)
+{
     // データ設定
     const KeyboardUpdateData pre = data_;
     data_ = data;
@@ -29,57 +31,68 @@ void Keyboard::Update(const KeyboardUpdateData& data) {
 }
 
 //------------------------------------------------------------------------------
-const KeyboardUpdateData Keyboard::LastUpdateData() const {
+const KeyboardUpdateData Keyboard::LastUpdateData() const
+{
     return data_;
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsHold(const KeyKind::EnumType kind) const {
+bool Keyboard::IsHold(const KeyKind::EnumType kind) const
+{
     return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsTrigger(const KeyKind::EnumType kind) const {
+bool Keyboard::IsTrigger(const KeyKind::EnumType kind) const
+{
     return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsRepeat(const KeyKind::EnumType kind) const {
+bool Keyboard::IsRepeat(const KeyKind::EnumType kind) const
+{
     return repeat_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsPulse(const KeyKind::EnumType kind) const {
+bool Keyboard::IsPulse(const KeyKind::EnumType kind) const
+{
     return pulse_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Keyboard::IsRelease(const KeyKind::EnumType kind) const {
+bool Keyboard::IsRelease(const KeyKind::EnumType kind) const
+{
     return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::Hold() const {
+const KeyBitSet Keyboard::Hold() const
+{
     return data_.hold;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::Trigger() const {
+const KeyBitSet Keyboard::Trigger() const
+{
     return trigger_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::Repeat() const {
+const KeyBitSet Keyboard::Repeat() const
+{
     return repeat_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::Pulse() const {
+const KeyBitSet Keyboard::Pulse() const
+{
     return pulse_;
 }
 
 //------------------------------------------------------------------------------
-const KeyBitSet Keyboard::Release() const {
+const KeyBitSet Keyboard::Release() const
+{
     return release_;
 }
 

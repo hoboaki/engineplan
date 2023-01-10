@@ -20,7 +20,8 @@ namespace {
 
 Pointer<Display_Ext> tCurrentDisplay;
 
-KeyKind::EnumType tToKeyKind(WPARAM key) {
+KeyKind::EnumType tToKeyKind(WPARAM key)
+{
     switch (key) {
     case VK_BACK: return KeyKind::BackSpace;
     case VK_TAB: return KeyKind::Tab;
@@ -126,7 +127,8 @@ KeyKind::EnumType tToKeyKind(WPARAM key) {
     }
 }
 
-void tUpdateMouseBtn(MouseUpdateData& data, WPARAM wParam) {
+void tUpdateMouseBtn(MouseUpdateData& data, WPARAM wParam)
+{
     data.hold.Set(MouseBtnKind::L, (wParam & MK_LBUTTON) != 0);
     data.hold.Set(MouseBtnKind::R, (wParam & MK_RBUTTON) != 0);
     data.hold.Set(MouseBtnKind::M, (wParam & MK_MBUTTON) != 0);
@@ -135,37 +137,43 @@ void tUpdateMouseBtn(MouseUpdateData& data, WPARAM wParam) {
 } // namespace
 
 //------------------------------------------------------------------------------
-int Display::ScreenCount() const {
+int Display::ScreenCount() const
+{
     return 1;
 }
 
 //------------------------------------------------------------------------------
-Screen& Display::ScreenAtIndex(const int index) {
+Screen& Display::ScreenAtIndex(const int index)
+{
     AE_BASE_ASSERT_LESS(index, ScreenCount());
     AE_BASE_UNUSED(index);
     return MainScreen();
 }
 
 //------------------------------------------------------------------------------
-Screen& Display::MainScreen() {
+Screen& Display::MainScreen()
+{
     return *ext_.mainScreen;
 }
 
 //------------------------------------------------------------------------------
-void Display::Show() {
+void Display::Show()
+{
     ext_.isClosed = false;
     ShowWindow(ext_.hwindow, SW_SHOWNORMAL);
     UpdateWindow(ext_.hwindow);
 }
 
 //------------------------------------------------------------------------------
-bool Display::IsClosed() const {
+bool Display::IsClosed() const
+{
     return ext_.isClosed;
 }
 
 //------------------------------------------------------------------------------
 LRESULT
-Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam) {
+Display_Ext::WindowProcess(HWND hWND, UINT msg, WPARAM wParam, LPARAM lParam)
+{
     // 設定済エラーチェック
     // 一部環境で無限呼び出しが確認されたためチェックは一度切りにする
     static bool isErrorOccurred = false;
@@ -191,7 +199,8 @@ Display_Ext::Display_Ext(const DisplayContext& context)
 , hidPtr()
 , isClosed(true)
 , keyboardUpdateData()
-, mouseUpdateData() {
+, mouseUpdateData()
+{
     // Windowクラスのセットアップ
     const char* className = "Adel Engine Application";
     windowClass.cbSize = sizeof(windowClass);
@@ -242,12 +251,14 @@ Display_Ext::Display_Ext(const DisplayContext& context)
 }
 
 //------------------------------------------------------------------------------
-Display_Ext::~Display_Ext() {
+Display_Ext::~Display_Ext()
+{
     tCurrentDisplay.Unset(*this);
 }
 
 //------------------------------------------------------------------------------
-void Display_Ext::PollEvent(Application&) {
+void Display_Ext::PollEvent(Application&)
+{
     // pulseをクリア
     keyboardUpdateData.pulse.Clear();
 
@@ -283,7 +294,8 @@ LRESULT Display_Ext::WindowProcessLocal(
     HWND hWND,
     UINT msg,
     WPARAM wParam,
-    LPARAM lParam) {
+    LPARAM lParam)
+{
     switch (msg) {
     case WM_GETMINMAXINFO: // set window's minimum size
         ((MINMAXINFO*)lParam)->ptMinTrackSize = minSize;
@@ -298,7 +310,8 @@ LRESULT Display_Ext::WindowProcessLocal(
 
     case WM_SYSKEYUP: break;
 
-    case WM_KEYDOWN: {
+    case WM_KEYDOWN:
+    {
         KeyKind::EnumType k = tToKeyKind(wParam);
         if (k < KeyKind::TERM) {
             keyboardUpdateData.hold.Set(k, true);
@@ -306,7 +319,8 @@ LRESULT Display_Ext::WindowProcessLocal(
         }
     } break;
 
-    case WM_KEYUP: {
+    case WM_KEYUP:
+    {
         KeyKind::EnumType k = tToKeyKind(wParam);
         if (k < KeyKind::TERM) {
             keyboardUpdateData.hold.Set(k, false);
@@ -319,11 +333,13 @@ LRESULT Display_Ext::WindowProcessLocal(
     case WM_MBUTTONUP:
     case WM_RBUTTONDOWN:
     case WM_RBUTTONUP:
-    case WM_MOUSEMOVE: {
+    case WM_MOUSEMOVE:
+    {
         switch (msg) {
         case WM_LBUTTONDOWN:
         case WM_MBUTTONDOWN:
-        case WM_RBUTTONDOWN: { // ボタンが押された
+        case WM_RBUTTONDOWN:
+        { // ボタンが押された
             // 更新する前にキャプチャー設定
             if (mouseUpdateData.hold.IsAllOff()) {
                 SetCapture(hWND);
@@ -335,7 +351,8 @@ LRESULT Display_Ext::WindowProcessLocal(
 
         case WM_LBUTTONUP:
         case WM_MBUTTONUP:
-        case WM_RBUTTONUP: { // ボタンが離された
+        case WM_RBUTTONUP:
+        { // ボタンが離された
             // 更新
             tUpdateMouseBtn(mouseUpdateData, wParam);
 

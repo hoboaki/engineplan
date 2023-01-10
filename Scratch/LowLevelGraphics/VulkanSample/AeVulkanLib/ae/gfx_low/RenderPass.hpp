@@ -32,7 +32,8 @@ public:
     /// @name 内部処理用機能
     //@{
     int RenderTargetCount_() const { return renderTargetCount_; }
-    ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const {
+    ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const
+    {
         return renderPassBeginInfo_;
     }
     const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }

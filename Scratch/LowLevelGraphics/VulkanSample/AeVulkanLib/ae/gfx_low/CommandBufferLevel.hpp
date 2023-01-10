@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// コマンドバッファの階層レベルを表す列挙値。
-enum class CommandBufferLevel {
+enum class CommandBufferLevel
+{
     /// 無効値。
     Invalid,
 

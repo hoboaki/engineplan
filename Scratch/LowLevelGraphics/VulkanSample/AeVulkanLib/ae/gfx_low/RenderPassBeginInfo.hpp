@@ -23,7 +23,8 @@ public:
     const RenderPass* RenderPass() const { return renderPass_.Get(); }
 
     /// RenderPass() の設定。（設定必須）
-    RenderPassBeginInfo& SetRenderPass(const gfx_low::RenderPass* renderPass) {
+    RenderPassBeginInfo& SetRenderPass(const gfx_low::RenderPass* renderPass)
+    {
         renderPass_.Reset(renderPass);
         return *this;
     }
@@ -32,12 +33,14 @@ public:
     /// @details
     /// true の場合、この描画パスにおいて一部を除く全てのコマンドは
     /// セカンダリコマンドバッファによって実行する必要があります。
-    bool UseSecondaryCommandBuffers() const {
+    bool UseSecondaryCommandBuffers() const
+    {
         return useSecondaryCommandBuffers_;
     }
 
     /// UseSecondaryCommandBuffers() の設定。
-    RenderPassBeginInfo& SetUseSecondaryCommandBuffers(bool use) {
+    RenderPassBeginInfo& SetUseSecondaryCommandBuffers(bool use)
+    {
         useSecondaryCommandBuffers_ = use;
         return *this;
     }

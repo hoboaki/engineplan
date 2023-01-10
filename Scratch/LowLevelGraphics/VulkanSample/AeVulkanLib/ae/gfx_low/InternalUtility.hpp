@@ -15,7 +15,8 @@ namespace ae {
 namespace gfx_low {
 
 /// 内部実装用便利機能群。
-struct InternalUtility {
+struct InternalUtility
+{
     /// @param aspectFlagsHint ImageAspectFlags が事前に分かっている場合は指定。（処理負荷削減目的の引数）
     static ::vk::ImageSubresourceRange ToImageSubresourceRange(
         const ImageResource& resource,

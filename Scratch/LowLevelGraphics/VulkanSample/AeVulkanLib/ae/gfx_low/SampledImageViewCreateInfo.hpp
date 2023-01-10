@@ -26,7 +26,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    SampledImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    SampledImageViewCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -36,7 +37,8 @@ public:
 
     /// ImageResource の設定。（設定必須）
     SampledImageViewCreateInfo& SetResource(
-        gfx_low::ImageResource* imageResource) {
+        gfx_low::ImageResource* imageResource)
+    {
         resource_.Reset(imageResource);
         return *this;
     }
@@ -58,7 +60,8 @@ public:
 
     /// SubresourceRange() の設定。
     SampledImageViewCreateInfo& SetSubresourceRange(
-        const ImageSubresourceRange& range) {
+        const ImageSubresourceRange& range)
+    {
         subresourceRange_ = range;
         return *this;
     }

@@ -10,8 +10,10 @@ namespace base {
 /// @addtogroup AeBase-IO
 //@{
 /// Seek関数の基準。
-struct SeekOrigin {
-    enum EnumType {
+struct SeekOrigin
+{
+    enum EnumType
+    {
         Begin, ///< 先頭。
         Current, ///< 現在位置。
         End, ///< 末尾。

@@ -25,7 +25,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    BufferResourceCreateInfo& SetDevice(gfx_low::Device* device) {
+    BufferResourceCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,7 +36,8 @@ public:
 
     /// SpecInfo() の設定。
     BufferResourceCreateInfo& SetSpecInfo(
-        const BufferResourceSpecInfo& specInfo) {
+        const BufferResourceSpecInfo& specInfo)
+    {
         specInfo_ = specInfo;
         return *this;
     }
@@ -46,7 +48,8 @@ public:
 
     /// DataAddress() の設定。
     BufferResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress) {
+        const ResourceMemoryAddress& dataAddress)
+    {
         dataAddress_ = dataAddress;
         return *this;
     }
@@ -57,7 +60,8 @@ public:
     //@{
     /// VkBuffer オブジェクト。こちらが指定されている場合はこれをそのまま使う。
     ::vk::Buffer* NativeObjectPtr_() const { return nativeObjectPtr_.Get(); }
-    BufferResourceCreateInfo& SetBufferPtr_(::vk::Buffer* nativeObjectPtr) {
+    BufferResourceCreateInfo& SetBufferPtr_(::vk::Buffer* nativeObjectPtr)
+    {
         nativeObjectPtr_.Reset(nativeObjectPtr);
         return *this;
     }

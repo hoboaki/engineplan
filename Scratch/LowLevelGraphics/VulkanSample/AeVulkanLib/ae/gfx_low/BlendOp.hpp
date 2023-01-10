@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// ブレンド演算を示す列挙値。
-enum class BlendOp {
+enum class BlendOp
+{
     /// 無効値。
     Invalid,
 

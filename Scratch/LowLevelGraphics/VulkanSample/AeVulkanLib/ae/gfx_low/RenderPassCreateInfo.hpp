@@ -27,25 +27,29 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    RenderPassCreateInfo& SetDevice(gfx_low::Device* device) {
+    RenderPassCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
 
     /// RenderPass 仕様情報。（初期値：デフォルトコンストラクタの値）
-    const RenderPassSpecInfo RenderPassSpecInfo() const {
+    const RenderPassSpecInfo RenderPassSpecInfo() const
+    {
         return renderPassSpecInfo_;
     }
 
     /// RenderPassSpecInfo() の設定。（設定必須）
     RenderPassCreateInfo& SetRenderPassSpecInfo(
-        const gfx_low::RenderPassSpecInfo& specInfo) {
+        const gfx_low::RenderPassSpecInfo& specInfo)
+    {
         renderPassSpecInfo_ = specInfo;
         return *this;
     }
 
     /// 全 RenderTarget 設定情報。（初期値：nullptr）
-    const RenderTargetSetting* RenderTargetSettings() const {
+    const RenderTargetSetting* RenderTargetSettings() const
+    {
         return renderTargetSettings_.Get();
     }
 
@@ -53,13 +57,15 @@ public:
     /// @param settings RenderPassSpecInfo().RenderTargetCount()
     /// 長の配列ポインタ。
     RenderPassCreateInfo& SetRenderTargetSettings(
-        const RenderTargetSetting* settings) {
+        const RenderTargetSetting* settings)
+    {
         renderTargetSettings_.Reset(settings);
         return *this;
     }
 
     /// DepthStencil 設定情報。（初期値：nullptr）
-    const DepthStencilSetting* DepthStencilSettingPtr() const {
+    const DepthStencilSetting* DepthStencilSettingPtr() const
+    {
         return depthStencilSettingPtr_.Get();
     }
 
@@ -68,7 +74,8 @@ public:
     /// RenderPassSpecInfo() で DepthStencil
     /// を使う仕様になっている場合は設定必須です。
     RenderPassCreateInfo& SetDepthStencilSettingPtr(
-        const DepthStencilSetting* settingPtr) {
+        const DepthStencilSetting* settingPtr)
+    {
         depthStencilSettingPtr_.Reset(settingPtr);
         return *this;
     }
@@ -77,7 +84,8 @@ public:
     base::Aabb2i RenderArea() const { return renderArea_; }
 
     /// RenderArea() の設定。
-    RenderPassCreateInfo& SetRenderArea(const base::Aabb2i& renderArea) {
+    RenderPassCreateInfo& SetRenderArea(const base::Aabb2i& renderArea)
+    {
         renderArea_ = renderArea;
         return *this;
     }

@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// イメージビューの種類。
-enum class ImageViewKind {
+enum class ImageViewKind
+{
     /// 無効値。
     Invalid,
 

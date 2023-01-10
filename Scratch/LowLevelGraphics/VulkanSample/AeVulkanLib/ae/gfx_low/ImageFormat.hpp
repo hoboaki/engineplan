@@ -13,7 +13,8 @@ namespace gfx_low {
 /// 配置の仕様は動作プラットフォームに依存します。
 ///
 /// （開発用メモ）非圧縮名前順、圧縮名前順で列挙値を定義しています。
-enum class ImageFormat {
+enum class ImageFormat
+{
     /// 無効値。
     Invalid,
 

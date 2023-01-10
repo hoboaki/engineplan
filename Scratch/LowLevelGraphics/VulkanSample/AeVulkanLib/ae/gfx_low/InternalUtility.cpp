@@ -14,7 +14,8 @@ namespace gfx_low {
 ::vk::ImageSubresourceRange InternalUtility::ToImageSubresourceRange(
     const ImageResource& resource,
     const ImageSubresourceLocation& location,
-    const ::vk::ImageAspectFlags& aspectFlagsHint) {
+    const ::vk::ImageAspectFlags& aspectFlagsHint)
+{
     const ::vk::ImageAspectFlags aspectFlags =
         aspectFlagsHint
             ? aspectFlagsHint

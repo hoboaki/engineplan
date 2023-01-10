@@ -35,7 +35,8 @@ public:
     //@{
     int PushConstantRangeCount() const { return pushConstantRangeCount_; }
 
-    const ::vk::PushConstantRange* PushConstantRanges() const {
+    const ::vk::PushConstantRange* PushConstantRanges() const
+    {
         return &pushConstantRanges_[0];
     }
     //@}

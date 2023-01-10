@@ -13,7 +13,8 @@ namespace base {
 //@{
 /// @brief EnumTmpl のPod版。
 template <typename TEnumType, typename TDataType>
-struct EnumPodTmpl {
+struct EnumPodTmpl
+{
     //============================================================
     // private
     TDataType val_;
@@ -46,7 +47,8 @@ struct EnumPodTmpl {
     /// EnumPodTmpl< Color::EnumType, int > color;
     /// color = Color::Red; // 代入できる
     /// @endcode
-    EnumPodTmpl<TEnumType, TDataType>& operator=(const TEnumType val) {
+    EnumPodTmpl<TEnumType, TDataType>& operator=(const TEnumType val)
+    {
         val_ = DataType(val);
         return *this;
     }
@@ -79,7 +81,8 @@ public:
     EnumTmpl() { EnumPodTmpl<TEnumType, TDataType>::val_ = 0; }
 
     /// 値を指定して作成。
-    EnumTmpl(const TEnumType val) {
+    EnumTmpl(const TEnumType val)
+    {
         EnumPodTmpl<TEnumType, TDataType>::val_ = DataType(val);
     }
     //@}

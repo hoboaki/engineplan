@@ -16,7 +16,8 @@ public:
     base::Aabb2i Rect() const { return rect_; }
 
     /// Rect() の設定。
-    ScissorSetting& SetRect(const base::Aabb2i& rect) {
+    ScissorSetting& SetRect(const base::Aabb2i& rect)
+    {
         rect_ = rect;
         return *this;
     }

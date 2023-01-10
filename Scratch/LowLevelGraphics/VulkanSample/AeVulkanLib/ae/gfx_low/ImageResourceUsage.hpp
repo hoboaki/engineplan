@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// イメージリソースの使用法。
-enum class ImageResourceUsage {
+enum class ImageResourceUsage
+{
     /// 無効値。
     Invalid,
 

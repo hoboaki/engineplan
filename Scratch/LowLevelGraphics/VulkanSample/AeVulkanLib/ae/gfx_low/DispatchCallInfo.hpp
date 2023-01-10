@@ -13,7 +13,8 @@ public:
     /// @name プロパティ
     //@{
     /// 1スレッドグループあたりのスレッド数。（初期値：1, 1, 1）
-    base::Extent3i ThreadsPerThreadGroup() const {
+    base::Extent3i ThreadsPerThreadGroup() const
+    {
         return threadsPerThreadGroup_;
     }
 

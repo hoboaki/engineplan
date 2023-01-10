@@ -33,7 +33,8 @@ public:
     /// @name プロパティ
     //@{
     /// 有効なメモリを指し示しているか。
-    bool IsValid() const {
+    bool IsValid() const
+    {
         return nativeObject_ != ::vk::DeviceMemory() || head_ != nullptr;
     }
 
@@ -45,10 +46,14 @@ public:
     /// @name 内部処理用機能
     //@{
     explicit ResourceMemory(const ::vk::DeviceMemory& instance)
-    : nativeObject_(instance) {}
+    : nativeObject_(instance)
+    {
+    }
 
     explicit ResourceMemory(void* head)
-    : head_(static_cast<uint8_t*>(head)) {}
+    : head_(static_cast<uint8_t*>(head))
+    {
+    }
 
     ::vk::DeviceMemory NativeObject_() const { return nativeObject_; }
 

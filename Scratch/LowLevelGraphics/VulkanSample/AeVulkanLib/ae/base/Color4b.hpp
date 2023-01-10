@@ -20,7 +20,8 @@ namespace base {
 /// @addtogroup AeBase-Util
 //@{
 /// 8bit符号無し整数をRGBAの順に並べた色構造体。
-struct Color4bPod {
+struct Color4bPod
+{
     //============================================================
     /// @name 定数取得
     //@{

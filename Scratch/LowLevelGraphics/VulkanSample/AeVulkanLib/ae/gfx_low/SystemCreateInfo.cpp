@@ -9,12 +9,14 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-SystemCreateInfo::SystemCreateInfo() {
+SystemCreateInfo::SystemCreateInfo()
+{
 }
 
 //------------------------------------------------------------------------------
 SystemCreateInfo& SystemCreateInfo::SetDebugLevel(
-    const SystemDebugLevel level) {
+    const SystemDebugLevel level)
+{
     AE_BASE_ASSERT_ENUM(level, SystemDebugLevel);
     debugLevel_ = level;
     return *this;

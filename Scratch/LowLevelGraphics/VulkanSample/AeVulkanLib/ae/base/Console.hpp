@@ -20,7 +20,8 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// コンソールに関する関数を定義する空間。
-struct Console {
+struct Console
+{
     /// @brief デフォルトの時間フォーマット文字列を取得する。
     /// @return フォーマット文字列。
     /// @see SetTimeFormatString

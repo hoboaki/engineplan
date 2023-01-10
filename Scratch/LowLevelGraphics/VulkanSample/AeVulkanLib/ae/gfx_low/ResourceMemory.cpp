@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-ResourceMemoryAddress ResourceMemory::Address(const size_t offset) const {
+ResourceMemoryAddress ResourceMemory::Address(const size_t offset) const
+{
     return ResourceMemoryAddress(*this, offset);
 }
 

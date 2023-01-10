@@ -16,7 +16,8 @@ public:
     /// @details
     /// Intel Ice Lake 世代のGPUなどは Normal を1つしか作れないようです。
     /// オンボードチップでも動くプログラムを書く場合は1つのQueueで動くことをサポートしてください。
-    int CreatableQueueCount(QueueKind queueKind) const {
+    int CreatableQueueCount(QueueKind queueKind) const
+    {
         return CreatableQueueCounts_[int(queueKind)];
     }
 

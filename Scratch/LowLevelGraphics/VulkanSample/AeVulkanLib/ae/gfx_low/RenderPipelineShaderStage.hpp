@@ -7,7 +7,8 @@ namespace gfx_low {
 
 /// レンダーパイプラインにおけるプログラマブルシェーダーをアサインできるステージを表す列挙値。
 /// @todo テッセレーションなど他のステージの対応。
-enum class RenderPipelineShaderStage {
+enum class RenderPipelineShaderStage
+{
     /// 無効値。
     Invalid,
 

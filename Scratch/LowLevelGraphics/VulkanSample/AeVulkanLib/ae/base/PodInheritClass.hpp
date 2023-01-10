@@ -21,14 +21,17 @@ public:
     typedef Pod_TYPE PodType;
 
     /// 0クリアの状態で作成する。
-    PodInheritClass() {
+    PodInheritClass()
+    {
         PodType obj = {};
         static_cast<PodType&>(*this) = obj;
     }
 
     /// 引数の値をコピーして作成する。
     PodInheritClass(const PodType& obj)
-    : PodType(obj) {}
+    : PodType(obj)
+    {
+    }
 
 private:
     AE_BASE_STATIC_ASSERT(TypeTraits::IsPod<PodType>::Value);

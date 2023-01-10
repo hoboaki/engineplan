@@ -19,7 +19,9 @@ public:
         const ResourceMemory& memory = ResourceMemory(),
         size_t offset = 0)
     : memory_(memory)
-    , offset_(offset) {}
+    , offset_(offset)
+    {
+    }
     //@}
 
     /// @name プロパティ

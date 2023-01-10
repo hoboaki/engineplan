@@ -13,7 +13,8 @@ namespace base {
 //@{
 /// std::tr1::ref と同じ役割の関数。
 template <typename T>
-const Reference<T> Ref(T& obj) {
+const Reference<T> Ref(T& obj)
+{
     return Reference<T>(obj);
 }
 //@}

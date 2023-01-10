@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// 比較演算を示す列挙値。
-enum class CompareOp {
+enum class CompareOp
+{
     /// 無効値。
     Invalid,
 

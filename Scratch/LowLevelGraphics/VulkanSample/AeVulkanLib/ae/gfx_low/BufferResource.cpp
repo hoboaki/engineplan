@@ -14,7 +14,8 @@ namespace gfx_low {
 BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , nativeObject_()
-, isCreatedByNativeObjectPtr_(false) {
+, isCreatedByNativeObjectPtr_(false)
+{
     // NativeObjectPtr からの作成
     if (createInfo.NativeObjectPtr_() != nullptr) {
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
@@ -45,7 +46,8 @@ BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-BufferResource::~BufferResource() {
+BufferResource::~BufferResource()
+{
     // NativeObjectPtr から作った場合は何もしない
     if (isCreatedByNativeObjectPtr_) {
         nativeObject_ = ::vk::Buffer();

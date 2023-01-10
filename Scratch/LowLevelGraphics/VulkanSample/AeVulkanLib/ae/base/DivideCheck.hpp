@@ -10,13 +10,15 @@ namespace ae {
 namespace base {
 
 // 割り算チェックで使うモノたち用空間。
-struct DivideCheck {
+struct DivideCheck
+{
     // Assert用メッセージ文字列。
     static const char* const AssertionMessage;
 
     // アサートで止めつつ引数の値をそのまま返す。
     template <typename T>
-    static T Error(const T& retVal) {
+    static T Error(const T& retVal)
+    {
         AE_BASE_ASSERT_NOT_REACHED_MSG(AssertionMessage);
         return retVal;
     }

@@ -23,19 +23,22 @@ public:
     /// @name プロパティ
     //@{
     /// RenderTarget イメージを指す RenderTargetImageView。（初期値：nullptr）
-    gfx_low::RenderTargetImageView* RenderTargetImageView() const {
+    gfx_low::RenderTargetImageView* RenderTargetImageView() const
+    {
         return renderTargetImageView_.Get();
     }
 
     /// RenderTargetImageView() の設定。（設定必須）
     RenderTargetSetting& SetRenderTargetImageView(
-        gfx_low::RenderTargetImageView* view) {
+        gfx_low::RenderTargetImageView* view)
+    {
         renderTargetImageView_.Reset(view);
         return *this;
     }
 
     /// RenderPass 開始時点の RenderTarget イメージの状態。（初期値：Invalid）
-    ImageResourceState InitialImageResourceState() const {
+    ImageResourceState InitialImageResourceState() const
+    {
         return initialImageResourceState_;
     }
 
@@ -43,7 +46,8 @@ public:
     RenderTargetSetting& SetInitialImageResourceState(ImageResourceState state);
 
     /// RenderPass 終了時点の RenderTarget イメージの状態。（初期値：Invalid）
-    ImageResourceState FinalImageResourceState() const {
+    ImageResourceState FinalImageResourceState() const
+    {
         return finalImageResourceState_;
     }
 
@@ -66,7 +70,8 @@ public:
     base::Color4Pod ClearColor() const { return clearColor_; }
 
     /// ClearColor() の設定。
-    RenderTargetSetting& SetClearColor(const base::Color4Pod& clearColor) {
+    RenderTargetSetting& SetClearColor(const base::Color4Pod& clearColor)
+    {
         clearColor_ = clearColor;
         return *this;
     }

@@ -18,7 +18,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 , mipLevels_()
 , arrayLength_()
 , isCreatedByNativeObjectPtr_(false)
-, isCubeMapImage_() {
+, isCubeMapImage_()
+{
     // NativeObjectPtr からの作成
     if (createInfo.NativeObjectPtr_() != nullptr) {
         AE_BASE_ASSERT(createInfo.NativeObjectPtr_() != nullptr);
@@ -58,7 +59,8 @@ ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-ImageResource::~ImageResource() {
+ImageResource::~ImageResource()
+{
     // NativeObjectPtr から作った場合は何もしない
     if (isCreatedByNativeObjectPtr_) {
         nativeObject_ = ::vk::Image();

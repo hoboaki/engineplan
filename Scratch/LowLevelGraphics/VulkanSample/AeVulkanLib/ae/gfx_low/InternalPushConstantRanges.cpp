@@ -16,7 +16,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 InternalPushConstantRanges::InternalPushConstantRanges(
     const DescriptorSetSpecInfo& info)
-: pushConstantRangeCount_(info.DirectConstantInfoCount()) {
+: pushConstantRangeCount_(info.DirectConstantInfoCount())
+{
     // 内容チェック
     info.Validate_();
 

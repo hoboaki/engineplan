@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// プリミティブトポロジの種類を示す列挙値。
-enum class PrimitiveTopologyKind {
+enum class PrimitiveTopologyKind
+{
     Invalid,
 
     /// 点リスト。

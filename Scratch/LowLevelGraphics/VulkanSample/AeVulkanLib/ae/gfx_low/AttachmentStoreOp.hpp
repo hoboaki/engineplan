@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// RenderTargetImage・DepthStencilImage のストア操作を示す列挙値。
-enum class AttachmentStoreOp {
+enum class AttachmentStoreOp
+{
     /// 無効値。
     Invalid,
 

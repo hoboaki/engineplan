@@ -27,7 +27,8 @@ public:
 
     /// UniformBuffer
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
-    const UniformBufferDescriptorInfo* UniformBufferInfos() const {
+    const UniformBufferDescriptorInfo* UniformBufferInfos() const
+    {
         return uniformBufferInfos_.Get();
     }
 
@@ -41,7 +42,8 @@ public:
 
     /// StorageBuffer
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
-    const StorageBufferDescriptorInfo* StorageBufferInfos() const {
+    const StorageBufferDescriptorInfo* StorageBufferInfos() const
+    {
         return storageBufferInfos_.Get();
     }
 
@@ -55,7 +57,8 @@ public:
 
     /// SampledImage
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
-    const SampledImageDescriptorInfo* SampledImageInfos() const {
+    const SampledImageDescriptorInfo* SampledImageInfos() const
+    {
         return sampledImageInfos_.Get();
     }
 
@@ -69,7 +72,8 @@ public:
 
     /// StorageImage
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
-    const StorageImageDescriptorInfo* StorageImageInfos() const {
+    const StorageImageDescriptorInfo* StorageImageInfos() const
+    {
         return storageImageInfos_.Get();
     }
 
@@ -83,7 +87,8 @@ public:
 
     /// Sampler
     /// 用デスクリプタ情報がある配列の先頭アドレス。（初期値：nullptr）
-    const SamplerDescriptorInfo* SamplerInfos() const {
+    const SamplerDescriptorInfo* SamplerInfos() const
+    {
         return samplerInfos_.Get();
     }
 

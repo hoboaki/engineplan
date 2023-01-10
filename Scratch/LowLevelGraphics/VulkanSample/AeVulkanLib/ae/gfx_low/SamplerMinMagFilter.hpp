@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// １枚のMipLevelテクスチャからサンプリングするときの値の取得方法。
-enum class SamplerMinMagFilter {
+enum class SamplerMinMagFilter
+{
     /// 無効値。
     Invalid,
 

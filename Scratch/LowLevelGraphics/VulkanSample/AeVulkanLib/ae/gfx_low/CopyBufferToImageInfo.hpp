@@ -27,13 +27,15 @@ public:
     //@{
     /// コピー元イメージデータが可能されている BufferResource
     /// のポインタ。（初期値：nullptr）
-    BufferResource* SrcBufferResource() const {
+    BufferResource* SrcBufferResource() const
+    {
         return srcBufferResource_.Get();
     }
 
     /// SrcBufferResource() の設定。（設定必須）
     CopyBufferToImageInfo& SetSrcBufferResource(
-        gfx_low::BufferResource* resource) {
+        gfx_low::BufferResource* resource)
+    {
         srcBufferResource_.Reset(resource);
         return *this;
     }
@@ -43,7 +45,8 @@ public:
     size_t SrcBufferOffset() const { return srcBufferOffset_; }
 
     /// BufferOffset() の設定。
-    CopyBufferToImageInfo& SetSrcBufferOffset(size_t offset) {
+    CopyBufferToImageInfo& SetSrcBufferOffset(size_t offset)
+    {
         srcBufferOffset_ = offset;
         return *this;
     }
@@ -52,7 +55,8 @@ public:
     size_t SrcBufferRowPitch() const { return srcBufferRowPitch_; }
 
     /// SrcBufferRowPitch() の設定。
-    CopyBufferToImageInfo& SetSrcBufferRowPitch(size_t pitch) {
+    CopyBufferToImageInfo& SetSrcBufferRowPitch(size_t pitch)
+    {
         srcBufferRowPitch_ = pitch;
         return *this;
     }
@@ -61,7 +65,8 @@ public:
     size_t SrcBufferDepthPitch() const { return srcBufferDepthPitch_; }
 
     /// SrcBufferDepthPitch() の設定。
-    CopyBufferToImageInfo& SetSrcBufferDepthPitch(size_t pitch) {
+    CopyBufferToImageInfo& SetSrcBufferDepthPitch(size_t pitch)
+    {
         srcBufferDepthPitch_ = pitch;
         return *this;
     }
@@ -70,13 +75,15 @@ public:
     base::Extent3i SrcImageExtent() const { return srcImageExtent_; }
 
     /// SrcImageExtent() の設定。（設定必須）
-    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent3iPod& extent) {
+    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent3iPod& extent)
+    {
         srcImageExtent_ = extent;
         return *this;
     }
 
     /// 2次元用 SrcImageExtent() の設定。
-    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent2iPod& extent) {
+    CopyBufferToImageInfo& SetSrcImageExtent(const base::Extent2iPod& extent)
+    {
         return SetSrcImageExtent(base::Extent3i(extent, 1));
     }
 
@@ -92,19 +99,22 @@ public:
 
     /// DstImageResource() の設定。（設定必須）
     CopyBufferToImageInfo& SetDstImageResource(
-        gfx_low::ImageResource* resource) {
+        gfx_low::ImageResource* resource)
+    {
         dstImageResource_.Reset(resource);
         return *this;
     }
 
     /// コピー先場所。（初期値：デフォルトコンストラクタの値）
-    ImageSubresourceLocation DstSubresourceLocation() const {
+    ImageSubresourceLocation DstSubresourceLocation() const
+    {
         return dstSubresourceLocation_;
     }
 
     /// DstSubresourceLocation() の設定。
     CopyBufferToImageInfo& SetDstSubresourceLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         dstSubresourceLocation_ = location;
         return *this;
     }
@@ -117,12 +127,14 @@ public:
     CopyBufferToImageInfo& SetDstImageOffset(const base::Vector3iPod& offset);
 
     /// 2次元用 DstImageOffset() の設定。
-    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector2iPod& offset) {
+    CopyBufferToImageInfo& SetDstImageOffset(const base::Vector2iPod& offset)
+    {
         return SetDstImageOffset(base::Vector3i(offset, 0));
     }
 
     /// コピー処理をする時点でのコピー先サブリソースのイメージリソースの状態。（初期値：Invalid）
-    ImageResourceState DstImageResourceState() const {
+    ImageResourceState DstImageResourceState() const
+    {
         return dstImageResourceState_;
     }
 

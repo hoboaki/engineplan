@@ -12,7 +12,8 @@ namespace base {
 Touch::Touch(const int tapCount)
 : tapCount_(tapCount)
 , data_()
-, taps_() {
+, taps_()
+{
     if (TouchUpdateData::TAP_COUNT_MAX < tapCount_) {
         AE_BASE_ERROR_INVALID_VALUE(tapCount);
         tapCount_ = TouchUpdateData::TAP_COUNT_MAX;
@@ -20,11 +21,13 @@ Touch::Touch(const int tapCount)
 }
 
 //------------------------------------------------------------------------------
-Touch::~Touch() {
+Touch::~Touch()
+{
 }
 
 //------------------------------------------------------------------------------
-void Touch::Update(const TouchUpdateData& data) {
+void Touch::Update(const TouchUpdateData& data)
+{
     // バックアップ
     data_ = data;
 
@@ -35,17 +38,20 @@ void Touch::Update(const TouchUpdateData& data) {
 }
 
 //------------------------------------------------------------------------------
-const TouchUpdateData Touch::LastUpdateData() const {
+const TouchUpdateData Touch::LastUpdateData() const
+{
     return data_;
 }
 
 //------------------------------------------------------------------------------
-int Touch::TapCount() const {
+int Touch::TapCount() const
+{
     return tapCount_;
 }
 
 //------------------------------------------------------------------------------
-const TouchTap Touch::TapAtIndex(const int index) const {
+const TouchTap Touch::TapAtIndex(const int index) const
+{
     if (TapCount() <= index) {
         AE_BASE_ERROR_INVALID_VALUE(index);
         return TouchTap();

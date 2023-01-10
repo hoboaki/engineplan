@@ -20,20 +20,23 @@ namespace base {
 //@{
 /// @brief 数学系関数を集めた空間。
 //@{
-struct Math {
+struct Math
+{
     //============================================================
     /// @name 選択
     //@{
 
     /// 最小値を取得する。
     template <typename T>
-    static const T Min(const T a1, const T a2) {
+    static const T Min(const T a1, const T a2)
+    {
         return a1 < a2 ? a1 : a2;
     }
 
     /// 最大値を取得する。
     template <typename T>
-    static const T Max(const T a1, const T a2) {
+    static const T Max(const T a1, const T a2)
+    {
         return a1 < a2 ? a2 : a1;
     }
 
@@ -57,7 +60,8 @@ struct Math {
     /// @param min 最小値。
     /// @param max 最大値。
     template <typename T>
-    static T Clamp(T value, T min, T max) {
+    static T Clamp(T value, T min, T max)
+    {
         AE_BASE_ASSERT_LESS_EQUALS(min, max);
         if (value < min) {
             return min;
@@ -121,7 +125,8 @@ struct Math {
     /// @param val2 rate == 1.0f のときに100%で返される値。
     /// @param rate レート値。0.0f <= rate <= 1.0f。
     template <typename T>
-    static const T Interpolation(const T& val1, const T& val2, const f32 rate) {
+    static const T Interpolation(const T& val1, const T& val2, const f32 rate)
+    {
         AE_BASE_ASSERT_MIN_MAX(rate, 0.0f, 1.0f);
         return val1 + (val2 - val1) * rate;
     }

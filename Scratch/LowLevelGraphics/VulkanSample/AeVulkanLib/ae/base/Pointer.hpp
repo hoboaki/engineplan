@@ -19,11 +19,16 @@ public:
     /// @name コンストラクタ
     //@{
     Pointer()
-    : ptr_(0) {}
+    : ptr_(0)
+    {
+    }
     Pointer(T* obj)
-    : ptr_(obj) {}
+    : ptr_(obj)
+    {
+    }
     Pointer(T& obj)
-    : ptr_(0) {
+    : ptr_(0)
+    {
         Set(obj);
     }
     //@}
@@ -41,7 +46,8 @@ public:
     T* Get() const { return ptr_; }
 
     /// ポインタが設定されているとして参照を返す。
-    T& Ref() const {
+    T& Ref() const
+    {
         AE_BASE_ASSERT_POINTER(ptr_);
         return *ptr_;
     }
@@ -60,7 +66,8 @@ public:
 
     /// @brief 未設定な状態で指定された参照を設定する。
     /// @details 既に設定済みな状況で呼ぶとエラーになります。
-    void Set(T& ref) {
+    void Set(T& ref)
+    {
         AE_BASE_ASSERT(IsNull());
         ptr_ = &ref;
     }
@@ -72,7 +79,8 @@ public:
     /// @brief 指定のオブジェクトが設定されている状態で設定を解除する。
     /// @details
     /// 未設定な状況で呼んだり指定のオブジェクト以外が設定されているとエラーになる。
-    void Unset(T& ref) {
+    void Unset(T& ref)
+    {
         AE_BASE_ASSERT(IsValid());
         AE_BASE_ASSERT(ptr_ == &ref);
         AE_BASE_UNUSED(ref);
@@ -84,7 +92,8 @@ public:
     //@{
     T* operator->() const { return Get(); } ///< Get()のエイリアス。
     T& operator*() const { return Ref(); } ///< Ref()のエイリアス。
-    bool operator==(const Pointer<T>& rHS) const {
+    bool operator==(const Pointer<T>& rHS) const
+    {
         return Equals(rHS);
     } ///> Equals()のエイリアス。
     //@}

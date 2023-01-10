@@ -39,15 +39,18 @@ public:
     //@{
     int DescriptorSetLayoutCount() const { return descriptorSetLayoutCount_; }
 
-    int StorageBufferBindingImageOffset() const {
+    int StorageBufferBindingImageOffset() const
+    {
         return storageBufferBindingIndexOffset_;
     }
 
-    int StorageImageBindingImageOffset() const {
+    int StorageImageBindingImageOffset() const
+    {
         return storageImageBindingIndexOffset_;
     }
 
-    const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const {
+    const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const
+    {
         return &descriptorSetLayouts_[0];
     }
 

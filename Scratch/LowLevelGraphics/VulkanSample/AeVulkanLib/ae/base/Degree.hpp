@@ -19,7 +19,8 @@ namespace base {
 /// @addtogroup AeBase-Math
 //@{
 /// 度を扱う構造体。
-struct DegreePod {
+struct DegreePod
+{
     f32 value; ///< 度の値。
 
     /// @name 変換

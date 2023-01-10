@@ -23,7 +23,8 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    SamplerDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    SamplerDescriptorInfo& SetRegion(const ShaderBindingRegion& region)
+    {
         region_ = region;
         return *this;
     }
@@ -33,7 +34,8 @@ public:
 
     /// Sampler() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    SamplerDescriptorInfo& SetSamplers(const Sampler** samplers) {
+    SamplerDescriptorInfo& SetSamplers(const Sampler** samplers)
+    {
         samplers_.Reset(samplers);
         return *this;
     }

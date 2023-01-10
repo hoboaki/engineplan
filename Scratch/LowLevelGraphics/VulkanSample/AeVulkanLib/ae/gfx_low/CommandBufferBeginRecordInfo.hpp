@@ -24,13 +24,15 @@ public:
     /// 描画用セカンダリコマンドバッファに引き継がれる描画パス。（初期値：nullptr）
     /// @details
     /// CommandBufferFeature::Render を指定したセカンダリコマンドバッファにおいて設定必須。
-    const RenderPass* InheritRenderPassPtr() const {
+    const RenderPass* InheritRenderPassPtr() const
+    {
         return inheritRenderPassPtr_.Get();
     }
 
     /// InheritRenderPassPtr() の設定。
     CommandBufferBeginRecordInfo& SetInheritRenderPassPtr(
-        const RenderPass* infoPtr) {
+        const RenderPass* infoPtr)
+    {
         inheritRenderPassPtr_.Reset(infoPtr);
         return *this;
     }
@@ -39,13 +41,15 @@ public:
     /// @details
     /// CommandBufferFeature::Render を指定したセカンダリコマンドバッファにおいて設定必須。
     /// 設定値は呼び出し元のプライマリコマンドバッファの設定と合わせる必要があります。
-    const ViewportSetting* InheritViewportSettingsPtr() const {
+    const ViewportSetting* InheritViewportSettingsPtr() const
+    {
         return inheritViewportSettingsPtr_.Get();
     }
 
     /// SetInheritViewportSettingsPtr() の設定。
     CommandBufferBeginRecordInfo& SetInheritViewportSettingsPtr(
-        const ViewportSetting* ptr) {
+        const ViewportSetting* ptr)
+    {
         inheritViewportSettingsPtr_.Reset(ptr);
         return *this;
     }
@@ -54,13 +58,15 @@ public:
     /// @details
     /// CommandBufferFeature::Render を指定したセカンダリコマンドバッファにおいて設定必須。
     /// 設定値は呼び出し元のプライマリコマンドバッファの設定と合わせる必要があります。
-    const ScissorSetting* InheritScissorSettingsPtr() const {
+    const ScissorSetting* InheritScissorSettingsPtr() const
+    {
         return inheritScissorSettingsPtr_.Get();
     }
 
     /// SetInheritScissorSettingsPtr() の設定。
     CommandBufferBeginRecordInfo& SetInheritScissorSettingsPtr(
-        const ScissorSetting* ptr) {
+        const ScissorSetting* ptr)
+    {
         inheritScissorSettingsPtr_.Reset(ptr);
         return *this;
     }

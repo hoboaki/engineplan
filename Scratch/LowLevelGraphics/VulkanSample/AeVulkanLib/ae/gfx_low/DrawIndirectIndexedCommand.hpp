@@ -10,7 +10,8 @@ namespace gfx_low {
 /// 頂点インデックスを使うタイプの DrawIndirect のコマンド構造体。
 /// @details
 /// 構造体のデータサイズは使用するグラフィックスAPIによって変わります。
-struct DrawIndirectIndexedCommand {
+struct DrawIndirectIndexedCommand
+{
 public:
     /// @name プロパティ
     //@{

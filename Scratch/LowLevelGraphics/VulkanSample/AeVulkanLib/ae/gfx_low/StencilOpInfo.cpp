@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-StencilOpInfo& StencilOpInfo::SetFailOp(const StencilOp op) {
+StencilOpInfo& StencilOpInfo::SetFailOp(const StencilOp op)
+{
     AE_BASE_ASSERT_ENUM(op, StencilOp);
     AE_BASE_ASSERT(op != StencilOp::Invalid);
     failOp_ = op;
@@ -17,7 +18,8 @@ StencilOpInfo& StencilOpInfo::SetFailOp(const StencilOp op) {
 }
 
 //------------------------------------------------------------------------------
-StencilOpInfo& StencilOpInfo::SetDepthFailOp(const StencilOp op) {
+StencilOpInfo& StencilOpInfo::SetDepthFailOp(const StencilOp op)
+{
     AE_BASE_ASSERT_ENUM(op, StencilOp);
     AE_BASE_ASSERT(op != StencilOp::Invalid);
     depthFailOp_ = op;
@@ -25,7 +27,8 @@ StencilOpInfo& StencilOpInfo::SetDepthFailOp(const StencilOp op) {
 }
 
 //------------------------------------------------------------------------------
-StencilOpInfo& StencilOpInfo::SetPassOp(const StencilOp op) {
+StencilOpInfo& StencilOpInfo::SetPassOp(const StencilOp op)
+{
     AE_BASE_ASSERT_ENUM(op, StencilOp);
     AE_BASE_ASSERT(op != StencilOp::Invalid);
     passOp_ = op;
@@ -33,7 +36,8 @@ StencilOpInfo& StencilOpInfo::SetPassOp(const StencilOp op) {
 }
 
 //------------------------------------------------------------------------------
-StencilOpInfo& StencilOpInfo::SetCompareOp(const gfx_low::CompareOp op) {
+StencilOpInfo& StencilOpInfo::SetCompareOp(const gfx_low::CompareOp op)
+{
     AE_BASE_ASSERT_ENUM(op, CompareOp);
     AE_BASE_ASSERT(op != CompareOp::Invalid);
     compareOp_ = op;

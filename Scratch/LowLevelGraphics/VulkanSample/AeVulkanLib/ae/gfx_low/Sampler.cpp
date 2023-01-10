@@ -14,7 +14,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 Sampler::Sampler(const SamplerCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     // VkSampler の作成
     {
         const auto nativeCreateInfo =
@@ -54,7 +55,8 @@ Sampler::Sampler(const SamplerCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-Sampler::~Sampler() {
+Sampler::~Sampler()
+{
     device_.NativeObject_().destroySampler(nativeObject_, nullptr);
     nativeObject_ = ::vk::Sampler();
 }

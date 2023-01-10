@@ -12,7 +12,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ResourceMemoryUsageBitSet EnumUtil::ToResourceMemoryUsageBitSet(
-    const ImageResourceUsageBitSet& usageBitSet) {
+    const ImageResourceUsageBitSet& usageBitSet)
+{
     const ResourceMemoryUsage table[] = {
         ResourceMemoryUsage(0), // Invalid
         ResourceMemoryUsage::CopySrc, // CopySrc
@@ -37,7 +38,8 @@ ResourceMemoryUsageBitSet EnumUtil::ToResourceMemoryUsageBitSet(
 
 //------------------------------------------------------------------------------
 ResourceMemoryUsageBitSet EnumUtil::ToResourceMemoryUsageBitSet(
-    const BufferResourceUsageBitSet& usageBitSet) {
+    const BufferResourceUsageBitSet& usageBitSet)
+{
     const ResourceMemoryUsage table[] = {
         ResourceMemoryUsage(0), // Invalid
         ResourceMemoryUsage::CopySrc, // CopySrc

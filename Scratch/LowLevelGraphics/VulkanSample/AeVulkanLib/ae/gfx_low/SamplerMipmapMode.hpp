@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// MipLevel のあるテクスチャからサンプリングするときの値の取得方法。
-enum class SamplerMipmapMode {
+enum class SamplerMipmapMode
+{
     /// 無効値。
     Invalid,
 

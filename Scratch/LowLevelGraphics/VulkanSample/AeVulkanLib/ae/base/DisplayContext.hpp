@@ -30,7 +30,8 @@ public:
     const char* WindowTitle() const { return windowTitle_.ReadPtr(); }
 
     /// WindowTitle() の設定。
-    DisplayContext& SetWindowTitle(const char* aText) {
+    DisplayContext& SetWindowTitle(const char* aText)
+    {
         windowTitle_ = aText;
         return *this;
     }
@@ -43,7 +44,8 @@ public:
     bool IsResizableWindow() const { return isResizableWindow_; }
 
     /// IsResizableWindow() の設定。
-    DisplayContext& SetIsResizableWindow(bool isResizable) {
+    DisplayContext& SetIsResizableWindow(bool isResizable)
+    {
         isResizableWindow_ = isResizable;
         return *this;
     }

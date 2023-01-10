@@ -56,7 +56,8 @@ public:
     gfx_low::Queue& Queue(int queueIndex) const;
 
     /// ResourceMemoryKind::DeviceLocal タイプが共有メモリ上に配置されるか。
-    bool IsDeviceLocalMemoryShared() const {
+    bool IsDeviceLocalMemoryShared() const
+    {
         return isDeviceLocalMemoryShared_;
     }
     //@}

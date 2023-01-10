@@ -23,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    DescriptorSetCreateInfo& SetDevice(gfx_low::Device* device) {
+    DescriptorSetCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -32,7 +33,8 @@ public:
     DescriptorSetSpecInfo SpecInfo() const { return specInfo_; }
 
     /// SpecInfo() の設定。
-    DescriptorSetCreateInfo& SetSpecInfo(const DescriptorSetSpecInfo& info) {
+    DescriptorSetCreateInfo& SetSpecInfo(const DescriptorSetSpecInfo& info)
+    {
         specInfo_ = info;
         return *this;
     }

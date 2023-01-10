@@ -32,24 +32,28 @@ public:
 
     /// オブジェクト生成時に確保・破棄時に解放されるメモリ用のアロケータ。（初期値：nullptr）
     /// @details nullptr 時はデフォルトアロケータを使用。
-    ::ae::base::IAllocator* ObjectAllocator() const {
+    ::ae::base::IAllocator* ObjectAllocator() const
+    {
         return objectAllocator_.Get();
     }
 
     /// ObjectAllocator() の設定。
-    SystemCreateInfo& SetObjectAllocator(::ae::base::IAllocator* allocator) {
+    SystemCreateInfo& SetObjectAllocator(::ae::base::IAllocator* allocator)
+    {
         objectAllocator_.Reset(allocator);
         return *this;
     }
 
     /// 関数内で確保・関数終了時に解放されるメモリ用のアロケータ。（初期値：nullptr）
     /// @details nullptr 時はデフォルトアロケータを使用。
-    ::ae::base::IAllocator* TempWorkAllocator() const {
+    ::ae::base::IAllocator* TempWorkAllocator() const
+    {
         return tempWorkAllocator_.Get();
     }
 
     /// TempWorkAllocator() の設定。
-    SystemCreateInfo& SetTempWorkAllocator(::ae::base::IAllocator* allocator) {
+    SystemCreateInfo& SetTempWorkAllocator(::ae::base::IAllocator* allocator)
+    {
         tempWorkAllocator_.Reset(allocator);
         return *this;
     }

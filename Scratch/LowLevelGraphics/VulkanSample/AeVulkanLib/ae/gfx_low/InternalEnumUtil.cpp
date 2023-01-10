@@ -13,7 +13,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::AttachmentLoadOp InternalEnumUtil::ToAttachmentLoadOp(
-    const AttachmentLoadOp loadOp) {
+    const AttachmentLoadOp loadOp)
+{
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     const ::vk::AttachmentLoadOp table[] = {
@@ -30,7 +31,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::AttachmentStoreOp InternalEnumUtil::ToAttachmentStoreOp(
-    const AttachmentStoreOp storeOp) {
+    const AttachmentStoreOp storeOp)
+{
     AE_BASE_ASSERT_ENUM(storeOp, AttachmentStoreOp);
     AE_BASE_ASSERT(storeOp != AttachmentStoreOp::Invalid);
     const ::vk::AttachmentStoreOp table[] = {
@@ -46,7 +48,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::BlendFactor InternalEnumUtil::ToBlendFactorForColor(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     const ::vk::BlendFactor table[] = {
@@ -77,7 +80,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::BlendFactor InternalEnumUtil::ToBlendFactorForAlpha(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     const ::vk::BlendFactor table[] = {
@@ -107,7 +111,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::BlendOp InternalEnumUtil::ToBlendOp(const BlendOp op) {
+::vk::BlendOp InternalEnumUtil::ToBlendOp(const BlendOp op)
+{
     AE_BASE_ASSERT_ENUM(op, BlendOp);
     AE_BASE_ASSERT(op != BlendOp::Invalid);
     const ::vk::BlendOp table[] = {
@@ -126,7 +131,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::BorderColor InternalEnumUtil::ToBorderColor(
-    const SamplerBorderColor color) {
+    const SamplerBorderColor color)
+{
     AE_BASE_ASSERT_ENUM(color, SamplerBorderColor);
     AE_BASE_ASSERT(color != SamplerBorderColor::Invalid);
     const ::vk::BorderColor table[] = {
@@ -143,7 +149,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::BufferUsageFlags InternalEnumUtil::ToBufferUsageFlags(
-    const BufferResourceUsageBitSet& usageBitSet) {
+    const BufferResourceUsageBitSet& usageBitSet)
+{
     const ::vk::BufferUsageFlagBits table[] = {
         ::vk::BufferUsageFlagBits(0), // Invalid
         ::vk::BufferUsageFlagBits::eTransferSrc, // CopySrc
@@ -169,11 +176,14 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ColorComponentFlags InternalEnumUtil::ToColorComponentFlags(
-    const RenderTargetComponentBitSet& componentBitSet) {
+    const RenderTargetComponentBitSet& componentBitSet)
+{
     const ::vk::ColorComponentFlagBits table[] = {
         ::vk::ColorComponentFlagBits(0), // Invalid
-        ::vk::ColorComponentFlagBits::eR, ::vk::ColorComponentFlagBits::eG,
-        ::vk::ColorComponentFlagBits::eB, ::vk::ColorComponentFlagBits::eA,
+        ::vk::ColorComponentFlagBits::eR,
+        ::vk::ColorComponentFlagBits::eG,
+        ::vk::ColorComponentFlagBits::eB,
+        ::vk::ColorComponentFlagBits::eA,
     };
     AE_BASE_ARRAY_LENGTH_CHECK(table, int(RenderTargetComponent::TERM));
     auto result = ::vk::ColorComponentFlags();
@@ -189,7 +199,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::CommandBufferLevel InternalEnumUtil::ToCommandBufferLevel(
-    const CommandBufferLevel level) {
+    const CommandBufferLevel level)
+{
     AE_BASE_ASSERT_ENUM(level, CommandBufferLevel);
     AE_BASE_ASSERT(level != CommandBufferLevel::Invalid);
     const ::vk::CommandBufferLevel table[] = {
@@ -204,7 +215,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::CompareOp InternalEnumUtil::ToCompareOp(const CompareOp op) {
+::vk::CompareOp InternalEnumUtil::ToCompareOp(const CompareOp op)
+{
     AE_BASE_ASSERT_ENUM(op, CompareOp);
     AE_BASE_ASSERT(op != CompareOp::Invalid);
     const ::vk::CompareOp table[] = {
@@ -226,7 +238,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::CullModeFlags InternalEnumUtil::ToCullModeFlags(
-    const RasterizeCullMode mode) {
+    const RasterizeCullMode mode)
+{
     AE_BASE_ASSERT_ENUM(mode, RasterizeCullMode);
     AE_BASE_ASSERT(mode != RasterizeCullMode::Invalid);
     // Vulkan は BitFlag だが gfx_low の仕様は enum
@@ -244,7 +257,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::Filter InternalEnumUtil::ToFilter(const SamplerMinMagFilter filter) {
+::vk::Filter InternalEnumUtil::ToFilter(const SamplerMinMagFilter filter)
+{
     AE_BASE_ASSERT_ENUM(filter, SamplerMinMagFilter);
     AE_BASE_ASSERT(filter != SamplerMinMagFilter::Invalid);
     const ::vk::Filter table[] = {
@@ -259,7 +273,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::Format InternalEnumUtil::ToFormat(const ImageFormat format) {
+::vk::Format InternalEnumUtil::ToFormat(const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     const ::vk::Format table[] = {
@@ -316,7 +331,6 @@ namespace gfx_low {
 
         ::vk::Format::eS8Uint, // S8Uint
 
-        
         ::vk::Format::eBc1RgbUnormBlock, // Bc1RgbUnormBlock
         ::vk::Format::eBc1RgbSrgbBlock, // Bc1RgbUnormSrgbBlock
         ::vk::Format::eBc1RgbaUnormBlock, // Bc1RgbaUnormBlock
@@ -339,7 +353,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::Format InternalEnumUtil::ToFormat(const VertexFormat format) {
+::vk::Format InternalEnumUtil::ToFormat(const VertexFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, VertexFormat);
     AE_BASE_ASSERT(format != VertexFormat::Invalid);
     const ::vk::Format table[] = {
@@ -415,7 +430,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::FrontFace InternalEnumUtil::ToFrontFace(const PolygonFrontFace face) {
+::vk::FrontFace InternalEnumUtil::ToFrontFace(const PolygonFrontFace face)
+{
     AE_BASE_ASSERT_ENUM(face, PolygonFrontFace);
     AE_BASE_ASSERT(face != PolygonFrontFace::Invalid);
     const ::vk::FrontFace table[] = {
@@ -431,7 +447,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageAspectFlags InternalEnumUtil::ToImageAspectFlags(
-    const ::vk::Format format) {
+    const ::vk::Format format)
+{
     switch (format) {
     case ::vk::Format::eD16Unorm:
     case ::vk::Format::eD32Sfloat:
@@ -453,7 +470,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageLayout InternalEnumUtil::ToImageLayout(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     const ::vk::ImageLayout table[] = {
@@ -476,7 +494,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageLayout InternalEnumUtil::ToImageLayoutForColorAttachment(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     const ::vk::ImageLayout table[] = {
@@ -500,7 +519,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 ::vk::ImageLayout InternalEnumUtil::ToImageLayoutForDepthStencilAttachment(
     const ImageResourceState state,
-    const ImageFormat format) {
+    const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     const ::vk::ImageLayout table[] = {
@@ -522,7 +542,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageType InternalEnumUtil::ToImageType(const ImageResourceKind kind) {
+::vk::ImageType InternalEnumUtil::ToImageType(const ImageResourceKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, ImageResourceKind);
     AE_BASE_ASSERT(kind != ImageResourceKind::Invalid);
     const ::vk::ImageType table[] = {
@@ -540,7 +561,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageTiling InternalEnumUtil::ToImageTiling(
-    const ImageResourceTiling tiling) {
+    const ImageResourceTiling tiling)
+{
     AE_BASE_ASSERT_ENUM(tiling, ImageResourceTiling);
     AE_BASE_ASSERT(tiling != ImageResourceTiling::Invalid);
     const ::vk::ImageTiling table[] = {
@@ -556,7 +578,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageUsageFlags InternalEnumUtil::ToImageUsageFlags(
-    const ImageResourceUsageBitSet& usageBitSet) {
+    const ImageResourceUsageBitSet& usageBitSet)
+{
     const ::vk::ImageUsageFlagBits table[] = {
         ::vk::ImageUsageFlagBits(0), // Invalid
         ::vk::ImageUsageFlagBits::eTransferSrc, // CopySrc
@@ -579,7 +602,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageViewType InternalEnumUtil::ToImageViewType(
-    const ImageViewKind kind) {
+    const ImageViewKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, ImageViewKind);
     AE_BASE_ASSERT(kind != ImageViewKind::Invalid);
     const ::vk::ImageViewType table[] = {
@@ -599,7 +623,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::IndexType InternalEnumUtil::ToIndexType(const IndexFormat format) {
+::vk::IndexType InternalEnumUtil::ToIndexType(const IndexFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, IndexFormat);
     AE_BASE_ASSERT(format != IndexFormat::Invalid);
     const ::vk::IndexType table[] = {
@@ -615,7 +640,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::PolygonMode InternalEnumUtil::ToPolygonMode(
-    const RasterizeFillMode kind) {
+    const RasterizeFillMode kind)
+{
     AE_BASE_ASSERT_ENUM(kind, RasterizeFillMode);
     AE_BASE_ASSERT(kind != RasterizeFillMode::Invalid);
     const ::vk::PolygonMode table[] = {
@@ -631,7 +657,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::PrimitiveTopology InternalEnumUtil::ToPrimitiveTopology(
-    const PrimitiveTopologyKind kind) {
+    const PrimitiveTopologyKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, PrimitiveTopologyKind);
     AE_BASE_ASSERT(kind != PrimitiveTopologyKind::Invalid);
     const ::vk::PrimitiveTopology table[] = {
@@ -650,7 +677,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::SamplerAddressMode InternalEnumUtil::ToSamplerAddressMode(
-    const SamplerAddressMode mode) {
+    const SamplerAddressMode mode)
+{
     AE_BASE_ASSERT_ENUM(mode, SamplerAddressMode);
     AE_BASE_ASSERT(mode != SamplerAddressMode::Invalid);
     const ::vk::SamplerAddressMode table[] = {
@@ -668,7 +696,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::SamplerMipmapMode InternalEnumUtil::ToSamplerMipmapMode(
-    const SamplerMipmapMode mode) {
+    const SamplerMipmapMode mode)
+{
     AE_BASE_ASSERT_ENUM(mode, SamplerMipmapMode);
     AE_BASE_ASSERT(mode != SamplerMipmapMode::Invalid);
     const ::vk::SamplerMipmapMode table[] = {
@@ -684,7 +713,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ShaderStageFlagBits InternalEnumUtil::ToShaderStageFlagBits(
-    const RenderPipelineShaderStage stage) {
+    const RenderPipelineShaderStage stage)
+{
     AE_BASE_ASSERT_ENUM(stage, RenderPipelineShaderStage);
     AE_BASE_ASSERT(stage != RenderPipelineShaderStage::Invalid);
     const ::vk::ShaderStageFlagBits table[] = {
@@ -701,7 +731,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ShaderStageFlags InternalEnumUtil::ToShaderStageFlags(
-    const ShaderBindingStageBitSet& stages) {
+    const ShaderBindingStageBitSet& stages)
+{
     const ::vk::ShaderStageFlagBits table[] = {
         ::vk::ShaderStageFlagBits(0), // Invalid
         ::vk::ShaderStageFlagBits::eVertex,
@@ -721,7 +752,8 @@ namespace gfx_low {
 }
 
 //------------------------------------------------------------------------------
-::vk::StencilOp InternalEnumUtil::ToStencilOp(const StencilOp op) {
+::vk::StencilOp InternalEnumUtil::ToStencilOp(const StencilOp op)
+{
     AE_BASE_ASSERT_ENUM(op, StencilOp);
     AE_BASE_ASSERT(op != StencilOp::Invalid);
     const ::vk::StencilOp table[] = {
@@ -743,7 +775,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::VertexInputRate InternalEnumUtil::ToVertexInputRate(
-    const VertexStepRate stepRate) {
+    const VertexStepRate stepRate)
+{
     AE_BASE_ASSERT_ENUM(stepRate, VertexStepRate);
     AE_BASE_ASSERT(stepRate != VertexStepRate::Invalid);
     const ::vk::VertexInputRate table[] = {

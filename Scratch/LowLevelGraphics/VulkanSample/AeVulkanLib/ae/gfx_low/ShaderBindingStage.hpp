@@ -7,7 +7,8 @@ namespace gfx_low {
 
 /// プログラマブルシェーダーをアサインできるステージを表す列挙値。
 /// @todo テッセレーションなど他のステージの対応。
-enum class ShaderBindingStage {
+enum class ShaderBindingStage
+{
     /// 無効値。
     Invalid,
 

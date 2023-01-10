@@ -25,7 +25,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    VertexBufferViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    VertexBufferViewCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,7 +36,8 @@ public:
 
     /// BufferResource の設定。（設定必須）
     VertexBufferViewCreateInfo& SetResource(
-        gfx_low::BufferResource* imageResource) {
+        gfx_low::BufferResource* imageResource)
+    {
         resource_.Reset(imageResource);
         return *this;
     }
@@ -44,7 +46,8 @@ public:
     ResourceMemoryRegion Region() const { return region_; }
 
     /// Region() の設定。
-    VertexBufferViewCreateInfo& SetRegion(const ResourceMemoryRegion& region) {
+    VertexBufferViewCreateInfo& SetRegion(const ResourceMemoryRegion& region)
+    {
         region_ = region;
         return *this;
     }
@@ -54,7 +57,8 @@ public:
 
     /// LayoutInfo() の設定。
     VertexBufferViewCreateInfo& SetLayoutInfo(
-        const VertexBufferLayoutInfo& info) {
+        const VertexBufferLayoutInfo& info)
+    {
         layoutInfo_ = info;
         return *this;
     }

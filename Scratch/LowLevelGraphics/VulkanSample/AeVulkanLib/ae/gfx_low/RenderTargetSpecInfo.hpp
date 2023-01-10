@@ -27,7 +27,8 @@ public:
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
     /// NativeFormat() 設定。
-    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format) {
+    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format)
+    {
         nativeFormat_ = format;
         return *this;
     }

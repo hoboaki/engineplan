@@ -96,7 +96,8 @@ public:
     //@}
 
 private:
-    enum class OperationKind {
+    enum class OperationKind
+    {
         NoOperation,
         SwapchainWait,
         SwapchainPresent,
@@ -106,7 +107,8 @@ private:
         TERM,
     };
 
-    struct Operation {
+    struct Operation
+    {
         OperationKind kind;
         void* ptr;
     };

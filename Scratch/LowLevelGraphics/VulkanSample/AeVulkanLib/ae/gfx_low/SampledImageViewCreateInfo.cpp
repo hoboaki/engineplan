@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 SampledImageViewCreateInfo& SampledImageViewCreateInfo::SetKind(
-    const ImageViewKind kind) {
+    const ImageViewKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, ImageViewKind);
     AE_BASE_ASSERT(kind != ImageViewKind::Invalid);
     kind_ = kind;
@@ -19,7 +20,8 @@ SampledImageViewCreateInfo& SampledImageViewCreateInfo::SetKind(
 
 //------------------------------------------------------------------------------
 SampledImageViewCreateInfo& SampledImageViewCreateInfo::SetFormat(
-    const ImageFormat format) {
+    const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     format_ = format;

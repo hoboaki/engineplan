@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// リソースメモリの使用法。
-enum class ResourceMemoryUsage {
+enum class ResourceMemoryUsage
+{
     /// 無効値。
     Invalid,
 

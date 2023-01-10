@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// ステンシルに対する動作を示す列挙値。
-enum class StencilOp {
+enum class StencilOp
+{
     /// 無効値。
     Invalid,
 

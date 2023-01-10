@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// 頂点バッファ内の頂点属性データ参照位置を移動する単位を示す列挙値。
-enum class VertexStepRate {
+enum class VertexStepRate
+{
     /// 無効値。
     Invalid,
 

@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// デスクリプタの種類を示す列挙値。
-enum class DescriptorKind {
+enum class DescriptorKind
+{
     /// 無効値。
     Invalid,
 

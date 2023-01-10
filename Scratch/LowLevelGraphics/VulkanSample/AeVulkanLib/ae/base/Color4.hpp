@@ -21,7 +21,8 @@ namespace base {
 /// @addtogroup AeBase-Util
 //@{
 /// 32bit浮動小数をRGBAの順に並べた色構造体。
-struct Color4Pod {
+struct Color4Pod
+{
     //============================================================
     /// @name 定数取得
     //@{

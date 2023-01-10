@@ -15,7 +15,8 @@ public:
 
     /// UsageBitSet() の設定。（設定必須）
     ResourceMemoryRequirements& SetUsageBitSet(
-        const ResourceMemoryUsageBitSet& usageBitSet) {
+        const ResourceMemoryUsageBitSet& usageBitSet)
+    {
         usageBitSet_ = usageBitSet;
         return *this;
     }
@@ -27,7 +28,8 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    ResourceMemoryRequirements& SetSize(size_t size) {
+    ResourceMemoryRequirements& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }
@@ -36,7 +38,8 @@ public:
     size_t Alignment() const { return alignment_; }
 
     /// Alignment() の設定。
-    ResourceMemoryRequirements& SetAlignment(size_t alignment) {
+    ResourceMemoryRequirements& SetAlignment(size_t alignment)
+    {
         alignment_ = alignment;
         return *this;
     }

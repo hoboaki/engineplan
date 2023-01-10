@@ -15,7 +15,8 @@ namespace base {
 /// @details
 /// スクリーンの左下が原点になります。@n
 /// 符号有りにしているのはマウスのドラッグ操作でウィンドウ外の座標を扱うことがあるためです。@n
-struct ScreenPosPod {
+struct ScreenPosPod
+{
     s16 x; ///< x位置。
     s16 y; ///< y位置。
 };

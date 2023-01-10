@@ -14,10 +14,12 @@ namespace base {
 //@{
 /// @brief カレンダー情報を扱う構造体。
 /// @details グレゴリアン歴を使っています。
-struct CalendarPod {
+struct CalendarPod
+{
     /// @name 定数
     //@{
-    enum {
+    enum
+    {
         YearMin = 0, ///< 年の最小値。
         YearMax = 9998, ///< 年の最大値。
         MonthMin = 0, ///< 月の最小値。

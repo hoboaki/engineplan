@@ -15,7 +15,8 @@ public:
 
     /// Offset() の設定。
     /// @param offset 参照する ResourceMemory のデータサイズ以下となる値。
-    ResourceMemoryRegion& SetOffset(size_t offset) {
+    ResourceMemoryRegion& SetOffset(size_t offset)
+    {
         offset_ = offset;
         return *this;
     }
@@ -25,7 +26,8 @@ public:
 
     /// Size() の設定
     /// @param size Offset() + size が参照する ResourceMemory のデータサイズ以下となる値。
-    ResourceMemoryRegion& SetSize(size_t size) {
+    ResourceMemoryRegion& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
         ;

@@ -7,7 +7,8 @@ namespace gfx_low {
 
 /// 頂点属性のフォーマット。
 /// @details
-enum class VertexFormat {
+enum class VertexFormat
+{
     /// 無効値。
     Invalid,
 

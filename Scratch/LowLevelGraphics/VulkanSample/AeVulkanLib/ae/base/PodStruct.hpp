@@ -15,7 +15,8 @@ namespace base {
 /// @brief PodClassの既定クラスとなる構造体。
 /// @details バイナリデータの定義で使うことを想定しています。
 template <typename T>
-struct PodStruct {
+struct PodStruct
+{
     /// 値の型名。
     typedef T ValueType;
 

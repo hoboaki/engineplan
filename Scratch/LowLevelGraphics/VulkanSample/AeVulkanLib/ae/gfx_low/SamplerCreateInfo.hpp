@@ -27,7 +27,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    SamplerCreateInfo& SetDevice(gfx_low::Device* device) {
+    SamplerCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -79,7 +80,8 @@ public:
     bool AnisotropyEnable() const { return anisotropyEnable_; }
 
     /// AnisotropyEnable() の設定。
-    SamplerCreateInfo& SetAnisotropyEnable(bool enable) {
+    SamplerCreateInfo& SetAnisotropyEnable(bool enable)
+    {
         anisotropyEnable_ = enable;
         return *this;
     }
@@ -95,7 +97,8 @@ public:
     bool CompareEnable() const { return compareEnable_; }
 
     /// CompareEnable() の設定。
-    SamplerCreateInfo& SetCompareEnable(bool enable) {
+    SamplerCreateInfo& SetCompareEnable(bool enable)
+    {
         compareEnable_ = enable;
         return *this;
     }
@@ -110,7 +113,8 @@ public:
     float MinLod() const { return minLod_; }
 
     /// MinLod() の設定。
-    SamplerCreateInfo& SetMinLod(float lod) {
+    SamplerCreateInfo& SetMinLod(float lod)
+    {
         minLod_ = lod;
         return *this;
     }
@@ -119,7 +123,8 @@ public:
     float MaxLod() const { return maxLod_; }
 
     /// MaxLod() の設定。
-    SamplerCreateInfo& SetMaxLod(float lod) {
+    SamplerCreateInfo& SetMaxLod(float lod)
+    {
         maxLod_ = lod;
         return *this;
     }
@@ -129,7 +134,8 @@ public:
     bool UnnormalizedCoordinates() const { return unnormalizedCordinates_; }
 
     /// UnnormalizedCoordinates() の設定。
-    SamplerCreateInfo& SetUnnormalizedCoordinates(bool unnormalizedCordinates) {
+    SamplerCreateInfo& SetUnnormalizedCoordinates(bool unnormalizedCordinates)
+    {
         unnormalizedCordinates_ = unnormalizedCordinates;
         return *this;
     }

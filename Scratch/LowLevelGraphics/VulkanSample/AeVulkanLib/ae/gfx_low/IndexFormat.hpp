@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// インデックスバッファのフォーマット。
-enum class IndexFormat {
+enum class IndexFormat
+{
     /// 無効値。
     Invalid,
 

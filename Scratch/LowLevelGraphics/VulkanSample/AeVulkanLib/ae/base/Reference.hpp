@@ -18,9 +18,12 @@ template <typename T>
 class Reference {
 public:
     Reference(T& ref)
-    : ptr_(&ref) {}
+    : ptr_(&ref)
+    {
+    }
 
-    operator T&() const {
+    operator T&() const
+    {
         AE_BASE_ASSERT_POINTER(ptr_);
         return *ptr_;
     }

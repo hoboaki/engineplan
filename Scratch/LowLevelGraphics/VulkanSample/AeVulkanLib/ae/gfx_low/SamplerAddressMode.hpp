@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// テクスチャサンプリング時のサンプリングアドレスの決め方。
-enum class SamplerAddressMode {
+enum class SamplerAddressMode
+{
     /// 無効値。
     Invalid,
 

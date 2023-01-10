@@ -43,11 +43,13 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::DescriptorSet* NativeObjects_() { return &nativeObjects_[0]; }
-    const ::vk::DescriptorSet* NativeObjects_() const {
+    const ::vk::DescriptorSet* NativeObjects_() const
+    {
         return &nativeObjects_[0];
     }
 
-    const InternalDescriptorSetLayouts& Layouts_() const {
+    const InternalDescriptorSetLayouts& Layouts_() const
+    {
         return descriptorSetLayouts_;
     }
     //@}

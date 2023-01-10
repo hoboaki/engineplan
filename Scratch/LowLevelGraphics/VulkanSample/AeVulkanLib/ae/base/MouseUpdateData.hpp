@@ -14,7 +14,8 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// マウスの更新データ。
-struct MouseUpdateData {
+struct MouseUpdateData
+{
     ScreenPos pos;
     MouseBtnBitSet hold;
     BoolPod32

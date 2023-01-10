@@ -28,19 +28,22 @@ public:
     RenderPassSpecInfo& SetRenderTargetCount(int renderTargetCount);
 
     /// 全 RenderTarget の仕様情報がある配列の先頭アドレス。（初期値：nullptr）
-    const RenderTargetSpecInfo* RenderTargetSpecInfos() const {
+    const RenderTargetSpecInfo* RenderTargetSpecInfos() const
+    {
         return renderTargetSpecInfos_.Get();
     }
 
     /// RenderTarget の数と仕様の設定。
     RenderPassSpecInfo& SetRenderTargetSpecInfos(
-        const RenderTargetSpecInfo* renderTargetSpecInfos) {
+        const RenderTargetSpecInfo* renderTargetSpecInfos)
+    {
         renderTargetSpecInfos_.Reset(renderTargetSpecInfos);
         return *this;
     }
 
     /// DepthStencil の仕様情報のポインタ。（初期値：nullptr）
-    const DepthStencilSpecInfo* DepthStencilSpecInfoPtr() const {
+    const DepthStencilSpecInfo* DepthStencilSpecInfoPtr() const
+    {
         return depthStencilSpecInfoPtr_.Get();
     }
 
@@ -48,7 +51,8 @@ public:
     /// @param specInfoPtr nullptr を指定すると DepthStencil
     /// を使わない扱いになる。
     RenderPassSpecInfo& SetDepthStencilSpecInfoPtr(
-        const DepthStencilSpecInfo* sptecInfoPtr) {
+        const DepthStencilSpecInfo* sptecInfoPtr)
+    {
         depthStencilSpecInfoPtr_.Reset(sptecInfoPtr);
         return *this;
     }

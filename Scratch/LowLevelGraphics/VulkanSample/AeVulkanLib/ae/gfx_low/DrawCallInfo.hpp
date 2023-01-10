@@ -30,7 +30,8 @@ public:
     bool UseIndexBuffer() const { return useIndexBuffer_; }
 
     /// UseIndexBuffer() の設定。
-    DrawCallInfo& SetUseIndexBuffer(bool useIndexBuffer) {
+    DrawCallInfo& SetUseIndexBuffer(bool useIndexBuffer)
+    {
         useIndexBuffer_ = useIndexBuffer;
         return *this;
     }

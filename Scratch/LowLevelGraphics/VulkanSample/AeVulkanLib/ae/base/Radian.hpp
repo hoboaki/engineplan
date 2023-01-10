@@ -19,7 +19,8 @@ namespace base {
 /// @addtogroup AeBase-Math
 //@{
 /// ラジアンを扱う構造体。
-struct RadianPod {
+struct RadianPod
+{
     f32 value; ///< ラジアン。
 
     /// @name 変換

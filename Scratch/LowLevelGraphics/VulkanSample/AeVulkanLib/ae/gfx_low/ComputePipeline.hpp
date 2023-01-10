@@ -38,7 +38,8 @@ public:
     const ::vk::Pipeline NativeObject_() const { return nativeObject_; }
 
     ::vk::PipelineLayout PipelineLayout_() const { return pipelineLayout_; }
-    const InternalPushConstantRanges& PushConstantRanges_() const {
+    const InternalPushConstantRanges& PushConstantRanges_() const
+    {
         return pushConstantRanges_;
     }
     //@}

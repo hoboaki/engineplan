@@ -26,7 +26,9 @@ public:
     /// @name コンストラクタ
     //@{
     EnumKeyArray()
-    : values_() {}
+    : values_()
+    {
+    }
     //@}
 
     /// @name API
@@ -35,7 +37,8 @@ public:
     constexpr int Count() const { return int(EnumType::TERM); }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int index) {
+    ValueType& At(const int index)
+    {
         if (index < 0 || Count() <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
             return values_[0]; // fail safe code
@@ -44,7 +47,8 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& At(const int index) const {
+    const ValueType& At(const int index) const
+    {
         if (index < 0 || Count() <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, Count());
             return values_[0]; // fail safe code
@@ -56,12 +60,14 @@ public:
     ValueType& At(const EnumType enumValue) { return At(int(enumValue)); }
 
     /// 指定キーの要素にアクセス。
-    const ValueType& At(const EnumType enumValue) const {
+    const ValueType& At(const EnumType enumValue) const
+    {
         return At(int(enumValue));
     }
 
     /// 指定の値を全要素に代入。
-    void Fill(const ValueType& value) {
+    void Fill(const ValueType& value)
+    {
         for (int i = 0; i < Count(); ++i) {
             values_[i] = value;
         }
@@ -80,7 +86,8 @@ public:
     ValueType& operator[](const EnumType enumValue) { return At(enumValue); }
 
     /// At()const のエイリアス。
-    const ValueType& operator[](const EnumType enumValue) const {
+    const ValueType& operator[](const EnumType enumValue) const
+    {
         return At(enumValue);
     }
     //@}

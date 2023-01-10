@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainMasterCreateInfo& SwapchainMasterCreateInfo::SetSwapchainCountMax(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, count);
     swapchainCountMax_ = count;
     return *this;

@@ -16,7 +16,8 @@ namespace gfx_low {
 RenderTargetImageView::RenderTargetImageView(
     const RenderTargetImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     // フォーマットの選択
     auto imageFormat = createInfo.RawFormat_();
     if (imageFormat == ::vk::Format::eUndefined) {
@@ -41,7 +42,8 @@ RenderTargetImageView::RenderTargetImageView(
 }
 
 //------------------------------------------------------------------------------
-RenderTargetImageView::~RenderTargetImageView() {
+RenderTargetImageView::~RenderTargetImageView()
+{
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 

@@ -24,7 +24,8 @@ public:
     bool BlendOpEnable() const { return blendOpEnable_; }
 
     /// BlendOpEnable() の設定。
-    RenderTargetBlendInfo& SetBlendOpEnable(bool enable) {
+    RenderTargetBlendInfo& SetBlendOpEnable(bool enable)
+    {
         blendOpEnable_ = enable;
         return *this;
     }
@@ -70,7 +71,8 @@ public:
 
     /// WriteMask() の設定。
     RenderTargetBlendInfo& SetWriteMask(
-        const RenderTargetComponentBitSet& mask) {
+        const RenderTargetComponentBitSet& mask)
+    {
         writeMask_ = mask;
         return *this;
     }

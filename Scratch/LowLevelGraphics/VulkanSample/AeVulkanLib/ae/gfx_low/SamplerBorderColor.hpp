@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// SamplerAddressMode が ClampToBorder のときに使われる色。
-enum class SamplerBorderColor {
+enum class SamplerBorderColor
+{
     /// 無効値。
     Invalid,
 

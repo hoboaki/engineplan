@@ -39,12 +39,14 @@ public:
     /// @name プロパティ
     //@{
     /// 所属する SwapchainMaster。
-    gfx_low::SwapchainMaster& SwapchainMaster() const {
+    gfx_low::SwapchainMaster& SwapchainMaster() const
+    {
         return swapchainMaster_.Ref();
     }
 
     /// RenderTarget 仕様情報。
-    gfx_low::RenderTargetSpecInfo RenderTargetSpecInfo() const {
+    gfx_low::RenderTargetSpecInfo RenderTargetSpecInfo() const
+    {
         return renderTargetSpecInfo_;
     }
     //@}
@@ -59,7 +61,8 @@ public:
     void AcquireNextImage();
 
     /// アクティブなバックバッファを指す RenderTargetImageView を取得。
-    RenderTargetImageView& CurrentRenderTargetImageView() const {
+    RenderTargetImageView& CurrentRenderTargetImageView() const
+    {
         return frameProperties_[currentFrameIndex_].RenderTargetImageView.Ref();
     }
     //@}
@@ -86,11 +89,13 @@ public:
     ::vk::SwapchainKHR Instance_() const { return swapchain_; }
     const ::vk::SwapchainKHR* InstancePtr_() const { return &swapchain_; }
 
-    Event& CurrentAcquireEvent_() {
+    Event& CurrentAcquireEvent_()
+    {
         return *frameProperties_[currentFrameIndex_].AcquireEvent;
     }
 
-    Event& CurrentReadyToPresentEvent_() {
+    Event& CurrentReadyToPresentEvent_()
+    {
         return *frameProperties_[currentFrameIndex_].ReadyToPresentEvent;
     }
 

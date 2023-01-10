@@ -13,7 +13,8 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// タッチの1タップの更新データ。
-struct TouchTapUpdateData {
+struct TouchTapUpdateData
+{
     uint32 tapCount;
     ScreenPosPod pos;
 };

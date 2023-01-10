@@ -11,7 +11,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectMipLevels_(
-    const int levels) {
+    const int levels)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, levels);
     nativeObjectMipLevels_ = levels;
     return *this;
@@ -19,14 +20,16 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectMipLevels_(
 
 //------------------------------------------------------------------------------
 ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectArrayLength_(
-    const int arrayLength) {
+    const int arrayLength)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, arrayLength);
     nativeObjectArrayLength_ = arrayLength;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const {
+::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const
+{
     const bool isCubeImage = specInfo_.Kind() == ImageResourceKind::ImageCube;
     return ::vk::ImageCreateInfo()
         .setImageType(InternalEnumUtil::ToImageType(specInfo_.Kind()))

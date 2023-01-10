@@ -34,7 +34,8 @@ public:
     bool IsSrgbFormat() const { return isSrgbFormat_; }
 
     /// IsSrgbFormat() の設定。
-    SwapchainCreateInfo& SetIsSrgbFormat(bool isSrgbFormat) {
+    SwapchainCreateInfo& SetIsSrgbFormat(bool isSrgbFormat)
+    {
         isSrgbFormat_ = isSrgbFormat;
         return *this;
     }

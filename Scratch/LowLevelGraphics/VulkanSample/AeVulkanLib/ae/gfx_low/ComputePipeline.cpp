@@ -21,7 +21,8 @@ ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
 , descriptorSetLayouts_(&device_, createInfo.DescriptorSetSpecInfo())
 , pushConstantRanges_(createInfo.DescriptorSetSpecInfo())
 , pipelineLayout_()
-, nativeObject_() {
+, nativeObject_()
+{
     // PipelineLayout
     {
         AE_BASE_ASSERT_LESS(
@@ -76,7 +77,8 @@ ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-ComputePipeline::~ComputePipeline() {
+ComputePipeline::~ComputePipeline()
+{
     device_.NativeObject_().destroyPipeline(nativeObject_, nullptr);
     nativeObject_ = ::vk::Pipeline();
     device_.NativeObject_().destroyPipelineLayout(pipelineLayout_, nullptr);

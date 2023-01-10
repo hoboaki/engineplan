@@ -16,7 +16,8 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// 実行時エラーを扱う空間。
-struct RuntimeError {
+struct RuntimeError
+{
     /// @brief デフォルトで設定されているコールバックを取得する。
     /// @return コールバックオブジェクト。
     /// @see OnError

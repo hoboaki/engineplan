@@ -15,7 +15,8 @@ public:
 
     /// Size() の設定。
     /// @param size 0以上。
-    ShaderModuleResourceSpecInfo& SetSize(size_t size) {
+    ShaderModuleResourceSpecInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }

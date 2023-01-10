@@ -17,11 +17,13 @@ IndirectBufferView::IndirectBufferView(
     const IndirectBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {
+, region_(createInfo.Region())
+{
 }
 
 //------------------------------------------------------------------------------
-IndirectBufferView::~IndirectBufferView() {
+IndirectBufferView::~IndirectBufferView()
+{
 }
 
 } // namespace gfx_low

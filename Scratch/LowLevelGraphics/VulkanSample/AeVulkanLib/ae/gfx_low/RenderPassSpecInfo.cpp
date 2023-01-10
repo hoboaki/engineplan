@@ -7,7 +7,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 RenderPassSpecInfo& RenderPassSpecInfo::SetRenderTargetCount(
-    const int renderTargetCount) {
+    const int renderTargetCount)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, renderTargetCount);
     renderTargetCount_ = renderTargetCount;
     return *this;

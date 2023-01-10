@@ -28,7 +28,8 @@ public:
     bool LogicOpEnable() const { return logicOpEnable_; }
 
     /// LogicOpEnable() の設定。
-    PipelineBlendInfo& SetLogicOpEnable(bool enable) {
+    PipelineBlendInfo& SetLogicOpEnable(bool enable)
+    {
         logicOpEnable_ = enable;
         return *this;
     }
@@ -43,20 +44,23 @@ public:
     base::Vector4Pod BlendConstant() const { return blendConstant_; }
 
     /// BlendConstant() の設定。
-    PipelineBlendInfo& SetBlendConstant(const base::Vector4Pod& constant) {
+    PipelineBlendInfo& SetBlendConstant(const base::Vector4Pod& constant)
+    {
         blendConstant_ = constant;
         return *this;
     }
 
     /// 各 RenderTarget 毎の BlendInfo の配列ポインタ。（初期値：nullptr）
-    const RenderTargetBlendInfo* RenderTargetBlendInfos() const {
+    const RenderTargetBlendInfo* RenderTargetBlendInfos() const
+    {
         return renderTargetBlendInfos_.Get();
     }
 
     /// RenderTargetBlendInfos() の設定。
     /// @param infos RenderPassSpecInfo::RenderTargetCount() 長の配列ポインタ。
     PipelineBlendInfo& SetRenderTargetBlendInfos(
-        const RenderTargetBlendInfo* infos) {
+        const RenderTargetBlendInfo* infos)
+    {
         renderTargetBlendInfos_.Reset(infos);
         return *this;
     }

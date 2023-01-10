@@ -21,7 +21,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 RenderPass::RenderPass(const RenderPassCreateInfo& info)
 : device_(base::PtrToRef(info.Device()))
-, renderTargetCount_(info.RenderPassSpecInfo().RenderTargetCount()) {
+, renderTargetCount_(info.RenderPassSpecInfo().RenderTargetCount())
+{
     AE_BASE_ASSERT_LESS_EQUALS(
         info.RenderPassSpecInfo().RenderTargetCount(),
         Device::SupportedRenderTargetCountMax_);
@@ -226,7 +227,8 @@ RenderPass::RenderPass(const RenderPassCreateInfo& info)
 }
 
 //------------------------------------------------------------------------------
-RenderPass::~RenderPass() {
+RenderPass::~RenderPass()
+{
     device_.NativeObject_().destroyFramebuffer(framebuffer_, nullptr);
     device_.NativeObject_().destroyRenderPass(renderPass_, nullptr);
 }

@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// ブレンド要素に乗算される係数を示す列挙値。
-enum class BlendFactor {
+enum class BlendFactor
+{
     /// 無効値。
     Invalid,
 

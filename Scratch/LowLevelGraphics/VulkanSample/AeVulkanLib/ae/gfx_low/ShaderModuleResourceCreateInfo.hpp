@@ -25,7 +25,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    ShaderModuleResourceCreateInfo& SetDevice(gfx_low::Device* device) {
+    ShaderModuleResourceCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,7 +36,8 @@ public:
 
     /// SpecInfo() の設定。
     ShaderModuleResourceCreateInfo& SetSpecInfo(
-        const ShaderModuleResourceSpecInfo& specInfo) {
+        const ShaderModuleResourceSpecInfo& specInfo)
+    {
         specInfo_ = specInfo;
         return *this;
     }
@@ -49,7 +51,8 @@ public:
 
     /// DataAddress() の設定。
     ShaderModuleResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress) {
+        const ResourceMemoryAddress& dataAddress)
+    {
         dataAddress_ = dataAddress;
         return *this;
     }

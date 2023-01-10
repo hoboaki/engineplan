@@ -20,13 +20,15 @@ namespace {
 IConsoleCallback* tCallbackPtr = 0;
 ShortString tTimeFormatString;
 ShortString* tTimeFormatStringPtr = 0;
-IConsoleCallback& tCallbackObj() {
+IConsoleCallback& tCallbackObj()
+{
     if (tCallbackPtr == 0 || PointerCheck::InvalidCheck(tCallbackPtr)) {
         return Console::DefaultCallback();
     }
     return *tCallbackPtr;
 }
-const char* const tTimeFormat() {
+const char* const tTimeFormat()
+{
     if (tTimeFormatStringPtr == 0 ||
         PointerCheck::InvalidCheck(tTimeFormatStringPtr)) {
         return Console::DefaultTimeFormatString();
@@ -36,14 +38,16 @@ const char* const tTimeFormat() {
 } // namespace
 
 //------------------------------------------------------------------------------
-const char* const Console::DefaultTimeFormatString() {
+const char* const Console::DefaultTimeFormatString()
+{
     static const char* const formatString =
         "[%04u/%02u/%02u %02u:%02u:%02u(%03u)]";
     return formatString;
 }
 
 //------------------------------------------------------------------------------
-void Console::SetTimeFormatString(const char* format) {
+void Console::SetTimeFormatString(const char* format)
+{
     if (PointerCheck::InvalidCheck(format)) {
         return;
     }
@@ -52,11 +56,13 @@ void Console::SetTimeFormatString(const char* format) {
 }
 
 //------------------------------------------------------------------------------
-IConsoleCallback& Console::DefaultCallback() {
+IConsoleCallback& Console::DefaultCallback()
+{
     // 実装
     class Callback : public IConsoleCallback {
     public:
-        AE_BASE_OVERRIDE(void OnWrite(const char* format, va_list arg)) {
+        AE_BASE_OVERRIDE(void OnWrite(const char* format, va_list arg))
+        {
 #if defined(AE_BASE_OS_WINDOWS)
             char buff[256];
             std::vsnprintf(buff, sizeof(buff), format, arg);
@@ -72,12 +78,14 @@ IConsoleCallback& Console::DefaultCallback() {
 }
 
 //------------------------------------------------------------------------------
-void Console::SetCallback(IConsoleCallback& callback) {
+void Console::SetCallback(IConsoleCallback& callback)
+{
     tCallbackPtr = &callback;
 }
 
 //------------------------------------------------------------------------------
-void Console::WriteF(const char* format, ...) {
+void Console::WriteF(const char* format, ...)
+{
     va_list arg;
     va_start(arg, format);
     WriteVF(format, arg);
@@ -85,12 +93,14 @@ void Console::WriteF(const char* format, ...) {
 }
 
 //------------------------------------------------------------------------------
-void Console::WriteVF(const char* format, va_list arg) {
+void Console::WriteVF(const char* format, va_list arg)
+{
     tCallbackObj().OnWrite(format, arg);
 }
 
 //------------------------------------------------------------------------------
-void Console::WriteLineF(const char* format, ...) {
+void Console::WriteLineF(const char* format, ...)
+{
     va_list arg;
     va_start(arg, format);
     WriteLineVF(format, arg);
@@ -98,13 +108,15 @@ void Console::WriteLineF(const char* format, ...) {
 }
 
 //------------------------------------------------------------------------------
-void Console::WriteLineVF(const char* format, va_list arg) {
+void Console::WriteLineVF(const char* format, va_list arg)
+{
     WriteVF(format, arg);
     WriteF("%s", AE_BASE_NEWLINE);
 }
 
 //------------------------------------------------------------------------------
-void Console::WriteTime() {
+void Console::WriteTime()
+{
     Calendar calendar = Time::LocalTime().ToCalendar();
     WriteF(
         tTimeFormat(),
@@ -119,7 +131,8 @@ void Console::WriteTime() {
 }
 
 //------------------------------------------------------------------------------
-void Console::TimeWriteLineF(const char* format, ...) {
+void Console::TimeWriteLineF(const char* format, ...)
+{
     va_list arg;
     va_start(arg, format);
     TimeWriteLineVF(format, arg);
@@ -127,7 +140,8 @@ void Console::TimeWriteLineF(const char* format, ...) {
 }
 
 //------------------------------------------------------------------------------
-void Console::TimeWriteLineVF(const char* format, va_list arg) {
+void Console::TimeWriteLineVF(const char* format, va_list arg)
+{
     // まず時間
     WriteTime();
 

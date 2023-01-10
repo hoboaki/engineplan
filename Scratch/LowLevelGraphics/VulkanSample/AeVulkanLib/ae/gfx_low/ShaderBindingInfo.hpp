@@ -16,7 +16,8 @@ public:
     ShaderBindingStageBitSet Stages() const { return stages_; }
 
     /// Stages() の設定。
-    ShaderBindingInfo& SetStages(const ShaderBindingStageBitSet& stages) {
+    ShaderBindingInfo& SetStages(const ShaderBindingStageBitSet& stages)
+    {
         stages_ = stages;
         return *this;
     }

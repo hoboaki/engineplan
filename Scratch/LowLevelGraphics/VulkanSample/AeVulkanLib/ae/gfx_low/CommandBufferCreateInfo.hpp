@@ -25,7 +25,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    CommandBufferCreateInfo& SetDevice(gfx_low::Device* device) {
+    CommandBufferCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -34,7 +35,8 @@ public:
     gfx_low::Queue* Queue() const { return queue_.Get(); }
 
     /// Queue() の設定。Level() == Primary の場合に設定必須。
-    CommandBufferCreateInfo& SetQueue(gfx_low::Queue* queue) {
+    CommandBufferCreateInfo& SetQueue(gfx_low::Queue* queue)
+    {
         queue_.Reset(queue);
         return *this;
     }
@@ -50,7 +52,8 @@ public:
 
     /// Features() の設定。
     CommandBufferCreateInfo& SetFeatures(
-        const CommandBufferFeatureBitSet& features) {
+        const CommandBufferFeatureBitSet& features)
+    {
         features_ = features;
         return *this;
     }

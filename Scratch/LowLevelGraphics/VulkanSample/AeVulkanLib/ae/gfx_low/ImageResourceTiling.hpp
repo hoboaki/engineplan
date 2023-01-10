@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// イメージのピクセルの並び方。
-enum class ImageResourceTiling {
+enum class ImageResourceTiling
+{
     /// 無効値。
     Invalid,
 

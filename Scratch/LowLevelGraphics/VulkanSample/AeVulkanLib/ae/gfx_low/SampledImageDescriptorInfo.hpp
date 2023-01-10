@@ -23,7 +23,8 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region)
+    {
         region_ = region;
         return *this;
     }
@@ -33,7 +34,8 @@ public:
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    SampledImageDescriptorInfo& SetViews(const SampledImageView** views) {
+    SampledImageDescriptorInfo& SetViews(const SampledImageView** views)
+    {
         views_.Reset(views);
         return *this;
         ;

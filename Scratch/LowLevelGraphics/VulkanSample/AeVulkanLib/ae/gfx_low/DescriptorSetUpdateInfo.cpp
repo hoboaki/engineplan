@@ -8,7 +8,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
     const int count,
-    const UniformBufferDescriptorInfo* infos) {
+    const UniformBufferDescriptorInfo* infos)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -21,7 +22,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageBufferInfos(
     const int count,
-    const StorageBufferDescriptorInfo* infos) {
+    const StorageBufferDescriptorInfo* infos)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -34,7 +36,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageBufferInfos(
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
     const int count,
-    const SampledImageDescriptorInfo* infos) {
+    const SampledImageDescriptorInfo* infos)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -47,7 +50,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSampledImageInfos(
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageImageInfos(
     const int count,
-    const StorageImageDescriptorInfo* infos) {
+    const StorageImageDescriptorInfo* infos)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);
@@ -60,7 +64,8 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetStorageImageInfos(
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSamplerInfos(
     const int count,
-    const SamplerDescriptorInfo* infos) {
+    const SamplerDescriptorInfo* infos)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infos);

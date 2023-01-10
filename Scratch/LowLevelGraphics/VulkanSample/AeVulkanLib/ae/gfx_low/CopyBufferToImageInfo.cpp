@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 CopyBufferToImageInfo& CopyBufferToImageInfo::SetSrcImageFormat(
-    const ImageFormat format) {
+    const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     srcImageFormat_ = format;
@@ -19,7 +20,8 @@ CopyBufferToImageInfo& CopyBufferToImageInfo::SetSrcImageFormat(
 
 //------------------------------------------------------------------------------
 CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
 
     // 現時点では CopyDst のみサポート
@@ -30,7 +32,8 @@ CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageResourceState(
 
 //------------------------------------------------------------------------------
 CopyBufferToImageInfo& CopyBufferToImageInfo::SetDstImageOffset(
-    const base::Vector3iPod& offset) {
+    const base::Vector3iPod& offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.x);
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.y);
     AE_BASE_ASSERT_LESS_EQUALS(0, offset.z);

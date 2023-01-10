@@ -16,7 +16,8 @@ namespace gfx_low {
 InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     Device* device,
     const DescriptorSetSpecInfo& info)
-: device_(base::PtrToRef(device)) {
+: device_(base::PtrToRef(device))
+{
     // 初期化
     descriptorSetLayoutIndexes_.Fill(-1);
 
@@ -189,7 +190,8 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
 }
 
 //------------------------------------------------------------------------------
-InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
+InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts()
+{
     for (int i = descriptorSetLayoutCount_ - 1; 0 <= i; --i) {
         device_.NativeObject_().destroyDescriptorSetLayout(
             descriptorSetLayouts_[i],
@@ -200,7 +202,8 @@ InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
 
 //------------------------------------------------------------------------------
 int InternalDescriptorSetLayouts::DescriptorSetLayoutIndex(
-    const DescriptorKind kind) const {
+    const DescriptorKind kind) const
+{
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     return descriptorSetLayoutIndexes_[kind];
 }

@@ -11,11 +11,13 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Extent3i::Extent3i(const Extent2iPod& extent, int depth)
-: Extent3i(extent.width, extent.height, depth) {
+: Extent3i(extent.width, extent.height, depth)
+{
 }
 
 //------------------------------------------------------------------------------
-Extent3i::Extent3i(int width, int height, int depth) {
+Extent3i::Extent3i(int width, int height, int depth)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, width);
     AE_BASE_ASSERT_LESS_EQUALS(0, height);
     AE_BASE_ASSERT_LESS_EQUALS(0, depth);

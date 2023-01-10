@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// CommandBuffer の状態を表す列挙値。
-enum class CommandBufferState {
+enum class CommandBufferState
+{
     /// 初期状態。
     Initial,
 

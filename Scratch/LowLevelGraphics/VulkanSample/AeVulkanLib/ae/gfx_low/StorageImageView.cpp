@@ -16,7 +16,8 @@ namespace gfx_low {
 //------------------------------------------------------------------------------
 StorageImageView::StorageImageView(const StorageImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     const auto nativeFormat = InternalEnumUtil::ToFormat(createInfo.Format());
     const auto viewType = InternalEnumUtil::ToImageViewType(createInfo.Kind());
     const bool isCubeImageViewType =
@@ -59,7 +60,8 @@ StorageImageView::StorageImageView(const StorageImageViewCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-StorageImageView::~StorageImageView() {
+StorageImageView::~StorageImageView()
+{
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 

@@ -10,7 +10,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator) {
+const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator)
+{
     // オープン
     ResFileStream stream;
     if (!stream.Open(path)) {

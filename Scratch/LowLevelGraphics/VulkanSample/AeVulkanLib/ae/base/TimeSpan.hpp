@@ -17,7 +17,8 @@ namespace base {
 /// 最小単位(1チック)は100ナノ秒です。@n
 /// 加算・減算に関してオーバーフロー対策は何もしていないためオーバーフローしてもエラーにはなりません。
 /// @n
-struct TimeSpanPod {
+struct TimeSpanPod
+{
     /// @brief チック数から作成する。
     /// @return 作成された時間間隔。
     /// @param ticks チック数。

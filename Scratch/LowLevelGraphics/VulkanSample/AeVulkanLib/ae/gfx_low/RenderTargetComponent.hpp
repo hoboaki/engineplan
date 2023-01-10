@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// レンダーターゲットのRGBA要素を示す列挙値。
-enum class RenderTargetComponent {
+enum class RenderTargetComponent
+{
     /// 無効値。
     Invalid,
 

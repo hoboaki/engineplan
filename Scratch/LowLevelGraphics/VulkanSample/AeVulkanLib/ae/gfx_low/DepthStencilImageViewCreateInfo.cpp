@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 DepthStencilImageViewCreateInfo& DepthStencilImageViewCreateInfo::SetFormat(
-    const ImageFormat format) {
+    const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     format_ = format;

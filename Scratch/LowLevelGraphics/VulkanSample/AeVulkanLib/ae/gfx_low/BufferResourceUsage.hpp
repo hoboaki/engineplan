@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// バッファリソースの使用法。
-enum class BufferResourceUsage {
+enum class BufferResourceUsage
+{
     /// 無効値。
     Invalid,
 

@@ -22,10 +22,12 @@ public:
     /// Struct型のエイリアス。
     typedef ::ae::base::PodStruct<T> StructType;
 
-    PodClass() {
+    PodClass()
+    {
         StructType::Ref() = StructType::DefaultValue();
     } ///< 規定値で初期化される。
-    PodClass(const PodStruct<T>& value) {
+    PodClass(const PodStruct<T>& value)
+    {
         StructType::Ref() = value;
     } ///< 値を指定して初期化。
 

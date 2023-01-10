@@ -12,8 +12,10 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// タッチ入力の更新データ。
-struct TouchUpdateData {
-    enum {
+struct TouchUpdateData
+{
+    enum
+    {
         /// サポートしている最大タップ数。
         TAP_COUNT_MAX = 8
     };

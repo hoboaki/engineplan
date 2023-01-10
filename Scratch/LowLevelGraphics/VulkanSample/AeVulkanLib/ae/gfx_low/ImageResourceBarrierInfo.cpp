@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResourceBarrierInfo& ImageResourceBarrierInfo::SetOldState(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     newState_ = state;
@@ -19,7 +20,8 @@ ImageResourceBarrierInfo& ImageResourceBarrierInfo::SetOldState(
 
 //------------------------------------------------------------------------------
 ImageResourceBarrierInfo& ImageResourceBarrierInfo::SetNewState(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     oldState_ = state;

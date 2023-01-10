@@ -56,12 +56,14 @@ public:
     /// @name プロパティ
     //@{
     /// 指定のデスクリプタ種類のバインド情報の数。（初期値：0）
-    int BindingInfoCount(DescriptorKind kind) const {
+    int BindingInfoCount(DescriptorKind kind) const
+    {
         return bindingInfos_[kind].infoCount;
     }
 
     /// 指定のデスクリプタ種類のバインド情報郡。（初期値：nullptr）
-    const ShaderBindingInfo* BindingInfos(DescriptorKind kind) const {
+    const ShaderBindingInfo* BindingInfos(DescriptorKind kind) const
+    {
         return bindingInfos_[kind].infos.Get();
     }
 
@@ -87,7 +89,8 @@ public:
     int DirectConstantInfoCount() const { return directConstantInfoCount_; }
 
     /// ダイレクトコンスタントの情報群。（初期値：nullptr）
-    const DirectConstantInfo* DirectConstantInfos() const {
+    const DirectConstantInfo* DirectConstantInfos() const
+    {
         return directConstantInfos_.Get();
     }
 

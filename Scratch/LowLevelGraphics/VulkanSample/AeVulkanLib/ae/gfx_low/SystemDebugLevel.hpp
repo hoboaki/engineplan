@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// デバッグレベルを表す列挙値。
-enum class SystemDebugLevel {
+enum class SystemDebugLevel
+{
     /// デバッグ動作なし。
     NoDebug,
 

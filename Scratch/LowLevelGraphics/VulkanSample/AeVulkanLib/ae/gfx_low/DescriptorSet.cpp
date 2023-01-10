@@ -27,7 +27,8 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , descriptorSetLayouts_(&device_, createInfo.SpecInfo())
 , descriptorPool_()
-, nativeObjects_() {
+, nativeObjects_()
+{
     // デスクリプタが不要なら何もしない
     if (descriptorSetLayouts_.DescriptorSetLayoutCount() == 0) {
         return;
@@ -110,7 +111,8 @@ DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-DescriptorSet::~DescriptorSet() {
+DescriptorSet::~DescriptorSet()
+{
     // デスクリプタが不要なら何もしない
     if (descriptorSetLayouts_.DescriptorSetLayoutCount() == 0) {
         return;
@@ -122,7 +124,8 @@ DescriptorSet::~DescriptorSet() {
 }
 
 //------------------------------------------------------------------------------
-void DescriptorSet::Update(const DescriptorSetUpdateInfo& info) {
+void DescriptorSet::Update(const DescriptorSetUpdateInfo& info)
+{
     // 1回の Update でこの数だけの DescriptorInfo を扱える。
     // また、スタック上に確保することで new/delete オーバーヘッドをなくす。
     constexpr int writesCountMax = 64;

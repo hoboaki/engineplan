@@ -12,7 +12,8 @@ namespace base {
 /// @addtogroup AeBase-Debug
 //@{
 /// ポインタについて調べる処理を扱う空間。
-struct PointerCheck {
+struct PointerCheck
+{
     /// @brief 有効なポインタか。
     /// @return nullや無効なポインタならfalseを返す。
     static bool IsValid(const_anyptr_t ptr);

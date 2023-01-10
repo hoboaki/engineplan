@@ -40,14 +40,16 @@ public:
     template <typename T, class Cond = void>
     class Impl {
     public:
-        static const ::ae::base::ShortString Create(const T& obj) {
+        static const ::ae::base::ShortString Create(const T& obj)
+        {
             return obj.ToShortString();
         }
     };
 
     // 特殊化できなかったものは、Implに委譲。
     template <typename T>
-    static const ::ae::base::ShortString Create(const T& obj) {
+    static const ::ae::base::ShortString Create(const T& obj)
+    {
         return Impl<T>::Create(obj);
     };
 };

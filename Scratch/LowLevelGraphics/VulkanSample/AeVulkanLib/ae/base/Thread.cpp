@@ -17,7 +17,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-void Thread::Sleep(const TimeSpanPod& timeSpan) {
+void Thread::Sleep(const TimeSpanPod& timeSpan)
+{
 #if defined(AE_BASE_OS_WINDOWS)
     ::Sleep(DWORD(::ae::base::Math::Max(s64(1), timeSpan.Milliseconds())));
 #else

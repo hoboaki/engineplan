@@ -15,7 +15,10 @@ namespace base {
 class Argument {
 public:
     // 引数の最大数。
-    enum { ArgCountMax = 256 };
+    enum
+    {
+        ArgCountMax = 256
+    };
 
     // コンストラクタをユーザーが直接呼ぶことは想定していない。
     // 引数のポインタはポインタをコピーするだけでポインタ先はコピーしない。

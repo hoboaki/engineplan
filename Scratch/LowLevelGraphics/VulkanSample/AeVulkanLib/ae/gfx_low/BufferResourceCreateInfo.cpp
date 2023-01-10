@@ -10,7 +10,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-::vk::BufferCreateInfo BufferResourceCreateInfo::NativeCreateInfo_() const {
+::vk::BufferCreateInfo BufferResourceCreateInfo::NativeCreateInfo_() const
+{
     return ::vk::BufferCreateInfo()
         .setSize(specInfo_.Size())
         .setUsage(InternalEnumUtil::ToBufferUsageFlags(specInfo_.UsageBitSet()))

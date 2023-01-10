@@ -16,7 +16,8 @@ namespace ae {
 namespace base {
 
 // 実行時Assertを扱う空間。
-struct RuntimeAssert {
+struct RuntimeAssert
+{
     static const char* const Separator; // 分離する文字列。
     static const char* const Header; // ヘッダ。
     static const char* const FileLineFmt; // ファイルと行数。

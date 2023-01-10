@@ -23,7 +23,8 @@ namespace {
 
 IRuntimeErrorCallback* tCallbackPtr = 0;
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
-IRuntimeErrorCallback& tCallbackObj() {
+IRuntimeErrorCallback& tCallbackObj()
+{
     // ここに到達するということは既に致命的な状態なはずなので
     // ポインタチェックはしない。
     return tCallbackPtr != 0 ? *tCallbackPtr : RuntimeError::DefaultCallback();
@@ -33,11 +34,13 @@ IRuntimeErrorCallback& tCallbackObj() {
 } // namespace
 
 //------------------------------------------------------------------------------
-IRuntimeErrorCallback& RuntimeError::DefaultCallback() {
+IRuntimeErrorCallback& RuntimeError::DefaultCallback()
+{
     // コールバックの実装。
     class Callback : public IRuntimeErrorCallback {
     public:
-        AE_BASE_OVERRIDE(void OnRuntimeError()) {
+        AE_BASE_OVERRIDE(void OnRuntimeError())
+        {
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
             // 標準のアサートで止めてみる。
             assert(false && "Runtime Error.");
@@ -60,12 +63,14 @@ IRuntimeErrorCallback& RuntimeError::DefaultCallback() {
 }
 
 //------------------------------------------------------------------------------
-void RuntimeError::SetCallback(IRuntimeErrorCallback& callback) {
+void RuntimeError::SetCallback(IRuntimeErrorCallback& callback)
+{
     tCallbackPtr = &callback;
 }
 
 //------------------------------------------------------------------------------
-void RuntimeError::OnError() {
+void RuntimeError::OnError()
+{
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)
     tCallbackObj().OnRuntimeError();
 #endif

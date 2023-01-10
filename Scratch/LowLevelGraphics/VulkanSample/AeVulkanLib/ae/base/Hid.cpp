@@ -14,17 +14,20 @@ namespace base {
 //------------------------------------------------------------------------------
 Hid::Hid(Display& display)
 : display_(display)
-, ext_() {
+, ext_()
+{
     display_.Ext_().hidPtr.Set(*this);
 }
 
 //------------------------------------------------------------------------------
-Hid::~Hid() {
+Hid::~Hid()
+{
     display_.Ext_().hidPtr.Unset(*this);
 }
 
 //------------------------------------------------------------------------------
-const Keyboard Hid::Keyboard() const {
+const Keyboard Hid::Keyboard() const
+{
     if (0 < KeyboardCount()) {
         return KeyboardAtIndex(0);
     }
@@ -32,7 +35,8 @@ const Keyboard Hid::Keyboard() const {
 }
 
 //------------------------------------------------------------------------------
-const Mouse Hid::Mouse() const {
+const Mouse Hid::Mouse() const
+{
     if (0 < MouseCount()) {
         return MouseAtIndex(0);
     }
@@ -40,7 +44,8 @@ const Mouse Hid::Mouse() const {
 }
 
 //------------------------------------------------------------------------------
-const Touch Hid::Touch() const {
+const Touch Hid::Touch() const
+{
     if (0 < TouchCount()) {
         return TouchAtIndex(0);
     }
@@ -48,7 +53,8 @@ const Touch Hid::Touch() const {
 }
 
 //------------------------------------------------------------------------------
-Hid_Ext& Hid::Ext_() {
+Hid_Ext& Hid::Ext_()
+{
     return ext_;
 }
 

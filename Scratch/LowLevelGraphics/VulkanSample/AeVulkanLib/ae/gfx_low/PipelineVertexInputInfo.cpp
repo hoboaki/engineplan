@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 PipelineVertexInputInfo& PipelineVertexInputInfo::SetBufferCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     bufferCount_ = count;
     return *this;
@@ -18,7 +19,8 @@ PipelineVertexInputInfo& PipelineVertexInputInfo::SetBufferCount(
 
 //------------------------------------------------------------------------------
 PipelineVertexInputInfo& PipelineVertexInputInfo::SetAttributeCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     attributeCount_ = count;
     return *this;

@@ -26,11 +26,13 @@ public:
     UniqueResourceMemory(
         Device* device,
         const ResourceMemoryAllocInfo& allocInfo)
-    : UniqueResourceMemory() {
+    : UniqueResourceMemory()
+    {
         Reset(device, allocInfo);
     }
     UniqueResourceMemory(Device* device, const ResourceMemory& memory)
-    : UniqueResourceMemory() {
+    : UniqueResourceMemory()
+    {
         Reset(device, memory);
     }
     ~UniqueResourceMemory();

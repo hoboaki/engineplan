@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// リソースメモリの種類。
-enum class ResourceMemoryKind {
+enum class ResourceMemoryKind
+{
     /// 無効値。
     Invalid,
 

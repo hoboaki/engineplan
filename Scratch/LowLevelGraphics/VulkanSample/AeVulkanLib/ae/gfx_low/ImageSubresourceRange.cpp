@@ -10,7 +10,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-ImageSubresourceRange& ImageSubresourceRange::SetMipLevels(const int levels) {
+ImageSubresourceRange& ImageSubresourceRange::SetMipLevels(const int levels)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, levels);
     mipLevels_ = levels;
     return *this;
@@ -18,7 +19,8 @@ ImageSubresourceRange& ImageSubresourceRange::SetMipLevels(const int levels) {
 
 //------------------------------------------------------------------------------
 ImageSubresourceRange& ImageSubresourceRange::SetArrayLength(
-    const int arrayLength) {
+    const int arrayLength)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, arrayLength);
     arrayLength_ = arrayLength;
     return *this;

@@ -24,11 +24,15 @@ public:
 
     /// アドレス・サイズを指定して作成。
     MemBlock(void* addr, pword_t size)
-    : MemBlock(ptr_t(addr), size) {}
+    : MemBlock(ptr_t(addr), size)
+    {
+    }
 
     /// アドレス・サイズを指定して作成。
     MemBlock(const void* addr, pword_t size)
-    : MemBlock(ptr_t(const_cast<void*>(addr)), size) {}
+    : MemBlock(ptr_t(const_cast<void*>(addr)), size)
+    {
+    }
     //@}
 
     /// @name プロパティの取得。

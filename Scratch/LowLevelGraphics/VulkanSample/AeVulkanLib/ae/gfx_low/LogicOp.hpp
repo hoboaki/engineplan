@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// 論理演算を示す列挙値。
-enum class LogicOp {
+enum class LogicOp
+{
     /// 無効値。
     Invalid,
 

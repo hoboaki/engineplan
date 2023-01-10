@@ -19,7 +19,8 @@ Quaternion::Quaternion()
 : x(0)
 , y(0)
 , z(0)
-, w(1.0f) {
+, w(1.0f)
+{
 }
 
 //------------------------------------------------------------------------------
@@ -27,7 +28,8 @@ Quaternion::Quaternion(const f32 x, const f32 y, const f32 z, const f32 w)
 : x(x)
 , y(y)
 , z(z)
-, w(w) {
+, w(w)
+{
 }
 
 //------------------------------------------------------------------------------
@@ -35,7 +37,8 @@ Quaternion::Quaternion(const Vector3Pod& axis, const Angle& angle)
 : x()
 , y()
 , z()
-, w() {
+, w()
+{
     const Vector3 normalizedAxis =
         axis.IsZeroStrict() ? Vector3() : axis.Unit();
     const Radian halfAngle = angle.Rad() * 0.5f;
@@ -48,14 +51,16 @@ Quaternion::Quaternion(const Vector3Pod& axis, const Angle& angle)
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::Mul(const Quaternion& rhs) const {
+const Quaternion Quaternion::Mul(const Quaternion& rhs) const
+{
     Quaternion quat(*this);
     quat.MulAssign(rhs);
     return quat;
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::MulAssign(const Quaternion& rhs) {
+Quaternion& Quaternion::MulAssign(const Quaternion& rhs)
+{
     const Quaternion& lhs = *this;
     *this = Quaternion(
         lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y,
@@ -66,7 +71,8 @@ Quaternion& Quaternion::MulAssign(const Quaternion& rhs) {
 }
 
 //------------------------------------------------------------------------------
-const Matrix34Pod Quaternion::ToRotateMatrix() const {
+const Matrix34Pod Quaternion::ToRotateMatrix() const
+{
     const f32 lenSrc = Math::SqrtF32(w * w + x * x + y * y + z * z);
     if (lenSrc == 0) {
         AE_BASE_ASSERT_NOT_REACHED();
@@ -98,18 +104,21 @@ const Matrix34Pod Quaternion::ToRotateMatrix() const {
 }
 
 //------------------------------------------------------------------------------
-const Quaternion Quaternion::operator*(const Quaternion& rhs) const {
+const Quaternion Quaternion::operator*(const Quaternion& rhs) const
+{
     return Mul(rhs);
 }
 
 //------------------------------------------------------------------------------
-Quaternion& Quaternion::operator*=(const Quaternion& rhs) {
+Quaternion& Quaternion::operator*=(const Quaternion& rhs)
+{
     MulAssign(rhs);
     return *this;
 }
 
 //------------------------------------------------------------------------------
-const ::ae::base::ShortString Quaternion::ToShortString() const {
+const ::ae::base::ShortString Quaternion::ToShortString() const
+{
     return ::ae::base::ShortString::FromFormat(
         "%s,%s,%s,%s",
         F32(x).ToShortString().ReadPtr(),

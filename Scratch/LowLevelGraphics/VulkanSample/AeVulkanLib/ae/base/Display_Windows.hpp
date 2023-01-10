@@ -30,7 +30,10 @@ namespace base {
 class Display_Ext {
 public:
     //============================================================
-    enum { KEY_NUM = 256 };
+    enum
+    {
+        KEY_NUM = 256
+    };
 
     //============================================================
     static LRESULT CALLBACK WindowProcess(HWND, UINT, WPARAM, LPARAM);

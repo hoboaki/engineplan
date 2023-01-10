@@ -11,11 +11,13 @@ namespace base {
 
 //------------------------------------------------------------------------------
 Extent3::Extent3(const Extent2Pod& extent, float depth)
-: Extent3(extent.width, extent.height, depth) {
+: Extent3(extent.width, extent.height, depth)
+{
 }
 
 //------------------------------------------------------------------------------
-Extent3::Extent3(float width, float height, float depth) {
+Extent3::Extent3(float width, float height, float depth)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, width);
     AE_BASE_ASSERT_LESS_EQUALS(0, height);
     AE_BASE_ASSERT_LESS_EQUALS(0, depth);

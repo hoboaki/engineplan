@@ -34,17 +34,22 @@ public:
     /// @details
     /// 配列長が0の場合、アロケートは走りません。
     RuntimeArray(IAllocator* allocator = &IAllocator::Default())
-    : RuntimeArray(0, allocator) {}
+    : RuntimeArray(0, allocator)
+    {
+    }
     RuntimeArray(int count, IAllocator* allocator = &IAllocator::Default())
     : allocator_()
     , count_(0)
-    , ptr_(nullptr) {
+    , ptr_(nullptr)
+    {
         Resize(count, allocator);
     }
 
     /// 非推奨版。
     RuntimeArray(int count, IAllocator& allocator = IAllocator::Default())
-    : RuntimeArray(count, &allocator) {}
+    : RuntimeArray(count, &allocator)
+    {
+    }
 
     /// デストラクタ。
     ~RuntimeArray() { Resize(0); }
@@ -58,7 +63,8 @@ public:
     /// 確保済配列領域を一度破棄＆再確保＆全要素デフォルトコンストラクタを呼ぶ。
     void Resize(
         const int count,
-        IAllocator* allocator = &IAllocator::Default()) {
+        IAllocator* allocator = &IAllocator::Default())
+    {
         // まず破棄処理
         if (ptr_ != nullptr) {
             // 逆順でデストラクタを呼び出す
@@ -97,7 +103,8 @@ public:
     }
 
     /// 全要素を指定の値で埋める。
-    void Fill(const ValueType& value) {
+    void Fill(const ValueType& value)
+    {
         for (int i = 0; i < count_; ++i) {
             ptr_[i] = value;
         }
@@ -110,19 +117,22 @@ public:
     int Count() const { return count_; }
 
     /// 0番目の要素のポインタ。
-    ValueType* Head() {
+    ValueType* Head()
+    {
         AE_BASE_ASSERT_LESS(0, count_);
         return ptr_;
     }
 
     /// 0番目の要素のポインタ。
-    const ValueType* Head() const {
+    const ValueType* Head() const
+    {
         AE_BASE_ASSERT_LESS(0, count_);
         return ptr_;
     }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int index) {
+    ValueType& At(const int index)
+    {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0]; // fail safe code
@@ -131,7 +141,8 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& At(const int index) const {
+    const ValueType& At(const int index) const
+    {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0]; // fail safe code

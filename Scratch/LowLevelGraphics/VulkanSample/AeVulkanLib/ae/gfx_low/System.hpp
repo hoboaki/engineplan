@@ -50,11 +50,13 @@ public:
     //@{
     ::vk::Instance& NativeObject_() { return nativeObject_; }
 
-    ::ae::base::IAllocator& ObjectAllocator_() const {
+    ::ae::base::IAllocator& ObjectAllocator_() const
+    {
         return objectAllocator_;
     }
 
-    ::ae::base::IAllocator& TempWorkAllocator_() const {
+    ::ae::base::IAllocator& TempWorkAllocator_() const
+    {
         return tempWorkAllocator_;
     }
 
@@ -68,7 +70,8 @@ public:
         QueueFamilyIndexTableType_* result,
         int physicalDeviceIndex) const;
 
-    const ::vk::PhysicalDevice& PhysicalDevice_(int physicalDeviceIndex) const {
+    const ::vk::PhysicalDevice& PhysicalDevice_(int physicalDeviceIndex) const
+    {
         return physicalDevices_[physicalDeviceIndex];
     }
     //@}

@@ -1,7 +1,8 @@
 // 文字コード：UTF-8
 #pragma once
 
-namespace {}
+namespace {
+}
 
 //------------------------------------------------------------------------------
 namespace ae {
@@ -13,7 +14,8 @@ namespace gfx_low {
 /// 例えば、RenderTargetImage として使う場合は RenderTargetImage
 /// 状態に設定する必要がありますが 同じイメージを Present として使うためには
 /// PresentSrc に切り替える必要があります。
-enum class ImageResourceState {
+enum class ImageResourceState
+{
     /// 無効値。
     Invalid,
 

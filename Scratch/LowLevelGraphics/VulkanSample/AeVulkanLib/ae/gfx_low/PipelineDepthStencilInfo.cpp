@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 PipelineDepthStencilInfo& PipelineDepthStencilInfo::SetDepthCompareOp(
-    const CompareOp op) {
+    const CompareOp op)
+{
     AE_BASE_ASSERT_ENUM(op, CompareOp);
     AE_BASE_ASSERT(op != CompareOp::Invalid);
     depthCompareOp_ = op;

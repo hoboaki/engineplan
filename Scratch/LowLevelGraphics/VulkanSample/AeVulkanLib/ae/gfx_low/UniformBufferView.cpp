@@ -18,11 +18,13 @@ UniformBufferView::UniformBufferView(
     const UniformBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {
+, region_(createInfo.Region())
+{
 }
 
 //------------------------------------------------------------------------------
-UniformBufferView::~UniformBufferView() {
+UniformBufferView::~UniformBufferView()
+{
 }
 
 } // namespace gfx_low

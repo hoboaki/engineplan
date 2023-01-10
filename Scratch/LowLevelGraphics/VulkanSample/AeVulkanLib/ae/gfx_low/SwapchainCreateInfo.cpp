@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount) {
+SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, imageCount);
     imageCount_ = imageCount;
     return *this;

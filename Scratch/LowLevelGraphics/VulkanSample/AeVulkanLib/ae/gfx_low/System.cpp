@@ -21,7 +21,8 @@ bool fCheckLayers(
     uint32_t checkCount,
     char const* const* const checkNames,
     uint32_t layerCount,
-    ::vk::LayerProperties* layers) {
+    ::vk::LayerProperties* layers)
+{
     for (uint32_t i = 0; i < checkCount; i++) {
         bool found = false;
         for (uint32_t j = 0; j < layerCount; j++) {
@@ -49,7 +50,8 @@ System::System(const SystemCreateInfo& createInfo)
 , tempWorkAllocator_(
       createInfo.TempWorkAllocator() == nullptr
           ? ::ae::base::IAllocator::Default()
-          : ::ae::base::PtrToRef(createInfo.TempWorkAllocator())) {
+          : ::ae::base::PtrToRef(createInfo.TempWorkAllocator()))
+{
     // 複数作成防止
     AE_BASE_ASSERT(!IsInstanceCreated);
     IsInstanceCreated = true;
@@ -246,7 +248,8 @@ System::System(const SystemCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-System::~System() {
+System::~System()
+{
     // インスタンス破棄
     nativeObject_.destroy(nullptr);
     nativeObject_ = ::vk::Instance();
@@ -258,7 +261,8 @@ System::~System() {
 
 //------------------------------------------------------------------------------
 PhysicalDeviceInfo System::PhysicalDeviceInfo(
-    const int physicalDeviceIndex) const {
+    const int physicalDeviceIndex) const
+{
     AE_BASE_ASSERT_LESS(physicalDeviceIndex, physicalDeviceCount_);
     const auto device = physicalDevices_[physicalDeviceIndex];
 
@@ -315,7 +319,8 @@ PhysicalDeviceInfo System::PhysicalDeviceInfo(
 }
 
 //------------------------------------------------------------------------------
-void System::DumpAllPhysicalDeviceInfo() const {
+void System::DumpAllPhysicalDeviceInfo() const
+{
     AE_BASE_COUTFMT_LINE("PhysicalDeviceCount: %d", physicalDeviceCount_);
     for (int i = 0; i < physicalDeviceCount_; ++i) {
         const auto info = PhysicalDeviceInfo(i);
@@ -335,7 +340,8 @@ void System::DumpAllPhysicalDeviceInfo() const {
 //------------------------------------------------------------------------------
 void System::QueueFamilyIndexTable_(
     QueueFamilyIndexTableType_* result,
-    const int physicalDeviceIndex) const {
+    const int physicalDeviceIndex) const
+{
     auto& resultRef = ::ae::base::PtrToRef(result);
     AE_BASE_ASSERT_LESS(physicalDeviceIndex, physicalDeviceCount_);
     const auto device = physicalDevices_[physicalDeviceIndex];

@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// コマンドバッファが扱う機能。
-enum class CommandBufferFeature {
+enum class CommandBufferFeature
+{
     /// 無効値。
     Invalid,
 

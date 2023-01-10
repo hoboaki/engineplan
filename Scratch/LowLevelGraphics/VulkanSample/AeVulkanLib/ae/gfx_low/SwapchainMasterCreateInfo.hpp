@@ -28,7 +28,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* device) {
+    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -50,7 +51,8 @@ public:
     base::Screen* Screen() const { return screen_.Get(); }
 
     /// Screen() の設定。（設定必須）
-    SwapchainMasterCreateInfo& SetScreen(base::Screen* screen) {
+    SwapchainMasterCreateInfo& SetScreen(base::Screen* screen)
+    {
         screen_.Reset(screen);
         return *this;
     }

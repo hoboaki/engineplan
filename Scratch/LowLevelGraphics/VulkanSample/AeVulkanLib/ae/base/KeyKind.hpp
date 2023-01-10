@@ -10,8 +10,10 @@ namespace base {
 /// @addtogroup AeBase-Hid
 //@{
 /// キーボードのキーの種類。
-struct KeyKind {
-    enum EnumType {
+struct KeyKind
+{
+    enum EnumType
+    {
         BackSpace,
         Tab,
         Return,

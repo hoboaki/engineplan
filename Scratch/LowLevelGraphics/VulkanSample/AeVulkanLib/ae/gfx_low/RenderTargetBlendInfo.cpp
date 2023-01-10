@@ -10,7 +10,8 @@ namespace gfx_low {
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetSrcColorBlendFactor(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     srcColorBlendFactor_ = factor;
@@ -19,7 +20,8 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetSrcColorBlendFactor(
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetDstColorBlendFactor(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     dstColorBlendFactor_ = factor;
@@ -28,7 +30,8 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetDstColorBlendFactor(
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetColorBlendOp(
-    const BlendOp op) {
+    const BlendOp op)
+{
     AE_BASE_ASSERT_ENUM(op, BlendOp);
     AE_BASE_ASSERT(op != BlendOp::Invalid);
     colorBlendOp_ = op;
@@ -37,7 +40,8 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetColorBlendOp(
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetSrcAlphaBlendFactor(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     srcAlphaBlendFactor_ = factor;
@@ -46,7 +50,8 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetSrcAlphaBlendFactor(
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetDstAlphaBlendFactor(
-    const BlendFactor factor) {
+    const BlendFactor factor)
+{
     AE_BASE_ASSERT_ENUM(factor, BlendFactor);
     AE_BASE_ASSERT(factor != BlendFactor::Invalid);
     dstAlphaBlendFactor_ = factor;
@@ -55,7 +60,8 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetDstAlphaBlendFactor(
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetAlphaBlendOp(
-    const BlendOp op) {
+    const BlendOp op)
+{
     AE_BASE_ASSERT_ENUM(op, BlendOp);
     AE_BASE_ASSERT(op != BlendOp::Invalid);
     alphaBlendOp_ = op;

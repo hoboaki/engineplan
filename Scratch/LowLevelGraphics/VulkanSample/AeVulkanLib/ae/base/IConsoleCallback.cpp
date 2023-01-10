@@ -6,7 +6,8 @@ namespace ae {
 namespace base {
 
 //------------------------------------------------------------------------------
-IConsoleCallback::~IConsoleCallback() {
+IConsoleCallback::~IConsoleCallback()
+{
 }
 
 } // namespace base

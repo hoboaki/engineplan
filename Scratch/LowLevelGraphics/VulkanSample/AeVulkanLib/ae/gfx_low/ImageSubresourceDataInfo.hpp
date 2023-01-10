@@ -17,7 +17,9 @@ public:
     ImageSubresourceDataInfo(size_t offset, size_t rowPitch, size_t depthPitch)
     : offset_(offset)
     , rowPitch_(rowPitch)
-    , depthPitch_(depthPitch) {}
+    , depthPitch_(depthPitch)
+    {
+    }
     //@}
 
     /// @name プロパティ

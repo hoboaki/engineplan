@@ -23,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    FenceCreateInfo& SetDevice(gfx_low::Device* system) {
+    FenceCreateInfo& SetDevice(gfx_low::Device* system)
+    {
         device_.Reset(system);
         return *this;
     }

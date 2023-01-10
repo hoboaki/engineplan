@@ -32,19 +32,22 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    RenderPipelineCreateInfo& SetDevice(gfx_low::Device* device) {
+    RenderPipelineCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
 
     /// RenderPass の仕様情報。 （初期値：デフォルトコンストラクタの値）
-    gfx_low::RenderPassSpecInfo RenderPassSpecInfo() const {
+    gfx_low::RenderPassSpecInfo RenderPassSpecInfo() const
+    {
         return renderPassSpecInfo_;
     }
 
     /// RenderPassSpecInfo() の設定。（設定必須）
     RenderPipelineCreateInfo& SetRenderPassSpecInfo(
-        const gfx_low::RenderPassSpecInfo& info) {
+        const gfx_low::RenderPassSpecInfo& info)
+    {
         renderPassSpecInfo_ = info;
         return *this;
     }
@@ -58,13 +61,15 @@ public:
         const PipelineShaderInfo& shaderInfo);
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
-    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const {
+    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const
+    {
         return descriptorSetSpecInfo_;
     }
 
     /// DescriptorSetSpecInfo() の設定。
     RenderPipelineCreateInfo& SetDescriptorSetSpecInfo(
-        const gfx_low::DescriptorSetSpecInfo& info) {
+        const gfx_low::DescriptorSetSpecInfo& info)
+    {
         descriptorSetSpecInfo_ = info;
         return *this;
     }
@@ -74,13 +79,15 @@ public:
 
     /// VertexInfo() の設定。
     RenderPipelineCreateInfo& SetVertexInputInfo(
-        const PipelineVertexInputInfo& info) {
+        const PipelineVertexInputInfo& info)
+    {
         vertexInputInfo_ = info;
         return *this;
     }
 
     /// プリミティブトポロジの種類。（初期値：Invalid）
-    gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const {
+    gfx_low::PrimitiveTopologyKind PrimitiveTopologyKind() const
+    {
         return primitiveTopologyKind_;
     }
 
@@ -93,19 +100,22 @@ public:
 
     /// RasterizerInfo() の設定。
     RenderPipelineCreateInfo& SetRasterizerInfo(
-        const PipelineRasterizerInfo& info) {
+        const PipelineRasterizerInfo& info)
+    {
         rasterizerInfo_ = info;
         return *this;
     }
 
     /// デプステスト・ステンシルテスト情報。（初期値：デフォルトコンストラクタの値）
-    PipelineDepthStencilInfo DepthStencilInfo() const {
+    PipelineDepthStencilInfo DepthStencilInfo() const
+    {
         return depthStencilInfo_;
     }
 
     /// DepthStencilInfo() の設定。
     RenderPipelineCreateInfo& SetDepthStencilInfo(
-        const PipelineDepthStencilInfo& info) {
+        const PipelineDepthStencilInfo& info)
+    {
         depthStencilInfo_ = info;
         return *this;
     }
@@ -114,7 +124,8 @@ public:
     PipelineBlendInfo BlendInfo() const { return blendInfo_; }
 
     /// BlendInfo() の設定。
-    RenderPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info) {
+    RenderPipelineCreateInfo& SetBlendInfo(const PipelineBlendInfo& info)
+    {
         blendInfo_ = info;
         return *this;
     }

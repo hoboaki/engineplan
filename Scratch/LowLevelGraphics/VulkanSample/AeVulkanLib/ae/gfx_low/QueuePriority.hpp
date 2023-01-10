@@ -6,7 +6,8 @@ namespace ae {
 namespace gfx_low {
 
 /// Queue の実行優先度。
-enum class QueuePriority {
+enum class QueuePriority
+{
     /// 無効値。
     Invalid,
 

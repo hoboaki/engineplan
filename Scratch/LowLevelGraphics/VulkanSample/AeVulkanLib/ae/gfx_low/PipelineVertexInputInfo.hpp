@@ -30,13 +30,15 @@ public:
     /// @details
     /// BufferCount() 長の配列として参照されます。
     /// 配列のインデックスは頂点バッファのスロット番号と一致します。
-    const VertexBufferLayoutInfo* BufferLayoutInfos() const {
+    const VertexBufferLayoutInfo* BufferLayoutInfos() const
+    {
         return bufferLayoutInfos_.Get();
     }
 
     /// BufferLayoutInfos() の設定。
     PipelineVertexInputInfo& SetBufferLayoutInfos(
-        const VertexBufferLayoutInfo* infos) {
+        const VertexBufferLayoutInfo* infos)
+    {
         bufferLayoutInfos_.Reset(infos);
         return *this;
     }
@@ -52,13 +54,15 @@ public:
     /// @details
     /// AttributeCount() 長の配列として参照されます。
     /// 配列のインデックスが VK-GLSL では location 番号、MSL では attribute 番号として扱われます。
-    const VertexAttributeInfo* AttributeInfos() const {
+    const VertexAttributeInfo* AttributeInfos() const
+    {
         return attributeInfos_.Get();
     }
 
     /// AttributeInfos() の設定。
     PipelineVertexInputInfo& SetAttributeInfos(
-        const VertexAttributeInfo* infos) {
+        const VertexAttributeInfo* infos)
+    {
         attributeInfos_.Reset(infos);
         return *this;
     }

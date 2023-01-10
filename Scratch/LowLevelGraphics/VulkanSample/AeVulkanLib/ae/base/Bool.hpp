@@ -13,7 +13,8 @@ namespace base {
 //@{
 /// @brief BoolTmpl のPod版。
 template <typename DATA_TYPE>
-struct BoolPodTmpl {
+struct BoolPodTmpl
+{
     //============================================================
     // private
     DATA_TYPE val_;
@@ -34,7 +35,8 @@ struct BoolPodTmpl {
     /// BoolPodTmpl< int > var;
     /// var = true; // 代入できる
     /// @endcode
-    BoolPodTmpl<DataType>& operator=(const bool val) {
+    BoolPodTmpl<DataType>& operator=(const bool val)
+    {
         val_ = DataType(val ? 1 : 0);
         return *this;
     }

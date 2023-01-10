@@ -25,7 +25,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    ComputePipelineCreateInfo& SetDevice(gfx_low::Device* device) {
+    ComputePipelineCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,19 +36,22 @@ public:
 
     /// ShaderInfo() の設定。（設定必須）
     ComputePipelineCreateInfo& SetShaderInfo(
-        const PipelineShaderInfo& shaderInfo) {
+        const PipelineShaderInfo& shaderInfo)
+    {
         shaderInfo_ = shaderInfo;
         return *this;
     }
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
-    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const {
+    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const
+    {
         return descriptorSetSpecInfo_;
     }
 
     /// DescriptorSetSpecInfo() の設定。
     ComputePipelineCreateInfo& SetDescriptorSetSpecInfo(
-        const gfx_low::DescriptorSetSpecInfo& info) {
+        const gfx_low::DescriptorSetSpecInfo& info)
+    {
         descriptorSetSpecInfo_ = info;
         return *this;
     }

@@ -9,7 +9,8 @@ namespace ae {
 namespace gfx_low {
 
 //------------------------------------------------------------------------------
-PipelineBlendInfo& PipelineBlendInfo::SetLogicOp(const gfx_low::LogicOp op) {
+PipelineBlendInfo& PipelineBlendInfo::SetLogicOp(const gfx_low::LogicOp op)
+{
     AE_BASE_ASSERT_ENUM(op, gfx_low::LogicOp);
     AE_BASE_ASSERT(op != gfx_low::LogicOp::Invalid);
     logicOp_ = op;
