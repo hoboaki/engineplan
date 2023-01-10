@@ -82,16 +82,19 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     float mvp[4][4];
 };
 
-struct fVertexType {
+struct fVertexType
+{
     float position[3];
     float uv0[2];
 };
 
-struct fVertexBufferType {
+struct fVertexBufferType
+{
     fVertexType v[12 * 3];
 };
 
@@ -196,7 +199,8 @@ const uint32_t fFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -280,11 +284,11 @@ int aemain(::ae::base::Application* app) {
     ::ae::base::Extent2i currentSwapchainExtent;
     constexpr int swapchainImageCount = 3;
     const auto setupSwapchain = [&display,
-                                &device,
-                                &swapchainMaster,
-                                &swapchain,
-                                &currentSwapchainExtent,
-                                &swapchainImageCount] {
+                                 &device,
+                                 &swapchainMaster,
+                                 &swapchain,
+                                 &currentSwapchainExtent,
+                                 &swapchainImageCount] {
         auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
                                .SetDevice(device.get())
                                .SetScreen(&display.MainScreen())

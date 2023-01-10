@@ -81,7 +81,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
@@ -93,7 +94,8 @@ struct fDirectConstantVertDataType
     ::ae::base::Vector4Pod instanceTrans;
 };
 
-struct fDirectConstantFragDataType {
+struct fDirectConstantFragDataType
+{
     ::ae::base::Vector4Pod addColor;
 };
 
@@ -116,7 +118,8 @@ const uint32_t fShapeFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -794,7 +797,7 @@ int aemain(::ae::base::Application* app) {
                             ::ae::gfx_low::DrawCallInfo().SetVertexCount(
                                 geometryCube.VertexCount()));
                     }
-                    
+
                     // 右のキューブ
                     {
                         fDirectConstantVertDataType vertData = {};

@@ -59,7 +59,8 @@ constexpr uint32_t fElemsLength = fThreadsPerThreadGroupX *
                                   fThreadsPerThreadGroupY * fThreadGroupsX *
                                   fThreadGroupsY;
 
-struct fStorageDataType {
+struct fStorageDataType
+{
     uint32_t elems[fElemsLength];
 };
 
@@ -72,7 +73,8 @@ const uint32_t fCompShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 

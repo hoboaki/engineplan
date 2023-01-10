@@ -39,8 +39,8 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPass.hpp>
-#include <ae/gfx_low/RenderPassCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
+#include <ae/gfx_low/RenderPassCreateInfo.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipeline.hpp>
 #include <ae/gfx_low/RenderPipelineCreateInfo.hpp>
@@ -77,12 +77,14 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fMultiUniformDataType {
+struct fMultiUniformDataType
+{
     ::ae::base::Matrix44Pod mvp;
     ::ae::base::Vector4fPod uvTrans;
 };
 
-struct fMixUniformDataType {
+struct fMixUniformDataType
+{
     ::ae::base::Matrix44Pod mvp;
 };
 
@@ -109,7 +111,8 @@ const uint32_t fMixFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -563,7 +566,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
-                auto model = ::ae::base::Matrix44::Identity();                
+                auto model = ::ae::base::Matrix44::Identity();
                 auto vp = proj * view;
                 auto mvp = vp * model;
 
@@ -588,7 +591,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::base::Vector3::Zero(), // targetPos
                     ::ae::base::Vector3::UnitY() // upVec
                 );
-                auto model = ::ae::base::Matrix44::Identity();                
+                auto model = ::ae::base::Matrix44::Identity();
                 auto vp = proj * view;
                 auto mvp = vp * model;
 
