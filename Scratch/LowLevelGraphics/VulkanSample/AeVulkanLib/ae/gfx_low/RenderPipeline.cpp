@@ -235,10 +235,11 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                         info.Slot(),
                         0,
                         vertexInputInfo.BufferCount());
-                    AE_BASE_ASSERT_MIN_MAX(
-                        info.Offset(),
-                        0,
-                        int(vertexBindingDescs[info.Slot()].stride));
+                    AE_BASE_ASSERT(
+                        vertexBindingDescs[info.Slot()].stride == 0 ||
+                        (0 <= info.Offset() &&
+                         info.Offset() <
+                             int(vertexBindingDescs[info.Slot()].stride)));
                     vertexAttrDescs[i] =
                         ::vk::VertexInputAttributeDescription()
                             .setBinding(uint32_t(info.Slot()))
