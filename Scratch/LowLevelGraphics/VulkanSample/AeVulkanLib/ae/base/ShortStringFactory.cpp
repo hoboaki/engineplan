@@ -2,8 +2,7 @@
 #include <ae/base/ShortStringFactory.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -126,6 +125,5 @@ const ShortString ShortStringFactory::Create(const char* ptr)
     return tToShortString("%s", ptr);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -5,16 +5,13 @@
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
 #include <ae/gfx_low/VertexBufferLayoutInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class BufferResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// VertexBufferView オブジェクト作成に必要な情報。
 class VertexBufferViewCreateInfo {
@@ -71,6 +68,5 @@ private:
     VertexBufferLayoutInfo layoutInfo_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

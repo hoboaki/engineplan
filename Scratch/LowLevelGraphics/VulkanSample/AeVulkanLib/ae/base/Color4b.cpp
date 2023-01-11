@@ -9,8 +9,7 @@
 #include <ae/base/ScalerTypes.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Color4bPod Color4bPod::Zero()
@@ -111,6 +110,5 @@ Color4b::Color4b(const u8 r, const u8 g, const u8 b, const u8 a)
     this->a = a;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

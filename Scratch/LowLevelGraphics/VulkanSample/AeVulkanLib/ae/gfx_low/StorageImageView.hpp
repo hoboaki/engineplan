@@ -3,16 +3,13 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class StorageImageViewCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// シェーダー上で格納されるイメージを扱うビューデスクリプタ。
 class StorageImageView {
@@ -40,6 +37,5 @@ private:
     ::vk::ImageView nativeObject_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

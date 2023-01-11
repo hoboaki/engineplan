@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DrawIndirectCallInfo& DrawIndirectCallInfo::SetCommandOffset(const int offset)
@@ -24,6 +23,5 @@ DrawIndirectCallInfo& DrawIndirectCallInfo::SetCommandCount(const int count)
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

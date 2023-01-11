@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// プリミティブトポロジの種類を示す列挙値。
 enum class PrimitiveTopologyKind
@@ -28,6 +27,5 @@ enum class PrimitiveTopologyKind
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

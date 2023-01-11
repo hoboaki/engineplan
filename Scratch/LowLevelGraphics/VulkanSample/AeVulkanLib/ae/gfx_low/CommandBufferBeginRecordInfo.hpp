@@ -4,17 +4,14 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderPass;
 class ScissorSetting;
 class ViewportSetting;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CommandBuffer::BeginRecord に必要な情報。
 class CommandBufferBeginRecordInfo {
@@ -78,6 +75,5 @@ private:
     base::Pointer<const ScissorSetting> inheritScissorSettingsPtr_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -4,8 +4,7 @@
 #include <ae/base/Pointer.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ドローコールに必要な情報。
 class DrawCallInfo {
@@ -67,6 +66,5 @@ private:
     bool useIndexBuffer_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

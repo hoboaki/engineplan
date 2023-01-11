@@ -3,15 +3,12 @@
 #else
 #define AE_BASE_INCLUDED_THREAD_HPP
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct TimeSpanPod;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Thread
 //@{
@@ -23,7 +20,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

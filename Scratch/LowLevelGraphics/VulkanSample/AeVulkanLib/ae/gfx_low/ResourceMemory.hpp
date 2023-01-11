@@ -3,15 +3,12 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ResourceMemoryAddress;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソース用メモリを扱うクラス。
 /// @details
@@ -65,6 +62,5 @@ private:
     uint8_t* head_ = nullptr;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

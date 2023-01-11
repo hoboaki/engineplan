@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 VertexBufferLayoutInfo& VertexBufferLayoutInfo::SetStride(const int stride)
@@ -26,6 +25,5 @@ VertexBufferLayoutInfo& VertexBufferLayoutInfo::SetStepRate(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

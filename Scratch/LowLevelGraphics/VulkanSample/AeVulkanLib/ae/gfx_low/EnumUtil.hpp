@@ -7,8 +7,7 @@
 #include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Enum に関する便利関数郡。
 struct EnumUtil
@@ -49,6 +48,5 @@ struct EnumUtil
     }
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

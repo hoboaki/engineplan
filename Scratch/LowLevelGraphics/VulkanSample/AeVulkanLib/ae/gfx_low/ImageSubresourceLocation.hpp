@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource の抱える ImageSubresource の場所を示すクラス。
 /// @details
@@ -59,6 +58,5 @@ private:
     int faceIndex_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

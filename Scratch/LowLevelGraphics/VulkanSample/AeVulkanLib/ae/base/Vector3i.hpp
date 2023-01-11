@@ -6,17 +6,14 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/ShortString.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Vector2iPod;
 struct Vector3Pod;
 struct Vector4iPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -185,7 +182,6 @@ public:
 typedef Vector3iPod Vec3i;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

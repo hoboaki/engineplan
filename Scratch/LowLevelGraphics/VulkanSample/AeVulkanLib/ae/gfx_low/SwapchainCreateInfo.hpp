@@ -3,15 +3,12 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class SwapchainMaster;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Swapchain オブジェクト作成時に必要な情報。
 /// @details
@@ -47,6 +44,5 @@ private:
     bool isSrgbFormat_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderTargetBlendInfo& RenderTargetBlendInfo::SetSrcColorBlendFactor(
@@ -68,6 +67,5 @@ RenderTargetBlendInfo& RenderTargetBlendInfo::SetAlphaBlendOp(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

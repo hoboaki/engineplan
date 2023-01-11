@@ -9,8 +9,7 @@
 #include <memory>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -66,8 +65,7 @@ IAllocator& IAllocator::OperatorNewDelete()
     return obj;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
 void* operator new(const std::size_t size, ::ae::base::IAllocator& allocator)

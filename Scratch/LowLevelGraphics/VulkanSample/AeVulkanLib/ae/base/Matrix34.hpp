@@ -5,19 +5,16 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 class Quaternion;
 struct Matrix44Pod;
 struct Vector3Pod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -198,7 +195,6 @@ public:
 typedef Matrix34Pod Mtx34;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

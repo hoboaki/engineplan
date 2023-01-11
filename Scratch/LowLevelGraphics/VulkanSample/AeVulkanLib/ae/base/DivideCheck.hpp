@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // 割り算チェックで使うモノたち用空間。
 struct DivideCheck
@@ -24,8 +23,7 @@ struct DivideCheck
     }
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 /// @addtogroup AeBase-Debug
 //@{

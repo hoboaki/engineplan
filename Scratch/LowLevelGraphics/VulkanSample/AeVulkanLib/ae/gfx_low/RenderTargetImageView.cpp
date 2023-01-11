@@ -9,8 +9,7 @@
 #include <ae/gfx_low/RenderTargetImageViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderTargetImageView::RenderTargetImageView(
@@ -47,6 +46,5 @@ RenderTargetImageView::~RenderTargetImageView()
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

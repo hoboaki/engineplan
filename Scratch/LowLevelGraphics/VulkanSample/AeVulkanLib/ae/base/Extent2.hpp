@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -45,6 +44,5 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

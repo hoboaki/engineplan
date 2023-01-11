@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ラスタライズ時にポリゴンをどのように埋めるかを示す列挙値。
 enum class RasterizeFillMode
@@ -20,6 +19,5 @@ enum class RasterizeFillMode
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

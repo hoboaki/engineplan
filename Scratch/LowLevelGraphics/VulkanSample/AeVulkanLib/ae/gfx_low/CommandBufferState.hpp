@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CommandBuffer の状態を表す列挙値。
 enum class CommandBufferState
@@ -20,6 +19,5 @@ enum class CommandBufferState
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

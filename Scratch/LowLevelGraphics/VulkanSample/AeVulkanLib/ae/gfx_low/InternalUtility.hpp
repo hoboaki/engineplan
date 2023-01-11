@@ -3,16 +3,13 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ImageResource;
 class ImageSubresourceLocation;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 内部実装用便利機能群。
 struct InternalUtility
@@ -24,6 +21,5 @@ struct InternalUtility
         const ::vk::ImageAspectFlags& aspectFlagsHint = {});
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

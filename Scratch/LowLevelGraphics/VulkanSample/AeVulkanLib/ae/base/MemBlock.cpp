@@ -2,8 +2,7 @@
 #include <ae/base/MemBlock.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 MemBlock::MemBlock()
@@ -43,6 +42,5 @@ pword_t MemBlock::Size() const
     return size_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

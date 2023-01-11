@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Argument::Argument(
@@ -70,6 +69,5 @@ const char* Argument::ExeDirPath() const
     return exeDirPath_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

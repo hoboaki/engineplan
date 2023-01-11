@@ -11,8 +11,7 @@
 #include <ae/base/Vector4i.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Zero()
@@ -475,6 +474,5 @@ Vector2i::Vector2i(const s32 x, const s32 y)
     this->y = y;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

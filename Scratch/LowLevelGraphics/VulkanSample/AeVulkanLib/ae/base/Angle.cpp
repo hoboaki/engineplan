@@ -6,8 +6,7 @@
 #include <ae/base/Radian.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Angle::Angle()
@@ -39,6 +38,5 @@ f32 Angle::Deg() const
     return Radian(rad_).ToDegree().value;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

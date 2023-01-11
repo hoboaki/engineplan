@@ -8,8 +8,7 @@
 #include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ShaderModuleResource::ShaderModuleResource(
@@ -36,6 +35,5 @@ ShaderModuleResource::~ShaderModuleResource()
     device_.NativeObject_().destroyShaderModule(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -7,8 +7,7 @@
 #include <ae/gfx_low/Device.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 BufferResource::BufferResource(const BufferResourceCreateInfo& createInfo)
@@ -58,6 +57,5 @@ BufferResource::~BufferResource()
     nativeObject_ = ::vk::Buffer();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

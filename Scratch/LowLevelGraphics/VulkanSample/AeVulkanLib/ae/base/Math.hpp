@@ -6,15 +6,12 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/RuntimeAssert.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -135,7 +132,6 @@ struct Math
 //@}
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

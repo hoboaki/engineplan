@@ -7,8 +7,7 @@
 #include <ae/base/Math.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Aabb2::Aabb2()
@@ -339,6 +338,5 @@ const Aabb2i Aabb2::ToAabb2i() const
         uint(newTerm.y - newMin.y));
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

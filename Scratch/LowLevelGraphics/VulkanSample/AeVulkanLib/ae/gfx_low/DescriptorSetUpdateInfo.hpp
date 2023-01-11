@@ -3,19 +3,16 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class SamplerDescriptorInfo;
 class SampledImageDescriptorInfo;
 class StorageBufferDescriptorInfo;
 class StorageImageDescriptorInfo;
 class UniformBufferDescriptorInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DescriptorSet の更新時に使われる情報。
 class DescriptorSetUpdateInfo {
@@ -112,6 +109,5 @@ private:
     base::Pointer<const SamplerDescriptorInfo> samplerInfos_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

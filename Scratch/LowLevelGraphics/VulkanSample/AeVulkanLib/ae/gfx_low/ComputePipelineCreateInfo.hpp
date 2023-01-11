@@ -6,15 +6,12 @@
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ComputePipeline オブジェクト作成に必要な情報。
 class ComputePipelineCreateInfo {
@@ -63,6 +60,5 @@ private:
     gfx_low::DescriptorSetSpecInfo descriptorSetSpecInfo_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

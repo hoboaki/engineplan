@@ -4,8 +4,7 @@
 #include <ae/base/Aabb2.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ビューポート設定。
 class ViewportSetting {
@@ -40,6 +39,5 @@ private:
     float maxDepth_ = 1.0f;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

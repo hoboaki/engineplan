@@ -6,8 +6,7 @@
 #include <array>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// GPU デバイス情報。
 class PhysicalDeviceInfo {
@@ -26,6 +25,5 @@ public:
         CreatableQueueCounts_ = {};
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

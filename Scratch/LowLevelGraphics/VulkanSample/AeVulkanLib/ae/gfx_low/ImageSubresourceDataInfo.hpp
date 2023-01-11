@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageSubresource のデータ情報。
 class ImageSubresourceDataInfo {
@@ -40,6 +39,5 @@ private:
     size_t depthPitch_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

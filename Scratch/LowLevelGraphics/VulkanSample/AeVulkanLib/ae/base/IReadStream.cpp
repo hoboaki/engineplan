@@ -2,14 +2,12 @@
 #include <ae/base/IReadStream.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 IReadStream::~IReadStream()
 {
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

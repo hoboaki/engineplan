@@ -4,8 +4,7 @@
 #include <ae/base/Aabb2i.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// シザー矩形設定。
 class ScissorSetting {
@@ -27,6 +26,5 @@ private:
     base::Aabb2i rect_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

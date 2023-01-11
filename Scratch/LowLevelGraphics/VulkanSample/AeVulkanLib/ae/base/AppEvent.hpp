@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_APPEVENT_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -25,7 +24,6 @@ struct AppEvent
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

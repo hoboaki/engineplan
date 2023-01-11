@@ -15,8 +15,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -76,6 +75,5 @@ void RuntimeError::OnError()
 #endif
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -2,8 +2,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const char* const RuntimeAssert::Separator =
@@ -13,6 +12,5 @@ const char* const RuntimeAssert::FileLineFmt = "File: %s(%d)";
 const char* const RuntimeAssert::LabelCondition = "Condition:";
 const char* const RuntimeAssert::LabelMessage = "Message:";
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

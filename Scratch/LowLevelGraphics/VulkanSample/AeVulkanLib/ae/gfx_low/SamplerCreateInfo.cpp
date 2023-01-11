@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SamplerCreateInfo& SamplerCreateInfo::SetMinFilter(
@@ -97,6 +96,5 @@ SamplerCreateInfo& SamplerCreateInfo::SetCompareOp(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

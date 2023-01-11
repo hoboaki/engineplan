@@ -9,16 +9,13 @@
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class BufferResource;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CopyBufferToImage コマンドに必要な情報。
 class CopyBufferToImageInfo {
@@ -156,6 +153,5 @@ private:
     ImageResourceState dstImageResourceState_ = ImageResourceState::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

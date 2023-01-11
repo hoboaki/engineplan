@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ShaderBindingRegion.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Sampler;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Sampler 用デスクリプタの情報。
 class SamplerDescriptorInfo {
@@ -46,6 +43,5 @@ private:
     base::Pointer<const Sampler*> samplers_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

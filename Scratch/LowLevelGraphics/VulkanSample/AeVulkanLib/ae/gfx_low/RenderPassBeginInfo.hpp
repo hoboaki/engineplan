@@ -4,15 +4,12 @@
 #include <ae/base/Aabb2i.hpp>
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderPass;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// BeginRenderPass 関数実行に必要な情報。
 class RenderPassBeginInfo {
@@ -51,7 +48,6 @@ private:
     bool useSecondaryCommandBuffers_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 // EOF

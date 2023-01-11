@@ -8,8 +8,7 @@
 #include <ae/gfx_low/EnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::AttachmentLoadOp InternalEnumUtil::ToAttachmentLoadOp(
@@ -790,6 +789,5 @@ namespace gfx_low {
     return result;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

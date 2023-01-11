@@ -3,16 +3,13 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class QueueCreateInfo;
 class System;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Device オブジェクト作成に必要な情報。
 class DeviceCreateInfo {
@@ -68,6 +65,5 @@ private:
     ::ae::base::Pointer<const QueueCreateInfo> queueCreateInfos_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

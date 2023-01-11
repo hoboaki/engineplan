@@ -6,8 +6,7 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectMipLevels_(
@@ -52,6 +51,5 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectArrayLength_(
                         : ::vk::ImageCreateFlagBits(0));
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

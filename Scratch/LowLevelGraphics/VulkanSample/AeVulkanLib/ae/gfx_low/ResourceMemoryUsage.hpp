@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソースメモリの使用法。
 enum class ResourceMemoryUsage
@@ -53,6 +52,5 @@ enum class ResourceMemoryUsage
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

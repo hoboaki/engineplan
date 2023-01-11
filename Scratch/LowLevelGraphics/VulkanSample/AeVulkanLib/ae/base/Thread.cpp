@@ -13,8 +13,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 void Thread::Sleep(const TimeSpanPod& timeSpan)
@@ -26,6 +25,5 @@ void Thread::Sleep(const TimeSpanPod& timeSpan)
 #endif
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -7,8 +7,7 @@
 #include <ae/base/ScalerClass.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Types
 //@{
@@ -77,7 +76,6 @@ typedef PodStruct<const_anyptr_t> ConstAnyPtrPod; ///< any_ptr_tのconst版。
 
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

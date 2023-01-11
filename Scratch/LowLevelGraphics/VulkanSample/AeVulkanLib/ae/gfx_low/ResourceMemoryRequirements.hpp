@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソースが要求する ResoureceMemory の要件。
 class ResourceMemoryRequirements {
@@ -50,6 +49,5 @@ private:
     size_t alignment_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

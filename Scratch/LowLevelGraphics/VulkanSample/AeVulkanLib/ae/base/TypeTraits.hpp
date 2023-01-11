@@ -11,8 +11,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Types
 //@{
@@ -61,7 +60,6 @@ struct TypeTraits
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

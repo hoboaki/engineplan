@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_NONCOPYABLE_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -27,7 +26,6 @@ struct Noncopyable
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

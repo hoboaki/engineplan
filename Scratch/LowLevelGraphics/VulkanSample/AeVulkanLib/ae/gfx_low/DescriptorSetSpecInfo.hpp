@@ -5,17 +5,14 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/DescriptorKind.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DirectConstantInfo;
 class ShaderBindingInfo;
 ;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DescriptorSet の仕様情報。
 /// @details
@@ -122,6 +119,5 @@ private:
     base::Pointer<const DirectConstantInfo> directConstantInfos_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

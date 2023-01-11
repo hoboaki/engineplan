@@ -2,12 +2,10 @@
 #include <ae/base/DivideCheck.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const char* const DivideCheck::AssertionMessage = "Division by zero error.";
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

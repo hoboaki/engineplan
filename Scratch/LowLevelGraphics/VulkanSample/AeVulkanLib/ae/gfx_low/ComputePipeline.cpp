@@ -12,8 +12,7 @@
 #include <ae/gfx_low/ShaderModuleResource.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ComputePipeline::ComputePipeline(const ComputePipelineCreateInfo& createInfo)
@@ -85,6 +84,5 @@ ComputePipeline::~ComputePipeline()
     pipelineLayout_ = ::vk::PipelineLayout();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ShaderBindingRegion.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class StorageImageView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// StorageImage 用デスクリプタの情報。
 class StorageImageDescriptorInfo {
@@ -47,6 +44,5 @@ private:
     base::Pointer<const StorageImageView*> views_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

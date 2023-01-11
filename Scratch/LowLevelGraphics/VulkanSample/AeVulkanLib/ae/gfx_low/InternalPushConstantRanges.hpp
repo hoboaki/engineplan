@@ -4,16 +4,13 @@
 #include <ae/base/EnumKeyArray.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DescriptorSetSpecInfo;
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// PushConstantRange 郡を扱うクラス。
 /// @details
@@ -48,6 +45,5 @@ private:
         pushConstantRanges_ = {};
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

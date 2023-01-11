@@ -4,8 +4,7 @@
 #include <ae/gfx_low/VertexFormat.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 頂点属性に関する情報。
 /// @todo HLSL 用の文字列ラベル対応。
@@ -40,6 +39,5 @@ private:
     VertexFormat format_ = VertexFormat::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

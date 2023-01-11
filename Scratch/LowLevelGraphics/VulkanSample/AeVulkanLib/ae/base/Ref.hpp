@@ -6,8 +6,7 @@
 #include <ae/base/Reference.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -19,7 +18,6 @@ const Reference<T> Ref(T& obj)
 }
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

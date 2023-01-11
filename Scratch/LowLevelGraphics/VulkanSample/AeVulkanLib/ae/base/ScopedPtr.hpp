@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_SCOPEDPTR_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -77,7 +76,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

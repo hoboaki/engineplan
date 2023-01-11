@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ダイレクトコンスタントに関する情報。
 class DirectConstantInfo {
@@ -39,6 +38,5 @@ private:
     size_t size_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

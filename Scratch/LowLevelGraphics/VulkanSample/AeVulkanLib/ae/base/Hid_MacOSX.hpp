@@ -8,8 +8,7 @@
 #include <ae/base/Noncopyable.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // MacOSXのHid拡張。
 class Hid_Ext : private Noncopyable<Hid_Ext> {
@@ -18,7 +17,6 @@ public:
     Mouse mouse;
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -8,15 +8,12 @@
 #include <ae/gfx_low/SamplerMinMagFilter.hpp>
 #include <ae/gfx_low/SamplerMipmapMode.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Sampler オブジェクト作成に必要な情報。
 class SamplerCreateInfo {
@@ -159,6 +156,5 @@ private:
     bool unnormalizedCordinates_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

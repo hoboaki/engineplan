@@ -4,8 +4,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// Enum を Key とした配列。
 /// @tparam TEnumType キーとなる Enum 型。TERM の定義が必要。
@@ -95,6 +94,5 @@ public:
     ValueType values_[static_cast<int>(TEnumType::TERM)];
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

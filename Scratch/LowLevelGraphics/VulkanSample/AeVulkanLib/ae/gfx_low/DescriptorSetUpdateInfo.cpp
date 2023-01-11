@@ -2,8 +2,7 @@
 #include <ae/gfx_low/DescriptorSetUpdateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetUniformBufferInfos(
@@ -75,6 +74,5 @@ DescriptorSetUpdateInfo& DescriptorSetUpdateInfo::SetSamplerInfos(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

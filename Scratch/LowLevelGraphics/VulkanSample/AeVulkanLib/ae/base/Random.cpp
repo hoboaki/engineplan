@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Random::Random()
@@ -85,6 +84,5 @@ unsigned int Random::operator()(const unsigned int term)
     return Rand() % (term + 1);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

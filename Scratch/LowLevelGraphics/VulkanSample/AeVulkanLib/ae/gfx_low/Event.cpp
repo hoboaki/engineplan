@@ -7,8 +7,7 @@
 #include <ae/gfx_low/EventCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Event::Event(const EventCreateInfo& createInfo)
@@ -29,6 +28,5 @@ Event::~Event()
     device_.NativeObject_().destroySemaphore(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

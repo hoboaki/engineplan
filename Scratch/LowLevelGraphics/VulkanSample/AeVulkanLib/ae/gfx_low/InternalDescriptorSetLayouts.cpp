@@ -9,8 +9,7 @@
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
@@ -210,6 +209,5 @@ int InternalDescriptorSetLayouts::DescriptorSetLayoutIndex(
     return descriptorSetLayoutIndexes_[kind];
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

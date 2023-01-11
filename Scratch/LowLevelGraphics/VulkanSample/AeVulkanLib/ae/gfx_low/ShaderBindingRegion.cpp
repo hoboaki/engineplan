@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ShaderBindingRegion& ShaderBindingRegion::SetBindingIndex(const int index)
@@ -32,6 +31,5 @@ ShaderBindingRegion& ShaderBindingRegion::SetElemCount(const int count)
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

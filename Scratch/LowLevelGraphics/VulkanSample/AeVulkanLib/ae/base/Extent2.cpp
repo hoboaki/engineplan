@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Extent2::Extent2(const float width, const float height)
@@ -17,6 +16,5 @@ Extent2::Extent2(const float width, const float height)
     this->height = height;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

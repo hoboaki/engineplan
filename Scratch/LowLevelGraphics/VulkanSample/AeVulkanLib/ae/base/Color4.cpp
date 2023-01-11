@@ -10,8 +10,7 @@
 #include <ae/base/Vector4.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Color4Pod Color4Pod::Zero()
@@ -394,6 +393,5 @@ Color4::Color4(const Vector4Pod& vec)
     this->a = vec.w;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

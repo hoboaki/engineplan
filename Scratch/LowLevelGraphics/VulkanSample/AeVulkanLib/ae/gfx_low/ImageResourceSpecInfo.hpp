@@ -9,8 +9,7 @@
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource のデータ構造仕様に関する情報。
 class ImageResourceSpecInfo {
@@ -93,6 +92,5 @@ private:
     ImageResourceUsageBitSet usageBitSet_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

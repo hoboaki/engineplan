@@ -16,8 +16,7 @@
 #include <ae/gfx_low/VertexBufferLayoutInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
@@ -408,6 +407,5 @@ RenderPipeline::~RenderPipeline()
     renderPass_ = ::vk::RenderPass();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

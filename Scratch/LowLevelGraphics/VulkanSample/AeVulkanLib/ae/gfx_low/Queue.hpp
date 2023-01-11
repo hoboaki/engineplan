@@ -7,19 +7,16 @@
 #include <ae/gfx_low/QueueKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class CommandBuffer;
 class Device;
 class Event;
 class Fence;
 class Swapchain;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// キューを扱うクラス。
 /// @details
@@ -127,6 +124,5 @@ private:
     base::RuntimeMarray<::vk::Semaphore> signalEvents_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

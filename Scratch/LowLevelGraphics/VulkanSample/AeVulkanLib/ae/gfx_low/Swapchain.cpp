@@ -12,8 +12,7 @@
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Swapchain::~Swapchain()
@@ -129,6 +128,5 @@ void Swapchain::Finalize_()
     AE_BASE_ASSERT(!IsInitialized_());
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

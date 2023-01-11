@@ -2,8 +2,7 @@
 #include <ae/base/Mouse.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Mouse::Mouse()
@@ -84,6 +83,5 @@ const MouseBtnBitSet Mouse::Release() const
     return release_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

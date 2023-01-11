@@ -7,8 +7,7 @@
 #include <ae/base/Radian.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -49,6 +48,5 @@ Degree::Degree(const DegreePod& val)
 {
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

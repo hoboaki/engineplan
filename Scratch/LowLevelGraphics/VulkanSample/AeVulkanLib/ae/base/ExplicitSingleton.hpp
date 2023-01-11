@@ -7,8 +7,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @name addtogroup AeBase-Util
 //@{
@@ -98,7 +97,6 @@ void ExplicitSingleton<T>::UnsetInstance()
 template <typename T>
 T* ExplicitSingleton<T>::sPtr = 0;
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

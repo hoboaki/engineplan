@@ -11,8 +11,7 @@
 #include <ae/base/Vector3.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Matrix34Pod Matrix34Pod::Identity()
@@ -527,6 +526,5 @@ Matrix34::Matrix34(
     SetW(w);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

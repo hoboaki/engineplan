@@ -6,8 +6,7 @@
 #include <limits>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Collection
 //@{
@@ -150,6 +149,5 @@ using EnumBitSetPod32 = EnumBitSetPod<TEnumType, uint32_t>;
 template <typename TEnumType>
 using EnumBitSet32 = EnumBitSet<TEnumType, uint32_t>;
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

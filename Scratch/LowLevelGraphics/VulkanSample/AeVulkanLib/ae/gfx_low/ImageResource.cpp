@@ -7,8 +7,7 @@
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResource::ImageResource(const ImageResourceCreateInfo& createInfo)
@@ -71,6 +70,5 @@ ImageResource::~ImageResource()
     nativeObject_ = ::vk::Image();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

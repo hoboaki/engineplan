@@ -8,8 +8,7 @@
 #include <cstdarg>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-String
 //@{
@@ -123,7 +122,6 @@ struct StringTraits
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

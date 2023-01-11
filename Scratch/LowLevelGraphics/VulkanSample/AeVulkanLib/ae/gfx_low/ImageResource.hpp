@@ -4,16 +4,13 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResourceCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// イメージリソースを扱うクラス。
 /// @details
@@ -55,6 +52,5 @@ private:
     bool isCubeMapImage_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

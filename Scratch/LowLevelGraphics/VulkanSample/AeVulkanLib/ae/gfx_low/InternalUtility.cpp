@@ -7,8 +7,7 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageSubresourceRange InternalUtility::ToImageSubresourceRange(
@@ -31,6 +30,5 @@ namespace gfx_low {
     );
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

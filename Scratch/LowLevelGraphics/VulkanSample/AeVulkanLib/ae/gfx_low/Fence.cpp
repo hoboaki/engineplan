@@ -7,8 +7,7 @@
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Fence::Fence(const FenceCreateInfo& createInfo)
@@ -64,6 +63,5 @@ void Fence::OnSubmit_()
     isActive_ = true;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 PipelineRasterizerInfo& PipelineRasterizerInfo::SetCullMode(
@@ -47,6 +46,5 @@ PipelineRasterizerInfo& PipelineRasterizerInfo::SetLineWidth(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

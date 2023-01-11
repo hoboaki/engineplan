@@ -5,18 +5,15 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DepthStencilSetting;
 class Device;
 class RenderPassSpecInfo;
 class RenderTargetSetting;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPass 作成に必要な情報。
 class RenderPassCreateInfo {
@@ -99,7 +96,6 @@ private:
     base::Aabb2i renderArea_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 // EOF

@@ -7,15 +7,12 @@
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DepthStencilImageView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPass に設定する DepthStencil に関する設定情報。
 class DepthStencilSetting {
@@ -105,6 +102,5 @@ private:
     int stencilClearValue_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

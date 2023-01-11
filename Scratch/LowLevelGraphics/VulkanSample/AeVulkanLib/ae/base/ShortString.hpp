@@ -6,8 +6,7 @@
 #include <ae/base/FixedString.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-String
 //@{
@@ -17,7 +16,6 @@ typedef FixedString<wchar_t, 64>
     ShortWString; ///< wchar_t版ShortString。短い固定長文字列。
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

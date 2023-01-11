@@ -9,8 +9,7 @@
 #include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 VertexBufferView::VertexBufferView(const VertexBufferViewCreateInfo& createInfo)
@@ -25,6 +24,5 @@ VertexBufferView::~VertexBufferView()
 {
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

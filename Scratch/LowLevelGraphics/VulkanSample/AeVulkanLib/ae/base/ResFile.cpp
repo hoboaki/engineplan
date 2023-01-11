@@ -6,8 +6,7 @@
 #include <ae/base/ResFileStream.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator)
@@ -40,6 +39,5 @@ const AutoMemBlock ResFile::Read(const char* path, IAllocator& allocator)
     return AutoMemBlock(MemBlock(ptr, size), allocator);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

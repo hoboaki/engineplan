@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Extent3::Extent3(const Extent2Pod& extent, float depth)
@@ -26,6 +25,5 @@ Extent3::Extent3(float width, float height, float depth)
     this->depth = depth;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

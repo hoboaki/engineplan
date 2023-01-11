@@ -16,8 +16,7 @@
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
@@ -380,6 +379,5 @@ void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance)
     device_.NativeObject_().destroySwapchainKHR(instance);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

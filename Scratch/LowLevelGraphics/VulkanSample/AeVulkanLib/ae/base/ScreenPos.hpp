@@ -6,8 +6,7 @@
 #include <ae/base/BuiltInTypes.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @name AeBase-Util
 //@{
@@ -33,7 +32,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Touch::Touch(const int tapCount)
@@ -59,6 +58,5 @@ const TouchTap Touch::TapAtIndex(const int index) const
     return taps_[index];
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

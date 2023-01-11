@@ -5,8 +5,7 @@
 #include <ae/base/ScreenPos.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Screen::Screen(Display_Ext& owner, const int width, const int height)
@@ -55,6 +54,5 @@ void Screen::SetExtent_(const Extent2iPod& extent)
     height_ = extent.height;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

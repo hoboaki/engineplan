@@ -4,15 +4,13 @@
 #define AE_BASE_INCLUDED_SCREEN_DEFAULT_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //デフォルト環境でのScreenの拡張。
 class Screen_Ext {
 public:
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

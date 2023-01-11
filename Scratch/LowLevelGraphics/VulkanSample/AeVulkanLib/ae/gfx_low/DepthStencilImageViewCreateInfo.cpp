@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DepthStencilImageViewCreateInfo& DepthStencilImageViewCreateInfo::SetFormat(
@@ -18,6 +17,5 @@ DepthStencilImageViewCreateInfo& DepthStencilImageViewCreateInfo::SetFormat(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

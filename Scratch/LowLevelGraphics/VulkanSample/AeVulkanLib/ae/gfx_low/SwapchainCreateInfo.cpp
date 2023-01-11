@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount)
@@ -16,6 +15,5 @@ SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount)
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -2,8 +2,7 @@
 #include <ae/base/Keyboard.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Keyboard::Keyboard()
@@ -96,6 +95,5 @@ const KeyBitSet Keyboard::Release() const
     return release_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -12,8 +12,7 @@
 #include <ae/base/Time.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 //------------------------------------------------------------------------------
 namespace {
 
@@ -149,6 +148,5 @@ void Console::TimeWriteLineVF(const char* format, va_list arg)
     WriteLineVF(format, arg);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

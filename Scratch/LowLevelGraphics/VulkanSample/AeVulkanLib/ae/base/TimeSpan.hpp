@@ -7,8 +7,7 @@
 #include <ae/base/PodInheritClass.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-DateTime
 //@{
@@ -118,7 +117,6 @@ struct TimeSpanPod
 typedef PodInheritClass<TimeSpanPod> TimeSpan;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

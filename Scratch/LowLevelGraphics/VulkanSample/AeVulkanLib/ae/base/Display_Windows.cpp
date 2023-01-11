@@ -12,8 +12,7 @@
 #include <ae/base/Unused.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -380,6 +379,5 @@ LRESULT Display_Ext::WindowProcessLocal(
     return DefWindowProc(hWND, msg, wParam, lParam);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

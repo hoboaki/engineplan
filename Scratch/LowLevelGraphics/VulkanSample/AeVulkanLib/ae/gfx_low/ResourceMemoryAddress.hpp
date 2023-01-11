@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ResourceMemory.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ResourceMemory のアドレスを扱うクラス。
 /// @details
@@ -38,6 +37,5 @@ private:
     size_t offset_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

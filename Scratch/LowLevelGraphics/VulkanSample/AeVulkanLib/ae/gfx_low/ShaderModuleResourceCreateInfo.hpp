@@ -6,15 +6,12 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ShaderModuleResource の作成に必要な情報。
 class ShaderModuleResourceCreateInfo {
@@ -65,6 +62,5 @@ private:
     ResourceMemoryAddress dataAddress_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

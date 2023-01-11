@@ -2,8 +2,7 @@
 #include <ae/base/TimeSpan.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const TimeSpanPod TimeSpanPod::FromTicks(const s64 ticks)
@@ -144,6 +143,5 @@ TimeSpanPod& TimeSpanPod::operator-=(const TimeSpanPod& timeSpan)
     return SubAssign(timeSpan);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

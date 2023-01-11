@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// プログラマブルシェーダーをアサインできるステージを表す列挙値。
 /// @todo テッセレーションなど他のステージの対応。
@@ -27,6 +26,5 @@ enum class ShaderBindingStage
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

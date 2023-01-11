@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 bool PointerCheck::IsValid(const_anyptr_t ptr)
@@ -24,6 +23,5 @@ bool PointerCheck::InvalidCheck(const_anyptr_t ptr)
     return false;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

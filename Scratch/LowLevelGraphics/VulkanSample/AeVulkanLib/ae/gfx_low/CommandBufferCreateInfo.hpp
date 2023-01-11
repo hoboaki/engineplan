@@ -7,16 +7,13 @@
 #include <ae/gfx_low/CommandBufferLevel.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class Queue;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CommandBuffer オブジェクト作成に必要な情報。
 class CommandBufferCreateInfo {
@@ -73,6 +70,5 @@ private:
     int renderPassCountMax_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -6,16 +6,13 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DepthStencilImageView オブジェクト作成に必要な情報。
 class DepthStencilImageViewCreateInfo {
@@ -71,6 +68,5 @@ private:
     ImageFormat format_ = ImageFormat::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

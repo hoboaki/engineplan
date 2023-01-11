@@ -6,8 +6,7 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageSubresourceRange& ImageSubresourceRange::SetMipLevels(const int levels)
@@ -26,6 +25,5 @@ ImageSubresourceRange& ImageSubresourceRange::SetArrayLength(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

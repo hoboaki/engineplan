@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_MOUSEBTNKIND_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
@@ -23,7 +22,6 @@ struct MouseBtnKind
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

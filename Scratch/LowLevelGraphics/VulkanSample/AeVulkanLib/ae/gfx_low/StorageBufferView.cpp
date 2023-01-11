@@ -10,8 +10,7 @@
 #include <ae/gfx_low/StorageBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 StorageBufferView::StorageBufferView(
@@ -27,6 +26,5 @@ StorageBufferView::~StorageBufferView()
 {
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

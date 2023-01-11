@@ -8,8 +8,7 @@
 #include <ae/base/Touch.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Hid::Hid(Display& display)
@@ -58,6 +57,5 @@ Hid_Ext& Hid::Ext_()
     return ext_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

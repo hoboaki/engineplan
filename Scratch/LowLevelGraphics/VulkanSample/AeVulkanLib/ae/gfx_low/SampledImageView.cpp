@@ -10,8 +10,7 @@
 #include <ae/gfx_low/SampledImageViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SampledImageView::SampledImageView(const SampledImageViewCreateInfo& createInfo)
@@ -65,6 +64,5 @@ SampledImageView::~SampledImageView()
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DepthStencil の仕様情報。
 class DepthStencilSpecInfo {
@@ -25,6 +24,5 @@ private:
     gfx_low::ImageFormat imageFormat_ = ImageFormat::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

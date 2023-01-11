@@ -5,8 +5,7 @@
 #include <ae/base/IAllocator.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 AutoMemBlock::AutoMemBlock()
@@ -110,6 +109,5 @@ const MemBlock* AutoMemBlock::operator->() const
     return &Ref();
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

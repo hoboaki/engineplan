@@ -15,8 +15,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -492,6 +491,5 @@ const StringTraits<wchar_t>::WriteResult StringTraits<wchar_t>::SNPrintf(
     return result;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -4,16 +4,13 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class BufferResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// IndirectBufferView オブジェクト作成に必要な情報。
 class IndirectBufferViewCreateInfo {
@@ -59,6 +56,5 @@ private:
     ResourceMemoryRegion region_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

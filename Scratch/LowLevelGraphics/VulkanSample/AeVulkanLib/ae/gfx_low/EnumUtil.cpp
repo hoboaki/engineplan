@@ -7,8 +7,7 @@
 #include <ae/base/StaticAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ResourceMemoryUsageBitSet EnumUtil::ToResourceMemoryUsageBitSet(
@@ -63,6 +62,5 @@ ResourceMemoryUsageBitSet EnumUtil::ToResourceMemoryUsageBitSet(
     return result;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

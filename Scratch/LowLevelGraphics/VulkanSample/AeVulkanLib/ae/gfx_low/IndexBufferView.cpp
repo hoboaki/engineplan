@@ -9,8 +9,7 @@
 #include <ae/gfx_low/IndexBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 IndexBufferView::IndexBufferView(const IndexBufferViewCreateInfo& createInfo)
@@ -26,6 +25,5 @@ IndexBufferView::~IndexBufferView()
 {
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

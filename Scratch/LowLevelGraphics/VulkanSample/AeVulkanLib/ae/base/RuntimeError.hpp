@@ -3,15 +3,12 @@
 #else
 #define AE_BASE_INCLUDED_RUNTIMEERROR_HPP
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class IRuntimeErrorCallback;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Debug
 //@{
@@ -36,7 +33,6 @@ struct RuntimeError
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

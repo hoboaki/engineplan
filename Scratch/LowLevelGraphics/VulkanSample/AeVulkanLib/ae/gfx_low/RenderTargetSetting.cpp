@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderTargetSetting& RenderTargetSetting::SetInitialImageResourceState(
@@ -48,6 +47,5 @@ RenderTargetSetting& RenderTargetSetting::SetStoreOp(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

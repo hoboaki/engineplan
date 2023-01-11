@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetIndexOffset(
@@ -53,6 +52,5 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceCount(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

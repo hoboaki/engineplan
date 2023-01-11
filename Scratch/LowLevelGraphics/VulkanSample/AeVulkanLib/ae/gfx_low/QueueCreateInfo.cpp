@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type)
@@ -35,6 +34,5 @@ QueueCreateInfo& QueueCreateInfo::SetOperationCountMax(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

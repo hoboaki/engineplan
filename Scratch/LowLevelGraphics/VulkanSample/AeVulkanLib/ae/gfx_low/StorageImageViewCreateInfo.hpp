@@ -6,16 +6,13 @@
 #include <ae/gfx_low/ImageSubresourceRange.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// StorageImageView オブジェクト作成に必要な情報。
 class StorageImageViewCreateInfo {
@@ -75,6 +72,5 @@ private:
     ImageViewKind kind_ = ImageViewKind::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -17,8 +17,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -288,6 +287,5 @@ s64 TimePod::Ticks() const
     return ticks_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

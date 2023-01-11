@@ -7,8 +7,7 @@
 #include <cstdint>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Types
 //@{
@@ -75,7 +74,6 @@ typedef const void* const_anyptr_t; ///< any_ptr_tのconst版。
 //@}
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

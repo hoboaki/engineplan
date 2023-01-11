@@ -10,15 +10,12 @@
 #include <ae/gfx_low/RenderTargetSpecInfo.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class SwapchainMaster;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// スワップチェインを扱うクラス。
 /// @details
@@ -136,6 +133,5 @@ private:
     int currentFrameIndex_ = int(); // 初期化直後は負の値が入っている
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

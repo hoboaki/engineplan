@@ -9,8 +9,7 @@
 #include <ae/base/TypeTraits.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // ShortStringを作る関数群。
 class ShortStringFactory {
@@ -54,7 +53,6 @@ public:
     };
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

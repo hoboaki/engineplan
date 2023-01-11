@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainMasterCreateInfo& SwapchainMasterCreateInfo::SetSwapchainCountMax(
@@ -17,6 +16,5 @@ SwapchainMasterCreateInfo& SwapchainMasterCreateInfo::SetSwapchainCountMax(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

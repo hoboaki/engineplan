@@ -6,16 +6,13 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/PodInheritClass.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct CalendarPod;
 struct TimeSpanPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-DateTime
 //@{
@@ -103,7 +100,6 @@ struct TimePod
 typedef PodInheritClass<TimePod> Time;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

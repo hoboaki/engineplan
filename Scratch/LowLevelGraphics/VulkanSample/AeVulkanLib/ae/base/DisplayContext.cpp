@@ -9,8 +9,7 @@
 #endif
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 #if defined(AE_BASE_OSTYPE_WINDOWSYSTEM)
 
 //------------------------------------------------------------------------------
@@ -108,6 +107,5 @@ DisplayContext::DisplayContext()
 
 //------------------------------------------------------------------------------
 #endif // end of other OS
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

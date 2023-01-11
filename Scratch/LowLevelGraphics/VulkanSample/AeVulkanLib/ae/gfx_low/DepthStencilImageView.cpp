@@ -11,8 +11,7 @@
 #include <ae/gfx_low/InternalUtility.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DepthStencilImageView::DepthStencilImageView(
@@ -42,6 +41,5 @@ DepthStencilImageView::~DepthStencilImageView()
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

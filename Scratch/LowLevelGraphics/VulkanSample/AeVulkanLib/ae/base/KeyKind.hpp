@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_KEYKIND_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
@@ -102,7 +101,6 @@ struct KeyKind
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

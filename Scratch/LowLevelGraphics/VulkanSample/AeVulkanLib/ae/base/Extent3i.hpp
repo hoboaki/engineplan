@@ -1,15 +1,12 @@
 // 文字コード：UTF-8
 #pragma once
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Extent2iPod;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -80,6 +77,5 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

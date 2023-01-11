@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// シェーダーバインディングに関する情報。
 class ShaderBindingInfo {
@@ -45,6 +44,5 @@ private:
     int elemCount_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

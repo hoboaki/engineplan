@@ -7,8 +7,7 @@
 #include <ae/base/Unused.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 int Hid::KeyboardCount() const
@@ -57,6 +56,5 @@ const Touch Hid::TouchAtIndex(const int) const
     return base::Touch(1);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

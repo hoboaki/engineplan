@@ -7,8 +7,7 @@
 #include <ae/gfx_low/RasterizeFillMode.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインのラスタライザに関する情報。
 /// @todo DepthBias MultiSample などの情報。
@@ -51,6 +50,5 @@ private:
     float lineWidth_ = 1.0f;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

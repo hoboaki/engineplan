@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResourceBarrierInfo& ImageResourceBarrierInfo::SetOldState(
@@ -28,6 +27,5 @@ ImageResourceBarrierInfo& ImageResourceBarrierInfo::SetNewState(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

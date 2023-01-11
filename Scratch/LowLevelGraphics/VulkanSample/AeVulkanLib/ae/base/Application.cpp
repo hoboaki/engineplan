@@ -5,8 +5,7 @@
 #include <ae/base/Display.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 //------------------------------------------------------------------------------
 namespace {
 
@@ -65,6 +64,5 @@ void Application::unregisterDisplay_(Display& display)
     displayPtr_.Unset(display);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

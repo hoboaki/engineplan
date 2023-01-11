@@ -11,8 +11,7 @@
 #include <ae/base/Vector4.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Matrix44Pod Matrix44Pod::Identity()
@@ -620,6 +619,6 @@ Matrix44::Matrix44(
     SetZ(z);
     SetW(w);
 }
-} // namespace base
-} // namespace ae
+
+} // namespace ae::base
 // EOF

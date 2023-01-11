@@ -2,8 +2,7 @@
 #include <ae/base/TouchTap.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 TouchTap::TouchTap()
@@ -60,6 +59,5 @@ bool TouchTap::IsRelease() const
     return data_.tapCount == 0 && prevData_.tapCount != 0;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

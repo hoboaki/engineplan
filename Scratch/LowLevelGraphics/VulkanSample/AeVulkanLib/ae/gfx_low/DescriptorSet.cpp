@@ -19,8 +19,7 @@
 #include <ae/gfx_low/UniformBufferView.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DescriptorSet::DescriptorSet(const DescriptorSetCreateInfo& createInfo)
@@ -297,6 +296,5 @@ void DescriptorSet::Update(const DescriptorSetUpdateInfo& info)
         .updateDescriptorSets(writeCount, &writes[0], 0, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

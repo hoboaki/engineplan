@@ -4,16 +4,13 @@
 #include <ae/base/Pointer.hpp>
 #include <array>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DepthStencilSpecInfo;
 class RenderTargetSpecInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPass の仕様情報。
 class RenderPassSpecInfo {
@@ -64,6 +61,5 @@ private:
     base::Pointer<const DepthStencilSpecInfo> depthStencilSpecInfoPtr_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

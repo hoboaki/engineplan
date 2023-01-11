@@ -5,16 +5,13 @@
 
 #include <ae/base/Vector2i.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Aabb2;
 struct Extent2iPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -144,7 +141,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

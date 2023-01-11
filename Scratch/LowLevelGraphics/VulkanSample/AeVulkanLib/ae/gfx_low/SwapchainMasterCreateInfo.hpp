@@ -4,20 +4,15 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/base/SdkHeader.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Screen;
 }
-} // namespace ae
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// SwapchainMaster オブジェクト作成に必要な情報。
 class SwapchainMasterCreateInfo {
@@ -72,6 +67,5 @@ private:
     int swapchainCountMax_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -7,8 +7,7 @@
 #include <ae/base/ScreenPos.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
@@ -20,7 +19,6 @@ struct TouchTapUpdateData
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

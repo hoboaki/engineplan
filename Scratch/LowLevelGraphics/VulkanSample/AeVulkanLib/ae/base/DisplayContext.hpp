@@ -9,8 +9,7 @@
 #include <ae/base/OsType.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -77,7 +76,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

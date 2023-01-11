@@ -7,8 +7,7 @@
 #include <ae/gfx_low/Device.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 void UniqueResourceMemory::Reset()
@@ -44,6 +43,5 @@ UniqueResourceMemory::~UniqueResourceMemory()
     Reset();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 PipelineShaderInfo RenderPipelineCreateInfo::ShaderInfo(
@@ -36,6 +35,5 @@ RenderPipelineCreateInfo& RenderPipelineCreateInfo::SetPrimitiveTopologyKind(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

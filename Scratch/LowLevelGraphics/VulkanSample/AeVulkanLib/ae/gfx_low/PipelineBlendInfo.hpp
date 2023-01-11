@@ -5,15 +5,12 @@
 #include <ae/base/Vector4.hpp>
 #include <ae/gfx_low/LogicOp.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderTargetBlendInfo;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインのブレンド処理に関する情報。
 /// @details
@@ -73,6 +70,5 @@ private:
     bool logicOpEnable_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

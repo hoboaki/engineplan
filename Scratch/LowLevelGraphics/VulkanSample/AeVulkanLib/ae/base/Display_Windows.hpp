@@ -12,16 +12,13 @@
 #include <ae/base/Screen.hpp>
 #include <ae/base/SdkHeader.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Application;
 class Hid;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -60,7 +57,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

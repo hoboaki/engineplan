@@ -2,8 +2,7 @@
 #include <ae/base/ScreenPos.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 ScreenPos::ScreenPos()
@@ -25,6 +24,5 @@ ScreenPos::ScreenPos(const ScreenPosPod& obj)
     static_cast<ScreenPosPod&>(*this) = obj;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

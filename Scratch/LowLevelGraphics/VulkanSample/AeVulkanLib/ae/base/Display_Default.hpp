@@ -6,8 +6,7 @@
 #include <ae/base/DisplayContext.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // デフォルト環境でのDisplayの拡張。
 class Display_Ext {
@@ -16,7 +15,6 @@ public:
     Display_Ext(const DisplayContext&) {}
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

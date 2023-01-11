@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -168,6 +167,5 @@ int CalendarPod::DaysInMonth(const int year, const int month)
     }
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

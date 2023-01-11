@@ -4,8 +4,7 @@
 #include <cstddef>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソースメモリの範囲を示すクラス。
 class ResourceMemoryRegion {
@@ -38,6 +37,5 @@ private:
     size_t offset_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

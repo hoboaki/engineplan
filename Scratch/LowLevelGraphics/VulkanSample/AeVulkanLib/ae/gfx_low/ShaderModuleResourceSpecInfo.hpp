@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ShaderModuleResource のデータ構造仕様に関する情報。
 class ShaderModuleResourceSpecInfo {
@@ -26,6 +25,5 @@ private:
     size_t size_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

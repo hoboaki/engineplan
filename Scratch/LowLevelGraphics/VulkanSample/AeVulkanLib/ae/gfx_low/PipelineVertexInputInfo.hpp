@@ -3,16 +3,13 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class VertexAttributeInfo;
 class VertexBufferLayoutInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインの頂点入力に関する情報。
 class PipelineVertexInputInfo {
@@ -75,6 +72,5 @@ private:
     base::Pointer<const VertexAttributeInfo> attributeInfos_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

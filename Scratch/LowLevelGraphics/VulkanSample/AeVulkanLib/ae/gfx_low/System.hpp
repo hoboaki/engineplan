@@ -8,16 +8,13 @@
 #include <ae/gfx_low/QueueKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class PhysicalDeviceInfo;
 class SystemCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 低レベルグラフィックスライブラリシステムを扱うクラス。
 /// @details
@@ -96,6 +93,5 @@ private:
     std::array<::vk::PhysicalDevice, PhysicalDeviceCountMax> physicalDevices_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

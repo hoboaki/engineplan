@@ -7,8 +7,7 @@
 #include <ae/base/MouseBtnKind.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
@@ -18,7 +17,6 @@ namespace base {
 typedef BitSet<MouseBtnKind::TERM> MouseBtnBitSet;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

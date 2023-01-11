@@ -2,8 +2,7 @@
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderPassSpecInfo& RenderPassSpecInfo::SetRenderTargetCount(
@@ -14,6 +13,5 @@ RenderPassSpecInfo& RenderPassSpecInfo::SetRenderTargetCount(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

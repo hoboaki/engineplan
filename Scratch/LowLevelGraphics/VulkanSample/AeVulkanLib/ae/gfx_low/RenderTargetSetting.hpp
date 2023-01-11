@@ -7,15 +7,12 @@
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderTargetImageView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPass に設定する RenderTarget に関する設定情報。
 class RenderTargetSetting {
@@ -86,6 +83,5 @@ private:
     base::Color4Pod clearColor_ = base::Color4Pod::Zero();
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -6,17 +6,14 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/ShortString.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Color3Pod;
 struct Color4bPod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -137,7 +134,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

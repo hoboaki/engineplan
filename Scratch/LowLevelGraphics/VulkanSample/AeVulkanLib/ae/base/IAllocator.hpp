@@ -7,8 +7,7 @@
 #include <memory>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -56,8 +55,7 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 /// @addtogroup AeBase-Memory
 //@{

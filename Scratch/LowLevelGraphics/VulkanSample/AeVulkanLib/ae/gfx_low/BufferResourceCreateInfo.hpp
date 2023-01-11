@@ -6,15 +6,12 @@
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// BufferResource の作成に必要な情報。
 class BufferResourceCreateInfo {
@@ -77,6 +74,5 @@ private:
     base::Pointer<::vk::Buffer> nativeObjectPtr_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

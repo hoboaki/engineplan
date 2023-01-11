@@ -5,17 +5,14 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <array>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DescriptorSetCreateInfo;
 class DescriptorSetUpdateInfo;
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// デスクリプタセットを扱うクラス。
 class DescriptorSet {
@@ -64,6 +61,5 @@ private:
         nativeObjects_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

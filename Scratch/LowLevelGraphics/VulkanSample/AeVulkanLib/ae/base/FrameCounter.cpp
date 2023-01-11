@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 FrameCounter::FrameCounter()
@@ -100,6 +99,5 @@ float FrameCounter::InvRateFrame() const
     return 1.0f - RateFrame();
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

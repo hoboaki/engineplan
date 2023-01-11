@@ -13,15 +13,12 @@
 #include <ae/gfx_low/RenderPassSpecInfo.hpp>
 #include <ae/gfx_low/RenderPipelineShaderStage.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPipeline オブジェクト作成に必要な情報。
 class RenderPipelineCreateInfo {
@@ -145,6 +142,5 @@ private:
         PrimitiveTopologyKind::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

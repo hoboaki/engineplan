@@ -11,8 +11,7 @@
 #include <ae/base/Vector3.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Quaternion::Quaternion()
@@ -127,6 +126,5 @@ const ::ae::base::ShortString Quaternion::ToShortString() const
         F32(w).ToShortString().ReadPtr());
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

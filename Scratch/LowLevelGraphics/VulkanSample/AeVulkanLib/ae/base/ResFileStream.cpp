@@ -6,8 +6,7 @@
 #include <ae/base/Unused.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 ResFileStream::ResFileStream()
@@ -36,6 +35,5 @@ pword_t ResFileStream::CalcReadBufferSize(const pword_t size) const
     return StaticCalcReadBufferSize(size);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

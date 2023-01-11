@@ -4,8 +4,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// ポインタが有効なアドレスを示していることをチェックしつつ参照に変換する。
 template <typename T>
@@ -15,6 +14,5 @@ T& PtrToRef(T* ptr)
     return *ptr;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

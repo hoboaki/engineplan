@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Extent2Pod Extent2iPod::ToExtent2() const
@@ -24,6 +23,5 @@ Extent2i::Extent2i(int width, int height)
     this->height = height;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

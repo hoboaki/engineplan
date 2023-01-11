@@ -12,8 +12,7 @@
 #include <ae/gfx_low/SystemCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 namespace {
 
@@ -384,6 +383,5 @@ void System::QueueFamilyIndexTable_(
 
 //------------------------------------------------------------------------------
 bool System::IsInstanceCreated = false;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

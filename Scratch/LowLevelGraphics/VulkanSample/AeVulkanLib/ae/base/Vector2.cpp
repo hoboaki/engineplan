@@ -11,8 +11,7 @@
 #include <ae/base/Vector4.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Vector2Pod Vector2Pod::Zero()
@@ -521,6 +520,5 @@ Vector2::Vector2(const float x, const float y)
     this->y = y;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

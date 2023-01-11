@@ -10,8 +10,7 @@
 #include <ae/gfx_low/UniformBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 UniformBufferView::UniformBufferView(
@@ -27,6 +26,5 @@ UniformBufferView::~UniformBufferView()
 {
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

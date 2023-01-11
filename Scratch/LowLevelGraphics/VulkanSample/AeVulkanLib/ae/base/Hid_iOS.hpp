@@ -7,8 +7,7 @@
 #include <ae/base/Touch.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // iOSのHid拡張。
 class Hid_Ext : public NonCopyable {
@@ -19,7 +18,6 @@ public:
     Hid_Ext();
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

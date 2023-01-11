@@ -4,8 +4,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 頂点インデックスを使うタイプの DrawIndirect のコマンド構造体。
 /// @details
@@ -57,6 +56,5 @@ public:
     //@}
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

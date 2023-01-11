@@ -7,8 +7,7 @@
 #include <ae/base/Pi.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 //------------------------------------------------------------------------------
 namespace {
 
@@ -46,6 +45,5 @@ Radian::Radian(const RadianPod& val)
 {
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

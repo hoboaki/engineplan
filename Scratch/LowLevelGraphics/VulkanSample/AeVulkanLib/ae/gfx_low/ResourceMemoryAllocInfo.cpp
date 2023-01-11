@@ -6,8 +6,7 @@
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
@@ -29,6 +28,5 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetParams(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

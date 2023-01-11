@@ -8,8 +8,7 @@
 #include <ae/base/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Display::Display(const DisplayContext& context)
@@ -39,6 +38,5 @@ Display_Ext& Display::Ext_()
     return ext_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

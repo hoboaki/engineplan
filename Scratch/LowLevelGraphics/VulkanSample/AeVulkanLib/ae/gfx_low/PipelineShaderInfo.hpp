@@ -3,15 +3,12 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ShaderModuleResource;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインに渡すシェーダーに関する情報。
 class PipelineShaderInfo {
@@ -44,6 +41,5 @@ private:
     const char* entryPointNamePtr_ = nullptr;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

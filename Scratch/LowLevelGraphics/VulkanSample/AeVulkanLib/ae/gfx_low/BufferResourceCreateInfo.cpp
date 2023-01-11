@@ -6,8 +6,7 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::BufferCreateInfo BufferResourceCreateInfo::NativeCreateInfo_() const
@@ -20,6 +19,5 @@ namespace gfx_low {
         .setPQueueFamilyIndices(nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

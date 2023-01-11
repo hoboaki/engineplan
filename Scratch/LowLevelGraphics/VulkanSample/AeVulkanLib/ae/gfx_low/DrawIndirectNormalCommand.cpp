@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexOffset(
@@ -44,6 +43,5 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceCount(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

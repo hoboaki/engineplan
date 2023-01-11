@@ -5,15 +5,12 @@
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource のバリアフェンス設定に関する情報。
 class ImageResourceBarrierInfo {
@@ -76,6 +73,5 @@ private:
     bool isSubresourceSpecified_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

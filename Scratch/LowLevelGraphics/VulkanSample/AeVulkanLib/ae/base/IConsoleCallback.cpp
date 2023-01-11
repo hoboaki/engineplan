@@ -2,14 +2,12 @@
 #include <ae/base/IConsoleCallback.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 IConsoleCallback::~IConsoleCallback()
 {
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

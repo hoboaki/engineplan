@@ -7,15 +7,12 @@
 #include <ae/base/MemBlock.hpp>
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class IAllocator;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -84,7 +81,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

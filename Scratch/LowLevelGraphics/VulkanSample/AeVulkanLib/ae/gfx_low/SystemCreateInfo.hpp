@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/SystemDebugLevel.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class IAllocator;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// System オブジェクト作成に必要な情報。
 class SystemCreateInfo {
@@ -65,6 +62,5 @@ private:
     ::ae::base::Pointer<::ae::base::IAllocator> tempWorkAllocator_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

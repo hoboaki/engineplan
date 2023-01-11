@@ -6,8 +6,7 @@
 #include <ae/gfx_low/StencilOpInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインのデプステスト・ステンシルテストに関する情報。
 /// @todo DepthBoundsTest の情報。
@@ -122,6 +121,5 @@ private:
     bool stencilTestEnable_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

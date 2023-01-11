@@ -5,16 +5,13 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 struct RadianPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -42,7 +39,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -42,8 +42,7 @@
 #include <ae/gfx_low/ViewportSetting.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
@@ -649,6 +648,5 @@ void CommandBuffer::CmdSetScissorsDetails(
     nativeObject_.setScissor(0, count, &rects[0]);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

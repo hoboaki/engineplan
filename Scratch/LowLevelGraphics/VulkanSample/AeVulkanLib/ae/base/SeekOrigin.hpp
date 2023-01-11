@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_SEEKORIGIN_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-IO
 //@{
@@ -23,7 +22,6 @@ struct SeekOrigin
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/gfx_low/StencilOp.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ステンシルテストの演算に関する情報。
 class StencilOpInfo {
@@ -45,6 +44,5 @@ private:
     gfx_low::CompareOp compareOp_ = CompareOp::Never;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

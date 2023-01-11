@@ -2,8 +2,7 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ブレンド要素に乗算される係数を示す列挙値。
 enum class BlendFactor
@@ -65,6 +64,5 @@ enum class BlendFactor
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

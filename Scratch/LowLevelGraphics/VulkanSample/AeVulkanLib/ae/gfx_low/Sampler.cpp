@@ -8,8 +8,7 @@
 #include <ae/gfx_low/SamplerCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Sampler::Sampler(const SamplerCreateInfo& createInfo)
@@ -61,6 +60,5 @@ Sampler::~Sampler()
     nativeObject_ = ::vk::Sampler();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

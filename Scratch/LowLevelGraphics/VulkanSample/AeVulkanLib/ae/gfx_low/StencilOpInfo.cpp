@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 StencilOpInfo& StencilOpInfo::SetFailOp(const StencilOp op)
@@ -44,6 +43,5 @@ StencilOpInfo& StencilOpInfo::SetCompareOp(const gfx_low::CompareOp op)
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

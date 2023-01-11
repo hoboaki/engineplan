@@ -27,8 +27,7 @@
 #include <array>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Device::Device(const DeviceCreateInfo& createInfo)
@@ -533,6 +532,5 @@ ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
         layout.depthPitch);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

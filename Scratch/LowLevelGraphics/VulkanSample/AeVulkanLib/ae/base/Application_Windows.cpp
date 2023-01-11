@@ -7,8 +7,7 @@
 #include <ae/base/TimeSpan.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -73,6 +72,5 @@ Application_Ext::Application_Ext()
 {
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

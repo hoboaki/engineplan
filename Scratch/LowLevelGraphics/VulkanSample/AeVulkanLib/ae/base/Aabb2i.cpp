@@ -7,8 +7,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 const Aabb2i Aabb2i::Largest()
@@ -202,6 +201,5 @@ const Aabb2 Aabb2i::ToAABB2f() const
     return Aabb2(Min().ToXYf(), Term().ToXYf());
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

@@ -5,8 +5,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderTarget の仕様情報。
 class RenderTargetSpecInfo {
@@ -39,6 +38,5 @@ private:
     ::vk::Format nativeFormat_ = ::vk::Format::eUndefined;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

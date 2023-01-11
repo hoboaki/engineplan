@@ -5,8 +5,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 VertexAttributeInfo& VertexAttributeInfo::SetFormat(const VertexFormat format)
@@ -33,6 +32,5 @@ VertexAttributeInfo& VertexAttributeInfo::SetOffset(const int offset)
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

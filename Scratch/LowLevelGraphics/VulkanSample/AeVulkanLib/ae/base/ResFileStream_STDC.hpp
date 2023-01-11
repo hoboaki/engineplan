@@ -6,8 +6,7 @@
 #include <cstdio>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // C標準ライブラリ用のResFileStream拡張。
 class ResFileStream_EXT {
@@ -17,7 +16,6 @@ public:
     ResFileStream_EXT();
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

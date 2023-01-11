@@ -8,8 +8,7 @@
 #include <cmath>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 //------------------------------------------------------------------------------
 namespace {
 
@@ -118,6 +117,5 @@ f32 Math::FloorF32(const f32 val)
     return f32(floor(val));
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

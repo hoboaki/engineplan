@@ -5,15 +5,12 @@
 #include <ae/gfx_low/BlendOp.hpp>
 #include <ae/gfx_low/RenderTargetComponentBitSet.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderTargetBlendInfo;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// １つの RenderTarget に設定されるブレンド処理に関する情報。
 class RenderTargetBlendInfo {
@@ -90,6 +87,5 @@ private:
     bool blendOpEnable_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

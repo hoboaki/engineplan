@@ -4,15 +4,12 @@
 #include <ae/gfx_low/ResourceMemoryKind.hpp>
 #include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ResourceMemoryRequirements;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ResourceMemory 確保に必要な情報。
 class ResourceMemoryAllocInfo {
@@ -68,6 +65,5 @@ private:
     size_t alignment_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

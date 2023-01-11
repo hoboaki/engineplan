@@ -7,8 +7,7 @@
 #include <ae/gfx_low/Swapchain.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainHandle::SwapchainHandle(Swapchain* entity)
@@ -33,6 +32,5 @@ Swapchain& SwapchainHandle::Ref() const
     return entity_.Ref();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF
