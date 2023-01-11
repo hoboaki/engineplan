@@ -65,7 +65,7 @@ SpaceBeforeCtorInitializerColon: true
 # 一様初期化子の波括弧の前後の空白を除去
 Cpp11BracedListStyle: false
 
-# case はインデント無し
+# case はインデントする
 IndentCaseLabels: false
 
 # 短い case 文は１行で
@@ -103,3 +103,6 @@ BraceWrapping:
     SplitEmptyFunction: true
     SplitEmptyRecord: true
     SplitEmptyNamespace: true
+
+# 小括弧の整列スタイル
+AlignAfterOpenBracket: DontAlign
