@@ -16,8 +16,7 @@
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
@@ -26,7 +25,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 , surface_()
 , swapchains_(
       createInfo.SwapchainCountMax(),
-      &device_.System().ObjectAllocator_()) {
+      &device_.System().ObjectAllocator_())
+{
     // surface 作成
 #if defined(VK_USE_PLATFORM_WIN32_KHR)
     {
@@ -75,7 +75,8 @@ SwapchainMaster::SwapchainMaster(const SwapchainMasterCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-SwapchainMaster::~SwapchainMaster() {
+SwapchainMaster::~SwapchainMaster()
+{
     // 逆順に破棄
     for (int i = swapchains_.Count() - 1; 0 <= i; --i) {
         auto& swapchain = swapchains_[i];
@@ -90,7 +91,8 @@ SwapchainMaster::~SwapchainMaster() {
 //------------------------------------------------------------------------------
 SwapchainHandle SwapchainMaster::CreateSwapchain(
     const SwapchainCreateInfo& createInfo,
-    const SwapchainHandle& oldSwapchain) {
+    const SwapchainHandle& oldSwapchain)
+{
     // メモ
     const auto& physicalDevice =
         device_.System().PhysicalDevice_(device_.PhysicalDeviceIndex());
@@ -335,7 +337,8 @@ SwapchainHandle SwapchainMaster::CreateSwapchain(
 }
 
 //------------------------------------------------------------------------------
-void SwapchainMaster::DestroySwapchain(const SwapchainHandle& swapchain) {
+void SwapchainMaster::DestroySwapchain(const SwapchainHandle& swapchain)
+{
     AE_BASE_ASSERT(swapchain.IsValid());
     auto& entity = swapchain.Entity_();
     AE_BASE_ASSERT(this == &entity.SwapchainMaster());
@@ -346,7 +349,8 @@ void SwapchainMaster::DestroySwapchain(const SwapchainHandle& swapchain) {
 }
 
 //------------------------------------------------------------------------------
-uint32_t SwapchainMaster::AcquireUniqueId() {
+uint32_t SwapchainMaster::AcquireUniqueId()
+{
     uint32_t uniqueId = lastAcquireUniqueId_;
     while (true) {
         ++uniqueId;
@@ -370,10 +374,10 @@ uint32_t SwapchainMaster::AcquireUniqueId() {
 }
 
 //------------------------------------------------------------------------------
-void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance) {
+void SwapchainMaster::DestroySwapchainInstance(::vk::SwapchainKHR instance)
+{
     device_.NativeObject_().destroySwapchainKHR(instance);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

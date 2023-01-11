@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// イメージビューの種類。
-enum class ImageViewKind {
+enum class ImageViewKind
+{
     /// 無効値。
     Invalid,
 
@@ -34,6 +34,5 @@ enum class ImageViewKind {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,23 +5,23 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-ShaderBindingInfo& ShaderBindingInfo::SetBindingIndex(const int index) {
+ShaderBindingInfo& ShaderBindingInfo::SetBindingIndex(const int index)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, index);
     bindingIndex_ = index;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-ShaderBindingInfo& ShaderBindingInfo::SetElemCount(const int count) {
+ShaderBindingInfo& ShaderBindingInfo::SetElemCount(const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, count);
     elemCount_ = count;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

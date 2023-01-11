@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 StorageImageViewCreateInfo& StorageImageViewCreateInfo::SetKind(
-    const ImageViewKind kind) {
+    const ImageViewKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, ImageViewKind);
     AE_BASE_ASSERT(kind != ImageViewKind::Invalid);
     kind_ = kind;
@@ -19,13 +19,13 @@ StorageImageViewCreateInfo& StorageImageViewCreateInfo::SetKind(
 
 //------------------------------------------------------------------------------
 StorageImageViewCreateInfo& StorageImageViewCreateInfo::SetFormat(
-    const ImageFormat format) {
+    const ImageFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, ImageFormat);
     AE_BASE_ASSERT(format != ImageFormat::Invalid);
     format_ = format;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

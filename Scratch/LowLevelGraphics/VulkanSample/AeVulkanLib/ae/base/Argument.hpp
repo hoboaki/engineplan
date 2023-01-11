@@ -6,8 +6,7 @@
 #include <ae/base/BuiltInTypes.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -15,7 +14,10 @@ namespace base {
 class Argument {
 public:
     // 引数の最大数。
-    enum { ArgCountMax = 256 };
+    enum
+    {
+        ArgCountMax = 256
+    };
 
     // コンストラクタをユーザーが直接呼ぶことは想定していない。
     // 引数のポインタはポインタをコピーするだけでポインタ先はコピーしない。
@@ -55,7 +57,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -6,12 +6,12 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectMipLevels_(
-    const int levels) {
+    const int levels)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, levels);
     nativeObjectMipLevels_ = levels;
     return *this;
@@ -19,21 +19,23 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectMipLevels_(
 
 //------------------------------------------------------------------------------
 ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectArrayLength_(
-    const int arrayLength) {
+    const int arrayLength)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, arrayLength);
     nativeObjectArrayLength_ = arrayLength;
     return *this;
 }
 
 //------------------------------------------------------------------------------
-::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const {
+::vk::ImageCreateInfo ImageResourceCreateInfo::NativeCreateInfo_() const
+{
     const bool isCubeImage = specInfo_.Kind() == ImageResourceKind::ImageCube;
     return ::vk::ImageCreateInfo()
         .setImageType(InternalEnumUtil::ToImageType(specInfo_.Kind()))
         .setFormat(InternalEnumUtil::ToFormat(specInfo_.Format()))
         .setExtent({ uint32_t(specInfo_.Extent().width),
-                     uint32_t(specInfo_.Extent().height),
-                     uint32_t(specInfo_.Extent().depth) })
+            uint32_t(specInfo_.Extent().height),
+            uint32_t(specInfo_.Extent().depth) })
         .setMipLevels(uint32_t(specInfo_.MipLevels()))
         .setArrayLayers(
             uint32_t(specInfo_.ArrayLength()) * (isCubeImage ? 6 : 1))
@@ -49,6 +51,5 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectArrayLength_(
                         : ::vk::ImageCreateFlagBits(0));
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

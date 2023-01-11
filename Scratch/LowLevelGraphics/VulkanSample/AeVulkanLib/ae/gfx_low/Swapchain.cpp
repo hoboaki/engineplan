@@ -12,16 +12,17 @@
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-Swapchain::~Swapchain() {
+Swapchain::~Swapchain()
+{
     AE_BASE_ASSERT(!IsInitialized_());
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::AcquireNextImage() {
+void Swapchain::AcquireNextImage()
+{
     AE_BASE_ASSERT(IsInitialized_());
     auto& device = swapchainMaster_->Device();
     {
@@ -49,7 +50,8 @@ void Swapchain::Initialize_(
     const ::vk::SwapchainKHR& swapchain,
     uint32_t uniqueId,
     int minImageCount,
-    ::vk::Format imageFormat) {
+    ::vk::Format imageFormat)
+{
     AE_BASE_ASSERT(!IsInitialized_());
     swapchainMaster_.Reset(swapchainMaster);
     swapchain_ = swapchain;
@@ -106,7 +108,8 @@ void Swapchain::Initialize_(
 }
 
 //------------------------------------------------------------------------------
-void Swapchain::Finalize_() {
+void Swapchain::Finalize_()
+{
     if (!IsInitialized_()) {
         return;
     }
@@ -125,6 +128,5 @@ void Swapchain::Finalize_() {
     AE_BASE_ASSERT(!IsInitialized_());
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

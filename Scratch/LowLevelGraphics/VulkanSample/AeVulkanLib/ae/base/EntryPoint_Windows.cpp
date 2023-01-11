@@ -17,7 +17,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-enum {
+enum
+{
     tExeFilePathLength = 260, // Windowsのファイル名はパスを含めて最長260文字。
     tExeFileNameLength = 260,
     tExeDirPathLength = 260,
@@ -34,7 +35,8 @@ char tArgChars[tArgCharsLength];
 char* tArgPtrs[tArgPtrsLength];
 
 // 指定の文字の最後のindex値取得。
-int tLastIndexOf(const char ch, const char* str) {
+int tLastIndexOf(const char ch, const char* str)
+{
     AE_BASE_ASSERT_POINTER(str);
     int index = -1;
     for (int i = 0; str[i] != '\0'; ++i) {
@@ -46,7 +48,8 @@ int tLastIndexOf(const char ch, const char* str) {
 }
 
 // 文字置き換え。
-void tReplaceChar(const char targetCh, const char newCh, char* str) {
+void tReplaceChar(const char targetCh, const char newCh, char* str)
+{
     AE_BASE_ASSERT_POINTER(str);
     for (int i = 0; str[i] != '\0'; ++i) {
         if (str[i] == targetCh) {
@@ -56,7 +59,8 @@ void tReplaceChar(const char targetCh, const char newCh, char* str) {
 }
 
 // tExeFilePathからtExeFileName,tExeDirPathを設定する
-void tSetupExeInfo() {
+void tSetupExeInfo()
+{
     // 最後の'\'の位置
     const int dirPathLength = tLastIndexOf('\\', tExeFilePath);
     AE_BASE_ASSERT_MIN_TERM(dirPathLength, 0, int(tExeDirPathLength));
@@ -77,7 +81,8 @@ void tSetupExeInfo() {
 }
 
 // 空白文字か
-bool tIsWhiteCh(const char ch) {
+bool tIsWhiteCh(const char ch)
+{
     switch (ch) {
     case ' ':
     case '\t':
@@ -89,7 +94,8 @@ bool tIsWhiteCh(const char ch) {
 }
 
 // tArgCharsからtArgCountとaArgPtrsを設定する。
-void tSetupArg() {
+void tSetupArg()
+{
     int index = 0;
     while (tArgChars[index] != '\0') {
         // 空白文字をスキップする
@@ -143,7 +149,8 @@ void tSetupArg() {
 }
 
 // main関数の共通部分。
-int tWinMainIN(HINSTANCE instance, int cmdShow) {
+int tWinMainIN(HINSTANCE instance, int cmdShow)
+{
     // 引数の作成
     const ::ae::base::Argument arg(
         tArgCount,
@@ -167,7 +174,8 @@ int WINAPI WinMain(
     HINSTANCE instance,
     HINSTANCE prevInstance,
     LPSTR cmdLine,
-    int cmdShow) {
+    int cmdShow)
+{
     // 実行ファイルのパス
     GetModuleFileNameA(instance, tExeFilePath, tExeFilePathLength);
     tSetupExeInfo();
@@ -197,7 +205,8 @@ int WINAPI WinMain(
 
 //------------------------------------------------------------------------------
 #if !defined(AE_BASE_FINAL)
-int Main(const int argCount, const char* argValues[]) {
+int Main(const int argCount, const char* argValues[])
+{
     // フラグオン
     tIsConsole = true;
 

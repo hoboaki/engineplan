@@ -6,16 +6,13 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/ShortString.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Vector2Pod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -23,7 +20,8 @@ namespace base {
 /// @details
 /// 使用頻度のことを考えて Vec3 という名前でもアクセスできます。
 /// メモリ配置は32bit浮動小数が先頭からx,y,zの順番に並んでいます。
-struct Vector3Pod {
+struct Vector3Pod
+{
     //============================================================
     /// @name 定数取得
     //@{
@@ -208,7 +206,6 @@ typedef Vec3 Vec3f;
 typedef Vector3 Vector3f;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

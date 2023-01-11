@@ -6,16 +6,17 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Extent3i::Extent3i(const Extent2iPod& extent, int depth)
-: Extent3i(extent.width, extent.height, depth) {
+: Extent3i(extent.width, extent.height, depth)
+{
 }
 
 //------------------------------------------------------------------------------
-Extent3i::Extent3i(int width, int height, int depth) {
+Extent3i::Extent3i(int width, int height, int depth)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, width);
     AE_BASE_ASSERT_LESS_EQUALS(0, height);
     AE_BASE_ASSERT_LESS_EQUALS(0, depth);
@@ -24,6 +25,5 @@ Extent3i::Extent3i(int width, int height, int depth) {
     this->depth = depth;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

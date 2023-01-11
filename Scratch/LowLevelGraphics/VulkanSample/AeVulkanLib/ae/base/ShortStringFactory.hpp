@@ -9,8 +9,7 @@
 #include <ae/base/TypeTraits.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // ShortStringを作る関数群。
 class ShortStringFactory {
@@ -40,19 +39,20 @@ public:
     template <typename T, class Cond = void>
     class Impl {
     public:
-        static const ::ae::base::ShortString Create(const T& obj) {
+        static const ::ae::base::ShortString Create(const T& obj)
+        {
             return obj.ToShortString();
         }
     };
 
     // 特殊化できなかったものは、Implに委譲。
     template <typename T>
-    static const ::ae::base::ShortString Create(const T& obj) {
+    static const ::ae::base::ShortString Create(const T& obj)
+    {
         return Impl<T>::Create(obj);
     };
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

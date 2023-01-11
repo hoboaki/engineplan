@@ -75,7 +75,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     float mvp[4][4];
 };
 
@@ -90,7 +91,8 @@ const uint32_t fFragShaderCode[] = {
 #include "../Resource/image_bc1_yokohama256/Image.hpp"
 namespace image = ::image_bc1_yokohama256;
 
-struct fDdsHeader {
+struct fDdsHeader
+{
     std::uint32_t dwMagic; // 常に 0x20534444  ' SDD'
     std::uint32_t dwSize; // 常に 124
     std::uint32_t dwFlags; // ヘッダ内の有効な情報 DDSD_* の組み合わせ
@@ -105,7 +107,7 @@ struct fDdsHeader {
     std::uint32_t dwPfFlags; // pixel フォーマットを表す DDPF_* の組み合わせ
     std::uint32_t
         dwFourCC; // フォーマットが FourCC で表現される場合に使用する。
-        // DX10 拡張ヘッダが存在する場合は 'DX10' (0x30315844) が入る。
+    // DX10 拡張ヘッダが存在する場合は 'DX10' (0x30315844) が入る。
     std::uint32_t dwRGBBitCount; // 1 pixel の bit 数
     std::uint32_t dwRBitMask; // RGB format 時の mask
     std::uint32_t dwGBitMask; // RGB format 時の mask
@@ -123,7 +125,8 @@ static_assert(sizeof(fDdsHeader) == 128);
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -512,11 +515,12 @@ int aemain(::ae::base::Application* app) {
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
             auto vp = proj * view;
             auto mvp = vp * model;
 
@@ -543,8 +547,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(textureImage.get())
                         .SetOldState(::ae::gfx_low::ImageResourceState::CopyDst)
-                        .SetNewState(::ae::gfx_low::ImageResourceState::
-                                         ShaderResourceReadOnly));
+                        .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
             }
 

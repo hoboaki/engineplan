@@ -5,11 +5,11 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type) {
+QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type)
+{
     AE_BASE_ASSERT_ENUM(type, QueueKind);
     AE_BASE_ASSERT(type != QueueKind::Invalid);
     type_ = type;
@@ -17,7 +17,8 @@ QueueCreateInfo& QueueCreateInfo::SetKind(const QueueKind type) {
 }
 
 //------------------------------------------------------------------------------
-QueueCreateInfo& QueueCreateInfo::SetPriority(const QueuePriority priority) {
+QueueCreateInfo& QueueCreateInfo::SetPriority(const QueuePriority priority)
+{
     AE_BASE_ASSERT_ENUM(priority, QueuePriority);
     AE_BASE_ASSERT(priority != QueuePriority::Invalid);
     priority_ = priority;
@@ -26,12 +27,12 @@ QueueCreateInfo& QueueCreateInfo::SetPriority(const QueuePriority priority) {
 
 //------------------------------------------------------------------------------
 QueueCreateInfo& QueueCreateInfo::SetOperationCountMax(
-    const int operationCountMax) {
+    const int operationCountMax)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, operationCountMax);
     operationCountMax_ = operationCountMax;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -7,14 +7,14 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ::vk::ImageSubresourceRange InternalUtility::ToImageSubresourceRange(
     const ImageResource& resource,
     const ImageSubresourceLocation& location,
-    const ::vk::ImageAspectFlags& aspectFlagsHint) {
+    const ::vk::ImageAspectFlags& aspectFlagsHint)
+{
     const ::vk::ImageAspectFlags aspectFlags =
         aspectFlagsHint
             ? aspectFlagsHint
@@ -30,6 +30,5 @@ namespace gfx_low {
     );
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

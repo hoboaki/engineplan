@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Fence オブジェクト作成に必要な情報。
 class FenceCreateInfo {
@@ -23,7 +20,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    FenceCreateInfo& SetDevice(gfx_low::Device* system) {
+    FenceCreateInfo& SetDevice(gfx_low::Device* system)
+    {
         device_.Reset(system);
         return *this;
     }
@@ -33,6 +31,5 @@ private:
     base::Pointer<gfx_low::Device> device_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

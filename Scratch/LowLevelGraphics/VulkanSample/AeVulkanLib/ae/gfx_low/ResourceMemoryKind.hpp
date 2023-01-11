@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソースメモリの種類。
-enum class ResourceMemoryKind {
+enum class ResourceMemoryKind
+{
     /// 無効値。
     Invalid,
 
@@ -43,6 +43,5 @@ enum class ResourceMemoryKind {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

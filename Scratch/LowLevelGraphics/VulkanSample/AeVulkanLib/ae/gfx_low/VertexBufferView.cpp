@@ -9,20 +9,20 @@
 #include <ae/gfx_low/VertexBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 VertexBufferView::VertexBufferView(const VertexBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {
+, region_(createInfo.Region())
+{
 }
 
 //------------------------------------------------------------------------------
-VertexBufferView::~VertexBufferView() {
+VertexBufferView::~VertexBufferView()
+{
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

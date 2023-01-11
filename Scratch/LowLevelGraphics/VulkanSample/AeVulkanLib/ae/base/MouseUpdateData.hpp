@@ -8,13 +8,13 @@
 #include <ae/base/ScreenPos.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// マウスの更新データ。
-struct MouseUpdateData {
+struct MouseUpdateData
+{
     ScreenPos pos;
     MouseBtnBitSet hold;
     BoolPod32
@@ -22,7 +22,6 @@ struct MouseUpdateData {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

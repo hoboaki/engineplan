@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// デバッグレベルを表す列挙値。
-enum class SystemDebugLevel {
+enum class SystemDebugLevel
+{
     /// デバッグ動作なし。
     NoDebug,
 
@@ -19,6 +19,5 @@ enum class SystemDebugLevel {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

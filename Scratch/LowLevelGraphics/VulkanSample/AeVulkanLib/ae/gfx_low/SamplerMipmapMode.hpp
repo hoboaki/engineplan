@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// MipLevel のあるテクスチャからサンプリングするときの値の取得方法。
-enum class SamplerMipmapMode {
+enum class SamplerMipmapMode
+{
     /// 無効値。
     Invalid,
 
@@ -19,6 +19,5 @@ enum class SamplerMipmapMode {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

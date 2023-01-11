@@ -3,15 +3,12 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ResourceMemoryAddress;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソース用メモリを扱うクラス。
 /// @details
@@ -33,7 +30,8 @@ public:
     /// @name プロパティ
     //@{
     /// 有効なメモリを指し示しているか。
-    bool IsValid() const {
+    bool IsValid() const
+    {
         return nativeObject_ != ::vk::DeviceMemory() || head_ != nullptr;
     }
 
@@ -45,10 +43,14 @@ public:
     /// @name 内部処理用機能
     //@{
     explicit ResourceMemory(const ::vk::DeviceMemory& instance)
-    : nativeObject_(instance) {}
+    : nativeObject_(instance)
+    {
+    }
 
     explicit ResourceMemory(void* head)
-    : head_(static_cast<uint8_t*>(head)) {}
+    : head_(static_cast<uint8_t*>(head))
+    {
+    }
 
     ::vk::DeviceMemory NativeObject_() const { return nativeObject_; }
 
@@ -60,6 +62,5 @@ private:
     uint8_t* head_ = nullptr;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

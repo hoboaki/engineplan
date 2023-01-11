@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_NONCOPYABLE_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -19,14 +18,14 @@ namespace base {
 /// Hoge b = a; // コピーできないのでコンパイルエラー。
 /// @endcode
 template <class T>
-struct Noncopyable {
+struct Noncopyable
+{
     Noncopyable() = default;
     Noncopyable(const Noncopyable&) = delete;
     Noncopyable& operator=(const Noncopyable&) = delete;
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

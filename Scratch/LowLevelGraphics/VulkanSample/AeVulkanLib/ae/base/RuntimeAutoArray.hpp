@@ -9,8 +9,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Collection
 //@{
@@ -37,7 +36,8 @@ public:
     : allocator_(PtrToRef(allocator))
     , countMax_(countMax)
     , count_(0)
-    , ptr_(0) {
+    , ptr_(0)
+    {
         if (0 < countMax) {
             ptr_ = reinterpret_cast<ValueType*>(
                 allocator_.Alloc(sizeof(ValueType) * countMax));
@@ -46,10 +46,13 @@ public:
 
     /// 非推奨版。
     RuntimeAutoArray(int countMax, IAllocator& allocator)
-    : RuntimeAutoArray(countMax, &allocator) {}
+    : RuntimeAutoArray(countMax, &allocator)
+    {
+    }
 
     /// デストラクタ。
-    ~RuntimeAutoArray() {
+    ~RuntimeAutoArray()
+    {
         // 全てをデストラクト
         Clear();
 
@@ -77,7 +80,8 @@ public:
     int CountMax() const { return countMax_; }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int index) const {
+    ValueType& At(const int index) const
+    {
         if (index < 0 || count_ <= index) {
             AE_BASE_ASSERT_MIN_TERM(index, 0, count_);
             return ptr_[0]; // fail safe code
@@ -101,7 +105,8 @@ public:
     //@{
 
     /// 全ての要素を削除する。
-    void Clear() {
+    void Clear()
+    {
         if (ptr_ == 0) {
             return;
         }
@@ -119,7 +124,8 @@ public:
     /// @name 要素の追加
     //@{
 
-    void Add() {
+    void Add()
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -128,7 +134,8 @@ public:
         ++count_;
     }
     template <typename A0>
-    void Add(A0 a0) {
+    void Add(A0 a0)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -137,7 +144,8 @@ public:
         ++count_;
     }
     template <typename A0, typename A1>
-    void Add(A0 a0, A1 a1) {
+    void Add(A0 a0, A1 a1)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -146,7 +154,8 @@ public:
         ++count_;
     }
     template <typename A0, typename A1, typename A2>
-    void Add(A0 a0, A1 a1, A2 a2) {
+    void Add(A0 a0, A1 a1, A2 a2)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -155,7 +164,8 @@ public:
         ++count_;
     }
     template <typename A0, typename A1, typename A2, typename A3>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -164,7 +174,8 @@ public:
         ++count_;
     }
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -179,7 +190,8 @@ public:
         typename A3,
         typename A4,
         typename A5>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -195,7 +207,8 @@ public:
         typename A4,
         typename A5,
         typename A6>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -212,7 +225,8 @@ public:
         typename A5,
         typename A6,
         typename A7>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -230,7 +244,8 @@ public:
         typename A6,
         typename A7,
         typename A8>
-    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+    void Add(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -259,7 +274,8 @@ public:
         A6 a6,
         A7 a7,
         A8 a8,
-        A9 a9) {
+        A9 a9)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -278,7 +294,8 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int index) const {
+    ValueType& operator[](const int index) const
+    {
         return At(index);
     } ///< At()const のエイリアス。
     //@}
@@ -291,7 +308,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

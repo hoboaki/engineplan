@@ -8,8 +8,7 @@
 #include <cstdarg>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-String
 //@{
@@ -23,9 +22,11 @@ namespace base {
 /// >::Length( L"abc" );
 /// @endcode
 template <typename CharType>
-struct StringTraits {
+struct StringTraits
+{
     /// Write系の結果。
-    struct WriteResult {
+    struct WriteResult
+    {
         BoolPod32 isSuccess; ///< 成功したか。
         pword_t length; ///< 書き込んだ文字数。終端文字は含めない。
     };
@@ -121,7 +122,6 @@ struct StringTraits {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// シェーダーバインディングに関する情報。
 class ShaderBindingInfo {
@@ -16,7 +15,8 @@ public:
     ShaderBindingStageBitSet Stages() const { return stages_; }
 
     /// Stages() の設定。
-    ShaderBindingInfo& SetStages(const ShaderBindingStageBitSet& stages) {
+    ShaderBindingInfo& SetStages(const ShaderBindingStageBitSet& stages)
+    {
         stages_ = stages;
         return *this;
     }
@@ -44,6 +44,5 @@ private:
     int elemCount_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

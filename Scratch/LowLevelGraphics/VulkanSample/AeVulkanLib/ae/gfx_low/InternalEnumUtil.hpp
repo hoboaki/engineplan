@@ -32,11 +32,11 @@
 #include <ae/gfx_low/VertexStepRate.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 内部実装用 Enum に関する便利関数郡。
-struct InternalEnumUtil {
+struct InternalEnumUtil
+{
     static ::vk::AttachmentLoadOp ToAttachmentLoadOp(AttachmentLoadOp loadOp);
     static ::vk::AttachmentStoreOp ToAttachmentStoreOp(
         AttachmentStoreOp storeOp);
@@ -83,6 +83,5 @@ struct InternalEnumUtil {
     static ::vk::VertexInputRate ToVertexInputRate(VertexStepRate stepRate);
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

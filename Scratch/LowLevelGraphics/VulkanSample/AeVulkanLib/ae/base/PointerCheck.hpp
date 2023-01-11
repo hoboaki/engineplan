@@ -6,13 +6,13 @@
 #include <ae/base/BuiltInTypes.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Debug
 //@{
 /// ポインタについて調べる処理を扱う空間。
-struct PointerCheck {
+struct PointerCheck
+{
     /// @brief 有効なポインタか。
     /// @return nullや無効なポインタならfalseを返す。
     static bool IsValid(const_anyptr_t ptr);
@@ -24,7 +24,6 @@ struct PointerCheck {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

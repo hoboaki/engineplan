@@ -6,34 +6,37 @@
 #include <ae/base/Radian.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Angle::Angle()
-: rad_(0) {
+: rad_(0)
+{
 }
 
 //------------------------------------------------------------------------------
 Angle::Angle(const DegreePod& degree)
-: rad_(degree.ToRadian().value) {
+: rad_(degree.ToRadian().value)
+{
 }
 
 //------------------------------------------------------------------------------
 Angle::Angle(const RadianPod& radian)
-: rad_(radian.value) {
+: rad_(radian.value)
+{
 }
 
 //------------------------------------------------------------------------------
-f32 Angle::Rad() const {
+f32 Angle::Rad() const
+{
     return rad_;
 }
 
 //------------------------------------------------------------------------------
-f32 Angle::Deg() const {
+f32 Angle::Deg() const
+{
     return Radian(rad_).ToDegree().value;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

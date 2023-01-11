@@ -9,8 +9,7 @@
 #include <ae/gfx_low/Event.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class CommandBufferBeginRecordInfo;
 class CommandBufferCreateInfo;
 class ComputePassBeginInfo;
@@ -30,12 +29,10 @@ class Queue;
 class ScissorSetting;
 class VertexBufferView;
 class ViewportSetting;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// GPUが処理するコマンドを扱うコマンドバッファ。
 /// @details
@@ -272,6 +269,5 @@ private:
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

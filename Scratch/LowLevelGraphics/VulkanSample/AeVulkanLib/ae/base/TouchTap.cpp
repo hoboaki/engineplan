@@ -2,55 +2,62 @@
 #include <ae/base/TouchTap.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 TouchTap::TouchTap()
 : data_()
-, prevData_() {
+, prevData_()
+{
 }
 
 //------------------------------------------------------------------------------
-TouchTap::~TouchTap() {
+TouchTap::~TouchTap()
+{
 }
 
 //------------------------------------------------------------------------------
-void TouchTap::Update(const TouchTapUpdateData& data) {
+void TouchTap::Update(const TouchTapUpdateData& data)
+{
     prevData_ = data_;
     data_ = data;
 }
 
 //------------------------------------------------------------------------------
-const TouchTapUpdateData TouchTap::LastUpdateData() const {
+const TouchTapUpdateData TouchTap::LastUpdateData() const
+{
     return data_;
 }
 
 //------------------------------------------------------------------------------
-int TouchTap::TapCount() const {
+int TouchTap::TapCount() const
+{
     return data_.tapCount;
 }
 
 //------------------------------------------------------------------------------
-const ScreenPosPod TouchTap::Pos() const {
+const ScreenPosPod TouchTap::Pos() const
+{
     return data_.pos;
 }
 
 //------------------------------------------------------------------------------
-bool TouchTap::IsHold() const {
+bool TouchTap::IsHold() const
+{
     return 0 < data_.tapCount;
 }
 
 //------------------------------------------------------------------------------
-bool TouchTap::IsTrigger() const {
+bool TouchTap::IsTrigger() const
+{
     return data_.tapCount != 0 && prevData_.tapCount == 0;
 }
 
 //------------------------------------------------------------------------------
-bool TouchTap::IsRelease() const {
+bool TouchTap::IsRelease() const
+{
     return data_.tapCount == 0 && prevData_.tapCount != 0;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

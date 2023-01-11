@@ -6,15 +6,12 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <ae/gfx_low/ShaderModuleResourceSpecInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ShaderModuleResource の作成に必要な情報。
 class ShaderModuleResourceCreateInfo {
@@ -25,7 +22,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    ShaderModuleResourceCreateInfo& SetDevice(gfx_low::Device* device) {
+    ShaderModuleResourceCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,7 +33,8 @@ public:
 
     /// SpecInfo() の設定。
     ShaderModuleResourceCreateInfo& SetSpecInfo(
-        const ShaderModuleResourceSpecInfo& specInfo) {
+        const ShaderModuleResourceSpecInfo& specInfo)
+    {
         specInfo_ = specInfo;
         return *this;
     }
@@ -49,7 +48,8 @@ public:
 
     /// DataAddress() の設定。
     ShaderModuleResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress) {
+        const ResourceMemoryAddress& dataAddress)
+    {
         dataAddress_ = dataAddress;
         return *this;
     }
@@ -62,6 +62,5 @@ private:
     ResourceMemoryAddress dataAddress_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

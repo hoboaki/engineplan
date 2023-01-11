@@ -9,16 +9,13 @@
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class BufferResource;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CopyBuffer コマンドに必要な情報。
 class CopyBufferInfo {
@@ -26,12 +23,14 @@ public:
     /// @name プロパティ
     //@{
     /// コピー元バッファデータが可能されている BufferResource のポインタ。（初期値：nullptr）
-    BufferResource* SrcBufferResource() const {
+    BufferResource* SrcBufferResource() const
+    {
         return srcBufferResource_.Get();
     }
 
     /// SrcBufferResource() の設定。（設定必須）
-    CopyBufferInfo& SetSrcBufferResource(gfx_low::BufferResource* resource) {
+    CopyBufferInfo& SetSrcBufferResource(gfx_low::BufferResource* resource)
+    {
         srcBufferResource_.Reset(resource);
         return *this;
     }
@@ -41,18 +40,21 @@ public:
     size_t SrcBufferOffset() const { return srcBufferOffset_; }
 
     /// BufferOffset() の設定。
-    CopyBufferInfo& SetSrcBufferOffset(size_t offset) {
+    CopyBufferInfo& SetSrcBufferOffset(size_t offset)
+    {
         srcBufferOffset_ = offset;
         return *this;
     }
 
     /// コピー先バッファデータが可能されている BufferResource のポインタ。（初期値：nullptr）
-    BufferResource* DstBufferResource() const {
+    BufferResource* DstBufferResource() const
+    {
         return dstBufferResource_.Get();
     }
 
     /// DstBufferResource() の設定。（設定必須）
-    CopyBufferInfo& SetDstBufferResource(gfx_low::BufferResource* resource) {
+    CopyBufferInfo& SetDstBufferResource(gfx_low::BufferResource* resource)
+    {
         dstBufferResource_.Reset(resource);
         return *this;
     }
@@ -62,7 +64,8 @@ public:
     size_t DstBufferOffset() const { return dstBufferOffset_; }
 
     /// BufferOffset() の設定。
-    CopyBufferInfo& SetDstBufferOffset(size_t offset) {
+    CopyBufferInfo& SetDstBufferOffset(size_t offset)
+    {
         dstBufferOffset_ = offset;
         return *this;
     }
@@ -71,7 +74,8 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。（設定必須）
-    CopyBufferInfo& SetSize(size_t size) {
+    CopyBufferInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }
@@ -85,6 +89,5 @@ private:
     size_t size_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

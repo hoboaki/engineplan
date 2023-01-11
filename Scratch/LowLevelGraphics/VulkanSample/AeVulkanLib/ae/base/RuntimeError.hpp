@@ -3,20 +3,18 @@
 #else
 #define AE_BASE_INCLUDED_RUNTIMEERROR_HPP
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class IRuntimeErrorCallback;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Debug
 //@{
 /// 実行時エラーを扱う空間。
-struct RuntimeError {
+struct RuntimeError
+{
     /// @brief デフォルトで設定されているコールバックを取得する。
     /// @return コールバックオブジェクト。
     /// @see OnError
@@ -35,7 +33,6 @@ struct RuntimeError {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

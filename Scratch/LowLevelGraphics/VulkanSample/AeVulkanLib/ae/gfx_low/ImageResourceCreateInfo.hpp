@@ -7,15 +7,12 @@
 #include <ae/gfx_low/ResourceMemoryAddress.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource の作成に必要な情報。
 class ImageResourceCreateInfo {
@@ -26,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    ImageResourceCreateInfo& SetDevice(gfx_low::Device* device) {
+    ImageResourceCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -36,7 +34,8 @@ public:
 
     /// SpecInfo() の設定。
     ImageResourceCreateInfo& SetSpecInfo(
-        const ImageResourceSpecInfo& specInfo) {
+        const ImageResourceSpecInfo& specInfo)
+    {
         specInfo_ = specInfo;
         return *this;
     }
@@ -47,7 +46,8 @@ public:
 
     /// DataAddress() の設定。
     ImageResourceCreateInfo& SetDataAddress(
-        const ResourceMemoryAddress& dataAddress) {
+        const ResourceMemoryAddress& dataAddress)
+    {
         dataAddress_ = dataAddress;
         return *this;
     }
@@ -63,7 +63,8 @@ public:
     /// NativeObjectPtr_() の設定。
     /// @details 有効なオブジェクトを設定した場合は NativeFormat_()
     /// も設定する必要があります。
-    ImageResourceCreateInfo& SetNativeObjectPtr_(::vk::Image* nativeObjectPtr) {
+    ImageResourceCreateInfo& SetNativeObjectPtr_(::vk::Image* nativeObjectPtr)
+    {
         nativeObjectPtr_.Reset(nativeObjectPtr);
         return *this;
     }
@@ -73,7 +74,8 @@ public:
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
     /// NativeFormat_() の設定。
-    ImageResourceCreateInfo& SetNativeFormat_(::vk::Format format) {
+    ImageResourceCreateInfo& SetNativeFormat_(::vk::Format format)
+    {
         nativeFormat_ = format;
         return *this;
     }
@@ -98,7 +100,8 @@ public:
     bool IsNativeObjectCubeImage_() const { return isNativeObjectCubeImage_; }
 
     /// IsNativeObjectCubeImage_() の設定。
-    ImageResourceCreateInfo& SetIsNativeObjectCubeImage_(bool isCubeImage) {
+    ImageResourceCreateInfo& SetIsNativeObjectCubeImage_(bool isCubeImage)
+    {
         isNativeObjectCubeImage_ = isCubeImage;
         return *this;
     }
@@ -118,6 +121,5 @@ private:
     bool isNativeObjectCubeImage_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

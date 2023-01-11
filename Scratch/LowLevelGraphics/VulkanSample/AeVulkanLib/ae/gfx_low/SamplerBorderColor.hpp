@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// SamplerAddressMode が ClampToBorder のときに使われる色。
-enum class SamplerBorderColor {
+enum class SamplerBorderColor
+{
     /// 無効値。
     Invalid,
 
@@ -22,6 +22,5 @@ enum class SamplerBorderColor {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

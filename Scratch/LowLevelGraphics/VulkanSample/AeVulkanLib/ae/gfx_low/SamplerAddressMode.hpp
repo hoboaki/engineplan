@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// テクスチャサンプリング時のサンプリングアドレスの決め方。
-enum class SamplerAddressMode {
+enum class SamplerAddressMode
+{
     /// 無効値。
     Invalid,
 
@@ -25,6 +25,5 @@ enum class SamplerAddressMode {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

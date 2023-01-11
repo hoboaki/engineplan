@@ -3,19 +3,17 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ImageResource;
 class ImageSubresourceLocation;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 内部実装用便利機能群。
-struct InternalUtility {
+struct InternalUtility
+{
     /// @param aspectFlagsHint ImageAspectFlags が事前に分かっている場合は指定。（処理負荷削減目的の引数）
     static ::vk::ImageSubresourceRange ToImageSubresourceRange(
         const ImageResource& resource,
@@ -23,6 +21,5 @@ struct InternalUtility {
         const ::vk::ImageAspectFlags& aspectFlagsHint = {});
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

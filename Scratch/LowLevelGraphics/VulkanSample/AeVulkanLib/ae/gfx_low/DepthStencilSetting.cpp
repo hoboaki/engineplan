@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetInitialImageResourceState(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     initialImageResourceState_ = state;
@@ -19,7 +19,8 @@ DepthStencilSetting& DepthStencilSetting::SetInitialImageResourceState(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetFinalImageResourceState(
-    const ImageResourceState state) {
+    const ImageResourceState state)
+{
     AE_BASE_ASSERT_ENUM(state, ImageResourceState);
     AE_BASE_ASSERT(state != ImageResourceState::Invalid);
     finalImageResourceState_ = state;
@@ -28,7 +29,8 @@ DepthStencilSetting& DepthStencilSetting::SetFinalImageResourceState(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetDepthLoadOp(
-    const AttachmentLoadOp loadOp) {
+    const AttachmentLoadOp loadOp)
+{
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     depthLoadOp_ = loadOp;
@@ -37,7 +39,8 @@ DepthStencilSetting& DepthStencilSetting::SetDepthLoadOp(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetDepthStoreOp(
-    const AttachmentStoreOp storeOp) {
+    const AttachmentStoreOp storeOp)
+{
     AE_BASE_ASSERT_ENUM(storeOp, AttachmentStoreOp);
     AE_BASE_ASSERT(storeOp != AttachmentStoreOp::Invalid);
     depthStoreOp_ = storeOp;
@@ -46,7 +49,8 @@ DepthStencilSetting& DepthStencilSetting::SetDepthStoreOp(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetDepthClearValue(
-    const float clearValue) {
+    const float clearValue)
+{
     AE_BASE_ASSERT_MIN_MAX(clearValue, 0.0f, 1.0f);
     depthClearValue_ = clearValue;
     return *this;
@@ -54,7 +58,8 @@ DepthStencilSetting& DepthStencilSetting::SetDepthClearValue(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetStencilLoadOp(
-    const AttachmentLoadOp loadOp) {
+    const AttachmentLoadOp loadOp)
+{
     AE_BASE_ASSERT_ENUM(loadOp, AttachmentLoadOp);
     AE_BASE_ASSERT(loadOp != AttachmentLoadOp::Invalid);
     stencilLoadOp_ = loadOp;
@@ -63,7 +68,8 @@ DepthStencilSetting& DepthStencilSetting::SetStencilLoadOp(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetStencilStoreOp(
-    const AttachmentStoreOp storeOp) {
+    const AttachmentStoreOp storeOp)
+{
     AE_BASE_ASSERT_ENUM(storeOp, AttachmentStoreOp);
     AE_BASE_ASSERT(storeOp != AttachmentStoreOp::Invalid);
     stencilStoreOp_ = storeOp;
@@ -72,12 +78,12 @@ DepthStencilSetting& DepthStencilSetting::SetStencilStoreOp(
 
 //------------------------------------------------------------------------------
 DepthStencilSetting& DepthStencilSetting::SetStencilClearValue(
-    const int clearValue) {
+    const int clearValue)
+{
     AE_BASE_ASSERT_MIN_MAX(clearValue, 0, 0xFF);
     stencilClearValue_ = clearValue;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

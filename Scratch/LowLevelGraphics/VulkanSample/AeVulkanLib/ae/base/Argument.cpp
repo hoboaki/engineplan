@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Argument::Argument(
@@ -18,16 +17,19 @@ Argument::Argument(
 : argCount_(argCount)
 , argValues_(argValues)
 , exeFileName_(exeFileName)
-, exeDirPath_(exeDirPath) {
+, exeDirPath_(exeDirPath)
+{
 }
 
 //------------------------------------------------------------------------------
-int Argument::ArgCount() const {
+int Argument::ArgCount() const
+{
     return argCount_;
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::ArgValue(const int index) const {
+const char* Argument::ArgValue(const int index) const
+{
     // 範囲外チェック
     if (argCount_ <= index) {
         AE_BASE_ERROR_INVALID_VALUE(index);
@@ -50,7 +52,8 @@ const char* Argument::ArgValue(const int index) const {
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::ExeFileName() const {
+const char* Argument::ExeFileName() const
+{
     if (PointerCheck::InvalidCheck(exeFileName_)) {
         return "";
     }
@@ -58,13 +61,13 @@ const char* Argument::ExeFileName() const {
 }
 
 //------------------------------------------------------------------------------
-const char* Argument::ExeDirPath() const {
+const char* Argument::ExeDirPath() const
+{
     if (PointerCheck::InvalidCheck(exeDirPath_)) {
         return "";
     }
     return exeDirPath_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

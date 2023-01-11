@@ -42,8 +42,7 @@
 #include <ae/gfx_low/ViewportSetting.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
@@ -54,14 +53,15 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 , renderPassCountMax_(createInfo.RenderPassCountMax())
 , commandPool_()
 , nativeObject_()
-, completeEvent_(EventCreateInfo().SetDevice(&device_)) {
+, completeEvent_(EventCreateInfo().SetDevice(&device_))
+{
     // セカンダリの場合は BitSet チェック
     if (level_ == CommandBufferLevel::Secondary) {
         // Render か Compute のどちらかだけ立っている
         AE_BASE_ASSERT(!createInfo.Features().Get(CommandBufferFeature::Copy));
         AE_BASE_ASSERT(
             !(createInfo.Features().Get(CommandBufferFeature::Render) &&
-              createInfo.Features().Get(CommandBufferFeature::Compute)));
+                createInfo.Features().Get(CommandBufferFeature::Compute)));
         AE_BASE_ASSERT(
             createInfo.Features().Get(CommandBufferFeature::Render) ||
             createInfo.Features().Get(CommandBufferFeature::Compute));
@@ -94,19 +94,22 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-CommandBuffer::~CommandBuffer() {
+CommandBuffer::~CommandBuffer()
+{
     Reset();
     device_.NativeObject_().freeCommandBuffers(commandPool_, nativeObject_);
     device_.NativeObject_().destroyCommandPool(commandPool_, nullptr);
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::BeginRecord() {
+void CommandBuffer::BeginRecord()
+{
     BeginRecord(CommandBufferBeginRecordInfo());
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::BeginRecord(const CommandBufferBeginRecordInfo& info) {
+void CommandBuffer::BeginRecord(const CommandBufferBeginRecordInfo& info)
+{
     Reset();
     AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
     auto inheritanceInfo = ::vk::CommandBufferInheritanceInfo();
@@ -150,7 +153,8 @@ void CommandBuffer::BeginRecord(const CommandBufferBeginRecordInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::EndRecord() {
+void CommandBuffer::EndRecord()
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     activePass_.Clear();
     const ::vk::Result result = nativeObject_.end();
@@ -159,13 +163,15 @@ void CommandBuffer::EndRecord() {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::Reset() {
+void CommandBuffer::Reset()
+{
     switch (state_) {
     case CommandBufferState::Initial:
         // 何もする必要がない
         return;
 
-    case CommandBufferState::Recorded: {
+    case CommandBufferState::Recorded:
+    {
         // リセット処理が必要なので続行
         break;
     }
@@ -184,7 +190,8 @@ void CommandBuffer::Reset() {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands) {
+void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(useSecondaryCommandBufferMode_);
     AE_BASE_ASSERT(secondaryCommands.level_ == CommandBufferLevel::Secondary);
@@ -192,10 +199,10 @@ void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands) {
     AE_BASE_ASSERT(
         (secondaryCommands.Features().Get(
              ::ae::gfx_low::CommandBufferFeature::Render) &&
-         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Render)) ||
+            activePass_.Get(::ae::gfx_low::CommandBufferFeature::Render)) ||
         (secondaryCommands.Features().Get(
              ::ae::gfx_low::CommandBufferFeature::Compute) &&
-         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Compute)));
+            activePass_.Get(::ae::gfx_low::CommandBufferFeature::Compute)));
 
     // コール
     nativeObject_.executeCommands(1, &secondaryCommands.nativeObject_);
@@ -203,7 +210,8 @@ void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands) {
 
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdImageResourceBarrier(
-    const ImageResourceBarrierInfo& info) {
+    const ImageResourceBarrierInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
 
@@ -283,7 +291,8 @@ void CommandBuffer::CmdImageResourceBarrier(
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdCopyBuffer(const CopyBufferInfo& info) {
+void CommandBuffer::CmdCopyBuffer(const CopyBufferInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
     AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
@@ -300,7 +309,8 @@ void CommandBuffer::CmdCopyBuffer(const CopyBufferInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
+void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
     AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
@@ -338,7 +348,8 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
+void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
@@ -351,13 +362,14 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info) {
     nativeObject_.beginRenderPass(
         base::PtrToRef(info.RenderPass()).RenderPassBeginInfo_(),
         (level_ == CommandBufferLevel::Primary &&
-         info.UseSecondaryCommandBuffers())
+            info.UseSecondaryCommandBuffers())
             ? vk::SubpassContents::eSecondaryCommandBuffers
             : vk::SubpassContents::eInline);
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdEndRenderPass() {
+void CommandBuffer::CmdEndRenderPass()
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
 
@@ -366,7 +378,8 @@ void CommandBuffer::CmdEndRenderPass() {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
+void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.IsAllOff());
     AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
@@ -376,7 +389,8 @@ void CommandBuffer::CmdBeginComputePass(const ComputePassBeginInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdEndComputePass() {
+void CommandBuffer::CmdEndComputePass()
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
 
@@ -384,7 +398,8 @@ void CommandBuffer::CmdEndComputePass() {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
+void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(
         activePass_.Get(CommandBufferFeature::Render) ||
@@ -419,7 +434,8 @@ void CommandBuffer::CmdSetDescriptorSet(const DescriptorSet& descriptorSet) {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetDirectConstant(
     const int index,
-    const void* dataHead) {
+    const void* dataHead)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(
         activePass_.Get(CommandBufferFeature::Render) ||
@@ -451,7 +467,8 @@ void CommandBuffer::CmdSetDirectConstant(
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline) {
+void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -464,7 +481,8 @@ void CommandBuffer::CmdSetRenderPipeline(const RenderPipeline& pipeline) {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetViewports(
     const int count,
-    const ViewportSetting* settings) {
+    const ViewportSetting* settings)
+{
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
     if (useSecondaryCommandBufferMode_) {
         // DX12互換のため関数コール自体は許容とするがコマンドは詰まない
@@ -476,7 +494,8 @@ void CommandBuffer::CmdSetViewports(
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetScissors(
     const int count,
-    const ScissorSetting* settings) {
+    const ScissorSetting* settings)
+{
     AE_BASE_ASSERT(level_ == CommandBufferLevel::Primary);
     if (useSecondaryCommandBufferMode_) {
         // DX12互換のため関数コール自体は許容とするがコマンドは詰まない
@@ -488,7 +507,8 @@ void CommandBuffer::CmdSetScissors(
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetVertexBuffer(
     const int slotIndex,
-    const VertexBufferView& view) {
+    const VertexBufferView& view)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -502,7 +522,8 @@ void CommandBuffer::CmdSetVertexBuffer(
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetIndexBuffer(const IndexBufferView& view) {
+void CommandBuffer::CmdSetIndexBuffer(const IndexBufferView& view)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -514,7 +535,8 @@ void CommandBuffer::CmdSetIndexBuffer(const IndexBufferView& view) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
+void CommandBuffer::CmdDraw(const DrawCallInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -535,7 +557,8 @@ void CommandBuffer::CmdDraw(const DrawCallInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdDrawIndirect(const DrawIndirectCallInfo& info) {
+void CommandBuffer::CmdDrawIndirect(const DrawIndirectCallInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -558,7 +581,8 @@ void CommandBuffer::CmdDrawIndirect(const DrawIndirectCallInfo& info) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
+void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -569,7 +593,8 @@ void CommandBuffer::CmdSetComputePipeline(const ComputePipeline& pipeline) {
 }
 
 //------------------------------------------------------------------------------
-void CommandBuffer::CmdDispatch(const DispatchCallInfo& info) {
+void CommandBuffer::CmdDispatch(const DispatchCallInfo& info)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Compute));
     AE_BASE_ASSERT(!useSecondaryCommandBufferMode_);
@@ -582,7 +607,8 @@ void CommandBuffer::CmdDispatch(const DispatchCallInfo& info) {
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetViewportsDetails(
     const int count,
-    const ViewportSetting* settings) {
+    const ViewportSetting* settings)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -605,7 +631,8 @@ void CommandBuffer::CmdSetViewportsDetails(
 //------------------------------------------------------------------------------
 void CommandBuffer::CmdSetScissorsDetails(
     const int count,
-    const ScissorSetting* settings) {
+    const ScissorSetting* settings)
+{
     AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
     AE_BASE_ASSERT(activePass_.Get(CommandBufferFeature::Render));
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -616,11 +643,10 @@ void CommandBuffer::CmdSetScissorsDetails(
         rects[i] = ::vk::Rect2D(
             { setting.Rect().Begin().x, setting.Rect().Begin().y },
             { uint32_t(setting.Rect().Width()),
-              uint32_t(setting.Rect().Height()) });
+                uint32_t(setting.Rect().Height()) });
     }
     nativeObject_.setScissor(0, count, &rects[0]);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

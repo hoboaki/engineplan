@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DispatchCallInfo& DispatchCallInfo::SetThreadsPerThreadGroup(
-    const base::Extent3i& threads) {
+    const base::Extent3i& threads)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, threads.width);
     AE_BASE_ASSERT_LESS_EQUALS(1, threads.height);
     AE_BASE_ASSERT_LESS_EQUALS(1, threads.depth);
@@ -20,7 +20,8 @@ DispatchCallInfo& DispatchCallInfo::SetThreadsPerThreadGroup(
 
 //------------------------------------------------------------------------------
 DispatchCallInfo& DispatchCallInfo::SetThreadGroups(
-    const base::Extent3i& threadGroups) {
+    const base::Extent3i& threadGroups)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, threadGroups.width);
     AE_BASE_ASSERT_LESS_EQUALS(1, threadGroups.height);
     AE_BASE_ASSERT_LESS_EQUALS(1, threadGroups.depth);
@@ -28,6 +29,5 @@ DispatchCallInfo& DispatchCallInfo::SetThreadGroups(
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

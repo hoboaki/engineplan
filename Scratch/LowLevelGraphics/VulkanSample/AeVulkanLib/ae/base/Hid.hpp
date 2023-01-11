@@ -14,18 +14,15 @@
 #include <ae/base/Hid_iOS.hpp>
 #endif
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Display;
 class Keyboard;
 class Mouse;
 class Touch;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
@@ -97,7 +94,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

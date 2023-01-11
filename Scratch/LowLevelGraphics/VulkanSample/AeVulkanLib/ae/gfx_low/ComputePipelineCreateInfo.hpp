@@ -6,15 +6,12 @@
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
 #include <ae/gfx_low/PipelineShaderInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ComputePipeline オブジェクト作成に必要な情報。
 class ComputePipelineCreateInfo {
@@ -25,7 +22,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    ComputePipelineCreateInfo& SetDevice(gfx_low::Device* device) {
+    ComputePipelineCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -35,19 +33,22 @@ public:
 
     /// ShaderInfo() の設定。（設定必須）
     ComputePipelineCreateInfo& SetShaderInfo(
-        const PipelineShaderInfo& shaderInfo) {
+        const PipelineShaderInfo& shaderInfo)
+    {
         shaderInfo_ = shaderInfo;
         return *this;
     }
 
     /// DescriptorSet の仕様情報。 （初期値：デフォルトコンストラクタの値）
-    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const {
+    gfx_low::DescriptorSetSpecInfo DescriptorSetSpecInfo() const
+    {
         return descriptorSetSpecInfo_;
     }
 
     /// DescriptorSetSpecInfo() の設定。
     ComputePipelineCreateInfo& SetDescriptorSetSpecInfo(
-        const gfx_low::DescriptorSetSpecInfo& info) {
+        const gfx_low::DescriptorSetSpecInfo& info)
+    {
         descriptorSetSpecInfo_ = info;
         return *this;
     }
@@ -59,6 +60,5 @@ private:
     gfx_low::DescriptorSetSpecInfo descriptorSetSpecInfo_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

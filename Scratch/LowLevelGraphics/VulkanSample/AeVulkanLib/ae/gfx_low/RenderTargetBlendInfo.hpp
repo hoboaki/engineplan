@@ -5,15 +5,12 @@
 #include <ae/gfx_low/BlendOp.hpp>
 #include <ae/gfx_low/RenderTargetComponentBitSet.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderTargetBlendInfo;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// １つの RenderTarget に設定されるブレンド処理に関する情報。
 class RenderTargetBlendInfo {
@@ -24,7 +21,8 @@ public:
     bool BlendOpEnable() const { return blendOpEnable_; }
 
     /// BlendOpEnable() の設定。
-    RenderTargetBlendInfo& SetBlendOpEnable(bool enable) {
+    RenderTargetBlendInfo& SetBlendOpEnable(bool enable)
+    {
         blendOpEnable_ = enable;
         return *this;
     }
@@ -70,7 +68,8 @@ public:
 
     /// WriteMask() の設定。
     RenderTargetBlendInfo& SetWriteMask(
-        const RenderTargetComponentBitSet& mask) {
+        const RenderTargetComponentBitSet& mask)
+    {
         writeMask_ = mask;
         return *this;
     }
@@ -88,6 +87,5 @@ private:
     bool blendOpEnable_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

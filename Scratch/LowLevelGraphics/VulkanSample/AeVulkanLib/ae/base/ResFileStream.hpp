@@ -11,8 +11,7 @@
 #include <ae/base/ResFileStream_STDC.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-IO
 //@{
@@ -85,7 +84,6 @@ private:
 
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

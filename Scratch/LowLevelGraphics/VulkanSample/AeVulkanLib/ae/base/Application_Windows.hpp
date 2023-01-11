@@ -7,8 +7,7 @@
 #include <ae/base/Time.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // Windows環境でのApplicationの拡張。
 class Application_Ext {
@@ -22,7 +21,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -7,49 +7,54 @@
 #include <ae/base/Unused.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
-int Hid::KeyboardCount() const {
+int Hid::KeyboardCount() const
+{
     return 1;
 }
 
 //------------------------------------------------------------------------------
-const Keyboard Hid::KeyboardAtIndex(const int index) const {
+const Keyboard Hid::KeyboardAtIndex(const int index) const
+{
     AE_BASE_ASSERT_LESS(index, KeyboardCount());
     AE_BASE_UNUSED(index);
     return ext_.keyboard;
 }
 
 //------------------------------------------------------------------------------
-int Hid::MouseCount() const {
+int Hid::MouseCount() const
+{
     return 1;
 }
 
 //------------------------------------------------------------------------------
-const Mouse Hid::MouseAtIndex(const int index) const {
+const Mouse Hid::MouseAtIndex(const int index) const
+{
     AE_BASE_ASSERT_LESS(index, MouseCount());
     AE_BASE_UNUSED(index);
     return ext_.mouse;
 }
 
 //------------------------------------------------------------------------------
-int Hid::SupportedTouchTapCount() const {
+int Hid::SupportedTouchTapCount() const
+{
     return 0;
 }
 
 //------------------------------------------------------------------------------
-int Hid::TouchCount() const {
+int Hid::TouchCount() const
+{
     return 0;
 }
 
 //------------------------------------------------------------------------------
-const Touch Hid::TouchAtIndex(const int) const {
+const Touch Hid::TouchAtIndex(const int) const
+{
     AE_BASE_ASSERT_NOT_REACHED();
     return base::Touch(1);
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

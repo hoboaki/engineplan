@@ -9,21 +9,21 @@
 #include <ae/gfx_low/IndirectBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 IndirectBufferView::IndirectBufferView(
     const IndirectBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {
+, region_(createInfo.Region())
+{
 }
 
 //------------------------------------------------------------------------------
-IndirectBufferView::~IndirectBufferView() {
+IndirectBufferView::~IndirectBufferView()
+{
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

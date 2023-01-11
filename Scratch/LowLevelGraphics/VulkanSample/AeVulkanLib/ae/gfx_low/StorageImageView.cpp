@@ -10,13 +10,13 @@
 #include <ae/gfx_low/StorageImageViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 StorageImageView::StorageImageView(const StorageImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     const auto nativeFormat = InternalEnumUtil::ToFormat(createInfo.Format());
     const auto viewType = InternalEnumUtil::ToImageViewType(createInfo.Kind());
     const bool isCubeImageViewType =
@@ -59,10 +59,10 @@ StorageImageView::StorageImageView(const StorageImageViewCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-StorageImageView::~StorageImageView() {
+StorageImageView::~StorageImageView()
+{
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

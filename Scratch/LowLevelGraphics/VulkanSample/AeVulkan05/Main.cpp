@@ -82,7 +82,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     float mvp[4][4];
 };
 
@@ -106,7 +107,8 @@ const uint32_t fFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -478,11 +480,12 @@ int aemain(::ae::base::Application* app) {
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
             auto vp = proj * view;
             auto mvp = vp * model;
 
@@ -527,8 +530,7 @@ int aemain(::ae::base::Application* app) {
                         .SetResource(textureImage.get())
                         .SetOldState(
                             ::ae::gfx_low::ImageResourceState::ShaderResource)
-                        .SetNewState(::ae::gfx_low::ImageResourceState::
-                                         ShaderResourceReadOnly));
+                        .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
             }
 
@@ -587,7 +589,6 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
                         renderPassUniquePtr.get()));
-
 
                 // Viewport
                 {

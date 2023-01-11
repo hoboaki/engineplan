@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// コマンドバッファの階層レベルを表す列挙値。
-enum class CommandBufferLevel {
+enum class CommandBufferLevel
+{
     /// 無効値。
     Invalid,
 
@@ -23,6 +23,5 @@ enum class CommandBufferLevel {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

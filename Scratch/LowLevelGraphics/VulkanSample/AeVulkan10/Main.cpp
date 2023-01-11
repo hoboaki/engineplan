@@ -33,17 +33,17 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/DrawCallInfo.hpp>
 #include <ae/gfx_low/DrawIndirectCallInfo.hpp>
-#include <ae/gfx_low/DrawIndirectNormalCommand.hpp>
 #include <ae/gfx_low/DrawIndirectIndexedCommand.hpp>
+#include <ae/gfx_low/DrawIndirectNormalCommand.hpp>
 #include <ae/gfx_low/Fence.hpp>
 #include <ae/gfx_low/FenceCreateInfo.hpp>
-#include <ae/gfx_low/IndirectBufferView.hpp>
-#include <ae/gfx_low/IndirectBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/ImageResource.hpp>
 #include <ae/gfx_low/ImageResourceBarrierInfo.hpp>
 #include <ae/gfx_low/ImageResourceCreateInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceDataInfo.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
+#include <ae/gfx_low/IndirectBufferView.hpp>
+#include <ae/gfx_low/IndirectBufferViewCreateInfo.hpp>
 #include <ae/gfx_low/Queue.hpp>
 #include <ae/gfx_low/RenderPass.hpp>
 #include <ae/gfx_low/RenderPassBeginInfo.hpp>
@@ -86,7 +86,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
@@ -113,7 +114,8 @@ const uint32_t fShapeaFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -185,7 +187,7 @@ int aemain(::ae::base::Application* app) {
     sphereVertexBuffer.StoreToResourceMemory(::ae::base::MemBlock(
         geometrySphere.getInterleavedVertices(),
         geometrySphere.getInterleavedVertexSize()));
-    
+
     // VertexBuffer の作成（正方形）
     ::aesk::GeometrySquare geometrySquare;
     const auto squareVertexBufferLayoutInfo =
@@ -216,14 +218,13 @@ int aemain(::ae::base::Application* app) {
             const_cast<uint32_t*>(geometrySphere.getIndices()),
             geometrySphere.getIndexSize()));
     }
-    
+
     // Sampler の作成
     ::std::unique_ptr<::ae::gfx_low::Sampler> sampler;
     {
         sampler.reset(new ::ae::gfx_low::Sampler(
             ::ae::gfx_low::SamplerCreateInfo().SetDevice(&gfxKit.Device())));
     }
-
 
     // UniformBuffer の作成
     ::aesk::UniformBuffer cubeUniformBuffer(
@@ -341,9 +342,9 @@ int aemain(::ae::base::Application* app) {
                 .SetRegion(sphereIndirectRegion)));
     }
     auto initializeCubeCopySrcIndirectBuffer = [&gfxKit,
-                                                &geometryCube,
-                                                &cubeCopySrcIndirectMemory,
-                                                &cubeIndirectRegion](int mask) {
+                                                   &geometryCube,
+                                                   &cubeCopySrcIndirectMemory,
+                                                   &cubeIndirectRegion](int mask) {
         auto* commands =
             reinterpret_cast<::ae::gfx_low::DrawIndirectNormalCommand*>(
                 gfxKit.Device().MapResourceMemory(
@@ -364,9 +365,9 @@ int aemain(::ae::base::Application* app) {
     };
     auto initializeSphereCopySrcIndirectBuffer =
         [&gfxKit,
-         &geometrySphere,
-         &sphereCopySrcIndirectMemory,
-         &sphereIndirectRegion](int mask) {
+            &geometrySphere,
+            &sphereCopySrcIndirectMemory,
+            &sphereIndirectRegion](int mask) {
             auto* commands =
                 reinterpret_cast<::ae::gfx_low::DrawIndirectIndexedCommand*>(
                     gfxKit.Device().MapResourceMemory(
@@ -417,9 +418,10 @@ int aemain(::ae::base::Application* app) {
                     .SetKind(::ae::gfx_low::ResourceMemoryKind::SharedNonCached)
                     .SetParams(gfxKit.Device().CalcResourceMemoryRequirements(
                         specInfo)));
-            cubeCopySrcBuffers.Add(::ae::gfx_low::BufferResourceCreateInfo()
-                                   .SetDevice(&gfxKit.Device())
-                                   .SetSpecInfo(specInfo)
+            cubeCopySrcBuffers.Add(
+                ::ae::gfx_low::BufferResourceCreateInfo()
+                    .SetDevice(&gfxKit.Device())
+                    .SetSpecInfo(specInfo)
                     .SetDataAddress(*cubeCopySrcMemories[i]));
             sphereCopySrcBuffers.Add(
                 ::ae::gfx_low::BufferResourceCreateInfo()
@@ -652,12 +654,12 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::RenderTargetImageView> colorBufferRenderTargetView;
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> colorBufferTextureView;
     auto setupColorBuffer = [&gfxKit,
-                             &display,
-                             &colorBufferMemory,
-                             &colorBufferImage,
-                             &colorBufferRenderTargetView,
-                             &colorBufferTextureView,
-                             &colorBufferFormat]() {
+                                &display,
+                                &colorBufferMemory,
+                                &colorBufferImage,
+                                &colorBufferRenderTargetView,
+                                &colorBufferTextureView,
+                                &colorBufferFormat]() {
         const auto extent = display.MainScreen().Extent();
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
@@ -685,8 +687,7 @@ int aemain(::ae::base::Application* app) {
             new ::ae::gfx_low::RenderTargetImageView(
                 ::ae::gfx_low::RenderTargetImageViewCreateInfo()
                     .SetDevice(&gfxKit.Device())
-                    .SetResource(colorBufferImage.get())
-                    ));
+                    .SetResource(colorBufferImage.get())));
         colorBufferTextureView.reset(new ::ae::gfx_low::SampledImageView(
             ::ae::gfx_low::SampledImageViewCreateInfo()
                 .SetDevice(&gfxKit.Device())
@@ -695,9 +696,9 @@ int aemain(::ae::base::Application* app) {
                 .SetFormat(colorBufferFormat)));
     };
     auto cleanupColorBuffer = [&colorBufferMemory,
-                               &colorBufferImage,
-                               &colorBufferRenderTargetView,
-                               &colorBufferTextureView]() {
+                                  &colorBufferImage,
+                                  &colorBufferRenderTargetView,
+                                  &colorBufferTextureView]() {
         colorBufferTextureView.reset();
         colorBufferRenderTargetView.reset();
         colorBufferImage.reset();
@@ -757,11 +758,12 @@ int aemain(::ae::base::Application* app) {
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
             fUniformDataType baseData;
             baseData.projMtx = proj;
             baseData.viewMtx = view;
@@ -943,7 +945,6 @@ int aemain(::ae::base::Application* app) {
                                 .SetRenderArea(::ae::base::Aabb2i(
                                     ::ae::base::Vector2i::Zero(),
                                     display.MainScreen().Extent())))));
-
                 }
 
                 // コマンドを保存
@@ -958,7 +959,7 @@ int aemain(::ae::base::Application* app) {
 
                     // Pipeline
                     subCmd.CmdSetRenderPipeline(*mainPipeline);
-                    
+
                     // キューブ
                     subCmd.CmdSetDescriptorSet(cubeDescriptorSet);
                     subCmd.CmdSetVertexBuffer(0, cubeVertexBuffer.View());
@@ -982,7 +983,6 @@ int aemain(::ae::base::Application* app) {
                 }
             }
 
-            
             // コピー用レンダーパス準備
             auto& copyRenderPassUniquePtr = copyRenderPassArray[bufferIndex];
             {
@@ -1092,7 +1092,6 @@ int aemain(::ae::base::Application* app) {
                 // 終了
                 cmd.CmdEndRenderPass();
             }
-
         }
         cmd.EndRecord();
 

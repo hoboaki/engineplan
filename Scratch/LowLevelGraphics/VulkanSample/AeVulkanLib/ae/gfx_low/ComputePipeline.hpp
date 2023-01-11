@@ -6,16 +6,13 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <array>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ComputePipelineCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// コンピュートパイプラインを扱うクラス。
 class ComputePipeline {
@@ -38,7 +35,8 @@ public:
     const ::vk::Pipeline NativeObject_() const { return nativeObject_; }
 
     ::vk::PipelineLayout PipelineLayout_() const { return pipelineLayout_; }
-    const InternalPushConstantRanges& PushConstantRanges_() const {
+    const InternalPushConstantRanges& PushConstantRanges_() const
+    {
         return pushConstantRanges_;
     }
     //@}
@@ -51,6 +49,5 @@ private:
     ::vk::Pipeline nativeObject_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

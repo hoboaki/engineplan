@@ -4,8 +4,7 @@
 #include <ae/base/Extent3i.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ディスパッチコールに必要な情報。
 class DispatchCallInfo {
@@ -13,7 +12,8 @@ public:
     /// @name プロパティ
     //@{
     /// 1スレッドグループあたりのスレッド数。（初期値：1, 1, 1）
-    base::Extent3i ThreadsPerThreadGroup() const {
+    base::Extent3i ThreadsPerThreadGroup() const
+    {
         return threadsPerThreadGroup_;
     }
 
@@ -34,6 +34,5 @@ private:
     base::Extent3i threadGroups_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 比較演算を示す列挙値。
-enum class CompareOp {
+enum class CompareOp
+{
     /// 無効値。
     Invalid,
 
@@ -37,6 +37,5 @@ enum class CompareOp {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

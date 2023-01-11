@@ -6,8 +6,7 @@
 #include <limits>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Collection
 //@{
@@ -16,7 +15,8 @@ namespace base {
 /// TEnumType には enum class の型を、TDataType には uint32_t
 /// などフラグを管理するデータ型を指定してください。
 template <typename TEnumType, typename TDataType>
-struct EnumBitSetPod {
+struct EnumBitSetPod
+{
     /// @name 内部処理用機能
     //@{
     TDataType bits_;
@@ -33,7 +33,8 @@ struct EnumBitSetPod {
     /// @name 定数プロパティ
     //@{
     /// 全ビット true のオブジェクトを取得。
-    static constexpr MyType AllOn() {
+    static constexpr MyType AllOn()
+    {
         if (int(EnumType::TERM) * 8 == BitCount) {
             return MyType{ ::std::numeric_limits<DataType>::max() };
         }
@@ -50,7 +51,8 @@ struct EnumBitSetPod {
     /// @name 各ビットの設定・取得
     //@{
     /// 指定番目のビットの値を設定する。
-    MyType& Set(EnumType index, bool flag) {
+    MyType& Set(EnumType index, bool flag)
+    {
         // チェック
         if (BitCount <= int(index)) {
             AE_BASE_ERROR_INVALID_VALUE(int(index));
@@ -70,7 +72,8 @@ struct EnumBitSetPod {
     MyType& Off(EnumType index) { return Set(index, false); }
 
     /// 指定番目のビットの値を取得する。
-    bool Get(EnumType index) const {
+    bool Get(EnumType index) const
+    {
         // チェック
         if (BitCount <= int(index)) {
             AE_BASE_ERROR_INVALID_VALUE(int(index));
@@ -87,7 +90,8 @@ struct EnumBitSetPod {
     /// 全てのビットがたっていない状態か。
     bool IsAllOff() const { return !IsAnyOn(); }
     /// 全てのビットがたっている状態か。
-    bool IsAllOn() const {
+    bool IsAllOn() const
+    {
         const auto allOnBits = IsAllOn().bits_;
         return (allOnBits & bits_) == allOnBits;
     }
@@ -99,17 +103,20 @@ struct EnumBitSetPod {
     const MyType operator~() const { return MyType{ ~bits_ }; }
 
     /// 論理積を取得。
-    const MyType operator&(const MyType& rhs) const {
+    const MyType operator&(const MyType& rhs) const
+    {
         return MyType{ bits_ & rhs.bits_ };
     }
 
     /// 論理和を取得。
-    const MyType operator|(const MyType& rhs) const {
+    const MyType operator|(const MyType& rhs) const
+    {
         return MyType{ bits_ | rhs.bits_ };
     }
 
     /// 排他的論理和を取得。
-    const MyType operator^(const MyType& rhs) const {
+    const MyType operator^(const MyType& rhs) const
+    {
         return MyType{ bits_ ^ rhs.bits_ };
     }
     //@}
@@ -125,7 +132,8 @@ public:
     EnumBitSet() { EnumBitSetPod<TEnumType, TDataType>::Clear(); }
 
     /// コピーして作成。
-    EnumBitSet(const EnumBitSetPod<TEnumType, TDataType>& obj) {
+    EnumBitSet(const EnumBitSetPod<TEnumType, TDataType>& obj)
+    {
         static_cast<EnumBitSetPod<TEnumType, TDataType>&>(*this) = obj;
     }
 
@@ -141,6 +149,5 @@ using EnumBitSetPod32 = EnumBitSetPod<TEnumType, uint32_t>;
 template <typename TEnumType>
 using EnumBitSet32 = EnumBitSet<TEnumType, uint32_t>;
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

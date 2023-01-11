@@ -5,16 +5,13 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ResourceMemory.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ResourceMemoryAllocInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// リソースメモリをデストラクタで解放する　ResourceMemory
 /// 専用のスマートポインタのようなクラス。
@@ -26,11 +23,13 @@ public:
     UniqueResourceMemory(
         Device* device,
         const ResourceMemoryAllocInfo& allocInfo)
-    : UniqueResourceMemory() {
+    : UniqueResourceMemory()
+    {
         Reset(device, allocInfo);
     }
     UniqueResourceMemory(Device* device, const ResourceMemory& memory)
-    : UniqueResourceMemory() {
+    : UniqueResourceMemory()
+    {
         Reset(device, memory);
     }
     ~UniqueResourceMemory();
@@ -57,6 +56,5 @@ private:
     ResourceMemory memory_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -6,16 +6,13 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/PodInheritClass.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct CalendarPod;
 struct TimeSpanPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-DateTime
 //@{
@@ -26,7 +23,8 @@ namespace base {
 /// 9999/12/31 23:59:59.999.999.9までサポートされています。@n
 /// 加算・減算に関してオーバーフロー対策は何もしていないためオーバーフローしてもエラーにはなりません。
 /// @n
-struct TimePod {
+struct TimePod
+{
     /// @brief 地域補正された現在時刻を取得する。
     /// @return 地域補正された現在時刻。
     /// @details
@@ -102,7 +100,6 @@ struct TimePod {
 typedef PodInheritClass<TimePod> Time;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

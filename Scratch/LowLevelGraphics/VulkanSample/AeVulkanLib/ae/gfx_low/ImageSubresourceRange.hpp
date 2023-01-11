@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource の抱える ImageSubresource の範囲を示すクラス。
 /// @details
@@ -22,7 +21,8 @@ public:
 
     /// BaseLocation() の設定。
     ImageSubresourceRange& SetBaseLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         baseLocation_ = location;
         return *this;
     }
@@ -51,6 +51,5 @@ private:
     int arrayLength_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

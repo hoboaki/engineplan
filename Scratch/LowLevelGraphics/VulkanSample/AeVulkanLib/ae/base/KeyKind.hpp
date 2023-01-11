@@ -4,14 +4,15 @@
 #define AE_BASE_INCLUDED_KEYKIND_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// キーボードのキーの種類。
-struct KeyKind {
-    enum EnumType {
+struct KeyKind
+{
+    enum EnumType
+    {
         BackSpace,
         Tab,
         Return,
@@ -100,7 +101,6 @@ struct KeyKind {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -6,24 +6,24 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // 割り算チェックで使うモノたち用空間。
-struct DivideCheck {
+struct DivideCheck
+{
     // Assert用メッセージ文字列。
     static const char* const AssertionMessage;
 
     // アサートで止めつつ引数の値をそのまま返す。
     template <typename T>
-    static T Error(const T& retVal) {
+    static T Error(const T& retVal)
+    {
         AE_BASE_ASSERT_NOT_REACHED_MSG(AssertionMessage);
         return retVal;
     }
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 /// @addtogroup AeBase-Debug
 //@{

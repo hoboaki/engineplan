@@ -12,11 +12,11 @@
 #include <ae/base/ValueInRange.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // 実行時Assertを扱う空間。
-struct RuntimeAssert {
+struct RuntimeAssert
+{
     static const char* const Separator; // 分離する文字列。
     static const char* const Header; // ヘッダ。
     static const char* const FileLineFmt; // ファイルと行数。
@@ -24,8 +24,7 @@ struct RuntimeAssert {
     static const char* const LabelMessage; // ラベル:Message。
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 // 実行時Assertの本体。AE_BASE_CONFIG_ENABLE_RUNTIME_ERRORが定義されているときに動作。
 #if defined(AE_BASE_CONFIG_ENABLE_RUNTIME_ERROR)

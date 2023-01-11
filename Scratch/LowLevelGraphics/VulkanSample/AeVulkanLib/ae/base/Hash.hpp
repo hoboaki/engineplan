@@ -5,20 +5,18 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class MemBlock;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
 /// ハッシュ値を求める関数群。
-struct Hash {
+struct Hash
+{
     /// CRC16の値を求める。
     static uint16 CRC16(const MemBlock&);
 
@@ -27,7 +25,6 @@ struct Hash {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -4,8 +4,7 @@
 #include <ae/gfx_low/VertexStepRate.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 頂点バッファのメモリレイアウトに関する情報。
 class VertexBufferLayoutInfo {
@@ -31,6 +30,5 @@ private:
     VertexStepRate stepRate_ = VertexStepRate::Vertex;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

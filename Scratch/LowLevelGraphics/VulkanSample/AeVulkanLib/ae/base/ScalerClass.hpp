@@ -8,8 +8,7 @@
 #include <ae/base/TypeTraits.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Types
 //@{
@@ -22,10 +21,13 @@ public:
     //@{
     /// 既定値で初期化する。
     ScalerClass()
-    : SuperClass() {}
+    : SuperClass()
+    {
+    }
 
     /// 指定された値で初期化する。
-    ScalerClass(const typename ScalerStruct<T>::ValueType value) {
+    ScalerClass(const typename ScalerStruct<T>::ValueType value)
+    {
         SuperClass::value_ = value;
     };
     //@}
@@ -38,7 +40,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -7,40 +7,43 @@
 #include <ae/base/Pi.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 //------------------------------------------------------------------------------
 namespace {
 
 const float tToDegreeRate = 180.0f / AE_BASE_PI;
 }
 //------------------------------------------------------------------------------
-const Angle RadianPod::ToAngle() const {
+const Angle RadianPod::ToAngle() const
+{
     return Angle(*this);
 }
 
 //------------------------------------------------------------------------------
-const DegreePod RadianPod::ToDegree() const {
+const DegreePod RadianPod::ToDegree() const
+{
     return Degree(value * tToDegreeRate);
 }
 
 //------------------------------------------------------------------------------
 Radian::Radian()
-: RadianPod() {
+: RadianPod()
+{
     value = 0;
 }
 
 //------------------------------------------------------------------------------
 Radian::Radian(const float radian)
-: RadianPod() {
+: RadianPod()
+{
     value = radian;
 }
 
 //------------------------------------------------------------------------------
 Radian::Radian(const RadianPod& val)
-: RadianPod(val) {
+: RadianPod(val)
+{
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

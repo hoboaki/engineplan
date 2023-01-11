@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// イメージリソースの種類。
-enum class ImageResourceKind {
+enum class ImageResourceKind
+{
     /// 無効値。
     Invalid,
 
@@ -25,6 +25,5 @@ enum class ImageResourceKind {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

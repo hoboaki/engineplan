@@ -4,16 +4,13 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Swapchain;
 class SwapchainMaster;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Swapchain を扱うハンドル。
 /// @details
@@ -64,6 +61,5 @@ private:
     uint32_t entityUniqueId_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -7,8 +7,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @name addtogroup AeBase-Util
 //@{
@@ -69,24 +68,28 @@ private:
 //@}
 
 template <typename T>
-T& ExplicitSingleton<T>::Instance() {
+T& ExplicitSingleton<T>::Instance()
+{
     AE_BASE_ASSERT(IsCreated());
     return *sPtr;
 }
 
 template <typename T>
-bool ExplicitSingleton<T>::IsCreated() {
+bool ExplicitSingleton<T>::IsCreated()
+{
     return sPtr != 0;
 }
 
 template <typename T>
-void ExplicitSingleton<T>::SetInstance(T& ref) {
+void ExplicitSingleton<T>::SetInstance(T& ref)
+{
     AE_BASE_ASSERT(!IsCreated());
     sPtr = &ref;
 }
 
 template <typename T>
-void ExplicitSingleton<T>::UnsetInstance() {
+void ExplicitSingleton<T>::UnsetInstance()
+{
     AE_BASE_ASSERT(IsCreated());
     sPtr = 0;
 }
@@ -94,7 +97,6 @@ void ExplicitSingleton<T>::UnsetInstance() {
 template <typename T>
 T* ExplicitSingleton<T>::sPtr = 0;
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -5,18 +5,17 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 IndexBufferViewCreateInfo& IndexBufferViewCreateInfo::SetFormat(
-    const IndexFormat format) {
+    const IndexFormat format)
+{
     AE_BASE_ASSERT_ENUM(format, IndexFormat);
     AE_BASE_ASSERT(format != IndexFormat::Invalid);
     format_ = format;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

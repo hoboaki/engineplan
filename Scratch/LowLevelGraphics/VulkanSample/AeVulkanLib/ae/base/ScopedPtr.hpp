@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_SCOPEDPTR_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -17,7 +16,9 @@ public:
     //@{
     /// ポインタを指定して作成。
     explicit ScopedPtr(T* ptr = 0)
-    : ptr_(ptr) {}
+    : ptr_(ptr)
+    {
+    }
     //@}
 
     /// @name 取得
@@ -29,7 +30,8 @@ public:
     bool IsValid() const { return ptr_ != 0; }
 
     /// ポインタの参照を取得する。
-    T& Ref() const {
+    T& Ref() const
+    {
         AE_BASE_ASSERT(IsValid());
         return *ptr_;
     }
@@ -45,7 +47,8 @@ public:
     void Reset() { Reset(0); }
 
     /// ポインタをリセットする。
-    void Reset(T* ptr) {
+    void Reset(T* ptr)
+    {
         T* ptr = ptr_;
         ptr_ = 0;
         if (ptr != 0) {
@@ -61,7 +64,8 @@ public:
     T& operator*() const { return Ref(); }
 
     /// 参照演算子
-    T* operator->() const {
+    T* operator->() const
+    {
         AE_BASE_ASSERT(IsValid());
         return Get();
     }
@@ -72,7 +76,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

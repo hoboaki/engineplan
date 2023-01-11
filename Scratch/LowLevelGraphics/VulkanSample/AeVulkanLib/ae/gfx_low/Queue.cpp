@@ -11,8 +11,7 @@
 #include <ae/gfx_low/System.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Queue::Queue(
@@ -28,15 +27,18 @@ Queue::Queue(
 , operations_(operationCountMax, device_.System().ObjectAllocator_())
 , executeCommands_(operationCountMax, device_.System().ObjectAllocator_())
 , waitEvents_(operationCountMax, device_.System().ObjectAllocator_())
-, signalEvents_(operationCountMax, device_.System().ObjectAllocator_()) {
+, signalEvents_(operationCountMax, device_.System().ObjectAllocator_())
+{
 }
 
 //------------------------------------------------------------------------------
-Queue::~Queue() {
+Queue::~Queue()
+{
 }
 
 //------------------------------------------------------------------------------
-Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
+Queue& Queue::PushCommandExecute(CommandBuffer* commands)
+{
     // Present 済みでないことを確認
     bool pushedSwapchainPresent = false;
     for (const auto& op : operations_) {
@@ -52,14 +54,16 @@ Queue& Queue::PushCommandExecute(CommandBuffer* commands) {
 }
 
 //------------------------------------------------------------------------------
-Queue& Queue::PushSwapchainWait(Swapchain* swapchain) {
+Queue& Queue::PushSwapchainWait(Swapchain* swapchain)
+{
     operations_.Add(Operation{ OperationKind::SwapchainWait, swapchain });
     PushEventWait(&base::PtrToRef(swapchain).CurrentAcquireEvent_());
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
+Queue& Queue::PushSwapchainPresent(Swapchain* swapchain)
+{
     // PushSwapchainWait 済みであることを確認
     bool pushedSwapchainWait = false;
     for (const auto& op : operations_) {
@@ -87,13 +91,15 @@ Queue& Queue::PushSwapchainPresent(Swapchain* swapchain) {
 }
 
 //------------------------------------------------------------------------------
-Queue& Queue::PushEventWait(Event* event) {
+Queue& Queue::PushEventWait(Event* event)
+{
     operations_.Add(Operation{ OperationKind::EventWait, event });
     return *this;
 }
 
 //------------------------------------------------------------------------------
-Queue& Queue::PushEventSignal(Event* event) {
+Queue& Queue::PushEventSignal(Event* event)
+{
     // １つ以上の CommandExecute が追加済みであることを確認
     bool pushedCommandExecute = false;
     for (const auto& op : operations_) {
@@ -109,7 +115,8 @@ Queue& Queue::PushEventSignal(Event* event) {
 }
 
 //------------------------------------------------------------------------------
-void Queue::Submit(Fence* fencePtr) {
+void Queue::Submit(Fence* fencePtr)
+{
     // １つずつコマンドを処理
     for (int opIdx = 0; opIdx < operations_.Count(); ++opIdx) {
         const auto& op = operations_[opIdx];
@@ -122,7 +129,8 @@ void Queue::Submit(Fence* fencePtr) {
             // 何もしない
             break;
 
-        case OperationKind::SwapchainPresent: {
+        case OperationKind::SwapchainPresent:
+        {
             // １つ以上の Wait があるはず。
             AE_BASE_ASSERT_LESS_EQUALS(1, waitEvents_.Count());
 
@@ -164,7 +172,8 @@ void Queue::Submit(Fence* fencePtr) {
             AE_BASE_ASSERT_NOT_REACHED();
             break;
 
-        case OperationKind::CommandExecute: {
+        case OperationKind::CommandExecute:
+        {
             // 連続するコマンド実行を一括して処理する
             // この連続するコマンド実行群をここではコマンド実行ブロックと呼ぶ
             // TODO: 複数のコマンド実行ブロックでの動作テストができていないので何か不具合があるかもしれない
@@ -249,7 +258,8 @@ void Queue::Submit(Fence* fencePtr) {
 }
 
 //------------------------------------------------------------------------------
-int Queue::FindOperationIndex(const OperationKind kind, const int startIndex) {
+int Queue::FindOperationIndex(const OperationKind kind, const int startIndex)
+{
     for (int i = startIndex; i < operations_.Count(); ++i) {
         if (operations_[i].kind == kind) {
             return i;
@@ -258,6 +268,5 @@ int Queue::FindOperationIndex(const OperationKind kind, const int startIndex) {
     return -1;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

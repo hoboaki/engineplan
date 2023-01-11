@@ -4,17 +4,14 @@
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class BufferResource;
 class Device;
 class StorageBufferViewCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ストレージバッファ用ビューデスクリプタ。
 class StorageBufferView {
@@ -44,6 +41,5 @@ private:
     const ResourceMemoryRegion region_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

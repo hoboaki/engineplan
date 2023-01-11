@@ -8,14 +8,14 @@
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
     const DescriptorKind kind,
     const int count,
-    const ShaderBindingInfo* infosPtr) {
+    const ShaderBindingInfo* infosPtr)
+{
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
@@ -29,7 +29,8 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetBindingInfos(
 }
 
 //------------------------------------------------------------------------------
-int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const {
+int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const
+{
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     const auto& info = bindingInfos_[kind];
@@ -41,7 +42,8 @@ int DescriptorSetSpecInfo::TotalBindingCount(const DescriptorKind kind) const {
 }
 
 //------------------------------------------------------------------------------
-int DescriptorSetSpecInfo::MaxBindingIndex(const DescriptorKind kind) const {
+int DescriptorSetSpecInfo::MaxBindingIndex(const DescriptorKind kind) const
+{
     AE_BASE_ASSERT_ENUM(kind, DescriptorKind);
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     const auto& info = bindingInfos_[kind];
@@ -56,7 +58,8 @@ int DescriptorSetSpecInfo::MaxBindingIndex(const DescriptorKind kind) const {
 //------------------------------------------------------------------------------
 DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(
     const int count,
-    const DirectConstantInfo* infosPtr) {
+    const DirectConstantInfo* infosPtr)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     if (0 < count) {
         AE_BASE_ASSERT_POINTER(infosPtr);
@@ -72,7 +75,8 @@ DescriptorSetSpecInfo& DescriptorSetSpecInfo::SetDirectConstantInfos(
 }
 
 //------------------------------------------------------------------------------
-void DescriptorSetSpecInfo::Validate_() const {
+void DescriptorSetSpecInfo::Validate_() const
+{
     ShaderBindingStageBitSet stages;
     if (0 < directConstantInfoCount_) {
         // Stage重複確認
@@ -85,6 +89,5 @@ void DescriptorSetSpecInfo::Validate_() const {
     }
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

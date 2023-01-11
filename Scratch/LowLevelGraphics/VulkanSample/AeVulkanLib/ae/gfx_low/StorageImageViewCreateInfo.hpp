@@ -6,16 +6,13 @@
 #include <ae/gfx_low/ImageSubresourceRange.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// StorageImageView オブジェクト作成に必要な情報。
 class StorageImageViewCreateInfo {
@@ -26,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    StorageImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    StorageImageViewCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -36,7 +34,8 @@ public:
 
     /// ImageResource の設定。（設定必須）
     StorageImageViewCreateInfo& SetResource(
-        gfx_low::ImageResource* imageResource) {
+        gfx_low::ImageResource* imageResource)
+    {
         resource_.Reset(imageResource);
         return *this;
     }
@@ -58,7 +57,8 @@ public:
 
     /// SubresourceRange() の設定。
     StorageImageViewCreateInfo& SetSubresourceRange(
-        const ImageSubresourceRange& range) {
+        const ImageSubresourceRange& range)
+    {
         subresourceRange_ = range;
         return *this;
     }
@@ -72,6 +72,5 @@ private:
     ImageViewKind kind_ = ImageViewKind::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

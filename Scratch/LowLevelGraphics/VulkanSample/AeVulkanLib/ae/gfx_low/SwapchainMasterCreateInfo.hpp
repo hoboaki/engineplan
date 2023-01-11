@@ -4,20 +4,15 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/base/SdkHeader.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Screen;
 }
-} // namespace ae
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// SwapchainMaster オブジェクト作成に必要な情報。
 class SwapchainMasterCreateInfo {
@@ -28,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* device) {
+    SwapchainMasterCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -50,7 +46,8 @@ public:
     base::Screen* Screen() const { return screen_.Get(); }
 
     /// Screen() の設定。（設定必須）
-    SwapchainMasterCreateInfo& SetScreen(base::Screen* screen) {
+    SwapchainMasterCreateInfo& SetScreen(base::Screen* screen)
+    {
         screen_.Reset(screen);
         return *this;
     }
@@ -70,6 +67,5 @@ private:
     int swapchainCountMax_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

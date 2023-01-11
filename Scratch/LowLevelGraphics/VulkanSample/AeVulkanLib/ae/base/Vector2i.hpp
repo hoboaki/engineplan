@@ -6,17 +6,14 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/ShortString.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Vector2Pod;
 struct Vector3iPod;
 struct Vector4iPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -24,7 +21,8 @@ namespace base {
 /// @details
 /// 使用頻度のことを考えて Vec2i という名前でもアクセスできます。
 /// メモリ配置は32bit符号有り整数が先頭からx,yの順番に並んでいます。
-struct Vector2iPod {
+struct Vector2iPod
+{
     //============================================================
     /// @name 定数取得
     //@{
@@ -175,7 +173,6 @@ public:
 typedef Vector2iPod Vec2i;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

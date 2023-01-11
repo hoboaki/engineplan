@@ -5,12 +5,10 @@
 #include <ae/gfx_low/CommandBufferFeature.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CommandBufferFeature を扱う BitSet。
 using CommandBufferFeatureBitSet = base::EnumBitSet32<CommandBufferFeature>;
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

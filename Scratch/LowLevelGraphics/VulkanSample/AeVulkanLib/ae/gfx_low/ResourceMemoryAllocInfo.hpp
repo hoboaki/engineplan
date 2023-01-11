@@ -4,15 +4,12 @@
 #include <ae/gfx_low/ResourceMemoryKind.hpp>
 #include <ae/gfx_low/ResourceMemoryUsageBitSet.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ResourceMemoryRequirements;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ResourceMemory 確保に必要な情報。
 class ResourceMemoryAllocInfo {
@@ -28,7 +25,8 @@ public:
 
     /// UsageBitSet() の設定。（設定必須）
     ResourceMemoryAllocInfo& SetUsageBitSet(
-        const ResourceMemoryUsageBitSet& usageBitSet) {
+        const ResourceMemoryUsageBitSet& usageBitSet)
+    {
         usageBitSet_ = usageBitSet;
         return *this;
     }
@@ -40,7 +38,8 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    ResourceMemoryAllocInfo& SetSize(size_t size) {
+    ResourceMemoryAllocInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }
@@ -49,7 +48,8 @@ public:
     size_t Alignment() const { return alignment_; }
 
     /// Alignment() の設定。
-    ResourceMemoryAllocInfo& SetAlignment(size_t alignment) {
+    ResourceMemoryAllocInfo& SetAlignment(size_t alignment)
+    {
         alignment_ = alignment;
         return *this;
     }
@@ -65,6 +65,5 @@ private:
     size_t alignment_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,17 +5,16 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 SwapchainMasterCreateInfo& SwapchainMasterCreateInfo::SetSwapchainCountMax(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, count);
     swapchainCountMax_ = count;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

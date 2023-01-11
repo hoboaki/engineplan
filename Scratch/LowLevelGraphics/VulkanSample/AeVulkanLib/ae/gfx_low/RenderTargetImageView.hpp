@@ -3,16 +3,13 @@
 
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class RenderTargetImageViewCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// レンダリングパイプラインにおける１枚の描画対象を扱うビューデスクリプタ。
 class RenderTargetImageView {
@@ -39,6 +36,5 @@ private:
     ::vk::ImageView nativeObject_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

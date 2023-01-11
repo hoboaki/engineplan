@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// コマンドバッファが扱う機能。
-enum class CommandBufferFeature {
+enum class CommandBufferFeature
+{
     /// 無効値。
     Invalid,
 
@@ -22,6 +22,5 @@ enum class CommandBufferFeature {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

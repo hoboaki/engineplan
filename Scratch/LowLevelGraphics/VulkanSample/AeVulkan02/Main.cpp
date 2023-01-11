@@ -82,16 +82,19 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     float mvp[4][4];
 };
 
-struct fVertexType {
+struct fVertexType
+{
     float position[3];
     float uv0[2];
 };
 
-struct fVertexBufferType {
+struct fVertexBufferType
+{
     fVertexType v[12 * 3];
 };
 
@@ -196,7 +199,8 @@ const uint32_t fFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -280,11 +284,11 @@ int aemain(::ae::base::Application* app) {
     ::ae::base::Extent2i currentSwapchainExtent;
     constexpr int swapchainImageCount = 3;
     const auto setupSwapchain = [&display,
-                                &device,
-                                &swapchainMaster,
-                                &swapchain,
-                                &currentSwapchainExtent,
-                                &swapchainImageCount] {
+                                    &device,
+                                    &swapchainMaster,
+                                    &swapchain,
+                                    &currentSwapchainExtent,
+                                    &swapchainImageCount] {
         auto& createInfo = ::ae::gfx_low::SwapchainMasterCreateInfo()
                                .SetDevice(device.get())
                                .SetScreen(&display.MainScreen())
@@ -309,11 +313,11 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::DepthStencilImageView> depthBufferView;
     constexpr auto depthBufferFormat = ::ae::gfx_low::ImageFormat::D32Sfloat;
     const auto setupDepthBuffer = [&display,
-                                   &device,
-                                   &depthBufferMemory,
-                                   &depthBufferImage,
-                                   &depthBufferView,
-                                   &depthBufferFormat] {
+                                      &device,
+                                      &depthBufferMemory,
+                                      &depthBufferImage,
+                                      &depthBufferView,
+                                      &depthBufferFormat] {
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
                 .SetKind(::ae::gfx_low::ImageResourceKind::Image2d)
@@ -894,8 +898,8 @@ int aemain(::ae::base::Application* app) {
                 ::ae::base::Vector3::UnitY() // upVec
             );
             auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
+                ::ae::base::Vector3::UnitY(),
+                ::ae::base::Degree(3.0f * frameCount))
                              .ToRotateMatrix()
                              .ToMatrix44();
             auto vp = proj * view;
@@ -928,7 +932,7 @@ int aemain(::ae::base::Application* app) {
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
                             .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
+                                    ShaderResourceReadOnly));
                 } else {
                     // デバイスメモリが専用メモリの場合はアップロードとメモリバリアを設定
                     cmd.CmdImageResourceBarrier(
@@ -945,7 +949,7 @@ int aemain(::ae::base::Application* app) {
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::CopyDst)
                             .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
+                                    ShaderResourceReadOnly));
                 }
                 isFinishedSetupTexture = true;
             }

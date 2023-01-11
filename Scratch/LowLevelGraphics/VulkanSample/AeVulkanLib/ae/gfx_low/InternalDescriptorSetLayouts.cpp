@@ -9,14 +9,14 @@
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     Device* device,
     const DescriptorSetSpecInfo& info)
-: device_(base::PtrToRef(device)) {
+: device_(base::PtrToRef(device))
+{
     // 初期化
     descriptorSetLayoutIndexes_.Fill(-1);
 
@@ -27,31 +27,33 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     std::array<::vk::DescriptorSetLayoutBinding, bindingsCountMax> bindings;
 
     // 汎用的な確保関数
-    auto addBinding = [bindingsCountMax](
-                          int& bindingsCount,
-                          ::vk::DescriptorSetLayoutBinding* bindingsPtr,
-                          const int bindingInfosIdx,
-                          const int bindingIndexOffset,
-                          const ShaderBindingInfo* bindingInfosPtr,
-                          const ::vk::DescriptorType descriptorType) {
-        AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
-        const auto& info = base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
-        bindingsPtr[bindingsCount] =
-            ::vk::DescriptorSetLayoutBinding()
-                .setBinding(bindingIndexOffset + info.BindingIndex())
-                .setDescriptorType(descriptorType)
-                .setDescriptorCount(info.ElemCount())
-                .setStageFlags(
-                    InternalEnumUtil::ToShaderStageFlags(info.Stages()))
-                .setPImmutableSamplers(nullptr);
-        ++bindingsCount;
-    };
+    auto addBinding =
+        [bindingsCountMax](
+            int& bindingsCount,
+            ::vk::DescriptorSetLayoutBinding* bindingsPtr,
+            const int bindingInfosIdx,
+            const int bindingIndexOffset,
+            const ShaderBindingInfo* bindingInfosPtr,
+            const ::vk::DescriptorType descriptorType) {
+            AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
+            const auto& info = base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
+            bindingsPtr[bindingsCount] =
+                ::vk::DescriptorSetLayoutBinding()
+                    .setBinding(bindingIndexOffset + info.BindingIndex())
+                    .setDescriptorType(descriptorType)
+                    .setDescriptorCount(info.ElemCount())
+                    .setStageFlags(
+                        InternalEnumUtil::ToShaderStageFlags(info.Stages()))
+                    .setPImmutableSamplers(nullptr);
+            ++bindingsCount;
+        };
     auto addSetLayout =
-        [](gfx_low::Device& device,
-           int& layoutsCount,
-           ::vk::DescriptorSetLayout* layoutsPtr,
-           int& bindingsCount,
-           const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
+        [](
+            gfx_low::Device& device,
+            int& layoutsCount,
+            ::vk::DescriptorSetLayout* layoutsPtr,
+            int& bindingsCount,
+            const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
             AE_BASE_ASSERT_LESS(layoutsCount, DescriptorSetLayoutsCountMax);
 
             const auto info = ::vk::DescriptorSetLayoutCreateInfo()
@@ -189,7 +191,8 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
 }
 
 //------------------------------------------------------------------------------
-InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
+InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts()
+{
     for (int i = descriptorSetLayoutCount_ - 1; 0 <= i; --i) {
         device_.NativeObject_().destroyDescriptorSetLayout(
             descriptorSetLayouts_[i],
@@ -200,11 +203,11 @@ InternalDescriptorSetLayouts::~InternalDescriptorSetLayouts() {
 
 //------------------------------------------------------------------------------
 int InternalDescriptorSetLayouts::DescriptorSetLayoutIndex(
-    const DescriptorKind kind) const {
+    const DescriptorKind kind) const
+{
     AE_BASE_ASSERT(kind != DescriptorKind::Invalid);
     return descriptorSetLayoutIndexes_[kind];
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

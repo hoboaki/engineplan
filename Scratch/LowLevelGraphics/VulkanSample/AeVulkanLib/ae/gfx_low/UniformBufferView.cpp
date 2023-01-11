@@ -10,21 +10,21 @@
 #include <ae/gfx_low/UniformBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 UniformBufferView::UniformBufferView(
     const UniformBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
-, region_(createInfo.Region()) {
+, region_(createInfo.Region())
+{
 }
 
 //------------------------------------------------------------------------------
-UniformBufferView::~UniformBufferView() {
+UniformBufferView::~UniformBufferView()
+{
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

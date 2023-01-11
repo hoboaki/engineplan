@@ -7,11 +7,11 @@
 #include <ae/gfx_low/Device.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-void UniqueResourceMemory::Reset() {
+void UniqueResourceMemory::Reset()
+{
     if (memory_.IsValid()) {
         device_->FreeResourceMemory(memory_);
     }
@@ -22,24 +22,26 @@ void UniqueResourceMemory::Reset() {
 //------------------------------------------------------------------------------
 void UniqueResourceMemory::Reset(
     Device* device,
-    const ResourceMemoryAllocInfo& allocInfo) {
+    const ResourceMemoryAllocInfo& allocInfo)
+{
     Reset();
     device_.Reset(&base::PtrToRef(device));
     memory_ = device_->AllocResourceMemory(allocInfo);
 }
 
 //------------------------------------------------------------------------------
-void UniqueResourceMemory::Reset(Device* device, const ResourceMemory& memory) {
+void UniqueResourceMemory::Reset(Device* device, const ResourceMemory& memory)
+{
     Reset();
     device_.Reset(&base::PtrToRef(device));
     memory_ = memory;
 }
 
 //------------------------------------------------------------------------------
-UniqueResourceMemory::~UniqueResourceMemory() {
+UniqueResourceMemory::~UniqueResourceMemory()
+{
     Reset();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

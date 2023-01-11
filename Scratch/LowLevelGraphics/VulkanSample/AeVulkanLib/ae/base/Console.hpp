@@ -7,20 +7,18 @@
 #include <ae/base/ToShortString.hpp>
 #include <cstdarg>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class IConsoleCallback;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Debug
 //@{
 /// コンソールに関する関数を定義する空間。
-struct Console {
+struct Console
+{
     /// @brief デフォルトの時間フォーマット文字列を取得する。
     /// @return フォーマット文字列。
     /// @see SetTimeFormatString
@@ -74,8 +72,7 @@ struct Console {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 // 準備
 #if defined(AE_BASE_CONFIG_ENABLE_LOGSTR)

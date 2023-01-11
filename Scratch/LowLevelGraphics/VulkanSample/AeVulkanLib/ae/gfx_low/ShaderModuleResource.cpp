@@ -8,13 +8,13 @@
 #include <ae/gfx_low/ShaderModuleResourceCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ShaderModuleResource::ShaderModuleResource(
     const ShaderModuleResourceCreateInfo& createInfo)
-: device_(base::PtrToRef(createInfo.Device())) {
+: device_(base::PtrToRef(createInfo.Device()))
+{
     const auto nativeCreateInfo =
         ::vk::ShaderModuleCreateInfo()
             .setCodeSize(createInfo.SpecInfo().Size())
@@ -30,10 +30,10 @@ ShaderModuleResource::ShaderModuleResource(
 }
 
 //------------------------------------------------------------------------------
-ShaderModuleResource::~ShaderModuleResource() {
+ShaderModuleResource::~ShaderModuleResource()
+{
     device_.NativeObject_().destroyShaderModule(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

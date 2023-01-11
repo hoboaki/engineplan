@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 頂点バッファ内の頂点属性データ参照位置を移動する単位を示す列挙値。
-enum class VertexStepRate {
+enum class VertexStepRate
+{
     /// 無効値。
     Invalid,
 
@@ -19,6 +19,5 @@ enum class VertexStepRate {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -4,17 +4,14 @@
 #include <ae/gfx_low/ResourceMemoryRegion.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class BufferResource;
 class Device;
 class UniformBufferViewCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ユニフォームバッファ用ビューデスクリプタ。
 class UniformBufferView {
@@ -44,6 +41,5 @@ private:
     const ResourceMemoryRegion region_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

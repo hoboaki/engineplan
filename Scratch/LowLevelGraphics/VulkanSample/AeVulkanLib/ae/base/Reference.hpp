@@ -6,8 +6,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -18,9 +17,12 @@ template <typename T>
 class Reference {
 public:
     Reference(T& ref)
-    : ptr_(&ref) {}
+    : ptr_(&ref)
+    {
+    }
 
-    operator T&() const {
+    operator T&() const
+    {
         AE_BASE_ASSERT_POINTER(ptr_);
         return *ptr_;
     }
@@ -30,7 +32,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -6,19 +6,18 @@
 #include <ae/base/KeyBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// キーボードの更新データ。
-struct KeyboardUpdateData {
+struct KeyboardUpdateData
+{
     KeyBitSet hold;
     KeyBitSet pulse;
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

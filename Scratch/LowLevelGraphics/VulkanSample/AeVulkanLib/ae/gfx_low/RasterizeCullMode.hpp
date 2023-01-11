@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ラスタライズ時に行われるポリゴン面カリングの動作を表す列挙値。
-enum class RasterizeCullMode {
+enum class RasterizeCullMode
+{
     /// 無効値。
     Invalid,
 
@@ -22,6 +22,5 @@ enum class RasterizeCullMode {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

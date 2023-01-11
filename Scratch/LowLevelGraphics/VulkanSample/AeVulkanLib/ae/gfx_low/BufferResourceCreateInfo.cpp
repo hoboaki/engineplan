@@ -6,11 +6,11 @@
 #include <ae/gfx_low/InternalEnumUtil.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-::vk::BufferCreateInfo BufferResourceCreateInfo::NativeCreateInfo_() const {
+::vk::BufferCreateInfo BufferResourceCreateInfo::NativeCreateInfo_() const
+{
     return ::vk::BufferCreateInfo()
         .setSize(specInfo_.Size())
         .setUsage(InternalEnumUtil::ToBufferUsageFlags(specInfo_.UsageBitSet()))
@@ -19,6 +19,5 @@ namespace gfx_low {
         .setPQueueFamilyIndices(nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

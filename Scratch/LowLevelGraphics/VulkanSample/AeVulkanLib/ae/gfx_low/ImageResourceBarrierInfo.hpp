@@ -5,15 +5,12 @@
 #include <ae/gfx_low/ImageResourceState.hpp>
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource のバリアフェンス設定に関する情報。
 class ImageResourceBarrierInfo {
@@ -24,7 +21,8 @@ public:
     ImageResource* Resource() const { return resource_.Get(); }
 
     /// Resource() の設定。（設定必須）
-    ImageResourceBarrierInfo& SetResource(ImageResource* resource) {
+    ImageResourceBarrierInfo& SetResource(ImageResource* resource)
+    {
         resource_.Reset(resource);
         return *this;
     }
@@ -46,19 +44,22 @@ public:
     bool IsSubresourceSpecified() const { return isSubresourceSpecified_; }
 
     /// IsSubresourceSpecified() の設定。
-    ImageResourceBarrierInfo& SetIsSubresourceSpecified(bool isSpecified) {
+    ImageResourceBarrierInfo& SetIsSubresourceSpecified(bool isSpecified)
+    {
         isSubresourceSpecified_ = isSpecified;
         return *this;
     }
 
     /// 特定サブリソース指定する場合の対象となるサブリソース。（初期値：デフォルトコンストラクタの値）
-    ImageSubresourceLocation SubresourceLocation() const {
+    ImageSubresourceLocation SubresourceLocation() const
+    {
         return subresourceLocation_;
     }
 
     /// SubresourceLocation() の設定。
     ImageResourceBarrierInfo& SetSubresourceLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         subresourceLocation_ = location;
         return *this;
     }
@@ -72,6 +73,5 @@ private:
     bool isSubresourceSpecified_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

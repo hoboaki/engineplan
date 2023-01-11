@@ -7,19 +7,18 @@
 #include <ae/base/ScreenPos.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// タッチの1タップの更新データ。
-struct TouchTapUpdateData {
+struct TouchTapUpdateData
+{
     uint32 tapCount;
     ScreenPosPod pos;
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

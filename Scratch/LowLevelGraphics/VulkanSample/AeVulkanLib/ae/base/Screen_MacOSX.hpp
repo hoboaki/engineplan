@@ -6,8 +6,7 @@
 struct AeBaseNSMetalView;
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // MacOSX環境でのScreenの拡張。
 class Screen_Ext {
@@ -21,7 +20,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

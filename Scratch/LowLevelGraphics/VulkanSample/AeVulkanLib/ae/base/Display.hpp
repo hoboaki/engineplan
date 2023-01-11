@@ -17,8 +17,7 @@
 #include <ae/base/Display_Default.hpp>
 #endif
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -72,7 +71,6 @@ private:
 
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

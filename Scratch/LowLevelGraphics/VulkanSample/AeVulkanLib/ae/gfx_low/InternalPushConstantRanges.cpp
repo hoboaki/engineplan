@@ -10,13 +10,13 @@
 #include <ae/gfx_low/ShaderBindingInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 InternalPushConstantRanges::InternalPushConstantRanges(
     const DescriptorSetSpecInfo& info)
-: pushConstantRangeCount_(info.DirectConstantInfoCount()) {
+: pushConstantRangeCount_(info.DirectConstantInfoCount())
+{
     // 内容チェック
     info.Validate_();
 
@@ -32,6 +32,5 @@ InternalPushConstantRanges::InternalPushConstantRanges(
     }
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

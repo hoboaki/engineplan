@@ -16,8 +16,7 @@
 #include <ae/gfx_low/VertexBufferLayoutInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
@@ -25,7 +24,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 , descriptorSetLayouts_(&device_, createInfo.DescriptorSetSpecInfo())
 , pushConstantRanges_(createInfo.DescriptorSetSpecInfo())
 , pipelineLayout_()
-, nativeObject_() {
+, nativeObject_()
+{
     // RenderPass(Spec)
     {
         AE_BASE_ASSERT_LESS_EQUALS(
@@ -238,8 +238,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                     AE_BASE_ASSERT(
                         vertexBindingDescs[info.Slot()].stride == 0 ||
                         (0 <= info.Offset() &&
-                         info.Offset() <
-                             int(vertexBindingDescs[info.Slot()].stride)));
+                            info.Offset() < int(vertexBindingDescs[info.Slot()].stride)));
                     vertexAttrDescs[i] =
                         ::vk::VertexInputAttributeDescription()
                             .setBinding(uint32_t(info.Slot()))
@@ -284,8 +283,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
         const auto multisampleInfo = ::vk::PipelineMultisampleStateCreateInfo();
 
         auto toStencilOpState =
-            [](const PipelineDepthStencilInfo& depthStencilInfo,
-               const StencilOpInfo& stencilOpInfo) {
+            [](
+                const PipelineDepthStencilInfo& depthStencilInfo,
+                const StencilOpInfo& stencilOpInfo) {
                 return ::vk::StencilOpState()
                     .setFailOp(
                         InternalEnumUtil::ToStencilOp(stencilOpInfo.FailOp()))
@@ -397,7 +397,8 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-RenderPipeline::~RenderPipeline() {
+RenderPipeline::~RenderPipeline()
+{
     device_.NativeObject_().destroyPipeline(nativeObject_, nullptr);
     nativeObject_ = ::vk::Pipeline();
     device_.NativeObject_().destroyPipelineLayout(pipelineLayout_, nullptr);
@@ -406,6 +407,5 @@ RenderPipeline::~RenderPipeline() {
     renderPass_ = ::vk::RenderPass();
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

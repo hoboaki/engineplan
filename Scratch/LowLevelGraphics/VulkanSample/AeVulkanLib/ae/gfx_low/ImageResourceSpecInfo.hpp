@@ -9,8 +9,7 @@
 #include <ae/gfx_low/ImageResourceUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResource のデータ構造仕様に関する情報。
 class ImageResourceSpecInfo {
@@ -39,14 +38,16 @@ public:
     base::Extent3i Extent() const { return extent_; }
 
     /// 2次元用 Extent() の設定。
-    ImageResourceSpecInfo& SetExtent(const base::Extent2iPod& extent) {
+    ImageResourceSpecInfo& SetExtent(const base::Extent2iPod& extent)
+    {
         extent_ = base::Extent3i(extent, 1);
         return *this;
     }
 
     /// Extent() の設定。
     /// @details 2次元イメージの場合は depth に 1 を入れてください。
-    ImageResourceSpecInfo& SetExtent(const base::Extent3iPod& extent) {
+    ImageResourceSpecInfo& SetExtent(const base::Extent3iPod& extent)
+    {
         extent_ = extent;
         return *this;
     }
@@ -74,7 +75,8 @@ public:
 
     /// UsageBitSet() の設定。（設定必須）
     ImageResourceSpecInfo& SetUsageBitSet(
-        const ImageResourceUsageBitSet& usageBitSet) {
+        const ImageResourceUsageBitSet& usageBitSet)
+    {
         usageBitSet_ = usageBitSet;
         return *this;
     }
@@ -90,6 +92,5 @@ private:
     ImageResourceUsageBitSet usageBitSet_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

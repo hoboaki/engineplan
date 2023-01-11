@@ -7,15 +7,12 @@
 #include <ae/gfx_low/AttachmentStoreOp.hpp>
 #include <ae/gfx_low/ImageResourceState.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DepthStencilImageView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderPass に設定する DepthStencil に関する設定情報。
 class DepthStencilSetting {
@@ -23,19 +20,22 @@ public:
     /// @name プロパティ
     //@{
     /// DepthStencil イメージを指す DepthStencilImageView。（初期値：nullptr）
-    gfx_low::DepthStencilImageView* DepthStencilImageView() const {
+    gfx_low::DepthStencilImageView* DepthStencilImageView() const
+    {
         return depthStencilImageView_.Get();
     }
 
     /// DepthStencilImageView() の設定。（設定必須）
     DepthStencilSetting& SetDepthStencilImageView(
-        gfx_low::DepthStencilImageView* view) {
+        gfx_low::DepthStencilImageView* view)
+    {
         depthStencilImageView_.Reset(view);
         return *this;
     }
 
     /// RenderPass 開始時点の DepthStencil イメージの状態。（初期値：Invalid）
-    ImageResourceState InitialImageResourceState() const {
+    ImageResourceState InitialImageResourceState() const
+    {
         return initialImageResourceState_;
     }
 
@@ -43,7 +43,8 @@ public:
     DepthStencilSetting& SetInitialImageResourceState(ImageResourceState state);
 
     /// RenderPass 終了時点の DepthStencil イメージの状態。（初期値：Invalid）
-    ImageResourceState FinalImageResourceState() const {
+    ImageResourceState FinalImageResourceState() const
+    {
         return finalImageResourceState_;
     }
 
@@ -101,6 +102,5 @@ private:
     int stencilClearValue_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

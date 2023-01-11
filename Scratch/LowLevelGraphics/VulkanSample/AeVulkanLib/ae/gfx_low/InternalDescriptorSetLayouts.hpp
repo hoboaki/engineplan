@@ -5,16 +5,13 @@
 #include <ae/gfx_low/DescriptorKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DescriptorSetSpecInfo;
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DescriptorSetLayout 郡を扱うクラス。
 /// @details
@@ -39,15 +36,18 @@ public:
     //@{
     int DescriptorSetLayoutCount() const { return descriptorSetLayoutCount_; }
 
-    int StorageBufferBindingImageOffset() const {
+    int StorageBufferBindingImageOffset() const
+    {
         return storageBufferBindingIndexOffset_;
     }
 
-    int StorageImageBindingImageOffset() const {
+    int StorageImageBindingImageOffset() const
+    {
         return storageImageBindingIndexOffset_;
     }
 
-    const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const {
+    const ::vk::DescriptorSetLayout* DescriptorSetLayouts() const
+    {
         return &descriptorSetLayouts_[0];
     }
 
@@ -66,6 +66,5 @@ private:
     base::EnumKeyArray<DescriptorKind, int> descriptorSetLayoutIndexes_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -12,16 +12,13 @@
 #include <ae/base/Screen.hpp>
 #include <ae/base/SdkHeader.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Application;
 class Hid;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-System
 //@{
@@ -30,7 +27,10 @@ namespace base {
 class Display_Ext {
 public:
     //============================================================
-    enum { KEY_NUM = 256 };
+    enum
+    {
+        KEY_NUM = 256
+    };
 
     //============================================================
     static LRESULT CALLBACK WindowProcess(HWND, UINT, WPARAM, LPARAM);
@@ -57,7 +57,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

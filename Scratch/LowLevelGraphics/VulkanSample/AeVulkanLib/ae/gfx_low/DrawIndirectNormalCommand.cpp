@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexOffset(
-    const int offset) {
+    const int offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     native_.firstVertex = offset;
     return *this;
@@ -18,7 +18,8 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexOffset(
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.vertexCount = count;
     return *this;
@@ -26,7 +27,8 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetVertexCount(
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceOffset(
-    const int offset) {
+    const int offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     native_.firstInstance = offset;
     return *this;
@@ -34,12 +36,12 @@ DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceOffset(
 
 //------------------------------------------------------------------------------
 DrawIndirectNormalCommand& DrawIndirectNormalCommand::SetInstanceCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.instanceCount = count;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

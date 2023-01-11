@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ShaderBindingRegion.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class StorageBufferView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// StorageBuffer 用デスクリプタの情報。
 class StorageBufferDescriptorInfo {
@@ -23,7 +20,8 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    StorageBufferDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    StorageBufferDescriptorInfo& SetRegion(const ShaderBindingRegion& region)
+    {
         region_ = region;
         return *this;
     }
@@ -33,7 +31,8 @@ public:
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    StorageBufferDescriptorInfo& SetViews(const StorageBufferView** views) {
+    StorageBufferDescriptorInfo& SetViews(const StorageBufferView** views)
+    {
         views_.Reset(views);
         return *this;
         ;
@@ -45,6 +44,5 @@ private:
     base::Pointer<const StorageBufferView*> views_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

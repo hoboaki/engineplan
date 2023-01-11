@@ -4,15 +4,12 @@
 #include <ae/base/Aabb2i.hpp>
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderPass;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// BeginRenderPass 関数実行に必要な情報。
 class RenderPassBeginInfo {
@@ -23,7 +20,8 @@ public:
     const RenderPass* RenderPass() const { return renderPass_.Get(); }
 
     /// RenderPass() の設定。（設定必須）
-    RenderPassBeginInfo& SetRenderPass(const gfx_low::RenderPass* renderPass) {
+    RenderPassBeginInfo& SetRenderPass(const gfx_low::RenderPass* renderPass)
+    {
         renderPass_.Reset(renderPass);
         return *this;
     }
@@ -32,12 +30,14 @@ public:
     /// @details
     /// true の場合、この描画パスにおいて一部を除く全てのコマンドは
     /// セカンダリコマンドバッファによって実行する必要があります。
-    bool UseSecondaryCommandBuffers() const {
+    bool UseSecondaryCommandBuffers() const
+    {
         return useSecondaryCommandBuffers_;
     }
 
     /// UseSecondaryCommandBuffers() の設定。
-    RenderPassBeginInfo& SetUseSecondaryCommandBuffers(bool use) {
+    RenderPassBeginInfo& SetUseSecondaryCommandBuffers(bool use)
+    {
         useSecondaryCommandBuffers_ = use;
         return *this;
     }
@@ -48,7 +48,6 @@ private:
     bool useSecondaryCommandBuffers_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 // EOF

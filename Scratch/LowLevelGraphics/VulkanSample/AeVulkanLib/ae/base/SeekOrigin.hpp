@@ -4,14 +4,15 @@
 #define AE_BASE_INCLUDED_SEEKORIGIN_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-IO
 //@{
 /// Seek関数の基準。
-struct SeekOrigin {
-    enum EnumType {
+struct SeekOrigin
+{
+    enum EnumType
+    {
         Begin, ///< 先頭。
         Current, ///< 現在位置。
         End, ///< 末尾。
@@ -21,7 +22,6 @@ struct SeekOrigin {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

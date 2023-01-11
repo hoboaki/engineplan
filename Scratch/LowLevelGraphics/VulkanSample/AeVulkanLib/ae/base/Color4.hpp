@@ -6,22 +6,20 @@
 #include <ae/base/BuiltInTypes.hpp>
 #include <ae/base/ShortString.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Color3Pod;
 struct Color4bPod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
 /// 32bit浮動小数をRGBAの順に並べた色構造体。
-struct Color4Pod {
+struct Color4Pod
+{
     //============================================================
     /// @name 定数取得
     //@{
@@ -136,7 +134,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

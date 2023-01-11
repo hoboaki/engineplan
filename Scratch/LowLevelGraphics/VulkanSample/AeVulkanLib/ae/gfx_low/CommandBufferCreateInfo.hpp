@@ -7,16 +7,13 @@
 #include <ae/gfx_low/CommandBufferLevel.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class Queue;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CommandBuffer オブジェクト作成に必要な情報。
 class CommandBufferCreateInfo {
@@ -25,7 +22,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    CommandBufferCreateInfo& SetDevice(gfx_low::Device* device) {
+    CommandBufferCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -34,7 +32,8 @@ public:
     gfx_low::Queue* Queue() const { return queue_.Get(); }
 
     /// Queue() の設定。Level() == Primary の場合に設定必須。
-    CommandBufferCreateInfo& SetQueue(gfx_low::Queue* queue) {
+    CommandBufferCreateInfo& SetQueue(gfx_low::Queue* queue)
+    {
         queue_.Reset(queue);
         return *this;
     }
@@ -50,7 +49,8 @@ public:
 
     /// Features() の設定。
     CommandBufferCreateInfo& SetFeatures(
-        const CommandBufferFeatureBitSet& features) {
+        const CommandBufferFeatureBitSet& features)
+    {
         features_ = features;
         return *this;
     }
@@ -70,6 +70,5 @@ private:
     int renderPassCountMax_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

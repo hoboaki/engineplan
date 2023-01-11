@@ -5,8 +5,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderTarget の仕様情報。
 class RenderTargetSpecInfo {
@@ -27,7 +26,8 @@ public:
     ::vk::Format NativeFormat_() const { return nativeFormat_; }
 
     /// NativeFormat() 設定。
-    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format) {
+    RenderTargetSpecInfo& SetNativeFormat_(::vk::Format format)
+    {
         nativeFormat_ = format;
         return *this;
     }
@@ -38,6 +38,5 @@ private:
     ::vk::Format nativeFormat_ = ::vk::Format::eUndefined;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

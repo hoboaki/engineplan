@@ -7,13 +7,13 @@
 #include <ae/gfx_low/FenceCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Fence::Fence(const FenceCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     const auto fenceCreateInfo = ::vk::FenceCreateInfo();
     const auto result = device_.NativeObject_().createFence(
         &fenceCreateInfo,
@@ -23,13 +23,15 @@ Fence::Fence(const FenceCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-Fence::~Fence() {
+Fence::~Fence()
+{
     AE_BASE_ASSERT(!isActive_);
     device_.NativeObject_().destroyFence(nativeObject_, nullptr);
 }
 
 //------------------------------------------------------------------------------
-void Fence::Wait() {
+void Fence::Wait()
+{
     if (!isActive_) {
         return;
     }
@@ -54,12 +56,12 @@ void Fence::Wait() {
 }
 
 //------------------------------------------------------------------------------
-void Fence::OnSubmit_() {
+void Fence::OnSubmit_()
+{
     // Wait 抜け検知
     AE_BASE_ASSERT(!isActive_);
     isActive_ = true;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

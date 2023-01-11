@@ -8,16 +8,13 @@
 #include <ae/gfx_low/QueueKind.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class PhysicalDeviceInfo;
 class SystemCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// 低レベルグラフィックスライブラリシステムを扱うクラス。
 /// @details
@@ -50,11 +47,13 @@ public:
     //@{
     ::vk::Instance& NativeObject_() { return nativeObject_; }
 
-    ::ae::base::IAllocator& ObjectAllocator_() const {
+    ::ae::base::IAllocator& ObjectAllocator_() const
+    {
         return objectAllocator_;
     }
 
-    ::ae::base::IAllocator& TempWorkAllocator_() const {
+    ::ae::base::IAllocator& TempWorkAllocator_() const
+    {
         return tempWorkAllocator_;
     }
 
@@ -68,7 +67,8 @@ public:
         QueueFamilyIndexTableType_* result,
         int physicalDeviceIndex) const;
 
-    const ::vk::PhysicalDevice& PhysicalDevice_(int physicalDeviceIndex) const {
+    const ::vk::PhysicalDevice& PhysicalDevice_(int physicalDeviceIndex) const
+    {
         return physicalDevices_[physicalDeviceIndex];
     }
     //@}
@@ -93,6 +93,5 @@ private:
     std::array<::vk::PhysicalDevice, PhysicalDeviceCountMax> physicalDevices_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

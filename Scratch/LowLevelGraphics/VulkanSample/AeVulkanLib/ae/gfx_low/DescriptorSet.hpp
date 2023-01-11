@@ -5,17 +5,14 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <array>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DescriptorSetCreateInfo;
 class DescriptorSetUpdateInfo;
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// デスクリプタセットを扱うクラス。
 class DescriptorSet {
@@ -43,11 +40,13 @@ public:
     /// @name 内部処理用機能
     //@{
     ::vk::DescriptorSet* NativeObjects_() { return &nativeObjects_[0]; }
-    const ::vk::DescriptorSet* NativeObjects_() const {
+    const ::vk::DescriptorSet* NativeObjects_() const
+    {
         return &nativeObjects_[0];
     }
 
-    const InternalDescriptorSetLayouts& Layouts_() const {
+    const InternalDescriptorSetLayouts& Layouts_() const
+    {
         return descriptorSetLayouts_;
     }
     //@}
@@ -62,6 +61,5 @@ private:
         nativeObjects_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

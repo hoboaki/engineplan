@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// インデックスバッファのフォーマット。
-enum class IndexFormat {
+enum class IndexFormat
+{
     /// 無効値。
     Invalid,
 
@@ -17,6 +17,5 @@ enum class IndexFormat {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

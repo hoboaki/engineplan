@@ -5,17 +5,14 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 struct Vector3Pod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -33,11 +30,13 @@ namespace base {
 ///
 /// DirectXの並びは行ベースになりますが演算上はどちらでも変わりません。
 /// (例：Translateのx,y,z値はどちらも12,13,14番にくる。)
-struct Matrix44Pod {
+struct Matrix44Pod
+{
     //============================================================
     /// @name インデックス値
     //@{
-    enum {
+    enum
+    {
         Index00 = 0, ///< [0][0]
         Index10 = 1, ///< [1][0]
         Index20 = 2, ///< [2][0]
@@ -141,7 +140,8 @@ struct Matrix44Pod {
     //============================================================
     /// @name 変数
     //@{
-    union {
+    union
+    {
         f32 v[16]; ///< 1次元配列。
         f32 m[4][4]; ///< 2次元配列。
     };
@@ -228,7 +228,6 @@ public:
 typedef Matrix44Pod Mtx44;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

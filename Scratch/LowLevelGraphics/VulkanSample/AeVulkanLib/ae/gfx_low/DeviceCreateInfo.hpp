@@ -3,16 +3,13 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class QueueCreateInfo;
 class System;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// Device オブジェクト作成に必要な情報。
 class DeviceCreateInfo {
@@ -24,7 +21,8 @@ public:
     gfx_low::System* System() const { return system_.Get(); }
 
     /// System() の設定。（設定必須）
-    DeviceCreateInfo& SetSystem(gfx_low::System* system) {
+    DeviceCreateInfo& SetSystem(gfx_low::System* system)
+    {
         system_.Reset(system);
         return *this;
     }
@@ -33,7 +31,8 @@ public:
     int PhysicalDeviceIndex() const { return physicalDeviceIndex_; }
 
     /// PhysicalDeviceIndex() の設定。
-    DeviceCreateInfo& SetPhysicalDeviceIndex(int index) {
+    DeviceCreateInfo& SetPhysicalDeviceIndex(int index)
+    {
         physicalDeviceIndex_ = index;
         return *this;
     }
@@ -42,7 +41,8 @@ public:
     int QueueCreateInfoCount() const { return queueCreateInfosCount_; }
 
     /// 作成する Queue 郡の情報。（初期値：nullptr）
-    const QueueCreateInfo* QueueCrateInfos() const {
+    const QueueCreateInfo* QueueCrateInfos() const
+    {
         return queueCreateInfos_.Get();
     }
 
@@ -50,7 +50,8 @@ public:
     /// @param infos count 長の情報配列。
     DeviceCreateInfo& SetQueueCreateInfos(
         int count,
-        const QueueCreateInfo* infos) {
+        const QueueCreateInfo* infos)
+    {
         queueCreateInfosCount_ = count;
         queueCreateInfos_.Reset(infos);
         return *this;
@@ -64,6 +65,5 @@ private:
     ::ae::base::Pointer<const QueueCreateInfo> queueCreateInfos_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

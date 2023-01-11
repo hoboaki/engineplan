@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ImageSubresourceLocation& ImageSubresourceLocation::SetMipLevel(
-    const int level) {
+    const int level)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, level);
     mipLevel_ = level;
     return *this;
@@ -18,7 +18,8 @@ ImageSubresourceLocation& ImageSubresourceLocation::SetMipLevel(
 
 //------------------------------------------------------------------------------
 ImageSubresourceLocation& ImageSubresourceLocation::SetArrayIndex(
-    const int index) {
+    const int index)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, index);
     arrayIndex_ = index;
     return *this;
@@ -26,12 +27,12 @@ ImageSubresourceLocation& ImageSubresourceLocation::SetArrayIndex(
 
 //------------------------------------------------------------------------------
 ImageSubresourceLocation& ImageSubresourceLocation::SetFaceIndex(
-    const int index) {
+    const int index)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, index);
     faceIndex_ = index;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

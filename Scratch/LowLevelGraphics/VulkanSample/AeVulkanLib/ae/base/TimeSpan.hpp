@@ -7,8 +7,7 @@
 #include <ae/base/PodInheritClass.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-DateTime
 //@{
@@ -17,7 +16,8 @@ namespace base {
 /// 最小単位(1チック)は100ナノ秒です。@n
 /// 加算・減算に関してオーバーフロー対策は何もしていないためオーバーフローしてもエラーにはなりません。
 /// @n
-struct TimeSpanPod {
+struct TimeSpanPod
+{
     /// @brief チック数から作成する。
     /// @return 作成された時間間隔。
     /// @param ticks チック数。
@@ -117,7 +117,6 @@ struct TimeSpanPod {
 typedef PodInheritClass<TimeSpanPod> TimeSpan;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

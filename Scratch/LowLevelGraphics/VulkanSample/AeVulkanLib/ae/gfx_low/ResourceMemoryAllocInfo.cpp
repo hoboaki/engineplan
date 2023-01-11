@@ -6,12 +6,12 @@
 #include <ae/gfx_low/ResourceMemoryRequirements.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
-    const ResourceMemoryKind kind) {
+    const ResourceMemoryKind kind)
+{
     AE_BASE_ASSERT_ENUM(kind, ResourceMemoryKind);
     AE_BASE_ASSERT(kind != ResourceMemoryKind::Invalid);
     kind_ = kind;
@@ -20,13 +20,13 @@ ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetKind(
 
 //------------------------------------------------------------------------------
 ResourceMemoryAllocInfo& ResourceMemoryAllocInfo::SetParams(
-    const ResourceMemoryRequirements& requirement) {
+    const ResourceMemoryRequirements& requirement)
+{
     SetUsageBitSet(requirement.UsageBitSet());
     SetSize(requirement.Size());
     SetAlignment(requirement.Alignment());
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

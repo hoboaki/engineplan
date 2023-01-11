@@ -5,12 +5,10 @@
 #include <ae/gfx_low/ShaderBindingStage.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ShaderBindingStage を扱う BitSet。
 using ShaderBindingStageBitSet = ::ae::base::EnumBitSet32<ShaderBindingStage>;
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

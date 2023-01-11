@@ -4,13 +4,11 @@
 #include <ae/base/Aabb2i.hpp>
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {} // namespace gfx_low
-} // namespace ae
+namespace ae::gfx_low {
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// BeginComputePass 関数実行に必要な情報。
 /// @todo MTLDispatchType に相当するプロパティの対応。
@@ -22,12 +20,14 @@ public:
     /// @details
     /// true の場合、このコンピュートパス内において全てのコマンドは
     /// セカンダリコマンドバッファによって実行する必要があります。
-    bool UseSecondaryCommandBuffers() const {
+    bool UseSecondaryCommandBuffers() const
+    {
         return useSecondaryCommandBuffers_;
     }
 
     /// UseSecondaryCommandBuffers() の設定。
-    ComputePassBeginInfo& SetUseSecondaryCommandBuffers(bool use) {
+    ComputePassBeginInfo& SetUseSecondaryCommandBuffers(bool use)
+    {
         useSecondaryCommandBuffers_ = use;
         return *this;
     }
@@ -37,7 +37,6 @@ private:
     bool useSecondaryCommandBuffers_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 // EOF

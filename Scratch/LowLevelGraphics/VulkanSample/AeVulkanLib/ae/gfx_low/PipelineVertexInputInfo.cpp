@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 PipelineVertexInputInfo& PipelineVertexInputInfo::SetBufferCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     bufferCount_ = count;
     return *this;
@@ -18,12 +18,12 @@ PipelineVertexInputInfo& PipelineVertexInputInfo::SetBufferCount(
 
 //------------------------------------------------------------------------------
 PipelineVertexInputInfo& PipelineVertexInputInfo::SetAttributeCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     attributeCount_ = count;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,16 +5,15 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
-SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount) {
+SwapchainCreateInfo& SwapchainCreateInfo::SetImageCount(const int imageCount)
+{
     AE_BASE_ASSERT_LESS_EQUALS(1, imageCount);
     imageCount_ = imageCount;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

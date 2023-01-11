@@ -3,15 +3,12 @@
 
 #include <ae/base/Pointer.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class IndirectBufferView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// CmdDrawIndirect に必要な情報。
 class DrawIndirectCallInfo {
@@ -19,13 +16,15 @@ public:
     /// @name プロパティ
     //@{
     /// 使用するインダイレクトバッファ。（初期値：0）
-    const IndirectBufferView* IndirectBufferView() const {
+    const IndirectBufferView* IndirectBufferView() const
+    {
         return indirectBufferView_.Get();
     }
 
     /// IndirectBufferView() の設定。（設定必須）
     DrawIndirectCallInfo& SetIndirectBufferView(
-        const gfx_low::IndirectBufferView* view) {
+        const gfx_low::IndirectBufferView* view)
+    {
         indirectBufferView_.Reset(view);
         return *this;
     }
@@ -48,7 +47,8 @@ public:
     bool UseIndexBuffer() const { return useIndexBuffer_; }
 
     /// UseIndexBuffer() の設定。
-    DrawIndirectCallInfo& SetUseIndexBuffer(bool useIndexBuffer) {
+    DrawIndirectCallInfo& SetUseIndexBuffer(bool useIndexBuffer)
+    {
         useIndexBuffer_ = useIndexBuffer;
         return *this;
     }
@@ -61,6 +61,5 @@ private:
     bool useIndexBuffer_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

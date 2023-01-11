@@ -6,8 +6,7 @@
 #include <ae/base/BuiltInTypes.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @name AeBase-Util
 //@{
@@ -15,7 +14,8 @@ namespace base {
 /// @details
 /// スクリーンの左下が原点になります。@n
 /// 符号有りにしているのはマウスのドラッグ操作でウィンドウ外の座標を扱うことがあるためです。@n
-struct ScreenPosPod {
+struct ScreenPosPod
+{
     s16 x; ///< x位置。
     s16 y; ///< y位置。
 };
@@ -32,7 +32,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

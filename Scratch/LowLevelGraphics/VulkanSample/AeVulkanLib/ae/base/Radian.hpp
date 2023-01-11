@@ -5,21 +5,19 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 struct DegreePod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
 /// ラジアンを扱う構造体。
-struct RadianPod {
+struct RadianPod
+{
     f32 value; ///< ラジアン。
 
     /// @name 変換
@@ -41,7 +39,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

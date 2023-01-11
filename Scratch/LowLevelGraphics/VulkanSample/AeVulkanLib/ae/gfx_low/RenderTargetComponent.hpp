@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// レンダーターゲットのRGBA要素を示す列挙値。
-enum class RenderTargetComponent {
+enum class RenderTargetComponent
+{
     /// 無効値。
     Invalid,
 
@@ -25,6 +25,5 @@ enum class RenderTargetComponent {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

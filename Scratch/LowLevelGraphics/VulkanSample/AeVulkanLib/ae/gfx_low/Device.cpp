@@ -27,8 +27,7 @@
 #include <array>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 Device::Device(const DeviceCreateInfo& createInfo)
@@ -37,7 +36,8 @@ Device::Device(const DeviceCreateInfo& createInfo)
 , physicalDeviceIndex_(createInfo.PhysicalDeviceIndex())
 , queues_(
       createInfo.QueueCreateInfoCount(),
-      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_()) {
+      &::ae::base::PtrToRef(createInfo.System()).ObjectAllocator_())
+{
     const auto physicalDeviceIndex = createInfo.PhysicalDeviceIndex();
     AE_BASE_ASSERT_MIN_TERM(
         physicalDeviceIndex,
@@ -98,10 +98,12 @@ Device::Device(const DeviceCreateInfo& createInfo)
             queueCount,
             &system_.TempWorkAllocator_());
     }
-    const float priorityTable[int(QueuePriority::TERM)] = { -1.0f,
-                                                            0.0f,
-                                                            0.5f,
-                                                            1.0f };
+    const float priorityTable[int(QueuePriority::TERM)] = {
+        -1.0f,
+        0.0f,
+        0.5f,
+        1.0f
+    };
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto indexInQueueKind = indexInQueueKindTable[queueIdx];
         const auto priorityEnum = queueCreateInfos[queueIdx].Priority();
@@ -276,20 +278,23 @@ Device::Device(const DeviceCreateInfo& createInfo)
 }
 
 //------------------------------------------------------------------------------
-Device::~Device() {
+Device::~Device()
+{
     queues_.Clear();
     nativeObject_.destroy(nullptr);
     nativeObject_ = ::vk::Device();
 }
 
 //------------------------------------------------------------------------------
-gfx_low::Queue& Device::Queue(const int queueIndex) const {
+gfx_low::Queue& Device::Queue(const int queueIndex) const
+{
     return queues_[queueIndex];
 }
 
 //------------------------------------------------------------------------------
 ResourceMemory Device::AllocResourceMemory(
-    const ResourceMemoryAllocInfo& allocInfo) {
+    const ResourceMemoryAllocInfo& allocInfo)
+{
     // 0 専用対応
     if (allocInfo.Size() == 0) {
         return ResourceMemory();
@@ -302,7 +307,8 @@ ResourceMemory Device::AllocResourceMemory(
 
 //------------------------------------------------------------------------------
 ResourceMemory Device::TryToAllocResourceMemory(
-    const ResourceMemoryAllocInfo& allocInfo) {
+    const ResourceMemoryAllocInfo& allocInfo)
+{
     // チェック
     AE_BASE_ASSERT(allocInfo.Kind() != ResourceMemoryKind::Invalid);
 
@@ -375,7 +381,8 @@ ResourceMemory Device::TryToAllocResourceMemory(
 }
 
 //------------------------------------------------------------------------------
-void Device::FreeResourceMemory(const ResourceMemory& memory) {
+void Device::FreeResourceMemory(const ResourceMemory& memory)
+{
     AE_BASE_ASSERT(memory.IsValid());
     if (memory.Head_() != nullptr) {
         system_.ObjectAllocator_().Free(memory.Head_());
@@ -386,7 +393,8 @@ void Device::FreeResourceMemory(const ResourceMemory& memory) {
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const ImageResourceSpecInfo& specInfo) const {
+    const ImageResourceSpecInfo& specInfo) const
+{
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
     // 一時的に VkImage を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
@@ -416,7 +424,8 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const BufferResourceSpecInfo& specInfo) const {
+    const BufferResourceSpecInfo& specInfo) const
+{
     // Vulkan 環境は VkBuffer を作成しないと値が取得できないため
     // 一時的に VkBuffer を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
@@ -444,7 +453,8 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 
 //------------------------------------------------------------------------------
 ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
-    const ShaderModuleResourceSpecInfo& specInfo) const {
+    const ShaderModuleResourceSpecInfo& specInfo) const
+{
     return ResourceMemoryRequirements()
         .SetSize(specInfo.Size())
         .SetAlignment(sizeof(size_t))
@@ -456,7 +466,8 @@ ResourceMemoryRequirements Device::CalcResourceMemoryRequirements(
 //------------------------------------------------------------------------------
 uint8_t* Device::MapResourceMemory(
     const ResourceMemory& resourceMemory,
-    const ResourceMemoryRegion& region) {
+    const ResourceMemoryRegion& region)
+{
     AE_BASE_ASSERT(resourceMemory.IsValid());
     // CompiledShaderModule 用処理
     if (resourceMemory.Head_() != nullptr) {
@@ -472,7 +483,8 @@ uint8_t* Device::MapResourceMemory(
 }
 
 //------------------------------------------------------------------------------
-void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
+void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory)
+{
     // CompiledShaderModule 用処理
     if (resourceMemory.Head_() != nullptr) {
         return;
@@ -484,7 +496,8 @@ void Device::UnmapResourceMemory(const ResourceMemory& resourceMemory) {
 //------------------------------------------------------------------------------
 ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
     const ImageResourceSpecInfo& specInfo,
-    const ImageSubresourceLocation& location) const {
+    const ImageSubresourceLocation& location) const
+{
     // Vulkan 環境は VkImage を作成しないと値が取得できないため
     // 一時的に VkImage を作成して求める。
     // 将来的には同じ specInfo が渡された場合は
@@ -519,6 +532,5 @@ ImageSubresourceDataInfo Device::CalcImageSubresourceDataInfo(
         layout.depthPitch);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

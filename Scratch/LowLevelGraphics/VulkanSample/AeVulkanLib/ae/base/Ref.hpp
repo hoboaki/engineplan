@@ -6,19 +6,18 @@
 #include <ae/base/Reference.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
 /// std::tr1::ref と同じ役割の関数。
 template <typename T>
-const Reference<T> Ref(T& obj) {
+const Reference<T> Ref(T& obj)
+{
     return Reference<T>(obj);
 }
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

@@ -5,15 +5,12 @@
 
 #include <ae/base/IAllocator.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class AutoMemBlock;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-IO
 //@{
@@ -34,7 +31,6 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

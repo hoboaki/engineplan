@@ -7,8 +7,7 @@
 #include <ae/base/Pointer.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Memory
 //@{
@@ -26,25 +25,29 @@ public:
 
     /// 1引数 Init() で作成。
     template <typename A0>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0) {
+    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0)
+    {
         Init(allocator, a0);
     }
 
     /// 2引数 Init() で作成。
     template <typename A0, typename A1>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1) {
+    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1)
+    {
         Init(allocator, a0, a1);
     }
 
     /// 3引数 Init() で作成。
     template <typename A0, typename A1, typename A2>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2) {
+    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2)
+    {
         Init(allocator, a0, a1, a2);
     }
 
     /// 4引数 Init() で作成。
     template <typename A0, typename A1, typename A2, typename A3>
-    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3) {
+    AutoSpPtr(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3)
+    {
         Init(allocator, a0, a1, a2, a3);
     }
 
@@ -56,7 +59,8 @@ public:
         A1 a1,
         A2 a2,
         A3 a3,
-        A4 a4) {
+        A4 a4)
+    {
         Init(allocator, a0, a1, a2, a3, a4);
     }
 
@@ -75,7 +79,8 @@ public:
         A2 a2,
         A3 a3,
         A4 a4,
-        A5 a5) {
+        A5 a5)
+    {
         Init(allocator, a0, a1, a2, a3, a4, a5);
     }
 
@@ -96,7 +101,8 @@ public:
         A3 a3,
         A4 a4,
         A5 a5,
-        A6 a6) {
+        A6 a6)
+    {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6);
     }
 
@@ -119,7 +125,8 @@ public:
         A4 a4,
         A5 a5,
         A6 a6,
-        A7 a7) {
+        A7 a7)
+    {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7);
     }
 
@@ -144,7 +151,8 @@ public:
         A5 a5,
         A6 a6,
         A7 a7,
-        A8 a8) {
+        A8 a8)
+    {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
 
@@ -171,7 +179,8 @@ public:
         A6 a6,
         A7 a7,
         A8 a8,
-        A9 a9) {
+        A9 a9)
+    {
         Init(allocator, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }
 
@@ -180,7 +189,8 @@ public:
 
     /// 破棄責任を委譲して作成。
     template <typename OtherType>
-    AutoSpPtr(const AutoSpPtr<OtherType>& ptr) {
+    AutoSpPtr(const AutoSpPtr<OtherType>& ptr)
+    {
         *this = ptr;
     }
 
@@ -198,7 +208,8 @@ public:
     bool IsValid() const { return ptr_.IsValid(); }
 
     /// ポインタの参照を取得する。
-    T& Ref() const {
+    T& Ref() const
+    {
         AE_BASE_ASSERT(IsValid());
         return *ptr_;
     }
@@ -211,7 +222,8 @@ public:
     /// @name 破棄
     //@{
     /// ポインタを設定していない状態にする。
-    void Reset() {
+    void Reset()
+    {
         if (IsNull()) {
             return;
         }
@@ -226,27 +238,32 @@ public:
 
     /// @name 生成
     //@{
-    void Init(::ae::base::IAllocator& allocator) {
+    void Init(::ae::base::IAllocator& allocator)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T());
     }
     template <typename A0>
-    void Init(::ae::base::IAllocator& allocator, A0 a0) {
+    void Init(::ae::base::IAllocator& allocator, A0 a0)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0));
     }
     template <typename A0, typename A1>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1) {
+    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1));
     }
     template <typename A0, typename A1, typename A2>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2) {
+    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2));
     }
     template <typename A0, typename A1, typename A2, typename A3>
-    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3) {
+    void Init(::ae::base::IAllocator& allocator, A0 a0, A1 a1, A2 a2, A3 a3)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3));
     }
@@ -257,7 +274,8 @@ public:
         A1 a1,
         A2 a2,
         A3 a3,
-        A4 a4) {
+        A4 a4)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4));
     }
@@ -275,7 +293,8 @@ public:
         A2 a2,
         A3 a3,
         A4 a4,
-        A5 a5) {
+        A5 a5)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5));
     }
@@ -295,7 +314,8 @@ public:
         A3 a3,
         A4 a4,
         A5 a5,
-        A6 a6) {
+        A6 a6)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6));
     }
@@ -317,7 +337,8 @@ public:
         A4 a4,
         A5 a5,
         A6 a6,
-        A7 a7) {
+        A7 a7)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7));
     }
@@ -341,7 +362,8 @@ public:
         A5 a5,
         A6 a6,
         A7 a7,
-        A8 a8) {
+        A8 a8)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8));
     }
@@ -367,7 +389,8 @@ public:
         A6 a6,
         A7 a7,
         A8 a8,
-        A9 a9) {
+        A9 a9)
+    {
         PrepareCtor(allocator);
         ptr_.Reset(new (allocator) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9));
     }
@@ -376,7 +399,8 @@ public:
     /// @name 演算子オーバーロード
     //@{
     /// 特別な代入演算子。
-    AutoSpPtr<T>& operator=(const AutoSpPtr<T>& rHS) {
+    AutoSpPtr<T>& operator=(const AutoSpPtr<T>& rHS)
+    {
         Reset();
         if (rHS.IsValid()) {
             ptr_.Set(*rHS.ptr_);
@@ -389,7 +413,8 @@ public:
 
     /// 特別な代入演算子。
     template <typename OtherType>
-    AutoSpPtr<T>& operator=(const AutoSpPtr<OtherType>& rHS) {
+    AutoSpPtr<T>& operator=(const AutoSpPtr<OtherType>& rHS)
+    {
         Reset();
         if (rHS.IsValid()) {
             ptr_.Set(*rHS.ptr_);
@@ -404,7 +429,8 @@ public:
     T& operator*() const { return Ref(); }
 
     /// 参照演算子
-    T* operator->() const {
+    T* operator->() const
+    {
         AE_BASE_ASSERT(IsValid());
         return Get();
     }
@@ -414,14 +440,14 @@ private:
     mutable Pointer<T> ptr_;
     mutable Pointer<IAllocator> allocatorPtr_;
     //------------------------------------------------------------------------------
-    void PrepareCtor(::ae::base::IAllocator& allocator) {
+    void PrepareCtor(::ae::base::IAllocator& allocator)
+    {
         Reset();
         allocatorPtr_.Set(allocator);
     }
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

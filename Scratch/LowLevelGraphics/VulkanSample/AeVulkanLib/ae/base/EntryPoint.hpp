@@ -4,11 +4,9 @@
 #define AE_BASE_INCLUDED_ENTRYPOINT_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 class Application;
 }
-} // namespace ae
 
 /// @addtogroup AeBase-System
 //@{

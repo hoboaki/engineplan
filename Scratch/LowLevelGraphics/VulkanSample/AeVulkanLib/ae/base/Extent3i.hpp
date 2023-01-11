@@ -1,20 +1,18 @@
 // 文字コード：UTF-8
 #pragma once
 
-namespace ae {
-namespace base {
+namespace ae::base {
 struct Extent2iPod;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
 /// 3次元の範囲を整数型で表す構造体。
-struct Extent3iPod {
+struct Extent3iPod
+{
     /// @name メンバ変数
     //@{
     /// 横幅。
@@ -36,7 +34,8 @@ struct Extent3iPod {
     /// @name 比較
     //@{
     /// 等価比較。
-    bool Equals(const Extent3iPod& rhs) const {
+    bool Equals(const Extent3iPod& rhs) const
+    {
         return width == rhs.width && height == rhs.height && depth == rhs.depth;
     }
     //@}
@@ -55,11 +54,15 @@ public:
     //@{
     /// 全て 0 で初期化。
     Extent3i()
-    : Extent3i(0, 0, 0) {}
+    : Extent3i(0, 0, 0)
+    {
+    }
 
     /// コピーして作成。
     Extent3i(const Extent3iPod& rhs)
-    : Extent3iPod(rhs) {}
+    : Extent3iPod(rhs)
+    {
+    }
 
     /// Extent2i と depth を指定して初期化。
     /// @details
@@ -74,6 +77,5 @@ public:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

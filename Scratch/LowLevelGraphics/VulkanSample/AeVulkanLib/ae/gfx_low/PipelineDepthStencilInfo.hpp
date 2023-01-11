@@ -6,8 +6,7 @@
 #include <ae/gfx_low/StencilOpInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// パイプラインのデプステスト・ステンシルテストに関する情報。
 /// @todo DepthBoundsTest の情報。
@@ -19,7 +18,8 @@ public:
     bool DepthTestEnable() const { return depthTestEnable_; }
 
     /// DepthTestEnable() の設定。
-    PipelineDepthStencilInfo& SetDepthTestEnable(bool enable) {
+    PipelineDepthStencilInfo& SetDepthTestEnable(bool enable)
+    {
         depthTestEnable_ = enable;
         return *this;
     }
@@ -28,7 +28,8 @@ public:
     bool DepthWriteEnable() const { return depthWriteEnable_; }
 
     /// DepthWriteEnable() の設定。
-    PipelineDepthStencilInfo& SetDepthWriteEnable(bool enable) {
+    PipelineDepthStencilInfo& SetDepthWriteEnable(bool enable)
+    {
         depthWriteEnable_ = enable;
         return *this;
     }
@@ -43,7 +44,8 @@ public:
     bool StencilTestEnable() const { return stencilTestEnable_; }
 
     /// StencilTestEnable() の設定。
-    PipelineDepthStencilInfo& SetStencilTestEnable(bool enable) {
+    PipelineDepthStencilInfo& SetStencilTestEnable(bool enable)
+    {
         stencilTestEnable_ = enable;
         return *this;
     }
@@ -52,7 +54,8 @@ public:
     uint8_t StencilReadMask() const { return stencilReadMask_; }
 
     /// StencilReadMask() の設定。
-    PipelineDepthStencilInfo& SetStencilReadMask(uint8_t mask) {
+    PipelineDepthStencilInfo& SetStencilReadMask(uint8_t mask)
+    {
         stencilReadMask_ = mask;
         return *this;
     }
@@ -61,7 +64,8 @@ public:
     uint8_t StencilWriteMask() const { return stencilWriteMask_; }
 
     /// StencilWriteMask() の設定。
-    PipelineDepthStencilInfo& SetStencilWriteMask(uint8_t mask) {
+    PipelineDepthStencilInfo& SetStencilWriteMask(uint8_t mask)
+    {
         stencilWriteMask_ = mask;
         return *this;
     }
@@ -70,31 +74,36 @@ public:
     uint8_t StencilReference() const { return stencilReference_; }
 
     /// StencilReference() の設定。
-    PipelineDepthStencilInfo& SetStencilReference(uint8_t value) {
+    PipelineDepthStencilInfo& SetStencilReference(uint8_t value)
+    {
         stencilReference_ = value;
         return *this;
     }
 
     /// 表面に対するステンシル演算情報。（初期値：デフォルトコンストラクタの値）
-    StencilOpInfo FrontFaceStencilOpInfo() const {
+    StencilOpInfo FrontFaceStencilOpInfo() const
+    {
         return frontFaceStencilOpInfo_;
     }
 
     /// FrontFaceStencilOpInfo() の設定。
     PipelineDepthStencilInfo& SetFrontFaceStencilOpInfo(
-        const StencilOpInfo& info) {
+        const StencilOpInfo& info)
+    {
         frontFaceStencilOpInfo_ = info;
         return *this;
     }
 
     /// 裏面に対するステンシル演算情報。（初期値：デフォルトコンストラクタの値）
-    StencilOpInfo BackFaceStencilOpInfo() const {
+    StencilOpInfo BackFaceStencilOpInfo() const
+    {
         return backFaceStencilOpInfo_;
     }
 
     /// BackFaceStencilOpInfo() の設定。
     PipelineDepthStencilInfo& SetBackFaceStencilOpInfo(
-        const StencilOpInfo& info) {
+        const StencilOpInfo& info)
+    {
         backFaceStencilOpInfo_ = info;
         return *this;
     }
@@ -112,6 +121,5 @@ private:
     bool stencilTestEnable_ = false;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

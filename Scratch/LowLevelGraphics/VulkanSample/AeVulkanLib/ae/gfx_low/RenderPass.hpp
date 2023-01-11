@@ -4,15 +4,12 @@
 #include <ae/gfx_low/Device.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class RenderPassCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// レンダーパスを扱うクラス。
 class RenderPass {
@@ -32,7 +29,8 @@ public:
     /// @name 内部処理用機能
     //@{
     int RenderTargetCount_() const { return renderTargetCount_; }
-    ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const {
+    ::vk::RenderPassBeginInfo RenderPassBeginInfo_() const
+    {
         return renderPassBeginInfo_;
     }
     const ::vk::RenderPass* RenderPass_() const { return &renderPass_; }
@@ -49,6 +47,5 @@ private:
     ::vk::RenderPassBeginInfo renderPassBeginInfo_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

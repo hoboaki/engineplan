@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/DescriptorSetSpecInfo.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DescriptorSet オブジェクト作成に必要な情報。
 class DescriptorSetCreateInfo {
@@ -23,7 +20,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    DescriptorSetCreateInfo& SetDevice(gfx_low::Device* device) {
+    DescriptorSetCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -32,7 +30,8 @@ public:
     DescriptorSetSpecInfo SpecInfo() const { return specInfo_; }
 
     /// SpecInfo() の設定。
-    DescriptorSetCreateInfo& SetSpecInfo(const DescriptorSetSpecInfo& info) {
+    DescriptorSetCreateInfo& SetSpecInfo(const DescriptorSetSpecInfo& info)
+    {
         specInfo_ = info;
         return *this;
     }
@@ -43,6 +42,5 @@ private:
     DescriptorSetSpecInfo specInfo_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

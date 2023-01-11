@@ -16,16 +16,13 @@
 #include <ae/base/Screen_Default.hpp>
 #endif
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Display_Ext;
 struct ScreenPosPod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @name addtogroup AeBase-System
 //@{
@@ -69,7 +66,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

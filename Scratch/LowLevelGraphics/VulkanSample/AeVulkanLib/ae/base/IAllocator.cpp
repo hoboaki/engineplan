@@ -9,8 +9,7 @@
 #include <memory>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 namespace {
@@ -18,7 +17,9 @@ namespace {
 class tDefaultAllocatorObj {
 public:
     tDefaultAllocatorObj()
-    : ptr(IAllocator::OperatorNewDelete()) {}
+    : ptr(IAllocator::OperatorNewDelete())
+    {
+    }
     Pointer<IAllocator> ptr;
 };
 
@@ -27,30 +28,36 @@ tDefaultAllocatorObj tDefaultAllocator;
 } // namespace
 
 //------------------------------------------------------------------------------
-IAllocator::~IAllocator() {
+IAllocator::~IAllocator()
+{
 }
 
 //------------------------------------------------------------------------------
-IAllocator& IAllocator::Default() {
+IAllocator& IAllocator::Default()
+{
     return *tDefaultAllocator.ptr;
 }
 
 //------------------------------------------------------------------------------
-void IAllocator::SetDefault(IAllocator& allocator) {
+void IAllocator::SetDefault(IAllocator& allocator)
+{
     tDefaultAllocator.ptr.Reset(&allocator);
 }
 
 //------------------------------------------------------------------------------
-IAllocator& IAllocator::OperatorNewDelete() {
+IAllocator& IAllocator::OperatorNewDelete()
+{
     class OperatorNewDeleteAllocator : public IAllocator {
     public:
-        AE_BASE_OVERRIDE(ptr_t Alloc(pword_t size, pword_t alignment)) {
+        AE_BASE_OVERRIDE(ptr_t Alloc(pword_t size, pword_t alignment))
+        {
             AE_BASE_UNUSED(alignment);
             void* ptr = ::operator new(size, std::nothrow_t());
             AE_BASE_ASSERT_EQUALS(pword_t(ptr) % alignment, 0);
             return static_cast<ptr_t>(ptr);
         }
-        AE_BASE_OVERRIDE(void Free(ptr_t ptr)) {
+        AE_BASE_OVERRIDE(void Free(ptr_t ptr))
+        {
             ::operator delete(ptr, std::nothrow_t());
         }
     };
@@ -58,28 +65,31 @@ IAllocator& IAllocator::OperatorNewDelete() {
     return obj;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-void* operator new(const std::size_t size, ::ae::base::IAllocator& allocator) {
+void* operator new(const std::size_t size, ::ae::base::IAllocator& allocator)
+{
     return allocator.Alloc(size);
 }
 
 //------------------------------------------------------------------------------
 void* operator new[](
     const std::size_t size,
-    ::ae::base::IAllocator& allocator) {
+    ::ae::base::IAllocator& allocator)
+{
     return allocator.Alloc(size);
 }
 
 //------------------------------------------------------------------------------
-void operator delete(void* ptr, ::ae::base::IAllocator& allocator) {
+void operator delete(void* ptr, ::ae::base::IAllocator& allocator)
+{
     allocator.Free(::ae::base::ptr_t(ptr));
 }
 
 //------------------------------------------------------------------------------
-void operator delete[](void* ptr, ::ae::base::IAllocator& allocator) {
+void operator delete[](void* ptr, ::ae::base::IAllocator& allocator)
+{
     allocator.Free(::ae::base::ptr_t(ptr));
 }
 

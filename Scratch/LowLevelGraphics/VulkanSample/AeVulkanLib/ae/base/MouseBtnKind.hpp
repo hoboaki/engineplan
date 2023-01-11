@@ -4,14 +4,15 @@
 #define AE_BASE_INCLUDED_MOUSEBTNKIND_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// マウスのボタンの種類。
-struct MouseBtnKind {
-    enum EnumType {
+struct MouseBtnKind
+{
+    enum EnumType
+    {
         L, ///< 左。
         R, ///< 右。(副ボタン)
         M, ///< 中。(3ボタン)
@@ -21,7 +22,6 @@ struct MouseBtnKind {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

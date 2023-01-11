@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// バッファリソースの使用法。
-enum class BufferResourceUsage {
+enum class BufferResourceUsage
+{
     /// 無効値。
     Invalid,
 
@@ -34,6 +34,5 @@ enum class BufferResourceUsage {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

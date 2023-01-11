@@ -11,14 +11,14 @@
 #include <ae/gfx_low/InternalUtility.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DepthStencilImageView::DepthStencilImageView(
     const DepthStencilImageViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
-, nativeObject_() {
+, nativeObject_()
+{
     const auto imageViewCreateInfo =
         ::vk::ImageViewCreateInfo()
             .setImage(base::PtrToRef(createInfo.Resource()).NativeObject_())
@@ -36,10 +36,10 @@ DepthStencilImageView::DepthStencilImageView(
 }
 
 //------------------------------------------------------------------------------
-DepthStencilImageView::~DepthStencilImageView() {
+DepthStencilImageView::~DepthStencilImageView()
+{
     device_.NativeObject_().destroyImageView(nativeObject_, nullptr);
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

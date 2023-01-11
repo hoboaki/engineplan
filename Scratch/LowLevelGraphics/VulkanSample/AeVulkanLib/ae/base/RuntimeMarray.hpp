@@ -8,8 +8,7 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Collection
 //@{
@@ -34,7 +33,8 @@ public:
     : allocator_(allocator)
     , countMax_(countMax)
     , count_(0)
-    , ptr_(0) {
+    , ptr_(0)
+    {
         if (0 < countMax) {
             ptr_ = reinterpret_cast<ValueType*>(
                 allocator_.Alloc(sizeof(ValueType) * countMax));
@@ -42,7 +42,8 @@ public:
     }
 
     /// デストラクタ。
-    ~RuntimeMarray() {
+    ~RuntimeMarray()
+    {
         if (ptr_ != 0) {
             // 逆順でデストラクタを呼び出す
             for (int i = count_; 0 < i; --i) {
@@ -73,7 +74,8 @@ public:
     int CountMax() const { return countMax_; }
 
     /// 指定番目の要素にアクセス。
-    ValueType& At(const int index) {
+    ValueType& At(const int index)
+    {
         if (count_ <= index) {
             AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
@@ -82,7 +84,8 @@ public:
     }
 
     /// 指定番目の要素にアクセス。
-    const ValueType& At(const int index) const {
+    const ValueType& At(const int index) const
+    {
         if (count_ <= index) {
             AE_BASE_ASSERT_LESS(index, count_);
             return ptr_[0]; // fail safe code
@@ -109,7 +112,8 @@ public:
     void Clear() { count_ = 0; }
 
     /// 指定の要素を末尾に追加する。
-    void Add(const ValueType& val) {
+    void Add(const ValueType& val)
+    {
         if (IsFull()) {
             AE_BASE_ASSERT_NOT_REACHED();
             return;
@@ -130,10 +134,12 @@ public:
 
     /// @name 演算子オーバーロード
     //@{
-    ValueType& operator[](const int index) {
+    ValueType& operator[](const int index)
+    {
         return At(index);
     } ///< At() のエイリアス。
-    const ValueType& operator[](const int index) const {
+    const ValueType& operator[](const int index) const
+    {
         return At(index);
     } ///< At()const のエイリアス。
     //@}
@@ -146,7 +152,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

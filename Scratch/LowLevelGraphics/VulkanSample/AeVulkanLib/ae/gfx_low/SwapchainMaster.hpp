@@ -6,23 +6,18 @@
 #include <ae/gfx_low/Swapchain.hpp>
 #include <ae/gfx_low/SwapchainHandle.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Screen;
 }
-} // namespace ae
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class SwapchainCreateInfo;
 class Swapchain;
 class SwapchainMasterCreateInfo;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// スワップチェインを管理するクラス。
 /// @details
@@ -79,6 +74,5 @@ private:
     uint32_t lastAcquireUniqueId_ = 0;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderTargetImage・DepthStencilImage のロード操作を示す列挙値。
-enum class AttachmentLoadOp {
+enum class AttachmentLoadOp
+{
     /// 無効値。
     Invalid,
 
@@ -22,6 +22,5 @@ enum class AttachmentLoadOp {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

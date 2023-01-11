@@ -11,15 +11,12 @@
 #include <ae/base/Screen.hpp>
 
 struct AeBaseNSWindow;
-namespace ae {
-namespace base {
+namespace ae::base {
 class Hid;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 // MacOSX環境でのDisplayの拡張。
 class Display_Ext {
@@ -42,7 +39,6 @@ public:
     ~Display_Ext();
 };
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

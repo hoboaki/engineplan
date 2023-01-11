@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ポリゴンの表面解釈の方法を示す列挙値。
-enum class PolygonFrontFace {
+enum class PolygonFrontFace
+{
     /// 無効値。
     Invalid,
 
@@ -19,6 +19,5 @@ enum class PolygonFrontFace {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

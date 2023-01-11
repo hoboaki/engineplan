@@ -5,19 +5,16 @@
 
 #include <ae/base/BuiltInTypes.hpp>
 
-namespace ae {
-namespace base {
+namespace ae::base {
 class Angle;
 class Quaternion;
 struct Matrix44Pod;
 struct Vector3Pod;
 struct Vector4Pod;
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Math
 //@{
@@ -31,11 +28,13 @@ namespace base {
 /// r1 [1] [4]  [7] [10]
 /// r2 [2] [5]  [8] [11]
 /// @endcode
-struct Matrix34Pod {
+struct Matrix34Pod
+{
     //============================================================
     /// @name インデックス値
     //@{
-    enum {
+    enum
+    {
         Index00 = 0, ///< [0][0]
         Index10 = 1, ///< [1][0]
         Index20 = 2, ///< [2][0]
@@ -102,7 +101,8 @@ struct Matrix34Pod {
     //============================================================
     /// @name 変数
     //@{
-    union {
+    union
+    {
         f32 v[12]; ///< 1次元配列。
     };
     //@}
@@ -195,7 +195,6 @@ public:
 typedef Matrix34Pod Mtx34;
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

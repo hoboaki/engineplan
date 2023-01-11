@@ -4,15 +4,12 @@
 #include <ae/base/Pointer.hpp>
 #include <ae/gfx_low/ShaderBindingRegion.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class SampledImageView;
 }
-} // namespace ae
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// SampledImage 用デスクリプタの情報。
 class SampledImageDescriptorInfo {
@@ -23,7 +20,8 @@ public:
     ShaderBindingRegion Region() const { return region_; }
 
     /// Region() の設定。
-    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region) {
+    SampledImageDescriptorInfo& SetRegion(const ShaderBindingRegion& region)
+    {
         region_ = region;
         return *this;
     }
@@ -33,7 +31,8 @@ public:
 
     /// Views() の設定。
     /// @param views Region().ElemCount() 長の配列ポインタ。
-    SampledImageDescriptorInfo& SetViews(const SampledImageView** views) {
+    SampledImageDescriptorInfo& SetViews(const SampledImageView** views)
+    {
         views_.Reset(views);
         return *this;
         ;
@@ -45,6 +44,5 @@ private:
     base::Pointer<const SampledImageView*> views_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

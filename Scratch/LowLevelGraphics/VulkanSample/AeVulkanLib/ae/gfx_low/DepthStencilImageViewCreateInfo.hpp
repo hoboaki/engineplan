@@ -6,16 +6,13 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/ImageViewKind.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// DepthStencilImageView オブジェクト作成に必要な情報。
 class DepthStencilImageViewCreateInfo {
@@ -26,7 +23,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    DepthStencilImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    DepthStencilImageViewCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -36,19 +34,22 @@ public:
 
     /// ImageResource の設定。（設定必須）
     DepthStencilImageViewCreateInfo& SetResource(
-        gfx_low::ImageResource* imageResource) {
+        gfx_low::ImageResource* imageResource)
+    {
         resource_.Reset(imageResource);
         return *this;
     }
 
     /// 対象となる ImageSubresource。（初期値：デフォルトコンストラクタの値）
-    ImageSubresourceLocation SubresouceLocation() const {
+    ImageSubresourceLocation SubresouceLocation() const
+    {
         return subresourceLocation_;
     }
 
     /// SubresourceLocation() の設定。
     DepthStencilImageViewCreateInfo& SetSubresourceLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         subresourceLocation_ = location;
         return *this;
     }
@@ -67,6 +68,5 @@ private:
     ImageFormat format_ = ImageFormat::Invalid;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

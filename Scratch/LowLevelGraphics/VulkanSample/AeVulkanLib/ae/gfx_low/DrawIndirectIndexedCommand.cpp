@@ -5,12 +5,12 @@
 #include <ae/base/RuntimeAssert.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetIndexOffset(
-    const int offset) {
+    const int offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     native_.firstIndex = offset;
     return *this;
@@ -18,7 +18,8 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetIndexOffset(
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexOffset(
-    const int offset) {
+    const int offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     native_.vertexOffset = offset;
     return *this;
@@ -26,7 +27,8 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexOffset(
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.indexCount = count;
     return *this;
@@ -34,7 +36,8 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetVertexCount(
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceOffset(
-    const int offset) {
+    const int offset)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, offset);
     native_.firstInstance = offset;
     return *this;
@@ -42,12 +45,12 @@ DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceOffset(
 
 //------------------------------------------------------------------------------
 DrawIndirectIndexedCommand& DrawIndirectIndexedCommand::SetInstanceCount(
-    const int count) {
+    const int count)
+{
     AE_BASE_ASSERT_LESS_EQUALS(0, count);
     native_.instanceCount = count;
     return *this;
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

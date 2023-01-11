@@ -4,8 +4,7 @@
 #define AE_BASE_INCLUDED_ENUMCHECK_HPP
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Debug
 //@{
@@ -25,7 +24,6 @@ namespace base {
     (AE_BASE_ENUM_IS_VALID(enumType, enumValue) == false)
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

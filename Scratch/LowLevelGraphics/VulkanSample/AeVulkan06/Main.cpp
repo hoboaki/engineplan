@@ -83,13 +83,15 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fSceneUniformDataType {
+struct fSceneUniformDataType
+{
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
 };
 
-struct fModelUniformDataType {
+struct fModelUniformDataType
+{
     ::ae::base::Matrix44Pod modelMtx;
 };
 
@@ -130,7 +132,8 @@ const uint8_t* const fCubemapPixelFaces[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -675,9 +678,9 @@ int aemain(::ae::base::Application* app) {
             // 天球モデルユニフォーム
             {
                 fModelUniformDataType data = {};
-                data.modelMtx = ::ae::base::Matrix34::Scale(
-                                    ::ae::base::Vector3::One() * 100.0f)
-                                    .ToMatrix44();
+                data.modelMtx =
+                    ::ae::base::Matrix34::Scale(::ae::base::Vector3::One() * 100.0f)
+                        .ToMatrix44();
                 skyBoxModelUniformBuffer.StoreToResourceMemory(
                     bufferIndex,
                     data);
@@ -708,8 +711,7 @@ int aemain(::ae::base::Application* app) {
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(textureImage.get())
                         .SetOldState(::ae::gfx_low::ImageResourceState::CopyDst)
-                        .SetNewState(::ae::gfx_low::ImageResourceState::
-                                         ShaderResourceReadOnly));
+                        .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
             }
 
@@ -768,7 +770,6 @@ int aemain(::ae::base::Application* app) {
                 cmd.CmdBeginRenderPass(
                     ::ae::gfx_low::RenderPassBeginInfo().SetRenderPass(
                         renderPassUniquePtr.get()));
-
 
                 // Viewport
                 {

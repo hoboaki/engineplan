@@ -2,11 +2,11 @@
 #pragma once
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// イメージのピクセルの並び方。
-enum class ImageResourceTiling {
+enum class ImageResourceTiling
+{
     /// 無効値。
     Invalid,
 
@@ -19,6 +19,5 @@ enum class ImageResourceTiling {
     TERM,
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -6,14 +6,15 @@
 #include <ae/base/TouchTapUpdateData.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Hid
 //@{
 /// タッチ入力の更新データ。
-struct TouchUpdateData {
-    enum {
+struct TouchUpdateData
+{
+    enum
+    {
         /// サポートしている最大タップ数。
         TAP_COUNT_MAX = 8
     };
@@ -21,7 +22,6 @@ struct TouchUpdateData {
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

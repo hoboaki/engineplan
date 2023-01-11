@@ -4,8 +4,7 @@
 #include <ae/gfx_low/ShaderBindingStageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ダイレクトコンスタントに関する情報。
 class DirectConstantInfo {
@@ -16,7 +15,8 @@ public:
     ShaderBindingStageBitSet Stages() const { return stages_; }
 
     /// Stages() の設定。
-    DirectConstantInfo& SetStages(const ShaderBindingStageBitSet& stages) {
+    DirectConstantInfo& SetStages(const ShaderBindingStageBitSet& stages)
+    {
         stages_ = stages;
         return *this;
     }
@@ -25,7 +25,8 @@ public:
     size_t Size() const { return size_; }
 
     /// Size() の設定。
-    DirectConstantInfo& SetSize(size_t size) {
+    DirectConstantInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }
@@ -37,6 +38,5 @@ private:
     size_t size_ = 1;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -5,12 +5,10 @@
 #include <ae/gfx_low/ImageResourceUsage.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ImageResourceUsage を扱う BitSet。
 using ImageResourceUsageBitSet = ::ae::base::EnumBitSet32<ImageResourceUsage>;
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

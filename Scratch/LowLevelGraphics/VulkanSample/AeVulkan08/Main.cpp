@@ -78,7 +78,8 @@
 //------------------------------------------------------------------------------
 namespace {
 
-struct fUniformDataType {
+struct fUniformDataType
+{
     ::ae::base::Matrix44Pod projMtx;
     ::ae::base::Matrix44Pod viewMtx;
     ::ae::base::Matrix44Pod invViewMtx;
@@ -106,7 +107,8 @@ const uint32_t fShapeFragShaderCode[] = {
 } // namespace
 
 //------------------------------------------------------------------------------
-int aemain(::ae::base::Application* app) {
+int aemain(::ae::base::Application* app)
+{
     // コンソール出力
     AE_BASE_COUT_LINE_WITH_TIME("Adel runtime start.");
 
@@ -159,7 +161,6 @@ int aemain(::ae::base::Application* app) {
         cubeVertexBufferLayoutInfo);
     cubeVertexBuffer.StoreToResourceMemory(geometryCube.Data());
 
-    
     // VertexBuffer の作成（正方形）
     ::aesk::GeometrySquare geometrySquare;
     const auto squareVertexBufferLayoutInfo =
@@ -280,9 +281,10 @@ int aemain(::ae::base::Application* app) {
             .SetDevice(&gfxKit.Device())
             .SetSpecInfo(copyDescriptorSetSpecInfo));
     for (int i = 0; i < gfxKit.SwapchainImageCount(); ++i) {
-        mainDescriptorSets.Add(::ae::gfx_low::DescriptorSetCreateInfo()
-                               .SetDevice(&gfxKit.Device())
-                                   .SetSpecInfo(mainDescriptorSetSpecInfo));
+        mainDescriptorSets.Add(
+            ::ae::gfx_low::DescriptorSetCreateInfo()
+                .SetDevice(&gfxKit.Device())
+                .SetSpecInfo(mainDescriptorSetSpecInfo));
 
         // UniformBuffer
         const ::ae::gfx_low::UniformBufferView* localUniformBufferViews[] = {
@@ -291,10 +293,10 @@ int aemain(::ae::base::Application* app) {
         const ::ae::gfx_low::UniformBufferDescriptorInfo
             uniformBufferDescs[] = {
                 ::ae::gfx_low::UniformBufferDescriptorInfo()
-                    .SetRegion(::ae::gfx_low::ShaderBindingRegion()
-                                   .SetBindingIndex(0)
-                                   .SetElemCount(AE_BASE_ARRAY_LENGTH(
-                                       localUniformBufferViews)))
+                    .SetRegion(
+                        ::ae::gfx_low::ShaderBindingRegion()
+                            .SetBindingIndex(0)
+                            .SetElemCount(AE_BASE_ARRAY_LENGTH(localUniformBufferViews)))
                     .SetViews(localUniformBufferViews),
             };
 
@@ -409,12 +411,12 @@ int aemain(::ae::base::Application* app) {
     ::std::unique_ptr<::ae::gfx_low::RenderTargetImageView> colorBufferRenderTargetView;
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> colorBufferTextureView;
     auto setupColorBuffer = [&gfxKit,
-                             &display,
-                             &colorBufferMemory,
-                             &colorBufferImage,
-                             &colorBufferRenderTargetView,
-                             &colorBufferTextureView,
-                             &colorBufferFormat]() {
+                                &display,
+                                &colorBufferMemory,
+                                &colorBufferImage,
+                                &colorBufferRenderTargetView,
+                                &colorBufferTextureView,
+                                &colorBufferFormat]() {
         const auto extent = display.MainScreen().Extent();
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
@@ -441,8 +443,7 @@ int aemain(::ae::base::Application* app) {
             new ::ae::gfx_low::RenderTargetImageView(
                 ::ae::gfx_low::RenderTargetImageViewCreateInfo()
                     .SetDevice(&gfxKit.Device())
-                    .SetResource(colorBufferImage.get())
-                    ));
+                    .SetResource(colorBufferImage.get())));
         colorBufferTextureView.reset(new ::ae::gfx_low::SampledImageView(
             ::ae::gfx_low::SampledImageViewCreateInfo()
                 .SetDevice(&gfxKit.Device())
@@ -451,9 +452,9 @@ int aemain(::ae::base::Application* app) {
                 .SetFormat(colorBufferFormat)));
     };
     auto cleanupColorBuffer = [&colorBufferMemory,
-                               &colorBufferImage,
-                               &colorBufferRenderTargetView,
-                               &colorBufferTextureView]() {
+                                  &colorBufferImage,
+                                  &colorBufferRenderTargetView,
+                                  &colorBufferTextureView]() {
         colorBufferTextureView.reset();
         colorBufferRenderTargetView.reset();
         colorBufferImage.reset();
@@ -511,11 +512,12 @@ int aemain(::ae::base::Application* app) {
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
 
             fUniformDataType data = {};
             data.projMtx = proj;
@@ -644,7 +646,6 @@ int aemain(::ae::base::Application* app) {
                                 .SetRenderArea(::ae::base::Aabb2i(
                                     ::ae::base::Vector2i::Zero(),
                                     display.MainScreen().Extent())))));
-
                 }
 
                 // コマンドを保存
@@ -671,7 +672,6 @@ int aemain(::ae::base::Application* app) {
                 }
             }
 
-            
             // コピー用レンダーパス準備
             auto& copyRenderPassUniquePtr = copyRenderPassArray[bufferIndex];
             {
@@ -702,7 +702,6 @@ int aemain(::ae::base::Application* app) {
                             ::ae::base::Vector2i::Zero(),
                             display.MainScreen().Extent()))));
             }
-
 
             // メイン描画
             {
@@ -768,7 +767,6 @@ int aemain(::ae::base::Application* app) {
                 // 終了
                 cmd.CmdEndRenderPass();
             }
-
         }
         cmd.EndRecord();
 

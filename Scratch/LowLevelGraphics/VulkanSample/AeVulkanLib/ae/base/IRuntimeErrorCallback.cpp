@@ -2,13 +2,12 @@
 #include <ae/base/IRuntimeErrorCallback.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
-IRuntimeErrorCallback::~IRuntimeErrorCallback() {
+IRuntimeErrorCallback::~IRuntimeErrorCallback()
+{
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

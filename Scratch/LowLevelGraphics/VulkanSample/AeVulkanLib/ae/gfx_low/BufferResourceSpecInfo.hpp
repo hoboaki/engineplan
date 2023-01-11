@@ -4,8 +4,7 @@
 #include <ae/gfx_low/BufferResourceUsageBitSet.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// BufferResource のデータ構造仕様に関する情報。
 class BufferResourceSpecInfo {
@@ -17,7 +16,8 @@ public:
 
     /// Size() の設定。
     /// @param size 0以上。
-    BufferResourceSpecInfo& SetSize(size_t size) {
+    BufferResourceSpecInfo& SetSize(size_t size)
+    {
         size_ = size;
         return *this;
     }
@@ -27,7 +27,8 @@ public:
 
     /// UsageBitSet() の設定。（設定必須）
     BufferResourceSpecInfo& SetUsageBitSet(
-        const BufferResourceUsageBitSet& usageBitSet) {
+        const BufferResourceUsageBitSet& usageBitSet)
+    {
         usageBitSet_ = usageBitSet;
         return *this;
     }
@@ -38,6 +39,5 @@ private:
     BufferResourceUsageBitSet usageBitSet_;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

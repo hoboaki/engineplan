@@ -8,8 +8,7 @@
 #include <new>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-Util
 //@{
@@ -33,7 +32,9 @@ public:
     //@{
     Placement()
     : ptr_(0)
-    , bytes_() {}
+    , bytes_()
+    {
+    }
     ~Placement() { Reset(); }
     //@}
 
@@ -43,7 +44,8 @@ public:
     bool IsValid() const { return ptr_ != 0; }
 
     /// 生成済みのオブジェクトのポインタを取得する。
-    T* Ptr() const {
+    T* Ptr() const
+    {
         AE_BASE_ASSERT_POINTER(ptr_);
         return ptr_;
     }
@@ -61,7 +63,8 @@ public:
     /// @name 破棄
     //@{
     /// 生成済みなら破棄する。
-    void Reset() {
+    void Reset()
+    {
         if (IsValid()) {
             ptr_->~T();
             ptr_ = 0;
@@ -71,32 +74,38 @@ public:
 
     /// @name 生成
     //@{
-    void Init() {
+    void Init()
+    {
         PrepareCtor();
         new (ptr_) T();
     }
     template <typename A0>
-    void Init(A0 a0) {
+    void Init(A0 a0)
+    {
         PrepareCtor();
         new (ptr_) T(a0);
     }
     template <typename A0, typename A1>
-    void Init(A0 a0, A1 a1) {
+    void Init(A0 a0, A1 a1)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1);
     }
     template <typename A0, typename A1, typename A2>
-    void Init(A0 a0, A1 a1, A2 a2) {
+    void Init(A0 a0, A1 a1, A2 a2)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2);
     }
     template <typename A0, typename A1, typename A2, typename A3>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3);
     }
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4);
     }
@@ -107,7 +116,8 @@ public:
         typename A3,
         typename A4,
         typename A5>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5);
     }
@@ -119,7 +129,8 @@ public:
         typename A4,
         typename A5,
         typename A6>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6);
     }
@@ -132,7 +143,8 @@ public:
         typename A5,
         typename A6,
         typename A7>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7);
     }
@@ -146,7 +158,8 @@ public:
         typename A6,
         typename A7,
         typename A8>
-    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+    void Init(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
@@ -171,7 +184,8 @@ public:
         A6 a6,
         A7 a7,
         A8 a8,
-        A9 a9) {
+        A9 a9)
+    {
         PrepareCtor();
         new (ptr_) T(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9);
     }
@@ -181,7 +195,8 @@ private:
     T* ptr_;
     byte_t bytes_[sizeof(T)];
     //------------------------------------------------------------------------------
-    void PrepareCtor() {
+    void PrepareCtor()
+    {
         Reset();
         ptr_ = reinterpret_cast<T*>(bytes_);
     }
@@ -189,7 +204,6 @@ private:
 
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

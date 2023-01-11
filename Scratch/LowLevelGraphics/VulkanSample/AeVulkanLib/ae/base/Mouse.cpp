@@ -2,19 +2,20 @@
 #include <ae/base/Mouse.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 //------------------------------------------------------------------------------
 Mouse::Mouse()
 : data_()
 , pos_()
 , trigger_()
-, release_() {
+, release_()
+{
 }
 
 //------------------------------------------------------------------------------
-void Mouse::Update(const MouseUpdateData& data) {
+void Mouse::Update(const MouseUpdateData& data)
+{
     // メモ
     const MouseUpdateData pre = data_;
     const MouseUpdateData cur = data;
@@ -29,50 +30,58 @@ void Mouse::Update(const MouseUpdateData& data) {
 }
 
 //------------------------------------------------------------------------------
-const MouseUpdateData Mouse::LastUpdateData() const {
+const MouseUpdateData Mouse::LastUpdateData() const
+{
     return data_;
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsPosUpdated() const {
+bool Mouse::IsPosUpdated() const
+{
     return data_.posUpdated != 0;
 }
 
 //------------------------------------------------------------------------------
-const ScreenPosPod Mouse::Pos() const {
+const ScreenPosPod Mouse::Pos() const
+{
     return pos_;
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsHold(const MouseBtnKind::EnumType kind) const {
+bool Mouse::IsHold(const MouseBtnKind::EnumType kind) const
+{
     return data_.hold.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsTrigger(const MouseBtnKind::EnumType kind) const {
+bool Mouse::IsTrigger(const MouseBtnKind::EnumType kind) const
+{
     return trigger_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-bool Mouse::IsRelease(const MouseBtnKind::EnumType kind) const {
+bool Mouse::IsRelease(const MouseBtnKind::EnumType kind) const
+{
     return release_.Get(kind);
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::Hold() const {
+const MouseBtnBitSet Mouse::Hold() const
+{
     return data_.hold;
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::Trigger() const {
+const MouseBtnBitSet Mouse::Trigger() const
+{
     return trigger_;
 }
 
 //------------------------------------------------------------------------------
-const MouseBtnBitSet Mouse::Release() const {
+const MouseBtnBitSet Mouse::Release() const
+{
     return release_;
 }
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 // EOF

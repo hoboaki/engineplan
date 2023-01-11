@@ -10,8 +10,7 @@
 #include <cstdio>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace base {
+namespace ae::base {
 
 /// @addtogroup AeBase-String
 //@{
@@ -21,7 +20,8 @@ namespace base {
 /// CHAR_TYPE には char もしくは wchar_t を設定してください。@n
 /// BUFFER_LENGTH には配列長(notバイト長)を指定してください。@n
 template <typename CHAR_TYPE, size_t BUFFER_LENGTH>
-struct FixedStringPod {
+struct FixedStringPod
+{
     /// 文字の型。
     typedef CHAR_TYPE CharType;
 
@@ -36,7 +36,8 @@ struct FixedStringPod {
     /// @param format フォーマット文字列。
     /// @details
     /// バッファ長が不足したときはAssertに失敗し長さ0の文字列を返します。
-    static const PodType FromFormat(const CharType* format, ...) {
+    static const PodType FromFormat(const CharType* format, ...)
+    {
         PodType str;
         va_list arg;
         va_start(arg, format);
@@ -59,7 +60,8 @@ struct FixedStringPod {
     /// @param str 設定する文字列。
     /// @details
     /// バッファ長が不足したときはAssertに失敗し長さ0に設定されます。
-    void Set(const CharType* str) {
+    void Set(const CharType* str)
+    {
         StringTraits<CharType>::NCopy(buffer_, BufferLength, str);
     }
 
@@ -77,19 +79,22 @@ class FixedString : public FixedStringPod<CHAR_TYPE, BUFFER_LENGTH> {
 public:
     /// 長さ0の文字列を作成。
     FixedString()
-    : SuperType() {
+    : SuperType()
+    {
         SuperType::buffer_[0] = '\0';
     }
 
     /// 指定した文字列をコピーして作成。
     FixedString(const CHAR_TYPE* str)
-    : SuperType() {
+    : SuperType()
+    {
         SuperType::Set(str);
     }
 
     /// コピーして作成。
     FixedString(const FixedStringPod<CHAR_TYPE, BUFFER_LENGTH>& obj)
-    : SuperType::PodType() {
+    : SuperType::PodType()
+    {
         static_cast<SuperType&>(*this) = obj;
     }
 
@@ -99,7 +104,6 @@ private:
 };
 //@}
 
-} // namespace base
-} // namespace ae
+} // namespace ae::base
 #endif
 // EOF

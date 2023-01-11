@@ -4,8 +4,7 @@
 #include <ae/base/Aabb2.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// ビューポート設定。
 class ViewportSetting {
@@ -16,7 +15,8 @@ public:
     base::Aabb2 Rect() const { return rect_; }
 
     /// Rect() の設定。
-    ViewportSetting& SetRect(const base::Aabb2& rect) {
+    ViewportSetting& SetRect(const base::Aabb2& rect)
+    {
         rect_ = rect;
         return *this;
     }
@@ -39,6 +39,5 @@ private:
     float maxDepth_ = 1.0f;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

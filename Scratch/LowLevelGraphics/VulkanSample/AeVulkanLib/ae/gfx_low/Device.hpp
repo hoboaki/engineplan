@@ -5,8 +5,7 @@
 #include <ae/gfx_low/SdkHeader.hpp>
 #include <list>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class DeviceCreateInfo;
 class BufferResourceSpecInfo;
 class ImageResourceSpecInfo;
@@ -19,12 +18,10 @@ class ResourceMemoryRegion;
 class ResourceMemoryRequirements;
 class ShaderModuleResourceSpecInfo;
 class System;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// グラフィックスデバイスを扱うクラス。
 /// @details
@@ -56,7 +53,8 @@ public:
     gfx_low::Queue& Queue(int queueIndex) const;
 
     /// ResourceMemoryKind::DeviceLocal タイプが共有メモリ上に配置されるか。
-    bool IsDeviceLocalMemoryShared() const {
+    bool IsDeviceLocalMemoryShared() const
+    {
         return isDeviceLocalMemoryShared_;
     }
     //@}
@@ -131,6 +129,5 @@ private:
     bool isDeviceLocalMemoryShared_ = bool();
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

@@ -9,21 +9,21 @@
 #include <ae/gfx_low/IndexBufferViewCreateInfo.hpp>
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 //------------------------------------------------------------------------------
 IndexBufferView::IndexBufferView(const IndexBufferViewCreateInfo& createInfo)
 : device_(base::PtrToRef(createInfo.Device()))
 , bufferResource_(base::PtrToRef(createInfo.Resource()))
 , region_(createInfo.Region())
-, format_(createInfo.Format()) {
+, format_(createInfo.Format())
+{
 }
 
 //------------------------------------------------------------------------------
-IndexBufferView::~IndexBufferView() {
+IndexBufferView::~IndexBufferView()
+{
 }
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF

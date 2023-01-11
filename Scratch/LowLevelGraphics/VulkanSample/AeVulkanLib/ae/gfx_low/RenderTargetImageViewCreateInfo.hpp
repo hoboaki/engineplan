@@ -5,16 +5,13 @@
 #include <ae/gfx_low/ImageSubresourceLocation.hpp>
 #include <ae/gfx_low/SdkHeader.hpp>
 
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 class Device;
 class ImageResource;
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 
 //------------------------------------------------------------------------------
-namespace ae {
-namespace gfx_low {
+namespace ae::gfx_low {
 
 /// RenderTargetImageView オブジェクト作成に必要な情報。
 class RenderTargetImageViewCreateInfo {
@@ -25,7 +22,8 @@ public:
     gfx_low::Device* Device() const { return device_.Get(); }
 
     /// Device() の設定。（設定必須）
-    RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* device) {
+    RenderTargetImageViewCreateInfo& SetDevice(gfx_low::Device* device)
+    {
         device_.Reset(device);
         return *this;
     }
@@ -34,19 +32,22 @@ public:
     ImageResource* Resource() const { return resource_.Get(); }
 
     /// Resource() の設定。（設定必須）
-    RenderTargetImageViewCreateInfo& SetResource(ImageResource* imageResource) {
+    RenderTargetImageViewCreateInfo& SetResource(ImageResource* imageResource)
+    {
         resource_.Reset(imageResource);
         return *this;
     }
 
     /// 対象となる ImageSubresource。（初期値：デフォルトコンストラクタの値）
-    ImageSubresourceLocation SubresouceLocation() const {
+    ImageSubresourceLocation SubresouceLocation() const
+    {
         return subresourceLocation_;
     }
 
     /// SubresourceLocation() の設定。
     RenderTargetImageViewCreateInfo& SetSubresourceLocation(
-        const ImageSubresourceLocation& location) {
+        const ImageSubresourceLocation& location)
+    {
         subresourceLocation_ = location;
         return *this;
     }
@@ -57,7 +58,8 @@ public:
     /// Vulkan ライブラリのフォーマット。こちらが指定されている場合は Format()
     /// よりも優先して使う。
     ::vk::Format RawFormat_() const { return rawFormat_; }
-    RenderTargetImageViewCreateInfo& SetRawFormat_(::vk::Format rawFormat) {
+    RenderTargetImageViewCreateInfo& SetRawFormat_(::vk::Format rawFormat)
+    {
         rawFormat_ = rawFormat;
         return *this;
     }
@@ -70,6 +72,5 @@ private:
     ::vk::Format rawFormat_ = ::vk::Format::eUndefined;
 };
 
-} // namespace gfx_low
-} // namespace ae
+} // namespace ae::gfx_low
 // EOF
