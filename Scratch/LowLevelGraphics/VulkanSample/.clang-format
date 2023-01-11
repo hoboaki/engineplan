@@ -6,82 +6,86 @@ BasedOnStyle: Google
 # C++バージョン設定
 Standard: c++17
 
-# アクセス修飾子はインデントしない
+# アクセス修飾子の（-数字でインデントしない）
 AccessModifierOffset: -4
 
-# インデント幅は4
+# インデント幅
 IndentWidth: 4
 
 # 文の途中で改行した場合のインデント幅
 ContinuationIndentWidth: 4
 
-# １行制限なし
+# １行の文字数制限（0で制限なし）
 ColumnLimit: 0
 
-# 連続空行は1まで認める
+# 連続空行数
 MaxEmptyLinesToKeep: 1
 
-# コメントを縦にそろえない
+# コメントを縦に整列させるか
 AlignTrailingComments: false
 
 # 行末コメントの前に入れるスペース数
 SpacesBeforeTrailingComments: 1
 
-# コメントを最大の列数に応じて自動改行させない
+# コメントを最大の列数に応じて自動改行させるか
 ReflowComments: false
 
-# インライン関数のみ1行での記述を許可
+# １行での関数記述を許可する種類の指定
+# InlineOnly: インライン関数のみ1行での記述を許可
 AllowShortFunctionsOnASingleLine: InlineOnly
 
-# 継承
+# 継承の改行位置
 BreakInheritanceList: BeforeComma
 
-# 関数宣言や定義の戻り値の後ろでは改行しない
+# 関数宣言や定義の戻り値の後ろでの改行指定
 AlwaysBreakAfterReturnType: None
 PenaltyReturnTypeOnItsOwnLine: 1000000
 
-# 関数引数の改行後インデント
+# 関数引数の改行後のインデント指定
 AlignAfterOpenBracket: AlwaysBreak
 
-# 関数の呼び出し引数を全て１行にするか全て改行する
+# 関数の呼び出し引数の記述
+# false: 全て１行にするか全て改行する
 BinPackArguments: false
 
-# 関数宣言や定義の引数を全て１行にするか全て改行する
+# 関数宣言や定義の引数の記述
+# false: 全て１行にするか全て改行する
 BinPackParameters: false
 
 # コンストラクタ
 ## ConstructorInitializerAllOnOneLineOrOnePerLine が true のとき
-## メンバ初期化リストが１行に収まらない場合に１回の改行だけで収まるならそれを許可しない
+## メンバ初期化リストが１行に収まらない場合に１回の改行だけで収まるならそれを許可するか
 AllowAllConstructorInitializersOnNextLine: false
-## メンバ初期化子のコロンとカンマの手前で改行
+## メンバ初期化子の改行スタイル
+## BeforeComma: コロンとカンマの手前で改行
 BreakConstructorInitializers: BeforeComma
-## コンストラクタ初期化子を１行に１つだけにする
+## コンストラクタ初期化子を１行に１つだけにするか
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ## コンストラクタ初期化子のインデント幅
 ConstructorInitializerIndentWidth: 0
-## コンストラクタ初期化子のコロンの前に空白を挿入
+## コンストラクタ初期化子のコロンの前に空白を挿入するか
 SpaceBeforeCtorInitializerColon: true
 
-# 一様初期化子の波括弧の前後の空白を除去
+# 一様初期化子の波括弧の前後の空白を除去するか
 Cpp11BracedListStyle: false
 
-# case はインデントする
+# case でインデントするか
 IndentCaseLabels: false
 
-# 短い case 文は１行で
+# 短い case 文は１行にまとめて書くことを許可するか
 AllowShortCaseLabelsOnASingleLine: true
 
 # 改行許可
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 
-# 三項演算子の前で改行
+# 三項演算子の前で改行するか
 BreakBeforeTernaryOperators: true
 
-# テンプレート引数の括弧内スペースは無し
+# テンプレート引数の括弧内スペースを入れるか
 SpacesInAngles: false
 
-# テンプレート宣言の後で複数行のであれば改行する
+# テンプレート宣言の後で複数行のであれば改行するか
 AlwaysBreakTemplateDeclarations: Yes
 
 # 中括弧の改行スタイル
@@ -105,4 +109,5 @@ BraceWrapping:
     SplitEmptyNamespace: true
 
 # 小括弧の整列スタイル
+# DontAlign: 整列しない
 AlignAfterOpenBracket: DontAlign
