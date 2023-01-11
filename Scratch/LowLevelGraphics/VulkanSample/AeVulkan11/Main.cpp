@@ -468,12 +468,12 @@ int aemain(::ae::base::Application* app)
         colorBufferRenderTargetView;
     ::std::unique_ptr<::ae::gfx_low::SampledImageView> colorBufferTextureView;
     auto setupColorBuffer = [&gfxKit,
-                             &display,
-                             &colorBufferMemory,
-                             &colorBufferImage,
-                             &colorBufferRenderTargetView,
-                             &colorBufferTextureView,
-                             &colorBufferFormat]() {
+                                &display,
+                                &colorBufferMemory,
+                                &colorBufferImage,
+                                &colorBufferRenderTargetView,
+                                &colorBufferTextureView,
+                                &colorBufferFormat]() {
         const auto extent = display.MainScreen().Extent();
         const auto specInfo =
             ::ae::gfx_low::ImageResourceSpecInfo()
@@ -510,9 +510,9 @@ int aemain(::ae::base::Application* app)
                 .SetFormat(colorBufferFormat)));
     };
     auto cleanupColorBuffer = [&colorBufferMemory,
-                               &colorBufferImage,
-                               &colorBufferRenderTargetView,
-                               &colorBufferTextureView]() {
+                                  &colorBufferImage,
+                                  &colorBufferRenderTargetView,
+                                  &colorBufferTextureView]() {
         colorBufferTextureView.reset();
         colorBufferRenderTargetView.reset();
         colorBufferImage.reset();
@@ -570,11 +570,12 @@ int aemain(::ae::base::Application* app)
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
 
             fUniformDataType data = {};
             data.projMtx = proj;

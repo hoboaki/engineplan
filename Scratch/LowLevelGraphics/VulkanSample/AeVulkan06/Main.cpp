@@ -678,9 +678,9 @@ int aemain(::ae::base::Application* app)
             // 天球モデルユニフォーム
             {
                 fModelUniformDataType data = {};
-                data.modelMtx = ::ae::base::Matrix34::Scale(
-                                    ::ae::base::Vector3::One() * 100.0f)
-                                    .ToMatrix44();
+                data.modelMtx =
+                    ::ae::base::Matrix34::Scale(::ae::base::Vector3::One() * 100.0f)
+                        .ToMatrix44();
                 skyBoxModelUniformBuffer.StoreToResourceMemory(
                     bufferIndex,
                     data);
@@ -711,8 +711,7 @@ int aemain(::ae::base::Application* app)
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(textureImage.get())
                         .SetOldState(::ae::gfx_low::ImageResourceState::CopyDst)
-                        .SetNewState(::ae::gfx_low::ImageResourceState::
-                                         ShaderResourceReadOnly));
+                        .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 isFinishedSetupTexture = true;
             }
 

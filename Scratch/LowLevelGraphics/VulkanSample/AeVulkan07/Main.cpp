@@ -615,8 +615,7 @@ int aemain(::ae::base::Application* app)
                             .SetResource(&textureImages[i])
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
-                            .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
+                            .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 }
                 isFinishedSetupTexture = true;
             }
@@ -626,8 +625,7 @@ int aemain(::ae::base::Application* app)
                 cmd.CmdImageResourceBarrier(
                     ::ae::gfx_low::ImageResourceBarrierInfo()
                         .SetResource(&textureImages[i])
-                        .SetOldState(::ae::gfx_low::ImageResourceState::
-                                         ShaderResourceReadOnly)
+                        .SetOldState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly)
                         .SetNewState(
                             ::ae::gfx_low::ImageResourceState::RenderTarget));
             }

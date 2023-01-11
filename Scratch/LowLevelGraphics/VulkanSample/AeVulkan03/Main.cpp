@@ -518,11 +518,12 @@ int aemain(::ae::base::Application* app)
                 ::ae::base::Vector3::Zero(), // targetPos
                 ::ae::base::Vector3::UnitY() // upVec
             );
-            auto model = ::ae::base::Quaternion(
-                             ::ae::base::Vector3::UnitY(),
-                             ::ae::base::Degree(3.0f * frameCount))
-                             .ToRotateMatrix()
-                             .ToMatrix44();
+            auto model =
+                ::ae::base::Quaternion(
+                    ::ae::base::Vector3::UnitY(),
+                    ::ae::base::Degree(3.0f * frameCount))
+                    .ToRotateMatrix()
+                    .ToMatrix44();
             auto vp = proj * view;
             auto mvp = vp * model;
 
@@ -544,8 +545,7 @@ int aemain(::ae::base::Application* app)
                             .SetResource(textureImage.get())
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::Unknown)
-                            .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
+                            .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 } else {
                     // デバイスメモリが専用メモリの場合はアップロードとメモリバリアを設定
                     cmd.CmdImageResourceBarrier(
@@ -561,8 +561,7 @@ int aemain(::ae::base::Application* app)
                             .SetResource(textureImage.get())
                             .SetOldState(
                                 ::ae::gfx_low::ImageResourceState::CopyDst)
-                            .SetNewState(::ae::gfx_low::ImageResourceState::
-                                             ShaderResourceReadOnly));
+                            .SetNewState(::ae::gfx_low::ImageResourceState::ShaderResourceReadOnly));
                 }
                 isFinishedSetupTexture = true;
             }
