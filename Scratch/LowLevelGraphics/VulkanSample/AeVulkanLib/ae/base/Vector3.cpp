@@ -31,9 +31,11 @@ const Vector3Pod Vector3Pod::One()
 //------------------------------------------------------------------------------
 const Vector3Pod Vector3Pod::Min()
 {
-    Vector3Pod obj = { -AE_BASE_INFINITY,
-                       -AE_BASE_INFINITY,
-                       -AE_BASE_INFINITY };
+    Vector3Pod obj = {
+        -AE_BASE_INFINITY,
+        -AE_BASE_INFINITY,
+        -AE_BASE_INFINITY
+    };
     return obj;
 }
 

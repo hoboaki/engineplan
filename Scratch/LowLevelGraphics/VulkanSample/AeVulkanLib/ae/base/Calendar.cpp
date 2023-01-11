@@ -44,7 +44,7 @@ bool CalendarPod::IsLeapYear(const int year)
 
     if ((localYear % 4) != 0 // 4で割り切れないので平年
         || ((localYear % 100) == 0 &&
-            (localYear % 400) != 0) // 100 で割り切れ 400 で割り切れない年は平年
+               (localYear % 400) != 0) // 100 で割り切れ 400 で割り切れない年は平年
     ) {
         return false;
     }

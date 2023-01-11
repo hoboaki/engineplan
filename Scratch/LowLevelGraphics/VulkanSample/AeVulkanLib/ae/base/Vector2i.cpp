@@ -31,16 +31,20 @@ const Vector2iPod Vector2iPod::One()
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Min()
 {
-    Vector2iPod obj = { std::numeric_limits<int>::min(),
-                        std::numeric_limits<int>::min() };
+    Vector2iPod obj = {
+        std::numeric_limits<int>::min(),
+        std::numeric_limits<int>::min()
+    };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector2iPod Vector2iPod::Max()
 {
-    Vector2iPod obj = { std::numeric_limits<int>::max(),
-                        std::numeric_limits<int>::max() };
+    Vector2iPod obj = {
+        std::numeric_limits<int>::max(),
+        std::numeric_limits<int>::max()
+    };
     return obj;
 }
 

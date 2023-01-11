@@ -28,31 +28,33 @@ InternalDescriptorSetLayouts::InternalDescriptorSetLayouts(
     std::array<::vk::DescriptorSetLayoutBinding, bindingsCountMax> bindings;
 
     // 汎用的な確保関数
-    auto addBinding = [bindingsCountMax](
-                          int& bindingsCount,
-                          ::vk::DescriptorSetLayoutBinding* bindingsPtr,
-                          const int bindingInfosIdx,
-                          const int bindingIndexOffset,
-                          const ShaderBindingInfo* bindingInfosPtr,
-                          const ::vk::DescriptorType descriptorType) {
-        AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
-        const auto& info = base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
-        bindingsPtr[bindingsCount] =
-            ::vk::DescriptorSetLayoutBinding()
-                .setBinding(bindingIndexOffset + info.BindingIndex())
-                .setDescriptorType(descriptorType)
-                .setDescriptorCount(info.ElemCount())
-                .setStageFlags(
-                    InternalEnumUtil::ToShaderStageFlags(info.Stages()))
-                .setPImmutableSamplers(nullptr);
-        ++bindingsCount;
-    };
+    auto addBinding =
+        [bindingsCountMax](
+            int& bindingsCount,
+            ::vk::DescriptorSetLayoutBinding* bindingsPtr,
+            const int bindingInfosIdx,
+            const int bindingIndexOffset,
+            const ShaderBindingInfo* bindingInfosPtr,
+            const ::vk::DescriptorType descriptorType) {
+            AE_BASE_ASSERT_LESS(bindingsCount, bindingsCountMax);
+            const auto& info = base::PtrToRef(&bindingInfosPtr[bindingInfosIdx]);
+            bindingsPtr[bindingsCount] =
+                ::vk::DescriptorSetLayoutBinding()
+                    .setBinding(bindingIndexOffset + info.BindingIndex())
+                    .setDescriptorType(descriptorType)
+                    .setDescriptorCount(info.ElemCount())
+                    .setStageFlags(
+                        InternalEnumUtil::ToShaderStageFlags(info.Stages()))
+                    .setPImmutableSamplers(nullptr);
+            ++bindingsCount;
+        };
     auto addSetLayout =
-        [](gfx_low::Device& device,
-           int& layoutsCount,
-           ::vk::DescriptorSetLayout* layoutsPtr,
-           int& bindingsCount,
-           const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
+        [](
+            gfx_low::Device& device,
+            int& layoutsCount,
+            ::vk::DescriptorSetLayout* layoutsPtr,
+            int& bindingsCount,
+            const ::vk::DescriptorSetLayoutBinding* bindingsPtr) {
             AE_BASE_ASSERT_LESS(layoutsCount, DescriptorSetLayoutsCountMax);
 
             const auto info = ::vk::DescriptorSetLayoutCreateInfo()

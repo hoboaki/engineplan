@@ -31,20 +31,24 @@ const Vector4Pod Vector4Pod::One()
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Min()
 {
-    Vector4Pod obj = { -AE_BASE_INFINITY,
-                       -AE_BASE_INFINITY,
-                       -AE_BASE_INFINITY,
-                       -AE_BASE_INFINITY };
+    Vector4Pod obj = {
+        -AE_BASE_INFINITY,
+        -AE_BASE_INFINITY,
+        -AE_BASE_INFINITY,
+        -AE_BASE_INFINITY
+    };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector4Pod Vector4Pod::Max()
 {
-    Vector4Pod obj = { AE_BASE_INFINITY,
-                       AE_BASE_INFINITY,
-                       AE_BASE_INFINITY,
-                       AE_BASE_INFINITY };
+    Vector4Pod obj = {
+        AE_BASE_INFINITY,
+        AE_BASE_INFINITY,
+        AE_BASE_INFINITY,
+        AE_BASE_INFINITY
+    };
     return obj;
 }
 

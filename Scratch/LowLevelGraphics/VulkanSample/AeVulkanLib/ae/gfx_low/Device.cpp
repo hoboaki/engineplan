@@ -99,10 +99,12 @@ Device::Device(const DeviceCreateInfo& createInfo)
             queueCount,
             &system_.TempWorkAllocator_());
     }
-    const float priorityTable[int(QueuePriority::TERM)] = { -1.0f,
-                                                            0.0f,
-                                                            0.5f,
-                                                            1.0f };
+    const float priorityTable[int(QueuePriority::TERM)] = {
+        -1.0f,
+        0.0f,
+        0.5f,
+        1.0f
+    };
     for (int queueIdx = 0; queueIdx < queueCreateCount; ++queueIdx) {
         const auto indexInQueueKind = indexInQueueKindTable[queueIdx];
         const auto priorityEnum = queueCreateInfos[queueIdx].Priority();

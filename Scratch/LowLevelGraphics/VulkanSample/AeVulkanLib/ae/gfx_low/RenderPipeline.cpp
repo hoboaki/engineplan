@@ -239,7 +239,7 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
                     AE_BASE_ASSERT(
                         vertexBindingDescs[info.Slot()].stride == 0 ||
                         (0 <= info.Offset() &&
-                         info.Offset() < int(vertexBindingDescs[info.Slot()].stride)));
+                            info.Offset() < int(vertexBindingDescs[info.Slot()].stride)));
                     vertexAttrDescs[i] =
                         ::vk::VertexInputAttributeDescription()
                             .setBinding(uint32_t(info.Slot()))
@@ -284,8 +284,9 @@ RenderPipeline::RenderPipeline(const RenderPipelineCreateInfo& createInfo)
         const auto multisampleInfo = ::vk::PipelineMultisampleStateCreateInfo();
 
         auto toStencilOpState =
-            [](const PipelineDepthStencilInfo& depthStencilInfo,
-               const StencilOpInfo& stencilOpInfo) {
+            [](
+                const PipelineDepthStencilInfo& depthStencilInfo,
+                const StencilOpInfo& stencilOpInfo) {
                 return ::vk::StencilOpState()
                     .setFailOp(
                         InternalEnumUtil::ToStencilOp(stencilOpInfo.FailOp()))

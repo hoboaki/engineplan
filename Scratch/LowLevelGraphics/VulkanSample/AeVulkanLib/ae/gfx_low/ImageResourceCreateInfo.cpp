@@ -35,8 +35,8 @@ ImageResourceCreateInfo& ImageResourceCreateInfo::SetNativeObjectArrayLength_(
         .setImageType(InternalEnumUtil::ToImageType(specInfo_.Kind()))
         .setFormat(InternalEnumUtil::ToFormat(specInfo_.Format()))
         .setExtent({ uint32_t(specInfo_.Extent().width),
-                     uint32_t(specInfo_.Extent().height),
-                     uint32_t(specInfo_.Extent().depth) })
+            uint32_t(specInfo_.Extent().height),
+            uint32_t(specInfo_.Extent().depth) })
         .setMipLevels(uint32_t(specInfo_.MipLevels()))
         .setArrayLayers(
             uint32_t(specInfo_.ArrayLength()) * (isCubeImage ? 6 : 1))

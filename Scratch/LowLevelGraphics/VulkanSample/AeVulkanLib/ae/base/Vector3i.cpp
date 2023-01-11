@@ -31,18 +31,22 @@ const Vector3iPod Vector3iPod::One()
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Min()
 {
-    Vector3iPod obj = { std::numeric_limits<int>::min(),
-                        std::numeric_limits<int>::min(),
-                        std::numeric_limits<int>::min() };
+    Vector3iPod obj = {
+        std::numeric_limits<int>::min(),
+        std::numeric_limits<int>::min(),
+        std::numeric_limits<int>::min()
+    };
     return obj;
 }
 
 //------------------------------------------------------------------------------
 const Vector3iPod Vector3iPod::Max()
 {
-    Vector3iPod obj = { std::numeric_limits<int>::max(),
-                        std::numeric_limits<int>::max(),
-                        std::numeric_limits<int>::max() };
+    Vector3iPod obj = {
+        std::numeric_limits<int>::max(),
+        std::numeric_limits<int>::max(),
+        std::numeric_limits<int>::max()
+    };
     return obj;
 }
 

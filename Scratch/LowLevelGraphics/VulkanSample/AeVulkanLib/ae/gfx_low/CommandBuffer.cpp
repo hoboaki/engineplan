@@ -62,7 +62,7 @@ CommandBuffer::CommandBuffer(const CommandBufferCreateInfo& createInfo)
         AE_BASE_ASSERT(!createInfo.Features().Get(CommandBufferFeature::Copy));
         AE_BASE_ASSERT(
             !(createInfo.Features().Get(CommandBufferFeature::Render) &&
-              createInfo.Features().Get(CommandBufferFeature::Compute)));
+                createInfo.Features().Get(CommandBufferFeature::Compute)));
         AE_BASE_ASSERT(
             createInfo.Features().Get(CommandBufferFeature::Render) ||
             createInfo.Features().Get(CommandBufferFeature::Compute));
@@ -200,10 +200,10 @@ void CommandBuffer::CmdCall(const CommandBuffer& secondaryCommands)
     AE_BASE_ASSERT(
         (secondaryCommands.Features().Get(
              ::ae::gfx_low::CommandBufferFeature::Render) &&
-         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Render)) ||
+            activePass_.Get(::ae::gfx_low::CommandBufferFeature::Render)) ||
         (secondaryCommands.Features().Get(
              ::ae::gfx_low::CommandBufferFeature::Compute) &&
-         activePass_.Get(::ae::gfx_low::CommandBufferFeature::Compute)));
+            activePass_.Get(::ae::gfx_low::CommandBufferFeature::Compute)));
 
     // コール
     nativeObject_.executeCommands(1, &secondaryCommands.nativeObject_);
@@ -363,7 +363,7 @@ void CommandBuffer::CmdBeginRenderPass(const RenderPassBeginInfo& info)
     nativeObject_.beginRenderPass(
         base::PtrToRef(info.RenderPass()).RenderPassBeginInfo_(),
         (level_ == CommandBufferLevel::Primary &&
-         info.UseSecondaryCommandBuffers())
+            info.UseSecondaryCommandBuffers())
             ? vk::SubpassContents::eSecondaryCommandBuffers
             : vk::SubpassContents::eInline);
 }
@@ -644,7 +644,7 @@ void CommandBuffer::CmdSetScissorsDetails(
         rects[i] = ::vk::Rect2D(
             { setting.Rect().Begin().x, setting.Rect().Begin().y },
             { uint32_t(setting.Rect().Width()),
-              uint32_t(setting.Rect().Height()) });
+                uint32_t(setting.Rect().Height()) });
     }
     nativeObject_.setScissor(0, count, &rects[0]);
 }
