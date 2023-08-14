@@ -35,7 +35,7 @@ struct EnumBitSetPod
     /// 全ビット true のオブジェクトを取得。
     static constexpr MyType AllOn()
     {
-        if (int(EnumType::TERM) * 8 == BitCount) {
+        if (int(EnumType::TERM) == BitCount) {
             return MyType{ ::std::numeric_limits<DataType>::max() };
         }
         return MyType{ (DataType(1) << int(EnumType::TERM)) - 1 };
