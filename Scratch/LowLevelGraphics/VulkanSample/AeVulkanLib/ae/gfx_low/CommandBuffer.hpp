@@ -17,6 +17,7 @@ class ComputePipeline;
 class CopyBufferInfo;
 class CopyBufferToImageInfo;
 class CopyImageInfo;
+class CopyImageToBufferInfo;
 class DescriptorSet;
 class Device;
 class DispatchCallInfo;
@@ -154,6 +155,9 @@ public:
 
     /// ImageResource から ImageResource へのコピー処理をする。
     void CmdCopyImage(const CopyImageInfo& info);
+
+    /// ImageResource から BufferResource へのコピー処理をする。
+    void CmdCopyImageToBuffer(const CopyImageToBufferInfo& info);
     //@}
 
     /// @name Render コマンド追加の開始・終了

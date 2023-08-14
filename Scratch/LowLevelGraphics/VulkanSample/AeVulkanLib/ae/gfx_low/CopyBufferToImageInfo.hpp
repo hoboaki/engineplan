@@ -22,8 +22,7 @@ class CopyBufferToImageInfo {
 public:
     /// @name プロパティ
     //@{
-    /// コピー元イメージデータが可能されている BufferResource
-    /// のポインタ。（初期値：nullptr）
+    /// コピー元イメージデータが格納されている BufferResource のポインタ。（初期値：nullptr）
     BufferResource* SrcBufferResource() const
     {
         return srcBufferResource_.Get();
@@ -136,7 +135,7 @@ public:
     }
 
     /// DstImageResourceState() の設定。
-    /// @param state TransferDstOptimal, のいずれかが指定可能。（将来的に追加予定）
+    /// @param state CopyDst, のいずれかが指定可能。（将来的に追加予定）
     CopyBufferToImageInfo& SetDstImageResourceState(ImageResourceState state);
     //@]
 
