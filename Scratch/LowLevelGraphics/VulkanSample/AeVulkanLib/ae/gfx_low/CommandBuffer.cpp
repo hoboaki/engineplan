@@ -14,6 +14,7 @@
 #include <ae/gfx_low/CopyBufferInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
 #include <ae/gfx_low/CopyImageInfo.hpp>
+#include <ae/gfx_low/CopyImageToBufferInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
@@ -393,6 +394,44 @@ void CommandBuffer::CmdCopyImage(const CopyImageInfo& info)
         InternalEnumUtil::ToImageLayout(info.SrcImageResourceState()),
         base::PtrToRef(info.DstImageResource()).NativeObject_(),
         InternalEnumUtil::ToImageLayout(info.DstImageResourceState()),
+        1, // regionCount
+        &copyInfo);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdCopyImageToBuffer(const CopyImageToBufferInfo& info)
+{
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
+
+    const auto copyInfo =
+        ::vk::BufferImageCopy()
+            .setBufferOffset(info.DstBufferOffset())
+            .setBufferRowLength(info.DstImageExtent().width)
+            .setBufferImageHeight(info.DstImageExtent().height)
+            .setImageOffset(::vk::Offset3D(
+                info.SrcImageOffset().x,
+                info.SrcImageOffset().y,
+                info.SrcImageOffset().z))
+            .setImageSubresource(
+                ::vk::ImageSubresourceLayers()
+                    .setAspectMask(::vk::ImageAspectFlagBits::eColor)
+                    .setMipLevel(info.SrcSubresourceLocation().MipLevel())
+                    .setBaseArrayLayer(
+                        info.SrcSubresourceLocation().FaceIndex() +
+                        info.SrcSubresourceLocation().ArrayIndex() *
+                            (info.SrcImageResource()->IsCubeMapImage_() ? 6 : 1))
+                    .setLayerCount(1))
+            .setImageExtent(::vk::Extent3D(
+                uint32_t(info.DstImageExtent().width),
+                uint32_t(info.DstImageExtent().height),
+                uint32_t(info.DstImageExtent().depth)));
+
+    nativeObject_.copyImageToBuffer(
+        base::PtrToRef(info.SrcImageResource()).NativeObject_(),
+        InternalEnumUtil::ToImageLayout(info.SrcImageResourceState()),
+        base::PtrToRef(info.DstBufferResource()).NativeObject_(),
         1, // regionCount
         &copyInfo);
 }
