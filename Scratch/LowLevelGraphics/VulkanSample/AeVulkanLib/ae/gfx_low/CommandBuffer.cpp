@@ -13,6 +13,7 @@
 #include <ae/gfx_low/ComputePipeline.hpp>
 #include <ae/gfx_low/CopyBufferInfo.hpp>
 #include <ae/gfx_low/CopyBufferToImageInfo.hpp>
+#include <ae/gfx_low/CopyImageInfo.hpp>
 #include <ae/gfx_low/DepthStencilImageView.hpp>
 #include <ae/gfx_low/DepthStencilSetting.hpp>
 #include <ae/gfx_low/DepthStencilSpecInfo.hpp>
@@ -341,6 +342,55 @@ void CommandBuffer::CmdCopyBufferToImage(const CopyBufferToImageInfo& info)
 
     nativeObject_.copyBufferToImage(
         base::PtrToRef(info.SrcBufferResource()).NativeObject_(),
+        base::PtrToRef(info.DstImageResource()).NativeObject_(),
+        InternalEnumUtil::ToImageLayout(info.DstImageResourceState()),
+        1, // regionCount
+        &copyInfo);
+}
+
+//------------------------------------------------------------------------------
+void CommandBuffer::CmdCopyImage(const CopyImageInfo& info)
+{
+    AE_BASE_ASSERT(state_ == CommandBufferState::Recording);
+    AE_BASE_ASSERT(activePass_.IsAllOff());
+    AE_BASE_ASSERT(features_.Get(CommandBufferFeature::Copy));
+
+    const auto copyInfo =
+        ::vk::ImageCopy()
+            .setSrcOffset(::vk::Offset3D(
+                info.SrcImageOffset().x,
+                info.SrcImageOffset().y,
+                info.SrcImageOffset().z))
+            .setSrcSubresource(
+                ::vk::ImageSubresourceLayers()
+                    .setAspectMask(::vk::ImageAspectFlagBits::eColor)
+                    .setMipLevel(info.SrcSubresourceLocation().MipLevel())
+                    .setBaseArrayLayer(
+                        info.SrcSubresourceLocation().FaceIndex() +
+                        info.SrcSubresourceLocation().ArrayIndex() *
+                            (info.SrcImageResource()->IsCubeMapImage_() ? 6 : 1))
+                    .setLayerCount(1))
+            .setDstOffset(::vk::Offset3D(
+                info.DstImageOffset().x,
+                info.DstImageOffset().y,
+                info.DstImageOffset().z))
+            .setDstSubresource(
+                ::vk::ImageSubresourceLayers()
+                    .setAspectMask(::vk::ImageAspectFlagBits::eColor)
+                    .setMipLevel(info.DstSubresourceLocation().MipLevel())
+                    .setBaseArrayLayer(
+                        info.DstSubresourceLocation().FaceIndex() +
+                        info.DstSubresourceLocation().ArrayIndex() *
+                            (info.DstImageResource()->IsCubeMapImage_() ? 6 : 1))
+                    .setLayerCount(1))
+            .setExtent(::vk::Extent3D(
+                uint32_t(info.ImageExtent().width),
+                uint32_t(info.ImageExtent().height),
+                uint32_t(info.ImageExtent().depth)));
+
+    nativeObject_.copyImage(
+        base::PtrToRef(info.SrcImageResource()).NativeObject_(),
+        InternalEnumUtil::ToImageLayout(info.SrcImageResourceState()),
         base::PtrToRef(info.DstImageResource()).NativeObject_(),
         InternalEnumUtil::ToImageLayout(info.DstImageResourceState()),
         1, // regionCount
