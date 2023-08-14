@@ -22,7 +22,7 @@ class CopyBufferInfo {
 public:
     /// @name プロパティ
     //@{
-    /// コピー元バッファデータが可能されている BufferResource のポインタ。（初期値：nullptr）
+    /// コピー元バッファデータが格納されている BufferResource のポインタ。（初期値：nullptr）
     BufferResource* SrcBufferResource() const
     {
         return srcBufferResource_.Get();
@@ -46,7 +46,7 @@ public:
         return *this;
     }
 
-    /// コピー先バッファデータが可能されている BufferResource のポインタ。（初期値：nullptr）
+    /// コピー先となる BufferResource のポインタ。（初期値：nullptr）
     BufferResource* DstBufferResource() const
     {
         return dstBufferResource_.Get();

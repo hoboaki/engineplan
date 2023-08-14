@@ -69,7 +69,7 @@ public:
     /// @param state CopyDst, のいずれかが指定可能。（将来的に追加予定）
     CopyImageToBufferInfo& SetSrcImageResourceState(ImageResourceState state);
 
-    /// コピー先イメージデータを格納する BufferResource のポインタ。（初期値：nullptr）
+    /// コピー先となる BufferResource のポインタ。（初期値：nullptr）
     BufferResource* DstBufferResource() const
     {
         return dstBufferResource_.Get();
@@ -93,7 +93,7 @@ public:
         return *this;
     }
 
-    /// コピー元イメージデータのY方向に+1移動する際のバイトサイズ。（初期値：0）
+    /// コピー先イメージデータのY方向に+1移動する際のバイトサイズ。（初期値：0）
     size_t DstBufferRowPitch() const { return dstBufferRowPitch_; }
 
     /// DstBufferRowPitch() の設定。
@@ -103,7 +103,7 @@ public:
         return *this;
     }
 
-    /// コピー元イメージデータのZ方向に+1移動する際のバイトサイズ。（初期値：0）
+    /// コピー先イメージデータのZ方向に+1移動する際のバイトサイズ。（初期値：0）
     size_t DstBufferDepthPitch() const { return dstBufferDepthPitch_; }
 
     /// DstBufferDepthPitch() の設定。
