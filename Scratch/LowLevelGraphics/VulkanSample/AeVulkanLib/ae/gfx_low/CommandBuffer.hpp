@@ -269,10 +269,10 @@ private:
     ::vk::CommandBuffer nativeObject_;
     Event completeEvent_;
     CommandBufferState state_ = CommandBufferState::Initial;
+    ::vk::RenderPass inheritRenderPass_ = {}; // セカンダリコマンドバッファ用の RenderPass オブジェクト
     int renderPassCount_ = {};
     CommandBufferFeatureBitSet activePass_;
-    bool
-        useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
+    bool useSecondaryCommandBufferMode_ = {}; // 現在の Render/Compute パスでセカンダリコマンドで
     base::Pointer<const RenderPipeline> currentRenderPipeline_;
     base::Pointer<const ComputePipeline> currentComputePipeline_;
 };

@@ -115,11 +115,14 @@ void CommandBuffer::BeginRecord(const CommandBufferBeginRecordInfo& info)
     Reset();
     AE_BASE_ASSERT(state_ == CommandBufferState::Initial);
     auto inheritanceInfo = ::vk::CommandBufferInheritanceInfo();
-    if (level_ == CommandBufferLevel::Secondary &&
-        features_.Get(CommandBufferFeature::Render)) {
-        const auto& renderPass = base::PtrToRef(info.InheritRenderPassPtr());
-        inheritanceInfo.framebuffer = *renderPass.Framebuffer_();
-        inheritanceInfo.renderPass = *renderPass.RenderPass_();
+    if (level_ == CommandBufferLevel::Secondary && features_.Get(CommandBufferFeature::Render)) {
+        InternalUtility::CreateRenderPass(
+            &inheritRenderPass_,
+            &device_,
+            info.RenderPassSpecInfo(),
+            info.RenderTargetSettingsPtr(),
+            info.DepthStencilSettingPtr());
+        inheritanceInfo.renderPass = inheritRenderPass_;
     }
     const auto flagsForSecondary =
         ::vk::CommandBufferUsageFlagBits::eRenderPassContinue |
@@ -147,10 +150,10 @@ void CommandBuffer::BeginRecord(const CommandBufferBeginRecordInfo& info)
     // Vulkan の仕様では引き継がれないためコマンドバッファの先頭で設定するようにしている。
     activePass_ = features_;
     CmdSetViewportsDetails(
-        base::PtrToRef(info.InheritRenderPassPtr()).RenderTargetCount_(),
+        info.RenderPassSpecInfo().RenderTargetCount(),
         info.InheritViewportSettingsPtr());
     CmdSetScissorsDetails(
-        base::PtrToRef(info.InheritRenderPassPtr()).RenderTargetCount_(),
+        info.RenderPassSpecInfo().RenderTargetCount(),
         info.InheritScissorSettingsPtr());
 }
 
@@ -189,6 +192,10 @@ void CommandBuffer::Reset()
     AE_BASE_ASSERT(result == ::vk::Result::eSuccess);
     state_ = CommandBufferState::Initial;
     renderPassCount_ = 0;
+    if (level_ == CommandBufferLevel::Secondary && features_.Get(CommandBufferFeature::Render)) {
+        device_.NativeObject_().destroyRenderPass(inheritRenderPass_, nullptr);
+        inheritRenderPass_ = ::vk::RenderPass();
+    }
 }
 
 //------------------------------------------------------------------------------
